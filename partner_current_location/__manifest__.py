@@ -30,4 +30,6 @@ Useful when visiting clients on-site for more accurate coordinates.
     'installable': True,
     'application': False,
     'auto_install': False,
+    'currency': 'USD',
+    'price': 39.0,
 }
