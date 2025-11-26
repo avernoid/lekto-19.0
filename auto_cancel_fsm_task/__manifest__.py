@@ -17,7 +17,7 @@
         'views/project_task_views.xml',
         'data/ir_cron_data.xml',
     ],
-    'images': ['static/description/thumbnail.png'],
+    'images': ['static/description/banner.png'],
     'license': 'OPL-1',
     'installable': True,
     'auto_install': False,
