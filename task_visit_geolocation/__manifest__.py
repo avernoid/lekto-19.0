@@ -3,7 +3,7 @@
     'version': '19.0.1.0.0',
     'category': 'Project',
     'summary': 'Add geolocation features to project tasks for visit registration',
-    'icon': '/task_visit_geolocation/static/description/icon.svg',
+    'icon': '/task_visit_geolocation/static/description/icon.png',
     'description': """
 This module extends project tasks to include geolocation functionalities for visit registration.
 - Add a boolean field "Registrar visita con Geolocalización" to project.project.
@@ -37,10 +37,10 @@ This module extends project tasks to include geolocation functionalities for vis
     },
 
     'images': [
-        'static/description/banner.svg',
+        'static/description/banner.png',
     ],
 
-    'license': 'Other proprietary',
+    'license': 'OPL-1',
     'installable': True,
     'application': False,
     'auto_install': False,
