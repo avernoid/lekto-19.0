@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_order_form_inherit_location" model="ir.ui.view">
+            <field name="name">sale.order.form.location</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- Campos invisibles para configuración -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="show_update_partner_location" invisible="1"/>
+                    <field name="show_register_sale_location" invisible="1"/>
+                    <field name="capture_location_on_confirm" invisible="1"/>
+                    <field name="show_location_fields" invisible="1"/>
+                    <field name="partner_latitude" invisible="1"/>
+                    <field name="partner_longitude" invisible="1"/>
+                    <field name="partner_date_localization" invisible="1"/>
+                </xpath>
+
+                <!-- Agregar botones de ubicación en el header -->
+                <xpath expr="//button[@name='action_quotation_send']" position="after">
+                    <button name="action_update_partner_location"
+                            type="object"
+                            string="Update Partner Location"
+                            class="btn-secondary"
+                            icon="fa-user"
+                            invisible="not show_update_partner_location or state not in ['draft', 'sent']"
+                            help="Update partner coordinates from current device location"/>
+                    
+                    <button name="action_register_sale_location"
+                            type="object"
+                            string="Register Sale Location"
+                            class="btn-secondary"
+                            icon="fa-map-marker"
+                            invisible="not show_register_sale_location or state not in ['draft', 'sent']"
+                            help="Register sale location from current device location"/>
+                </xpath>
+
+                <!-- Agregar página de Geolocalización -->
+                <xpath expr="//page[@name='customer_signature']" position="after">
+                    <page string="Geolocation" name="geolocation" invisible="not show_location_fields">
+                        
+                        <!-- Ubicación del Cliente -->
+                        <group string="Partner Location" name="partner_location">
+                            <group>
+                                <label for="partner_latitude" string="Partner Coordinates"/>
+                                <div>
+                                    <span>Lat: <field name="partner_latitude" class="oe_inline"/></span>
+                                    <br/>
+                                    <span>Long: <field name="partner_longitude" class="oe_inline"/></span>
+                                    <br/>
+                                    <span invisible="not partner_date_localization">
+                                        Updated: <field name="partner_date_localization" class="oe_inline"/>
+                                    </span>
+                                </div>
+                            </group>
+                            <group>
+                                <button name="action_view_partner_location_map"
+                                        type="object"
+                                        string="View Partner on Map"
+                                        icon="fa-map"
+                                        class="btn-link"
+                                        invisible="not partner_latitude or not partner_longitude"
+                                        help="Open Google Maps with partner location"/>
+                            </group>
+                        </group>
+
+                        <!-- Ubicación de la Venta -->
+                        <group string="Sale Location" name="sale_location">
+                            <group>
+                                <label for="sale_latitude" string="Sale Coordinates"/>
+                                <div>
+                                    <span>Lat: <field name="sale_latitude" readonly="1" class="oe_inline"/></span>
+                                    <br/>
+                                    <span>Long: <field name="sale_longitude" readonly="1" class="oe_inline"/></span>
+                                    <br/>
+                                    <span invisible="not sale_location_date">
+                                        Registered: <field name="sale_location_date" readonly="1" class="oe_inline"/>
+                                    </span>
+                                </div>
+                            </group>
+                            <group>
+                                <button name="action_view_sale_location_map"
+                                        type="object"
+                                        string="View Sale Location on Map"
+                                        icon="fa-map"
+                                        class="btn-link"
+                                        invisible="not sale_latitude or not sale_longitude"
+                                        help="Open Google Maps with sale location"/>
+                            </group>
+                        </group>
+
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

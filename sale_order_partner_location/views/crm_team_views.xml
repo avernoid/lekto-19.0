@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_team_view_form_inherit_location" model="ir.ui.view">
+            <field name="name">crm.team.form.location</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                
+                <!-- Agregar sección de configuración de geolocalización -->
+                <xpath expr="//group[@name='right']" position="after">
+                    <group string="Sale Geolocation Settings" name="geolocation_settings">
+                        <field name="show_update_partner_location"/>
+                        <field name="show_register_sale_location"/>
+                        <field name="capture_location_on_confirm"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

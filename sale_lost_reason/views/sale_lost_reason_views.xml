@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_lost_reason_view_tree" model="ir.ui.view">
+        <field name="name">sale.lost.reason.view.tree</field>
+        <field name="model">sale.lost.reason</field>
+        <field name="arch" type="xml">
+            <list string="Lost Reasons" editable="bottom">
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sale_lost_reason_view_form" model="ir.ui.view">
+        <field name="name">sale.lost.reason.view.form</field>
+        <field name="model">sale.lost.reason</field>
+        <field name="arch" type="xml">
+            <form string="Lost Reason">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_lost_reason" model="ir.actions.act_window">
+        <field name="name">Lost Reasons</field>
+        <field name="res_model">sale.lost.reason</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Define a new lost reason
+          </p><p>
+            Use lost reasons to explain why a sales order is lost.
+          </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_sale_lost_reason"
+        name="Lost Reasons"
+        parent="sale.menu_sale_config"
+        action="action_sale_lost_reason"
+        sequence="50"/>
+</odoo>

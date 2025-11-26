@@ -1,0 +1,67 @@
+<svg width="750" height="371" viewBox="0 0 750 371" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Background -->
+    <rect width="750" height="371" fill="#5D38A4"/>
+    
+    <!-- Decorative Patterns -->
+    <!-- Top Left: Gears/Abstract -->
+    <path d="M0 0 L100 0 L0 100 Z" fill="#F72585" opacity="0.2"/>
+    <circle cx="30" cy="30" r="20" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.3"/>
+    <circle cx="60" cy="10" r="10" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.2"/>
+    
+    <!-- Top/Bottom Right: Zigzag -->
+    <path d="M750 0 L650 0 L750 100 Z" fill="#F72585" opacity="0.2"/>
+    <path d="M750 371 L650 371 L750 271 Z" fill="#9D4EDD" opacity="0.3"/>
+
+    <!-- Left Content Box -->
+    <g transform="translate(40, 60)">
+        <!-- Title -->
+        <text x="0" y="40" font-family="Arial, sans-serif" font-weight="bold" font-size="28" fill="#FFFFFF">
+            Auto Cancel FSM Task
+        </text>
+        
+        <!-- Description -->
+        <text x="0" y="90" font-family="Arial, sans-serif" font-size="18" fill="#FFFFFF">
+            <tspan x="0" dy="0">Automatically cancel/finish tasks</tspan>
+            <tspan x="0" dy="25">based on antiquity</tspan>
+        </text>
+        
+        <!-- Highlights -->
+        <g transform="translate(0, 150)">
+            <circle cx="6" cy="6" r="6" fill="#F72585"/>
+            <text x="20" y="11" font-family="Arial, sans-serif" font-size="16" fill="#FFFFFF">Time-based automation</text>
+            
+            <circle cx="6" cy="36" r="6" fill="#F72585"/>
+            <text x="20" y="41" font-family="Arial, sans-serif" font-size="16" fill="#FFFFFF">Project configuration</text>
+            
+            <circle cx="6" cy="66" r="6" fill="#F72585"/>
+            <text x="20" y="71" font-family="Arial, sans-serif" font-size="16" fill="#FFFFFF">Manual trigger option</text>
+        </g>
+    </g>
+
+    <!-- Right Content Box (Illustration) -->
+    <g transform="translate(480, 60)">
+        <rect width="230" height="230" rx="20" ry="20" fill="#FFFFFF"/>
+        <!-- Icon Image (Embedded SVG) -->
+        <g transform="translate(15, 15) scale(2)">
+            <!-- Stylized Clock Face (Teal) -->
+            <circle cx="50" cy="50" r="45" fill="#00A09D" opacity="0.1"/>
+            <circle cx="50" cy="50" r="35" fill="none" stroke="#00A09D" stroke-width="8"/>
+            
+            <!-- Clock Hands (Purple) -->
+            <line x1="50" y1="50" x2="50" y2="25" stroke="#714B67" stroke-width="6" stroke-linecap="round"/>
+            <line x1="50" y1="50" x2="70" y2="50" stroke="#714B67" stroke-width="6" stroke-linecap="round"/>
+            
+            <!-- Cancel/Stop Symbol (Red/Pink) - Overlaying bottom right -->
+            <circle cx="75" cy="75" r="20" fill="#FFFFFF"/>
+            <circle cx="75" cy="75" r="16" fill="#F72585"/>
+            <line x1="68" y1="68" x2="82" y2="82" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+            <line x1="82" y1="68" x2="68" y2="82" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+        </g>
+    </g>
+
+    <!-- CTA Button -->
+    <g transform="translate(530, 310)">
+        <rect width="130" height="40" rx="20" ry="20" fill="#F72585"/>
+        <text x="65" y="25" font-family="Arial, sans-serif" font-weight="bold" font-size="16" fill="#FFFFFF" text-anchor="middle">ganemo.co</text>
+    </g>
+</svg>

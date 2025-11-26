@@ -1,0 +1,31 @@
+{
+    'name': 'Sale Lost Reason',
+    'version': '19.0.1.0.0',
+    'category': 'Sales',
+    'summary': 'Manage lost reasons for sales orders',
+    'description': """
+        This module allows you to define lost reasons for sales orders,
+        similar to how it is done in the CRM module.
+    """,
+    'author': 'Ganemo',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': "https://www.ganemo.co",
+    'depends': ['sale_management'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/sale_lost_reason_views.xml',
+        'views/sale_order_views.xml',
+        'views/crm_team_views.xml',
+        'wizard/sale_lost_reason_wizard_views.xml',
+    ],
+    'images': ['static/description/banner.svg'],
+    'icon': '/sale_lost_reason/static/description/icon.svg',
+    'license': 'Other proprietary',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    'currency': 'USD',
+    'price': 45.0,
+    'module_type': 'official',
+}
