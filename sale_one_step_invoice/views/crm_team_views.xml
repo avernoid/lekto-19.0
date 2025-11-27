@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_team_view_form_inherit_sale_one_step_invoice" model="ir.ui.view">
+        <field name="name">crm.team.view.form.inherit.sale.one_step.invoice</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='right']" position="after">
+                <group string="Invoicing Configuration" name="invoicing_config">
+                    <field name="skip_invoice_wizard"/>
+                    <field name="create_posted_invoice"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
