@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_batch_spreadsheet_view_form" model="ir.ui.view">
+        <field name="name">stock.batch.spreadsheet.view.form</field>
+        <field name="model">stock.batch.spreadsheet</field>
+        <field name="arch" type="xml">
+            <form string="Batch Spreadsheet" class="o_spreadsheet_form">
+                <field name="spreadsheet_binary_data" widget="spreadsheet" />
+                <field name="spreadsheet_data" invisible="1" />
+                <field name="spreadsheet_file_name" invisible="1" />
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_batch_spreadsheet_action" model="ir.actions.act_window">
+        <field name="name">Batch Spreadsheets</field>
+        <field name="res_model">stock.batch.spreadsheet</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

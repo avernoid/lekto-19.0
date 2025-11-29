@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_batch_spreadsheet_template,stock.batch.spreadsheet.template,model_stock_batch_spreadsheet_template,stock.group_stock_user,1,1,1,1
+access_stock_batch_spreadsheet,stock.batch.spreadsheet,model_stock_batch_spreadsheet,stock.group_stock_user,1,1,1,1
+
