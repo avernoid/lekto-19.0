@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_spreadsheet_user,project.spreadsheet.user,model_project_spreadsheet,project.group_project_user,1,1,1,1
+access_project_spreadsheet_manager,project.spreadsheet.manager,model_project_spreadsheet,project.group_project_manager,1,1,1,1
+access_project_spreadsheet_template_user,project.spreadsheet.template.user,model_project_spreadsheet_template,project.group_project_user,1,0,0,0
+access_project_spreadsheet_template_manager,project.spreadsheet.template.manager,model_project_spreadsheet_template,project.group_project_manager,1,1,1,1

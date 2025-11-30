@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_task_spreadsheet_user,project.task.spreadsheet.user,model_project_task_spreadsheet,project.group_project_user,1,1,1,1
+access_project_task_spreadsheet_manager,project.task.spreadsheet.manager,model_project_task_spreadsheet,project.group_project_manager,1,1,1,1
+access_project_task_spreadsheet_template_user,project.task.spreadsheet.template.user,model_project_task_spreadsheet_template,project.group_project_user,1,0,0,0
+access_project_task_spreadsheet_template_manager,project.task.spreadsheet.template.manager,model_project_task_spreadsheet_template,project.group_project_manager,1,1,1,1

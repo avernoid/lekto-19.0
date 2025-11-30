@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <div t-name="mrp_production_spreadsheet_report.MrpProductionSpreadsheetAction" class="o_action">
+        <SpreadsheetNavbar t-props="navbarProps" model="model"/>
+        <SpreadsheetComponent model="model"/>
+    </div>
+</templates>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_spreadsheet_template_view_tree" model="ir.ui.view">
+        <field name="name">mrp.production.spreadsheet.template.view.tree</field>
+        <field name="model">mrp.production.spreadsheet.template</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="spreadsheet_id" optional="hide"/>
+                <button name="action_create_spreadsheet" type="object" string="Create Spreadsheet" 
+                        invisible="spreadsheet_id" class="btn-primary"/>
+                <button name="action_open_spreadsheet" type="object" string="Edit Spreadsheet" 
+                        invisible="not spreadsheet_id" class="btn-secondary"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="mrp_production_spreadsheet_template_view_form" model="ir.ui.view">
+        <field name="name">mrp.production.spreadsheet.template.view.form</field>
+        <field name="model">mrp.production.spreadsheet.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Production Analysis"/></h1>
+                    </div>
+                    <group>
+                        <field name="spreadsheet_id" readonly="1"/>
+                        <field name="spreadsheet_file_name" invisible="1"/>
+                        <field name="spreadsheet_binary_data" filename="spreadsheet_file_name" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mrp_production_spreadsheet_template" model="ir.actions.act_window">
+        <field name="name">Manufacturing Order Spreadsheet Templates</field>
+        <field name="res_model">mrp.production.spreadsheet.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_mrp_production_spreadsheet_template"
+              parent="mrp.menu_mrp_configuration"
+              action="action_mrp_production_spreadsheet_template"
+              sequence="100"/>
+</odoo>

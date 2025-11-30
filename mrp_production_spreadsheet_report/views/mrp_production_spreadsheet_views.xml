@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_spreadsheet_view_form" model="ir.ui.view">
+        <field name="name">mrp.production.spreadsheet.view.form</field>
+        <field name="model">mrp.production.spreadsheet</field>
+        <field name="arch" type="xml">
+            <form string="Manufacturing Order Spreadsheet" class="o_spreadsheet_form">
+                <field name="spreadsheet_binary_data" widget="spreadsheet" />
+                <field name="spreadsheet_data" invisible="1" />
+                <field name="spreadsheet_file_name" invisible="1" />
+            </form>
+        </field>
+    </record>
+</odoo>
