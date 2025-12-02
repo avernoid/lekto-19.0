@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!--FINAL INDEX UPDATED-->
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Invoice on Delivery</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #212121;
+            background-color: #f8f9fa;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-tabs li .active {
+            background-color: #bb89aa;
+            color: #fff !important;
+        }
+
+        .accordion .card-body {
+            background-color: #f0f4f7;
+        }
+
+        .accordion .fa {
+            margin-right: 0.5rem;
+        }
+
+        .accordion button,
+        .accordion button:hover,
+        .accordion button:focus {
+            text-decoration: none;
+        }
+
+        .card-header:after {
+            content: "\2212";
+            color: #000;
+            font-weight: bold;
+            float: left;
+            margin-right: 13px;
+            margin-left: 0px;
+            font-size: 18px;
+        }
+
+        .collapsed:after {
+            content: '\002B';
+        }
+
+        /* Custom Enhancements */
+        .hero-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            padding: 4rem 2rem;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-weight: 900 !important;
+            color: #791d97;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-subtitle {
+            letter-spacing: 4px !important;
+            color: #74788D !important;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-box {
+            font-size: 2rem;
+            color: #3c6dac;
+            margin-bottom: 1rem;
+        }
+
+        .step-list li {
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .footer-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .footer-card:hover {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-custom {
+            border-radius: 35px;
+            padding: 8px 35px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-custom:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex align-items-center justify-content-between"
+        style="background-color: #fff; border-bottom: 1px solid #e0e0e0; padding: 15px 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.02);">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-weight: bold; background-color: #f8f9fa; display: inline-block; padding: 5px 15px; border-radius: 50px; border: 1px solid #e9ecef;"
+                class="mr-2">
+                <i class="fa fa-check mr-1 text-success"></i> Enterprise (Odoo.SH, Odoo Online, Ganemo Online o
+                Ganemo.SH)
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container" style="max-width: 1140px;">
+
+        <!-- HERO SLIDE -->
+        <div class="hero-section text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <h1 class="text-uppercase mb-3"
+                        style="font-size: 56px !important; color: #5154a5; font-weight: 900 !important; line-height: 1.2;">
+                        <span style="color:#9451a5;">Auto Invoice</span> on Delivery
+                    </h1>
+                    <div style="height: 4px; width: 80px; background: #9451a5; margin: 20px auto;"></div>
+
+                    <p class="mt-4 mb-2" style="font-size: 22px; font-weight: 600; color: #495057;">
+                        Streamline billing by creating invoices directly from delivery orders.
+                    </p>
+                    <p style="font-size: 18px; color: #6c757d; max-width: 800px; margin: 0 auto;">
+                        Accelerate invoicing, reduce manual steps, and automate billing upon delivery validation.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- END OF HERO -->
+
+        <!-- What We're Solving -->
+        <section class="oe_container pb-5">
+            <div class="mb-5 text-center">
+                <h2 class="section-title" style="font-size: 36px;">
+                    <i class="fa fa-lightbulb-o mr-2" style="color: #3c6dac;"></i> <span style="color:#3c6dac">What
+                        We're Solving</span>
+                </h2>
+                <p class="section-subtitle">----------------</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="fa fa-clock-o"></i></div>
+                        <h4 class="font-weight-bold mb-3">Delayed Billing Cycles</h4>
+                        <p class="text-muted text-justify">
+                            In many businesses, the warehouse team ships goods, but the accounting team isn't notified
+                            immediately. This module allows triggering the invoice immediately upon delivery, speeding
+                            up payment collection.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="fa fa-mouse-pointer"></i></div>
+                        <h4 class="font-weight-bold mb-3">Unnecessary Navigation</h4>
+                        <p class="text-muted text-justify">
+                            Standard Odoo requires navigating back to the Sales Order to create an invoice. This module
+                            adds the convenience of doing it directly from the Delivery Order, saving time and clicks.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="fa fa-check-circle-o"></i></div>
+                        <h4 class="font-weight-bold mb-3">Missed Invoices</h4>
+                        <p class="text-muted text-justify">
+                            With the automatic "On Validate" feature, you ensure that no delivery goes uninvoiced. As
+                            soon as the goods leave the warehouse, the invoice process begins automatically.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overview -->
+        <section class="oe_container pb-5">
+            <div class="mb-5 text-center">
+                <h2 class="section-title" style="font-size: 36px;">
+                    <i class="fa fa-info-circle mr-2" style="color: #3c6dac;"></i> <span
+                        style="color:#3c6dac">Overview</span>
+                </h2>
+                <p class="section-subtitle">----------------</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="feature-card p-5">
+                        <h5 style="line-height: 1.8; font-size: 1.1rem; text-align: justify; color: #495057;">
+                            <p>This module extends Odoo's Inventory and Sales capabilities by linking the delivery
+                                process directly to invoicing. It allows you to configure specific Operation Types (like
+                                Delivery Orders) to display a <strong>"Facturar" (Invoice)</strong> button.</p>
+                            <p class="mb-0">Additionally, it offers an automation feature where validating a delivery
+                                order automatically triggers the invoice creation, ensuring a seamless flow from stock
+                                to cash. It uses the standard Sales Order invoicing logic, so it respects your existing
+                                invoicing policies (ordered vs delivered quantities).</p>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Easy Setup -->
+        <section class="oe_container pb-5">
+            <div class="mb-5 text-center">
+                <h2 class="section-title" style="font-size: 36px;">
+                    <i class="fa fa-cogs mr-2" style="color: #3c6dac;"></i> <span style="color:#3c6dac">Easy
+                        Setup</span>
+                </h2>
+                <p class="section-subtitle">----------------</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="feature-card">
+                        <ol class="step-list pl-4 text-muted">
+                            <li>Navigate to <strong>Inventory > Configuration > Operations Types</strong>.</li>
+                            <li>Select the operation type you want to configure (e.g., <strong>Delivery
+                                    Orders</strong>).</li>
+                            <li>Locate the <strong>Facturación</strong> (Invoicing) section.</li>
+                            <li>Check <strong>Emitir Factura</strong> to enable the manual invoice button on pickings.
+                            </li>
+                            <li>(Optional) Check <strong>Al Validar</strong> to enable automatic invoicing when the
+                                picking is validated.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow Guide -->
+        <section class="oe_container pb-5">
+            <div class="mb-5 text-center">
+                <h2 class="section-title" style="font-size: 36px;">
+                    <i class="fa fa-list-ol mr-2" style="color: #3c6dac;"></i> <span style="color:#3c6dac">Workflow
+                        Guide</span>
+                </h2>
+                <p class="section-subtitle">----------------</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card" style="border-left: 5px solid #3c6dac;">
+                        <h4 class="font-weight-bold mb-3 text-primary">Manual Invoicing</h4>
+                        <ul class="list-unstyled step-list text-muted">
+                            <li class="d-flex"><i class="fa fa-chevron-right mr-2 mt-1 text-primary"
+                                    style="font-size: 12px;"></i> <span>Open a Delivery Order that is ready to be
+                                    processed.</span></li>
+                            <li class="d-flex"><i class="fa fa-chevron-right mr-2 mt-1 text-primary"
+                                    style="font-size: 12px;"></i> <span>Click the <strong>Facturar</strong> button in
+                                    the header.</span></li>
+                            <li class="d-flex"><i class="fa fa-chevron-right mr-2 mt-1 text-primary"
+                                    style="font-size: 12px;"></i> <span>The invoice will be created (or the wizard will
+                                    open) based on the linked Sales Order.</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="feature-card" style="border-left: 5px solid #9451a5;">
+                        <h4 class="font-weight-bold mb-3" style="color: #9451a5;">Automatic Invoicing</h4>
+                        <ul class="list-unstyled step-list text-muted">
+                            <li class="d-flex"><i class="fa fa-chevron-right mr-2 mt-1"
+                                    style="color: #9451a5; font-size: 12px;"></i> <span>Process the Delivery Order as
+                                    usual.</span></li>
+                            <li class="d-flex"><i class="fa fa-chevron-right mr-2 mt-1"
+                                    style="color: #9451a5; font-size: 12px;"></i> <span>Click
+                                    <strong>Validate</strong>.</span></li>
+                            <li class="d-flex"><i class="fa fa-chevron-right mr-2 mt-1"
+                                    style="color: #9451a5; font-size: 12px;"></i> <span>The system will automatically
+                                    trigger the invoice creation immediately after validation.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Ganemo? -->
+        <section class="oe_container pb-5">
+            <div class="mb-5 text-center">
+                <h2 class="section-title" style="font-size: 36px;">
+                    <i class="fa fa-star mr-2" style="color: #3c6dac;"></i> <span style="color:#3c6dac">Why Choose
+                        Ganemo?</span>
+                </h2>
+                <p class="section-subtitle">----------------</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="feature-card text-center p-5" style="background: #f8f9fa; border: 1px solid #e9ecef;">
+                        <i class="fa fa-trophy mb-3" style="font-size: 3rem; color: #ffc107;"></i>
+                        <h5 style="line-height: 1.8; font-size: 1.1rem; color: #495057;">
+                            Ganemo is the best Partner for Odoo implementation for 5 years, and is also the #1 seller of
+                            quality Odoo apps. Recognized as the best Partner in these countries: Peru, USA, Mexico,
+                            Chile, Spain, Colombia, and Ecuador. Also holds the award for best Partner for localization
+                            implementation in: Peru, USA, Mexico, Chile, Spain, Colombia, Venezuela, and Ecuador.
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-lg-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Support</h2>
+                <p style="color:#777783">Need help? Get in touch.</p>
+                <hr>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="footer-card text-center">
+                    <div class="mb-3">
+                        <i class="fa fa-whatsapp" style="font-size: 40px; color: #549c33;"></i>
+                    </div>
+                    <h4>WhatsApp</h4>
+                    <p class="text-muted">Say hi to us on WhatsApp!</p>
+                    <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                        style="text-decoration:none;">
+                        <p class="h5 mb-3" style="color:#714B67;">+1 (828) 672-6150</p>
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                        class="btn btn-custom text-white" style="background-color:#549c33;">
+                        WhatsApp Us
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="footer-card text-center">
+                    <div class="mb-3">
+                        <i class="fa fa-envelope-o" style="font-size: 40px; color: #3c6dac;"></i>
+                    </div>
+                    <h4>Need Help?</h4>
+                    <p class="text-muted">Got questions? Write Us</p>
+                    <a href="mailto:leads@ganemo.co" target="_blank" style="text-decoration:none;">
+                        <p class="h5 mb-3" style="color:#714B67;">leads@ganemo.co</p>
+                    </a>
+                    <a href="mailto:leads@ganemo.co" target="_blank" class="btn btn-custom text-white"
+                        style="background-color:#3c6dac;">
+                        Email Us
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="footer-card text-center">
+                    <div class="mb-3">
+                        <i class="fa fa-calendar" style="font-size: 40px; color: #714B67;"></i>
+                    </div>
+                    <h4>Schedule Meet?</h4>
+                    <p class="text-muted">Let's move faster</p>
+                    <a href="https://www.ganemo.co/appointment/5" target="_blank" style="text-decoration:none;">
+                        <p class="h5 mb-3" style="color:#714B67;">Schedule here</p>
+                    </a>
+                    <a href="https://www.ganemo.co/appointment/5" target="_blank" class="btn btn-custom text-white"
+                        style="background-color:#714B67;">
+                        Schedule DEMO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

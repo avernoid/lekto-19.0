@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_auto_invoice" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.auto.invoice</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="auto_invoice" invisible="1"/>
+                <field name="auto_invoice_on_validate" invisible="1"/>
+                <field name="sale_id" invisible="1"/>
+                <field name="show_invoice_button" invisible="1"/>
+                
+                <button name="action_create_invoice" 
+                        string="Create Invoice" 
+                        type="object" 
+                        class="oe_highlight"
+                        invisible="not show_invoice_button"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_invoice"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-pencil-square-o"
+                        invisible="invoice_count == 0">
+                    <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
