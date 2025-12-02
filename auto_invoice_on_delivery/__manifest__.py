@@ -28,6 +28,6 @@ mimicking the "Create Invoice" flow from the Sales Order.
     'auto_install': False,
     'application': False,
     'currency': 'USD',
-    'price': 49.0,
+    'price': 173.0,
     'module_type': 'official'
 }
