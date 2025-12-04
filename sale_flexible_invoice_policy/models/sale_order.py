@@ -20,7 +20,8 @@ class SaleOrder(models.Model):
         This must be done BEFORE _get_invoiceable_lines() is called.
         """
         # Apply force policy for orders with the flag enabled
-        orders_with_exception = self.filtered(lambda o: o.allow_invoice_without_delivery)
+        orders_with_exception_ids = self.sudo().filtered(lambda o: o.allow_invoice_without_delivery).ids
+        orders_with_exception = self.browse(orders_with_exception_ids)
         if orders_with_exception:
             orders_with_exception._force_lines_to_invoice_policy_order()
         

@@ -42,7 +42,7 @@ class Task(models.Model):
 
         return True
 
-    def action_fsm_validate(self):
+    def action_fsm_validate(self, stop_running_timers=False):
         """
         Override the standard FSM validate action to check for lost reason.
         """
@@ -64,4 +64,4 @@ class Task(models.Model):
         if self.env.context.get('skip_fsm_super'):
             return True
 
-        return super().action_fsm_validate()
+        return super().action_fsm_validate(stop_running_timers=stop_running_timers)
