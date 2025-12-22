@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_task_form2_inherit" model="ir.ui.view">
+        <field name="name">project.task.form.quick.products</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <field name="show_fsm_products_button" invisible="1" nolabel="1"/>
+                <div class="o_fsm_quick_products_container px-3 py-1 bg-view border-bottom d-flex justify-content-end" 
+                     invisible="not is_fsm or not show_fsm_products_button or has_template_ancestor or has_project_template">
+                    <button name="action_fsm_view_material" 
+                            type="object" 
+                            icon="fa-cubes" 
+                            class="btn btn-link text-primary p-0"
+                            title="Productos"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
