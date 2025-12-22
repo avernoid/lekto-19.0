@@ -1,0 +1,279 @@
+# Spanish translation for stock_delivery_payment_control.
+# Corresponding Source Options:
+# Active Payment Control -> Control de Pago Activo
+# Validation Level -> Nivel de Validación
+# Sale Order Level -> Nivel Orden de Venta
+# Picking Level -> Nivel Albarán
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-19 00:00+0000\n"
+"PO-Revision-Date: 2025-12-19 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_sale_order__payment_control_active
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__payment_control_active
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__payment_control_active
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_crm_team__payment_control_active
+msgid "Active Payment Control"
+msgstr "Control de Pago Activo"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__payment_control_active
+msgid "Default Payment Control Active"
+msgstr "Control de Pago Activo por Defecto"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_sale_order__payment_validation_level
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__payment_validation_level
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__payment_validation_level
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_crm_team__payment_validation_level
+msgid "Validation Level"
+msgstr "Nivel de Validación"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__payment_validation_level
+msgid "Default Validation Level"
+msgstr "Nivel de Validación por Defecto"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__sale_order__payment_validation_level__sale
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__stock_picking_type__payment_validation_level__sale
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__res_partner__payment_validation_level__sale
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__crm_team__payment_validation_level__sale
+msgid "Sale Order Level"
+msgstr "Nivel Orden de Venta"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__sale_order__payment_validation_level__picking
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__stock_picking_type__payment_validation_level__picking
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__res_partner__payment_validation_level__picking
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__crm_team__payment_validation_level__picking
+msgid "Picking Level"
+msgstr "Nivel Albarán"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_sale_order__include_credit_analysis
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__include_credit_analysis
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__include_credit_analysis
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_crm_team__include_credit_analysis
+msgid "Include Credit Analysis"
+msgstr "Incluir Análisis de Crédito"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__include_credit_analysis
+msgid "Default Include Credit Analysis"
+msgstr "Incluir Análisis de Crédito por Defecto"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_sale_order__require_full_payment
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__require_full_payment
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__require_full_payment
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_crm_team__require_full_payment
+msgid "Require Full Payment"
+msgstr "Requerir Pago Completo"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_res_partner__require_full_payment
+msgid "Default Require Full Payment"
+msgstr "Requerir Pago Completo por Defecto"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_sale_order__payment_coverage_status
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking__payment_coverage_status
+msgid "Payment Coverage"
+msgstr "Cobertura de Pago"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__enforce_payment_control
+msgid "Enforce Payment Control"
+msgstr "Forzar Control de Pago"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__sale_order__payment_coverage_status__no_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__stock_picking__payment_coverage_status__no_control
+msgid "No Control"
+msgstr "Sin Control"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__sale_order__payment_coverage_status__not_covered
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__stock_picking__payment_coverage_status__not_covered
+msgid "Not Covered"
+msgstr "No Cubierto"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__sale_order__payment_coverage_status__partially_covered
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__stock_picking__payment_coverage_status__partially_covered
+msgid "Partially Covered"
+msgstr "Parcialmente Cubierto"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__sale_order__payment_coverage_status__fully_covered
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__stock_picking__payment_coverage_status__fully_covered
+msgid "Fully Covered"
+msgstr "Totalmente Cubierto"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__sale_order__payment_coverage_status__credit_not_due
+#: model:ir.model.fields.selection,name:stock_delivery_payment_control.selection__stock_picking__payment_coverage_status__credit_not_due
+msgid "Credit Not Due"
+msgstr "Crédito Vigente"
+
+#. module: stock_delivery_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_picking_type_form_inherit_payment_control
+msgid "Delivery Payment Control Checkpoint"
+msgstr "Punto de Control de Pago de Entrega"
+
+#. module: stock_delivery_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_order_form_inherit_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_picking_type_form_inherit_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_partner_form_inherit_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_crm_team_form_inherit_payment_control
+msgid "Delivery Payment Control Defaults"
+msgstr "Valores por Defecto de Control de Pago"
+
+#. module: stock_delivery_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_order_form_inherit_payment_control
+msgid "Delivery Payment Control"
+msgstr "Control de Pago de Entrega"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_sale_order__payment_control_active
+msgid "Check this box to enable the delivery blocking mechanism based on payment status for this specific order. Defaults are loaded from the Customer or Sales Team."
+msgstr "Marque esta casilla para habilitar el mecanismo de bloqueo de entrega basado en el estado de pago para este pedido específico. Los valores predeterminados se cargan desde el Cliente o el Equipo de Ventas."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_res_partner__payment_control_active
+msgid "If configured, sales orders for this customer will have Payment Control enabled by default."
+msgstr "Si está configurado, los pedidos de venta para este cliente tendrán el Control de Pago habilitado por defecto."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_crm_team__payment_control_active
+msgid "If configured, sales orders for this team will have Payment Control enabled by default (unless overridden by Customer settings)."
+msgstr "Si está configurado, los pedidos de venta para este equipo tendrán el Control de Pago habilitado por defecto (a menos que sea anulado por la configuración del Cliente)."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_sale_order__payment_validation_level
+msgid "Select 'Sale Order Level' to validate based on the total order payment status, or 'Picking Level' to validate based on the specific value of goods in the picking."
+msgstr "Seleccione 'Nivel Orden de Venta' para validar según el estado de pago total del pedido, o 'Nivel Albarán' para validar según el valor específico de los bienes en el albarán."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_res_partner__payment_validation_level
+msgid "Default validation level for this customer's orders."
+msgstr "Nivel de validación por defecto para los pedidos de este cliente."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_crm_team__payment_validation_level
+msgid "Default validation level for this team's orders."
+msgstr "Nivel de validación por defecto para los pedidos de este equipo."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_sale_order__include_credit_analysis
+msgid "If checked, the system will consider the partner's credit terms. If the credit is not due (payment term days > 0), validation will be allowed even if unpaid."
+msgstr "Si está marcado, el sistema considerará los términos de crédito del cliente. Si el crédito está vigente (días de plazo de pago > 0), se permitirá la validación incluso si no se ha pagado."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_res_partner__include_credit_analysis
+msgid "Default setting for credit analysis inclusion for this customer."
+msgstr "Configuración por defecto para la inclusión del análisis de crédito para este cliente."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_crm_team__include_credit_analysis
+msgid "Default setting for credit analysis inclusion for this team."
+msgstr "Configuración por defecto para la inclusión del análisis de crédito para este equipo."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_sale_order__require_full_payment
+msgid "If checked, the delivery will only be allowed if the order (or picking value) is 100% paid. Partial payments will block validation."
+msgstr "Si está marcado, la entrega solo se permitirá si el pedido (o el valor del albarán) está pagado al 100%. Los pagos parciales bloquearán la validación."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_res_partner__require_full_payment
+msgid "Default setting for requiring full payment before delivery for this customer."
+msgstr "Configuración por defecto para requerir el pago completo antes de la entrega para este cliente."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_crm_team__require_full_payment
+msgid "Default setting for requiring full payment before delivery for this team."
+msgstr "Configuración por defecto para requerir el pago completo antes de la entrega para este equipo."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_sale_order__payment_coverage_status
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_stock_picking__payment_coverage_status
+msgid "The current calculated payment status. 'Fully Covered' means paid or within credit terms 'Not Covered' means payment is required."
+msgstr "El estado de pago calculado actual. 'Totalmente Cubierto' significa pagado o dentro de los términos de crédito. 'No Cubierto' significa que se requiere el pago."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_stock_picking_type__enforce_payment_control
+msgid "If checked, pickings of this type will be subject to payment control validation and will count towards the delivered value of the sale order."
+msgstr "Si está marcado, los albaranes de este tipo estarán sujetos a la validación de control de pago y contarán para el valor entregado del pedido de venta."
+
+#. module: stock_delivery_payment_control
+#: code:addons/stock_delivery_payment_control/models/stock_picking.py:0
+#, python-format
+msgid "Blocking Validation: Payment not covered (Status: %s)"
+msgstr "Bloqueo de Validación: Pago no cubierto (Estado: %s)"
+
+#. module: stock_delivery_payment_control
+#: code:addons/stock_delivery_payment_control/models/stock_picking.py:0
+#, python-format
+msgid "Blocking Validation: Partial payment not allowed (Full Payment Required)"
+msgstr "Bloqueo de Validación: Pago parcial no permitido (Se requiere pago completo)"
+
+#. module: stock_delivery_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_picking_type_form_inherit_payment_control
+msgid "Warning:"
+msgstr "Advertencia:"
+
+#. module: stock_delivery_payment_control
+#: model:ir.ui.view,arch_db:stock_delivery_payment_control.view_picking_type_form_inherit_payment_control
+msgid "In multi-step routes (e.g. Pick -> Pack -> Ship), enable this ONLY on one operation (usually the final Delivery) to avoid double-counting delivered value and blocking internal transfers."
+msgstr "En rutas de varios pasos (ej. Recoger -> Empaquetar -> Enviar), habilite esto SOLO en una operación (generalmente la Entrega final) para evitar el conteo doble del valor entregado y el bloqueo de transferencias internas."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__payment_control_active
+msgid "Active Payment Control Fallback"
+msgstr "Control de Pago Activo (Alternativo)"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_stock_picking_type__payment_control_active
+msgid "Fallback setting if no policy is defined on the Sale Order."
+msgstr "Configuración alternativa si no se define ninguna política en el Pedido de Venta."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__payment_validation_level
+msgid "Validation Level Fallback"
+msgstr "Nivel de Validación (Alternativo)"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_stock_picking_type__payment_validation_level
+msgid "Fallback validation level setting."
+msgstr "Configuración del nivel de validación alternativo."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__include_credit_analysis
+msgid "Include Credit Analysis Fallback"
+msgstr "Incluir Análisis de Crédito (Alternativo)"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_stock_picking_type__include_credit_analysis
+msgid "Fallback credit analysis setting."
+msgstr "Configuración del análisis de crédito alternativo."
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,field_description:stock_delivery_payment_control.field_stock_picking_type__require_full_payment
+msgid "Require Full Payment Fallback"
+msgstr "Requerir Pago Completo (Alternativo)"
+
+#. module: stock_delivery_payment_control
+#: model:ir.model.fields,help:stock_delivery_payment_control.field_stock_picking_type__require_full_payment
+msgid "Fallback full payment requirement setting."
+msgstr "Configuración del requisito de pago completo alternativo."

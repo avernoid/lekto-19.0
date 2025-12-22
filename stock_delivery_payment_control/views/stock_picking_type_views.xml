@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_type_form_inherit_payment_control" model="ir.ui.view">
+        <field name="name">stock.picking.type.form.payment.control</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='stock_picking_type_lot']" position="after">
+                <group string="Delivery Payment Control Checkpoint">
+                    <div class="alert alert-warning" role="alert" colspan="2" invisible="not enforce_payment_control">
+                        <strong>Warning:</strong> In multi-step routes (e.g. Pick -> Pack -> Ship), enable this ONLY on one operation (usually the final Delivery) to avoid double-counting delivered value and blocking internal transfers.
+                    </div>
+                    <field name="enforce_payment_control" help="Mark this operation type as the checkpoint for payment control. Only pickings of this type will check payment status and count towards delivered value."/>
+                </group>
+                <group string="Payment Control Defaults">
+                    <field name="payment_control_active"/>
+                     <field name="payment_validation_level" invisible="not payment_control_active"/>
+                    <field name="include_credit_analysis" invisible="not payment_control_active"/>
+                    <field name="require_full_payment" invisible="not payment_control_active"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
