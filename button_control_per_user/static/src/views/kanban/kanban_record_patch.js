@@ -29,9 +29,9 @@ patch(KanbanRecord.prototype, {
             return;
         }
 
-        const { list } = props;
-        const resModel = list.resModel;
-        const context = list.context || {};
+        const list = props.list || {};
+        const resModel = list.resModel || (props.record && props.record.resModel);
+        const context = list.context || (props.record && props.record.context) || {};
 
         // Check Delete rule
         if (this.dataState.widget.deletable) {

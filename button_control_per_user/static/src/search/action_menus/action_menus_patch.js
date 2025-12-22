@@ -24,8 +24,8 @@ patch(ActionMenus.prototype, {
             return items;
         }
 
-        const resModel = props.resModel;
-        const context = props.context;
+        const resModel = props?.resModel;
+        const context = props?.context || {};
         const viewType = this.env.viewType || 'list';
 
         return items.filter(item => {
