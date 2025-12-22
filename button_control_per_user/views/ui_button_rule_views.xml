@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- List view for ui.button.rule -->
+    <record id="view_ui_button_rule_list" model="ir.ui.view">
+        <field name="name">ui.button.rule.list</field>
+        <field name="model">ui.button.rule</field>
+        <field name="arch" type="xml">
+            <list string="Button Visibility Rules" editable="bottom">
+                <field name="user_id" readonly="1" optional="hide"/>
+                <field name="res_model" placeholder="e.g., project.task (leave empty for all)"/>
+                <field name="view_type"/>
+                <field name="button_name"/>
+                <field name="context_key"/>
+                <field name="hide"/>
+            </list>
+        </field>
+    </record>
+    
+    <!-- Form view for ui.button.rule -->
+    <record id="view_ui_button_rule_form" model="ir.ui.view">
+        <field name="name">ui.button.rule.form</field>
+        <field name="model">ui.button.rule</field>
+        <field name="arch" type="xml">
+            <form string="Button Visibility Rule">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="view_type"/>
+                            <field name="button_name"/>
+                        </group>
+                        <group>
+                            <field name="res_model" placeholder="e.g., project.task"/>
+                            <field name="context_key"/>
+                            <field name="hide"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <label for="res_model" class="text-muted"/>
+                            <div class="text-muted">
+                                <small>
+                                    Leave the Model field empty to apply this rule to all models.
+                                    Specify a model (e.g., project.task) to restrict the rule to that model only.
+                                </small>
+                            </div>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Search view for ui.button.rule -->
+    <record id="view_ui_button_rule_search" model="ir.ui.view">
+        <field name="name">ui.button.rule.search</field>
+        <field name="model">ui.button.rule</field>
+        <field name="arch" type="xml">
+            <search string="Button Visibility Rules">
+                <field name="user_id"/>
+                <field name="res_model"/>
+                <field name="button_name"/>
+                <filter string="Active Rules" name="active_rules" domain="[('hide', '=', True)]"/>
+                <filter string="Inactive Rules" name="inactive_rules" domain="[('hide', '=', False)]"/>
+                <separator/>
+                <filter string="User" name="group_user" context="{'group_by': 'user_id'}"/>
+                <filter string="View Type" name="group_view" context="{'group_by': 'view_type'}"/>
+                <filter string="Button" name="group_button" context="{'group_by': 'button_name'}"/>
+            </search>
+        </field>
+    </record>
+    
+    <!-- Action for ui.button.rule -->
+    <record id="action_ui_button_rule" model="ir.actions.act_window">
+        <field name="name">Button Visibility Rules</field>
+        <field name="res_model">ui.button.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active_rules': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No button visibility rules configured yet
+            </p>
+            <p>
+                Button visibility rules allow you to hide standard interface buttons 
+                (New, Edit, Archive, etc.) for specific users without affecting permissions.
+            </p>
+            <p>
+                Configure rules from the user form (Settings → Users).
+            </p>
+        </field>
+    </record>
+    
+    <!-- Menu item under Settings → Technical (admin only) -->
+    <menuitem id="menu_ui_button_rule"
+              name="Button Visibility Rules"
+              parent="base.menu_custom"
+              action="action_ui_button_rule"
+              groups="base.group_system"
+              sequence="100"/>
+    
+</odoo>
