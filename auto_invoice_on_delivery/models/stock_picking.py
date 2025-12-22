@@ -75,28 +75,32 @@ class Picking(models.Model):
         if not self.sale_id:
             return
         
-        # Call the action_create_invoice method on the sale order
-        # This mimics clicking "Create Invoice" on the SO
-        res = self.sale_id.action_create_invoice()
+        # Call the action directly since sale.order.action_create_invoice method might not exist in this version
+        # This opens the "Create Invoice" (Down Payment) wizard
+        res = self.env['ir.actions.actions']._for_xml_id('sale.action_view_sale_advance_payment_inv')
         
         # We need to ensure the context points to the Sale Order, not the Picking
-        # This is critical because the wizard uses active_ids to find the orders to invoice
         if isinstance(res, dict):
-            from odoo.tools.safe_eval import safe_eval
-            
-            # Get existing context, handling both dict and string formats
+            # Get existing context
             context = res.get('context', {})
-            if isinstance(context, str):
-                try:
-                    context = safe_eval(context) or {}
-                except Exception:
-                    context = {}
+            # If context is a string, eval it (though _for_xml_id usually returns evaluated dicts in modern odoo, strict safety)
+            # Actually _for_xml_id returns a clean dict with 'context' as a dict usually.
+            # But avoiding safe_eval complexity if simple is enough.
             
+            if not isinstance(context, dict):
+                 # Fallback if it is somehow a string representation
+                 from odoo.tools.safe_eval import safe_eval
+                 try:
+                     context = safe_eval(context) or {}
+                 except Exception:
+                     context = {}
+
             # Update context with correct active_ids
             context.update({
                 'active_ids': [self.sale_id.id],
                 'active_model': 'sale.order',
                 'active_id': self.sale_id.id,
+                'default_journal_id': False, # Let wizard decide
             })
             
             res['context'] = context
