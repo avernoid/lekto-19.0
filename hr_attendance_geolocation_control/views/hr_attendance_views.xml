@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_view_form_inherit_geolocation" model="ir.ui.view">
+        <field name="name">hr.attendance.form.inherit.geolocation</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='check_in_group']" position="after">
+                <separator string="Geolocation Control"/>
+                <group col="4">
+                    <field name="distance_meters"/>
+                    <field name="location_status"/>
+                    <field name="location_reliability"/>
+                    <field name="in_accuracy"/>
+                    <field name="out_accuracy"/>
+                </group>
+                <group>
+                    <field name="in_out_of_location_reason" invisible="location_status == 'inside'"/>
+                    <field name="out_out_of_location_reason" invisible="location_status == 'inside'"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_attendance_tree_inherit_geolocation" model="ir.ui.view">
+        <field name="name">hr.attendance.list.inherit.geolocation</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="distance_meters" optional="show"/>
+                <field name="location_status" optional="show" widget="badge" 
+                       decoration-success="location_status == 'inside'" 
+                       decoration-danger="location_status == 'outside'" 
+                       decoration-info="location_status == 'not_applicable'"/>
+                <field name="location_reliability" optional="show" widget="badge"
+                       decoration-success="location_reliability == 'high'"
+                       decoration-warning="location_reliability == 'medium'"
+                       decoration-danger="location_reliability == 'low'"/>
+                <field name="in_accuracy" optional="hide"/>
+                <field name="out_accuracy" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

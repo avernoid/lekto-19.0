@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="hr_attendance_geolocation_control.ReasonDialog">
+        <Dialog title="title" size="'md'">
+            <div class="p-3">
+                <p><t t-esc="message"/></p>
+                <textarea class="form-control" t-model="state.reason" t-att-placeholder="placeholder"/>
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="_confirm" t-att-disabled="!state.reason"><t t-esc="confirmLabel"/></button>
+                <button class="btn btn-secondary" t-on-click="props.close"><t t-esc="cancelLabel"/></button>
+            </t>
+        </Dialog>
+    </t>
+</templates>
