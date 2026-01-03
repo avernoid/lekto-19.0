@@ -52,8 +52,13 @@
         </field>
     </record>
 
-    <menuitem id="menu_stock_batch_spreadsheet_template"
+    <menuitem id="menu_stock_batch_spreadsheet_root"
+              name="Batch Spreadsheets"
               parent="stock.menu_stock_config_settings"
-              action="action_stock_batch_spreadsheet_template"
               sequence="100"/>
+
+    <menuitem id="menu_stock_batch_spreadsheet_template"
+              parent="menu_stock_batch_spreadsheet_root"
+              action="action_stock_batch_spreadsheet_template"
+              sequence="10"/>
 </odoo>

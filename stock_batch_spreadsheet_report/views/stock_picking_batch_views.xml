@@ -9,18 +9,10 @@
                 <button name="action_view_spreadsheet_reports"
                         type="object"
                         class="oe_stat_button"
-                        icon="fa-table"
-                        invisible="spreadsheet_count == 0">
+                        icon="fa-table">
                     <field name="spreadsheet_count" widget="statinfo" string="Reports"/>
                 </button>
             </div>
-            <header position="inside">
-                <button name="action_create_spreadsheet_report"
-                        string="Create Report"
-                        type="object"
-                        class="oe_highlight"
-                        invisible="state == 'draft'"/>
-            </header>
         </field>
     </record>
 </odoo>

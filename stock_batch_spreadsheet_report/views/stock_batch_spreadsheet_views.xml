@@ -12,9 +12,33 @@
         </field>
     </record>
 
-    <record id="stock_batch_spreadsheet_action" model="ir.actions.act_window">
-        <field name="name">Batch Spreadsheets</field>
-        <field name="res_model">stock.batch.spreadsheet</field>
-        <field name="view_mode">tree,form</field>
+    <record id="stock_batch_spreadsheet_view_search" model="ir.ui.view">
+        <field name="name">stock.batch.spreadsheet.view.search</field>
+        <field name="model">stock.batch.spreadsheet</field>
+        <field name="arch" type="xml">
+            <search string="Batch Spreadsheets">
+                <field name="name"/>
+                <field name="batch_id"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Reports" name="reports" domain="[('batch_id', '!=', False)]"/>
+                <filter string="Templates (Orphans)" name="templates" domain="[('batch_id', '=', False)]"/>
+                <group>
+                    <filter string="Batch Picking" name="group_by_batch" context="{'group_by': 'batch_id'}"/>
+                </group>
+            </search>
+        </field>
     </record>
+
+    <record id="stock_batch_spreadsheet_action" model="ir.actions.act_window">
+        <field name="name">Spreadsheets Data</field>
+        <field name="res_model">stock.batch.spreadsheet</field>
+        <field name="view_mode">list,form</field>
+        <!-- Removed domain to allow seeing orphans -->
+    </record>
+
+    <menuitem id="menu_stock_batch_spreadsheet"
+              parent="menu_stock_batch_spreadsheet_root"
+              action="stock_batch_spreadsheet_action"
+              sequence="20"/>
 </odoo>

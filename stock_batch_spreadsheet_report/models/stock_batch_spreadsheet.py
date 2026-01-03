@@ -7,9 +7,26 @@ class StockBatchSpreadsheet(models.Model):
     _inherit = ['spreadsheet.mixin']
     _description = 'Stock Batch Spreadsheet'
 
-    name = fields.Char(required=True, default=lambda self: _('Untitled spreadsheet'))
-    company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
-    batch_id = fields.Many2one('stock.picking.batch', index='btree_not_null', ondelete='cascade')
+    name = fields.Char(
+        required=True, 
+        default=lambda self: _('Untitled spreadsheet'),
+        help="Name of the spreadsheet report."
+    )
+    company_id = fields.Many2one(
+        'res.company', 
+        default=lambda self: self.env.company,
+        help="The company this spreadsheet belongs to."
+    )
+    batch_id = fields.Many2one(
+        'stock.picking.batch', 
+        index='btree_not_null', 
+        ondelete='cascade',
+        help="The Stock Batch Picking this spreadsheet is reporting on. If empty, this is a Template."
+    )
+    active = fields.Boolean(
+        default=True,
+        help="If unchecked, it will allow you to hide the spreadsheet without removing it."
+    )
 
     def get_formview_action(self, access_uid=None):
         return self.action_open_spreadsheet()

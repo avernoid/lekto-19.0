@@ -1,0 +1,265 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_batch_spreadsheet_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__batch_id
+msgid "Batch Picking"
+msgstr "Lote Picking"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__active
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__active
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_view_search
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__active
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__active
+msgid "If unchecked, it will allow you to hide the spreadsheet without removing it."
+msgstr "Si no está marcado, le permitirá ocultar la hoja de cálculo sin eliminarla."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__display_name
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_picking_batch__spreadsheet_ids
+msgid "All spreadsheet reports generated for this specific batch."
+msgstr "Todos los informes de hoja de cálculo generados para este Lote específico."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.ui.menu,name:stock_batch_spreadsheet_report.menu_stock_batch_spreadsheet_root
+msgid "Batch Spreadsheets"
+msgstr "Hojas de cálculo de Lotes"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.actions.act_window,name:stock_batch_spreadsheet_report.stock_batch_spreadsheet_action
+#: model:ir.ui.menu,name:stock_batch_spreadsheet_report.menu_stock_batch_spreadsheet
+msgid "Spreadsheets Data"
+msgstr "Datos de Hojas de cálculo"
+
+#. module: stock_batch_spreadsheet_report
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_view_search
+msgid "Reports"
+msgstr "Reportes"
+
+#. module: stock_batch_spreadsheet_report
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_view_search
+msgid "Templates (Orphans)"
+msgstr "Plantillas (Huérfanas)"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model,name:stock_batch_spreadsheet_report.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr "Transferencia por lotes"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_picking_type__batch_spreadsheet_template_id
+msgid "Batch Spreadsheet Template"
+msgstr "Plantilla de hoja de cálculo de Lote"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.actions.act_window,name:stock_batch_spreadsheet_report.action_stock_batch_spreadsheet_template
+#: model:ir.ui.menu,name:stock_batch_spreadsheet_report.menu_stock_batch_spreadsheet_template
+msgid "Batch Spreadsheet Templates"
+msgstr "Plantillas de hoja de cálculo de Lotes"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_batch_spreadsheet_report
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_template_view_form
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_template_view_tree
+msgid "Create"
+msgstr "Crear"
+
+#. module: stock_batch_spreadsheet_report
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_template_view_form
+msgid "Create Spreadsheet"
+msgstr "Crear hoja de cálculo"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.actions.act_window,help:stock_batch_spreadsheet_report.action_stock_batch_spreadsheet_template
+msgid "Create a new Spreadsheet Template for Batch Pickings"
+msgstr "Crear una nueva plantilla de hoja de cálculo para Lote Pickings"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__create_uid
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__create_date
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_picking_type__batch_spreadsheet_template_id
+msgid "Default Spreadsheet Template used for Batch Pickings of this type."
+msgstr "Plantilla de hoja de cálculo predeterminada utilizada para Lote Pickings de este tipo."
+
+#. module: stock_batch_spreadsheet_report
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_template_view_form
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_template_view_tree
+msgid "Edit"
+msgstr "Editar"
+
+#. module: stock_batch_spreadsheet_report
+#: model_terms:ir.ui.view,arch_db:stock_batch_spreadsheet_report.stock_batch_spreadsheet_template_view_form
+msgid "Edit Spreadsheet"
+msgstr "Editar hoja de cálculo"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_picking_batch__spreadsheet_id
+msgid "Link to the most recent spreadsheet report for quick access."
+msgstr "Enlace al informe de hoja de cálculo más reciente para acceso rápido."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__name
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__name
+msgid "Name of the spreadsheet report."
+msgstr "Nombre del informe de hoja de cálculo."
+
+#. module: stock_batch_spreadsheet_report
+#. odoo-python
+#: code:addons/stock_batch_spreadsheet_report/models/stock_picking_batch.py:0
+#, python-format
+msgid "No Spreadsheet Template configured for this Operation Type."
+msgstr "No hay plantilla de hoja de cálculo configurada para este tipo de operación."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_picking_batch__spreadsheet_count
+msgid "Number of spreadsheet reports attached to this batch."
+msgstr "Número de informes de hoja de cálculo adjuntos a este Lote."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_picking_batch__spreadsheet_count
+msgid "Number of spreadsheet reports attached to this batch."
+msgstr "Número de informes de hoja de cálculo adjuntos a este Lote."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__picking_type_ids
+msgid "Operation Types"
+msgstr "Tipos de operación"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__picking_type_ids
+msgid "Operation Types (e.g., Pick, Pack, Ship) that can use this template to generate reports."
+msgstr "Tipos de operación (ej. Pick, Pack, Ship) que pueden usar esta plantilla para generar informes."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model,name:stock_batch_spreadsheet_report.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de operación"
+
+#. module: stock_batch_spreadsheet_report
+#. odoo-python
+#: code:addons/stock_batch_spreadsheet_report/models/stock_batch_spreadsheet_template.py:0
+#, python-format
+msgid "Please select a Spreadsheet Template first."
+msgstr "Por favor, selecciona primero una plantilla de hoja de cálculo."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_picking_batch__spreadsheet_ids
+msgid "Spreadsheet Reports"
+msgstr "Informes de hoja de cálculo"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__spreadsheet_id
+#: model:ir.model.fields,field_description:stock_batch_spreadsheet_report.field_stock_picking_batch__spreadsheet_id
+msgid "Spreadsheet Template"
+msgstr "Plantilla de hoja de cálculo"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model,name:stock_batch_spreadsheet_report.model_stock_batch_spreadsheet
+msgid "Stock Batch Spreadsheet"
+msgstr "Hoja de cálculo de Stock de Lote"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model,name:stock_batch_spreadsheet_report.model_stock_batch_spreadsheet_template
+msgid "Batch Spreadsheet Template"
+msgstr "Plantilla de hoja de cálculo de Lotes"
+
+#. module: stock_batch_spreadsheet_report
+#. odoo-python
+#: code:addons/stock_batch_spreadsheet_report/models/stock_batch_spreadsheet_template.py:0
+#, python-format
+msgid "Template: %s"
+msgstr "Plantilla: %s"
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__spreadsheet_id
+msgid "The actual spreadsheet file that serves as the blueprint. When a report is generated, this spreadsheet is copied."
+msgstr "El archivo de hoja de cálculo real que sirve como modelo. Cuando se genera un informe, se copia esta hoja de cálculo."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__company_id
+msgid "The company this spreadsheet belongs to."
+msgstr "La compañía a la que pertenece esta hoja de cálculo."
+
+#. module: stock_batch_spreadsheet_report
+#. odoo-python
+#: code:addons/stock_batch_spreadsheet_report/models/stock_picking_batch.py:0
+#, python-format
+msgid "The configured template has no linked spreadsheet."
+msgstr "La plantilla configurada no tiene una hoja de cálculo vinculada."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__name
+msgid "The name of the template (e.g., 'Delivery Batch Sheet')."
+msgstr "El nombre de la plantilla (ej. 'Hoja de Lote de Entrega')."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet__batch_id
+msgid "The Stock Batch Picking this spreadsheet is reporting on. If empty, this is a Template."
+msgstr "El Stock Lote Picking sobre el que informa esta hoja de cálculo. Si está vacío, es una plantilla."
+
+#. module: stock_batch_spreadsheet_report
+#. odoo-python
+#: code:addons/stock_batch_spreadsheet_report/models/stock_batch_spreadsheet_template.py:0
+#, python-format
+msgid "This template already has a spreadsheet. Use 'Edit Spreadsheet' to modify it."
+msgstr "Esta plantilla ya tiene una hoja de cálculo. Usa 'Editar hoja de cálculo' para modificarla."
+
+#. module: stock_batch_spreadsheet_report
+#: model:ir.model.fields,help:stock_batch_spreadsheet_report.field_stock_batch_spreadsheet_template__picking_type_ids
+msgid "Operation types that can use this template."
+msgstr "Tipos de operación que pueden utilizar esta plantilla."
+
+#. module: stock_batch_spreadsheet_report
+#. odoo-python
+#: code:addons/stock_batch_spreadsheet_report/models/stock_batch_spreadsheet.py:0
+#, python-format
+msgid "Untitled spreadsheet"
+msgstr "Hoja de cálculo sin título"

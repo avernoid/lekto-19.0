@@ -12,13 +12,18 @@ class StockPickingBatch(models.Model):
     spreadsheet_ids = fields.One2many(
         'stock.batch.spreadsheet',
         'batch_id',
-        string='Spreadsheet Reports'
+        string='Spreadsheet Reports',
+        help="All spreadsheet reports generated for this specific batch."
     )
     spreadsheet_id = fields.Many2one(
         'stock.batch.spreadsheet',
         compute='_compute_spreadsheet_id',
+        help="Link to the most recent spreadsheet report for quick access."
     )
-    spreadsheet_count = fields.Integer(compute='_compute_spreadsheet_count')
+    spreadsheet_count = fields.Integer(
+        compute='_compute_spreadsheet_count',
+        help="Number of spreadsheet reports attached to this batch."
+    )
 
     def _compute_spreadsheet_id(self):
         for batch in self:
@@ -53,6 +58,11 @@ class StockPickingBatch(models.Model):
 
     def action_view_spreadsheet_reports(self):
         self.ensure_one()
+        
+        # If no reports, create one (Lazy Creation)
+        if not self.spreadsheet_ids:
+            return self.action_create_spreadsheet_report()
+
         # If there is only one report, open it directly
         if len(self.spreadsheet_ids) == 1:
             return self.spreadsheet_ids[0].action_open_spreadsheet()
