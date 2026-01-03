@@ -1,4 +1,5 @@
 from odoo import api, fields, models, _
+import json
 
 
 class StockBatchSpreadsheet(models.Model):
@@ -15,11 +16,18 @@ class StockBatchSpreadsheet(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get('batch_id') and not ('spreadsheet_binary_data' in vals or 'spreadsheet_data' in vals):
+                vals['spreadsheet_data'] = json.dumps(self._empty_spreadsheet_data())
         spreadsheets = super().create(vals_list)
-        for spreadsheet, vals in zip(spreadsheets, vals_list):
-            if not spreadsheet.batch_id and not ('spreadsheet_binary_data' in vals or 'spreadsheet_data' in vals):
-                spreadsheet._dispatch_default_data()
         return spreadsheets
+
+    def check_access(self, operation):
+        try:
+            return super().check_access(operation)
+        except AttributeError:
+            self.check_access_rights(operation, raise_exception=True)
+            self.check_access_rule(operation)
 
     def action_open_spreadsheet(self):
         self.ensure_one()

@@ -1,6 +1,6 @@
 {
     'name': 'Stock Batch Spreadsheet Report',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.6',
     'category': 'Inventory/Inventory',
     'summary': 'Generate Spreadsheet reports for Batch Pickings',
     'description': """
