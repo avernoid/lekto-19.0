@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_full_reconcile_form_view_inherit_add_reconcile_date" model="ir.ui.view">
+        <field name="name">account.full.reconcile.form.view.inherit.add_reconcile_date</field>
+        <field name="model">account.full.reconcile</field>
+        <field name="inherit_id" ref="account.view_full_reconcile_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div" position="after">
+                <group>
+                    <field name="reconcile_date"/>
+                </group>
+                <notebook>
+                    <page string="Journal Items" name="reconciled_lines">
+                        <field name="reconciled_line_ids">
+                            <list create="false" edit="false">
+                                <field name="date"/>
+                                <field name="move_id"/>
+                                <field name="account_id"/>
+                                <field name="name"/>
+                                <field name="debit"/>
+                                <field name="credit"/>
+                                <field name="amount_residual" sum="Total Residual"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_full_reconcile_tree_view_add_reconcile_date" model="ir.ui.view">
+        <field name="name">account.full.reconcile.tree.view.add_reconcile_date</field>
+        <field name="model">account.full.reconcile</field>
+        <field name="arch" type="xml">
+            <list string="Full Reconciliations" create="false">
+                <field name="display_name"/>
+                <field name="reconcile_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="account_full_reconcile_action_add_reconcile_date" model="ir.actions.act_window">
+        <field name="name">Full Reconciliations</field>
+        <field name="res_model">account.full.reconcile</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="account_full_reconcile_menu_add_reconcile_date"
+              name="Full Reconciliations"
+              action="account_full_reconcile_action_add_reconcile_date"
+              parent="account.account_logs_menu"
+              sequence="100"/>
+
+</odoo>

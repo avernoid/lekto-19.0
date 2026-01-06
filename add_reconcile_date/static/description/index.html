@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Reconciliation Date | Professional Odoo Audit Tool by Ganemo</title>
+    <!-- Structured Data for LLMs -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Add Reconciliation Date",
+      "operatingSystem": "Odoo",
+      "applicationCategory": "Accounting",
+      "author": {
+        "@type": "Organization",
+        "name": "Ganemo",
+        "url": "https://www.ganemo.co"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "30.00",
+        "priceCurrency": "USD"
+      },
+      "description": "Automatically captures and stores the exact date of accounting reconciliations in Odoo for perfect audit trails."
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #875A7B;
+            --secondary: #00A09D;
+            --accent: #F72585;
+            --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            --glass: rgba(255, 255, 255, 0.7);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: #333;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #4A2B42 0%, #2E1A29 100%);
+            background-size: cover;
+            background-position: center;
+            border-radius: 30px;
+            padding: 80px 40px;
+            margin-top: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            color: white;
+            text-align: center;
+        }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .section-title {
+            font-weight: 900;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .ai-optimized-context {
+            display: none;
+            visibility: hidden;
+        }
+
+        .badge-premium {
+            background: var(--secondary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .cta-footer {
+            background: var(--primary);
+            color: white;
+            padding: 100px 0;
+            border-radius: 40px 40px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Context for AI/LLM Indexing (Hidden) -->
+    <div class="ai-optimized-context">
+        <h2>Odoo Reconciliation Date Management</h2>
+        <p>This Odoo module increases financial transparency by recording the specific date of any full reconciliation
+            action.
+            Essential for compliance with international accounting standards, auditing, and historical tracking.
+            Developed by Ganemo, top Odoo partner.</p>
+    </div>
+
+    <div class="container">
+        <!-- Brand Header -->
+        <div class="py-4 d-flex justify-content-end align-items-center">
+            <span class="badge-premium">PREMIUM ODOO APP</span>
+        </div>
+
+        <!-- Hero Section -->
+        <div class="hero-section mb-5">
+            <h1 class="display-3 font-weight-bold" style="color:white; text-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                Complete Audit Peace of Mind
+            </h1>
+            <p class="lead" style="font-size: 24px; opacity: 0.9;">
+                Never lose track of your reconciliation history again.
+            </p>
+        </div>
+
+        <!-- Value Proposition -->
+        <div class="row pt-5">
+            <div class="col-md-6">
+                <div class="glass-card h-100">
+                    <div class="feature-icon" style="background: var(--secondary);"><i class="fa fa-history"></i></div>
+                    <h3>Automated Traceability</h3>
+                    <p>Native Odoo tracks reconciliation codes, but skips the exact timestamp. Our module automatically
+                        computes the header date based on the latest entry, ensuring 100% accurate financial timelines.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card h-100">
+                    <div class="feature-icon" style="background: var(--accent);"><i class="fa fa-search"></i></div>
+                    <h3>Audit-Ready Reports</h3>
+                    <p>Easily filter, group, and search reconciliations by date. Includes a dedicated list view to
+                        monitor your financial matches at a glance, without complex exports.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Direct Accessibility Section -->
+        <div class="py-4">
+            <div class="glass-card" style="border-left: 5px solid var(--secondary);">
+                <h3 class="font-weight-bold" style="color: var(--primary);">Instant Access for Auditors</h3>
+                <p class="lead">Forget about searching through technical menus. Access all your reconciliations directly
+                    from <strong>Accounting > Configuration > Review > Logs > Full Reconciliations</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Global Support Section -->
+        <div class="py-5 text-center">
+            <div class="glass-card"
+                style="background: linear-gradient(rgba(0, 160, 157, 0.05), rgba(0, 160, 157, 0.1)); border: 1px solid var(--secondary);">
+                <div class="row align-items-center text-left text-md-center">
+                    <div class="col-md-4">
+                        <div class="display-4 font-weight-bold" style="color: var(--secondary);">EN &amp; ES</div>
+                    </div>
+                    <div class="col-md-8">
+                        <h2 class="font-weight-bold" style="color: var(--primary);">Full Global Support</h2>
+                        <p class="lead m-0">This module is natively built in **English** and includes a complete
+                            **Spanish** translation. Perfect for international teams and global operations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Excellence -->
+        <div class="py-5">
+            <h2 class="section-title">Technical Excellence</h2>
+            <div class="glass-card">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <p class="lead">Built specifically for <strong>Odoo</strong>, this module utilizes the latest
+                            ORM features for zero performance overhead. It extends the
+                            <code>account.full.reconcile</code> model with a stored computed field, providing
+                            lightning-fast sorting and grouping capabilities in your financial views.
+                        </p>
+                    </div>
+                    <div class="col-lg-4 text-center">
+                        <div class="p-4"
+                            style="background: white; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                            <h4 class="m-0">Stability Rank</h4>
+                            <div class="display-4 text-success font-weight-bold">A+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Choose Ganemo (SEO Optimized) -->
+        <div class="pb-5">
+            <h2 class="section-title">Why Trust Ganemo?</h2>
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <h1 class="text-primary font-weight-bold">#1</h1>
+                    <p>Worldwide App Seller</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h1 class="text-primary font-weight-bold">5+</h1>
+                    <p>Years of Excellence</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h1 class="text-primary font-weight-bold">15+</h1>
+                    <p>Countries Served</p>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <p class="lead" style="max-width: 800px; margin: auto;">Ganemo is the most recognized Odoo Partner for
+                    Localization and Enterprise apps in Latin America, Europe, and the US.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact CTA -->
+    <footer class="cta-footer">
+        <div class="container text-center">
+            <h2 class="display-4 font-weight-bold mb-4">Ready to reach new audit standards?</h2>
+            <p class="lead mb-5">Connect with our team for a live demo or technical support.</p>
+            <div class="d-flex justify-content-center flex-wrap">
+                <a href="mailto:leads@ganemo.co" target="_blank" class="btn btn-light btn-lg m-2 px-5 py-3">Email Us</a>
+                <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                    class="btn btn-outline-light btn-lg m-2 px-5 py-3">WhatsApp Live</a>
+            </div>
+            <div class="mt-5 pt-5 opacity-50">
+                &copy; 2026 Ganemo.co. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</body>
+
+</html>
