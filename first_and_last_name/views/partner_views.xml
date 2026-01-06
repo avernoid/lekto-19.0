@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_form_view_inherit_first_and_last_name" model="ir.ui.view">
+        <field name="name">res.partner.form.view.inherit.first_and_last_name</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="before">
+                <label for="partner_name" string="Name Details" invisible="is_company"/>
+                <div class="o_address_format" invisible="is_company">
+                    <field name="partner_name" placeholder="First Names" class="o_address_street"/>
+                    <field name="first_name" placeholder="Paternal Surname" class="o_address_city" style="width: 50%"/>
+                    <field name="second_name" placeholder="Maternal Surname" class="o_address_state" style="width: 50%"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -4,10 +4,11 @@ This module enhances the Field Service Management (FSM) experience by providing 
 
 ## Features
 
-- **Direct Accessibility**: Adds a dedicated button (box icon) in a compact section just below the task header.
-- **Mobile Optimized**: Ensures the products button is always visible on mobile devices, preventing it from being hidden inside Odoo's native "lightning" (⚡) or "more" (⋮) menus.
+- **Direct Accessibility**: Adds dedicated buttons for products (box icon) and Sales Orders (shopping cart icon) in a compact section just below the task header.
+- **Context-Aware Visibility**: The Sales Order icon automatically hidden if no Sale Order is linked to the task, preventing UI clutter.
+- **Mobile Optimized**: Ensures these critical buttons are always visible on mobile devices, preventing them from being hidden inside Odoo's native "lightning" (⚡) or "more" (⋮) menus.
 - **Seamless Integration**: Uses Odoo's native color palette and design patterns for a non-intrusive look.
-- **Configurable Visibility**: Use Odoo Studio or project settings to toggle the button's visibility via the `show_fsm_products_button` field on the task.
+- **Configurable Visibility**: Use Odoo Studio or project settings to toggle the products button's visibility via the `show_fsm_products_button` field on the task.
 
 ## Configuration
 
@@ -25,7 +26,7 @@ This module enhances the Field Service Management (FSM) experience by providing 
 
 - **Model Extended**: `project.task`
 - **View Inherited**: `project.view_task_form2`
-- **Dependencies**: `project`, `industry_fsm`, `industry_fsm_stock`
+- **Dependencies**: `project`, `sale`, `industry_fsm`, `industry_fsm_stock`
 
 ---
 **Author**: [Ganemo](https://www.ganemo.co)

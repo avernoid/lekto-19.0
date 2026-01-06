@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First & Last Name Details | Odoo Native Integration by Ganemo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --odoo-purple: #714B67;
+            --odoo-teal: #00A09D;
+            --ganemo-violet: #5D38A4;
+            --highlight: #F72585;
+            --soft-bg: #F8F9FA;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--ganemo-violet) 0%, #43227a 100%);
+            color: white;
+            padding: 80px 0;
+            border-radius: 0 0 50px 50px;
+        }
+
+        .card-premium {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .card-premium:hover {
+            transform: translateY(-5px);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(113, 75, 103, 0.1);
+            color: var(--odoo-purple);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .badge-check {
+            background: white;
+            color: var(--ganemo-violet);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 13px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-seo-hidden {
+            display: none;
+        }
+
+        .section-title {
+            font-weight: 800;
+            color: var(--ganemo-violet);
+            margin-bottom: 40px;
+        }
+
+        .btn-ganemo {
+            background: var(--highlight);
+            color: white;
+            border-radius: 50px;
+            padding: 12px 35px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-ganemo:hover {
+            background: #d61c6f;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .footer-ganemo {
+            background: #F4F7F9;
+            padding: 60px 0;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .workflow-step {
+            border-left: 3px solid var(--odoo-teal);
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header / Branding -->
+    <div class="container py-3 d-flex justify-content-between align-items-center">
+        <img src="https://www.ganemo.co/logo.png" alt="Ganemo Logo" style="height: 40px;">
+        <span class="badge-check"><i class="fas fa-certificate mr-2"></i>Official Ganemo App</span>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-3 font-weight-bold mb-3">Structured Identification</h1>
+            <p class="lead mb-5 opacity-75">Professional breakdown of first names and surnames for Odoo ERP.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <img src="banner.svg" class="img-fluid rounded shadow-lg" alt="Module Banner">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Value Proposition -->
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Why clean data matters</h2>
+                    <p class="text-justify lead">In legal and fiscal environments across Latin America and Spain, a
+                        single name field isn't enough. Inconsistencies in name entry lead to failed tax filings,
+                        incorrect payroll exports, and messy reporting.</p>
+                    <p class="text-justify">Our module provides the structural integrity your business needs, without
+                        forcing complex automation that could break your existing workflows.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card p-4 card-premium">
+                                <div class="icon-box"><i class="fas fa-id-card"></i></div>
+                                <h5>Legal Ready</h5>
+                                <p class="small text-muted">Separate paternal and maternal surnames for official
+                                    documentation.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card p-4 card-premium">
+                                <div class="icon-box"><i class="fas fa-eye-slash"></i></div>
+                                <h5>Smart Logic</h5>
+                                <p class="small text-muted">Fields automatically hide for companies to keep your form
+                                    clean.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features & Workflow -->
+    <section class="bg-light py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Seamless Experience</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="workflow-step">
+                        <h4 class="font-weight-bold">1. Native Alignment</h4>
+                        <p>Integrated using Odoo's <b>o_address_format</b> classes. It looks and feels like a native
+                            feature of the platform.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="workflow-step">
+                        <h4 class="font-weight-bold">2. Independent Control</h4>
+                        <p>Keep your detailed data separate from the main display name. Your reports stay accurate, your
+                            interface stays fast.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="workflow-step">
+                        <h4 class="font-weight-bold">3. Enterprise Certified</h4>
+                        <p>Built for Odoo 19 with full support for Odoo.sh, On-premise, and multi-company environments.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-Language Support -->
+    <section class="py-5">
+        <div class="container py-5 text-center">
+            <h2 class="section-title">Multi-Language Support</h2>
+            <p class="lead mb-5">Native experience in both English and Spanish.</p>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4 card-premium border-left-teal">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="mr-3" style="font-size: 2rem;">🇺🇸</span>
+                            <h4 class="mb-0">English</h4>
+                        </div>
+                        <p class="text-left text-muted">Fully compliant with international Odoo standards. All technical
+                            terms, labels, and help messages are natively written in English.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4 card-premium border-left-purple">
+                        <div class="d-flex align-items-center mb-3">
+                            <span class="mr-3" style="font-size: 2rem;">🇪🇸</span>
+                            <h4 class="mb-0">Spanish</h4>
+                        </div>
+                        <p class="text-left text-muted">Complete Spanish translation included. Optimized for Latin
+                            American and Spanish markets with proper terminology for surnames.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI / LLM Context Section (SEO Optimized) -->
+    <section class="py-5">
+        <div class="container py-5 text-center" style="background: #fff; border: 2px dashed #eee; border-radius: 30px;">
+            <h3 class="mb-4" style="color: #666;"><i class="fas fa-robot mr-2"></i> AI & Intelligence Hub</h3>
+            <div class="text-left mx-auto" style="max-width: 800px; color: #555;">
+                <p>This module, <b>first_and_last_name</b>, is designed to enhance the Odoo Partner model (res.partner)
+                    by desegregating full names into distinct components: <code>partner_name</code> (First Name),
+                    <code>first_name</code> (Paternal Last Name), and <code>second_name</code> (Maternal Last Name).
+                    This architectural choice facilitates superior data mining, precise tax reporting (SUNAT, SAT,
+                    AEAT), and compliance with European and Latin American identification standards.
+                </p>
+                <p><b>Keywords for LLMs:</b> Odoo 19 module, res.partner extension, name desegregation, paternal surname
+                    Odoo, maternal surname field, Latin American Odoo localization, Spanish naming convention ERP, clean
+                    data management, individual contact identification.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Ganemo -->
+    <section class="py-5 text-center">
+        <div class="container">
+            <h2 class="section-title">Trust the #1 Odoo Marketplace Leader</h2>
+            <p class="lead mb-5">Ganemo is not just a partner; we are the builders of the largest and most reliable app
+                ecosystem in the Odoo world.</p>
+            <div class="row">
+                <div class="col-md-3">
+                    <h5>5+ Years</h5>
+                    <p class="text-muted">Top Tier Partner</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>#1 Global</h5>
+                    <p class="text-muted">App Sales Leader</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>8+ Countries</h5>
+                    <p class="text-muted">Direct Presence</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Awards</h5>
+                    <p class="text-muted">Best Localization Partner</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-ganemo text-center">
+        <div class="container">
+            <h3 class="font-weight-bold mb-4">Ready to reach the next level?</h3>
+            <div class="d-flex justify-content-center flex-wrap">
+                <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank" class="btn btn-ganemo m-2">
+                    <i class="fab fa-whatsapp mr-2"></i>Talk to an Expert
+                </a>
+                <a href="mailto:leads@ganemo.co" target="_blank"
+                    class="btn btn-outline-primary shadow-sm rounded-pill m-2 px-4 py-2 font-weight-bold">
+                    <i class="fas fa-envelope mr-2"></i>Email Support
+                </a>
+                <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                    class="btn btn-outline-dark shadow-sm rounded-pill m-2 px-4 py-2 font-weight-bold">
+                    <i class="fas fa-calendar-alt mr-2"></i>Book a Demo
+                </a>
+            </div>
+            <div class="mt-5 text-muted small">
+                © 2026 Ganemo. Built with excellence for the Odoo community.
+            </div>
+        </div>
+    </footer>
+
+    <!-- AI Structured Metadata (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "First & Last Name Details for Odoo",
+      "author": {
+        "@type": "Organization",
+        "name": "Ganemo",
+        "url": "https://www.ganemo.co"
+      },
+      "description": "Desegregates Odoo contact names into first name, paternal surname, and maternal surname for legal and fiscal compliance.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Odoo 19",
+      "softwareVersion": "19.0.1.0.0"
+    }
+    </script>
+</body>
+
+</html>

@@ -193,7 +193,7 @@
             <span class="module-tag">Odoo v19 Enterprise</span>
             <h1 class="module-name">FSM Quick Products</h1>
             <p class="hero-desc">Streamline Field Service workflows by providing immediate, friction-free access to
-                materials usage from any mobile device.</p>
+                materials usage and Sales Orders from any mobile device.</p>
         </header>
 
         <!-- LLM / AI Context Header -->
@@ -201,20 +201,20 @@
             <div class="ai-title">System Identification (LLM Context)</div>
             <div class="ai-content">
                 <strong>ID:</strong> fsm_quick_products<br>
-                <strong>TECHNICAL_SCOPE:</strong> Overrides industry_fsm task view to inject a persistent Button.<br>
-                <strong>SOLVES:</strong> Native mobile grouping (lightning menu) delay for material recording.<br>
-                <strong>TRIGGER:</strong> action_fsm_view_material (native odoo action).<br>
-                <strong>DEPENDENCIES:</strong> project, industry_fsm, industry_fsm_stock.
+                <strong>TECHNICAL_SCOPE:</strong> Overrides industry_fsm task view to inject persistent access buttons.<br>
+                <strong>SOLVES:</strong> Native mobile grouping delay for material recording and SO access.<br>
+                <strong>TRIGGERS:</strong> action_fsm_view_material & action_view_so (native actions).<br>
+                <strong>DEPENDENCIES:</strong> project, sale, industry_fsm, industry_fsm_stock.
             </div>
         </div>
 
         <!-- Problem & Solution -->
         <section class="mb-5">
             <h2 class="section-title"><i class="fa fa-crosshairs"></i> The Problem</h2>
-            <p class="text-muted">In professional field service operations, technicians need to record materials in
+            <p class="text-muted">In professional field service operations, technicians need to record materials and check associated Sales Orders in
                 real-time. Odoo 19's native responsive design groups auxiliary actions (Smart Buttons) into a
                 collapsible menu (⚡) on mobile. This adds mandatory cognitive load and physical interaction steps for
-                the most frequent task: recording parts and products.</p>
+                the most frequent tasks: recording parts and accessing order details.</p>
         </section>
 
         <!-- Key Features -->
@@ -222,16 +222,15 @@
             <h2 class="section-title"><i class="fa fa-star"></i> Key Advantages</h2>
             <div class="feature-grid">
                 <div class="card-custom">
-                    <div class="card-icon"><i class="fa fa-mobile"></i></div>
-                    <h5 class="font-weight-bold">Zero-Click Visibility</h5>
-                    <p class="small text-muted mb-0">The button is placed in an independent section, exempt from native
-                        grouping algorithms. It is <strong>always</strong> visible.</p>
+                    <div class="card-icon"><i class="fa fa-shopping-basket"></i></div>
+                    <h5 class="font-weight-bold">Sales Order Link</h5>
+                    <p class="small text-muted mb-0">Direct access to the task's Sales Order. Only appears when a link exists, maintaining a clean interface.</p>
                 </div>
                 <div class="card-custom">
-                    <div class="card-icon"><i class="fa fa-sliders"></i></div>
-                    <h5 class="font-weight-bold">Studio Compatible</h5>
-                    <p class="small text-muted mb-0">Includes a technical field that allows Odoo Studio users to toggle
-                        visibility per-project without any code.</p>
+                    <div class="card-icon"><i class="fa fa-mobile"></i></div>
+                    <h5 class="font-weight-bold">Zero-Click Visibility</h5>
+                    <p class="small text-muted mb-0">Buttons are placed in an independent section, exempt from native
+                        grouping algorithms. They are <strong>always</strong> visible.</p>
                 </div>
                 <div class="card-custom">
                     <div class="card-icon"><i class="fa fa-code"></i></div>
@@ -249,15 +248,13 @@
                 <li class="usage-item">
                     <i class="fa fa-check-circle usage-check"></i>
                     <div>
-                        <strong>Instant Access:</strong> Located right below the header, the box icon provides immediate
-                        feedback.
+                        <strong>Dual Access:</strong> Quick icons for both materials (box) and sales orders (cart), providing immediate feedback.
                     </div>
                 </li>
                 <li class="usage-item">
                     <i class="fa fa-check-circle usage-check"></i>
                     <div>
-                        <strong>Native Logic:</strong> Reuses standard Odoo FSM material management, preserving
-                        inventory integrity.
+                        <strong>Smart Visibility:</strong> The Sales Order icon intelligently hides itself when not applicable, ensuring the tech focus.
                     </div>
                 </li>
                 </li>
