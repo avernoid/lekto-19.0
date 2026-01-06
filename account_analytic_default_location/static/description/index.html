@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Analytic Default Location - Odoo App</title>
+    <meta name="description"
+        content="Automatically assign analytic accounts based on warehouse locations in Odoo. Optimize cost tracking for multi-warehouse inventory movements.">
+    <meta name="keywords"
+        content="Odoo, Analytic Accounting, Warehouse, Location, Cost Allocation, Inventory Management, Ganemo">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #3C6DAC;
+            /* Ganemo Blue */
+            --secondary-color: #791D97;
+            /* Ganemo Purple */
+            --accent-color: #BB89AA;
+            /* Light Purple/Pink */
+            --text-dark: #212121;
+            --text-muted: #74788D;
+            --bg-light: #F6F8F9;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+        }
+
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .text-secondary {
+            color: var(--secondary-color) !important;
+        }
+
+        .bg-light {
+            background-color: var(--bg-light) !important;
+        }
+
+        /* Utilities */
+        .fw-900 {
+            font-weight: 900;
+        }
+
+        .fw-300 {
+            font-weight: 300;
+        }
+
+        .ls-2 {
+            letter-spacing: 2px;
+        }
+
+        .box-shadow {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .rounded-xl {
+            border-radius: 1rem;
+        }
+
+        /* Badge */
+        .badge-enterprise {
+            color: var(--secondary-color);
+            background-color: var(--white);
+            border: 1px solid #E0E0E0;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Hero */
+        .hero-section {
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            color: var(--secondary-color);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 1.5rem auto;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid #F0F0F0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Process Steps */
+        .step-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(60, 109, 172, 0.1);
+            /* Primary color faded */
+            line-height: 1;
+            margin-bottom: -1rem;
+            position: relative;
+            z-index: 0;
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* SEO/AI Context Block - Hidden visually but accessible to bots if needed, 
+           or kept visible but styled subtly for "Technical Overview" */
+        .ai-context {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        /* Footer */
+        .footer-cta {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 3rem;
+        }
+
+        .btn-custom {
+            border-radius: 50px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            border: none;
+        }
+
+        .btn-email {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-schedule {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-custom:hover {
+            opacity: 0.9;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Separator */
+        .separator {
+            width: 50px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 2rem auto;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container py-5">
+
+        <!-- Header Badge -->
+        <div class="d-flex justify-content-center mb-4">
+            <div class="badge-enterprise shadow-sm">
+                <i class="fa fa-check mr-2"></i> Enterprise Ready (Odoo.SH, Odoo Online, Ganemo)
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <header class="hero-section">
+            <h1 class="hero-title fw-900 text-uppercase">
+                Account Analytic<br>
+                <span style="color: var(--primary-color);">Default Location</span>
+            </h1>
+            <div class="separator"></div>
+            <p class="hero-subtitle">
+                Automate your analytic accounting by mapping warehouse locations to analytic accounts.
+                Ensure precise cost tracking for every inventory movement without manual data entry.
+            </p>
+        </header>
+
+        <!-- Problem & Solution -->
+        <section class="py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4">
+                    <div class="p-4 bg-light rounded-xl h-100">
+                        <h3 class="text-secondary mb-3"><i class="fas fa-exclamation-triangle mr-2"></i> The Problem
+                        </h3>
+                        <p>
+                            In multi-warehouse environments, standard Odoo rules often fail to allocate costs precisely.
+                            Companies struggle to distinguish costs between the same product moving through different
+                            branches
+                            or specific stock locations, leading to manual journal adjustments and reporting errors.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="p-4 rounded-xl h-100 box-shadow border border-success"
+                        style="background-color:#f0fff4; border-color:#c3e6cb !important;">
+                        <h3 class="text-success mb-3" style="color:#155724 !important"><i
+                                class="fas fa-check-circle mr-2"></i> The Solution</h3>
+                         <p>
+                             This module introduces granularity to your Analytic Distribution Models. You can now define
+                             rules based on:
+                             <strong>Origin Warehouse</strong>, <strong>Origin Location</strong>, <strong>Destination
+                                 Location</strong>, <strong>Salesperson (Invoice)</strong>, and <strong>Journal (Invoice)</strong>.
+                             Odoo automatically applies the correct analytic account to every stock move, ensuring 100%
+                             accurate cost allocation.
+                         </p>
+                     </div>
+                 </div>
+             </div>
+         </section>
+ 
+         <!-- Key Features Grid -->
+         <section class="py-5">
+             <div class="text-center mb-5">
+                 <h2 class="fw-900 text-uppercase text-secondary">Key Features</h2>
+                 <p class="text-muted">Why this module is essential for your accounting</p>
+             </div>
+             <div class="row">
+                 <div class="col-md-4 mb-4">
+                     <div class="feature-card text-center">
+                         <i class="fas fa-layer-group feature-icon"></i>
+                         <h5>Odoo 19 Merging Logic</h5>
+                         <p class="small text-muted">Rules for different analytic plans now merge automatically, allowing multiple dimensions on a single line.</p>
+                     </div>
+                 </div>
+                 <div class="col-md-4 mb-4">
+                     <div class="feature-card text-center">
+                         <i class="fas fa-list-ol feature-icon"></i>
+                         <h5>Multi-Prefix Support</h5>
+                         <p class="small text-muted">Use comma-separated account prefixes (e.g., '40, 60, 64') in a single rule for maximum flexibility.</p>
+                     </div>
+                 </div>
+                 <div class="col-md-4 mb-4">
+                     <div class="feature-card text-center">
+                         <i class="fas fa-shield-alt feature-icon"></i>
+                         <h5>Supreme Priority & Protection</h5>
+                         <p class="small text-muted">Analytic accounts from SO/PO are respected, and manual user entries are never overwritten.</p>
+                     </div>
+                 </div>
+             </div>
+         </section>
+ 
+         <!-- How It Works (Workflow) -->
+         <section class="py-5 bg-light rounded-xl px-4">
+             <div class="text-center mb-5">
+                 <h2 class="fw-900 text-uppercase text-primary">Dimensions Included</h2>
+             </div>
+             <div class="row">
+                 <div class="col-md-4 text-center mb-4">
+                     <div class="step-content">
+                         <h5 class="fw-bold"><i class="fas fa-warehouse text-primary mr-2"></i> Logistics</h5>
+                         <p class="text-muted small">Warehouse, Source Location, Destination Location. Applied on Invoices, SO, and stock movements.</p>
+                     </div>
+                 </div>
+                 <div class="col-md-4 text-center mb-4">
+                     <div class="step-content">
+                         <h5 class="fw-bold"><i class="fas fa-user-tag text-primary mr-2"></i> Salesperson</h5>
+                         <p class="text-muted small">Matches Invoice Salesperson. Built-in warnings clarify scope versus Sales Orders.</p>
+                     </div>
+                 </div>
+                 <div class="col-md-4 text-center mb-4">
+                     <div class="step-content">
+                         <h5 class="fw-bold"><i class="fas fa-book text-primary mr-2"></i> Journal</h5>
+                         <p class="text-muted small">Filter by Accounting Journal to differentiate analytic distribution for Receipts vs Bills.</p>
+                     </div>
+                 </div>
+             </div>
+         </section>
+ 
+         <!-- AI/LLM Context & SEO Technical Summary -->
+         <section class="ai-context rounded-xl">
+             <h4 class="mb-3"><i class="fas fa-robot mr-2"></i> Module Context for AI & Search Engines</h4>
+             <p>
+                 <strong>Module Name:</strong> Account Analytic Default Location (Odoo 19 Ready)<br>
+                 <strong>Technical Name:</strong> <code>account_analytic_default_location</code><br>
+                 <strong>Category:</strong> Accounting / Logistics<br>
+                 <strong>Functionality:</strong> Extends <code>account.analytic.distribution.model</code> to support 
+                 <code>origin_warehouse_id</code>, <code>origin_location_id</code>, <code>dest_location_id</code>, 
+                 <code>invoice_user_id</code>, and <code>journal_id</code>. Implements the native Odoo 19 merging logic, 
+                 allowing distributions from multiple matching models to combine if they target different plan roots.
+                 <strong>Advanced Matching:</strong> Supports comma-separated <code>account_prefix</code> (e.g., '40, 60, 64') 
+                 with manual prefix-matching logic for robust account branch allocation.
+                 <strong>Priority System:</strong> Uses "Supreme Priority" to respect distributions coming from 
+                 Sales/Purchase Orders and "Override Protection" for manual user changes.
+             </p>
+         </section>
+
+
+        <!-- FAQ for SEO -->
+        <section class="py-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-secondary">Frequently Asked Questions</h3>
+            </div>
+            <div class="accordion" id="faqAccordion">
+                <div class="card mb-2 border-0 shadow-sm">
+                    <div class="card-header bg-white" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-dark font-weight-bold text-decoration-none" type="button"
+                                data-toggle="collapse" data-target="#collapseOne">
+                                Does this work with Odoo Enterprise?
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#faqAccordion">
+                        <div class="card-body text-muted">
+                            Yes, this module is fully compatible with Odoo Enterprise, Odoo.SH, and Odoo Online (if
+                            custom modules are allowed).
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-2 border-0 shadow-sm">
+                    <div class="card-header bg-white" id="headingTwo">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-dark font-weight-bold text-decoration-none collapsed"
+                                type="button" data-toggle="collapse" data-target="#collapseTwo">
+                                Can I set different analytic accounts for different shelves?
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapseTwo" class="collapse" data-parent="#faqAccordion">
+                        <div class="card-body text-muted">
+                            Absolutely. You can define rules as granular as a specific stock location (shelf/bin),
+                            allowing for precise cost tracking within a single warehouse.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / Contact -->
+        <footer class="mt-5">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2 class="fw-900 text-uppercase" style="color: #3D3D4E;">Why Choose Ganemo?</h2>
+                    <div class="separator"></div>
+                    <p class="mx-auto" style="max-width: 800px; color: #777783;">
+                        We are a premier Odoo Gold Partner with over 5 years of experience.
+                        Recognized as the <strong>#1 seller of high-quality Odoo apps</strong> and Best Partner for
+                        Localization in
+                        Peru, USA, Mexico, Chile, Spain, Colombia, and Ecuador.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row footer-cta text-center">
+                <div class="col-md-4 mb-3">
+                    <h5 class="fw-bold">Contact Support</h5>
+                    <p class="small text-muted mb-3">Questions? +1 (828) 672-6150</p>
+                    <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                        class="btn btn-whatsapp btn-custom btn-block">
+                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp Us
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 class="fw-bold">Email Us</h5>
+                    <p class="small text-muted mb-3">leads@ganemo.co</p>
+                    <a href="mailto:leads@ganemo.co" target="_blank" class="btn btn-email btn-custom btn-block">
+                        <i class="fas fa-envelope mr-2"></i> Email Us
+                    </a>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5 class="fw-bold">Book a Demo</h5>
+                    <p class="small text-muted mb-3">Let's discuss your needs</p>
+                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                        class="btn btn-schedule btn-custom btn-block">
+                        <i class="fas fa-calendar-check mr-2"></i> Schedule Meeting
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-4 text-muted small">
+                &copy; 2025 Ganemo. All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Optional JS for Bootstrap components -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+# Spanish translation for account_analytic_default_location.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: account_analytic_default_location 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-28 00:00+0000\n"
+"PO-Revision-Date: 2024-12-28 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,field_description:account_analytic_default_location.field_account_analytic_distribution_model__origin_warehouse_id
+msgid "Origin Warehouse"
+msgstr "Almacén de Origen"
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,help:account_analytic_default_location.field_account_analytic_distribution_model__origin_warehouse_id
+msgid "This rule applies to Sales Orders, Purchase Orders, and Invoices."
+msgstr "Esta regla se aplica a Pedidos de Venta, Pedidos de Compra y Facturas."
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,field_description:account_analytic_default_location.field_account_analytic_distribution_model__origin_location_id
+msgid "Origin Location"
+msgstr "Ubicación de Origen"
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,help:account_analytic_default_location.field_account_analytic_distribution_model__origin_location_id
+msgid "Select the specific Source Location. This rule applies to stock-related documents like Sale Orders and Invoices."
+msgstr "Seleccione la ubicación de origen específica. Esta regla se aplica a documentos relacionados con stock, como pedidos de venta y facturas."
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,field_description:account_analytic_default_location.field_account_analytic_distribution_model__dest_location_id
+msgid "Destination Location"
+msgstr "Ubicación de Destino"
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,help:account_analytic_default_location.field_account_analytic_distribution_model__dest_location_id
+msgid "Select the specific Destination Location. Applies to documents involving stock moves."
+msgstr "Seleccione la ubicación de destino específica. Se aplica a documentos que involucran movimientos de stock."
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,field_description:account_analytic_default_location.field_account_analytic_distribution_model__invoice_user_id
+msgid "Salesperson (Invoice)"
+msgstr "Vendedor (Factura)"
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,help:account_analytic_default_location.field_account_analytic_distribution_model__invoice_user_id
+msgid "Specific matching for the Salesperson on Customer Invoices. Warning: This field does NOT match the Salesperson on Sale Orders (SO)."
+msgstr "Coincidencia específica para el Vendedor en Facturas de Cliente. Advertencia: Este campo NO coincide con el Vendedor en los Pedidos de Venta (SO)."
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,field_description:account_analytic_default_location.field_account_analytic_distribution_model__user_id
+msgid "Responsible User (Invoice)"
+msgstr "Usuario Responsable (Factura)"
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,help:account_analytic_default_location.field_account_analytic_distribution_model__user_id
+msgid "Specific matching for the Responsible User on Invoices. Warning: This field does NOT apply to non-accounting documents."
+msgstr "Coincidencia específica para el Usuario Responsable en Facturas. Advertencia: Este campo NO se aplica a documentos no contables."
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,field_description:account_analytic_default_location.field_account_analytic_distribution_model__journal_id
+msgid "Journal (Invoice)"
+msgstr "Diario (Factura)"
+
+#. module: account_analytic_default_location
+#: model:ir.model.fields,help:account_analytic_default_location.field_account_analytic_distribution_model__journal_id
+msgid "Specific matching for the Accounting Journal. Only applies to Invoices/Bills."
+msgstr "Coincidencia específica para el Diario Contable. Solo se aplica a Facturas de Cliente/Proveedor."
+

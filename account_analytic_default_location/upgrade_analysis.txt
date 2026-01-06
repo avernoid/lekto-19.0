@@ -1,0 +1,5 @@
+---Models in module 'account_analytic_default_location'---
+---Fields in module 'account_analytic_default_location'---
+---XML records in module 'account_analytic_default_location'---
+---Functions in module 'account_analytic_default_location'---
+REPLACE account.move.line _compute_analytic_tag_ids -> _compute_analytic_distribution
