@@ -1,0 +1,168 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* add_user_by_journal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,field_description:add_user_by_journal.field_account_journal__assign_to_ids
+msgid "Assigned in Dashboard"
+msgstr "Asignado en Tablero"
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,help:add_user_by_journal.field_account_journal__assign_to_ids
+msgid "Users assigned to this journal. Restricted users will only see journals where they are assigned."
+msgstr "Usuarios asignados a este diario. Los usuarios restringidos solo verán los diarios donde estén asignados."
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,field_description:add_user_by_journal.field_account_move__journal_assign_to_ids
+msgid "Journal - Assigned to"
+msgstr "Diario - Asignado a"
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,help:add_user_by_journal.field_account_move__journal_assign_to_ids
+msgid "Technical field used to store the users assigned to the journal of this move. Used for record rules."
+msgstr "Campo técnico usado para almacenar los usuarios asignados al diario de este movimiento. Usado para reglas de registro."
+
+#. module: add_user_by_journal
+#: model_terms:ir.ui.view,arch_db:add_user_by_journal.view_account_journal_search_inherit_add_user_by_journal
+msgid "My Journals"
+msgstr "Mis Diarios"
+
+#. module: add_user_by_journal
+#: model:res.groups,name:add_user_by_journal.res_groups_admin_journal_access
+#: model:res.groups.privilege,name:add_user_by_journal.privilege_admin_journal_access
+msgid "Allow access to all journals and assignments"
+msgstr "Permitir acceso a todos los diarios y asignaciones"
+
+#. module: add_user_by_journal
+#: model:ir.module.module,summary:add_user_by_journal.module_meta_information
+msgid "Control and restrict accounting journal access to assigned users."
+msgstr "Controlar y restringir el acceso a diarios contables a usuarios asignados."
+
+#. module: add_user_by_journal
+#: model:ir.module.module,description:add_user_by_journal.module_meta_information
+msgid ""
+"\n"
+"        This module allows you to restrict the visibility and usage of accounting journals \n"
+"        to specific users. It enhances security in multi-user environments by ensuring \n"
+"        that cashiers and accounting staff only see relevant journals in their dashboard \n"
+"        and search views.\n"
+"        \n"
+"        Key Features:\n"
+"        - Assign users to specific journals.\n"
+"        - Filter Accounting Dashboard based on user assignments.\n"
+"        - Strict record-level security (Record Rules) for Journal Entries and Invoices.\n"
+"        - Dedicated search filter \"My Journals\".\n"
+"        - Administrator bypass group for full visibility.\n"
+"    "
+msgstr ""
+"\n"
+"        Este módulo le permite restringir la visibilidad y el uso de los diarios contables \n"
+"        a usuarios específicos. Mejora la seguridad en entornos multi-ususario asegurando \n"
+"        que los cajeros y el personal contable solo vean los diarios relevantes en su tablero \n"
+"        y vistas de búsqueda.\n"
+"        \n"
+"        Características Clave:\n"
+"        - Asignar usuarios a diarios específicos.\n"
+"        - Filtrar el Tablero Contable basado en asignaciones de usuario.\n"
+"        - Seguridad estricta a nivel de registro (Reglas de Registro) para Asientos Contables y Facturas.\n"
+"        - Filtro de búsqueda dedicado \"Mis Diarios\".\n"
+"        - Grupo de administrador para visibilidad completa sin restricciones.\n"
+"    "
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,field_description:add_user_by_journal.field_account_journal__journal_group_ids
+msgid "Allowed Groups"
+msgstr "Grupos Permitidos"
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,field_description:add_user_by_journal.field_account_journal__access_instruction
+msgid "Access Policy"
+msgstr "Política de Acceso"
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,help:add_user_by_journal.field_account_journal__journal_group_ids
+msgid "User groups that have access to this journal. Users belonging to these groups will see this journal."
+msgstr "Grupos de usuarios que tienen acceso a este diario. Los usuarios que pertenezcan a estos grupos podrán ver este diario."
+
+#. module: add_user_by_journal
+#: model:ir.model.fields,help:add_user_by_journal.field_account_journal__access_instruction
+msgid "Dynamic explanation of who can access this journal."
+msgstr "Explicación dinámica de quién puede acceder a este diario."
+
+#. module: add_user_by_journal
+#: code:addons/add_user_by_journal/models/account_journal.py:0
+#, python-format
+msgid "<i>None</i>"
+msgstr "<i>Ninguno</i>"
+
+#. module: add_user_by_journal
+#: code:addons/add_user_by_journal/models/account_journal.py:0
+#, python-format
+msgid ""
+"\n"
+"                    <div class=\"alert alert-info\" role=\"alert\">\n"
+"                        <strong>✅ Public Access:</strong> This journal is visible to <b>ALL users</b> with accounting rights.<br/>\n"
+"                        <small>(Because both 'Assigned Users' and 'Allowed Groups' are empty)</small>\n"
+"                    </div>\n"
+"                "
+msgstr ""
+"\n"
+"                    <div class=\"alert alert-info\" role=\"alert\">\n"
+"                        <strong>✅ Acceso Público:</strong> Este diario es visible para <b>TODOS los usuarios</b> con permisos contables.<br/>\n"
+"                        <small>(Porque tanto 'Usuarios Asignados' como 'Grupos Permitidos' están vacíos)</small>\n"
+"                    </div>\n"
+"                "
+
+#. module: add_user_by_journal
+#: code:addons/add_user_by_journal/models/account_journal.py:0
+#, python-format
+msgid ""
+"\n"
+"                    <div class=\"alert alert-warning\" role=\"alert\">\n"
+"                        <strong>🔒 Restricted Access:</strong> Only the following will have access:\n"
+"                        <ul>\n"
+"                            <li><b>Users:</b> %s</li>\n"
+"                            <li><b>Groups:</b> %s</li>\n"
+"                            <li><b>Administrators</b> (Always have access)</li>\n"
+"                        </ul>\n"
+"                    </div>\n"
+"                "
+msgstr ""
+"\n"
+"                    <div class=\"alert alert-warning\" role=\"alert\">\n"
+"                        <strong>🔒 Acceso Restringido:</strong> Solo los siguientes tendrán acceso:\n"
+"                        <ul>\n"
+"                            <li><b>Usuarios:</b> %s</li>\n"
+"                            <li><b>Grupos:</b> %s</li>\n"
+"                            <li><b>Administradores</b> (Siempre tienen acceso)</li>\n"
+"                        </ul>\n"
+"                    </div>\n"
+"                "
+
+#. module: add_user_by_journal
+#: model:ir.ui.view,arch_db:add_user_by_journal.account_journal_view_form_inherit_add_user_by_journal
+msgid "Empty = Public (unless Groups are set)"
+msgstr "Vacío = Público (a menos que haya Grupos)"
+
+#. module: add_user_by_journal
+#: model:ir.ui.view,arch_db:add_user_by_journal.account_journal_view_form_inherit_add_user_by_journal
+msgid "Empty = Public (unless Users are set)"
+msgstr "Vacío = Público (a menos que haya Usuarios)"
+
+#. module: add_user_by_journal
+#: model:ir.ui.view,arch_db:add_user_by_journal.account_journal_view_form_inherit_add_user_by_journal
+msgid "To edit this, go to <b>Settings > Users</b> and enable \"Allow access to all journals and assignments\"."
+msgstr "Para editar, vaya a <b>Ajustes > Usuarios</b> y active \"Permitir acceso a todos los diarios y asignaciones\"."

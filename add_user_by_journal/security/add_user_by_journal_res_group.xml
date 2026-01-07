@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="privilege_admin_journal_access" model="res.groups.privilege">
+        <field name="name">Allow access to all journals and assignments</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <record id="res_groups_admin_journal_access" model="res.groups">
+        <field name="name">Allow access to all journals and assignments</field>
+        <field name="privilege_id" ref="privilege_admin_journal_access"/>
+    </record>
+
+</odoo>

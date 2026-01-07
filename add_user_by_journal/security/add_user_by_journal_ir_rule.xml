@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <record id="ir_rule_account_journal_filter_by_user" model="ir.rule">
+        <field name="name">Journal: Filter allowed Users</field>
+        <field name="model_id" ref="account.model_account_journal"/>
+        <field name="domain_force">['|', '&amp;', ('assign_to_ids', '=', False), ('journal_group_ids', '=', False), '|', ('assign_to_ids', 'in', [user.id]), ('journal_group_ids', 'in', user.group_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="ir_rule_account_journal_admin" model="ir.rule">
+        <field name="name">Journal: Allowed Users admin</field>
+        <field name="model_id" ref="account.model_account_journal"/>
+        <field name="domain_force">[]</field>
+        <field name="groups" eval="[(4, ref('add_user_by_journal.res_groups_admin_journal_access'))]"/>
+    </record>
+
+</odoo>

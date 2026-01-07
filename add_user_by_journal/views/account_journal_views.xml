@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_journal_view_form_inherit_add_user_by_journal" model="ir.ui.view">
+        <field name="name">account.journal.view.form.inherit.add_user_by_journal</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_email_alias']" position="after">
+                <group name="assign" string="Accounting Security">
+                    <field name="can_edit_journal_security" invisible="1"/>
+                    <div class="alert alert-info" role="alert" invisible="can_edit_journal_security">
+                        <i class="fa fa-lock"/> To edit this, go to <b>Settings > Users</b> and enable "Allow access to all journals and assignments".
+                    </div>
+                    <field name="assign_to_ids" widget="many2many_tags" placeholder="Empty = Public (unless Groups are set)" readonly="not can_edit_journal_security"/>
+                    <field name="journal_group_ids" widget="many2many_tags" placeholder="Empty = Public (unless Users are set)" readonly="not can_edit_journal_security"/>
+                    <field name="access_instruction" widget="html" nolabel="1" colspan="2"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_journal_search_inherit_add_user_by_journal" model="ir.ui.view">
+        <field name="name">account.journal.search.inherit.add_user_by_journal</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='dashboard']" position="before">
+                <filter name="my_journals" string="My Journals" domain="[('assign_to_ids', 'in', [uid])]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+
+   
+
+</odoo>

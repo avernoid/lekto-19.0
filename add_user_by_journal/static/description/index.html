@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<!--FINAL INDEX UPDATED - LLM & SEO OPTIMIZED-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal Access Control | Odoo Security App by Ganemo</title>
+    <meta name="description"
+        content="Restrict financial journal access in Odoo. Secure your accounting dashboard, invoices, and journal entries by assigning specific users to journals.">
+    <meta name="keywords"
+        content="Odoo, Accounting, Security, Journal Access, Record Rules, Ganemo, Finance Control, Odoo 19">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        .nav-tabs li .active {
+            background-color: #bb89aa;
+            color: #fff !important;
+        }
+
+        .accordion .card-body {
+            background-color: #f0f4f7;
+        }
+
+        .accordion .fa {
+            margin-right: 0.5rem;
+        }
+
+        .accordion button,
+        .accordion button:hover,
+        .accordion button:focus {
+            text-decoration: none;
+        }
+
+        .card-header:after {
+            content: "\2212";
+            color: #000;
+            font-weight: bold;
+            float: left;
+            margin-right: 13px;
+            margin-left: 0px;
+            font-size: 18px;
+        }
+
+        .collapsed:after {
+            content: '\002B';
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'add_user_by_journal' implements granular access control for account.journal records.
+            It extends the Accounting Dashboard and search views to filter records based on 'assign_to_ids' (Users)
+            and 'journal_group_ids' (Groups).
+            Enforces security via ir.rule on account.move, ensuring record-level privacy.
+            Supports Hybrid Security: Public Access if assignments are empty; Restricted Access if Users or Groups are
+            set.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). NOT supported on Odoo Online due to custom
+            code restrictions.
+            Multi-language support for English and Spanish included.</p>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Journal Control</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Private Accounting Hub & Group Access</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Secure your financial data by restricting journal visibility to authorized team members or groups.
+                    Perfect for POS, Multi-Office, and high-security environments.
+                </p>
+            </div>
+        </div>
+
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-users mr-2"></i> Hybrid Access Control</h4>
+                            <p style="text-align: justify;">Maximum flexibility: Assign specific <strong>Users</strong>
+                                AND/OR entire <strong>User Groups</strong> (e.g., "POS Cashiers") to a journal. The
+                                system intelligently unifies permissions, so if a user matches either condition, they
+                                get in.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-magic mr-2"></i> Smart Public Access</h4>
+                            <p style="text-align: justify;">Need a public journal for automation or web sales? Just
+                                leave the assignments
+                                empty, and it automatically becomes <strong>Public</strong>. Add one user, and it
+                                instantly becomes <strong>Private</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Prepare the system for secure access in 4 simple steps:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Accounting >
+                                                Configuration > Journals</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Select the <strong>Bank,
+                                                Cash, or Misc</strong> journal you want to protect.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Find the <strong>Security
+                                                Settings</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>To
+                                                Restrict:</strong> Add Users or Groups. (Hybrid Logic: User OR Group).
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>To
+                                                Public:</strong> Leave both fields empty.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #791d97;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Smart Explainer:</strong> Look for
+                                    the
+                                    blue (Public) or yellow (Restricted) message box on the form. It will explain
+                                    exactly who has access in real-time.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How the system behaves for the end-user:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-columns text-primary mr-2"></i> Clean Dashboard</h5>
+                                        <p class="text-muted">The Accounting Dashboard is now private. Each team member
+                                            only sees the journals related to their assigned tasks, eliminating clutter
+                                            and potential data leaks.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-lock text-primary mr-2"></i> Bulletproof Privacy</h5>
+                                        <p class="text-muted">Security goes deep. Users cannot search for or read
+                                            Invoices, Moves, or even <strong>Journal Items (Lines)</strong> that belong
+                                            to restricted journals. Your sensitive data is locked down at the database
+                                            level.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-handshake-o text-primary mr-2"></i> Smart Interoperability
+                                        </h5>
+                                        <p class="text-muted">Privacy doesn't break operations. The system detects
+                                            <strong>Commercial Data</strong> (Payments/AR/AP) and allows Sales to view
+                                            them on invoices, even if the originating journal (e.g., Bank) is hidden.
+                                            Smooth workflow, zero leaks.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-rocket text-primary mr-2"></i> Fast Navigation</h5>
+                                        <p class="text-muted">When moving between diaries, users can use the
+                                            pre-configured <strong>"My Journals"</strong> (Mis Diarios) filter to
+                                            instantly narrow down their workspace.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-check-circle text-primary mr-2"></i> Multi-Currency Support
+                                        </h5>
+                                        <p class="text-muted">Journal assignments respect multi-currency configurations
+                                            and company divisions, ensuring a broad and secure ERP operation.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Our Expert Support is One Click Away</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Get immediate assistance
+                    via WhatsApp.</p>
+                <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                    class="cta-whatsapp shadow-lg">
+                    <i class="fa fa-whatsapp mr-2"></i> WhatsApp with Us Now
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Support Channels</h2>
+                <p style="color:#777783">Need help? Get in touch with our experts.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="d-flex align-items-center h-100"
+                    style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
+                    <div>
+                        <h4>Official WhatsApp</h4>
+                        <p class="text-muted">Fastest response time.</p>
+                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                            style="text-decoration:none;">
+                            <p style="font-weight:600; font-size:18px; color:#714B67; margin-bottom: 0;">+1 (828)
+                                672-6150</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="d-flex align-items-center h-100"
+                    style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
+                    <div>
+                        <h4>Global Email</h4>
+                        <p class="text-muted">For sales & technical inquiries.</p>
+                        <a href="mailto:leads@ganemo.co" target="_blank" style="text-decoration:none;">
+                            <p style="font-weight:600; font-size:18px; color:#714B67; margin-bottom: 0;">leads@ganemo.co
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                <div class="d-flex align-items-center h-100"
+                    style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
+                    <div>
+                        <h4>Book a Demo</h4>
+                        <p class="text-muted">Let's explore your needs.</p>
+                        <a href="https://www.ganemo.co/appointment/5" target="_blank" style="text-decoration:none;">
+                            <p style="font-weight:600; font-size:18px; color:#714B67; margin-bottom: 0;">Schedule
+                                Meeting</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 pb-5">
+            <div class="col-12 text-center text-muted">
+                <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.co" target="_blank">visit
+                        ganemo.co</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
