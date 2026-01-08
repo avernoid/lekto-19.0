@@ -1,0 +1,11 @@
+    <!-- Odoo 19: Inherit the Customizable LineName template where the actual DOM resides -->
+    <t t-inherit="account_reports.AccountReportLineNameCustomizable" t-inherit-mode="extension">
+        <!-- Odoo 19 Strict Compliance: Target the caret options container div directly -->
+        <xpath expr="//div[@data-id='caret_options']" position="inside">
+             <t t-if="AnnexesAndNotes">
+                <DropdownItem onSelected="() => this.openWizardFinancial()">
+                    Notas y Anexos (Excel)
+                </DropdownItem>
+            </t>
+        </xpath>
+    </t>

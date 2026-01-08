@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- 
+            Enterprise Bridge Module
+            This module exists to ensure 'financial_statement_annexes' (Base) is installed.
+            The Base module provides the Wizard and the 'Generic' menu access.
+            
+            The Native Enterprise Report implementation has been disabled/removed until further notice.
+            No specific menus are defined here to avoid duplication.
+        -->
+    </data>
+</odoo>

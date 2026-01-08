@@ -1,0 +1,9 @@
+---Models in module 'financial_statement_annexes'---
+---Fields in module 'financial_statement_annexes'---
+---XML records in module 'financial_statement_annexes'---
+UPD ir.ui.view:  financial_statement_annexes.wizard_report_financial_form_view -> financial_statement_annexes.wizard_report_financial_view_form
+----------------------------------------------------------------
+DEPENDS [ add_reconcile_date]
+model: 
+field:  
+xml_id: 

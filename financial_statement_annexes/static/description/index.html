@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Financial Statement Annexes - Master Your Audits</title>
+    <meta name="description"
+        content="Generate precise Odoo financial reports with cut-off dates. Perfect for audits, aging analysis, and historical debt tracking. Accounts Receivable & Payable in Excel.">
+    <meta name="keywords"
+        content="Odoo, Financial Reports, Aging Analysis, Cut-off Date, Accounts Receivable, Accounts Payable, Audit, Historical Balances, Excel Export, Ganemo, Accounting">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap & FontAwesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #5154a5;
+            --accent-color: #9451a5;
+            --text-dark: #2c3e50;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-dark);
+            background-color: white;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+
+        .text-accent {
+            color: var(--accent-color) !important;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(81, 84, 165, 0.05) 0%, rgba(148, 81, 165, 0.05) 100%);
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Value Props */
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(148, 81, 165, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #791d97;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Screenshots / Workflow */
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-right: 15px;
+        }
+
+        .workflow-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Contact / Footer */
+        .contact-box {
+            background: #F6F8F9;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .contact-box:hover {
+            background: #eef2f5;
+        }
+
+        .btn-custom {
+            border-radius: 50px;
+            padding: 10px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            border: 2px solid #25D366;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: transparent;
+            color: #25D366;
+        }
+
+        .btn-email {
+            background-color: #3c6dac;
+            color: white;
+            border: 2px solid #3c6dac;
+        }
+
+        .btn-email:hover {
+            background-color: transparent;
+            color: #3c6dac;
+        }
+
+        /* SEO Hidden Content for LLMs */
+        .llm-context {
+            display: none;
+        }
+
+        /* Enterprise Badge */
+        .enterprise-badge {
+            background: #E8F0FE;
+            color: #1a73e8;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Enterprise Badge Row -->
+    <div class="container-fluid py-2 border-bottom">
+        <div class="d-flex justify-content-between align-items-center px-4">
+            <div class="enterprise-badge">
+                <i class="fas fa-check-circle mr-2"></i> Enterprise Ready (Odoo.sh, On-Premise)
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+
+        <!-- Hero Section -->
+        <div class="hero-section text-center">
+            <h1 class="hero-title">
+                <span class="text-primary">Financial Statement</span> <span class="text-accent">Annexes</span>
+            </h1>
+            <p class="hero-subtitle">
+                Stop struggling with end-of-month reconciliations. Generate audit-ready <b>Accounts Receivable &
+                    Payable</b> reports with precise cut-off dates and advanced aging analysis in seconds.
+            </p>
+        </div>
+
+        <!-- Problem & Solution (Why buy this?) -->
+        <div class="row mb-5">
+            <div class="col-md-6 mb-4">
+                <div class="value-card">
+                    <div class="icon-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h4>The Problem</h4>
+                    <p class="text-muted">
+                        Native Odoo reports often reflect the <i>current</i> status of a partner's debt, making it
+                        difficult to reconstruct the exact balance at a specific past date. Auditors demand historical
+                        accuracy (e.g., "What was the balance on Dec 31st?"), and manual spreadsheet reconstruction is
+                        prone to errors.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="value-card web-design">
+                    <div class="icon-box">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <h4>Our Solution</h4>
+                    <p class="text-muted">
+                        We augment Odoo's reporting engine to freeze time. Select any past date, and our engine
+                        recalculates the exact open balance for every partner as of that moment. combined with flexible
+                        aging buckets (1-30, 31-60 days), it's the ultimate tool for financial controllers.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>Key Capabilities</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="value-card text-center">
+                        <div class="icon-box mx-auto">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h5>Precise Cut-Off Dates</h5>
+                        <p class="small text-muted">Generate reports as of any historical date. Perfect for month-end
+                            and year-end closing.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="value-card text-center">
+                        <div class="icon-box mx-auto">
+                            <i class="fas fa-hourglass-half"></i>
+                        </div>
+                        <h5>Advanced Aging</h5>
+                        <p class="small text-muted">Visualize debt maturity with configurable buckets (Current, 1-30,
+                            30-60, 60+ days) to prioritize collections.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="value-card text-center">
+                        <div class="icon-box mx-auto">
+                            <i class="fas fa-file-excel"></i>
+                        </div>
+                        <h5>Native Excel Export</h5>
+                        <p class="small text-muted">Direct export to professionally formatted Excel files, ready for
+                            presentation to auditors or management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Workflow / How it works -->
+        <section class="mb-5 bg-light p-5 rounded">
+            <div class="section-header">
+                <h2>How It Works</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="workflow-item">
+                        <div class="step-circle">1</div>
+                        <div>
+                            <h5>Access the Report</h5>
+                            <p class="text-muted">Navigate to <b>Accounting > Reporting > Financial Reports > Notas y
+                                    Anexos (Excel)</b>.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <div class="step-circle">2</div>
+                        <div>
+                            <h5>Set Your Parameters</h5>
+                            <p class="text-muted">Choose your <b>Start Date</b> and <b>End Date</b>. Select whether you
+                                want accurate accounts Payable or Receivable.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <div class="step-circle">3</div>
+                        <div>
+                            <h5>Enable Aging Analysis</h5>
+                            <p class="text-muted">Toggle the "Reporte de Antigüedad" option to break down balances by
+                                days overdue.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <div class="step-circle">4</div>
+                        <div>
+                            <h5>Export & Analyze</h5>
+                            <p class="text-muted">Click "Descargar en Excel". You now have a hard-data snapshot of your
+                                financials.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Ganemo -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>Why Choose Ganemo?</h2>
+            </div>
+            <div class="row text-center">
+                <div class="col-12">
+                    <p class="lead text-muted mx-auto" style="max-width: 800px;">
+                        With over 5 years of experience and recognition as a top Odoo Partner in the US and Latin
+                        America (Peru, Mexico, Chile, Spain, Colombia), we build modules that solve real-world
+                        accounting problems. We are the #1 seller of quality Odoo apps for a reason: <b>Reliability</b>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages Supported -->
+        <div class="row mb-5 justify-content-center">
+            <div class="col-md-8 text-center">
+                <span class="badgem badge-pill badge-light px-4 py-2 border shadow-sm"
+                    style="font-size: 1.1rem; color: #5154a5;">
+                    <i class="fas fa-language mr-2"></i> Fully Supported in <b>English</b> & <b>Spanish</b> (Español)
+                </span>
+            </div>
+        </div>
+
+        <!-- User Manual & Guide -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>User Manual & Guide</h2>
+            </div>
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <h4 class="text-primary mb-3"><i class="fas fa-cogs mr-2"></i>Configuration</h4>
+                <p>
+                    The module is designed for <b>"Plug & Play"</b> use. No complex configuration settings are required
+                    in the General Settings.
+                </p>
+                <ul>
+                    <li><b>Prerequisites:</b> Ensure the user has the "Show Full Accounting Features" rights or
+                        equivalent Accountant access to view the <i>Reporting</i> menu.</li>
+                    <li><b>Access:</b> The report menu is automatically added at
+                        <code>Accounting > Reporting > Financial Reports > Notas y Anexos (Excel)</code>.
+                    </li>
+                    <li><b>Multi-Company:</b> The report respects the currently selected company in the Odoo
+                        environment.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Detailed Workflow Guide -->
+        <section class="mb-5 bg-light p-5 rounded">
+            <div class="section-header">
+                <h2>Daily Workflow Guide</h2>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <p class="text-center text-muted mb-4 lead">
+                        How to use this tool in your day-to-day operations for audits and internal controls.
+                    </p>
+
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-accent">1. End-of-Month Review</h5>
+                            <p class="card-text">
+                                When closing the month (e.g., January), you need to know exactly who owed what on Jan
+                                31st.
+                                <br>
+                                <b>Action:</b> Run the report with <code>End Date = 01/31/YYYY</code>. The system
+                                recalculates balances as if it were that day, ignoring payments made in February.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-accent">2. Audit Requests</h5>
+                            <p class="card-text">
+                                External auditors often ask for a "breakdown of Accounts Payable as of Dec 31st".
+                                <br>
+                                <b>Action:</b> Select "Payable Accounts", set the date to Dec 31st, and export to Excel.
+                                The file contains partner names, VAT numbers, and detailed amounts matching the Trial
+                                Balance.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title text-accent">3. Collections Management</h5>
+                            <p class="card-text">
+                                Use the <b>Aging</b> feature to spot overdue invoices.
+                                <br>
+                                <b>Action:</b> Enable "Reporte de Antigüedad". The Excel file will show columns like
+                                "1-30 Days", "31-60 Days", making it easy to filter and send dunning emails to the right
+                                customers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA / User Testing Scenarios -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>QA / User Testing Scenarios</h2>
+            </div>
+            <p class="text-center text-muted mb-4">
+                Follow these scenarios to verify the module's accuracy in your environment.
+            </p>
+
+            <div class="qa-scenarios">
+
+                <!-- Scenario 1 -->
+                <div class="card mb-3 border shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0 text-primary font-weight-bold">
+                            <i class="fas fa-vial mr-2"></i> Scenario 1: Historical Balance Accuracy
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Create an Invoice for <b>Customer A</b> for $1000 on <b>Jan 1st</b>.</li>
+                            <li>Register a Payment of $1000 on <b>Feb 1st</b>.</li>
+                            <li>Run the report with End Date = <b>Jan 15th</b>.</li>
+                            <li><b>Expected Result:</b> Customer A should show a balance of $1000 (Payment from Feb is
+                                ignored).</li>
+                            <li>Run the report with End Date = <b>Feb 2nd</b>.</li>
+                            <li><b>Expected Result:</b> Customer A should NOT appear (or show $0 balance).</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Scenario 2 -->
+                <div class="card mb-3 border shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0 text-dark font-weight-bold">
+                            <i class="fas fa-vial mr-2"></i> Scenario 2: Aging Buckets Verification
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Set report date to <b>Today</b>.</li>
+                            <li>Find an invoice that is 45 days overdue.</li>
+                            <li>Enable "Reporte de Antigüedad".</li>
+                            <li><b>Expected Result:</b> The amount should appear specifically in the <b>31-60 Days</b>
+                                column in the Excel file.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Scenario 3 -->
+                <div class="card mb-3 border shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0 text-dark font-weight-bold">
+                            <i class="fas fa-vial mr-2"></i> Scenario 3: Partial Payments
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Create an invoice for $1000. Pay $400. Remaining = $600.</li>
+                            <li>Run the report.</li>
+                            <li><b>Expected Result:</b> The report should show the <b>Residual Amount</b> of $600, not
+                                the original $1000.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Scenario 4 -->
+                <div class="card mb-3 border shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0 text-dark font-weight-bold">
+                            <i class="fas fa-vial mr-2"></i> Scenario 4: Multi-Currency Validation (Amount Currency)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Create multiple Invoices in a foreign currency (e.g., 2 invoices of $100 USD each).</li>
+                            <li>Run the report.</li>
+                            <li><b>Expected Result:</b> The report should correctly display and SUM the <b>"Amount
+                                    Currency"</b> column (showing $200 USD total), ensuring the original currency values
+                                are preserved alongside the converted amounts.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Scenario 5 -->
+                <div class="card mb-3 border shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0 text-dark font-weight-bold">
+                            <i class="fas fa-vial mr-2"></i> Scenario 5: Balance Sheet Accounts (Non-Reconcilable)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Select an account like <b>Equity</b>, <b>Fixed Assets</b>, or <b>Bank</b> (if not set to
+                                reconcile).</li>
+                            <li>Run the report with End Date = Jan 31st.</li>
+                            <li><b>Expected Result:</b> The report displays the <b>Cumulative Balance</b> (Historic) up
+                                to the End Date. It ignores the Start Date for the calculation, behaving like a true
+                                Balance Sheet.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Scenario 6 -->
+                <div class="card mb-3 border shadow-sm">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0 text-dark font-weight-bold">
+                            <i class="fas fa-vial mr-2"></i> Scenario 6: Profit & Loss Accounts
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Select an <b>Income</b> or <b>Expense</b> account.</li>
+                            <li>Run the report with Start Date = Jan 1st and End Date = Jan 31st.</li>
+                            <li><b>Expected Result:</b> The report displays the sum of movements <b>strictly within the
+                                    Date Range</b> (Period Activity), ignoring previous balances.</li>
+                        </ol>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="mb-5">
+            <div class="section-header">
+                <h2>FAQ & Troubleshooting</h2>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h5 class="text-primary">Why is the report empty?</h5>
+                    <p class="small text-muted">
+                        Double-check your <b>Date Range</b> and <b>Account Type</b> selection. If you select "Payable"
+                        but only have Customer Invoices (Receivable), the report will be empty. Also, ensure there are
+                        Posted entries in that period.
+                    </p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h5 class="text-primary">I can't see the menu item.</h5>
+                    <p class="small text-muted">
+                        This usually means your user is missing permissions. Ensure you have "Accountant" or "Manager"
+                        level access in the Accounting app settings.
+                    </p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h5 class="text-primary">Does it support Multi-Currency?</h5>
+                    <p class="small text-muted">
+                        Yes. The report exports values in the company's currency. Foreign currency transactions are
+                        converted using the exchange rate active at the date of the transaction (or the report date,
+                        depending on configured valuation settings).
+                    </p>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h5 class="text-primary">Can I customize the aging buckets?</h5>
+                    <p class="small text-muted">
+                        The current version uses standard standard 30-day buckets (1-30, 31-60, 61-90, 90+). Custom
+                        bucket configuration is available in our Enterprise+ version or via customization request.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / Contact -->
+        <section class="mt-5 pt-5 border-top">
+            <h3 class="text-center mb-5" style="color: #3D3D4E;">We're Here to Help</h3>
+            <div class="row justify-content-center">
+                <!-- WhatsApp -->
+                <div class="col-md-4 mb-4">
+                    <div class="contact-box">
+                        <i class="fab fa-whatsapp fa-3x mb-3 text-success"></i>
+                        <h4>WhatsApp Support</h4>
+                        <p class="text-muted">Fast response for quick questions.</p>
+                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                            class="btn btn-custom btn-whatsapp">
+                            Chat with us
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-4 mb-4">
+                    <div class="contact-box">
+                        <i class="fas fa-envelope fa-3x mb-3 text-primary"></i>
+                        <h4>Email Support</h4>
+                        <p class="text-muted">Detailed technical assistance.</p>
+                        <a href="mailto:leads@ganemo.co" target="_blank" class="btn btn-custom btn-email">
+                            leads@ganemo.co
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Schedule -->
+                <div class="col-md-4 mb-4">
+                    <div class="contact-box">
+                        <i class="fas fa-calendar-check fa-3x mb-3" style="color: #714B67;"></i>
+                        <h4>Schedule Demo</h4>
+                        <p class="text-muted">See it in action.</p>
+                        <a href="https://www.ganemo.co/appointment/5" target="_blank" class="btn btn-custom"
+                            style="background-color: #714B67; color: white;">
+                            Book a Time
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LLM / SEO Optimization Context (Hidden) -->
+        <section class="llm-context">
+            <h3>Module Technical Summary for AI Indexing</h3>
+            <p>
+                This Odoo module, "Financial Statement Annexes", enables the generation of historical financial reports
+                with specific cut-off dates.
+                Key features include:
+                - Aging analysis (partner balance aging) for accounts receivable and payable.
+                - Accurate reconstruction of partner debt at any past date (historical cut-off).
+                - Integration with Odoo Accounting > Reporting menu.
+                - Output format: .xlsx (Excel) for manipulation and audit presentation.
+                - Solves the "Time Travel" problem in accounting where native reports often show current residual
+                amounts instead of historical values.
+                - Compatible with Odoo Enterprise and Community versions (depending on base dependency).
+                - Developed by Ganemo, a Gold Partner and localization expert.
+            </p>
+        </section>
+
+    </div>
+</body>
+
+</html>
