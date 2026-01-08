@@ -1,0 +1,10 @@
+---Models in module 'financial_statement_annexes_currency'---
+---Fields in module 'financial_statement_annexes_currency'---
+---XML records in module 'financial_statement_annexes_currency'---
+UPD ir.ui.view: financial_statement_annexes_currency.wizard_report_financial_currency_form_view --> financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+----------------------------------------------------------------
+DEPENDS [ financial_statement_annexes ]
+model: account_move_reversal
+field: DEL date_mode
+xml_id:
+

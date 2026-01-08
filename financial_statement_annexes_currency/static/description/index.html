@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<!--FINAL INDEX UPDATED-->
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unrealized Gain/Loss Foreign Currency - Odoo App</title>
+    <meta name="description"
+        content="Automate unrealized foreign currency gain/loss calculations in Odoo. Precise revaluation for multi-currency accounting.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #212121;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .text-purple {
+            color: #714B67;
+        }
+
+        .text-teal {
+            color: #00A09D;
+        }
+
+        .bg-light-purple {
+            background-color: #F6F8F9;
+        }
+
+        .card-box {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid #714B67;
+            transition: transform 0.2s;
+        }
+
+        .card-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .display-4 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #5154a5;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="d-flex align-items-center justify-content-between text-center py-3 border-bottom border-purple">
+        <div class="mx-auto">
+            <div
+                style="color: #875A7B; font-size: 14px; font-weight: bold; background-color: white; display: inline-block; padding: 3px 15px; border-radius: 50px; border: 1px solid #e0e0e0;">
+                <i class="fa fa-check mr-1"></i>Enterprise Ready (Odoo.SH, Ganemo Online)
+            </div>
+        </div>
+    </div>
+
+    <!-- BANNER SECTION -->
+    <div class="container my-5">
+        <div class="row align-items-center justify-content-center text-center">
+            <div class="col-lg-12">
+                <h1 class="display-4 mb-2">
+                    <span style="color:#714B67;">Unrealized Gains/Losses</span>
+                </h1>
+                <p class="h3 text-uppercase text-muted mb-4" style="letter-spacing: 4px; font-weight: bold;">
+                    Foreign Currency Revaluation
+                </p>
+                <p class="lead font-weight-bold mb-4">
+                    Automate your multi-currency closing process. Calculate exchange differences instantly <br>and post
+                    adjustment entries with precision.
+                </p>
+                <div style="font-size: 18px; color: #00A09D; font-weight: 600;">
+                    <i class="fa fa-check-circle mr-1"></i> Automated Adjustments &nbsp;|&nbsp;
+                    <i class="fa fa-check-circle mr-1"></i> Real-time Valuation &nbsp;|&nbsp;
+                    <i class="fa fa-check-circle mr-1"></i> Multi-Currency Support
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+
+        <!-- PROBLEM: What We're Solving -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    What We're Solving
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <p style="font-size: 1.1rem; text-align: justify; line-height: 1.8;">
+                            Managing accounts in multiple currencies brings a critical challenge: <strong>Exchange Rate
+                                Volatility</strong>.
+                            At the end of every month or fiscal year, the book value of your foreign currency assets and
+                            liabilities rarely matches the current market value.
+                            <br><br>
+                            Manually updating these values in spreadsheets is time-consuming, prone to calculation
+                            errors, and creates a disconnect in your accounting software.
+                            <strong>This module eliminates that manual work</strong>, ensuring your financial statements
+                            are accurate, compliant, and reflective of the true economic reality.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- OVERVIEW: How It Works -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    Overview
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-md-12">
+                    <div class="card-box" style="border-left-color: #00A09D;">
+                        <ul class="list-unstyled" style="font-size: 1.1rem;">
+                            <li class="mb-3">
+                                <i class="fa fa-arrow-circle-right text-teal mr-2"></i>
+                                <strong>Smart Wizard:</strong> A dedicated interface to select specific accounts
+                                (Receivable, Payable, Bank) for revaluation.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa fa-arrow-circle-right text-teal mr-2"></i>
+                                <strong>Flexible Rates:</strong> Choose between Buying, Selling, or Custom exchange
+                                rates for the valuation.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa fa-arrow-circle-right text-teal mr-2"></i>
+                                <strong>Automatic Posting:</strong> Generates the journal entry for the difference
+                                (Unrealized Gain/Loss) automatically.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fa fa-arrow-circle-right text-teal mr-2"></i>
+                                <strong>Auto-Reversal:</strong> Optionally reverse the entry on the first day of the
+                                next period to reset the accounting state.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LANGUAGES SUPPORTED -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    Languages Supported
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box text-center">
+                        <p style="font-size: 1.2rem;">
+                            This module is fully translated and supported in:
+                        </p>
+                        <div class="d-flex justify-content-center mt-3">
+                            <span class="badge badge-pill badge-primary mr-2 px-3 py-2"
+                                style="background-color: #714B67; font-size: 1rem;">🇺🇸 English</span>
+                            <span class="badge badge-pill badge-primary px-3 py-2"
+                                style="background-color: #714B67; font-size: 1rem;">🇪🇸 Spanish</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- USER MANUAL & GUIDE -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    User Manual & Guide
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <h4 class="text-purple mb-4"><i class="fa fa-cogs"></i> Configuration</h4>
+                        <ol style="font-size: 1.1rem; line-height: 1.8;">
+                            <li>
+                                <strong>Multi-Currency Activation:</strong>
+                                Go to <mark>Accounting > Configuration > Settings</mark> and enable "Multi-Currencies".
+                            </li>
+                            <li>
+                                <strong>Chart of Accounts:</strong>
+                                Ensure your foreign currency accounts (e.g., USD Bank Account) have the correct
+                                <b>Account Currency</b> set in their configuration.
+                                <i>Note: The wizard only shows accounts where the Currency is different from the Company
+                                    Currency.</i>
+                            </li>
+                            <li>
+                                <strong>Exchange Rate Journal:</strong>
+                                Go to <mark>Accounting > Configuration > Settings</mark> (Currencies section) and ensure
+                                the "Currency Exchange Journal" and "Gain/Loss Accounts" are configured (this is
+                                standard Odoo, but required).
+                            </li>
+                        </ol>
+
+                        <h4 class="text-purple mb-4 mt-5"><i class="fa fa-wrench"></i> Advanced & Troubleshooting</h4>
+                        <ul style="font-size: 1.1rem; line-height: 1.8;">
+                            <li>
+                                <strong>Missing Accounts in Wizard:</strong>
+                                If an account does not appear in the wizard, verify that the <code>Currency</code> field
+                                on the Account form is set. If it is empty (Company Currency), it is excluded from
+                                revaluation.
+                            </li>
+                            <li>
+                                <strong>Exchange Rates:</strong>
+                                The wizard requires a <b>Closing Exchange Rate</b> for each account. This allows you to
+                                revalue different accounts at different rates (e.g., Buy vs Sell rate) if needed by
+                                local regulations.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORKFLOW GUIDE -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    Daily Workflow
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <div class="row align-items-center">
+                            <div class="col-md-4 text-center">
+                                <i class="fa fa-calculator fa-5x text-teal mb-3"></i>
+                                <h5 class="text-purple">1. Generate Preview</h5>
+                                <p class="text-muted">Open the Wizard, select accounts and date range. Click "Generate
+                                    Excel Preview".</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <i class="fa fa-file-excel-o fa-5x text-teal mb-3"></i>
+                                <h5 class="text-purple">2. Review Excel</h5>
+                                <p class="text-muted">Check the calculated adjustments in the downloaded file. Verify
+                                    amounts and rates.</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <i class="fa fa-check-square-o fa-5x text-teal mb-3"></i>
+                                <h5 class="text-purple">3. Post Entries</h5>
+                                <p class="text-muted">If approved, click "Generate Adjustment Entry" to post the journal
+                                    entries automatically.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    QA / User Testing Scenarios
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <p class="mb-4">Use these scenarios to validate the module functionality in your environment.
+                        </p>
+
+                        <h5 class="text-purple font-weight-bold">Scenario A: Basic Gain/Loss</h5>
+                        <ol>
+                            <li>Create a bank account in USD (assuming company currency is different).</li>
+                            <li>Post an incoming payment of $1000 USD at an exchange rate of 1.0.</li>
+                            <li>At month-end, the exchange rate is 1.2.</li>
+                            <li>Run the wizard with Closing Rate = 1.2.</li>
+                            <li><b>Expected Result:</b> The system should calculate a gain (or loss depending on base
+                                currency) based on the 0.2 difference and post an adjustment entry.</li>
+                        </ol>
+
+                        <hr>
+
+                        <h5 class="text-purple font-weight-bold">Scenario B: No Variation</h5>
+                        <ol>
+                            <li>Use an account where the closing rate is exactly the same as the transaction rate.</li>
+                            <li>Run the wizard.</li>
+                            <li><b>Expected Result:</b> The calculated adjustment should be 0.00, and no entry should be
+                                generated for this specific account.</li>
+                        </ol>
+
+                        <hr>
+
+                        <h5 class="text-purple font-weight-bold">Scenario C: Reversal Check</h5>
+                        <ol>
+                            <li>Post the adjustment entry from Scenario A.</li>
+                            <li>Check the "Reversal Date" on the generated Journal Entry.</li>
+                            <li><b>Expected Result:</b> The entry should be set to auto-reverse on the first day of the
+                                next period (if configured to do so) to reset the balance.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    FAQ & Troubleshooting
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-box" style="height: 100%;">
+                        <h5 class="text-purple font-weight-bold">Q: Why is my account list empty?</h5>
+                        <p>A: The wizard filters for accounts that have a <b>Foreign Currency</b> set in their
+                            configuration. If your account is set to the Company Currency or has no currency specified,
+                            it will not appear.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card-box" style="height: 100%;">
+                        <h5 class="text-purple font-weight-bold">Q: Can I edit the calculated amounts?</h5>
+                        <p>A: No, the amounts are calculated mathematically based on the balance and the exchange rate
+                            you provide. If you need a different result, check your input Exchange Rate or the account
+                            balance.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4">
+                    <div class="card-box" style="height: 100%;">
+                        <h5 class="text-purple font-weight-bold">Q: Does this affect my official reports?</h5>
+                        <p>A: Yes, it creates standard Header Journal Entries. However, since they are usually set to
+                            reverse immediately, they serve primarily for month-end reporting compliance without
+                            permanently altering historical cost.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-4">
+                    <div class="card-box" style="height: 100%;">
+                        <h5 class="text-purple font-weight-bold">Q: What if I have thousands of accounts?</h5>
+                        <p>A: The module is optimized for performance. However, for massive datasets, we recommend
+                            processing by Account Group if you experience timeouts, though standard volumes handle fine.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EASY SETUP -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    Easy Setup
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <p style="font-size: 1.1rem; line-height: 1.8;">
+                            Getting started is simple. Just ensure your standard Odoo multi-currency configuration is
+                            active.
+                            Navigate to the wizard, select your parameters, and let the system handle the complex math.
+                            <strong>No complex implementation required.</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORKFLOW GUIDE -->
+        <section class="mt-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    Workflow Guide
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box" style="border-left: none; border-top: 5px solid #714B67;">
+                        <ol style="font-size: 1.1rem; line-height: 2;">
+                            <li>Go to <strong>Accounting > Reporting > Unrealized Gains/Losses</strong>.</li>
+                            <li>Definen the <strong>Start Date</strong> and <strong>End Date</strong> for the period.
+                            </li>
+                            <li>Select the <strong>Accounts</strong> you want to revalue.</li>
+                            <li>Review the calculated adjustment in the preview.</li>
+                            <li>Click <strong>Generate Entry</strong> to post to the General Ledger.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY CHOOSE GANEMO -->
+        <section class="mt-5 mb-5">
+            <div class="text-center mb-5">
+                <h2 class="text-uppercase" style="font-size: 2.5rem; color: #714B67;">
+                    Why Choose Ganemo?
+                </h2>
+                <div style="height: 4px; width: 60px; background-color: #00A09D; margin: 10px auto;"></div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-box text-center bg-light">
+                        <p style="font-size: 1.1rem; font-style: italic;">
+                            "Ganemo is the premier Odoo Implementation Partner with over 5 years of specialized
+                            experience.
+                            We are the #1 seller of high-quality Odoo apps worldwide.
+                            Recognized as the Best Partner in Peru, USA, Mexico, Chile, Spain, Colombia, and Ecuador.
+                            Award-winning Localization experts."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container-fluid mt-5 py-5" style="background-color: #F6F8F9;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h3 class="font-weight-bold mb-3" style="color:#3D3D4E">Support</h3>
+                    <p class="text-muted">Need help? We're here for you.</p>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 bg-white shadow-sm rounded">
+                        <h4 class="font-weight-bold">WhatsApp</h4>
+                        <p class="text-muted small">Instant Support</p>
+                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                            class="text-decoration-none">
+                            <h5 class="text-purple font-weight-bold">+1 (828) 672-6150</h5>
+                        </a>
+                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
+                            class="btn btn-success btn-block rounded-pill mt-3">
+                            <i class="fa fa-whatsapp mr-2"></i> Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="p-4 bg-white shadow-sm rounded">
+                        <h4 class="font-weight-bold">Email Us</h4>
+                        <p class="text-muted small">Detailed Inquiries</p>
+                        <a href="mailto:leads@ganemo.co" target="_blank" class="text-decoration-none">
+                            <h5 class="text-purple font-weight-bold">leads@ganemo.co</h5>
+                        </a>
+                        <a href="mailto:leads@ganemo.co" target="_blank"
+                            class="btn btn-primary btn-block rounded-pill mt-3"
+                            style="background-color: #3c6dac; border-color: #3c6dac;">
+                            <i class="fa fa-envelope mr-2"></i> Send Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

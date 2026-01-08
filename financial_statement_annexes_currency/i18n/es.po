@@ -1,0 +1,145 @@
+# Spanish translation for financial_statement_annexes_currency.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-08 00:00+0000\n"
+"PO-Revision-Date: 2026-01-08 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,field_description:financial_statement_annexes_currency.field_account_account__adjustment_rate
+msgid "Closing Exchange Rate"
+msgstr "Tipo de Cambio Cierre"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,help:financial_statement_annexes_currency.field_account_account__adjustment_rate
+msgid "Exchange rate used for the unrealized gain/loss calculation at the end of the period."
+msgstr "Tipo de cambio utilizado para el cálculo de ganancias/pérdidas no realizadas al cierre del periodo."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,field_description:financial_statement_annexes_currency.field_wizard_report_financial_currency__date_start
+msgid "Start Date"
+msgstr "Fecha Inicio"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,help:financial_statement_annexes_currency.field_wizard_report_financial_currency__date_start
+msgid "Start date of the analysis period."
+msgstr "Fecha de inicio del periodo de análisis."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,field_description:financial_statement_annexes_currency.field_wizard_report_financial_currency__date_end
+msgid "End Date"
+msgstr "Fecha Fin"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,help:financial_statement_annexes_currency.field_wizard_report_financial_currency__date_end
+msgid "End date of the analysis period."
+msgstr "Fecha de fin del periodo de análisis."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,field_description:financial_statement_annexes_currency.field_wizard_report_financial_currency__xls_binary
+msgid "Excel Report"
+msgstr "Reporte Excel"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,help:financial_statement_annexes_currency.field_wizard_report_financial_currency__xls_binary
+msgid "Generated Excel report file."
+msgstr "Archivo de reporte Excel generado."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,field_description:financial_statement_annexes_currency.field_wizard_report_financial_currency__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,field_description:financial_statement_annexes_currency.field_wizard_report_financial_currency__account_ids
+msgid "Accounts"
+msgstr "Cuentas"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,help:financial_statement_annexes_currency.field_wizard_report_financial_currency__account_ids
+msgid "Select the foreign currency accounts to analyze."
+msgstr "Seleccione las cuentas en moneda extranjera a analizar."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,field_description:financial_statement_annexes_currency.field_wizard_report_financial_currency__seniority_report
+msgid "Aging Report"
+msgstr "Reporte de Antigüedad"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.model.fields,help:financial_statement_annexes_currency.field_wizard_report_financial_currency__seniority_report
+msgid "Include aging analysis in the report."
+msgstr "Incluir análisis de antigüedad en el reporte."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Unrealized Gain/Loss Analysis"
+msgstr "Análisis de Ganancias/Pérdidas No Realizadas"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Download Excel"
+msgstr "Descargar Excel"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Generate Adjustment Entry"
+msgstr "Generar Asiento de Ajuste"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.actions.act_window,name:financial_statement_annexes_currency.action_wizard_report_financial_currency
+msgid "Currency Exchange Difference"
+msgstr "Diferencia de Cambio"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.menu,name:financial_statement_annexes_currency.change_diference
+msgid "Unrealized Gains/Losses"
+msgstr "Ganancias/Pérdidas No Realizadas"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Note"
+msgstr "Nota"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Only accounts with a <b>Foreign Currency</b> set (different from the Company Currency) will appear in this list."
+msgstr "Solo las cuentas con una <b>Moneda Extranjera</b> configurada (diferente a la Moneda de la Compañía) aparecerán en esta lista."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Please enter the <b>Closing Exchange Rate</b> for each account to calculate the unrealized gain/loss."
+msgstr "Por favor ingrese el <b>Tipo de Cambio de Cierre</b> para cada cuenta para calcular la ganancia/pérdida no realizada."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Workflow Guide:"
+msgstr "Guía de Flujo:"
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Click <b>Generate Excel Preview</b> to calculate adjustments for selected accounts."
+msgstr "Haga clic en <b>Generar Vista Previa en Excel</b> para calcular los ajustes de las cuentas seleccionadas."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Download and review the Excel file to verify the proposed entries."
+msgstr "Descargue y revise el archivo Excel para verificar los asientos propuestos."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "If correct, come back and click <b>Generate Adjustment Entry</b> to post it to the General Ledger."
+msgstr "Si es correcto, regrese y haga clic en <b>Generar Asiento de Ajuste</b> para publicarlo en el Libro Mayor."
+
+#. module: financial_statement_annexes_currency
+#: model:ir.ui.view,arch_db:financial_statement_annexes_currency.wizard_report_financial_currency_view_form
+msgid "Generate Excel Preview"
+msgstr "Generar Vista Previa en Excel"
