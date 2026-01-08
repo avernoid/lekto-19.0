@@ -15,7 +15,7 @@ In the field "Customs Unit" it will give us a list of codes: 019, 028, 046, 055,
 *These codes will be loaded in the path "LOCATION/PLE/[11]CUSTOMS DEPENDENCY CODE".
     """,
     'depends': [
-        'localization_menu',
+        'l10n_pe_localization_menu',
         'l10n_latam_invoice_document'
     ],
     'data': [

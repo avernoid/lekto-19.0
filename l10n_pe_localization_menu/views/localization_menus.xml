@@ -4,7 +4,7 @@
     <menuitem 
         id="menu_localization" 
         name="Localización" 
-        web_icon="localization_menu,static/description/icon.png"
+        web_icon="l10n_pe_localization_menu,static/description/icon.png"
     />
 
     <menuitem 

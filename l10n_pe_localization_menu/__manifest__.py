@@ -1,5 +1,5 @@
 {
-    'name': 'Localization Menu',
+    'name': 'l10n_pe_localization_menu',
     'version': '19.0.1.0.1',
     'author': 'Ganemo',
     'maintainer': 'Ganemo',
@@ -28,7 +28,7 @@ This module has been crafted to implement new menus, aiming to enhance key funct
     'auto_install': False,
     'license': 'OPL-1',
     'images': ['static/description/banner.png'],
-    'icon': '/localization_menu/static/description/icon.png',
+    'icon': '/l10n_pe_localization_menu/static/description/icon.png',
     'currency': 'USD',
     'price': 20.00,
     'module_type': 'official'
