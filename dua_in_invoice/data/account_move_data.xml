@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="code_aduana_19" model="code.aduana">
+            <field name="name">TUMBES</field>
+            <field name="code">19</field>
+        </record>
+        <record id="code_aduana_28" model="code.aduana">
+            <field name="name">TALARA</field>
+            <field name="code">28</field>
+        </record>
+        <record id="code_aduana_46" model="code.aduana">
+            <field name="name">PAITA</field>
+            <field name="code">46</field>
+        </record>
+        <record id="code_aduana_55" model="code.aduana">
+            <field name="name">CHICLAYO</field>
+            <field name="code">55</field>
+        </record>
+        <record id="code_aduana_82" model="code.aduana">
+            <field name="name">SALAVERRY</field>
+            <field name="code">82</field>
+        </record>
+        <record id="code_aduana_91" model="code.aduana">
+            <field name="name">CHIMBOTE</field>
+            <field name="code">91</field>
+        </record>
+        <record id="code_aduana_118" model="code.aduana">
+            <field name="name">MARÍTIMA DEL CALLAO</field>
+            <field name="code">118</field>
+        </record>
+        <record id="code_aduana_127" model="code.aduana">
+            <field name="name">PISCO</field>
+            <field name="code">127</field>
+        </record>
+        <record id="code_aduana_145" model="code.aduana">
+            <field name="name">MOLLENDO MATARANI</field>
+            <field name="code">145</field>
+        </record>
+        <record id="code_aduana_154" model="code.aduana">
+            <field name="name">AREQUIPA</field>
+            <field name="code">154</field>
+        </record>
+        <record id="code_aduana_163" model="code.aduana">
+            <field name="name">ILO</field>
+            <field name="code">163</field>
+        </record>
+        <record id="code_aduana_172" model="code.aduana">
+            <field name="name">TACNA</field>
+            <field name="code">172</field>
+        </record>
+        <record id="code_aduana_181" model="code.aduana">
+            <field name="name">PUNO</field>
+            <field name="code">181</field>
+        </record>
+        <record id="code_aduana_190" model="code.aduana">
+            <field name="name">CUZCO</field>
+            <field name="code">190</field>
+        </record>
+        <record id="code_aduana_217" model="code.aduana">
+            <field name="name">PUCALLPA</field>
+            <field name="code">217</field>
+        </record>
+        <record id="code_aduana_226" model="code.aduana">
+            <field name="name">IQUITOS</field>
+            <field name="code">226</field>
+        </record>
+        <record id="code_aduana_235" model="code.aduana">
+            <field name="name">AÉREA DEL CALLAO</field>
+            <field name="code">235</field>
+        </record>
+        <record id="code_aduana_244" model="code.aduana">
+            <field name="name">POSTAL DE LIMA</field>
+            <field name="code">244</field>
+        </record>
+        <record id="code_aduana_262" model="code.aduana">
+            <field name="name">DESAGUADERO</field>
+            <field name="code">262</field>
+        </record>
+        <record id="code_aduana_271" model="code.aduana">
+            <field name="name">TARAPOTO</field>
+            <field name="code">271</field>
+        </record>
+        <record id="code_aduana_280" model="code.aduana">
+            <field name="name">PUERTO MALDONADO</field>
+            <field name="code">280</field>
+        </record>
+        <record id="code_aduana_299" model="code.aduana">
+            <field name="name">LA TINA</field>
+            <field name="code">299</field>
+        </record>
+        <record id="code_aduana_884" model="code.aduana">
+            <field name="name">DEPENDENCIA FERROVIARIA TACNA</field>
+            <field name="code">884</field>
+        </record>
+        <record id="code_aduana_893" model="code.aduana">
+            <field name="name">DEPENDENCIA POSTAL TACNA</field>
+            <field name="code">893</field>
+        </record>
+        <record id="code_aduana_910" model="code.aduana">
+            <field name="name">DEPENDENCIA POSTAL AREQUIPA</field>
+            <field name="code">910</field>
+        </record>
+        <record id="code_aduana_929" model="code.aduana">
+            <field name="name">COMPLEJO FRONTERIZO STA ROSA TACNA</field>
+            <field name="code">929</field>
+        </record>
+        <record id="code_aduana_938" model="code.aduana">
+            <field name="name">TERMINAL TERRESTRE TACNA</field>
+            <field name="code">938</field>
+        </record>
+        <record id="code_aduana_947" model="code.aduana">
+            <field name="name">AEROPUERTO TACNA</field>
+            <field name="code">947</field>
+        </record>
+        <record id="code_aduana_956" model="code.aduana">
+            <field name="name">CETICOS TACNA</field>
+            <field name="code">956</field>
+        </record>
+        <record id="code_aduana_965" model="code.aduana">
+            <field name="name">DEPENDENCIA POSTAL DE SALAVERRY</field>
+            <field name="code">965</field>
+        </record>
+
+    </data>
+</odoo>

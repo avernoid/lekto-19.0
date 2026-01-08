@@ -1,0 +1,67 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* localization_menu
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-08 00:00+0000\n"
+"PO-Revision-Date: 2026-01-08 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: localization_menu
+#: model:ir.model,name:localization_menu.model_account_spot_detraction
+msgid "SPOT Detraction"
+msgstr "Detracción SPOT"
+
+#. module: localization_menu
+#: model:ir.model,name:localization_menu.model_account_spot_retention
+msgid "SPOT Retention"
+msgstr "Retención SPOT"
+
+#. module: localization_menu
+#: model:ir.model,name:localization_menu.model_code_aduana
+msgid "Customs Unit Code (Customs)"
+msgstr "Código de Dependencia Aduanera"
+
+#. module: localization_menu
+#: model:ir.model.fields,field_description:localization_menu.field_account_spot_detraction__name
+#: model:ir.model.fields,field_description:localization_menu.field_account_spot_retention__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: localization_menu
+#: model:ir.model.fields,help:localization_menu.field_account_spot_detraction__name
+msgid "Name or description of the SPOT detraction type. This identifies the specific classification for detraction purposes."
+msgstr "Nombre o descripción del tipo de detracción SPOT. Esto identifica la clasificación específica para fines de detracción."
+
+#. module: localization_menu
+#: model:ir.model.fields,help:localization_menu.field_account_spot_retention__name
+msgid "Name or description of the SPOT retention type. This identifies the specific classification for retention purposes."
+msgstr "Nombre o descripción del tipo de retención SPOT. Esto identifica la clasificación específica para fines de retención."
+
+#. module: localization_menu
+#: model:ir.model.fields,field_description:localization_menu.field_code_aduana__name
+msgid "Description"
+msgstr "Descripción"
+
+#. module: localization_menu
+#: model:ir.model.fields,help:localization_menu.field_code_aduana__name
+msgid "Descriptive name of the Customs Unit. This helps identify the specific customs location or entity."
+msgstr "Nombre descriptivo de la Dependencia Aduanera. Esto ayuda a identificar la ubicación o entidad aduanera específica."
+
+#. module: localization_menu
+#: model:ir.model.fields,field_description:localization_menu.field_code_aduana__code
+msgid "Code"
+msgstr "Código"
+
+#. module: localization_menu
+#: model:ir.model.fields,help:localization_menu.field_code_aduana__code
+msgid "Unique code identifier for the Customs Unit (e.g., 001, 118). Use the official code assigned by the customs authority."
+msgstr "Código identificador único para la Dependencia Aduanera (ej. 001, 118). Use el código oficial asignado por la autoridad aduanera."
