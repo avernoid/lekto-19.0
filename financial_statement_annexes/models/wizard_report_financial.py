@@ -54,6 +54,164 @@ class WizardReportFinancial(models.TransientModel):
         self.xls_filename = report_financial.get_filename()
         return self.action_return_wizard()
 
+    def action_view_report(self):
+        self.ensure_one()
+        # 1. Generate data using existing logic
+        data = self.generate_data()
+        
+        # 2. Clear old records for this user
+        self.env.cr.execute("DELETE FROM financial_annex_report_line WHERE create_uid = %s", (self.env.user.id,))
+        
+        # 3. Prepare data for SQL insertion
+        sql_values = []
+        
+        # Helpers for processing
+        def _get_val(d, key, type_cast=str):
+            val = d.get(key)
+            return type_cast(val) if val else None
+
+        def _parse_date(date_str):
+            if not date_str:
+                return None
+            try:
+                # generate_data returns dates as 'dd/mm/yyyy' strings sometimes, or dates?
+                # Looking at generate_data: date.strftime(..., '%d/%m/%Y')
+                return date.strftime(datetime.strptime(date_str, '%d/%m/%Y'), '%Y-%m-%d')
+            except ValueError:
+                return None
+        
+        from datetime import datetime
+        
+        values_list = []
+        company_id = self.env.company.id
+        create_uid = self.env.user.id
+        create_date = fields.Datetime.now()
+        write_uid = create_uid
+        write_date = create_date
+        
+        for account_name, lines in data.items():
+            for line in lines:
+                # Logic from report_financial.py to fill defaults if missing
+                date_maturity_val = line.get('date_maturity')
+                if not date_maturity_val:
+                     # Fallback to date if maturity missing (from report_financial logic)
+                     # date string 'dd/mm/YYYY' -> object
+                     d_str = line.get('date')
+                     if d_str:
+                         date_maturity_val = datetime.strptime(d_str, '%d/%m/%Y').date()
+                elif isinstance(date_maturity_val, str):
+                     # If it's a string (though _set_values usually keeps it valid or empty string?)
+                     # _set_values: obj_move_line.date_maturity (Date object) or ''
+                     # But generate_data might store it. 
+                     # Wait, _set_values stores: 'date_maturity': obj_move_line.date_maturity or ''
+                     # So it's likely a Date object or empty string.
+                     if date_maturity_val == '':
+                         # Fallback to date
+                         d_str = line.get('date')
+                         date_maturity_val = datetime.strptime(d_str, '%d/%m/%Y').date() if d_str else None
+                
+                # Verify date_maturity_val is Date object for calculation
+                if not isinstance(date_maturity_val, date) and date_maturity_val:
+                    # Try parsing if it's a string, though unlikely based on _set_values
+                     pass
+
+                # Calculate days overdue
+                range_older = 0.0
+                range_91_120 = 0.0
+                range_61_90 = 0.0
+                range_31_60 = 0.0
+                range_0_30 = 0.0
+                range_not_due = 0.0
+
+                amount_currency_val = line.get('balance', 0.0) if not line.get('account_currency') else line.get('amount_currency', 0.0)
+                # Note: report_financial logic for amount_currency is:
+                # line_data.get('balance', 0.00) if not line_data.get('account_currency') else line_data.get('amount_currency', 0.00)
+                # Using same logic.
+
+                if self.seniority_report and date_maturity_val:
+                    days_rest = (self.date_end - date_maturity_val).days
+                    if days_rest < 0:
+                        range_not_due = amount_currency_val
+                    elif 0 <= days_rest <= 30:
+                        range_0_30 = amount_currency_val
+                    elif 31 <= days_rest <= 60:
+                        range_31_60 = amount_currency_val
+                    elif 61 <= days_rest <= 90:
+                        range_61_90 = amount_currency_val
+                    elif 91 <= days_rest <= 120:
+                        range_91_120 = amount_currency_val
+                    else:
+                        range_older = amount_currency_val
+
+                # Prepare Date fields for DB
+                db_date = _parse_date(line.get('date'))
+                db_date_maturity = date_maturity_val
+                if isinstance(line.get('expected_pay_date'), str):
+                     db_expected = _parse_date(line.get('expected_pay_date'))
+                else:
+                    db_expected = line.get('expected_pay_date') # Might be Date or False
+
+                db_date_reconcile = _parse_date(line.get('date_reconcile'))
+                db_next_action = _parse_date(line.get('next_action_date'))
+                
+                values_list.append({
+                    'wizard_id': self.id,
+                    'account_name': account_name,
+                    'date': db_date,
+                    'balance': line.get('balance', 0.0),
+                    'amount_currency': amount_currency_val,
+                    'currency_id': line.get('currency_id'),
+                    'partner_name': line.get('partner', ''),
+                    'move_name': line.get('move', ''),
+                    'ref': line.get('ref', ''),
+                    'name': line.get('name', ''),
+                    'date_maturity': db_date_maturity,
+                    'expected_pay_date': db_expected,
+                    'reconcile_name': line.get('reconcile', ''),
+                    'date_reconcile': db_date_reconcile,
+                    'internal_note': line.get('internal_note', ''),
+                    'range_not_due': range_not_due,
+                    'range_0_30': range_0_30,
+                    'range_31_60': range_31_60,
+                    'range_61_90': range_61_90,
+                    'range_91_120': range_91_120,
+                    'range_older': range_older,
+                    'company_id': company_id,
+                    'create_uid': create_uid,
+                    'create_date': create_date,
+                    'write_uid': write_uid,
+                    'write_date': write_date,
+                    'move_line_id': line.get('move_line_id'),
+                    'account_id': line.get('account_id'),
+                    'partner_id': line.get('partner_id'),
+                    'move_id': line.get('move_id'),
+                })
+
+        if values_list:
+            # Construct Query
+            # Using create() is slower but cleaner, but user asked for SQL direct.
+            # Using SQL Insert.
+            keys = values_list[0].keys()
+            columns = ', '.join(keys)
+            placeholders = ', '.join(['%s'] * len(keys))
+            query = "INSERT INTO financial_annex_report_line ({}) VALUES ({})".format(columns, placeholders)
+            
+            # Prepare rows
+            rows = []
+            for v in values_list:
+                rows.append(tuple(v[k] for k in keys))
+            
+            self.env.cr.executemany(query, rows)
+
+        # 4. Return Action
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Financial Annexes Analysis',
+            'res_model': 'financial.annex.report.line',
+            'view_mode': 'list,pivot',
+            'target': 'current',
+        }
+
     def _set_values(self, obj_move_line):
         partner = obj_move_line.partner_id or self.env.company.partner_id
         values = {
@@ -68,6 +226,9 @@ class WizardReportFinancial(models.TransientModel):
             'date_maturity': obj_move_line.date_maturity or '',
             'vat': partner.vat or '0',
             'vat_ple': obj_move_line.partner_id.vat if obj_move_line.partner_id.vat else '0',
+            'currency_id': obj_move_line.currency_id.id,
+            'partner_id': partner.id,
+            'move_id': obj_move_line.move_id.id,
         }
 
         if 'ple_correlative' in obj_move_line._fields:
@@ -116,6 +277,7 @@ class WizardReportFinancial(models.TransientModel):
                         'date': date.strftime(self.date_end, '%d/%m/%Y'),
                         'balance': sum_balance,
                         'account': obj_account.code,
+                        'account_id': obj_account.id,
                         'amount_currency': sum_currency
                     }
                     values.update(self._set_values(list_move_line[0]))
@@ -150,6 +312,7 @@ class WizardReportFinancial(models.TransientModel):
                             'date': date.strftime(obj_ml.date, '%d/%m/%Y'),
                             'balance': 0.00,
                             'account': obj_account.code,
+                            'account_id': obj_account.id,
                             'amount_currency': 0.00,
                             'date_maturity': obj_ml.date_maturity or '',
                             'date_reconcile': date.strftime(reconcile_date, '%d/%m/%Y'),
@@ -222,7 +385,8 @@ class WizardReportFinancial(models.TransientModel):
                             'balance': 0.00,
                             'amount_currency': 0.00,
                             'move_line_id': list_ml[0].id,
-                            'account': obj_account.code
+                            'account': obj_account.code,
+                            'account_id': obj_account.id
                         }
                         data_d.update(self._set_values(list_ml[0]))
                         for i in range(len(list_ml)):
@@ -241,6 +405,7 @@ class WizardReportFinancial(models.TransientModel):
                         'balance': obj_ml_zero.balance,
                         'amount_currency': obj_ml_zero.amount_currency,
                         'account': obj_account.code,
+                        'account_id': obj_account.id,
                     }
                     values.update(self._set_values(obj_ml_zero))
                     data_account[name_account].append(values)

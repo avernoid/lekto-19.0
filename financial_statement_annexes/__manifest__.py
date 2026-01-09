@@ -11,7 +11,8 @@
     'depends': ['add_reconcile_date'],
     'data': [
         'security/ir.model.access.csv',
-        'views/wizard_report_financial_views.xml'
+        'views/wizard_report_financial_views.xml',
+        'views/financial_annex_report_line_views.xml',
     ],
     'icon': '/financial_statement_annexes/static/description/icon.png',
     'images': ['static/description/banner.png'],

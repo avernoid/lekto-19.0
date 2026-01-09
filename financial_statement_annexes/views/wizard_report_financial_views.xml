@@ -28,6 +28,7 @@
                 </field>
                 <footer>
                     <button string="Generate Excel" name="action_generate_excel" type="object" default_focus="1" class="oe_highlight" icon="fa-download"/>
+                    <button string="View in Odoo" name="action_view_report" type="object" class="btn-primary" icon="fa-table"/>
                     <button string="Cancel" class="btn-secondary" special="cancel" icon="fa-times"/>
                     <field name="xls_binary" filename="xls_filename" readonly="1" invisible="not xls_filename" widget="binary"/>
                 </footer>

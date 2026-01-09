@@ -2,684 +2,843 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Financial Statement Annexes - Master Your Audits</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Statement Annexes | Odoo Accounting Reports by Ganemo</title>
     <meta name="description"
-        content="Generate precise Odoo financial reports with cut-off dates. Perfect for audits, aging analysis, and historical debt tracking. Accounts Receivable & Payable in Excel.">
+        content="Generate Excel reports for accounts receivable and payable with accurate cut-off dates and aging buckets. Necessary for financial auditing and analysis in Odoo.">
     <meta name="keywords"
-        content="Odoo, Financial Reports, Aging Analysis, Cut-off Date, Accounts Receivable, Accounts Payable, Audit, Historical Balances, Excel Export, Ganemo, Accounting">
-
+        content="Odoo, Accounting, Financial Reports, Annexes, Cut-off Date, Aging Report, Ganemo, Accounts Receivable, Accounts Payable, Odoo 19">
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
-    <!-- Bootstrap & FontAwesome -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        :root {
-            --primary-color: #5154a5;
-            --accent-color: #9451a5;
-            --text-dark: #2c3e50;
-            --text-muted: #6c757d;
-            --bg-light: #f8f9fa;
-        }
-
         body {
-            font-family: 'Open Sans', sans-serif;
-            color: var(--text-dark);
-            background-color: white;
-            line-height: 1.6;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
+            color: #333;
         }
 
-        .text-primary {
-            color: var(--primary-color) !important;
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
         }
 
-        .text-accent {
-            color: var(--accent-color) !important;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            padding: 4rem 0;
-            background: linear-gradient(135deg, rgba(81, 84, 165, 0.05) 0%, rgba(148, 81, 165, 0.05) 100%);
-            border-radius: 0 0 50px 50px;
-            margin-bottom: 3rem;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-
-        /* Value Props */
-        .value-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            border: 1px solid rgba(0, 0, 0, 0.03);
-        }
-
-        .value-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-        }
-
-        .icon-box {
-            width: 60px;
-            height: 60px;
-            background: rgba(148, 81, 165, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            color: var(--accent-color);
-            font-size: 1.5rem;
-        }
-
-        /* Section Headers */
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: #791d97;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-header h2::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 4px;
-            background: var(--accent-color);
-            margin: 10px auto 0;
-            border-radius: 2px;
-        }
-
-        /* Screenshots / Workflow */
-        .step-circle {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
             font-weight: bold;
-            flex-shrink: 0;
-            margin-right: 15px;
-        }
-
-        .workflow-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Contact / Footer */
-        .contact-box {
-            background: #F6F8F9;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: background 0.3s;
-        }
-
-        .contact-box:hover {
-            background: #eef2f5;
-        }
-
-        .btn-custom {
             border-radius: 50px;
-            padding: 10px 30px;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
+            padding: 15px 40px;
+            font-size: 20px;
             transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
 
-        .btn-whatsapp {
-            background-color: #25D366;
-            color: white;
-            border: 2px solid #25D366;
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
         }
 
-        .btn-whatsapp:hover {
-            background-color: transparent;
-            color: #25D366;
-        }
-
-        .btn-email {
-            background-color: #3c6dac;
-            color: white;
-            border: 2px solid #3c6dac;
-        }
-
-        .btn-email:hover {
-            background-color: transparent;
-            color: #3c6dac;
-        }
-
-        /* SEO Hidden Content for LLMs */
-        .llm-context {
-            display: none;
-        }
-
-        /* Enterprise Badge */
-        .enterprise-badge {
-            background: #E8F0FE;
-            color: #1a73e8;
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
             padding: 5px 15px;
             border-radius: 20px;
+            font-size: 14px;
             font-weight: 600;
-            font-size: 0.85rem;
+        }
+
+        .copy-link-wrapper {
             display: inline-flex;
             align-items: center;
-            margin-bottom: 1rem;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
         }
     </style>
 </head>
 
 <body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'financial_statement_annexes' generates detailed financial annex reports for Accounts
+            Receivable
+            and Payable.
+            It solves the limitation of standard Odoo reporting regarding "cut-off dates" for partner balances.
+            Key features: Arbitrary cut-off date selection (historical view), Aging Buckets (30/60/90 days),
+            Excel (.xlsx) export format.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            This tool is essential for external audits and period closing justifications.</p>
+    </div>
 
-    <!-- Enterprise Badge Row -->
-    <div class="container-fluid py-2 border-bottom">
-        <div class="d-flex justify-content-between align-items-center px-4">
-            <div class="enterprise-badge">
-                <i class="fas fa-check-circle mr-2"></i> Enterprise Ready (Odoo.sh, On-Premise)
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
             </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
         </div>
     </div>
 
-    <div class="container my-5">
-
-        <!-- Hero Section -->
-        <div class="hero-section text-center">
-            <h1 class="hero-title">
-                <span class="text-primary">Financial Statement</span> <span class="text-accent">Annexes</span>
-            </h1>
-            <p class="hero-subtitle">
-                Stop struggling with end-of-month reconciliations. Generate audit-ready <b>Accounts Receivable &
-                    Payable</b> reports with precise cut-off dates and advanced aging analysis in seconds.
-            </p>
-        </div>
-
-        <!-- Problem & Solution (Why buy this?) -->
-        <div class="row mb-5">
-            <div class="col-md-6 mb-4">
-                <div class="value-card">
-                    <div class="icon-box">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <h4>The Problem</h4>
-                    <p class="text-muted">
-                        Native Odoo reports often reflect the <i>current</i> status of a partner's debt, making it
-                        difficult to reconstruct the exact balance at a specific past date. Auditors demand historical
-                        accuracy (e.g., "What was the balance on Dec 31st?"), and manual spreadsheet reconstruction is
-                        prone to errors.
-                    </p>
-                </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 50px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Financial Annexes</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Receivables, Payables & Aging Reports</p>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="value-card web-design">
-                    <div class="icon-box">
-                        <i class="fas fa-check-double"></i>
-                    </div>
-                    <h4>Our Solution</h4>
-                    <p class="text-muted">
-                        We augment Odoo's reporting engine to freeze time. Select any past date, and our engine
-                        recalculates the exact open balance for every partner as of that moment. combined with flexible
-                        aging buckets (1-30, 31-60 days), it's the ultimate tool for financial controllers.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Features Section -->
-        <section class="mb-5">
-            <div class="section-header">
-                <h2>Key Capabilities</h2>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="value-card text-center">
-                        <div class="icon-box mx-auto">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        <h5>Precise Cut-Off Dates</h5>
-                        <p class="small text-muted">Generate reports as of any historical date. Perfect for month-end
-                            and year-end closing.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="value-card text-center">
-                        <div class="icon-box mx-auto">
-                            <i class="fas fa-hourglass-half"></i>
-                        </div>
-                        <h5>Advanced Aging</h5>
-                        <p class="small text-muted">Visualize debt maturity with configurable buckets (Current, 1-30,
-                            30-60, 60+ days) to prioritize collections.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="value-card text-center">
-                        <div class="icon-box mx-auto">
-                            <i class="fas fa-file-excel"></i>
-                        </div>
-                        <h5>Native Excel Export</h5>
-                        <p class="small text-muted">Direct export to professionally formatted Excel files, ready for
-                            presentation to auditors or management.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Workflow / How it works -->
-        <section class="mb-5 bg-light p-5 rounded">
-            <div class="section-header">
-                <h2>How It Works</h2>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="workflow-item">
-                        <div class="step-circle">1</div>
-                        <div>
-                            <h5>Access the Report</h5>
-                            <p class="text-muted">Navigate to <b>Accounting > Reporting > Financial Reports > Notas y
-                                    Anexos (Excel)</b>.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-item">
-                        <div class="step-circle">2</div>
-                        <div>
-                            <h5>Set Your Parameters</h5>
-                            <p class="text-muted">Choose your <b>Start Date</b> and <b>End Date</b>. Select whether you
-                                want accurate accounts Payable or Receivable.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-item">
-                        <div class="step-circle">3</div>
-                        <div>
-                            <h5>Enable Aging Analysis</h5>
-                            <p class="text-muted">Toggle the "Reporte de Antigüedad" option to break down balances by
-                                days overdue.</p>
-                        </div>
-                    </div>
-                    <div class="workflow-item">
-                        <div class="step-circle">4</div>
-                        <div>
-                            <h5>Export & Analyze</h5>
-                            <p class="text-muted">Click "Descargar en Excel". You now have a hard-data snapshot of your
-                                financials.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Why Ganemo -->
-        <section class="mb-5">
-            <div class="section-header">
-                <h2>Why Choose Ganemo?</h2>
-            </div>
-            <div class="row text-center">
-                <div class="col-12">
-                    <p class="lead text-muted mx-auto" style="max-width: 800px;">
-                        With over 5 years of experience and recognition as a top Odoo Partner in the US and Latin
-                        America (Peru, Mexico, Chile, Spain, Colombia), we build modules that solve real-world
-                        accounting problems. We are the #1 seller of quality Odoo apps for a reason: <b>Reliability</b>.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Languages Supported -->
-        <div class="row mb-5 justify-content-center">
-            <div class="col-md-8 text-center">
-                <span class="badgem badge-pill badge-light px-4 py-2 border shadow-sm"
-                    style="font-size: 1.1rem; color: #5154a5;">
-                    <i class="fas fa-language mr-2"></i> Fully Supported in <b>English</b> & <b>Spanish</b> (Español)
-                </span>
-            </div>
-        </div>
-
-        <!-- User Manual & Guide -->
-        <section class="mb-5">
-            <div class="section-header">
-                <h2>User Manual & Guide</h2>
-            </div>
-            <div class="card border-0 shadow-sm p-4 mb-4">
-                <h4 class="text-primary mb-3"><i class="fas fa-cogs mr-2"></i>Configuration</h4>
-                <p>
-                    The module is designed for <b>"Plug & Play"</b> use. No complex configuration settings are required
-                    in the General Settings.
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Generate precise audit-ready reports with historical cut-off dates and aging buckets in Excel.
+                    The missing piece for your Monthly and Yearly Closing.
                 </p>
-                <ul>
-                    <li><b>Prerequisites:</b> Ensure the user has the "Show Full Accounting Features" rights or
-                        equivalent Accountant access to view the <i>Reporting</i> menu.</li>
-                    <li><b>Access:</b> The report menu is automatically added at
-                        <code>Accounting > Reporting > Financial Reports > Notas y Anexos (Excel)</code>.
-                    </li>
-                    <li><b>Multi-Company:</b> The report respects the currently selected company in the Odoo
-                        environment.</li>
-                </ul>
             </div>
-        </section>
+        </div>
 
-        <!-- Detailed Workflow Guide -->
-        <section class="mb-5 bg-light p-5 rounded">
-            <div class="section-header">
-                <h2>Daily Workflow Guide</h2>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <p class="text-center text-muted mb-4 lead">
-                        How to use this tool in your day-to-day operations for audits and internal controls.
-                    </p>
-
-                    <div class="card mb-3 border-0 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title text-accent">1. End-of-Month Review</h5>
-                            <p class="card-text">
-                                When closing the month (e.g., January), you need to know exactly who owed what on Jan
-                                31st.
-                                <br>
-                                <b>Action:</b> Run the report with <code>End Date = 01/31/YYYY</code>. The system
-                                recalculates balances as if it were that day, ignoring payments made in February.
-                            </p>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-history mr-2"></i> Accurate Historical Balances
+                            </h4>
+                            <p style="text-align: justify;">Need to know exactly what a client owed you on December 31st
+                                of last year? Standard reports often struggle with "as of" dates when payments happen
+                                later. This module reconstructs the balance sheet <strong>exactly as it was</strong> on
+                                your chosen cut-off date.</p>
                         </div>
                     </div>
-
-                    <div class="card mb-3 border-0 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title text-accent">2. Audit Requests</h5>
-                            <p class="card-text">
-                                External auditors often ask for a "breakdown of Accounts Payable as of Dec 31st".
-                                <br>
-                                <b>Action:</b> Select "Payable Accounts", set the date to Dec 31st, and export to Excel.
-                                The file contains partner names, VAT numbers, and detailed amounts matching the Trial
-                                Balance.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="card mb-3 border-0 shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title text-accent">3. Collections Management</h5>
-                            <p class="card-text">
-                                Use the <b>Aging</b> feature to spot overdue invoices.
-                                <br>
-                                <b>Action:</b> Enable "Reporte de Antigüedad". The Excel file will show columns like
-                                "1-30 Days", "31-60 Days", making it easy to filter and send dunning emails to the right
-                                customers.
-                            </p>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-clock-o mr-2"></i> Detailed Aging Analysis</h4>
+                            <p style="text-align: justify;">Go beyond simple totals. Activate the <strong>Aging
+                                    Option</strong> to split debts into buckets (1-30 days, 31-60 days, etc.). Perfect
+                                for cash flow analysis and identifying bad debts before they become a problem.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- QA / User Testing Scenarios -->
-        <section class="mb-5">
-            <div class="section-header">
-                <h2>QA / User Testing Scenarios</h2>
-            </div>
-            <p class="text-center text-muted mb-4">
-                Follow these scenarios to verify the module's accuracy in your environment.
-            </p>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Easy Reporting</p>
+                </div>
 
-            <div class="qa-scenarios">
-
-                <!-- Scenario 1 -->
-                <div class="card mb-3 border shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0 text-primary font-weight-bold">
-                            <i class="fas fa-vial mr-2"></i> Scenario 1: Historical Balance Accuracy
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                            <li>Create an Invoice for <b>Customer A</b> for $1000 on <b>Jan 1st</b>.</li>
-                            <li>Register a Payment of $1000 on <b>Feb 1st</b>.</li>
-                            <li>Run the report with End Date = <b>Jan 15th</b>.</li>
-                            <li><b>Expected Result:</b> Customer A should show a balance of $1000 (Payment from Feb is
-                                ignored).</li>
-                            <li>Run the report with End Date = <b>Feb 2nd</b>.</li>
-                            <li><b>Expected Result:</b> Customer A should NOT appear (or show $0 balance).</li>
-                        </ol>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Accessing the Report</h3>
+                            <p class="lead">No complex configuration needed. Just install and go.</p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Accounting >
+                                                Reporting > Informes Financieros > Notas y Anexos (excel)</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> This opens the reporting
+                                            wizard.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Scenario 2 -->
-                <div class="card mb-3 border shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0 text-dark font-weight-bold">
-                            <i class="fas fa-vial mr-2"></i> Scenario 2: Aging Buckets Verification
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                            <li>Set report date to <b>Today</b>.</li>
-                            <li>Find an invoice that is 45 days overdue.</li>
-                            <li>Enable "Reporte de Antigüedad".</li>
-                            <li><b>Expected Result:</b> The amount should appear specifically in the <b>31-60 Days</b>
-                                column in the Excel file.</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- Scenario 3 -->
-                <div class="card mb-3 border shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0 text-dark font-weight-bold">
-                            <i class="fas fa-vial mr-2"></i> Scenario 3: Partial Payments
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                            <li>Create an invoice for $1000. Pay $400. Remaining = $600.</li>
-                            <li>Run the report.</li>
-                            <li><b>Expected Result:</b> The report should show the <b>Residual Amount</b> of $600, not
-                                the original $1000.</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- Scenario 4 -->
-                <div class="card mb-3 border shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0 text-dark font-weight-bold">
-                            <i class="fas fa-vial mr-2"></i> Scenario 4: Multi-Currency Validation (Amount Currency)
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                            <li>Create multiple Invoices in a foreign currency (e.g., 2 invoices of $100 USD each).</li>
-                            <li>Run the report.</li>
-                            <li><b>Expected Result:</b> The report should correctly display and SUM the <b>"Amount
-                                    Currency"</b> column (showing $200 USD total), ensuring the original currency values
-                                are preserved alongside the converted amounts.</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- Scenario 5 -->
-                <div class="card mb-3 border shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0 text-dark font-weight-bold">
-                            <i class="fas fa-vial mr-2"></i> Scenario 5: Balance Sheet Accounts (Non-Reconcilable)
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                            <li>Select an account like <b>Equity</b>, <b>Fixed Assets</b>, or <b>Bank</b> (if not set to
-                                reconcile).</li>
-                            <li>Run the report with End Date = Jan 31st.</li>
-                            <li><b>Expected Result:</b> The report displays the <b>Cumulative Balance</b> (Historic) up
-                                to the End Date. It ignores the Start Date for the calculation, behaving like a true
-                                Balance Sheet.</li>
-                        </ol>
-                    </div>
-                </div>
-
-                <!-- Scenario 6 -->
-                <div class="card mb-3 border shadow-sm">
-                    <div class="card-header bg-white">
-                        <h5 class="mb-0 text-dark font-weight-bold">
-                            <i class="fas fa-vial mr-2"></i> Scenario 6: Profit & Loss Accounts
-                        </h5>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                            <li>Select an <b>Income</b> or <b>Expense</b> account.</li>
-                            <li>Run the report with Start Date = Jan 1st and End Date = Jan 31st.</li>
-                            <li><b>Expected Result:</b> The report displays the sum of movements <b>strictly within the
-                                    Date Range</b> (Period Activity), ignoring previous balances.</li>
-                        </ol>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- FAQ -->
-        <section class="mb-5">
-            <div class="section-header">
-                <h2>FAQ & Troubleshooting</h2>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <h5 class="text-primary">Why is the report empty?</h5>
-                    <p class="small text-muted">
-                        Double-check your <b>Date Range</b> and <b>Account Type</b> selection. If you select "Payable"
-                        but only have Customer Invoices (Receivable), the report will be empty. Also, ensure there are
-                        Posted entries in that period.
-                    </p>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <h5 class="text-primary">I can't see the menu item.</h5>
-                    <p class="small text-muted">
-                        This usually means your user is missing permissions. Ensure you have "Accountant" or "Manager"
-                        level access in the Accounting app settings.
-                    </p>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <h5 class="text-primary">Does it support Multi-Currency?</h5>
-                    <p class="small text-muted">
-                        Yes. The report exports values in the company's currency. Foreign currency transactions are
-                        converted using the exchange rate active at the date of the transaction (or the report date,
-                        depending on configured valuation settings).
-                    </p>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <h5 class="text-primary">Can I customize the aging buckets?</h5>
-                    <p class="small text-muted">
-                        The current version uses standard standard 30-day buckets (1-30, 31-60, 61-90, 90+). Custom
-                        bucket configuration is available in our Enterprise+ version or via customization request.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer / Contact -->
-        <section class="mt-5 pt-5 border-top">
-            <h3 class="text-center mb-5" style="color: #3D3D4E;">We're Here to Help</h3>
-            <div class="row justify-content-center">
-                <!-- WhatsApp -->
-                <div class="col-md-4 mb-4">
-                    <div class="contact-box">
-                        <i class="fab fa-whatsapp fa-3x mb-3 text-success"></i>
-                        <h4>WhatsApp Support</h4>
-                        <p class="text-muted">Fast response for quick questions.</p>
-                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
-                            class="btn btn-custom btn-whatsapp">
-                            Chat with us
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Email -->
-                <div class="col-md-4 mb-4">
-                    <div class="contact-box">
-                        <i class="fas fa-envelope fa-3x mb-3 text-primary"></i>
-                        <h4>Email Support</h4>
-                        <p class="text-muted">Detailed technical assistance.</p>
-                        <a href="mailto:leads@ganemo.co" target="_blank" class="btn btn-custom btn-email">
-                            leads@ganemo.co
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Schedule -->
-                <div class="col-md-4 mb-4">
-                    <div class="contact-box">
-                        <i class="fas fa-calendar-check fa-3x mb-3" style="color: #714B67;"></i>
-                        <h4>Schedule Demo</h4>
-                        <p class="text-muted">See it in action.</p>
-                        <a href="https://www.ganemo.co/appointment/5" target="_blank" class="btn btn-custom"
-                            style="background-color: #714B67; color: white;">
-                            Book a Time
-                        </a>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Generating the Report</h3>
+                            <p class="lead">Customize your view:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-calendar text-primary mr-2"></i> Select Dates</h5>
+                                        <p class="text-muted">Choose your <strong>Start Date</strong> and <strong>End
+                                                Date</strong>. The End Date acts as your "Cut-off" date for balances.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-filter text-primary mr-2"></i> Choose Accounts</h5>
+                                        <p class="text-muted">Filter by specific <strong>Receivable</strong> or
+                                            <strong>Payable</strong> accounts. You can select multiple accounts (e.g.,
+                                            Domestic Clients, Foreign Clients).
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-columns text-primary mr-2"></i> Aging Option</h5>
+                                        <p class="text-muted">Check the <strong>"Reporte de Antiguedad"</strong> box.
+                                            This adds columns to the Excel file categorizing debt by age (1-30, 31-60,
+                                            61-90, >90 days).</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-file-excel-o text-primary mr-2"></i> Excel Output</h5>
+                                        <p class="text-muted">Click <strong>"Descargar en Excel"</strong>. You get a
+                                            clean, formatted file ready for your auditor or manager.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- LLM / SEO Optimization Context (Hidden) -->
-        <section class="llm-context">
-            <h3>Module Technical Summary for AI Indexing</h3>
-            <p>
-                This Odoo module, "Financial Statement Annexes", enables the generation of historical financial reports
-                with specific cut-off dates.
-                Key features include:
-                - Aging analysis (partner balance aging) for accounts receivable and payable.
-                - Accurate reconstruction of partner debt at any past date (historical cut-off).
-                - Integration with Odoo Accounting > Reporting menu.
-                - Output format: .xlsx (Excel) for manipulation and audit presentation.
-                - Solves the "Time Travel" problem in accounting where native reports often show current residual
-                amounts instead of historical values.
-                - Compatible with Odoo Enterprise and Community versions (depending on base dependency).
-                - Developed by Ganemo, a Gold Partner and localization expert.
-            </p>
+
+
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-calendar-check-o mr-2"></i>
+                                Scenario 1: Historical Cut-off Precision</h4>
+                            <p class="mb-2 text-muted"><strong>Objective:</strong> Verify that payments made
+                                <em>after</em> the selected cut-off date are ignored, showing the debt as it existed
+                                historically.</p>
+                            <ol class="mt-2">
+                                <li>Create an Invoice (INV-2023-001) dated <strong>Dec 15th</strong>, 2023 for $1,000.
+                                </li>
+                                <li>Register a Payment (PAY-2024-001) dated <strong>Jan 15th</strong>, 2024 for the full
+                                    amount.</li>
+                                <li>Run the report with End Date: <strong>Dec 31st, 2023</strong>.</li>
+                                <li><strong>Expected Result:</strong> The report must show a balance of
+                                    <strong>$1,000</strong> (Open). The payment from Jan 2024 should be ignored.</li>
+                                <li>Run the report again with End Date: <strong>Jan 31st, 2024</strong>.</li>
+                                <li><strong>Expected Result:</strong> The report must show a balance of
+                                    <strong>$0</strong> (Paid).</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-usd mr-2"></i>
+                                Scenario 2: Multi-Currency & Partial Payments</h4>
+                            <p class="mb-2 text-muted"><strong>Objective:</strong> Ensure correct calculation of
+                                residual amounts in foreign currency.</p>
+                            <ol class="mt-2">
+                                <li>Create a USD Invoice for $10,000 (assuming company currency is EUR).</li>
+                                <li>Pay $3,000 on a date with a different exchange rate.</li>
+                                <li>Leave $7,000 open.</li>
+                                <li>Run the report including the "Amount Currency" column.</li>
+                                <li><strong>Expected Result:</strong> "Amount Currency" column must show exactly
+                                    <strong>$7,000 USD</strong>. The "Balance" column (EUR) should reflect the revalued
+                                    (or historical, depending on config) residual amount.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-clock-o mr-2"></i> Scenario 3:
+                                Aging Buckets & "Not Due"</h4>
+                            <p class="mb-2 text-muted"><strong>Objective:</strong> Validate that debts are correctly
+                                bucketed based on Due Date.</p>
+                            <ol class="mt-2">
+                                <li>Create 3 Invoices with Due Dates: <strong>Today</strong> (0 days), <strong>45 days
+                                        ago</strong>, and <strong>Future</strong> (+30 days).</li>
+                                <li>Run report with <strong>"Aging Report"</strong> enabled.</li>
+                                <li><strong>Expected Result:</strong>
+                                    <ul>
+                                        <li>Invoice 1: Appears in "0-30" or "Current".</li>
+                                        <li>Invoice 2: Appears in "31-60".</li>
+                                        <li>Invoice 3: Appears in "Not Due" (Por Vencer).</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-database mr-2"></i> Scenario
+                                4:
+                                High Volume Performance</h4>
+                            <p class="mb-2 text-muted"><strong>Objective:</strong> Ensure stability with 10,000+
+                                records.</p>
+                            <ol class="mt-2">
+                                <li>Select a high-volume account (e.g., Receivable) with thousands of historical moves.
+                                </li>
+                                <li>Generate the report for a full fiscal year.</li>
+                                <li><strong>Expected Result:</strong> The wizard should generate the Excel file within
+                                    standard timeout limits (SQL optimizations are in place). Pivot view should load
+                                    without browser freeze (using optimized grouping).</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-table mr-2"></i> Scenario 5:
+                                View in Odoo vs. Excel Consistency</h4>
+                            <p class="mb-2 text-muted"><strong>Objective:</strong> Validate the new "View in Odoo"
+                                feature.</p>
+                            <ol class="mt-2">
+                                <li>Configure report options (Date, Accounts, Aging).</li>
+                                <li>Click <strong>"View in Odoo"</strong>.</li>
+                                <li>Click <strong>"Generate Excel"</strong> with same options.</li>
+                                <li><strong>Expected Result:</strong> The Total Balance sum in the Odoo list view must
+                                    <strong>exactly match</strong> the Grand Total in the Excel file. Link navigation
+                                    (clicking on Account/Partner) should open the correct form views.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Why is my balance different from Odoo's Partner
+                                Ledger?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Standard Partner Ledger might include
+                                different account types or unposted entries.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ensure
+                                you
+                                are selecting <strong>posted entries only</strong> if that is your goal, and verify the
+                                Accounts filter matches exactly.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Does it support PDF?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> This module specializes in <strong>Excel
+                                    data dumps</strong> for auditing.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Use
+                                Odoo's standard reports for PDF. Use this module for data manipulation, pivots, and
+                                audits.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">"Zero Division Error"?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Usually happens if exchange rates are
+                                missing (0.00) for a specific historical date in multi-currency environments.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Check
+                                your Currency Rates table for the date of the transaction.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is it compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                It respects record rules and only shows data for the currently active company.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </div>
+
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+
+    <!-- Technical Support Section -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                <p style="color:#777783">Existing customers regarding module functionality.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                    <div class="row align-items-center">
+                        <div class="col-5 text-center">
+                            <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                alt="QR Technical Support">
+                        </div>
+                        <div class="col-7 pl-4">
+                            <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                            <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                reports.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                    style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    ayuda@ganemo.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 pb-5">
+            <div class="col-12 text-center text-muted">
+                <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                        ganemo.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

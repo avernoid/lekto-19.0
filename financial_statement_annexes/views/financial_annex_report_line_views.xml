@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+    <record id="view_financial_annex_report_line_tree" model="ir.ui.view">
+        <field name="name">financial.annex.report.line.list</field>
+        <field name="model">financial.annex.report.line</field>
+        <field name="arch" type="xml">
+            <list string="Financial Annexes" create="false" edit="false" delete="false">
+                <field name="date"/>
+                <field name="account_code" optional="show"/>
+                <field name="account_id" optional="show" widget="many2one"/>
+                <field name="move_id" optional="show" widget="many2one"/>
+                <field name="partner_id" optional="show" widget="many2one"/>
+                <field name="ref"/>
+                <field name="date_maturity" optional="show"/>
+                <field name="expected_pay_date" optional="hide"/>
+                <field name="name" optional="show"/>
+                <field name="balance" sum="Total Balance"/>
+                <field name="amount_currency" sum="Total Amount Currency"/>
+                <field name="currency_id" optional="hide"/>
+                <field name="reconcile_name" optional="hide"/>
+                <field name="date_reconcile" optional="hide"/>
+                <field name="internal_note" optional="hide"/>
+                
+                <field name="range_not_due" optional="hide" sum="Total Not Due"/>
+                <field name="range_0_30" optional="hide" sum="Total 1-30"/>
+                <field name="range_31_60" optional="hide" sum="Total 31-60"/>
+                <field name="range_61_90" optional="hide" sum="Total 61-90"/>
+                <field name="range_91_120" optional="hide" sum="Total 91-120"/>
+                <field name="range_older" optional="hide" sum="Total Older"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_financial_annex_report_line_pivot" model="ir.ui.view">
+        <field name="name">financial.annex.report.line.pivot</field>
+        <field name="model">financial.annex.report.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Financial Annexes" disable_linking="True">
+                <field name="account_name" type="row"/>
+                <field name="balance" type="measure"/>
+                <field name="amount_currency" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_financial_annex_report_line_search" model="ir.ui.view">
+        <field name="name">financial.annex.report.line.search</field>
+        <field name="model">financial.annex.report.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Financial Annexes">
+                <field name="account_name"/>
+                <field name="partner_name"/>
+                <field name="move_name"/>
+                <field name="ref"/>
+                <separator/>
+                <group>
+                    <filter string="Account" name="group_account" context="{'group_by':'account_name'}"/>
+                    <filter string="Partner" name="group_partner" context="{'group_by':'partner_name'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_financial_annex_report_line" model="ir.actions.act_window">
+        <field name="name">Financial Annexes Analysis</field>
+        <field name="res_model">financial.annex.report.line</field>
+        <field name="view_mode">list,pivot</field>
+
+    </record>
+
+</odoo>
