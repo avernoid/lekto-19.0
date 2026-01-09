@@ -53,8 +53,13 @@ class IrRule(models.Model):
              # 4. Whitelisted Interoperability
              # Must access move_id fields. This is slightly expensive but necessary.
              # move_id.move_type, move_id.payment_ids, move_id.statement_line_id
-             d_whitelist = ['&', ('move_id.move_type', '=', 'entry'), '|', '|', ('move_id.payment_ids', '!=', False), ('move_id.statement_line_id', '!=', False), ('account_id.account_type', 'in', ('asset_receivable', 'liability_payable'))]
-             # Note: For AR/AP, we check the line's own account! ('account_id.account_type').
+             # Fix Conflict: Pre-fetch account IDs to avoid implicit 'LEFT JOIN account_account' which conflicts with 
+             # reports (like Cash Flow) that use explicit 'JOIN account_account'.
+             allowed_account_ids = self.env['account.account'].sudo().search([
+                 ('account_type', 'in', ('asset_receivable', 'liability_payable'))
+             ]).ids
+             d_whitelist = ['&', ('move_id.move_type', '=', 'entry'), '|', '|', ('move_id.payment_ids', '!=', False), ('move_id.statement_line_id', '!=', False), ('account_id', 'in', allowed_account_ids)]
+             # Note: For AR/AP, we check the line's own account! ('account_id' in list).
              # This is actually simpler/better than checking move_id.line_ids.
              
              extra_domain = Domain(['|', '|', '|'] + d_public + d_user + d_group + d_whitelist)

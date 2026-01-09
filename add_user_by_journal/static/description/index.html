@@ -80,6 +80,72 @@
             font-size: 14px;
             font-weight: 600;
         }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
     </style>
 </head>
 
@@ -258,7 +324,8 @@
                                         <p class="text-muted">Privacy doesn't break operations. The system detects
                                             <strong>Commercial Data</strong> (Payments/AR/AP) and allows Sales to view
                                             them on invoices, even if the originating journal (e.g., Bank) is hidden.
-                                            Smooth workflow, zero leaks.</p>
+                                            Smooth workflow, zero leaks.
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
@@ -285,6 +352,8 @@
                 </div>
             </div>
         </section>
+
+
 
         <!--Section Languages-->
         <section class="oe_container pb-5 text-center">
@@ -329,76 +398,392 @@
         <!-- Primary CTA WhatsApp -->
         <section class="oe_container py-5 text-center">
             <div class="mt-4">
-                <h2 class="mb-4" style="font-weight: 700;">Our Expert Support is One Click Away</h2>
-                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Get immediate assistance
-                    via WhatsApp.</p>
-                <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
-                    class="cta-whatsapp shadow-lg">
-                    <i class="fa fa-whatsapp mr-2"></i> WhatsApp with Us Now
-                </a>
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="copy-link-wrapper">
+                                    <div class="copy-link-label">COPY<br>LINK</div>
+                                    <a href="https://wa.me/18286726150" target="_blank" class="copy-link-url"
+                                        style="text-decoration:none;">https://wa.me/18286726150</a>
+                                </div>
+                                <p class="mt-2" style="font-size: 24px; color: #555; font-weight: bold;">
+                                    <i class="fa fa-whatsapp text-success"></i> +1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="copy-link-wrapper">
+                                    <div class="copy-link-label">COPY<br>ADDRESS</div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank" class="copy-link-url"
+                                        style="text-decoration:none;">leads@ganemo.com</a>
+                                </div>
+                                <p class="mt-2" style="font-size: 24px; color: #555; font-weight: bold;">
+                                    <i class="fa fa-envelope text-primary"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="copy-link-wrapper">
+                                    <div class="copy-link-label">COPY<br>LINK</div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank" class="copy-link-url"
+                                        style="text-decoration:none;">ganemo.co/appointment/5</a>
+                                </div>
+                                <p class="mt-2" style="font-size: 24px; color: #555; font-weight: bold;">
+                                    <i class="fa fa-calendar text-warning"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-user-secret mr-2"></i>
+                                Scenario 1: Private Restrictions (User-Level)</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Settings > Users</strong> and create "User A" and "User B".</li>
+                                <li>Go to <strong>Accounting > Configuration > Journals</strong>.</li>
+                                <li>Select "Bank X". In <strong>Security Settings</strong> tab, add "User A" to
+                                    <em>Assigned Users</em>.
+                                </li>
+                                <li><strong>Test:</strong> Log in as User A. You SHOULD see "Bank X" in the Dashboard.
+                                </li>
+                                <li><strong>Test:</strong> Log in as User B. You SHOULD NOT see "Bank X" in Dashboard or
+                                    Journal filters.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-users mr-2"></i> Scenario 2:
+                                Role-Based Access (Group-Level)</h4>
+                            <ol class="mt-3">
+                                <li>Create/Identify a Group, e.g., "Sales / Manager".</li>
+                                <li>Go to a Journal "Cash Y". Add "Sales / Manager" to <em>Assigned Groups</em>.</li>
+                                <li>Ensure "User B" is in the "Sales / Manager" group.</li>
+                                <li><strong>Test:</strong> Log in as User B. You SHOULD see "Cash Y".</li>
+                                <li><strong>Test:</strong> Remove User B from the group. You SHOULD NOT see "Cash Y"
+                                    anymore.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-globe mr-2"></i> Scenario 3:
+                                Public & Hybrid Access</h4>
+                            <p class="mt-2"><strong>Public:</strong> Clear all Users and Groups from Journal Z. Everyone
+                                should see it.</p>
+                            <p><strong>Hybrid:</strong> Add "User A" AND "Group Sales".</p>
+                            <ul>
+                                <li>User A (not in group) -> Has Access.</li>
+                                <li>User B (in group) -> Has Access.</li>
+                                <li>User C (neither) -> No Access.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-random mr-2"></i> Scenario 4:
+                                Interoperability (Whitelist)</h4>
+                            <p class="mt-2"><em>Goal: Ensure Sales can create invoices even if they can't see the Bank
+                                    Journal.</em></p>
+                            <ol>
+                                <li>Create an Invoice as a user who is RESTRICTED from seeing "Bank A".</li>
+                                <li>Register a Payment on that invoice using "Bank A".</li>
+                                <li><strong>Result:</strong> The system MUST allow saving the payment. The user can see
+                                    the payment widget on the invoice (Whitelisted) but cannot click through to read the
+                                    full Journal Entry details.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-bar-chart mr-2"></i> Scenario
+                                5: Reporting Stability</h4>
+                            <ol class="mt-3">
+                                <li>Install module.</li>
+                                <li>Go to <strong>Accounting > Reporting > Cash Flow Statement</strong>.</li>
+                                <li>Run the report.</li>
+                                <li><strong>Result:</strong> It MUST generate the report PDF/View without
+                                    "AssertionError" or "Odoo Server Error". (Validates SQL Join fix).</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Using "Bank A" but can't see it?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> You are likely not assigned to the
+                                journal.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ask
+                                your
+                                Administrator to add your User (or your Group) to the <em>Assigned Users</em> tab in the
+                                Journal configuration.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Why is my Journal visible to everyone?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> If no Users and no Groups are assigned,
+                                the
+                                Journal defaults to <strong>Public</strong>.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Add
+                                at
+                                least one User (e.g., the Administrator) to the <em>Assigned Users</em> field to
+                                activate
+                                Private Mode.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">"Access Error" when opening a Move?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> You are trying to access a document
+                                belonging to a Restricted Journal.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                This
+                                is expected behavior. If you need access, request assignment to that specific Journal.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Journal
+                                assignments are strictly linked to the specific Journal record. You can have different
+                                rules
+                                for "Bank US" (Company A) and "Bank EU" (Company B).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <!-- FOOTER -->
     <div class="container mt-5 pt-5 border-top">
         <div class="row">
             <div class="col-12 mb-4">
-                <h2 style="font-weight:bold; color:#3D3D4E">Support Channels</h2>
-                <p style="color:#777783">Need help? Get in touch with our experts.</p>
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="d-flex align-items-center h-100"
-                    style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
-                    <div>
-                        <h4>Official WhatsApp</h4>
-                        <p class="text-muted">Fastest response time.</p>
-                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
-                            style="text-decoration:none;">
-                            <p style="font-weight:600; font-size:18px; color:#714B67; margin-bottom: 0;">+1 (828)
-                                672-6150</p>
-                        </a>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
+                    <div class="d-flex align-items-center h-100"
+                        style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
+                        <div class="d-flex align-items-center mob-col">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 100px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+                                class="mr-3 mb-2">
+                            <div>
+                                <h4>Official WhatsApp</h4>
+                                <p class="text-muted">Fastest response time.</p>
+                                <div class="copy-link-wrapper mt-2">
+                                    <div class="copy-link-label">COPY<br>LINK</div>
+                                    <a href="https://wa.me/18286726150" target="_blank" class="copy-link-url"
+                                        style="font-size: 14px; text-decoration:none;">https://wa.me/18286726150</a>
+                                </div>
+                                <p style="font-weight:600; font-size:16px; color:#714B67; margin-bottom: 0;">+1 (828)
+                                    672-6150
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
+                    <div class="d-flex align-items-center h-100"
+                        style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
+                        <div class="d-flex align-items-center mob-col">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 100px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+                                class="mr-3 mb-2">
+                            <div>
+                                <h4>Sales Email</h4>
+                                <p class="text-muted">For commercial inquiries.</p>
+                                <a href="mailto:leads@ganemo.com" target="_blank" style="text-decoration:none;">
+                                    <p style="font-weight:600; font-size:18px; color:#714B67; margin-bottom: 0;">
+                                        leads@ganemo.com
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
+                    <div class="d-flex align-items-center h-100"
+                        style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
+                        <div class="d-flex align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 100px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+                                class="mr-3 mb-2">
+                            <div>
+                                <h4>Book a Demo</h4>
+                                <p class="text-muted">Let's explore your needs.</p>
+                                <div class="copy-link-wrapper mt-2">
+                                    <div class="copy-link-label">COPY<br>LINK</div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank" class="copy-link-url"
+                                        style="font-size: 14px; text-decoration:none;">https://www.ganemo.co/appointment/5</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="d-flex align-items-center h-100"
-                    style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
-                    <div>
-                        <h4>Global Email</h4>
-                        <p class="text-muted">For sales & technical inquiries.</p>
-                        <a href="mailto:leads@ganemo.co" target="_blank" style="text-decoration:none;">
-                            <p style="font-weight:600; font-size:18px; color:#714B67; margin-bottom: 0;">leads@ganemo.co
-                            </p>
-                        </a>
+            <!-- Technical Support Section -->
+            <div class="row mt-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="d-flex align-items-center h-100"
+                        style="background-color:#fff3cd; padding:30px; border-radius: 15px; border: 1px solid #ffeeba;">
+                        <div class="d-flex align-items-center mob-col">
+                            <img src="qremailhelp.png" alt="QR Technical Support"
+                                style="max-width: 100px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
+                                class="mr-3 mb-2">
+                            <div>
+                                <h4 style="color:#856404"><i class="fa fa-life-ring mr-2"></i>Help Desk</h4>
+                                <p class="text-muted">Exclusive channel for technical assistance and bug reports.</p>
+                                <div class="copy-link-wrapper mt-2"
+                                    style="background-color:#856404; border-color:#533f03;">
+                                    <div class="copy-link-label" style="color:#856404;">COPY<br>LINK</div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank" class="copy-link-url"
+                                        style="font-size: 14px; text-decoration:none;">ayuda@ganemo.com</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="d-flex align-items-center h-100"
-                    style="background-color:#F6F8F9; padding:30px; border-radius: 15px; border: 1px solid #eee;">
-                    <div>
-                        <h4>Book a Demo</h4>
-                        <p class="text-muted">Let's explore your needs.</p>
-                        <a href="https://www.ganemo.co/appointment/5" target="_blank" style="text-decoration:none;">
-                            <p style="font-weight:600; font-size:18px; color:#714B67; margin-bottom: 0;">Schedule
-                                Meeting</p>
-                        </a>
-                    </div>
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
                 </div>
             </div>
         </div>
-        <div class="row pt-5 pb-5">
-            <div class="col-12 text-center text-muted">
-                <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.co" target="_blank">visit
-                        ganemo.co</a></p>
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>
