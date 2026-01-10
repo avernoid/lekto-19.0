@@ -23,35 +23,8 @@ class StockMove(models.Model):
         # Usually in onchange, we check against the lines currently in the parent view.
         
         is_duplicate = False
-        existing_moves = self.picking_id.move_ids
-        
-        count = 0
-        for move in existing_moves:
-            # Skip if it's the exact same record in memory (comparing NewIds works effectively in Odoo JS context usually, 
-            # but in python onchange, self is a virtual record)
-            # A robust way is to check how many times this key appears.
-            
-            # Note: 'move' here comes from the picking's one2many.
-            if move.product_id == self.product_id and (move.description_picking or '') == current_desc:
-                count += 1
-        
-        # If we are creating a new line, it might not be in existing_moves yet, or it might be.
-        # If we are editing, it is definitely in there.
-        # The 'self' is the record being edited.
-        
-        # If count > 1, strictly duplicate. 
-        # But wait, 'self' might NOT be in existing_moves yet if it's a fresh creation line in the UI before "Save & New" or similar.
-        # However, usually the Onchange triggers on the single line form or editable list.
-        
-        # Let's try a simpler approach: Check if ANY OTHER line has same tuple.
-        # We can try to match by ID if origin exists, or just count occurrences.
-        
-        # If I am just typing product_id, and not added to the list yet?
-        # Onchange happens on the record.
-        
-        # Let's count how many lines in picking match this criteria.
-        # If self is in picking.move_ids_without_package, we expect count >= 1 (itself).
-        # If self is NOT in picking.move_ids_without_package (weird, but possible if completely new), count == 0 is fine.
+        # Merge moves from both relations to handle NewId context where one might be empty but the other populated by the view
+        existing_moves = self.picking_id.move_ids | self.picking_id.move_ids_without_package
         
         matches = [
             m for m in existing_moves 

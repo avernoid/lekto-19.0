@@ -1,2 +1,0 @@
-from . import test_financial_statement_annexes_currency
-from . import test_financial_currency_logic

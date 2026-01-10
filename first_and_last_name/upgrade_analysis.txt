@@ -1,3 +1,0 @@
----Models in module 'first_and_last_name'---
----Fields in module 'first_and_last_name'---
----XML records in module 'first_and_last_name'---

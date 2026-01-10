@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_hr_employee_spreadsheet_user,hr.employee.spreadsheet.user,model_hr_employee_spreadsheet,hr.group_hr_user,1,1,1,1
-access_hr_employee_spreadsheet_template_user,hr.employee.spreadsheet.template.user,model_hr_employee_spreadsheet_template,hr.group_hr_user,1,1,1,1

@@ -1,2 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_project_task_lost_reason_wizard,project.task.lost.reason.wizard,model_project_task_lost_reason_wizard,base.group_user,1,1,1,1

@@ -3,7 +3,7 @@
 # Ganemo <leads@ganemo.com>, 2026.
 msgid ""
 msgstr ""
-"Project-Id-Version: stock_picking_duplicate_control 19.0.1.0\n"
+"Project-Id-Version: stock_picking_duplicate_control 18.0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-10 00:00+0000\n"
 "PO-Revision-Date: 2026-01-10 00:00+0000\n"

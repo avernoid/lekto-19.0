@@ -12,7 +12,7 @@ class TestStockPickingDuplicate(TransactionCase):
         cls.StockMove = cls.env['stock.move']
         cls.Product = cls.env['product.product']
 
-        # Create Products - Updated for Odoo 19 (type='consu' + is_storable=True)
+        # Create Products - Updated for Odoo 18+ (type='consu' + is_storable=True)
         cls.product_a = cls.Product.create({'name': 'Product A', 'type': 'consu', 'is_storable': True})
         cls.product_b = cls.Product.create({'name': 'Product B', 'type': 'consu', 'is_storable': True})
 
@@ -37,6 +37,7 @@ class TestStockPickingDuplicate(TransactionCase):
                     'product_uom': self.product_a.uom_id.id,
                     'product_uom_qty': 1,
                     'description_picking': 'Test Desc',
+                    'name': 'Product A',
                     'location_id': self.picking_type.default_location_src_id.id or 1,
                     'location_dest_id': self.picking_type.default_location_dest_id.id or 1,
                 }),
@@ -45,6 +46,7 @@ class TestStockPickingDuplicate(TransactionCase):
                     'product_uom': self.product_a.uom_id.id,
                     'product_uom_qty': 1,
                     'description_picking': 'Test Desc',
+                    'name': 'Product A',
                     'location_id': self.picking_type.default_location_src_id.id or 1,
                     'location_dest_id': self.picking_type.default_location_dest_id.id or 1,
                 })
@@ -67,12 +69,14 @@ class TestStockPickingDuplicate(TransactionCase):
                     'product_id': self.product_a.id,
                     'product_uom_qty': 1,
                     'description_picking': 'Test Desc',
+                    'name': 'Product A',
                     'location_id': 1, 'location_dest_id': 1,
                 }),
                 (0, 0, {
                     'product_id': self.product_a.id,
                     'product_uom_qty': 1,
                     'description_picking': 'Test Desc',
+                    'name': 'Product A',
                     'location_id': 1, 'location_dest_id': 1,
                 })
             ]
@@ -95,12 +99,14 @@ class TestStockPickingDuplicate(TransactionCase):
                         'product_id': self.product_a.id,
                         'product_uom_qty': 1,
                         'description_picking': 'Test Desc',
+                        'name': 'Product A',
                         'location_id': 1, 'location_dest_id': 1,
                     }),
                     (0, 0, {
                         'product_id': self.product_a.id,
                         'product_uom_qty': 1,
                         'description_picking': 'Test Desc',
+                        'name': 'Product A',
                         'location_id': 1, 'location_dest_id': 1,
                     })
                 ]
@@ -118,12 +124,14 @@ class TestStockPickingDuplicate(TransactionCase):
                     'product_id': self.product_a.id,
                     'product_uom_qty': 1,
                     'description_picking': 'Desc 1',
+                    'name': 'Product A',
                     'location_id': 1, 'location_dest_id': 1,
                 }),
                 (0, 0, {
                     'product_id': self.product_a.id,
                     'product_uom_qty': 1,
                     'description_picking': 'Desc 2',
+                    'name': 'Product A',
                     'location_id': 1, 'location_dest_id': 1,
                 })
             ]
@@ -137,6 +145,7 @@ class TestStockPickingDuplicate(TransactionCase):
             'product_id': self.product_b.id,
             'product_uom_qty': 1,
             'description_picking': 'Desc B',
+            'name': 'Product B',
             'location_id': 1, 'location_dest_id': 1,
         })
         move1._action_cancel()
@@ -146,6 +155,7 @@ class TestStockPickingDuplicate(TransactionCase):
             'product_id': self.product_b.id,
             'product_uom_qty': 1,
             'description_picking': 'Desc B',
+            'name': 'Product B',
             'location_id': 1, 'location_dest_id': 1,
         })
         self.assertTrue(move2) # Should allow because move1 is cancel
@@ -165,6 +175,7 @@ class TestStockPickingDuplicate(TransactionCase):
             'product_id': self.product_a.id,
             'product_uom_qty': 1,
             'description_picking': 'Same Desc',
+            'name': 'Product A',
             'location_id': 1, 'location_dest_id': 1,
         })
         
@@ -174,6 +185,7 @@ class TestStockPickingDuplicate(TransactionCase):
             'picking_id': picking.id,
             'product_id': self.product_a.id,
             'description_picking': 'Same Desc', 
+            'name': 'Product A',
             'location_id': 1, 'location_dest_id': 1,
         })
         
@@ -197,6 +209,7 @@ class TestStockPickingDuplicate(TransactionCase):
             'picking_id': picking.id,
             'product_id': self.product_a.id,
             'description_picking': 'Same Desc',
+            'name': 'Product A',
             'location_id': 1, 'location_dest_id': 1,
         })
         
@@ -204,6 +217,7 @@ class TestStockPickingDuplicate(TransactionCase):
             'picking_id': picking.id,
             'product_id': self.product_a.id,
             'description_picking': 'Same Desc', 
+            'name': 'Product A',
             'location_id': 1, 'location_dest_id': 1,
         })
         

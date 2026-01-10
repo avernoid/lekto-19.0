@@ -39,7 +39,9 @@ class StockPicking(models.Model):
                 
         return list(duplicates)
 
-    @api.depends('move_ids.product_id', 'move_ids.description_picking', 'move_ids.state', 'picking_type_id.duplicate_product_policy')
+    @api.depends('move_ids.product_id', 'move_ids.description_picking', 'move_ids.state', 
+                 'move_ids_without_package.product_id', 'move_ids_without_package.description_picking', 'move_ids_without_package.state',
+                 'picking_type_id.duplicate_product_policy')
     def _compute_duplicate_warning_banner(self):
         for picking in self:
             picking.duplicate_warning_banner = False
@@ -50,7 +52,8 @@ class StockPicking(models.Model):
 
             # Check duplicates
             # We filter out cancelled/done moves as per requirements
-            moves = picking.move_ids.filtered(lambda m: m.state not in ('cancel', 'done'))
+            all_moves = picking.move_ids | picking.move_ids_without_package
+            moves = all_moves.filtered(lambda m: m.state not in ('cancel', 'done'))
             duplicates = picking._get_duplicate_lines(moves)
             
             if duplicates:
