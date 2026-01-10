@@ -1,0 +1,80 @@
+# Spanish translation for stock_picking_duplicate_control.
+# Authors:
+# Ganemo <leads@ganemo.com>, 2026.
+msgid ""
+msgstr ""
+"Project-Id-Version: stock_picking_duplicate_control 19.0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-10 00:00+0000\n"
+"PO-Revision-Date: 2026-01-10 00:00+0000\n"
+"Last-Translator: Ganemo <leads@ganemo.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_duplicate_control
+#: model:ir.model.fields,field_description:stock_picking_duplicate_control.field_stock_picking_type__duplicate_product_policy
+msgid "Duplicate Product Policy"
+msgstr "Política de Productos Duplicados"
+
+#. module: stock_picking_duplicate_control
+#: model:ir.model.fields,help:stock_picking_duplicate_control.field_stock_picking_type__duplicate_product_policy
+msgid "Defines how to handle duplicate products (same product and description) in pickings."
+msgstr "Define cómo manejar productos duplicados (mismo producto y descripción) en los albaranes."
+
+#. module: stock_picking_duplicate_control
+#: model:ir.model.fields.selection,name:stock_picking_duplicate_control.selection__stock_picking_type__duplicate_product_policy__allow
+msgid "Allow"
+msgstr "Permitir"
+
+#. module: stock_picking_duplicate_control
+#: model:ir.model.fields.selection,name:stock_picking_duplicate_control.selection__stock_picking_type__duplicate_product_policy__warning
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: stock_picking_duplicate_control
+#: model:ir.model.fields.selection,name:stock_picking_duplicate_control.selection__stock_picking_type__duplicate_product_policy__block
+msgid "Block"
+msgstr "Bloquear"
+
+#. module: stock_picking_duplicate_control
+#: model:ir.model.fields,field_description:stock_picking_duplicate_control.field_stock_picking__duplicate_warning_banner
+msgid "Duplicate Warning"
+msgstr "Advertencia de Duplicado"
+
+#. module: stock_picking_duplicate_control
+#: code:addons/stock_picking_duplicate_control/models/stock_picking.py:0
+#, python-format
+msgid "Duplicate Lines Detected"
+msgstr "Líneas Duplicadas Detectadas"
+
+#. module: stock_picking_duplicate_control
+#: code:addons/stock_picking_duplicate_control/models/stock_picking.py:0
+#, python-format
+msgid "The following products are duplicated (Same Product + Description):"
+msgstr "Los siguientes productos están duplicados (Mismo Producto + Descripción):"
+
+#. module: stock_picking_duplicate_control
+#: code:addons/stock_picking_duplicate_control/models/stock_picking.py:0
+#, python-format
+msgid "You cannot validate this picking because the following products are duplicated:\n%s\nCheck the Duplicate Product Policy on the Operation Type."
+msgstr "No puede validar este albarán porque los siguientes productos están duplicados:\n%s\nVerifique la Política de Productos Duplicados en el Tipo de Operación."
+
+#. module: stock_picking_duplicate_control
+#: code:addons/stock_picking_duplicate_control/models/stock_move.py:0
+#, python-format
+msgid "The product '%(name)s' already exists with the description '%(desc)s'. Modify the description if you wish to repeat it."
+msgstr "El producto '%(name)s' ya existe con la descripción '%(desc)s'. Modifique la descripción si desea repetirlo."
+
+#. module: stock_picking_duplicate_control
+#: code:addons/stock_picking_duplicate_control/models/stock_move.py:0
+#, python-format
+msgid "Duplicate Blocked"
+msgstr "Duplicado Bloqueado"
+
+#. module: stock_picking_duplicate_control
+#: model_terms:ir.ui.view,arch_db:stock_picking_duplicate_control.view_picking_type_form_inherit_duplicate_control
+msgid "Duplicate Control"
+msgstr "Control de Duplicados"

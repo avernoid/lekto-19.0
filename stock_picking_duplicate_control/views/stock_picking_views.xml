@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_duplicate_control" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.duplicate.control</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[1]" position="before">
+                <!-- Banner for duplicates -->
+                <field name="duplicate_warning_banner" widget="html" nolabel="1" 
+                       invisible="not duplicate_warning_banner"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
