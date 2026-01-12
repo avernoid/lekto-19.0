@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_project_task_evidence" model="ir.actions.report">
+        <field name="name">Task Evidence Report</field>
+        <field name="model">project.task</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">project_task_photo_evidence.report_evidence_template</field>
+        <field name="report_file">project_task_photo_evidence.report_evidence_template</field>
+        <field name="binding_model_id" ref="project.model_project_task"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_evidence_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="task">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mb-4 border-bottom pb-3">
+                            <div class="col-8">
+                                <h2 style="color: #5D38A4; font-weight: bold;"><span t-field="task.name"/></h2>
+                                <div>
+                                    <span class="text-muted">Project:</span> <strong t-field="task.project_id"/>
+                                </div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <div t-if="task.partner_id">
+                                    <strong style="color: #5D38A4;">Customer:</strong>
+                                    <div t-field="task.partner_id" t-options='{"widget": "contact", "fields": ["name", "address", "phone"], "no_marker": True}'/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Group by Product -->
+                        <t t-set="all_evidences" t-value="task.evidence_ids.filtered(lambda x: not x.exclude_from_report)"/>
+                        <t t-if="all_evidences">
+                            <t t-set="evidences_by_product" t-value="all_evidences.sorted(key=lambda s: s.product_id.name or '')"/>
+                            <t t-foreach="evidences_by_product.grouped(lambda s: s.product_id).items()" t-as="product_group">
+                               <t t-set="product" t-value="product_group[0]"/>
+                               <t t-set="evidences" t-value="product_group[1]"/>
+                               
+                               <h3 class="mt-4"><span t-esc="product.name if product else 'No Product'"/></h3>
+                               
+                               <!-- Warning Banner -->
+                               <t t-if="product and product.evidence_required and product.evidence_min_qty > 0 and len(evidences) &lt; product.evidence_min_qty">
+                                    <div class="alert alert-warning mt-2" role="alert" style="background-color: #fff3cd; border-color: #ffeeba; color: #856404; padding: 0.75rem 1.25rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                                        <strong>⚠️ Attention:</strong> This product requires a minimum of <t t-esc="product.evidence_min_qty"/> photos, but only <t t-esc="len(evidences)"/> are included in this report.
+                                    </div>
+                               </t>
+
+                               <t t-foreach="range(0, len(evidences), 3)" t-as="i">
+                                   <div class="row mt-3">
+                                       <t t-foreach="evidences[i:i+3]" t-as="evidence">
+                                       <div class="col-4 mb-3" style="page-break-inside: avoid;">
+                                           <div class="card h-100" style="border: 1px solid #ddd; border-radius: 4px;">
+                                               <div class="card-header py-1 px-2 text-center text-truncate" style="background-color: #f8f9fa; border-bottom: 1px solid #ddd; font-size: 0.85rem; color: #333;">
+                                                   <span t-field="evidence.name"/>
+                                               </div>
+                                               <div class="card-body p-2 text-center d-flex flex-column justify-content-between" style="min-height: 220px;">
+                                                   <div class="d-flex align-items-center justify-content-center" style="height: 160px; overflow: hidden;">
+                                                       <!-- Use width: auto to prevent blurry upscaling of small images -->
+                                                       <img t-if="evidence.image" t-att-src="image_data_uri(evidence.image)" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;"/>
+                                                   </div>
+                                                   <div class="mt-2" style="font-size: 0.75rem; line-height: 1.3;">
+                                                       <t t-if="evidence.latitude and evidence.longitude">
+                                                           <div class="text-muted mb-1">
+                                                               <span class="d-inline-block">Lat: <span t-field="evidence.latitude" t-options="{'widget': 'float', 'precision': 5}"/></span>
+                                                               <span class="d-inline-block mx-1">|</span>
+                                                               <span class="d-inline-block">Lon: <span t-field="evidence.longitude" t-options="{'widget': 'float', 'precision': 5}"/></span>
+                                                           </div>
+                                                           <div t-if="evidence.map_url">
+                                                               <a t-att-href="evidence.map_url" target="_blank" style="color: #5D38A4; text-decoration: underline; font-weight: bold;">
+                                                                   <i class="fa fa-map-marker"/> View on Map
+                                                               </a>
+                                                           </div>
+                                                       </t>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                       </t>
+                                   </div>
+                               </t>
+                            </t>
+                        </t>
+
+                         <!-- Button to Print -->
+                         <div class="row mt-4" style="page-break-inside: avoid;" t-if="public_view">
+                            <div class="col-12 text-center">
+                                <style>
+                                    @media print {
+                                        .no-print { display: none !important; }
+                                    }
+                                </style>
+                                <button onclick="window.print()" class="btn btn-primary no-print">Print Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_project_evidence" model="ir.actions.report">
+        <field name="name">Project Evidence Report</field>
+        <field name="model">project.project</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">project_task_photo_evidence.report_project_evidence_template</field>
+        <field name="report_file">project_task_photo_evidence.report_project_evidence_template</field>
+        <field name="binding_model_id" ref="project.model_project_project"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_project_evidence_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="project">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                         <!-- Project Header -->
+                        <div class="row mb-4 border-bottom pb-3">
+                            <div class="col-8">
+                                <h1 style="color: #5D38A4; font-weight: bold;"><span t-field="project.name"/></h1>
+                                <div class="text-muted">Evidence Report</div>
+                            </div>
+                            <div class="col-4 text-right">
+                                <div t-if="project.partner_id">
+                                    <strong style="color: #5D38A4;">Customer:</strong>
+                                    <div t-field="project.partner_id" t-options='{"widget": "contact", "fields": ["name", "address", "phone"], "no_marker": True}'/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tasks Loop -->
+                        <t t-foreach="project.task_ids.sorted(key=lambda t: t.sequence)" t-as="task">
+                            <t t-set="task_valid_evidences" t-value="task.evidence_ids.filtered(lambda x: not x.exclude_from_report)"/>
+                            <t t-if="task_valid_evidences">
+                                <div class="mb-5">
+                                    <div class="d-flex align-items-center mb-3 p-2 bg-light rounded border-left border-primary" style="border-width: 4px !important;">
+                                        <h3 class="m-0" style="color: #333;"><span t-field="task.name"/></h3>
+                                    </div>
+    
+                                    <!-- Reuse grouping logic -->
+                                    <t t-set="evidences_by_product" t-value="task_valid_evidences.sorted(key=lambda s: s.product_id.name or '')"/>
+                                    <t t-foreach="evidences_by_product.grouped(lambda s: s.product_id).items()" t-as="product_group">
+                                       <t t-set="product" t-value="product_group[0]"/>
+                                       <t t-set="evidences" t-value="product_group[1]"/>
+                                       
+                                       <h5 class="mt-3 ml-2 text-muted"><span t-esc="product.name if product else 'General Evidence'"/></h5>
+                                       
+                                       <!-- Warning Banner -->
+                                       <t t-if="product and product.evidence_required and product.evidence_min_qty > 0 and len(evidences) &lt; product.evidence_min_qty">
+                                            <div class="alert alert-warning mt-2 ml-3 mr-3" role="alert" style="background-color: #fff3cd; border-color: #ffeeba; color: #856404; padding: 0.5rem 1rem; border: 1px solid transparent; border-radius: 0.25rem; font-size: 0.9rem;">
+                                                <strong>⚠️ Attention:</strong> This product requires a minimum of <t t-esc="product.evidence_min_qty"/> photos, but only <t t-esc="len(evidences)"/> are included.
+                                            </div>
+                                       </t>
+
+                               <t t-foreach="range(0, len(evidences), 3)" t-as="i">
+                                   <div class="row mt-3">
+                                       <t t-foreach="evidences[i:i+3]" t-as="evidence">
+                                           <div class="col-4 mb-3" style="page-break-inside: avoid;">
+                                               <div class="card h-100" style="border: 1px solid #ddd; border-radius: 4px;">
+                                                   <div class="card-header py-1 px-2 text-center text-truncate" style="background-color: #f8f9fa; border-bottom: 1px solid #ddd; font-size: 0.85rem; color: #333;">
+                                                       <span t-field="evidence.name"/>
+                                                   </div>
+                                                   <div class="card-body p-2 text-center d-flex flex-column justify-content-between" style="min-height: 220px;">
+                                                       <div class="d-flex align-items-center justify-content-center" style="height: 160px; overflow: hidden;">
+                                                           <img t-if="evidence.image" t-att-src="image_data_uri(evidence.image)" style="max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain;"/>
+                                                       </div>
+                                                       <div class="mt-2" style="font-size: 0.75rem; line-height: 1.3;">
+                                                           <t t-if="evidence.latitude and evidence.longitude">
+                                                               <div class="text-muted mb-1">
+                                                                   <span class="d-inline-block">Lat: <span t-field="evidence.latitude" t-options="{'widget': 'float', 'precision': 5}"/></span>
+                                                                   <span class="d-inline-block mx-1">|</span>
+                                                                   <span class="d-inline-block">Lon: <span t-field="evidence.longitude" t-options="{'widget': 'float', 'precision': 5}"/></span>
+                                                               </div>
+                                                               <div t-if="evidence.map_url">
+                                                                   <a t-att-href="evidence.map_url" target="_blank" style="color: #5D38A4; text-decoration: underline; font-weight: bold;">
+                                                                       <i class="fa fa-map-marker"/> View on Map
+                                                                   </a>
+                                                               </div>
+                                                           </t>
+                                                       </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </t>
+                                   </div>
+                               </t>
+                                    </t>
+                                </div>
+                                <hr class="my-4" style="border-top: 2px dashed #eee;"/>
+                            </t>
+                        </t>
+
+                        <!-- Button to Print -->
+                         <div class="row mt-4" style="page-break-inside: avoid;" t-if="public_view">
+                            <div class="col-12 text-center">
+                                <style>
+                                    @media print {
+                                        .no-print { display: none !important; }
+                                    }
+                                </style>
+                                <button onclick="window.print()" class="btn btn-primary no-print">Print Project Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="project_task_photo_evidence.ImageCameraField" owl="1">
+        <div class="d-inline-block position-relative">
+            <input type="file" 
+                   accept="image/*" 
+                   capture="environment" 
+                   class="d-none" 
+                   t-ref="fileInput" 
+                   t-on-change="onFileChange"/>
+
+            <div t-if="props.record.data[props.name]" class="position-relative">
+                <img t-att-src="'data:image/png;base64,' + props.record.data[props.name]" 
+                     class="img img-fluid shadow-sm rounded" 
+                     style="max-width: 100%; max-height: 300px; cursor: pointer;"
+                     t-on-click="triggerUpload"/>
+                <button class="btn btn-sm btn-light position-absolute top-0 end-0 m-1 rounded-circle border" 
+                        t-on-click="triggerUpload"
+                        title="Change Photo">
+                    <i class="fa fa-pencil"/>
+                </button>
+            </div>
+            
+            <div t-else="" 
+                 class="d-flex align-items-center justify-content-center bg-light border rounded" 
+                 style="width: 300px; height: 300px; cursor: pointer;"
+                 t-on-click="triggerUpload">
+                <div class="text-center text-muted">
+                    <i class="fa fa-camera fa-3x mb-2"/>
+                    <div>Tap to Take Photo</div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

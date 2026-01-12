@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_task_form2_evidence" model="ir.ui.view">
+        <field name="name">project.task.form.evidence</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="%(action_project_task_evidence_wizard)d" string="📷 Aggregate Photo" type="action" class="btn-primary" 
+                    context="{'default_task_id': id}"/>
+            </header>
+            <xpath expr="//div[@name='button_box']" position="after">
+                <field name="evidence_warning_msg" invisible="not evidence_warning_msg" nolabel="1"/>
+            </xpath>
+            <notebook position="inside">
+                <page string="Photo Evidence" name="photo_evidence">
+                    <group>
+                        <field name="evidence_report_url" widget="copy_clipboard" readonly="1" invisible="not evidence_report_url"/>
+                    </group>
+                    <div class="mb-3">
+                        <button name="action_generate_evidence_token" string="Generate Share Link" type="object" class="btn-secondary" invisible="evidence_report_url"/>
+                        <button name="action_revoke_evidence_token" string="Revoke Link" type="object" class="btn-warning" invisible="not evidence_report_url" confirm="Are you sure you want to revoke the public link? This will make the current link invalid immediately."/>
+                    </div>
+                    <field name="sale_product_id" invisible="1"/>
+                    <field name="evidence_ids" mode="kanban" context="{'default_product_id': sale_product_id}">
+                        <kanban>
+                            <field name="id"/>
+                            <field name="name"/>
+                            <field name="image"/>
+                            <field name="map_url"/>
+                            <templates>
+                                <t t-name="card">
+                                    <div class="o_kanban_image">
+                                        <field name="image" widget="image"/>
+                                    </div>
+                                    <div class="oe_kanban_details">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name"/>
+                                        </strong>
+                                        <div t-if="record.map_url.raw_value">
+                                            <a t-att-href="record.map_url.raw_value" target="_blank">
+                                                <i class="fa fa-map-marker"/> View Map
+                                            </a>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <list>
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="product_id"/>
+                            <field name="exclude_from_report"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <field name="map_url" widget="url"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="project_task_photo_evidence.EvidenceWizardController" t-inherit="web.FormView" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('o_form_view_container')]" position="before">
+            <div class="alert alert-info d-flex justify-content-between align-items-center mb-0" role="alert">
+                <span>
+                    <t t-esc="state.locationMessage"/>
+                </span>
+                <button t-if="state.locationStatus === 'error'" class="btn btn-sm btn-primary" t-on-click="retryLocation">
+                    🔄 Reintentar GPS
+                </button>
+            </div>
+        </xpath>
+    </t>
+</templates>

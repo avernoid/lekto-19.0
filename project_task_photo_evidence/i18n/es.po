@@ -1,0 +1,190 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* project_task_photo_evidence
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_product_template__evidence_required
+msgid ""
+"If checked, tasks linked to this product (via Sales Order Item) will require "
+"photo evidence. This enforces quality control for field service operations."
+msgstr "Si está marcado, las tareas vinculadas a este producto (vía línea de pedido) requerirían evidencia fotográfica. Esto refuerza el control de calidad para operaciones de campo."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_product_template__evidence_min_qty
+msgid ""
+"Minimum number of photos required to consider the evidence collection "
+"sufficient for this product."
+msgstr "Número mínimo de fotos requeridas para considerar la recolección de evidencia suficiente para este producto."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_product_template__evidence_max_qty
+msgid ""
+"Maximum number of photos allowed for this product. Useful to prevent storage "
+"waste. Set to 0 for unlimited."
+msgstr "Número máximo de fotos permitidas para este producto. Útil para prevenir desperdicio de almacenamiento. Establecer en 0 para ilimitado."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence__name
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__name
+msgid "Short description or label for this photo evidence."
+msgstr "Descripción corta o etiqueta para esta evidencia fotográfica."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence__image
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__image
+msgid "Photo evidence captured. Automatically resized to max 1280x1280."
+msgstr "Evidencia fotográfica capturada. Redimensionada automáticamente a un máximo de 1280x1280."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence__task_id
+msgid "The Project Task this evidence belongs to."
+msgstr "La Tarea de Proyecto a la que pertenece esta evidencia."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence__product_id
+msgid ""
+"The Product associated with the evidence, usually inherited from the Task's "
+"Sales Order Item."
+msgstr "El Producto asociado con la evidencia, usualmente heredado de la línea de pedido de venta de la tarea."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence__latitude
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__latitude
+msgid "GPS Latitude captured automatically from the device."
+msgstr "Latitud GPS capturada automáticamente desde el dispositivo."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence__longitude
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__longitude
+msgid "GPS Longitude captured automatically from the device."
+msgstr "Longitud GPS capturada automáticamente desde el dispositivo."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence__map_url
+msgid "Direct link to view the location on Google Maps."
+msgstr "Enlace directo para ver la ubicación en Google Maps."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task__evidence_ids
+msgid "List of photo evidence collected for this task."
+msgstr "Lista de evidencia fotográfica recolectada para esta tarea."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__name
+msgid "Enter a brief description for this photo."
+msgstr "Ingrese una breve descripción para esta foto."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__image
+msgid "Upload the photo evidence here."
+msgstr "Suba la evidencia fotográfica aquí."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__latitude
+msgid "Detected GPS Latitude."
+msgstr "Latitud GPS Detectada."
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,help:project_task_photo_evidence.field_project_task_evidence_wizard__longitude
+msgid "Detected GPS Longitude."
+msgstr "Longitud GPS Detectada."
+
+#. module: project_task_photo_evidence
+#: code:addons/project_task_photo_evidence/models/product_template.py:0
+#, python-format
+msgid "Minimum evidence quantity cannot be greater than maximum evidence quantity."
+msgstr "La cantidad mínima de evidencia no puede ser mayor que la cantidad máxima de evidencia."
+
+#. module: project_task_photo_evidence
+#: code:addons/project_task_photo_evidence/models/project_task.py:0
+#, python-format
+msgid "You cannot add more than %s evidence(s) for product %s."
+msgstr "No puede agregar más de %s evidencia(s) para el producto %s."
+
+#. module: project_task_photo_evidence
+#: code:addons/project_task_photo_evidence/wizard/project_task_evidence_wizard.py:0
+#, python-format
+msgid "Add Photo Evidence"
+msgstr "Agregar Evidencia Fotográfica"
+
+#. module: project_task_photo_evidence
+#: code:addons/project_task_photo_evidence/wizard/project_task_evidence_wizard.py:0
+#, python-format
+msgid "Maximum evidence quantity reached for this product."
+msgstr "Se ha alcanzado la cantidad máxima de evidencia para este producto."
+
+#. module: project_task_photo_evidence
+#: model:ir.ui.view,arch_db:project_task_photo_evidence.view_task_form2_evidence
+msgid "Add Photo"
+msgstr "Agregar Foto"
+
+#. module: project_task_photo_evidence
+#: model:ir.actions.act_window,name:project_task_photo_evidence.action_project_task_evidence
+#: model:ir.ui.menu,name:project_task_photo_evidence.menu_project_task_evidence
+msgid "Photo Evidence"
+msgstr "Evidencia Fotográfica"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_product_product__evidence_required
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_product_template__evidence_required
+msgid "Evidence Required"
+msgstr "Evidencia Requerida"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_product_product__evidence_min_qty
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_product_template__evidence_min_qty
+msgid "Minimum Evidence"
+msgstr "Evidencia Mínima"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_product_product__evidence_max_qty
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_product_template__evidence_max_qty
+msgid "Maximum Evidence"
+msgstr "Evidencia Máxima"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence__name
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence_wizard__name
+msgid "Description"
+msgstr "Descripción"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence__image
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence_wizard__image
+msgid "Image"
+msgstr "Imagen"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence__latitude
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence_wizard__latitude
+msgid "Latitude"
+msgstr "Latitud"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence__longitude
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence_wizard__longitude
+msgid "Longitude"
+msgstr "Longitud"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task_evidence__map_url
+msgid "Map Link"
+msgstr "Enlace Mapa"
+
+#. module: project_task_photo_evidence
+#: model:ir.model.fields,field_description:project_task_photo_evidence.field_project_task__evidence_ids
+msgid "Evidence"
+msgstr "Evidencia"

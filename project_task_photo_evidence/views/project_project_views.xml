@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_project_evidence_inherit" model="ir.ui.view">
+        <field name="name">project.project.form.evidence</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+             <div name="button_box" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_internal_evidence" icon="fa-file-text-o">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Internal</span>
+                        <span class="o_stat_text">Report</span>
+                    </div>
+                </button>
+             </div>
+             <xpath expr="//header" position="inside">
+                <button name="action_generate_evidence_token" string="Enable Sharing" type="object" class="oe_highlight" invisible="evidence_report_url"/>
+                <button name="action_revoke_evidence_token" string="Disable Sharing" type="object" invisible="not evidence_report_url"/>
+             </xpath>
+            <xpath expr="//page[@name='settings']" position="inside">
+                 <group string="Photo Evidence Report" name="evidence_settings">
+                    <group>
+                        <field name="access_token" invisible="1"/>
+                        <field name="evidence_report_url" widget="copy_clipboard" readonly="1" invisible="not evidence_report_url"/>
+                    </group>
+                    <div class="mb-3">
+                        <button name="action_generate_evidence_token" string="Generate Share Link" type="object" class="btn-secondary" invisible="evidence_report_url"/>
+                        <button name="action_revoke_evidence_token" string="Revoke Link" type="object" class="btn-warning" invisible="not evidence_report_url" confirm="Are you sure you want to revoke the public link? This will make the current link invalid immediately."/>
+                        <div class="text-muted" invisible="evidence_report_url">
+                            <i class="fa fa-info-circle" title="Visibility Requirements"/> <i>Requires Project Visibility to be "Invited internal and portal users" or "Public".</i>
+                        </div>
+                    </div>
+                 </group>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>
