@@ -1,0 +1,7 @@
+Copyright (c) 2026 Ganemo
+
+All rights reserved.
+
+This software and associated files (the "Software") are the property of Ganemo.
+Unauthorized copying of this file, via any medium, is strictly prohibited.
+Proprietary and confidential.

@@ -2,62 +2,79 @@
 
 <img src="static/description/banner.png" width="100%" alt="Banner">
 
-## Description
+## 🌟 Overview
 
-This module enables the capture of photo evidence for project tasks with **automatic geolocation validation**. It is designed for field service operations where proof of work and location verification are critical. Unlike standard attachments, this module enforces business rules (Min/Max photos) and creates a shareable, professional evidence report for your customers.
+The **Project Task Photo Evidence** module transforms Odoo into a robust field-verification tool. It enables task assignees to capture and document work progress through a secure, "app-like" mobile interface. Designed for high-reliability operations, it enforces business rules, captures GPS coordinates, and provides professional reporting for customers.
 
-## Key Features
+---
 
-*   **Automatic Geolocation**: Captures GPS coordinates (Latitude/Longitude) instantly when the photo wizard is opened.
-*   **Enforced Business Rules**: Configure products to require a minimum quantity of photos (Warning) and a maximum limit (Blocking Error).
-*   **Public Share Link**: Generate a secure, read-only URL for clients to view the evidence dashboard without logging in.
-*   **Internal PDF Report**: Consolidated PDF report accessible via Smart Button on the Project.
-*   **Integrity Protection**: Read-only coordinate fields to ensure data authenticity.
+## 🚀 Key Features
 
-## Requirements
+### 📱 Premium Mobile Experience (PWA)
+*   **App-like UI**: A dedicated **Portal App Launcher** providing a clean, "Thumb-Friendly" interface.
+*   **PWA Installable**: Field workers can "Install" the app on their home screen for instant access.
+*   **One-Hand UX**: Bottom navigation and horizontally scrollable filters for easy operation on mobile devices.
 
-*   **Odoo Version**: 19.0
-*   **Dependencies**: `project`, `sale_management`, `website`, `portal`
-*   **Browser**: Requires **HTTPS** (secure context) or localhost to access the Geolocation API.
+### 📍 Smart Evidence Collection
+*   **Automatic Geolocation**: Stealthily captures GPS coordinates (Latitude/Longitude) during photo upload.
+*   **Multi-Product Evidence**: Assign multiple products to a single task, each requiring different photo evidence.
+*   **Rich Metadata**: Add descriptions and track timestamps for every photo captured.
 
-## Configuration
+### 🛡️ Business Rule Enforcement
+*   **Min/Max Quantity Controls**: Scaling rules that multiply based on the Sales Order Line quantity.
+*   **Visual Warnings**: Real-time alerts in the portal if evidence requirements are not met.
+*   **Blocking Validation**: Prevents uploading more photos than the maximum allowed limit.
 
-### 1. Product Rules
-1.  Go to **Sales > Products**.
-2.  Select a service product (e.g., "Field Service").
-3.  In the **Sales** tab, scroll to the **Task Evidence** group.
-4.  Enable **Evidence Required**.
-5.  Set **Minimum Evidence** (triggers yellow warning) and **Maximum Evidence** (triggers red validation error).
+### 📊 Professional Visibility
+*   **Public Share Link**: Secure, read-only dashboard for clients to see evidence live.
+*   **Consolidated PDF**: Generate a professional internal PDF report summarizing all task evidence.
+*   **Smart Search**: Filter tasks by name, project, product, or tags directly in the portal.
 
-### 2. Project Privacy (For Sharing)
-To use the **"Generate Share Link"** feature:
-1.  Go to **Project > Configuration > Settings** (or the Project Form).
-2.  Set **Visibility** to **"Invited internal users and portal users"** or **"Public"**.
-3.  *Note: If set to "Invited internal users only", the Share Link button will be disabled with a warning.*
+---
 
-## Usage
+## ⚙️ Configuration
 
-### Field Worker Flow
-1.  Open the assigned **Task** on a mobile device or desktop.
-2.  Navigate to the **"Photo Evidence"** page.
-3.  Click the **"📷 Add Photo"** button (Camera Icon).
-4.  **Important:** Click **"Allow"** when the browser requests Location Access.
-5.  Upload the photo. The system silently records the Latitude and Longitude.
+### 1. Define Product Requirements
+To enforce photo collection for specific services:
+1.  Go to **Sales > Products** and select a product.
+2.  Enable **"Evidence Required"** in the Sales tab.
+3.  Set **"Evidence Min Qty"** (Yellow warning if missing).
+4.  Set **"Evidence Max Qty"** (Red error blocking excessive uploads).
 
-### Reporting Flow
-1.  **Internal Review:** On the **Project Form**, click the **"Internal Report"** smart button to download the PDF.
-2.  **Customer Sharing:**
-    *   On the **Project Form**, click **"Generate Share Link"**.
-    *   The **"Evidence Report URL"** field will appear.
-    *   Copy the URL and send it to the client.
-    *   *To stop sharing, click "Revoke Link".*
+### 2. Configure Project Automation
+You can automate task progression when work is "Done" in the portal:
+1.  Open a **Project** in configuration.
+2.  Set **"Done Stage"** (Task will move here when the worker clicks "Done" in the portal).
+3.  Set **"Done State"** (e.g., Set to 'Done' or 'Approved').
 
-## Troubleshooting
+---
 
-*   **"Location Stuck on Searching..."**: This usually means the browser denied permission or the site is not on HTTPS.
-*   **"Generate Share Link button is missing"**: Check your Project Visibility settings. It demands Portal or Public access.
+## 🔄 Workflow
 
-## Credits
+### 👷 For Field Workers
+1.  **Launch App**: Open the portal and click the **"Photos"** icon in the Launcher.
+2.  **Filter & Search**: Use the bottom scrollable bar to find tasks by Project, Product, or Tag.
+3.  **Upload**: Click a Task card. The dashboard shows what photos are missing.
+4.  **Capture**: Upload images. Ensure browser **Location Access** is granted for GPS capture.
+5.  **Complete**: Once all requirements are green, click **"Finalize Task"** to move it to the project's Done stage.
 
-**Author**: [Ganemo](https://www.ganemo.co)
-**Maintainer**: Ganemo
+### 💼 For Managers
+1.  **Monitor**: View real-time uploads from the Task's **Evidence** tab in the backend.
+2.  **Report**: Click the **"Internal Report"** smart button to generate a PDF.
+3.  **Share**: Use **"Generate Share Link"** to give your client a live view of the progress.
+
+---
+
+## 🛠️ Technical Notes
+
+*   **Secure Context (HTTPS)**: Browsers **block** Geolocation and Camera access on insecure connections. Ensure your Odoo instance uses SSL.
+*   **Portal App Launcher**: This module relies on the `portal_app_launcher` bridge for the enhanced UI.
+*   **Sale Integration**: If a task is linked to a Sales Order, photo requirements scale automatically (e.g., 2 photos per piece ordered).
+
+---
+
+## 💳 Credits
+
+**Author**: [Ganemo](https://www.ganemo.com)  
+**Industry**: Specialized in Enterprise Odoo Localizations and Operational Excellence.  
+**Support**: [leads@ganemo.com](mailto:leads@ganemo.com)

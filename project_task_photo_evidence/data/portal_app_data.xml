@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="portal_app_photo_evidence" model="portal.app">
+        <field name="name">Photo Evidence</field>
+        <field name="sequence">10</field>
+        <field name="action_url">/my/evidence/tasks</field>
+        <field name="image" type="base64" file="project_task_photo_evidence/static/description/icon.png"/>
+    </record>
+</odoo>

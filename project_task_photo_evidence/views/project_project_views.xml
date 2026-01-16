@@ -22,6 +22,9 @@
                     <group>
                         <field name="access_token" invisible="1"/>
                         <field name="evidence_report_url" widget="copy_clipboard" readonly="1" invisible="not evidence_report_url"/>
+                        <separator string="Portal Workflow"/>
+                        <field name="evidence_final_state"/>
+                        <field name="evidence_final_stage_id"/>
                     </group>
                     <div class="mb-3">
                         <button name="action_generate_evidence_token" string="Generate Share Link" type="object" class="btn-secondary" invisible="evidence_report_url"/>

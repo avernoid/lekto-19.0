@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="evidence_app_home" name="My Evidence Tasks">
+        <t t-call="portal_app_launcher.portal_app_layout">
+            <div class="container py-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                     <div class="d-flex align-items-center">
+                        <a href="/my/home" class="btn btn-light rounded-circle shadow-sm me-3">
+                            <i class="fa fa-arrow-left"/>
+                        </a>
+                        <div>
+                            <h4 class="m-0 text-white">Photos</h4>
+                            <button id="pwaInstallBtn" class="btn btn-sm btn-outline-light rounded-pill mt-1" style="display: none;">
+                                <i class="fa fa-download me-1"/> Install App
+                            </button>
+                        </div>
+                     </div>
+                </div>
+
+                <script type="text/javascript">
+                    let deferredPrompt;
+                    const installBtn = document.getElementById('pwaInstallBtn');
+
+                    window.addEventListener('beforeinstallprompt', (e) => {
+                        e.preventDefault();
+                        deferredPrompt = e;
+                        if(installBtn) installBtn.style.display = 'block';
+                    });
+
+                    if(installBtn) {
+                        installBtn.addEventListener('click', (e) => {
+                            installBtn.style.display = 'none';
+                            if(deferredPrompt) {
+                                deferredPrompt.prompt();
+                                deferredPrompt.userChoice.then((choiceResult) => {
+                                    deferredPrompt = null;
+                                });
+                            }
+                        });
+                    }
+                </script>
+
+                <!-- Smart Filters moved to bottom bar -->
+
+                <div class="row">
+                    <t t-foreach="tasks" t-as="task">
+                        <div class="col-12 mb-3">
+                            <div class="card shadow-sm border-0 rounded-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="card-title text-dark mb-1"><t t-esc="task.name"/></h5>
+                                            <small class="text-muted d-block"><t t-esc="task.project_id.name"/></small>
+                                            
+                                            <!-- Evidence Warning Badge -->
+                                            <t t-if="task.evidence_warning_msg">
+                                                <small class="d-block text-danger mt-1 fw-bold">
+                                                    <i class="fa fa-exclamation-triangle ms-1"/> Evidence Required!
+                                                </small>
+                                            </t>
+                                            <!-- Show Tags & Evidence Count -->
+                                            <div class="mt-1">
+                                                <t t-foreach="task.tag_ids" t-as="tag">
+                                                    <span class="badge bg-light text-dark border me-1"><t t-esc="tag.name"/></span>
+                                                </t>
+                                                <t t-if="task.evidence_product_ids">
+                                                    <span class="badge bg-info text-dark" title="Evidence Products">
+                                                        <i class="fa fa-cube"/> <t t-esc="len(task.evidence_product_ids)"/>
+                                                    </span>
+                                                </t>
+                                            </div>
+
+                                            <t t-if="task.state in ['1_done', '1_canceled']">
+                                                <span class="badge bg-success ms-2">Done</span>
+                                            </t>
+                                        </div>
+                                        <a t-att-href="'/my/evidence/task/%s/upload' % task.id" class="btn btn-primary rounded-pill px-4">
+                                            <i class="fa fa-camera me-1"/> <t t-esc="'View' if filter_by == 'done' else 'Upload'"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-if="not tasks">
+                        <div class="col-12 text-center text-white mt-5">
+                            <i class="fa fa-check-circle fa-4x mb-3"/>
+                            <h3 t-esc="'No completed tasks' if filter_by == 'done' else 'All caught up!'" />
+                            <p t-esc="'You haven\'t completed any tasks yet.' if filter_by == 'done' else 'No tasks require photo evidence right now.'" />
+                        </div>
+                    </t>
+                    
+                    <!-- Pager -->
+                    <div class="col-12 d-flex justify-content-center mt-3" t-if="pager['page_count'] > 1">
+                        <t t-call="portal.pager"/>
+                    </div>
+                </div>
+            <!-- Bottom Spacer for Fixed Bar -->
+            <div style="height: 80px;"></div>
+            
+            <!-- Search Bar Overlay (Hidden by default) -->
+            <div id="evidenceSearchBar" class="fixed-bottom bg-white border-top shadow p-3" style="bottom: 70px; display: none; z-index: 1040; border-radius: 15px 15px 0 0;">
+                <form action="/my/evidence/tasks" method="get">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="fa fa-search text-muted"/></span>
+                        <input type="text" name="search" class="form-control bg-light border-0" placeholder="Search name, project, tag..." t-att-value="request.params.get('search')"/>
+                        <button type="submit" class="btn btn-primary rounded-end-pill px-4">Go</button>
+                    </div>
+                    <!-- Preserve Mode -->
+                    <input type="hidden" name="filter_by" t-att-value="filter_by"/>
+                </form>
+            </div>
+
+            <!-- Sticky Bottom Navigation Bar (Unified Scroll) -->
+             <div class="fixed-bottom bg-white border-top shadow-lg py-2 px-3">
+                 <!-- Container with horizontal scroll -->
+                 <div class="d-flex align-items-center gap-2 overflow-auto no-scrollbar" style="white-space: nowrap;">
+                     
+                     <!-- Search Toggle -->
+                     <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-primary" onclick="toggleEvidenceSearchBar()">
+                        <i class="fa fa-search"/>
+                     </button>
+
+                     
+                     <!-- Separator -->
+                     <div class="vr mx-1"></div>
+
+                     <!-- Active Filters (Close Buttons) -->
+                     <t t-if="current_tag or current_product or current_project or request.params.get('search')">
+                        <a href="/my/evidence/tasks?filter_by=pending" class="btn btn-outline-danger rounded-pill shadow-sm flex-shrink-0 d-flex align-items-center gap-1">
+                            <i class="fa fa-times"/> <span class="small">Clear</span>
+                        </a>
+                     </t>
+
+                     <!-- Dropup Filters -->
+                     <t t-if="filter_by == 'pending' and (available_tags or available_products or available_projects)">
+                         <t t-if="available_products">
+                             <div class="dropup">
+                                 <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleFilterMenu('filter_product_menu')">
+                                    <i class="fa fa-cube"/> 
+                                    <t t-if="current_product">
+                                        <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['product.product'].sudo().browse(current_product).name"/></span>
+                                    </t>
+                                 </button>
+                                 <ul id="filter_product_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 80px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                                    <li><a class="dropdown-item" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">All Products</a></li>
+                                    <t t-foreach="available_products" t-as="p">
+                                        <li><a t-attf-class="dropdown-item {{ 'active' if current_product == p.id else '' }}" t-attf-href="/my/evidence/tasks?filter_by=pending&amp;filter_product={{p.id}}{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}"><t t-esc="p.name"/></a></li>
+                                    </t>
+                                 </ul>
+                             </div>
+                         </t>
+
+                         <t t-if="available_projects">
+                             <div class="dropup">
+                                 <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleFilterMenu('filter_project_menu')">
+                                    <i class="fa fa-briefcase"/> 
+                                    <t t-if="current_project">
+                                        <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['project.project'].sudo().browse(current_project).name"/></span>
+                                    </t>
+                                 </button>
+                                 <ul id="filter_project_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 80px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                                    <li><a class="dropdown-item" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">All Projects</a></li>
+                                    <t t-foreach="available_projects" t-as="p">
+                                        <li><a t-attf-class="dropdown-item {{ 'active' if current_project == p.id else '' }}" t-attf-href="/my/evidence/tasks?filter_by=pending&amp;filter_project={{p.id}}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}"><t t-esc="p.name"/></a></li>
+                                    </t>
+                                 </ul>
+                             </div>
+                         </t>
+
+                         <t t-if="available_tags">
+                             <div class="dropup">
+                                 <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleFilterMenu('filter_tag_menu')">
+                                    <i class="fa fa-tag"/> 
+                                    <t t-if="current_tag">
+                                        <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['project.tags'].sudo().browse(current_tag).name"/></span>
+                                    </t>
+                                 </button>
+                                 <ul id="filter_tag_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 80px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                                    <li><a class="dropdown-item" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">All Tags</a></li>
+                                    <t t-foreach="available_tags" t-as="t">
+                                        <li><a t-attf-class="dropdown-item {{ 'active' if current_tag == t.id else '' }}" t-attf-href="/my/evidence/tasks?filter_by=pending&amp;filter_tag={{t.id}}{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}"><t t-esc="t.name"/></a></li>
+                                    </t>
+                                 </ul>
+                             </div>
+                         </t>
+                     </t>
+                     
+                     <!-- Mode Toggle (To Do / History) -->
+                     <div class="btn-group bg-light rounded-pill p-1 shadow-sm flex-shrink-0" role="group">
+                        <a t-attf-class="btn btn-sm rounded-pill {{ 'btn-primary' if filter_by == 'pending' else 'btn-light text-muted' }}" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">To Do</a>
+                        <a t-attf-class="btn btn-sm rounded-pill {{ 'btn-primary' if filter_by == 'done' else 'btn-light text-muted' }}" title="History" t-attf-href="/my/evidence/tasks?filter_by=done{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">
+                            <i class="fa fa-history"/>
+                        </a>
+                     </div>
+                     
+                     <!-- Logout (Thumb-Friendly) -->
+                     <a href="/web/session/logout?redirect=/" class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-danger ms-auto">
+                        <i class="fa fa-power-off"/>
+                     </a>
+                     
+                 </div>
+                 <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>
+             </div>
+             </div>
+        </t>
+    </template>
+
+    <template id="evidence_app_task_upload" name="Upload Evidence">
+        <t t-call="portal_app_launcher.portal_app_layout">
+             <div class="container py-4">
+                <div class="d-flex align-items-center mb-4">
+                    <a href="/my/evidence/tasks" class="btn btn-light rounded-circle shadow-sm me-3">
+                        <i class="fa fa-arrow-left"/>
+                    </a>
+                    <h4 class="m-0 text-white"><t t-esc="task.name"/></h4>
+                </div>
+                
+                <!-- Task Warning Msg -->
+                <t t-if="task.evidence_warning_msg">
+                    <div class="alert alert-warning mb-4 shadow-sm">
+                         <t t-out="task.evidence_warning_msg"/>
+                    </div>
+                </t>
+
+                <!-- Validation Error (Max Qty) -->
+                <t t-if="request.params.get('error')">
+                    <div class="alert alert-danger mb-4 shadow-sm">
+                        <i class="fa fa-times-circle me-1"/> <t t-esc="request.params.get('error')"/>
+                    </div>
+                </t>
+
+                <!-- Upload Card -->
+                <div class="card shadow-sm border-0 rounded-3 mb-4">
+                    <div class="card-body text-center py-5">
+                        <form t-att-action="'/my/evidence/task/%s/process_upload' % task.id" method="post" enctype="multipart/form-data" id="uploadForm">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="latitude" id="latitude"/>
+                            <input type="hidden" name="longitude" id="longitude"/>
+                            
+                            <!-- Product Selection -->
+                            <t t-if="task.evidence_product_ids and len(task.evidence_product_ids) > 1">
+                                <div class="mb-3 text-start">
+                                    <label class="form-label fw-bold">Evidence For:</label>
+                                    <select name="product_id" class="form-select">
+                                        <t t-foreach="task.evidence_product_ids" t-as="p">
+                                            <option t-att-value="p.id"><t t-esc="p.name"/></option>
+                                        </t>
+                                    </select>
+                                </div>
+                            </t>
+                            <t t-elif="task.evidence_product_ids">
+                                <div class="mb-3 text-start">
+                                    <label class="form-label text-muted small">Evidence For:</label>
+                                    <div class="fw-bold"><i class="fa fa-cube me-1"/> <t t-esc="task.evidence_product_ids[0].name"/></div>
+                                    <input type="hidden" name="product_id" t-att-value="task.evidence_product_ids[0].id"/>
+                                </div>
+                            </t>
+
+                            <!-- Description -->
+                            <div class="mb-4 text-start">
+                                <label class="form-label">Description (Optional)</label>
+                                <input type="text" name="evidence_name" class="form-control" placeholder="e.g. Broken screen..."/>
+                            </div>
+
+                            <label for="evidence_file" class="btn btn-lg btn-primary rounded-pill px-5 py-3 shadow">
+                                <i class="fa fa-camera fa-2x mb-2 d-block"/>
+                                <span class="h5">Take Photo</span>
+                            </label>
+                            <input type="file" name="evidence_file" id="evidence_file" accept="image/*" capture="environment" class="d-none" onchange="document.getElementById('uploadForm').submit();"/>
+                        </form>
+                        <p class="text-muted mt-3 mb-0">Tap to open camera</p>
+                    </div>
+                </div>
+
+                <!-- Complete Task Button (Only if configured) -->
+                <t t-if="task.project_id.evidence_final_stage_id or task.project_id.evidence_final_state">
+                    <form t-att-action="'/my/evidence/task/%s/complete' % task.id" method="post" class="mb-4 text-center">
+                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                         <button type="submit" class="btn btn-success btn-lg rounded-pill shadow w-100" confirm="Are you sure you want to mark this task as done?">
+                            <i class="fa fa-check-circle me-2"/> Mark as Done
+                         </button>
+                    </form>
+                </t>
+
+                <!-- Previous Evidence -->
+                <h5 class="text-white mb-3">Recent Uploads</h5>
+                <div class="row g-2">
+                    <t t-foreach="task.evidence_ids" t-as="evidence">
+                        <div class="col-4 col-md-3">
+                            <div class="position-relative">
+                                <img t-att-src="image_data_uri(evidence.image)" class="img-fluid rounded shadow-sm" style="aspect-ratio: 1; object-fit: cover;"/>
+                                <span class="position-absolute top-0 end-0 badge bg-success m-1 rounded-circle p-1">
+                                    <i class="fa fa-check small"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+             </div>
+
+             <script type="text/javascript">
+                // Simple JS to get location before submit
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        var lat = document.getElementById('latitude');
+                        var lon = document.getElementById('longitude');
+                        if(lat) lat.value = position.coords.latitude;
+                        if(lon) lon.value = position.coords.longitude;
+                    });
+                }
+             </script>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* portal_app_launcher
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-15 19:00+0000\n"
+"PO-Revision-Date: 2026-01-15 19:00+0000\n"
+"Last-Translator: Ganemo\n"
+"Language-Team: Ganemo\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: portal_app_launcher
+#: model:ir.model,name:portal_app_launcher.model_portal_app
+msgid "Portal Application"
+msgstr "Aplicación de Portal"
+
+#. module: portal_app_launcher
+#: field:portal.app,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: portal_app_launcher
+#: field:portal.app,name:0
+msgid "The display name of the application as seen by portal users."
+msgstr "El nombre visible de la aplicación para los usuarios del portal."
+
+#. module: portal_app_launcher
+#: field:portal.app,sequence:0
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: portal_app_launcher
+#: field:portal.app,sequence:0
+msgid "Determines the display order in the launcher. Lower numbers appear first."
+msgstr "Determina el orden de visualización en el lanzador. Los números más bajos aparecen primero."
+
+#. module: portal_app_launcher
+#: field:portal.app,image:0
+msgid "Icon"
+msgstr "Ícono"
+
+#. module: portal_app_launcher
+#: field:portal.app,image:0
+msgid "The icon image for the app. Recommended size is 512x512px with a transparent background."
+msgstr "La imagen del ícono para la aplicación. El tamaño recomendado es 512x512px con fondo transparente."
+
+#. module: portal_app_launcher
+#: field:portal.app,action_url:0
+msgid "Action URL"
+msgstr "URL de Acción"
+
+#. module: portal_app_launcher
+#: field:portal.app,action_url:0
+msgid "The portal route or external URL where the app redirects users (e.g., '/my/evidence/tasks')."
+msgstr "La ruta del portal o URL externa donde la aplicación redirige a los usuarios (ej. '/my/evidence/tasks')."
+
+#. module: portal_app_launcher
+#: field:portal.app,group_ids:0
+msgid "Allowed Groups"
+msgstr "Grupos Permitidos"
+
+#. module: portal_app_launcher
+#: field:portal.app,group_ids:0
+msgid "Grant access to specific user groups. If empty, the app is visible to all authorized portal users."
+msgstr "Otorga acceso a grupos de usuarios específicos. Si está vacío, la aplicación es visible para todos los usuarios autorizados del portal."
+
+#. module: portal_app_launcher
+#: field:portal.app,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: portal_app_launcher
+#: field:portal.app,active:0
+msgid "If unchecked, the app will be hidden from the launcher dashboard without being deleted."
+msgstr "Si no está marcado, la aplicación se ocultará del tablero del lanzador sin ser eliminada."

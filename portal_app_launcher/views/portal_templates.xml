@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_app_launcher_home" name="App Launcher">
+        <t t-call="portal_app_launcher.portal_app_layout">
+            <div class="container py-5 text-center">
+                <h3 class="mb-4 text-white">Welcome, <t t-esc="user.name"/></h3>
+
+                <!-- PWA Install Button (Hidden by default) -->
+                <!-- PWA Install Button (Always Visible) -->
+                <button id="pwaInstallBtn" class="btn btn-light rounded-pill mb-4 shadow-sm fw-bold px-4">
+                    <i class="fa fa-download me-2"/> Install App
+                </button>
+                <div id="pwaInstalledMsg" class="mb-4 text-white small" style="display: none;">
+                    <i class="fa fa-check-circle me-1"/> App Installed
+                </div>
+
+                
+                <div class="row justify-content-center">
+                    <t t-foreach="apps" t-as="app">
+                        <div class="col-6 col-md-4 col-lg-3 mb-4">
+                            <a t-att-href="app.action_url" class="text-decoration-none">
+                                <div class="card shadow-sm border-0 h-100 app-card">
+                                    <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
+                                        <div class="app-icon mb-3">
+                                            <img t-if="app.image" t-att-src="image_data_uri(app.image)" class="img-fluid" style="max-height: 80px;"/>
+                                            <i t-else="" class="fa fa-cube fa-3x text-primary"></i>
+                                        </div>
+                                        <h5 class="card-title text-dark mb-0"><t t-esc="app.name"/></h5>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </t>
+                </div>
+
+                <!-- Bottom Logout (Ergonomic) -->
+                <div class="mt-5 mb-4">
+                     <a href="/web/session/logout?redirect=/" class="btn btn-outline-light rounded-pill px-4">
+                        <i class="fa fa-power-off me-2"/> Log Out
+                    </a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Minimal Layout for Apps -->
+    <template id="portal_app_layout" name="Portal App Layout">
+        &lt;!DOCTYPE html&gt;
+        <html t-att-lang="lang" t-att-data-website-id="website.id if website else None" t-att-dir="lang_direction">
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+                <title t-esc="title or 'In-House App'"/>
+                
+                <!-- PWA Meta Tags -->
+                <link rel="manifest" href="/portal_app/manifest.webmanifest"/>
+                <meta name="theme-color" content="#667eea"/>
+                <meta name="apple-mobile-web-app-capable" content="yes"/>
+                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+                <meta name="apple-mobile-web-app-title" content="Portal App"/>
+                <link rel="apple-touch-icon" href="/web/binary/company_logo"/>
+
+                <t t-call-assets="web.assets_frontend" t-js="false"/>
+                <t t-call-assets="web.assets_frontend" t-css="false"/>
+                
+
+            </head>
+            <body class="portal_app_body">
+                <main>
+                    <t t-out="0"/>
+                </main>
+                <script>
+                    if ('serviceWorker' in navigator) {
+                        window.addEventListener('load', function() {
+                            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                                console.log('ServiceWorker registration successful');
+                            }, function(err) {
+                                console.log('ServiceWorker registration failed: ', err);
+                            });
+                        });
+                    }
+                    
+                    // PWA Install Logic
+                    let deferredPrompt;
+                    const installBtn = document.getElementById('pwaInstallBtn');
+                    const installedMsg = document.getElementById('pwaInstalledMsg');
+                    
+                    window.addEventListener('beforeinstallprompt', (e) => {
+                        // Prevent Chrome 67 and earlier from automatically showing the prompt
+                        e.preventDefault();
+                        // Stash the event so it can be triggered later.
+                        deferredPrompt = e;
+                    });
+
+                    if(installBtn) {
+                        installBtn.addEventListener('click', (e) => {
+                            // Show the prompt
+                            if(deferredPrompt) {
+                                deferredPrompt.prompt();
+                                // Wait for the user to respond to the prompt
+                                deferredPrompt.userChoice.then((choiceResult) => {
+                                    if (choiceResult.outcome === 'accepted') {
+                                        console.log('User accepted the A2HS prompt');
+                                        if(installedMsg) installedMsg.style.display = 'block';
+                                        installBtn.style.display = 'none';
+                                    } else {
+                                        console.log('User dismissed the A2HS prompt');
+                                    }
+                                    deferredPrompt = null;
+                                });
+                            } else {
+                                // Manual Instructions Fallback (e.g. iOS)
+                                alert('To install: Tap the Share button (bottom or top bar) and select "Add to Home Screen".');
+                            }
+                        });
+                    }
+
+                    // Check if already installed
+                    if (window.matchMedia('(display-mode: standalone)').matches) {
+                        if(installBtn) installBtn.style.display = 'none';
+                        if(installedMsg) installedMsg.style.display = 'block';
+                    }
+                </script>
+            </body>
+        </html>
+    </template>
+</odoo>

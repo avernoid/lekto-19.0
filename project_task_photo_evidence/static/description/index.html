@@ -231,22 +231,14 @@
                         <div class="p-4 mb-4"
                             style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
-                                Product Configuration (The Rules)</h3>
-                            <p class="lead">Define the evidence rules before selling the service. These rules will
-                                automatically apply to any Task created from this Product.</p>
+                                Product Configuration & Multiple Evidence</h3>
+                            <p class="lead">Define photo requirements per product. You can link multiple products to one task for diverse evidence needs.</p>
                             <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
-                                <li><i class="fa fa-angle-right text-muted mr-2"></i> Navigate to <strong>Sales >
-                                        Products</strong> and open a Service Product.</li>
-                                <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to the <strong>"Sales"</strong>
-                                    tab.</li>
-                                <li><i class="fa fa-check-square-o text-success mr-2"></i> Enable <strong>"Evidence
-                                        Required"</strong>.</li>
-                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Min Quantity:</strong>
-                                    Minimum photos required to consider the evidence complete (Triggers warnings if not
-                                    met).</li>
-                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Max Quantity:</strong>
-                                    Hard limit to prevent server storage overload (Variables Validation Error if
-                                    exceeded).</li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> Open any <strong>Product</strong> and navigate to the <strong>"Sales"</strong> tab.</li>
+                                <li><i class="fa fa-check-square-o text-success mr-2"></i> Enable <strong>"Evidence Required"</strong>.</li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Min Qty:</strong> Scaling requirement based on Order Line quantity (Triggers warnings).</li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Max Qty:</strong> Hard limit to prevent data overload (Blocks uploads).</li>
+                                <li><i class="fa fa-briefcase text-info mr-2"></i> <strong>Task Setup:</strong> On the Task form, add these products to the <strong>"Evidence Requirement"</strong> tab.</li>
                             </ul>
                         </div>
 
@@ -295,32 +287,36 @@
                         <div class="p-4"
                             style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-mobile mr-2"></i> 4.
-                                Field Worker Operation (Mobile Friendly)</h3>
-                            <p class="lead">Instructions for your on-site staff:</p>
+                                Field Worker App Experience (PWA)</h3>
+                            <p class="lead">Field workers use a dedicated, app-like portal interface:</p>
 
                             <div class="row mt-4">
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-3 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5>1. Open Task</h5>
-                                        <p class="text-muted small">Navigate to the assigned Task on your mobile device.
-                                        </p>
+                                        <h5>1. Install App</h5>
+                                        <p class="text-muted small">Open the Portal. Click <strong>"Install App"</strong> in the header to add it to your Home Screen.</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-3 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5>2. Add Photo</h5>
-                                        <p class="text-muted small">Go to "Photo Evidence" tab. Click the <strong>Camera
-                                                Icon</strong>.</p>
+                                        <h5>2. Smart Launch</h5>
+                                        <p class="text-muted small">Open the <strong>"Photos"</strong> app from the Launcher to see all assigned tasks.</p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-3 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5>3. Allow GPS</h5>
-                                        <p class="text-muted small"><strong>Critical:</strong> Click "Allow" when the
-                                            browser asks for Location. The system captures coordinates instantly.</p>
+                                        <h5>3. Filter & Search</h5>
+                                        <p class="text-muted small">Use the <strong>Unified Bottom Bar</strong> to scroll through filters or use the 🔍 Search toggle.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5>4. Upload & GPS</h5>
+                                        <p class="text-muted small">Upload photos. Ensure <strong>Location</strong> is enabled for automatic geotagging.</p>
                                     </div>
                                 </div>
                             </div>
@@ -571,15 +567,14 @@
                                 <!-- Scenario 1 -->
                                 <div class="mb-4 p-4 shadow-sm"
                                     style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
-                                    <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-camera mr-2"></i>
-                                        Scenario 1: Field Evidence</h4>
+                                    <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-mobile mr-2"></i>
+                                        Scenario 1: App Installation & Navigation</h4>
                                     <ol class="mt-3">
-                                        <li>Open a Project Task assigned to you.</li>
-                                        <li>Click the "Photo Evidence" tab and hit "Add Photo".</li>
-                                        <li><strong>Action:</strong> Allow Location Permission in the browser.</li>
-                                        <li>Upload an image file.</li>
-                                        <li><strong>Result:</strong> verify that Status updates to "Location Captured"
-                                            and Latitude/Longitude fields are populated with valid coordinates.</li>
+                                        <li>Log in as a Portal User on a mobile device.</li>
+                                        <li><strong>Action:</strong> Click "Install App" in the top bar. Verify it adds to Home Screen.</li>
+                                        <li><strong>Action:</strong> Use the 🔍 Search toggle to find a task by Project name.</li>
+                                        <li><strong>Action:</strong> Scroll the bottom navigation bar to filter by a specific "Tag".</li>
+                                        <li><strong>Result:</strong> Tasks should filter instantly without page reloads.</li>
                                     </ol>
                                 </div>
 
@@ -588,15 +583,13 @@
                                     style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
                                     <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-ban mr-2"></i>
                                         Scenario 2:
-                                        Constraints & Warnings</h4>
+                                        Portal Validation & Completion</h4>
                                     <ol class="mt-3">
-                                        <li>Create a Product with <strong>Min Qty=2</strong> and <strong>Max
-                                                Qty=3</strong>. Create a Task from it.</li>
-                                        <li><strong>Test A (Min):</strong> Upload 1 photo. Check the top of the Task
-                                            form. Expected: A yellow warning banner "⚠️ Attention: This product requires
-                                            a minimum of 2 photos".</li>
-                                        <li><strong>Test B (Max):</strong> Upload 3 photos. Now try to upload a 4th one.
-                                            Expected: A red Validation Error popup preventing the save.</li>
+                                        <li>Assign a product with <strong>Max Qty=1</strong> to a task.</li>
+                                        <li><strong>Test A (Max):</strong> In the portal, upload 2 photos.</li>
+                                        <li><strong>Result:</strong> Verify a red "Maximum quantity reached" alert appears.</li>
+                                        <li><strong>Test B (Completion):</strong> Upload required photos and click "Finalize Task".</li>
+                                        <li><strong>Result:</strong> The task should disappear from "To Do" and move to the project's "Done Stage".</li>
                                     </ol>
                                 </div>
 
@@ -646,8 +639,7 @@
                                     <p class="text-muted mt-2"><strong>Reason:</strong> Browser permissions denied or
                                         non-secure connection.</p>
                                     <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong>
-                                        Ensure you are using HTTPS (or localhost) and have clicked "Allow" on the
-                                        location prompt.</p>
+                                        Ensure you are using <strong>HTTPS</strong> and have granted "Location" permissions. Note: Browser settings can reset these permissions.</p>
                                 </div>
                             </div>
 

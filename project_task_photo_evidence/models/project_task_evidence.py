@@ -25,11 +25,22 @@ class ProjectTaskEvidence(models.Model):
         ondelete='cascade',
         help="The Project Task this evidence belongs to."
     )
+    display_product_domain = fields.Many2many(
+        'product.product', 
+        compute='_compute_display_product_domain',
+        store=False
+    )
     product_id = fields.Many2one(
         'product.product', 
         string='Product',
-        help="The Product associated with the evidence, usually inherited from the Task's Sales Order Item."
+        domain="[('id', 'in', display_product_domain)]",
+        help="The Product associated with the evidence."
     )
+    
+    @api.depends('task_id', 'task_id.evidence_product_ids')
+    def _compute_display_product_domain(self):
+         for record in self:
+            record.display_product_domain = record.task_id.evidence_product_ids
     
     latitude = fields.Float(
         string='Latitude', 

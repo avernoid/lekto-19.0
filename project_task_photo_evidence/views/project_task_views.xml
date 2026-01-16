@@ -15,6 +15,9 @@
             <notebook position="inside">
                 <page string="Photo Evidence" name="photo_evidence">
                     <group>
+                        <field name="evidence_product_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <group>
                         <field name="evidence_report_url" widget="copy_clipboard" readonly="1" invisible="not evidence_report_url"/>
                     </group>
                     <div class="mb-3">

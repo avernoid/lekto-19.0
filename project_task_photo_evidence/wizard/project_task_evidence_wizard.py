@@ -6,29 +6,29 @@ class ProjectTaskEvidenceWizard(models.TransientModel):
     _description = 'Add Evidence Wizard'
 
     task_id = fields.Many2one('project.task', string='Task', required=True)
-    product_id = fields.Many2one('product.product', string='Product')
+    display_product_domain = fields.Many2many(
+        'product.product', 
+        compute='_compute_display_product_domain',
+        store=False
+    )
+
+    @api.depends('task_id', 'task_id.evidence_product_ids')
+    def _compute_display_product_domain(self):
+         for wizard in self:
+            wizard.display_product_domain = wizard.task_id.evidence_product_ids
+
+    product_id = fields.Many2one('product.product', string='Product', domain="[('id', 'in', display_product_domain)]")
+    
     name = fields.Char(
         string='Description', 
         required=False,
         help="Enter a brief description for this photo."
     )
-    image = fields.Image(
-        string='Image', 
-        max_width=1280, 
-        max_height=1280, 
-        required=True,
-        help="Upload the photo evidence here."
-    )
-    latitude = fields.Float(
-        string='Latitude', 
-        digits=(10, 7),
-        help="Detected GPS Latitude."
-    )
-    longitude = fields.Float(
-        string='Longitude', 
-        digits=(10, 7),
-        help="Detected GPS Longitude."
-    )
+    
+    image = fields.Image(string="Photo", required=True, max_width=1024, max_height=1024)
+    latitude = fields.Float(string="Latitude", digits=(10, 7))
+    longitude = fields.Float(string="Longitude", digits=(10, 7))
+    # ... fields ...
 
     @api.model
     def default_get(self, fields_list):
@@ -36,8 +36,8 @@ class ProjectTaskEvidenceWizard(models.TransientModel):
         if self.env.context.get('active_id'):
             task = self.env['project.task'].browse(self.env.context.get('active_id'))
             res['task_id'] = task.id
-            if task.sale_line_id:
-                res['product_id'] = task.sale_line_id.product_id.id
+            if task.evidence_product_ids and len(task.evidence_product_ids) == 1:
+                res['product_id'] = task.evidence_product_ids[0].id
         return res
 
     def action_save(self):
@@ -72,7 +72,11 @@ class ProjectTaskEvidenceWizard(models.TransientModel):
                  ('task_id', '=', self.task_id.id),
                  ('product_id', '=', self.product_id.id)
              ])
-             if current_evidence_count >= self.product_id.evidence_max_qty:
+             max_qty = self.product_id.evidence_max_qty
+             if self.task_id.sale_line_id and self.task_id.sale_line_id.product_id == self.product_id:
+                 max_qty = int(self.product_id.evidence_max_qty * self.task_id.sale_line_id.product_uom_qty)
+             
+             if current_evidence_count >= max_qty:
                  raise ValidationError(_("Maximum evidence quantity reached for this product."))
 
         self.env['project.task.evidence'].create({

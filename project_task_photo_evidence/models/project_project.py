@@ -10,6 +10,26 @@ class ProjectProject(models.Model):
         compute='_compute_evidence_report_url',
         help="Public link to share the Project Evidence report."
     )
+    
+    evidence_final_stage_id = fields.Many2one(
+        'project.task.type', 
+        string='Final Evidence Stage',
+        domain="[('user_id', '=', False)]", # Simple domain, usually stages are shared or project specific
+        help="Stage to move tasks to when evidence is completed from the portal."
+    )
+    
+    evidence_final_state = fields.Selection(
+        [
+            ('01_in_progress', 'In Progress'),
+            ('1_done', 'Done'),
+            ('03_approved', 'Approved'),
+            ('1_canceled', 'Canceled'),
+            ('04_waiting_normal', 'Waiting'),
+        ],
+        string='Final Evidence State',
+        default='1_done',
+        help="State to set on tasks when evidence is completed from the portal."
+    )
 
     @api.depends('access_token')
     def _compute_evidence_report_url(self):
