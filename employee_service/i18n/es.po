@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* employee_service
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-16 00:00+0000\n"
+"PO-Revision-Date: 2024-01-16 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: employee_service
+#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_hire_date
+msgid "Hire Date"
+msgstr "Fecha de Contratación"
+
+#. module: employee_service
+#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_start_date
+msgid "Start Date"
+msgstr "Fecha de Inicio"
+
+#. module: employee_service
+#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_termination_date
+msgid "Termination Date"
+msgstr "Fecha de Cese"
+
+#. module: employee_service
+#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_duration
+#: model_terms:ir.ui.view,arch_db:employee_service.hr_employee_view_form_inherit_employee_service
+msgid "Service Duration"
+msgstr "Tiempo de Servicio"
+
+#. module: employee_service
+#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_duration_years
+msgid "Service Duration (years)"
+msgstr "Tiempo de Servicio (años)"
+
+#. module: employee_service
+#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_duration_months
+msgid "Service Duration (months)"
+msgstr "Tiempo de Servicio (meses)"
+
+#. module: employee_service
+#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_duration_days
+msgid "Service Duration (days)"
+msgstr "Tiempo de Servicio (días)"
+
+#. module: employee_service
+#: model_terms:ir.ui.view,arch_db:employee_service.hr_employee_view_form_inherit_employee_service
+msgid "Service Information"
+msgstr "Información del Servicio"
+
+#. module: employee_service
+#: model_terms:ir.ui.view,arch_db:employee_service.hr_employee_view_form_inherit_employee_service
+msgid "year(s)"
+msgstr "año(s)"
+
+#. module: employee_service
+#: model_terms:ir.ui.view,arch_db:employee_service.hr_employee_view_form_inherit_employee_service
+msgid "month(s)"
+msgstr "mes(es)"
+
+#. module: employee_service
+#: model_terms:ir.ui.view,arch_db:employee_service.hr_employee_view_form_inherit_employee_service
+msgid "day(s)"
+msgstr "día(s)"
+
+#. module: employee_service
+#: model:ir.model.fields,help:employee_service.field_hr_employee__service_hire_date
+msgid "The date the employee was originally hired. This field is automatically calculated based on the oldest active contract version found in the system."
+msgstr "La fecha original de contratación del empleado. Este campo se calcula automáticamente basándose en la versión de contrato activa más antigua encontrada en el sistema."
+
+#. module: employee_service
+#: model:ir.model.fields,help:employee_service.field_hr_employee__service_start_date
+msgid "The actual first day the employee started working. This date is critical for calculating accrual leave allocations and benefits."
+msgstr "El primer día real en que el empleado comenzó a trabajar. Esta fecha es crítica para calcular la asignación de vacaciones y beneficios acumulados."
+
+#. module: employee_service
+#: model:ir.model.fields,help:employee_service.field_hr_employee__service_termination_date
+msgid "The last day the employee worked. If set, the service duration calculation will stop accumulating at this date."
+msgstr "El último día que el empleado trabajó. Si se establece, el cálculo del tiempo de servicio dejará de acumularse en esta fecha."

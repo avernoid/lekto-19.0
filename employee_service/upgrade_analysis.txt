@@ -1,0 +1,19 @@
+---Models in module 'employee_service'---
+---Fields in module 'employee_service'---
+---XML records in module 'employee_service'---
+UPD ir.ui.view: employee_service.view_employee_form_inherit_employee_service -> employee_service.hr_employee_view_form_inherit_employee_service
+----------------------------------------------------------------
+DEPENDS [ hr ]
+model:  hr_employee
+field:  service_hire_date,
+        service_start_date,
+        service_termination_date,
+        service_duration
+xml_id: 
+    hr.view_employee_form 
+
+DEPENDS [ hr_contract ]
+model: 
+field:
+xml_id: 
+    
