@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+
+    <record id="account_asset_form_view_inherit_merch_and_model_asset" model="ir.ui.view">
+        <field name="name">account.asset.form.view.inherit.merch_and_model_asset</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+        <field name="arch" type="xml">
+            <field name="acquisition_date" position="after">
+                <field name="asset_brand" placeholder="e.g. Dell, Toyota"/>
+                <field name="asset_model" placeholder="e.g. XPS 13, Corolla"/>
+                <field name="asset_series" placeholder="e.g. SN12345678"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_asset_tree_inherit_merch_and_model_asset" model="ir.ui.view">
+        <field name="name">account.asset.list.inherit.merch_and_model_asset</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="asset_brand" optional="hide"/>
+                <field name="asset_model" optional="hide"/>
+                <field name="asset_series" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_account_asset_search_inherit_merch_and_model_asset" model="ir.ui.view">
+        <field name="name">account.asset.search.inherit.merch_and_model_asset</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="asset_brand"/>
+                <field name="asset_model"/>
+                <field name="asset_series"/>
+            </field>
+            <filter name="month" position="after">
+                <filter string="Brand" name="group_by_brand" context="{'group_by': 'asset_brand'}"/>
+                <filter string="Item Model" name="group_by_model" context="{'group_by': 'asset_model'}"/>
+            </filter>
+        </field>
+    </record>
+
+
+</odoo>

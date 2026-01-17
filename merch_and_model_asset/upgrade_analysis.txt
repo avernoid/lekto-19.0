@@ -1,0 +1,20 @@
+---Analysis and Changes---
+Date: 2026-01-17
+Refactor: Removed redundant 'open_asset' method from 'models/account.py'.
+- Rationale: The standard Odoo 'account_asset' module (v19) already includes an 'open_asset' method with identical functionality (forces form view for single records, cleans 'default_move_type' from context). Keeping the custom method was unnecessary code duplication.
+
+---Models in module 'merch_and_model_asset'---
+Model: account.asset (Inherited)
+- Defined in: models/account.py
+
+---Fields in module 'merch_and_model_asset'---
+Model: account.asset
+- asset_brand (Char): "Marca"
+- asset_model (Char): "Modelo"
+- asset_series (Char): "N° de Serie y/o Placa"
+
+---XML records in module 'merch_and_model_asset'---
+Record ID: account_asset_form_view_inherit_merch_and_model_asset
+- Model: ir.ui.view
+- Inherits: account_asset.view_account_asset_form
+- Action: Adds asset_brand, asset_model, asset_series after acquisition_date
