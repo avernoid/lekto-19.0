@@ -1,0 +1,82 @@
+# Spanish Translation for Document Type Validation
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: document_type_validation
+#: model:ir.model.fields,field_description:document_type_validation.field_l10n_latam_identification_type__doc_length
+msgid "Length"
+msgstr "Largo"
+
+#. module: document_type_validation
+#: model:ir.model.fields,help:document_type_validation.field_l10n_latam_identification_type__doc_length
+msgid "Specifies the required length of the identification number."
+msgstr "Especifica el largo requerido del número de identificación."
+
+#. module: document_type_validation
+#: model:ir.model.fields,field_description:document_type_validation.field_l10n_latam_identification_type__doc_type
+msgid "Tipo"
+msgstr "Tipo"
+
+#. module: document_type_validation
+#: model:ir.model.fields,help:document_type_validation.field_l10n_latam_identification_type__doc_type
+msgid "Specifies whether the identification number must be numeric, alphanumeric, or other."
+msgstr "Especifica si el número de identificación debe ser numérico, alfanumérico u otro."
+
+#. module: document_type_validation
+#: model:ir.model.fields,field_description:document_type_validation.field_l10n_latam_identification_type__exact_length
+msgid "Largo Exacto"
+msgstr "Largo Exacto"
+
+#. module: document_type_validation
+#: model:ir.model.fields,help:document_type_validation.field_l10n_latam_identification_type__exact_length
+msgid "Determines if the length check is exact or a maximum limit."
+msgstr "Determina si la verificación de largo es exacta o un límite máximo."
+
+#. module: document_type_validation
+#: model:ir.model.fields,field_description:document_type_validation.field_l10n_latam_identification_type__nationality
+msgid "Nacionalidad"
+msgstr "Nacionalidad"
+
+#. module: document_type_validation
+#: model:ir.model.fields,help:document_type_validation.field_l10n_latam_identification_type__nationality
+msgid "Indicates if this document type is for nationals, foreigners, or both."
+msgstr "Indica si este tipo de documento es para nacionales, extranjeros o ambos."
+
+#. module: document_type_validation
+#: model:ir.model.fields,field_description:document_type_validation.field_l10n_latam_identification_type__validation_regex
+msgid "Validation Regex"
+msgstr "Regex de Validación"
+
+#. module: document_type_validation
+#: model:ir.model.fields,help:document_type_validation.field_l10n_latam_identification_type__validation_regex
+msgid "Custom Regular Expression for advanced validation. If set, this regex takes precedence over the standard check.\nExample: ^[A-Z]{3}-[0-9]{3}$ will allow 'ABC-123' but fail '123-ABC'."
+msgstr "Expresión regular personalizada para validación avanzada. Si se establece, este regex tiene prioridad sobre la verificación estándar.\nEjemplo: ^[A-Z]{3}-[0-9]{3}$ permitirá 'ABC-123' pero fallará '123-ABC'."
+
+#. module: document_type_validation
+#: code:addons/document_type_validation/models/res_partner.py:0
+#, python-format
+msgid "- The identification number must contain only numbers.\n"
+msgstr "- El número de identificación debe contener solo números.\n"
+
+#. module: document_type_validation
+#: code:addons/document_type_validation/models/res_partner.py:0
+#, python-format
+msgid "- The identification number cannot contain only zeros.\n"
+msgstr "- El número de identificación no puede contener solo ceros.\n"
+
+#. module: document_type_validation
+#: code:addons/document_type_validation/models/res_partner.py:0
+#, python-format
+msgid "- The identification number contains not allowed characters.\n"
+msgstr "- El número de identificación contiene caracteres no permitidos.\n"

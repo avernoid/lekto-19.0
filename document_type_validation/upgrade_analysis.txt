@@ -1,0 +1,22 @@
+---Models in module 'document_type_validation'---
+l10n_latam.identification.type
+res.partner
+
+---Fields in module 'document_type_validation'---
+l10n_latam.identification.type: validation_regex
+res.partner: error_dialog
+---XML records in module 'document_type_validation'---
+UPD ir.ui.view: document_type_validation.l10n_latam_identification_type_form_view_document_type_validation          -> document_type_validation.l10n_latam_identification_type_view_form
+UPD ir.ui.view: document_type_validation.l10n_latam_identification_type_tree_view_inherit_document_type_validation  -> document_type_validation.l10n_latam_identification_type_view_tree_inherit_document_type_validation
+UPD ir.ui.view: document_type_validation.res_partner_form_view_inherit_document_type_validation                     -> document_type_validation.res_partner_view_form_inherit_document_type_validation
+----------------------------------------------------------------
+DEPENDS 
+module: l10n_latam_base
+field:
+xml_id: 
+    l10n_latam_base.view_l10n_latam_identification_type_tree
+
+module: base
+field:
+xml_id: 
+    base.view_partner_form

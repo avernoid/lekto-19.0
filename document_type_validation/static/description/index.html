@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Type Validation | Odoo Localization App by Ganemo</title>
+    <meta name="description"
+        content="Validate identification documents (DNI, RUC, Passport) properly in Odoo. Configure lengths, types, and custom regex validations.">
+    <meta name="keywords" content="Odoo, Localization, Validation, VAT, DNI, RUC, Ganemo, Odoo 19, Document Type">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'document_type_validation' enhances 'l10n_latam.identification.type' to support advanced
+            validations.
+            It allows defining exact or maximum lengths, numeric/alphanumeric types, and custom Regex patterns.
+            Validates 'res.partner' VAT field in real-time and upon saving.
+            Key Features: Custom Regex, Length Check, Structure Check, Non-stored UI feedback.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Document Type</span> Validation
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Ensure VAT & ID Correctness</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Prevent data entry errors by enforcing strict or flexible validation rules for DNI, RUC, Passport,
+                    and other ID types.
+                </p>
+            </div>
+        </div>
+
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-shield mr-2"></i> Data Integrity</h4>
+                            <p style="text-align: justify;">Avoid invalid identification numbers that cause issues with
+                                electronic invoicing and tax reporting. Validate lengths (exact or max) and types
+                                (numeric/alphanumeric) automatically.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-code mr-2"></i> Custom Regex Power</h4>
+                            <p style="text-align: justify;">Need to validate a specific format like "ABC-123"? Use the
+                                new <strong>Validation Regex</strong> field to define your own rules without writing
+                                Python code. Perfect for foreign IDs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Comprehensive Guide</p>
+                </div>
+
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Define strict rules for each Document Type to ensure database integrity.</p>
+
+                            <h5 class="mt-4 text-primary">Key Fields Explanation:</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-2" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i>
+                                            <strong>Length:</strong> The required number of characters (e.g., 8 for
+                                            DNI).
+                                        </li>
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i> <strong>Exact
+                                                Length:</strong> Choose <em>'Exact'</em> (must equal Length) or
+                                            <em>'Maximum'</em> (must not exceed Length).
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-2" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i> <strong>Type:</strong>
+                                            <em>'Numeric'</em> (0-9 only), <em>'Alphanumeric'</em> (Letters & Numbers),
+                                            or <em>'Other'</em> (No validation).
+                                        </li>
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i> <strong>Validation
+                                                Regex:</strong> Advanced pattern matching. (Overrides standard 'Type'
+                                            validation if set).</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="mt-4 text-primary">Step-by-Step Configuration:</h5>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Contacts > Configuration > Identification Types</strong> (or
+                                    Accounting > Configuration).</li>
+                                <li>Select the Document Type you want to restrict (e.g., "RUC").</li>
+                                <li><strong>Standard Setup:</strong>
+                                    <ul>
+                                        <li>Set <strong>Length</strong> to <code>11</code>.</li>
+                                        <li>Set <strong>Exact Length</strong> to <code>Exact</code>.</li>
+                                        <li>Set <strong>Type</strong> to <code>Numeric</code>.</li>
+                                        <li><em>Result:</em> Users can only enter exactly 11 digits.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Advanced Setup (Foreign ID):</strong>
+                                    <ul>
+                                        <li>Set <strong>Validation Regex</strong> to <code>^[A-Z]{2}-\d{6}$</code>.</li>
+                                        <li><em>Result:</em> Validates format like "US-123456". Usage of standard regex
+                                            syntax is supported.</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">Understanding the User Experience and Validation Logic:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-flash text-warning mr-2"></i> Real-Time Feedback</h5>
+                                        <p class="text-muted">As soon as a user selects a Document Type or changes the
+                                            VAT number, the system runs the validation.</p>
+                                        <p class="small">If invalid, a <strong class="text-danger">Red Alert</strong>
+                                            box appears instantly above the partner form, detailing exactly why it
+                                            failed (e.g., "Contains letters but should be numeric").</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-ban text-danger mr-2"></i> Integrity Enforcement</h5>
+                                        <p class="text-muted">The system creates a <strong>Blocking Constraint</strong>.
+                                            It is technically impossible to save a Contact with an invalid ID number.
+                                        </p>
+                                        <p class="small">This prevents "dirty data" from entering your system via manual
+                                            entry, mass imports, or API calls.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-magic text-info mr-2"></i> Hybrid Validation</h5>
+                                        <p class="text-muted">The system automatically prioritizes your rules:</p>
+                                        <ul class="small mb-0 pl-3">
+                                            <li>If <strong>Regex</strong> is present -> Uses Regex.</li>
+                                            <li>If Regex is empty -> Uses <strong>Type</strong> (Numeric/Alpha).</li>
+                                            <li>Always checks <strong>Length</strong> (if defined).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-globe text-secondary mr-2"></i> Multi-National Support</h5>
+                                        <p class="text-muted">You can define different rules for the same document type
+                                            in different usage contexts or define generic "Passport" types with flexible
+                                            'Maximum' length rules to accommodate various countries.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-check-square mr-2"></i>
+                                Scenario 1: Numeric Integrity</h4>
+                            <ol class="mt-3">
+                                <li><strong>Configuration:</strong> Set Document Type "DNI" to <code>Length: 8</code>,
+                                    <code>Type: Numeric</code>.
+                                </li>
+                                <li><strong>Action:</strong> Create a Partner, select "DNI", enter "12345ABC".</li>
+                                <li><strong>Result:</strong> Visual Alert appears: "The identification number must
+                                    contain only numbers." Save is blocked.</li>
+                                <li><strong>Action:</strong> Correct to "12345678".</li>
+                                <li><strong>Result:</strong> Alert disappears, Save allowed.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-arrows-h mr-2"></i> Scenario
+                                2:
+                                Length Constraints (Exact vs Max)</h4>
+                            <p><strong>Part A: Exact Length</strong></p>
+                            <ul>
+                                <li>Config: Length=8, Exact_Length=Exact.</li>
+                                <li>Test: Input "12345" (5 digits). -> <strong>Fail</strong> (Too short).</li>
+                                <li>Test: Input "123456789" (9 digits). -> <strong>Fail</strong> (Too long).</li>
+                            </ul>
+                            <p><strong>Part B: Maximum Length</strong></p>
+                            <ul>
+                                <li>Config: Length=12, Exact_Length=Maximum.</li>
+                                <li>Test: Input "123". -> <strong>Pass</strong>.</li>
+                                <li>Test: Input "1234567890123" (13 chars). -> <strong>Fail</strong> (Too long).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-code mr-2"></i> Scenario 3:
+                                Advanced Regex Validation</h4>
+                            <p class="mt-2"><strong>Goal:</strong> Validate complex License Plate format "ABC-123".</p>
+                            <ol>
+                                <li><strong>Setup:</strong> In Regex field enter: <code>^[A-Z]{3}-\d{3}$</code></li>
+                                <li><strong>Test:</strong> Enter "ABC-123". -> <strong>Success</strong>.</li>
+                                <li><strong>Test:</strong> Enter "abc-123" (lowercase). -> <strong>Fail</strong> (Case
+                                    sensitive).</li>
+                                <li><strong>Test:</strong> Enter "123-ABC" (Wrong order). -> <strong>Fail</strong>.</li>
+                                <li><strong>Test:</strong> Enter "ABC1234" (Missing hyphen). -> <strong>Fail</strong>.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-upload mr-2"></i> Scenario 4:
+                                Bulk Import Protection</h4>
+                            <ol>
+                                <li>Prepare a CSV file with 100 partners. Include 5 records with invalid DNI lengths
+                                    (e.g., 7 digits).</li>
+                                <li>Go to Contacts > Favorites > Import Records.</li>
+                                <li>Attempt to import.</li>
+                                <li><strong>Result:</strong> Odoo's import tool will flag the 5 invalid rows with
+                                    "ValidationError: The identification number...".</li>
+                                <li><strong>Conclusion:</strong> The database remains clean even during mass operations.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">I configured a Regex but it's not working. Why?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Regex syntax must be precise. Also,
+                                Python's <code>re.search</code> is used.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ensure
+                                you are using <code>^</code> (start) and <code>$</code> (end) anchors to match the whole
+                                string. Example: use <code>^\d{8}$</code> instead of <code>\d{8}</code>. Test your regex
+                                on <a href="https://regex101.com" target="_blank">regex101.com</a> (Python flavor).</p>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">I can't save a Contact, it says "Must be
+                                Numeric".</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The selected Document Type is configured
+                                as 'Numeric' but you entered a letter or space.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Check for hidden spaces at the start/end, or check if the Document Type configuration
+                                requires 'Alphanumeric' instead.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">How do I handle Foreign Passports with varying
+                                lengths?</h5>
+                            <p class="text-muted mt-2"><strong>Scenario:</strong> Passports can clearly be any length up
+                                to 20 chars.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Set <strong>Length</strong> to <code>20</code>, <strong>Exact Length</strong> to
+                                <code>Maximum</code>, and <strong>Type</strong> to <code>Alphanumeric</code>. This
+                                allows flexibility while preventing excessively long garbage data.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Does this modify my existing data?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Installing the module does NOT retroactively validate or block existing records.
+                                Validations run only when you <strong>Create</strong> a new record or
+                                <strong>Write/Edit</strong> an existing one.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Support Section -->
+            <div class="row mt-5 border-top pt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ayuda@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
