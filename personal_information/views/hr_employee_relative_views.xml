@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="hr_employee_relative_view_form" model="ir.ui.view">
+        <field name="name">hr.employee.relative.view.form</field>
+        <field name="model">hr.employee.relative</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="e.g. Maria Perez"/>
+                            <field name="relation_id"/>
+                            <field name="date_of_birth"/>
+                            <field name="age"/>
+                        </group>
+                        <group>
+                            <field name="gender"/>
+                            <field name="partner_id" context="{'default_is_company': False, 'default_type': 'contact'}"/>
+                            <field name="phone_number" placeholder="e.g. 999 999 999"/>
+                            <field name="job" placeholder="e.g. Student"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Additional information..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_employee_relative_view_tree" model="ir.ui.view">
+        <field name="name">hr.employee.relative.view.tree</field>
+        <field name="model">hr.employee.relative</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="relation_id"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="name"/>
+                <field name="gender" optional="hide"/>
+                <field name="date_of_birth" optional="show"/>
+                <field name="age" optional="show"/>
+                <field name="phone_number" optional="show"/>
+                <field name="job" optional="hide"/>
+                <field name="notes" optional="hide"/>
+                <button name="action_open_form" type="object" icon="fa-external-link" title="View Details" class="btn-secondary"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

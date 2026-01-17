@@ -1,0 +1,22 @@
+---Models in module 'personal_information'---
+---Fields in module 'personal_information'---
+personal_information      / hr.employee.relative     / age (float)                   : change type field float -> integer
+---XML records in module 'personal_information'---
+DEL ir.ui.view: personal_information.hr_employee_view_form
+UPD ir.model.access: personal_information.access_hr_employee_relative_employee -> personal_information.access_hr_employee_relative
+UPD ir.model.access: personal_information.access_hr_employee_relative_user -> personal_information.access_hr_employee_relative_manager
+UPD ir.model.access: personal_information.access_hr_employee_relative_relation_employee -> personal_information.access_hr_employee_relative_relation
+UPD ir.model.access: personal_information.access_hr_employee_relative_relation_user -> personal_information.access_hr_employee_relative_relation_manager
+----------------------------------------------------------------
+DEPENDS 
+model:HR
+field:
+xml_id: hr.view_employee_form
+
+----------------------------------------------------------------
+[2026-01-17] FUNCTIONAL UPGRADE
+1. Relatives Tab: Added dedicated tab for Spouse/Children management.
+2. Auto-Sync: Implemented synchronization from Relatives Tab to native Employee fields (children, spouse_complete_name, spouse_birthdate).
+3. Legal Name: Added configurable auto-generation of Legal Name from First/Last names.
+4. Validations: Added constraints for future birthdates and unique spouse.
+5. Assets: Updated Icon (inverted pear), Banner, and Documentation (Index, Readme, License).

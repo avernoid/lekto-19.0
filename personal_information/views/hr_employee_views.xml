@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="hr_employee_view_form_inherit_personal_information" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.personal_information</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='personal_information']//field[@name='private_email']"
+                   position="before">
+                <label for="firstname" string="Full Name"/>
+                <div>
+                    <field name="firstname" placeholder="First Name" nolabel="1"/>
+                    <div class="o_row">
+                        <field name="lastname" placeholder="Paternal Lastname" nolabel="1"/>
+                        <field name="secondname" placeholder="Maternal Lastname" nolabel="1"/>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='personal_information']" position="after">
+                <page string="Relatives" name="employee_relative" groups="hr.group_hr_user">
+                    <field name="relative_ids" nolabel="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_search_inherit_personal_information" model="ir.ui.view">
+        <field name="name">hr.employee.view.search.inherit.personal_information</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="relative_ids" string="Relative Name" filter_domain="[('relative_ids.name', 'ilike', self)]"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
