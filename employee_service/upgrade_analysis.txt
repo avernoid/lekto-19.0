@@ -17,3 +17,13 @@ model:
 field:
 xml_id: 
     
+--- Upgrade Notes (Odoo 19) ---
+1. Field Removal: 'service_termination_date' has been removed from 'hr.employee'.
+   Rationale: Odoo 19 introduces native contract versioning ('hr.version') which exposes 'contract_date_end' directly on the employee model via delegation. 
+   Maintaining a separate stored field for termination date created redundancy and potential data inconsistency.
+
+2. Logic Update: 'service_duration' computation now relies on 'contract_date_end' (native) instead of 'service_termination_date'.
+   - Use 'contract_date_end' if set.
+   - If 'contract_date_end' is False (active contract), 'fields.Date.today()' is used for duration calculation.
+
+3. Deprecation: This refactoring effectively deprecates the need for the 'employee_service_contract' bridge module, as its primary purpose (syncing contract dates to the employee) is now handled natively by Odoo.

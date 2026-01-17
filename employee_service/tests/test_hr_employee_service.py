@@ -37,7 +37,7 @@ class TestHrEmployeeService(common.TransactionCase):
         
         # Set start date matching hire date
         employee.service_start_date = hire_date
-        employee.service_termination_date = False
+        employee.contract_date_end = False
 
         self.assertEqual(employee.service_hire_date, hire_date, "Hire date should be computed from version")
         self.assertEqual(employee.service_duration_years, 2)
@@ -51,7 +51,7 @@ class TestHrEmployeeService(common.TransactionCase):
         
         employee = self.create_employee_with_version('Employee Terminated', hire_date)
         employee.service_start_date = hire_date
-        employee.service_termination_date = termination_date
+        employee.contract_date_end = termination_date
 
         self.assertEqual(employee.service_duration_years, 2)
 

@@ -25,10 +25,7 @@ msgstr "Fecha de Contratación"
 msgid "Start Date"
 msgstr "Fecha de Inicio"
 
-#. module: employee_service
-#: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_termination_date
-msgid "Termination Date"
-msgstr "Fecha de Cese"
+
 
 #. module: employee_service
 #: model:ir.model.fields,field_description:employee_service.field_hr_employee__service_duration
@@ -81,7 +78,4 @@ msgstr "La fecha original de contratación del empleado. Este campo se calcula a
 msgid "The actual first day the employee started working. This date is critical for calculating accrual leave allocations and benefits."
 msgstr "El primer día real en que el empleado comenzó a trabajar. Esta fecha es crítica para calcular la asignación de vacaciones y beneficios acumulados."
 
-#. module: employee_service
-#: model:ir.model.fields,help:employee_service.field_hr_employee__service_termination_date
-msgid "The last day the employee worked. If set, the service duration calculation will stop accumulating at this date."
-msgstr "El último día que el empleado trabajó. Si se establece, el cálculo del tiempo de servicio dejará de acumularse en esta fecha."
+

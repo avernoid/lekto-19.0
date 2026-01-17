@@ -135,7 +135,7 @@
         <p>This Odoo module 'employee_service' manages employee service duration and seniority.
             It calculates 'service_hire_date' based on the oldest active 'hr.version' (contract version).
             It computes 'service_duration' in years, months, and days based on 'service_start_date' and
-            'service_termination_date'.
+            native 'contract_date_end' (from hr.version).
             Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
             Multi-language support for English and Spanish included.</p>
     </div>
@@ -194,7 +194,7 @@
                             <p style="text-align: justify;">Stop calculating seniority manually. The system
                                 automatically
                                 computes <strong>Years, Months, and Days</strong> of service based on the start date
-                                and termination date (or today). Perfect for benefits and vacation allocation.</p>
+                                and contract end date (or today). Perfect for benefits and vacation allocation.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
@@ -318,8 +318,8 @@
                                         <h5><i class="fa fa-sign-out text-primary mr-2"></i> Termination</h5>
                                         <p class="text-muted small">
                                             When an employee leaves:<br>
-                                            1. Set the <strong>Termination Date</strong> in the Service Info tab.<br>
-                                            2. The "Service Duration" counter stops immediately.
+                                            1. Set the <strong>End Date</strong> in the Contract/Version.<br>
+                                            2. The "Service Duration" counter uses that date automatically.
                                         </p>
                                     </div>
                                 </div>
@@ -571,7 +571,7 @@
                                 Scenario 3: Complex Duration Calculation</h4>
                             <ol class="mt-3">
                                 <li>Set 'Start Date' to exactly 1 year and 1 month ago from today.</li>
-                                <li>Clear any Termination Date.</li>
+                                <li>Ensure the Contract has no <strong>End Date</strong> (Active).</li>
                                 <li><strong>PASS Criteria:</strong> Service Duration should read <strong>"1 year(s) 1
                                         month(s) 0 day(s)"</strong> (allowing for minimal day variance depending on
                                     months).</li>

@@ -11,20 +11,20 @@ This module is essential for organizations that need precise calculations for se
 - **Automated Hire Date Calculation:** The system identifies the *real* hire date by analyzing the employee's entire contract history (`hr.version`) and selecting the start date of the oldest *active* version.
 - **Read-Only Integrity:** The "Hire Date" field is set to **Read-Only** to prevent manual errors and ensure it always serves as a "Single Source of Truth" derived from contracts.
 - **Real-Time Duration Tracking:** Automatically computes and displays service duration in **Years, Months, and Days** (e.g., "5 Years 2 Months 10 Days").
-- **Termination Handling:** If a "Termination Date" is set, the service duration calculation freezes at that specific date, preserving historical records for former employees.
+- **Termination Handling:** The module leverages the native **Contract End Date** (`contract_date_end`). If a contract ends, the service duration calculation freezes at that specific date, ensuring historical accuracy without manual data duplication.
 - **Smart Data Entry:** For new employees, identifying a new contract start date automatically populates the service start date (if empty) to streamline onboarding.
 
 ## Configuration & Setup
-No complex technical configuration is required. The module works out-of-the-box, but understanding its logic is crucial for correct usage.
+No complex technical configuration is required. The module works out-of-the-box, relying on Odoo's native Contract structure.
 
 ### 1. Verification of Dependencies
-Ensure that your Odoo environment has the employee contracts/versions correctly set up. This module relies on `hr.version` records.
+Ensure that your Odoo environment has the employee contracts/versions correctly set up. This module relies on the native `hr.version` records and their dates.
 
 ### 2. Initial Usage
 1.  Navigate to **Employees** and open an Employee Profile.
 2.  Go to the **HR Settings** tab.
 3.  Locate the **Service Information** group.
-4.  You will see the computed fields: `Hire Date`, `Start Date`, `Termination Date`, and the `Service Duration` counters.
+4.  You will see the computed fields: `Hire Date`, `Start Date`, and the `Service Duration` counters. Note that "Termination Date" is now managed via the Contract form.
 
 ## Detailed Operating Manual
 
@@ -42,9 +42,9 @@ When you create a new employee and add their first contract version:
 
 ### Handling Terminations
 When an employee leaves the company:
-1.  Go to the **Service Information** tab.
-2.  Manually set the **Termination Date**.
-3.  **Result:** The "Service Duration" calculation stops increasing. It will permanently show the exact tenure the employee had on their last day.
+1.  Go to the **Contract/Version** associated with the employee.
+2.  Set the **Contract End Date** (`contract_date_end`).
+3.  **Result:** The "Service Duration" calculation automatically detects this end date and stops increasing. It will permanently show the exact tenure the employee had on their last day of contract.
 
 ### Archived Versions
 *   **Scenario:** You have old data migration records or "test" contracts that you archived.

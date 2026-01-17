@@ -24,14 +24,6 @@ class HrEmployee(models.Model):
             'for calculating accrual leave allocations and benefits.'
         ),
     )
-    service_termination_date = fields.Date(
-        string='Termination Date',
-        groups='hr.group_hr_user',
-        help=(
-            'The last day the employee worked. If set, the service duration calculation '
-            'will stop accumulating at this date.'
-        ),
-    )
     service_duration = fields.Integer(
         string='Service Duration',
         groups='hr.group_hr_user',
@@ -58,14 +50,14 @@ class HrEmployee(models.Model):
         store=True
     )
 
-    @api.depends('service_start_date', 'service_termination_date')
+    @api.depends('service_start_date', 'contract_date_end')
     def _compute_service_duration(self):
         for record in self:
-            if hasattr(record, 'service_termination_date') and record.service_termination_date:
-                if record.service_termination_date >= fields.Date.today():
+            if hasattr(record, 'contract_date_end') and record.contract_date_end:
+                if record.contract_date_end >= fields.Date.today():
                     service_until = fields.Date.today()
                 else:
-                    service_until = record.service_termination_date
+                    service_until = record.contract_date_end
             else:
                 service_until = fields.Date.today()
 

@@ -1,6 +1,6 @@
 {
     'name': 'Employee Service',
-    'version': '19.0.1.0.1',
+    'version': '19.0.2.0.0',
     'category': 'Human Resources',
     'summary': 'Manage employee service duration, hire date and tenure automatically.',
     'description': """
@@ -8,8 +8,7 @@ This module calculates employee service duration based on contracts/versions his
 It tracks:
 - Service Hire Date (from oldest active version)
 - Service Start Date
-- Service Termination Date
-- Exact Service Tenure (Years, Months, Days)
+- Exact Service Tenure (Years, Months, Days) -> Uses native Contract End Date
     """,
     'author': 'Ganemo',
     'maintainer': 'Ganemo',
