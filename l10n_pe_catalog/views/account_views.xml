@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem 
+        id="catalogos_sunat_menu_localization"
+        name="Catálogos SUNAT"
+        parent="l10n_pe_localization_menu.menu_localization_invoicing"
+        sequence="10"
+    />
+
+</odoo>

@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_charge_discount_codes_all_users,charge.discount.codes,model_charge_discount_codes,base.group_user,1,0,0,0
+access_charge_discount_codes_account_user,charge.discount.codes,model_charge_discount_codes,account.group_account_user,1,1,1,1
+access_charge_discount_codes_account_manager,charge.discount.codes,model_charge_discount_codes,account.group_account_manager,1,1,1,1
+
+access_payment_methods_codes_all_users,payment.methods.codes,model_payment_methods_codes,base.group_user,1,0,0,0
+access_payment_methods_codes_account_user,payment.methods.codes,model_payment_methods_codes,account.group_account_user,1,1,1,1
+access_payment_methods_codes_account_manager,payment.methods.codes,model_payment_methods_codes,account.group_account_manager,1,1,1,1
+
+access_classification_services_all_users,classification.services,model_classification_services,base.group_user,1,0,0,0
+access_classification_services_account_user,classification.services,model_classification_services,account.group_account_user,1,1,1,1
+access_classification_services_account_manager,classification.services,model_classification_services,account.group_account_manager,1,1,1,1

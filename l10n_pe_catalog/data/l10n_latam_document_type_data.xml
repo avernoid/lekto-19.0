@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="l10n_pe_catalog.document_type00" model="l10n_latam.document.type">
+            <field name="sequence">00</field>
+            <field name="code">00</field>
+            <field name="report_name">Otros</field>
+            <field name="name">Otros</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type09" model="l10n_latam.document.type">
+            <field name="sequence">09</field>
+            <field name="code">09</field>
+            <field name="report_name">Guía de remisión - Remitente</field>
+            <field name="name">Guía de remisión - Remitente</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type31" model="l10n_latam.document.type">
+            <field name="sequence">31</field>
+            <field name="code">31</field>
+            <field name="report_name">Guía de Remisión - Transportista</field>
+            <field name="name">Guía de Remisión - Transportista</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type71" model="l10n_latam.document.type">
+            <field name="sequence">71</field>
+            <field name="code">71</field>
+            <field name="report_name">Resolución de Adjudicación de bienes – SUNAT</field>
+            <field name="name">Resolución de Adjudicación de bienes – SUNAT</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type72" model="l10n_latam.document.type">
+            <field name="sequence">72</field>
+            <field name="code">72</field>
+            <field name="report_name">Resolución de Comiso de bienes – SUNAT</field>
+            <field name="name">Resolución de Comiso de bienes – SUNAT</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type73" model="l10n_latam.document.type">
+            <field name="sequence">73</field>
+            <field name="code">73</field>
+            <field name="report_name">Guía de Transporte Forestal o de Fauna - SERFOR</field>
+            <field name="name">Guía de Transporte Forestal o de Fauna - SERFOR</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type74" model="l10n_latam.document.type">
+            <field name="sequence">74</field>
+            <field name="code">74</field>
+            <field name="report_name">Guía de Tránsito – SUCAMEC</field>
+            <field name="name">Guía de Tránsito – SUCAMEC</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type75" model="l10n_latam.document.type">
+            <field name="sequence">75</field>
+            <field name="code">75</field>
+            <field name="report_name">Autorización para operar como empresa de Saneamiento Ambiental – MINSA -</field>
+            <field name="name">Autorización para operar como empresa de Saneamiento Ambiental – MINSA -</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type76" model="l10n_latam.document.type">
+            <field name="sequence">76</field>
+            <field name="code">76</field>
+            <field name="report_name">Autorización para manejo y recojo de residuos sólidos peligrosos y no peligrosos</field>
+            <field name="name">Autorización para manejo y recojo de residuos sólidos peligrosos y no peligrosos</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type77" model="l10n_latam.document.type">
+            <field name="sequence">77</field>
+            <field name="code">77</field>
+            <field name="report_name">Certificado fitosanitario la movilización de plantas, productos vegetales, y otros artículos reglamentados</field>
+            <field name="name">Certificado fitosanitario la movilización de plantas, productos vegetales, y otros artículos reglamentados</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type78" model="l10n_latam.document.type">
+            <field name="sequence">78</field>
+            <field name="code">78</field>
+            <field name="report_name">Registro Único de Usuarios y Transportistas de Alcohol Etílico</field>
+            <field name="name">Registro Único de Usuarios y Transportistas de Alcohol Etílico</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type80" model="l10n_latam.document.type">
+            <field name="sequence">80</field>
+            <field name="code">80</field>
+            <field name="report_name">Constancia de Depósito – Detracción</field>
+            <field name="name">Constancia de Depósito – Detracción</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+        <record id="l10n_pe_catalog.document_type81" model="l10n_latam.document.type">
+            <field name="sequence">81</field>
+            <field name="code">81</field>
+            <field name="report_name">Código de autorización emitida por el SCOP</field>
+            <field name="name">Código de autorización emitida por el SCOP</field>
+            <field name='country_id' ref='base.pe'/>
+            <field name='doc_code_prefix'>F</field>
+            <field name='internal_type'/>
+        </record>
+
+    </data>
+</odoo>

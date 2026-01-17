@@ -1,0 +1,23 @@
+---Models in module 'l10n_pe_catalog'---
+del model isc.calculation.system
+del model igv.afectation.type
+del model l10n_latam.identification.type (extension removed)
+
+---Fields in module 'l10n_pe_catalog'---
+account     / account.tax       / isc_calculation_system_id (many2one)  : DEL relation: isc.calculation.system
+account     / account.tax       / l10n_pe_edi_isc_type (selection)      : NEW selection_keys: ['01', '02', '03']
+
+---XML records in module 'l10n_pe_catalog'---
+DEL isc.calculation.system: l10n_pe_catalog.isc_calculation_system_01
+DEL isc.calculation.system: l10n_pe_catalog.isc_calculation_system_02
+DEL isc.calculation.system: l10n_pe_catalog.isc_calculation_system_03
+DEL igv.afectation.type: l10n_pe_catalog.igv_afectation_type_* (all records)
+
+---Views in module 'l10n_pe_catalog'---
+DEL ir.ui.view: l10n_pe_catalog.account_tax_form_view_inherit
+DEL ir.ui.view: l10n_pe_catalog.isc_calculation_system_form_view
+DEL ir.ui.view: l10n_pe_catalog.isc_calculation_system_tree_view
+DEL ir.ui.view: l10n_pe_catalog.l10n_latam_document_type_tree_view_inherit_l10n_pe_catalog (sequence editing removed)
+
+---Actions in module 'l10n_pe_catalog'---
+DEL ir.actions.act_window: l10n_pe_catalog.isc_calculation_system_action

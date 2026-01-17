@@ -1,0 +1,89 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. module: l10n_pe_catalog
+#: model:ir.model,name:l10n_pe_catalog.model_charge_discount_codes
+msgid "[53] Charge or Discount Codes"
+msgstr "[53] Códigos de cargos o descuentos"
+
+#. module: l10n_pe_catalog
+#: model:ir.model,name:l10n_pe_catalog.model_classification_services
+msgid "[30] Goods and Services Classification"
+msgstr "[30] Clasificación de los bienes y servicios adquiridos"
+
+#. module: l10n_pe_catalog
+#: model:ir.model,name:l10n_pe_catalog.model_payment_methods_codes
+msgid "[59] Payment Methods Codes"
+msgstr "[59] Códigos de medios de pago"
+
+#. module: l10n_pe_catalog
+#: model:ir.model,name:l10n_pe_catalog.model_model_sunat_catalog
+msgid "SUNAT Catalog Model"
+msgstr "Modelo catálogo de SUNAT"
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_model_sunat_catalog__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_model_sunat_catalog__code
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_classification_services__code
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_payment_methods_codes__code
+msgid "Code"
+msgstr "Código"
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_model_sunat_catalog__description
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_classification_services__description
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_payment_methods_codes__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_model_sunat_catalog__name
+msgid "Computed name combining code and description."
+msgstr "Nombre calculado combinando código y descripción."
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_model_sunat_catalog__code
+msgid "Unique code defined by SUNAT."
+msgstr "Código único definido por SUNAT."
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_model_sunat_catalog__description
+msgid "Official description of the code."
+msgstr "Descripción oficial del código."
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,field_description:l10n_pe_catalog.field_product_template__l10n_pe_charge_discount_id
+msgid "Charge/Discount Code"
+msgstr "Código de Cargo/Descuento"
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_product_template__l10n_pe_charge_discount_id
+msgid "Code from SUNAT Catalog 53 to be used for charges or discounts applied to this product."
+msgstr "Código del Catálogo 53 de SUNAT para ser usado en cargos o descuentos aplicados a este producto."
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_classification_services__code
+msgid "Classification code according to SUNAT Catalog 30."
+msgstr "Código de clasificación según el Catálogo 30 de SUNAT."
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_classification_services__description
+msgid "Description of the good or service classification."
+msgstr "Descripción de la clasificación del bien o servicio."
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_payment_methods_codes__code
+msgid "Payment method code from SUNAT Catalog 59."
+msgstr "Código de medio de pago del Catálogo 59 de SUNAT."
+
+#. module: l10n_pe_catalog
+#: model:ir.model.fields,help:l10n_pe_catalog.field_payment_methods_codes__description
+msgid "Description of the payment method."
+msgstr "Descripción del medio de pago."
