@@ -1,5 +1,5 @@
 {
-    'name': 'Amount To Text',
+    'name': 'Amount To Text Invoice',
     'version': '19.0.1.0.0',
     'category': 'Accounting/Accounting',
     'summary': 'Convert invoice totals to text. Force Uppercase, Language, and Strict Formats.',
@@ -23,7 +23,7 @@ It allows configuring per Journal:
     'data': [
         'views/account_journal_views.xml',
     ],
-    'icon': '/amount_to_text/static/description/icon.png',
+    'icon': '/amount_to_text_invoice/static/description/icon.png',
     'images': ['static/description/banner.png'],
     'license': 'OPL-1',
     'installable': True,
