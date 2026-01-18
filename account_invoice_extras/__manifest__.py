@@ -1,26 +1,35 @@
 {
     'name': 'Account Invoice Extras',
     'version': '19.0.1.0.0',
-    'author': 'Ganemo',
-    'website': 'https://www.ganemo.co',
+    'category': 'Accounting',
     'summary': 'Unified module for extra invoice fields and settings.',
     'description': '''
-    Consolidates functionality from carrier_reference_number_invoice, print_aditional_comment, and aditional_document_reference.
+    Consolidates functionality for extra invoice fields and printed report configurations.
     
     Features:
-    - Adds "Guía(s) de Remisión" (carrier_ref_number) to invoices.
-    - Adds "Otro tipo de documento" (aditional_document_reference) to invoices.
-    - Adds company-level configuration "Información adicional factura impresa" (additional_information) printed on invoices.
+    - Carrier Reference Number (Guía de Remisión).
+    - Additional Document Reference.
+    - Company-level printed invoice footer configuration.
     ''',
-    'category': 'Accounting',
-    'depends': ['account'],
+    'author': 'Ganemo',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': 'https://www.ganemo.com',
+    'depends': [
+        'account',
+    ],
     'data': [
         'views/account_move_views.xml',
         'views/res_company_views.xml',
         'reports/report_invoice_document.xml',
     ],
+    'icon': '/account_invoice_extras/static/description/icon.png',
+    'images': ['static/description/banner.png'],
+    'license': 'OPL-1',
     'installable': True,
     'auto_install': False,
     'application': False,
-    'license': 'Other proprietary',
+    'currency': 'USD',
+    'price': 7.0,
+    'module_type': 'official',
 }
