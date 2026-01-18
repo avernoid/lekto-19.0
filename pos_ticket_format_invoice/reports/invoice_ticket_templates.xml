@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="external_layout_invoice_ticket">
+            <div class="article doc_report_layout_standard" t-att-data-oe-model="o and o._name"
+                 t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-call="web.address_layout"/>
+                <t t-out="0"/>
+            </div>
+        </template>
+
+        <!-- ============================================== -->
+        <!-- CLASSIC LAYOUT (The original robust design)    -->
+        <!-- ============================================== -->
+        <template id="ticket_layout_classic">
+            <link rel="stylesheet" href="/pos_ticket_format_invoice/static/src/css/main.css"/>
+            <div class="pos-receipt-print-ticket" t-attf-style="font-family: {{o.journal_id.ticket_font_family or 'inherit'}};">
+
+                <t t-if="o.journal_id.ticket_logo or o.company_id.logo">
+                    <img class="pos-receipt-logo" t-att-src="image_data_uri(o.journal_id.ticket_logo or o.company_id.logo)" alt="Logo"/>
+                </t>
+
+                <div class="pos-receipt-contact">
+                    <div t-if="o.company_id.name" t-attf-style="font-size: {{o.journal_id.ticket_company_name_size}}px; font-weight: bold;">
+                        <t t-esc="o.company_id.name"/>
+                    </div>
+                    <div class="pos-receipt-contact__street" t-if="o.company_id.street" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        <t t-esc="o.company_id.street"/>
+                    </div>
+                    <div name="company_complement" class="pos-receipt-contact__address" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        <span name="company_city"><t t-if="o.company_id.city" t-esc="o.company_id.city"/></span>,
+                        <span name="company_state"><t t-if="o.company_id.state_id.name" t-esc="o.company_id.state_id.name"/></span>,
+                        <span name="company_country"><t t-if="o.company_id.country_id.name" t-esc="o.company_id.country_id.name"/></span>
+                    </div>
+                    <div t-if="o.company_id.email" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        <t t-esc="o.company_id.email"/>
+                    </div>
+                    <div t-if="o.company_id.phone" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        <t t-esc="o.company_id.phone"/>
+                    </div>
+                    <div class="pos-receipt-contact__vat" t-if="o.company_id.vat" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        RUC N°
+                        <t t-esc="o.company_id.vat"/>
+                    </div>
+                    <div t-if="o.l10n_latam_document_type_id.report_name or o.name" t-attf-style="font-size: {{o.journal_id.ticket_invoice_details_size}}px; font-weight: bold; margin-top: 5px;">
+                        <t t-esc="o.l10n_latam_document_type_id.report_name"/>
+                        <t t-esc="o.name.replace(' ','')"/>
+                    </div>
+                    <div class="pos-receipt-contact__invoice" t-if="o.invoice_date" t-attf-style="font-size: {{o.journal_id.ticket_invoice_details_size}}px;">
+                        <strong>F. Emisión:</strong>
+                        <span t-field="o.invoice_date"/>&amp;nbsp;&amp;nbsp;
+                        <strong t-if="o.create_date">Hora:</strong>
+                        <span t-field="o.create_date" t-options='{"format": "H:mm:ss"}'/>&amp;nbsp;&amp;nbsp;
+                        <strong t-if="o.invoice_date_due">F.V.:</strong>
+                        <span t-if="o.invoice_date_due" t-field="o.invoice_date_due"/>
+                    </div>
+                </div>
+
+                <table class="table-pos-receipt-vendor" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Forma de Pago</strong></td>
+                            <td>:</td>
+                            <td>
+                                <t t-if="o.invoice_payment_term_id.name">
+                                    <t t-esc="o.invoice_payment_term_id.name"/>
+                                </t>
+                                <t t-else="">Pago al Contado</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cajero</strong></td>
+                            <td>:</td>
+                            <td><t t-esc="o.invoice_user_id.name"/></td>
+                        </tr>
+                        <tr t-if="o.journal_id.address_point_emission">
+                            <td><strong>Dirección punto de emisión</strong></td>
+                            <td>:</td>
+                            <td><t t-esc="o.journal_id.address_point_emission"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table-pos-receipt-customer" t-attf-style="font-size: {{o.journal_id.ticket_customer_details_size}}px;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cliente</strong></td>
+                            <td>:</td>
+                            <td><t t-esc="o.partner_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <t t-if="o.partner_id.l10n_latam_identification_type_id.name == 'Non-Domiciled Tax Document'">
+                                    <strong>Documento de impuestos no domiciliado</strong>
+                                </t>
+                                <t t-else="">
+                                    <strong><t t-esc="o.partner_id.l10n_latam_identification_type_id.name"/></strong>
+                                </t>
+                            </td>
+                            <td>:</td>
+                            <td><t t-esc="o.partner_id.vat"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Teléfono/Móvil</strong></td>
+                            <td>:</td>
+                            <td><t t-esc="o.partner_id.phone"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Direccion</strong></td>
+                            <td>:</td>
+                            <td>
+                                <t name="partner_street" t-if="o.partner_id.street" t-esc="o.partner_id.street"/>,
+                                <t name="partner_city" t-if="o.partner_id.city_id.name" t-esc="o.partner_id.city_id.name"/>,
+                                <t name="partner_state" t-if="o.partner_id.state_id.name" t-esc="o.partner_id.state_id.name"/>,
+                                <t name="partner_country" t-if="o.partner_id.country_id.name" t-esc="o.partner_id.country_id.name"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table-ticket">
+                    <thead t-attf-style="font-size: {{o.journal_id.ticket_table_header_size}}px;">
+                        <tr>
+                            <th name="th_quantity" class="text-center fw-bold"><span>Cant.</span></th>
+                            <th name="th_description" class="text-left fw-bold"><span>Descripcion</span></th>
+                            <th name="th_priceunit" class="text-center fw-bold"><span>P. Unit.</span></th>
+                            <th name="th_subtotal" class="text-right fw-bold"><span>Total</span></th>   
+                        </tr>
+                    </thead>
+                    <tbody class="invoice_tbody" t-attf-style="font-size: {{o.journal_id.ticket_table_body_size}}px;">
+                        <t t-set="current_subtotal" t-value="0"/>
+                        <t t-set="current_total" t-value="0"/>
+                        <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+
+                        <t t-foreach="lines" t-as="line">
+                            <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
+                            <t t-set="current_total" t-value="current_total + line.price_total"/>
+
+                            <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                <t t-if="line.display_type not in ['line_note', 'line_section']" name="account_invoice_line_accountable">
+                                    <td name="account_invoice_line_quantity" class="text-center"><span t-field="line.quantity"/></td>
+                                    <td name="account_invoice_line_name" class="text-left"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                    <td name="account_invoice_line_price_unit" t-attf-class="text-center"><span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}'/></td>
+                                    <td name="account_invoice_line_price_total" class="o_price_total"><span class="text-nowrap" t-field="line.price_subtotal" t-options='{"widget": "float", "precision": 2}'/></td>
+                                </t>
+                                <t t-if="line.display_type == 'line_section'">
+                                    <td colspan="99"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                    <t t-set="current_section" t-value="line"/>
+                                    <t t-set="current_subtotal" t-value="0"/>
+                                </t>
+                                <t t-if="line.display_type == 'line_note'">
+                                    <td colspan="99"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+                                </t>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <table class="table-ticket-foot" t-attf-style="font-size: {{o.journal_id.ticket_totals_size}}px;">
+                    <t t-set="tax_totals" t-value="o.tax_totals"/>
+                    <t t-set="currency" t-value="o.currency_id"/>
+                    <t t-set="same_tax_base" t-value="tax_totals['same_tax_base']"/>
+                    <t t-foreach="tax_totals['subtotals']" t-as="subtotal">
+                        <tr class="border-black o_subtotal">
+                            <td><span t-out="subtotal['name']">Untaxed Amount</span></td>
+                            <td class="text-end">
+                                <span t-att-class="oe_subtotal_footer_separator" t-out="subtotal['base_amount_currency']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                            </td>
+                        </tr>
+                        <t t-foreach="subtotal['tax_groups']" t-as="tax_group">
+                            <tr class="o_taxes">
+                                <t t-if="same_tax_base or tax_group['display_base_amount_currency'] is None">
+                                    <td><span class="text-nowrap" t-out="tax_group['group_name']"/></td>
+                                    <td class="text-end o_price_total">
+                                        <span class="text-nowrap" t-out="tax_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                    </td>
+                                </t>
+                                <t t-else="">
+                                    <td>
+                                        <span t-out="tax_group['group_name']"/>
+                                        <span> on </span>
+                                        <span class="text-nowrap" t-out="tax_group['display_base_amount_currency']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                    </td>
+                                    <td class="text-end o_price_total">
+                                        <span class="text-nowrap" t-out="tax_group['tax_amount_currency']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </t>
+                    <tr t-if="'cash_rounding_base_amount_currency' in tax_totals">
+                        <td>Rounding</td>
+                        <td class="text-end">
+                            <span t-out="tax_totals['cash_rounding_base_amount_currency']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                        </td>
+                    </tr>
+                    <tr class="o_total">
+                        <td><strong>Total</strong></td>
+                        <td class="text-end">
+                            <strong t-out="tax_totals['total_amount_currency']" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="total_write" name="total_write_post_ticket_format_invoice" t-attf-style="font-size: {{o.journal_id.ticket_amount_text_size}}px;">
+                    <strong>Son:</strong>
+                    <t t-esc="o.amount_total_words.title()"/>
+                </div>
+                <div class="pos-receipt-final" t-attf-style="font-size: {{o.journal_id.ticket_footer_msg_size}}px;">
+                    <div t-if="o.narration"><span t-field="o.narration"/></div>
+                    <div t-if="o.company_id.additional_information"><t t-out="o.company_id.additional_information"/></div>
+                </div>
+            </div>
+        </template>
+
+        <!-- ============================================== -->
+        <!-- MODERN LAYOUT (Clean, Inverse Headers)         -->
+        <!-- ============================================== -->
+        <template id="ticket_layout_modern">
+            <link rel="stylesheet" href="/pos_ticket_format_invoice/static/src/css/main.css"/>
+            <div class="pos-receipt-print-ticket" t-attf-style="font-family: {{o.journal_id.ticket_font_family or 'inherit'}};">
+
+                <div class="text-center mb-2">
+                     <t t-if="o.journal_id.ticket_logo or o.company_id.logo">
+                        <img class="pos-receipt-logo" t-att-src="image_data_uri(o.journal_id.ticket_logo or o.company_id.logo)" alt="Logo" style="max-height: 80px; width: auto;"/>
+                    </t>
+                </div>
+
+                <div class="pos-receipt-contact text-center">
+                    <div t-if="o.company_id.name" t-attf-style="font-size: {{o.journal_id.ticket_company_name_size + 2}}px; font-weight: 900; text-transform: uppercase;">
+                        <t t-esc="o.company_id.name"/>
+                    </div>
+                </div>
+                
+                <!-- Modern Invoice Info Block -->
+                <div class="mt-2 mb-2 p-1 border-top border-bottom" style="border-style: dotted !important; border-color: #333 !important; border-width: 1px;">
+                     <div class="d-flex justify-content-between" t-attf-style="font-size: {{o.journal_id.ticket_invoice_details_size}}px;">
+                        <span class="fw-bold"><t t-esc="o.l10n_latam_document_type_id.report_name or 'Invoice'"/></span>
+                        <span class="fw-bold"><t t-esc="o.name.replace(' ','')"/></span>
+                     </div>
+                     <div class="d-flex justify-content-between" t-attf-style="font-size: {{o.journal_id.ticket_invoice_details_size}}px;">
+                        <span><span t-field="o.invoice_date"/> <span t-if="o.create_date" t-field="o.create_date" t-options='{"format": "H:mm"}'/></span>
+                        <span>RUC: <t t-esc="o.company_id.vat"/></span>
+                     </div>
+                </div>
+
+                <div class="pos-receipt-contact text-center mb-2">
+                     <div t-if="o.company_id.street" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        <t t-esc="o.company_id.street"/>, <t t-if="o.company_id.city" t-esc="o.company_id.city"/>
+                    </div>
+                </div>
+
+                <!-- Modern Customer Block -->
+                 <div class="mb-2" t-attf-style="font-size: {{o.journal_id.ticket_customer_details_size}}px;">
+                    <div><strong>CLIENTE:</strong> <span t-esc="o.partner_id.name"/></div>
+                    <div><strong>RUC/DNI:</strong> <span t-esc="o.partner_id.vat"/></div>
+                    <div t-if="o.partner_id.phone"><strong>TEL:</strong> <span t-esc="o.partner_id.phone"/></div>
+                 </div>
+
+                <!-- Modern Table: No borders, cleaner -->
+                <table class="table-ticket mt-2">
+                    <thead t-attf-style="font-size: {{o.journal_id.ticket_table_header_size}}px; border-bottom: 2px solid #000;">
+                        <tr>
+                            <th name="th_quantity" class="text-center fw-bold" style="width: 15%">CANT</th>
+                            <th name="th_description" class="text-left fw-bold" style="width: 45%">PRODUCTO</th>
+                            <th name="th_priceunit" class="text-end fw-bold" style="width: 20%">UNIT</th>
+                            <th name="th_subtotal" class="text-end fw-bold" style="width: 20%">TOT</th>   
+                        </tr>
+                    </thead>
+                     <tbody class="invoice_tbody" t-attf-style="font-size: {{o.journal_id.ticket_table_body_size}}px;">
+                        <t t-foreach="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" t-as="line">
+                             <tr t-if="line.display_type not in ['line_note', 'line_section']">
+                                <td class="text-center" style="vertical-align: top;"><span t-field="line.quantity"/></td>
+                                <td class="text-left" style="padding-right: 2px;"><span t-field="line.name"/></td>
+                                <td class="text-end" style="vertical-align: top;"><span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}'/></td>
+                                <td class="text-end fw-bold" style="vertical-align: top;"><span t-field="line.price_subtotal" t-options='{"widget": "float", "precision": 2}'/></td>
+                            </tr>
+                        </t>
+                     </tbody>
+                </table>
+
+                <!-- Inverted TOTAL Box -->
+                <div class="row mt-3 mb-2" t-attf-style="font-size: {{o.journal_id.ticket_totals_size}}px;">
+                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <div class="p-1 text-center" style="background-color: #000; color: #fff; border-radius: 4px;">
+                            <strong>TOTAL</strong><br/>
+                            <strong t-field="o.amount_total" style="font-size: 1.2em;"/>
+                        </div>
+                    </div>
+                </div>
+                
+                 <div class="text-end mb-2" t-attf-style="font-size: {{o.journal_id.ticket_totals_size}}px;">
+                    <small>Subtotal: <span t-field="o.amount_untaxed"/></small><br/>
+                    <small>Impuestos: <span t-esc="o.amount_total - o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></small>
+                 </div>
+
+                <div class="total_write mt-2 border-top pt-1" t-attf-style="font-size: {{o.journal_id.ticket_amount_text_size}}px;">
+                    <i><t t-esc="o.amount_total_words.title()"/></i>
+                </div>
+
+                <!-- Footer -->
+                 <div class="pos-receipt-final text-center mt-4" t-attf-style="font-size: {{o.journal_id.ticket_footer_msg_size}}px; opacity: 0.7;">
+                    <t t-if="o.invoice_payment_term_id.name"><span t-esc="o.invoice_payment_term_id.name"/><br/></t>
+                    <span t-esc="o.name"/> - <span t-field="o.invoice_user_id.name"/>
+                    <div t-if="o.narration" class="mt-2 text-start">
+                         <span t-field="o.narration"/>
+                    </div>
+                    <div t-if="o.company_id.additional_information" class="mt-2 text-start">
+                         <t t-out="o.company_id.additional_information"/>
+                    </div>
+                </div>
+
+            </div>
+        </template>
+
+
+
+        <!-- ============================================== -->
+        <!-- FULL WIDTH LAYOUT (Description on own line)    -->
+        <!-- ============================================== -->
+        <template id="ticket_layout_full_width">
+            <link rel="stylesheet" href="/pos_ticket_format_invoice/static/src/css/main.css"/>
+            <div class="pos-receipt-print-ticket" t-attf-style="font-family: {{o.journal_id.ticket_font_family or 'inherit'}};">
+
+                <t t-if="o.journal_id.ticket_logo or o.company_id.logo">
+                    <img class="pos-receipt-logo" t-att-src="image_data_uri(o.journal_id.ticket_logo or o.company_id.logo)" alt="Logo"/>
+                </t>
+
+                <!-- HEADER (Similar to Classic but simplified) -->
+                <div class="pos-receipt-contact">
+                    <div t-if="o.company_id.name" t-attf-style="font-size: {{o.journal_id.ticket_company_name_size}}px; font-weight: bold;">
+                        <t t-esc="o.company_id.name"/>
+                    </div>
+                    <div t-if="o.company_id.vat" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        RUC N° <t t-esc="o.company_id.vat"/>
+                    </div>
+                     <div class="pos-receipt-contact__street" t-if="o.company_id.street" t-attf-style="font-size: {{o.journal_id.ticket_company_details_size}}px;">
+                        <t t-esc="o.company_id.street"/>
+                    </div>
+                    <div t-if="o.l10n_latam_document_type_id.report_name or o.name" t-attf-style="font-size: {{o.journal_id.ticket_invoice_details_size}}px; font-weight: bold; margin-top: 5px;">
+                        <t t-esc="o.l10n_latam_document_type_id.report_name"/> <t t-esc="o.name.replace(' ','')"/>
+                    </div>
+                     <div class="pos-receipt-contact__invoice" t-if="o.invoice_date" t-attf-style="font-size: {{o.journal_id.ticket_invoice_details_size}}px;">
+                        <strong>F. Emisión:</strong> <span t-field="o.invoice_date"/> <span t-if="o.create_date" t-field="o.create_date" t-options='{"format": "H:mm"}'/>
+                    </div>
+                </div>
+
+                <table class="table-pos-receipt-customer" t-attf-style="font-size: {{o.journal_id.ticket_customer_details_size}}px;">
+                     <tbody>
+                        <tr><td><strong>Cliente:</strong> <t t-esc="o.partner_id.name"/></td></tr>
+                        <tr><td><strong>DOC:</strong> <t t-esc="o.partner_id.vat"/></td></tr>
+                     </tbody>
+                </table>
+
+                <!-- FULL WIDTH TABLE HEADER -->
+                <div style="border-bottom: 2px dashed #000; margin-bottom: 5px; margin-top: 10px;"></div>
+                <div class="" t-attf-style="font-size: {{o.journal_id.ticket_table_header_size}}px;">
+                    <div class="fw-bold">Producto</div>
+                </div>
+                 <div class="d-flex justify-content-end fw-bold" t-attf-style="font-size: {{o.journal_id.ticket_table_header_size}}px;">
+                     <div style="width: 25%; text-align: center;">Cant.</div>
+                     <div style="width: 25%; text-align: right;">Unit.</div>
+                     <div style="width: 25%; text-align: right;">Total</div>
+                </div>
+                <div style="border-bottom: 2px dashed #000; margin-bottom: 5px;"></div>
+
+                <div class="invoice_tbody" t-attf-style="font-size: {{o.journal_id.ticket_table_body_size}}px;">
+                    <t t-foreach="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)" t-as="line">
+                        <t t-if="line.display_type not in ['line_note', 'line_section']">
+                            <!-- Row 1: Description -->
+                            <div class="fw-bold text-left mb-1">
+                                <span t-field="line.name"/>
+                            </div>
+                            <!-- Row 2: Numbers -->
+                            <div class="d-flex justify-content-end mb-2" style="border-bottom: 1px dotted #ccc;">
+                                <div style="width: 25%; text-align: center;">
+                                    <span t-field="line.quantity"/>
+                                </div>
+                                <div style="width: 25%; text-align: right;">
+                                    <span t-field="line.price_unit" t-options='{"widget": "float", "precision": 2}'/>
+                                </div>
+                                <div style="width: 25%; text-align: right; font-weight: bold;">
+                                    <span t-field="line.price_subtotal" t-options='{"widget": "float", "precision": 2}'/>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                </div>
+
+                 <!-- Footer Totals -->
+                <table class="table-ticket-foot mt-2" t-attf-style="font-size: {{o.journal_id.ticket_totals_size}}px;">
+                    <tr>
+                        <td><strong>Subtotal:</strong></td>
+                        <td class="text-end">
+                            <span t-field="o.amount_untaxed"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Impuestos:</strong></td>
+                        <td class="text-end">
+                            <span t-esc="o.amount_total - o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                    </tr>
+                     <tr class="o_total" style="border-top: 2px dashed #000; font-size: 1.1em;">
+                        <td><strong>Total:</strong></td>
+                        <td class="text-end">
+                            <strong t-field="o.amount_total"/>
+                        </td>
+                    </tr>
+                </table>
+                
+                 <div class="total_write mt-2" t-attf-style="font-size: {{o.journal_id.ticket_amount_text_size}}px;">
+                    Son: <t t-esc="o.amount_total_words.title()"/>
+                </div>
+
+                <div class="pos-receipt-final mt-2" t-attf-style="font-size: {{o.journal_id.ticket_footer_msg_size}}px; text-align: left;">
+                     <div t-if="o.narration" class="mb-2">
+                        <span t-field="o.narration"/>
+                     </div>
+                     <div t-if="o.company_id.additional_information">
+                        <t t-out="o.company_id.additional_information"/>
+                     </div>
+                </div>
+            </div>
+        </template>
+
+        <!-- ============================================== -->
+        <!-- DISPATCHER REPORT                              -->
+        <!-- ============================================== -->
+        <template id="report_invoice_document_tickets">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="pos_ticket_format_invoice.external_layout_invoice_ticket">
+                        
+                        <!-- DISPATCHER LOGIC -->
+                        <t t-if="o.journal_id.ticket_layout == 'modern'">
+                            <t t-call="pos_ticket_format_invoice.ticket_layout_modern"/>
+                        </t>
+                        <t t-elif="o.journal_id.ticket_layout == 'full_width'">
+                             <t t-call="pos_ticket_format_invoice.ticket_layout_full_width"/>
+                        </t>
+                        <t t-else="">
+                            <t t-call="pos_ticket_format_invoice.ticket_layout_classic"/>
+                        </t>
+
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

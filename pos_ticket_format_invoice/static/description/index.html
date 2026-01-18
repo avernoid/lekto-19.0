@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POS Ticket Format Invoice | Odoo Accounting App by Ganemo</title>
+    <meta name="description"
+        content="Print standard backend invoices in POS Ticket/Receipt format. optimized for thermal printers (80mm). Support for Amount to Text and Custom Emission Points.">
+    <meta name="keywords" content="Odoo, Accounting, POS, Ticket, Invoice, Thermal Printer, Receipt, Ganemo, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .mob-col img {
+            margin-right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'pos_ticket_format_invoice' enables printing of standard 'account.move' invoices in a
+            Continuous Feed / Receipt format suitable for Thermal Printers (e.g., 80mm).
+            It introduces a specific QWeb report and integrates with 'amount_to_text_invoice' for spelled-out totals.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). Includes multi-language support
+            (English/Spanish).</p>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">POS Ticket Format</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Thermal Printer Invoice Receipts</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Print backend invoices directly to your thermal receipt printer. Perfect for retail environments
+                    using standard invoicing logic.
+                </p>
+            </div>
+        </div>
+
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-print mr-2"></i> Thermal Printing Support</h4>
+                            <p style="text-align: justify;">Standard A4 invoices are useless on thermal printers. We
+                                provide a professionally designed <strong>Ticket Format</strong> optimized for 80mm
+                                paper rolls, saving paper and fitting your hardware.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-map-marker mr-2"></i> Custom Emission Points
+                            </h4>
+                            <p style="text-align: justify;">Manage multiple store locations easily. Configure a specific
+                                <strong>"Point of Emission"</strong> address for each Sales Journal (POS), verifying
+                                that the ticket prints the correct store address regardless of the main company info.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step Implementation Guide</p>
+                </div>
+
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Configure the appearance and behavior of your tickets per Journal:</p>
+
+                            <h5 class="mt-4 text-primary">A. General Setup</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-2" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Accounting >
+                                                Configuration > Journals</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Select your <strong>Point
+                                                of Sale / Sales Journal</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Open the new
+                                            <strong>"Ticket Config"</strong> tab.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h5 class="mt-4 text-primary">B. Advanced Customization ("Ticket Config" Tab)</h5>
+                            <p>This module adds a powerful styling engine. You can customize every aspect:</p>
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Field / Section</th>
+                                            <th>Description & Best Practices</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Ticket Layout</strong></td>
+                                            <td>
+                                                Select the visual structure of your ticket:
+                                                <ul>
+                                                    <li><strong>Classic:</strong> Compact, line-separated, standard
+                                                        retail look.</li>
+                                                    <li><strong>Modern Invoice:</strong> Minimalist, whitespace-based,
+                                                        inverted totals (White text on Black). Ideal for
+                                                        luxury/agencies.</li>
+                                                    <li><strong>Full Width:</strong> Products on their own line. Best
+                                                        for hardware stores or businesses with <strong>long product
+                                                            descriptions</strong>.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Ticket Logo</strong></td>
+                                            <td>
+                                                <i class="fa fa-star text-warning"></i> <strong>Pro Tip:</strong> Upload
+                                                a high-contrast Black & White version of your logo here.
+                                                If left empty, usage falls back to the Company Logo. Using a dedicated
+                                                ticket logo ensures crisp printing on thermal paper.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Font Configuration</strong></td>
+                                            <td>
+                                                <strong>Font Family:</strong> Choose a font that matches your brand
+                                                (e.g., Roboto, Lato, Courier New).<br>
+                                                <strong>Font Sizes:</strong> Granular control (in px) for every section
+                                                (Company Name, Table Header, Totals, Footer).
+                                                Adjust these if your printer fits more/less text per line. <em>Defaults:
+                                                    11px/12px</em>.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Workflow</h3>
+                            <p class="lead">How to print standard Invoices as Thermal Tickets:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-file-text-o text-primary mr-2"></i> 1. Create Invoice</h5>
+                                        <p class="text-muted">Process a standard Customer Invoice. Ensure it is Posted.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-print text-primary mr-2"></i> 2. Print</h5>
+                                        <p class="text-muted">Click the <strong>Print</strong> dropdown and select
+                                            <strong>"Facturas Ticket"</strong> (Invoice Ticket).
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-check-circle text-primary mr-2"></i> 3. Result</h5>
+                                        <p class="text-muted">The system generates a PDF styled according to your
+                                            Journal's configuration (Classic/Modern/Full Width) ready for your thermal
+                                            printer.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REPORT FIELD MAPPING (Technical Reference) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Mapeo de Campos</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Report Source Logic</p>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="background-color: #fff; border-radius: 10px; border: 1px solid #eee; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <p class="mb-4 text-muted">A continuación detallamos el origen de datos de cada sección del
+                                ticket para facilitar personalizaciones técnicas.</p>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered table-striped">
+                                    <thead style="background-color: #3c6dac; color: white;">
+                                        <tr>
+                                            <th>Campo en Ticket</th>
+                                            <th>Modelo / Campo Odoo</th>
+                                            <th>Notas Técnicas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Logo</strong></td>
+                                            <td><code>journal_id.ticket_logo</code> (Fallback:
+                                                <code>company_id.logo</code>)</td>
+                                            <td>Se prioriza el logo del Diario.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Empresa</strong></td>
+                                            <td><code>company_id.name</code></td>
+                                            <td>Nombre comercial.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Dirección</strong></td>
+                                            <td><code>journal_id.point_of_emission_address</code> (Fallback:
+                                                <code>company_id.street</code>)</td>
+                                            <td>Dirección de emisión configurable por diario.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Tipo Documento</strong></td>
+                                            <td><code>l10n_latam_document_type_id.report_name</code></td>
+                                            <td>Ej: "Factura", "Boleta".</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Consecutivo</strong></td>
+                                            <td><code>name</code></td>
+                                            <td>Número de factura (Ej: F001-00045).</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Cliente</strong></td>
+                                            <td><code>partner_id.name</code></td>
+                                            <td>Nombre del cliente.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Identificación (DOC)</strong></td>
+                                            <td><code>partner_id.vat</code></td>
+                                            <td>RUC / DNI del cliente.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Líneas (Producto)</strong></td>
+                                            <td><code>invoice_line_ids.name</code></td>
+                                            <td>Descripción del item.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Líneas (Precios)</strong></td>
+                                            <td><code>line.price_unit</code> / <code>line.price_subtotal</code></td>
+                                            <td>Montos sin impuestos (depende de config).</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total</strong></td>
+                                            <td><code>amount_total</code></td>
+                                            <td>Total final con impuestos.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Son (Texto)</strong></td>
+                                            <td><code>amount_total_words</code></td>
+                                            <td>Conversión automática a texto.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA / User Testing Scenarios -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Checklist</p>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-print mr-2"></i>
+                                Scenario 1: Multi-Layout Verification</h4>
+                            <div class="mt-3">
+                                <strong>Goal:</strong> Validate that different layouts are applied correctly.
+                                <ol>
+                                    <li>Go to Journal Settings > Ticket Config. Set Layout to
+                                        <strong>"Classic"</strong>. Print an invoice. Verify it has dashed separators.
+                                    </li>
+                                    <li>Change Layout to <strong>"Modern Invoice"</strong>. Print the same invoice.
+                                        Verify it is minimalist, with black/white total box.</li>
+                                    <li>Change Layout to <strong>"Full Width"</strong>. Print. Verify Product
+                                        Descriptions occupy a full dedicated line.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-font mr-2"></i> Scenario
+                                2: Dynamic Styling (Font Sizes)</h4>
+                            <div class="mt-3">
+                                <strong>Goal:</strong> Verify that font size adjustments work in real-time.
+                                <ol>
+                                    <li>In Ticket Config, change "Company Name Size" to 20px and "Body Font Size" to
+                                        14px.</li>
+                                    <li>Print an invoice.</li>
+                                    <li><strong>Result:</strong> The Company Name should be significantly larger and the
+                                        table content bigger than default.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-picture-o mr-2"></i> Scenario
+                                3:
+                                Branding & Logo Fallback</h4>
+                            <div class="mt-3">
+                                <strong>Goal:</strong> Ensure proper logo usage (Ticket Logo > Company Logo).
+                                <ol>
+                                    <li>Ensure Company has a color logo. Print ticket -> Should show Company Logo.</li>
+                                    <li>In Journal > Ticket Config, upload a specific B/W logo to the "Ticket Logo"
+                                        field.</li>
+                                    <li>Print ticket again.</li>
+                                    <li><strong>Result:</strong> The ticket should now use the specific B/W logo, while
+                                        other reports (like A4 Invoice) still use the Company Logo.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">My Product Names are cut off/wrapping badly?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Standard thermal paper width is limited
+                                (80mm).</p>
+                            <p class="small text-danger"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Switch to the <strong>"Full Width"</strong> layout in Journal Configuration. This moves
+                                the description to its own line, providing maximum space.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">The logo looks blurry on my thermal printer?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Thermal printers print in Black & White,
+                                and colored web logos often dither poorly.</p>
+                            <p class="small text-dark"><i class="fa fa-picture-o mr-1"></i> <strong>Fix:</strong> Upload
+                                a dedicated <strong>Black & White</strong> logo in the "Ticket Logo" field in Journal
+                                settings.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;">Can I change the font style?</h5>
+                            <p class="text-muted mt-2"><strong>Yes!</strong></p>
+                            <p class="small text-dark"><i class="fa fa-font mr-1"></i> <strong>Fix:</strong> Go to the
+                                "Ticket Config" tab in your Journal and select a different <strong>Font Family</strong>
+                                (e.g., Courier New for a retro look, Roboto for modern).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                            <p class="text-muted small mb-2">Fastest response time.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://wa.me/18286726150" target="_blank"
+                                    style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    https://wa.me/18286726150
+                                </a>
+                            </div>
+                            <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                            <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:leads@ganemo.com" target="_blank"
+                                    style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    leads@ganemo.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                            <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                    style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    ganemo.co/appointment/5
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Technical Support Section -->
+        <div class="row mt-5">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                <p style="color:#777783">Existing customers regarding module functionality.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                    <div class="row align-items-center">
+                        <div class="col-5 text-center">
+                            <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                alt="QR Technical Support">
+                        </div>
+                        <div class="col-7 pl-4">
+                            <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                            <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                reports.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                    style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    ayuda@ganemo.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 pb-5">
+            <div class="col-12 text-center text-muted">
+                <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                        ganemo.com</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

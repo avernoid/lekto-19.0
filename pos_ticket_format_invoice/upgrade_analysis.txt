@@ -1,0 +1,17 @@
+---Models in module 'pos_ticket_format_invoice'---
+No model changes required. The module inherits from `account.journal` adding `address_point_emission`, which is compatible with Odoo 19.
+
+---Fields in module 'pos_ticket_format_invoice'---
+No field changes required. `address_point_emission` is a standard Char field.
+
+---XML records in module 'pos_ticket_format_invoice'---
+report_invoice_document_tickets:
+- Updated method call for amount in words.
+    - OLD: `o._amount_to_text().title()`
+    - NEW: `o.amount_total_words.title()`
+    - REASON: `_amount_to_text()` was a custom method from `amount_to_text` module. The new `amount_to_text_invoice` provides a computed field `amount_total_words`.
+
+---Dependencies---
+- Removed `amount_to_text`. Replaced with `amount_to_text_invoice`.
+- Removed `print_aditional_comment`. Replaced with `account_invoice_extras`.
+- `l10n_latam_invoice_document` and others remain compatible.

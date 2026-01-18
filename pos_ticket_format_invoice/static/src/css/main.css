@@ -1,0 +1,211 @@
+.pos-receipt-print-ticket {
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: left;
+    direction: ltr;
+    color: #000000;
+    padding: 5px 5px 5px 5px;
+}
+
+.pos-receipt-print-ticket .pos-receipt-logo {
+    width: 50%;
+    display: block;
+    margin: 0.8px auto;
+}
+
+.pos-receipt-print-ticket .pos-receipt-contact {
+    text-align: center;
+}
+
+.pos-receipt-contact div {
+    margin: 3px 0px;
+}
+
+.pos-receipt-contact .pos-receipt-contact__street {}
+
+.pos-receipt-contact .pos-receipt-contact__address {}
+
+.pos-receipt-contact .pos-receipt-contact__vat {}
+
+.pos-receipt-contact .pos-receipt-contact__invoice {}
+
+.pos-receipt-print-ticket table {
+    border: none;
+}
+
+.table-pos-receipt-vendor {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-pos-receipt-vendor tbody {
+    border: none;
+}
+
+.table-pos-receipt-vendor tr {
+    border: none;
+}
+
+.table-pos-receipt-vendor td {
+    border: none;
+}
+
+.table-pos-receipt-vendor thead {
+    padding-left: 2px;
+    border-bottom: 1px dashed #666666;
+}
+
+.table-pos-receipt-vendor tbody {}
+
+.table-pos-receipt-vendor thead th:nth-child(1) {
+    width: 25%;
+}
+
+.table-pos-receipt-vendor thead th:nth-child(2) {
+    width: 2%;
+}
+
+.table-pos-receipt-vendor thead th:nth-child(3) {
+    width: 73%;
+}
+
+.table-pos-receipt-customer {
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-pos-receipt-customer tbody {
+    border: none;
+}
+
+.table-pos-receipt-customer tr {
+    border: none;
+}
+
+.table-pos-receipt-customer td {
+    border: none;
+}
+
+.table-pos-receipt-customer thead {
+    border-bottom: 1px dashed #666666;
+}
+
+.table-pos-receipt-customer tbody {
+    padding-left: 2px;
+}
+
+.table-pos-receipt-customer tbody {}
+
+.table-pos-receipt-customer thead th:nth-child(1) {
+    width: 25%;
+}
+
+.table-pos-receipt-customer thead th:nth-child(2) {
+    width: 2%;
+}
+
+.table-pos-receipt-customer thead th:nth-child(3) {
+    width: 73%;
+}
+
+.table-ticket {
+    margin-top: 2px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-ticket thead {
+    border: none;
+}
+
+.table-ticket tr {
+    border: none;
+    text-overflow: ellipsis
+}
+
+.table-ticket th {
+    border: none;
+}
+
+.table-ticket tbody {
+    border: none;
+}
+
+.table-ticket thead {
+    border-top: 1px dashed #666666;
+    border-bottom: 1px dashed #666666;
+}
+
+.table-ticket tbody {}
+
+.table-ticket thead th:nth-child(1) {
+    width: 12%;
+}
+
+.table-ticket thead th:nth-child(2) {
+    width: 50%;
+}
+
+.table-ticket thead th:nth-child(3) {
+    width: 18%;
+}
+
+.table-ticket thead th:nth-child(4) {
+    width: 20%;
+    text-align: right;
+}
+
+.invoice_tbody tr {
+    border: none;
+}
+
+.invoice_tbody tr .o_price_total {
+    text-align: right;
+}
+
+.invoice_tbody td {
+    border: none;
+}
+
+.table-ticket-foot {
+    border-collapse: collapse;
+    border-color: #fff !important;
+    width: 100%;
+    margin-top: 3px;
+}
+
+.table-ticket-foot tr {
+    border: none;
+}
+
+.table-ticket-foot tr .text-right {
+    text-align: right;
+}
+
+.table-ticket-foot td {
+    border: none;
+}
+
+.pos-receipt-print-ticket .total_write {
+    text-align: left;
+    width: 100%;
+    margin-top: 3px;
+}
+
+.pos-receipt-print-ticket .qr_code_invoice {
+    margin-top: 7px;
+    text-align: center;
+}
+
+.pos-receipt-print-ticket .pos-receipt-final {
+    margin-top: 48px;
+    text-align: inherit;
+    /* Was center, changed to inherit to respect source format */
+}

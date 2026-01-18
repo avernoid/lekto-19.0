@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_journal_view_form_inherit_pos_ticket_format_invoice" model="ir.ui.view">
+        <field name="name">account.journal.view.form.inherit.pos_ticket_format_invoice</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='advanced_settings']" position="after">
+                <page name="ticket_config" string="Ticket Config">
+                    <group>
+                        <group string="Emission Point">
+                            <field name="address_point_emission"/>
+                        </group>
+                        <group string="General Styles">
+                            <field name="ticket_layout" widget="radio" options="{'horizontal': true}"/>
+                            <field name="ticket_logo" widget="image" style="width: 90px; height: 90px;"/>
+                            <field name="ticket_font_family"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Header Configuration">
+                            <field name="ticket_company_name_size"/>
+                            <field name="ticket_company_details_size"/>
+                            <field name="ticket_invoice_details_size"/>
+                        </group>
+                        <group string="Customer Configuration">
+                            <field name="ticket_customer_details_size"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Table Item Configuration">
+                            <field name="ticket_table_header_size"/>
+                            <field name="ticket_table_body_size"/>
+                        </group>
+                        <group string="Totals &amp; Footer Configuration">
+                            <field name="ticket_totals_size"/>
+                            <field name="ticket_amount_text_size"/>
+                            <field name="ticket_footer_msg_size"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

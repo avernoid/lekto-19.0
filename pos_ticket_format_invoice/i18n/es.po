@@ -1,0 +1,92 @@
+# Spanish translation for pos_ticket_format_invoice.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pos_ticket_format_invoice\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-01-01 00:00+0000\n"
+"PO-Revision-Date: 2023-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,field_description:pos_ticket_format_invoice.field_account_journal__address_point_emission
+msgid "Point of Emission Address"
+msgstr "Dirección punto de emisión"
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__address_point_emission
+msgid "Physical address printed on the ticket for this specific Point of Sale/Journal. It overrides the Company Address. If left empty, the generic Company Address is used."
+msgstr "Dirección física impresa en el ticket para este Punto de Venta/Diario específico. Sobrescribe la Dirección de la Compañía. Si se deja vacío, se usa la Dirección de la Compañía genérica."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_logo
+msgid "Specific logo to be printed on this ticket (e.g., Black & White version for better contrast). If left empty, the standard Company Logo is used as fallback."
+msgstr "Logo específico para imprimir en este ticket (ej. versión Blanco y Negro para mejor contraste). Si se deja vacío, se usa el Logo de la Compañía estándar como respaldo."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_layout
+msgid "Defines the visual structure of the printed ticket:\n- Classic: Standard compact layout with dashed separators.\n- Modern Invoice: Minimalist, high-contrast design (Black/White headers) with boxed totals.\n- Full Width: Optimized for long product names; places the description on its own line followed by values."
+msgstr "Define la estructura visual del ticket impreso:\n- Classic: Diseño compacto estándar con separadores discontinuos.\n- Modern Invoice: Diseño minimalista de alto contraste (cabeceras Blancas/Negras) con totales en recuadro.\n- Full Width: Optimizado para nombres de productos largos; coloca la descripción en su propia línea seguida de los valores."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_font_family
+msgid "Select a custom font for the ticket to match your branding. If left empty, it uses the printer default font (inherit)."
+msgstr "Seleccione una fuente personalizada para el ticket que coincida con su marca. Si se deja vacío, usa la fuente predeterminada de la impresora (heredada)."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_company_name_size
+msgid "Font size in pixels (px) for the Company Name at the top. Increase/Decrease to fit your paper width."
+msgstr "Tamaño de fuente en píxeles (px) para el Nombre de la Compañía en la parte superior. Aumente/Disminuya para ajustar al ancho del papel."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_company_details_size
+msgid "Font size in pixels (px) for the Company Address, Phone, and Email lines."
+msgstr "Tamaño de fuente en píxeles (px) para las líneas de Dirección, Teléfono y Correo Electrónico de la Compañía."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_invoice_details_size
+msgid "Font size in pixels (px) for the Invoice Number, Date, and Issuer lines."
+msgstr "Tamaño de fuente en píxeles (px) para las líneas de Número de Factura, Fecha y Emisor."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_table_header_size
+msgid "Font size in pixels (px) for the product table column titles (Qty, Description, Price, Total)."
+msgstr "Tamaño de fuente en píxeles (px) para los títulos de columna de la tabla de productos (Cant, Descripción, Precio, Total)."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_table_body_size
+msgid "Font size in pixels (px) for the actual product lines (name, quantity, price)."
+msgstr "Tamaño de fuente en píxeles (px) para las líneas de productos reales (nombre, cantidad, precio)."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_customer_details_size
+msgid "Font size in pixels (px) for the Customer Name, VAT, and Contact info block."
+msgstr "Tamaño de fuente en píxeles (px) para el bloque de Nombre del Cliente, RUC/IVA e información de contacto."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_totals_size
+msgid "Font size in pixels (px) for the Subtotal, Tax, and Grand Total block."
+msgstr "Tamaño de fuente en píxeles (px) para el bloque de Subtotal, Impuesto y Gran Total."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_amount_text_size
+msgid "Font size in pixels (px) for the \"Amount in Words\" text (Son...)."
+msgstr "Tamaño de fuente en píxeles (px) para el texto \"Son...\" (Monto en Letras)."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.model.fields,help:pos_ticket_format_invoice.field_account_journal__ticket_footer_msg_size
+msgid "Font size in pixels (px) for the Terms & Conditions (Narration) and Company Additional Info at the bottom."
+msgstr "Tamaño de fuente en píxeles (px) para los Términos y Condiciones (Narración) e Información Adicional de la Compañía en la parte inferior."
+
+#. module: pos_ticket_format_invoice
+#: model:ir.actions.report,name:pos_ticket_format_invoice.account_invoices_tickets
+msgid "Facturas Ticket"
+msgstr "Facturas Ticket"
+
