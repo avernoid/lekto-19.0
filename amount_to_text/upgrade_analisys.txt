@@ -1,0 +1,36 @@
+# Upgrade Analysis: Refactoring Amount to Text (2026-01-17)
+
+## 1. Justificación del Cambio (Rationale)
+El módulo original `amount_to_text` funcionaba como una utilidad aislada que generaba un texto en formato estricto ("CIENTO VEINTE Y 00/100 SOLES") a través de una función `_amount_to_text`. Sin embargo, esto presentaba problemas de integración y rigidez:
+- **Falta de Integración Nativa**: Los reportes estándar de Odoo (y muchos de terceros) usan el campo nativo `amount_total_words` de `account.move`. El módulo original requerida modificar los reportes para llamar a su función específica.
+- **Rigidez**: No permitía configurar variantes (mayúsculas/minúsculas, idioma forzado) sin tocar código.
+- **Redundancia**: Incluía librerías (`num2words` en requirements.txt) que ya son parte del núcleo de Odoo.
+
+## 2. Cambios Arquitectónicos
+Se ha realizado una refactorización completa para pasar de un enfoque de "Utilidad Externa" a "Extensión Nativa".
+
+### Antes (Legacy)
+- Método `_amount_to_text` en `account.move`.
+- Uso exclusivo si se llamaba explícitamente en el código.
+- Configuración nula.
+
+### Ahora (V 19.0.2.0.0)
+- **Override de Campo Nativo**: Se hereda y sobreescribe `_compute_amount_total_words` en `account.move`.
+- **Configuración por Diario**: Se extiende `account.journal` para permitir configuración granular.
+- **Compatibilidad Híbrida**: Permite elegir entre el formato Nativo de Odoo y el formato Custom (00/100).
+
+## 3. Nuevas Funcionalidades
+1.  **Selection Field (`amount_text_format`)**: 
+    - `Native`: Usa la lógica estándar de Odoo.
+    - `Custom`: Usa la lógica estricta "Y 00/100".
+2.  **Toggle Uppercase (`amount_text_in_caps`)**: Fuerza mayúsculas globalmente tras la generación del texto.
+3.  **Language Override (`amount_text_lang_id`)**: Campo en el Diario para forzar un idioma (ej. Facturas de exportación en Inglés) independientemente del idioma del cliente.
+
+## 4. Detalles Técnicos para Desarrolladores
+- **Extensibilidad**: El override de `_compute_amount_total_words` filtra explícitamente por `format == 'custom'`. Cualquier otro valor cae al `super()`, permitiendo que otros módulos agreguen formatos adicionales sin conflictos.
+- **Traducciones**: Se reemplazaron diccionarios hardcodeados por `_(' AND ')`, permitiendo gestión de traducciones desde la UI de Odoo (`ir.translation`).
+- **Limpieza**: Se eliminó `requirements.txt`.
+
+## 5. Impacto en la Migración
+- No se requiere migración de datos (nuevos campos tienen default seguro).
+- **Acción Requerida**: Ir a los Diarios de Ventas y configurar el formato deseado en la pestaña "Advanced Settings".

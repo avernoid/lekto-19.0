@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* amount_to_text
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-17 00:00+0000\n"
+"PO-Revision-Date: 2026-01-17 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: amount_to_text
+#: model:ir.model,name:amount_to_text.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: amount_to_text
+#: model:ir.model,name:amount_to_text.model_account_move
+msgid "Journal Entry"
+msgstr "Asiento Contable"
+
+#. module: amount_to_text
+#: model:ir.model.fields,field_description:amount_to_text.field_account_journal__amount_text_format
+msgid "Amount Text Format"
+msgstr "Formato de Texto del Monto"
+
+#. module: amount_to_text
+#: model:ir.model.fields,field_description:amount_to_text.field_account_journal__amount_text_in_caps
+msgid "Amount in Uppercase"
+msgstr "Monto en Mayúsculas"
+
+#. module: amount_to_text
+#: model:ir.model.fields,field_description:amount_to_text.field_account_journal__amount_text_lang_id
+msgid "Amount Text Language"
+msgstr "Idioma del Texto del Monto"
+
+#. module: amount_to_text
+#: model:ir.model.fields.selection,name:amount_to_text.selection__account_journal__amount_text_format__native
+msgid "Odoo Native"
+msgstr "Nativo de Odoo"
+
+#. module: amount_to_text
+#: model:ir.model.fields.selection,name:amount_to_text.selection__account_journal__amount_text_format__custom
+msgid "Custom (00/100)"
+msgstr "Personalizado (00/100)"
+
+#. module: amount_to_text
+#: model:ir.model.fields,help:amount_to_text.field_account_journal__amount_text_format
+msgid "Choose the method to convert the invoice amount to text. 'Native' uses the standard Odoo format. 'Custom (00/100)' enforces strict legal formatting often required in Latin America."
+msgstr "Elija el método para convertir el monto de la factura a texto. 'Nativo' usa el formato estándar de Odoo. 'Personalizado (00/100)' impone un formato legal estricto requerido a menudo en Latinoamérica."
+
+#. module: amount_to_text
+#: model:ir.model.fields,help:amount_to_text.field_account_journal__amount_text_in_caps
+msgid "Enable this to force the 'Amount in Words' to be displayed in specific UPPERCASE letters (e.g., 'ONE HUNDRED')."
+msgstr "Habilite esto para forzar que el 'Monto en Letras' se muestre en MAYÚSCULAS específicas (ej. 'CIEN')."
+
+#. module: amount_to_text
+#: model:ir.model.fields,help:amount_to_text.field_account_journal__amount_text_lang_id
+msgid "Override the language used for the text amount. Useful if you need to issue invoices in a specific language (e.g., English) regardless of the customer's language setting. If empty, Odoo standard behavior (Customer Language) applies."
+msgstr "Anular el idioma utilizado para el monto en texto. Útil si necesita emitir facturas en un idioma específico (ej. Inglés) independientemente de la configuración de idioma del cliente. Si está vacío, se aplica el comportamiento estándar de Odoo (Idioma del Cliente)."
+
+#. module: amount_to_text
+#: code:addons/amount_to_text/models/account_move.py:0
+#, python-format
+msgid " AND "
+msgstr " Y "
