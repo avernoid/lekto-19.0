@@ -1,17 +1,13 @@
 {
     'name': 'Use Classic Format To Print Invoices',
     'version': '19.0.1.0.1',
-    'author': 'Ganemo',
-    'website': 'https://www.ganemo.com',
-    'summary': '''
-    Add an additional, classic-style invoice format.
-    ''',
-    'icon': '/classic_format_invoice/static/description/icon.png',
-    'images': ['static/description/banner.png'],
-    'Description': '''
-    Add a classic format for invoices, which is requested by many users
-    ''',
     'category': 'Accounting',
+    'summary': '''Add an additional, classic-style invoice format.''',
+    'description': '''Add a classic format for invoices, which is requested by many users''',
+    'author': 'Ganemo',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': 'https://www.ganemo.co',
     'depends': [
         'account',
         'uom',
@@ -21,19 +17,23 @@
         'account_invoice_extras',
         'l10n_latam_base',
     ],
-    'assets': {
-        'web.report_assets_common': [
-            'classic_format_invoice/static/src/css/main.css',
-        ]},
     'data': [
         'views/account_journal_views.xml',
         'reports/classic_invoice_report.xml',
         'reports/classic_invoice_template.xml',
         'reports/modern_template.xml',
     ],
+    'assets': {
+        'web.report_assets_common': [
+            'classic_format_invoice/static/src/css/main.css',
+        ],
+    },
+    'icon': '/classic_format_invoice/static/description/icon.png',
+    'images': ['static/description/banner.png'],
+    'license': 'OPL-1',
     'installable': True,
     'auto_install': False,
-    'license': 'Other proprietary',
+    'application': False,
     'currency': 'USD',
     'price': 45.00,
     'module_type': 'official'
