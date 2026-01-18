@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_journal_form_inherit_classic_format" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.classic.format</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='advanced_settings']" position="after">
+                <page string="Classic Format Config" name="classic_format_config">
+                    <group>
+                        <group string="Design Selection">
+                            <field name="cfi_template" widget="radio"/>
+                        </group>
+                    </group>
+                    <group string="Shared Settings">
+                        <field name="cfi_show_product_images"/>
+                    </group>
+                    <group invisible="cfi_template != 'classic'">
+                        <group string="Classic Settings">
+                             <field name="cfi_round_qty_to_int"/>
+                             <field name="cfi_logo" widget="image" style="width: 120px;"/>
+                             <field name="cfi_font_family"/>
+                        </group>
+                        <group string="Font Sizes (px)">
+                             <field name="cfi_company_name_size"/>
+                             <field name="cfi_company_details_size"/>
+                             <field name="cfi_invoice_details_size"/>
+                             <field name="cfi_customer_details_size"/>
+                             <field name="cfi_table_header_size"/>
+                             <field name="cfi_table_body_size"/>
+                             <field name="cfi_totals_size"/>
+                             <field name="cfi_footer_msg_size"/>
+                        </group>
+                    </group>
+                    <group invisible="cfi_template != 'modern'">
+                        <group string="Modern Settings">
+                            <field name="cfi_show_qr"/>
+                            <field name="cfi_primary_color" widget="color"/>
+                            <field name="cfi_show_watermark"/>
+                            <field name="cfi_show_banks"/>
+                            <field name="cfi_show_signature"/>
+                        </group>
+                        <!-- We can reuse some settings from classic or duplicate fields if needed.
+                             For now, let's assume Modern uses standard fonts. -->
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

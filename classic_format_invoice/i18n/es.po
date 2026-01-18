@@ -1,0 +1,141 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* classic_format_invoice
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-18 00:00+0000\n"
+"PO-Revision-Date: 2025-01-18 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: classic_format_invoice
+#: model:ir.ui.view,arch_db:classic_format_invoice.view_account_journal_form_inherit_classic_format
+msgid "Classic Format Config"
+msgstr "Conf. Formato Clásico"
+
+#. module: classic_format_invoice
+#: model:ir.ui.view,arch_db:classic_format_invoice.view_account_journal_form_inherit_classic_format
+msgid "Visual Settings"
+msgstr "Ajustes Visuales"
+
+#. module: classic_format_invoice
+#: model:ir.ui.view,arch_db:classic_format_invoice.view_account_journal_form_inherit_classic_format
+msgid "Font Sizes (px)"
+msgstr "Tamaños de Fuente (px)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_round_qty_to_int
+msgid "Round Quantity to Integer (Classic)"
+msgstr "Redondear Cantidad a Entero (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_round_qty_to_int
+msgid "If checked, the quantity is printed without decimals."
+msgstr "Si está marcado, la cantidad se imprime sin decimales."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_logo
+msgid "Classic Invoice Logo"
+msgstr "Logo Factura Clásica"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_logo
+msgid "Identify a specific logo for this invoice format. If not set, Company Logo is used."
+msgstr "Identifique un logo específico para este formato. Si no se configura, se usa el logo de la Compañía."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_font_family
+msgid "Font Family (Classic)"
+msgstr "Familia de Fuente (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_font_family
+msgid "Select a custom font for the invoice to match your branding. If left empty, it uses the default font."
+msgstr "Seleccione una fuente personalizada para la factura. Si se deja vacío, usa la fuente predeterminada."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_company_name_size
+msgid "Company Name Size (Classic)"
+msgstr "Tamaño Nombre Compañía (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_company_name_size
+msgid "Font size in pixels (px) for the Company Name."
+msgstr "Tamaño de fuente en pixeles (px) para el Nombre de la Compañía."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_company_details_size
+msgid "Company Details Size (Classic)"
+msgstr "Tamaño Detalles Compañía (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_company_details_size
+msgid "Font size in pixels (px) for address/phone."
+msgstr "Tamaño de fuente en pixeles (px) para la dirección/teléfono."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_invoice_details_size
+msgid "Invoice Details Size (Classic)"
+msgstr "Tamaño Detalles Factura (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_invoice_details_size
+msgid "Font size in pixels (px) for RUC, Document Name headers."
+msgstr "Tamaño de fuente en pixeles (px) para los encabezados de RUC y Nombre de Documento."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_customer_details_size
+msgid "Customer Details Size (Classic)"
+msgstr "Tamaño Detalles Cliente (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_customer_details_size
+msgid "Font size in pixels (px) for Customer data."
+msgstr "Tamaño de fuente en pixeles (px) para los datos del Cliente."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_table_header_size
+msgid "Table Header Size (Classic)"
+msgstr "Tamaño Cabecera Tabla (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_table_header_size
+msgid "Font size in pixels (px) for table headers."
+msgstr "Tamaño de fuente en pixeles (px) para las cabeceras de la tabla."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_table_body_size
+msgid "Table Body Size (Classic)"
+msgstr "Tamaño Cuerpo Tabla (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_table_body_size
+msgid "Font size in pixels (px) for table content."
+msgstr "Tamaño de fuente en pixeles (px) para el contenido de la tabla."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_totals_size
+msgid "Totals Size (Classic)"
+msgstr "Tamaño Totales (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_totals_size
+msgid "Font size in pixels (px) for totals area."
+msgstr "Tamaño de fuente en pixeles (px) para el área de totales."
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,field_description:classic_format_invoice.field_account_journal__cfi_footer_msg_size
+msgid "Footer Message Size (Classic)"
+msgstr "Tamaño Mensaje Pie (Clásico)"
+
+#. module: classic_format_invoice
+#: model:ir.model.fields,help:classic_format_invoice.field_account_journal__cfi_footer_msg_size
+msgid "Font size in pixels (px) for terms and additional info."
+msgstr "Tamaño de fuente en pixeles (px) para términos e información adicional."

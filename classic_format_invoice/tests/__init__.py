@@ -1,0 +1,1 @@
+from . import test_classic_format_invoice

@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Format Invoice | Odoo Accounting App by Ganemo</title>
+    <meta name="description"
+        content="Print classic style invoices in Odoo. Customizable PDF report with traditional layout, font controls, and detailed breakdown.">
+    <meta name="keywords"
+        content="Odoo, Accounting, Invoice, Report, PDF, Classic Format, Ganemo, Layout, Customization, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'classic_format_invoice' provides a classic PDF report layout for invoices.
+            Features journal-specific configuration for fonts, sizes, and logos.
+            Ideal for regions requiring traditional invoice formatting.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Classic Format</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Invoice PDF Report</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Professional, detailed, and customizable invoice reports with a traditional grid layout.
+                </p>
+            </div>
+        </div>
+
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-pencil mr-2"></i> Custom Visuals</h4>
+                            <p style="text-align: justify;">Control exactly how your invoice looks. Configure
+                                <strong>Fonts</strong>
+                                and <strong>Font Sizes</strong> for every section (Header, Body, Tables) directly from
+                                the Journal settings.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-text-o mr-2"></i> Classic Layout</h4>
+                            <p style="text-align: justify;">Delivers a structured, grid-based report format that
+                                includes explicit
+                                details like <strong>Amount in Words</strong>, client tax IDs, and payment terms tables.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Comprehensive Guide</p>
+                </div>
+
+                <!-- Step 1: Journal Configuration -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1. Journal
+                                Configuration</h3>
+                            <p class="lead">Configure the visual style for your invoices directly in the Journal
+                                settings.</p>
+
+                            <hr>
+                            <h5 style="color: #555; font-weight: 600;">A. Access Settings</h5>
+                            <ol>
+                                <li>Navigate to <strong>Accounting > Configuration > Journals</strong>.</li>
+                                <li>Select the Journal you use for invoicing (e.g., "Customer Invoices").</li>
+                                <li>Click on the <strong>"Classic Format Config"</strong> tab.</li>
+                            </ol>
+
+                            <hr>
+                            <h5 style="color: #555; font-weight: 600;">B. Select Design Template</h5>
+                            <p>Choose between two distinct styles using the <strong>Invoice Design</strong> field:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card bg-light border-0">
+                                        <div class="card-body">
+                                            <h6 class="font-weight-bold">1. Classic (Official)</h6>
+                                            <p class="small text-muted mb-0">A traditional, black-and-white grid layout.
+                                                Ideal for official documents requiring a serious, bureaucratic look.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card bg-white border text-white"
+                                        style="background-color: #791d97 !important;">
+                                        <div class="card-body">
+                                            <h6 class="font-weight-bold text-white">2. Modern (Professional)</h6>
+                                            <p class="small mb-0 text-white-50">A fresh, colorful design with improved
+                                                readability, watermarks, and QR code support. Recommended for best
+                                                impression.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <h5 style="color: #555; font-weight: 600;">C. Visual Configuration</h5>
+
+                            <!-- Classic Options -->
+                            <div class="alert alert-secondary mt-3">
+                                <strong>If "Classic" is selected:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li><strong>Logo:</strong> Upload a specific logo (recommended width: 120px) to
+                                        appear on the invoice.</li>
+                                    <li><strong>Font Family:</strong> Choose the typeface (e.g., Roboto, Arial) to match
+                                        your brand.</li>
+                                    <li><strong>Font Sizes:</strong> Fine-tune the size (in pixels) for every section
+                                        (Header, Body, Totals, Footer) to fit your paper perfectly.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Modern Options -->
+                            <div class="alert alert-primary mt-3"
+                                style="background-color: #e3f2fd; color: #0c5460; border-color: #b8daff;">
+                                <strong>If "Modern" is selected:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li><strong>Primary Color:</strong> Set your brand's main color (Hex code, e.g.,
+                                        #00A09D). This will tint borders, headers, and totals.</li>
+                                    <li><strong>Show QR Code:</strong> Enable to display the QR code block (relies on
+                                        active electronic invoicing).</li>
+                                    <li><strong>Show Status Watermark:</strong> Adds a large, transparent "DRAFT",
+                                        "PAID", or "CANCELLED" text diagonally across the page.</li>
+                                    <li><strong>Show Bank Accounts:</strong> Displays a structured block with bank logos
+                                        and numbers in the footer.</li>
+                                    <li><strong>Show Signature Area:</strong> Adds "Authorized Signature" and "Received
+                                        By" lines at the bottom.</li>
+                                    <li><strong>Show Product Images:</strong> Includes a thumbnail of the product in the
+                                        invoice lines.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Usage -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-print mr-2"></i> 2. Printing
+                                Invoices</h3>
+                            <p class="lead">How to generate the PDF report.</p>
+                            <ol>
+                                <li>Go to <strong>Accounting > Customers > Invoices</strong>.</li>
+                                <li>Open any invoice (Draft or Posted).</li>
+                                <li>Click on the <strong>Print</strong> button (or Action menu).</li>
+                                <li>Select <strong>"Facturas Clasicas"</strong> (Classic Invoice).</li>
+                            </ol>
+                            <p class="text-muted small"><i class="fa fa-info-circle"></i> The report will automatically
+                                apply the layout (Classic/Modern) configured in the Journal associated with that
+                                invoice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Field Mapping (Data Sources) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:32px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#555">Field Mapping</span>
+                    </h2>
+                    <p class="text-center text-muted">Understand where the data comes from to fill your report
+                        correctly.</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover bg-white" style="font-size: 0.95rem;">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="width: 30%;">Report Field / Section</th>
+                                        <th style="width: 35%;">Odoo Source (Data)</th>
+                                        <th style="width: 35%;">Configuration / Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Company Logo</strong></td>
+                                        <td><code>Journal > Classic Config > Logo</code> OR <code>Company > Logo</code>
+                                        </td>
+                                        <td>Prioritizes the specific logo set in the Journal. Falls back to Company
+                                            logo.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Company Details</strong> (Address, Phone, etc.)</td>
+                                        <td><code>Settings > Companies > Address</code></td>
+                                        <td>Ensure your Main Company address is complete (Street, City, VAT).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Client Name & Address</strong></td>
+                                        <td><code>Contact Form (Partner)</code></td>
+                                        <td>Uses the Invoice Address of the customer.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Shipping Address</strong> (Dirección de Entrega)</td>
+                                        <td><code>Invoice > Delivery Address</code></td>
+                                        <td>Only appears if the Delivery Address is different from the Invoice Address.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>RUC / VAT / NIT</strong></td>
+                                        <td><code>Contact Form > VAT</code></td>
+                                        <td>The Tax ID of the customer.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Salesperson</strong> (Vendedor)</td>
+                                        <td><code>Invoice > "Salesperson"</code></td>
+                                        <td>Shows the name of the user assigned to the invoice.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Order Ref</strong> (Orden de Compra/Venta)</td>
+                                        <td><code>Invoice > "Ref"</code> or <code>So Source</code></td>
+                                        <td>Usually the PO number provided by client or the Sales Order origin.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Guide Number</strong> (Guía de Remisión)</td>
+                                        <td><code>Invoice > Carrier Ref</code> (or custom field)</td>
+                                        <td>Commonly used for delivery notes in localized versions.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Payment Terms</strong> (Condición de Pago)</td>
+                                        <td><code>Invoice > Payment Terms > Description</code></td>
+                                        <td>Displays the note/description of the selected payment term.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bank Accounts</strong></td>
+                                        <td><code>Company > Bank Accounts</code></td>
+                                        <td>Lists all bank accounts linked to the company (filterable in Modern mode).
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Amount in Words</strong> (Son:)</td>
+                                        <td><code>Automatic Calculation</code></td>
+                                        <td>Automatically generated based on the total amount and currency language.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>QR Code</strong></td>
+                                        <td><code>Localization / External</code></td>
+                                        <td>The module displays the QR code <strong>only if Odoo generates it</strong>
+                                            (e.g., via Electronic Invoicing localization).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA / User Testing Scenarios -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:32px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#555">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="text-center text-muted">Validate the module functionality with these enterprise-grade
+                        tests.</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped bg-white">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Scenario</th>
+                                        <th>Steps</th>
+                                        <th>Expected Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>QA-01</strong></td>
+                                        <td><strong>Classic Layout Generation</strong></td>
+                                        <td>
+                                            1. Set Journal to "Classic".<br>
+                                            2. Define custom font sizes (e.g., Header: 15px).<br>
+                                            3. Print an invoice.
+                                        </td>
+                                        <td>PDF header text is 15px. Layout is black/white grid.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>QA-02</strong></td>
+                                        <td><strong>Modern Layout & Color</strong></td>
+                                        <td>
+                                            1. Set Journal to "Modern".<br>
+                                            2. Set Primary Color to Red (#FF0000).<br>
+                                            3. Print an invoice.
+                                        </td>
+                                        <td>PDF shows Red borders/headers. Layout uses clean modern style.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>QA-03</strong></td>
+                                        <td><strong>Watermark Status</strong></td>
+                                        <td>
+                                            1. Enable "Show Status Watermark".<br>
+                                            2. Print a Draft Invoice.<br>
+                                            3. Post/Pay it and print again.
+                                        </td>
+                                        <td>First PDF has "BORRADOR" watermark. Second has "PAGADO".</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>QA-04</strong></td>
+                                        <td><strong>Tax Breakdown</strong></td>
+                                        <td>
+                                            1. Create invoice with 2 taxes (e.g., VAT 18%, Perc 2%).<br>
+                                            2. Use Modern Layout.<br>
+                                            3. Print.
+                                        </td>
+                                        <td>Footer shows a clear table: Tax Name | Base | Amount.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>QA-05</strong></td>
+                                        <td><strong>Internationalization</strong></td>
+                                        <td>
+                                            1. Set Customer Language to Spanish.<br>
+                                            2. Print invoice.<br>
+                                            3. Change to English.<br>
+                                            4. Print invoice.
+                                        </td>
+                                        <td>Labels (Factura, Fecha, Total) appear in the correct language. Dates follow
+                                            locale format (DD/MM/YYYY vs MM/DD/YYYY).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ & Troubleshooting -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:32px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#555">FAQ & Troubleshooting</span>
+                    </h2>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="h-100 p-4 border rounded bg-white">
+                            <h5 style="color: #3c6dac; font-weight: bold;">Q: My logo looks too big/small.</h5>
+                            <p class="text-muted"><strong>A:</strong> The module automatically optimizes the logo
+                                display. In "Classic" mode, it fits the header box. In "Modern" mode, it is constrained
+                                to a max-width of 120px to ensure alignment. Upload a high-quality square or landscape
+                                image for best results.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="h-100 p-4 border rounded bg-white">
+                            <h5 style="color: #3c6dac; font-weight: bold;">Q: Dates are in YYYY-MM-DD format. How to
+                                change?</h5>
+                            <p class="text-muted"><strong>A:</strong> The report now respects the
+                                <strong>Language/Locale</strong> settings of the Customer. If the customer is set to
+                                "Spanish (Peru)", it will show "dd/mm/yyyy". Verify the customer's language setting in
+                                their contact form.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="h-100 p-4 border rounded bg-white">
+                            <h5 style="color: #3c6dac; font-weight: bold;">Q: How do I remove the "Draft" watermark?
+                            </h5>
+                            <p class="text-muted"><strong>A:</strong> Go to the Journal configuration, "Modern Settings"
+                                group, and uncheck the <strong>"Show Status Watermark"</strong> option.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="h-100 p-4 border rounded bg-white">
+                            <h5 style="color: #3c6dac; font-weight: bold;">Q: QR Code is missing.</h5>
+                            <p class="text-muted"><strong>A:</strong> Note that this module <strong>displays</strong>
+                                the QR code but does not <strong>generate</strong> it from scratch if your localization
+                                (e.g., Electronic Invoicing) doesn't provide it. It relies on Odoo's native QR
+                                generation logic or your localization module. If the QR field is empty in Odoo, it will
+                                be empty in the report.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Support Section -->
+        <div class="row mt-5">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                <p style="color:#777783">Existing customers regarding module functionality.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                    <div class="row align-items-center">
+                        <div class="col-5 text-center">
+                            <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                alt="QR Technical Support">
+                        </div>
+                        <div class="col-7 pl-4">
+                            <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                            <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                reports.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                    style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    ayuda@ganemo.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 pb-5">
+            <div class="col-12 text-center text-muted">
+                <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                        us</a>.</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

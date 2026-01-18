@@ -1,0 +1,484 @@
+.print-container-invoice-classic-header {
+    width: 100%;
+    height: auto;
+    color: black;
+}
+
+.table-print-invoice-classic-header {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.client_data {
+    width: 100%;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0px;
+    box-sizing: border-box;
+}
+
+.client_data_1,
+.client_data_2 {
+    display: table-cell;
+    border: none;
+    font-size: 12px;
+    padding: 0px 5px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.client_data_1 {
+    width: 70%;
+}
+
+.client_data_2 {
+    width: 30%;
+}
+
+.client_data_1 .row .label {
+    width: 15%;
+    padding-left: 3px;
+}
+
+.client_data_2 .row .label {
+    width: 40%;
+    padding-left: 3px;
+}
+
+.client_data_1 .row .separator,
+.client_data_2 .row .separator {
+    width: 2%;
+    text-align: left;
+}
+
+.client_data_1 .row .data {
+    padding-left: 3px;
+    padding-right: 6px;
+    width: 83%;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.client_data_2 .row .data {
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 58%;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.info {
+    display: block;
+    margin-top: 0px;
+    width: 80%;
+}
+
+.ruc {
+    width: 100%;
+    margin: 0;
+    padding: 4px 2px;
+    box-sizing: border-box;
+    vertical-align: top;
+    border: 2px solid #D7D7D7;
+    border-radius: 10px;
+    background-color: #EEEEEE;
+    text-align: center;
+    font-size: 21px;
+}
+
+.letter_reportname_1 {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.letter_reportname_2 {
+    font-weight: bold;
+    letter-spacing: -0.07em;
+}
+
+.letter_reportname_3 {
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+.table-container-invoice-classic-header-client {
+    width: 100%;
+    height: 150px;
+    color: black;
+    padding: 5px 5px 5px 5px;
+    font-size: 13px;
+}
+
+.table-invoice-classic-header-client {
+    margin-top: 5px;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-color: white;
+    width: 100%;
+}
+
+
+.table-container-invoice-classic {
+    width: 100%;
+    padding: 5px 5px 5px 5px;
+}
+
+.table-invoice-classic {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-invoice-classic thead {
+    width: 100%;
+    background: #EEEEEE;
+    border: 2px solid #D7D7D7;
+    border-radius: 10px;
+}
+
+.table-info {
+    width: 100%;
+    border-collapse: separate;
+    background: #EEEEEE;
+    border: 2px solid #D7D7D7;
+    border-radius: 5px;
+    font-size: 18px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+.table-container-invoice-classic-footer {
+    margin-top: 5px;
+    height: 190px;
+    padding: 5px 5px 5px 5px;
+
+}
+
+.table_data_product_cfi {
+    width: 100%;
+    border-collapse: collapse;
+    border: hidden;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+}
+
+.table_data_product_cfi tr:nth-child(odd) {
+    background: #EEEEEE;
+}
+
+.table_data_product_cfi tr:nth-child(even) {
+    background: white;
+}
+
+/* Removed legacy fixed column widths to match XML headers */
+.table_data_product_cfi tr td {
+    padding: 2px 4px;
+}
+
+.par_lines_extra_cfi {
+    width: 100%;
+    border-collapse: collapse;
+    border: hidden;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+}
+
+.par_lines_extra_cfi tr:nth-child(odd) {
+    background: #EEEEEE;
+}
+
+.par_lines_extra_cfi tr:nth-child(even) {
+    background: white;
+}
+
+.impar_lines_extra_cfi {
+    width: 100%;
+    border-collapse: collapse;
+    border: hidden;
+    border-right-color: transparent;
+}
+
+.impar_lines_extra_cfi tr:nth-child(odd) {
+    background: white;
+}
+
+.impar_lines_extra_cfi tr:nth-child(even) {
+    background: #EEEEEE;
+}
+
+.border_detr_ret {
+    border: 2px solid #D7D7D7;
+    width: 350px;
+    border-radius: 10px;
+}
+
+.table_detr_ret {
+    width: 100%;
+    font-size: 15px;
+}
+
+.detraction_retention_1 {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right: 1px solid #D7D7D7;
+    font-size: 12px;
+    padding-right: 2px;
+}
+
+.detraction_retention_2 {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: 1px solid #D7D7D7;
+    border-right: 1px solid #D7D7D7;
+    font-size: 12px;
+    padding-right: 2px;
+}
+
+.detraction_retention_3 {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: 1px solid #D7D7D7;
+    border-right: 1px solid #D7D7D7;
+    font-size: 12px;
+    padding-right: 2px;
+}
+
+.detraction_retention_4 {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left: 1px solid #D7D7D7;
+    border-right-color: transparent;
+    font-size: 12px;
+    padding-right: 2px;
+}
+
+.detraction_retention_content_1 {
+    border-top: 1px solid #D7D7D7;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right: 1px solid #D7D7D7;
+    font-size: 12px;
+    padding-right: 2px;
+    text-align: right;
+}
+
+.detraction_retention_content_2 {
+    border-top: 1px solid #D7D7D7;
+    border-bottom-color: transparent;
+    border-left-color: 1px solid #D7D7D7;
+    border-right: 1px solid #D7D7D7;
+    font-size: 12px;
+    padding-right: 2px;
+    text-align: right;
+}
+
+.detraction_retention_content_3 {
+    border-top: 1px solid #D7D7D7;
+    border-bottom-color: transparent;
+    border-left-color: 1px solid #D7D7D7;
+    border-right: 1px solid #D7D7D7;
+    font-size: 12px;
+    padding-right: 2px;
+    text-align: right;
+}
+
+.detraction_retention_content_4 {
+    border-top: 1px solid #D7D7D7;
+    border-bottom-color: transparent;
+    border-left-color: 1px solid #D7D7D7;
+    border-right-color: transparent;
+    font-size: 12px;
+    padding-right: 2px;
+    text-align: right;
+}
+
+.info_group_total {
+    display: block;
+    float: right;
+    width: 35%;
+}
+
+.table_group_total {
+    border-collapse: separate;
+    border: 2px solid #D7D7D7;
+    width: 300px;
+    border-radius: 10px;
+    font-size: 15px;
+    vertical-align: top;
+}
+
+.total {
+    text-align: right;
+    margin-right: 8px;
+    height: 100%;
+    margin-top: -15px;
+}
+
+.info_company {
+    display: block;
+    border: 2px solid #D7D7D7;
+    border-radius: 10px;
+    height: 200px;
+    padding: 4px;
+    float: right;
+    margin-top: 20px;
+}
+
+.company_qr_text {
+    display: block;
+    clear: left;
+    width: 100%;
+}
+
+.qr_company {
+    display: block;
+    width: 140px;
+    border: 2px solid #D7D7D7;
+    border-radius: 10px;
+    height: 140px;
+    float: left;
+    margin-top: 20px;
+}
+
+.text_company {
+    display: block;
+    width: 700px;
+    border: 2px solid #D7D7D7;
+    border-radius: 10px;
+    padding: 4px;
+    float: right;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    column-count: 2;
+    column-gap: 10px;
+    min-height: 140px;
+}
+
+.additional-info {
+    line-height: 1;
+}
+
+.table-info {
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+}
+
+/* Removed rigid nth-child width rules to allow dynamic columns via XML styles */
+.table-info th,
+.table_data_product_cfi td {
+    box-sizing: border-box;
+    padding: 2px 4px;
+}
+
+.ruc .letter_reportname_1,
+.ruc .letter_reportname_2,
+.ruc .letter_reportname_3 {
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 1.05;
+    font-weight: bold;
+    max-width: 100%;
+    letter-spacing: 0;
+}
+
+.ruc .letter_reportname_1 {
+    font-size: 0.85em;
+}
+
+.ruc .letter_reportname_3 {
+    font-size: 0.70em;
+    letter-spacing: -0.02em;
+}
+
+.ruc .letter_reportname_2 {
+    font-size: 0.70em;
+    letter-spacing: -0.02em;
+}
+
+/* --- NEW CLASSES FOR REFACTORING --- */
+
+.cfi-header-col-logo {
+    width: 20%;
+    border: hidden;
+    text-align: left;
+    vertical-align: top;
+}
+
+.cfi-logo-container {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+}
+
+.cfi-logo-img {
+    max-width: 94%;
+    max-height: 60%;
+    object-fit: contain;
+}
+
+.cfi-header-col-info {
+    width: 50%;
+    vertical-align: top;
+    border: hidden;
+}
+
+.cfi-header-col-ruc {
+    width: 30%;
+    vertical-align: top;
+    border: hidden;
+}
+
+.cfi-page-container {
+    margin-top: 0px;
+    padding-top: 5px;
+}
+
+.cfi-payment-terms-container {
+    display: block;
+    float: left;
+    width: 55%;
+}
+
+.cfi-total-write {
+    clear: left;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.cfi-terms-note {
+    clear: left;
+    text-align: justify;
+}
+
+.cfi-group-total-cell {
+    vertical-align: top;
+}
+
+.cfi-narration-container {
+    display: block;
+    float: left;
+    text-align: left;
+    width: 100%;
+}
+
+.cfi-extra-info-table {
+    width: 100%;
+    margin-top: 20px;
+    border: hidden;
+}
+
+.cfi-extra-info-content {
+    display: block;
+    clear: left;
+    width: 100%;
+}
+
+.cfi-clear-block {
+    display: block;
+    clear: left;
+    width: 100%;
+}
+
+.cfi-clear-left {
+    clear: left;
+}
