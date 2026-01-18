@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_invoice_document_inherit_print_aditional_comment" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[@id='payment_term']" position="after">
+            <div id="additional_information" t-if="o.company_id and o.company_id.additional_information">
+                <span class="text-center" t-out="o.company_id.additional_information"/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

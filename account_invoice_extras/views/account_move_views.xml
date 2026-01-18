@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_move_form_inherit_account_invoice_extras" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit.account.invoice.extras</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_origin']" position="after">
+                <field name="carrier_ref_number"/>
+            </xpath>
+            <xpath expr="//group[@name='sale_info_group']" position="inside">
+                <field name="aditional_document_reference"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
