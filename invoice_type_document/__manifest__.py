@@ -27,7 +27,7 @@ facilitating the identification of documents during reconciliation.
     'currency': 'USD',
     'price': 25.00,
     'module_type': 'official',
-    'icon': '/invoice_type_document/static/description/icon.svg',
-    'images': ['static/description/banner.svg'],
+    'icon': '/invoice_type_document/static/description/icon.png',
+    'images': ['static/description/banner.png'],
 
 }
