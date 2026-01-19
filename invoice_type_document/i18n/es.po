@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* invoice_type_document
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-19 00:00+0000\n"
+"PO-Revision-Date: 2026-01-19 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es\n"
+
+#. module: invoice_type_document
+#: model:ir.model.fields,field_description:invoice_type_document.field_account_move__serie_correlative
+#: model:ir.model.fields,field_description:invoice_type_document.field_account_move_line__serie_correlative
+msgid "Series-Correlative"
+msgstr "Serie-Correlativo"
+
+#. module: invoice_type_document
+#: model:ir.model.fields,help:invoice_type_document.field_account_move__serie_correlative
+#: model:ir.model.fields,help:invoice_type_document.field_account_move_line__serie_correlative
+msgid "Official document number (Series-Number) propagated from the invoice."
+msgstr "Número de documento oficial (Serie-Correlativo) propagado desde la factura."
+
+#. module: invoice_type_document
+#: model:ir.model.fields,field_description:invoice_type_document.field_account_move_line__serie_correlative_is_readonly
+msgid "Is Editable"
+msgstr "Es editable"
+
+#. module: invoice_type_document
+#: model:ir.model.fields,help:invoice_type_document.field_account_move_line__serie_correlative_is_readonly
+msgid "Technical field to determine if the Series-Correlative can be edited."
+msgstr "Campo técnico para determinar si el Serie-Correlativo puede ser editado."

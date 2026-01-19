@@ -1,0 +1,38 @@
+---Models in module 'invoice_type_document'---
+---Fields in module 'invoice_type_document'---
+---XML records in module 'invoice_type_document'---
+UPD ir.ui.view: invoice_type_document.account_move_line_tree_view_inherit_invoice_type_document  --> invoice_type_document.account_move_line_view_tree_inherit_invoice_type_document
+UPD ir.ui.view: invoice_type_document.account_move_form_view_inherit_invoice_type_doc   --> invoice_type_document.account_move_view_form_inherit_invoice_type_document
+----------------------------------------------------------------
+DEPENDS [ account ]
+model:  account_move_line
+field:  serie_correlative,
+        move_type,
+        serie_correlative_is_readonly,
+xml_id: 
+        account.view_move_line_tree
+
+model:  account_move
+field:  serie_correlative,
+xml_id: 
+        account.view_move_form
+
+model:  account_payment
+field: 
+xml_id: 
+
+DEPENDS [ l10n_latam_invoice_document ]
+model: 
+field:
+xml_id: 
+
+----------------------------------------------------------------
+MIGRATION TO V19.0
+- Updated manifest version to 19.0.1.0.1.
+- Reviewed python models. Standard API usage detected. No critical refactoring needed for `api.depends`.
+- Reviewed XML views. `tree` tag is not explicitly used (xpath uses `list` or field injection), which is compatible with V19.
+- Updated Tests (`tests/test_invoice_type_move.py`):
+    - [FIXED] Removed invalid usage of `company_id` in `account.account` search.
+    - [FIXED] Replaced hardcoded IDs with dynamic records.
+    - [FIXED] Corrected `test_vendor_bill_serie_logic` to use a Purchase Journal for `in_invoice` creation, avoiding ValidationError.
+    - [ADDED] Test case for new logic: `l10n_latam_document_number` priority over `ref`.
