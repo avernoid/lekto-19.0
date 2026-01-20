@@ -1,0 +1,13 @@
+--- Upgrade Analysis v18 to v19 ---
+1. Manifest: Updated version to 19.0.1.0.0.
+2. models/pos_order.py:
+    - Removed 'export_as_json' (obsolete).
+    - Added '_load_pos_data_fields' to include 'account_move' in frontend data.
+    - Updated 'generate_pos_ui_report_action_value' error logging.
+3. models/pos_config.py:
+    - Added '_load_pos_data_fields' to ensure custom configuration fields are loaded in the frontend.
+4. static/src/overrides/models/models.js:
+    - Updated 'PosStore' import path to '@point_of_sale/app/services/pos_store'.
+5. Tests: Added backend and frontend tests to ensure stability in v19.
+    - tests/test_pos_ticket_base.py (Backend logic).
+    - tests/test_frontend.py & static/tests/tours/pos_ticket_base_tour.js (Frontend UI verification).

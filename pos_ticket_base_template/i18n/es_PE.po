@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pos_ticket_base_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-19 19:00+0000\n"
+"PO-Revision-Date: 2026-01-19 19:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pos_ticket_base_template
+#: model:ir.model.fields,field_description:pos_ticket_base_template.field_pos_config__automatic_download_electronic_invoice
+#: model:ir.model.fields,field_description:pos_ticket_base_template.field_res_config_settings__pos_automatic_download_electronic_invoice
+msgid "Automatic Electronic Invoice Download"
+msgstr "Descarga automática factura electrónica"
+
+#. module: pos_ticket_base_template
+#: model:ir.model.fields,help:pos_ticket_base_template.field_pos_config__automatic_download_electronic_invoice
+#: model:ir.model.fields,help:pos_ticket_base_template.field_res_config_settings__pos_automatic_download_electronic_invoice
+msgid "If enabled, the browser will automatically initiate a download of the electronic invoice PDF once the POS order is validated."
+msgstr "Si está activado, el navegador iniciará automáticamente una descarga del PDF de la factura electrónica una vez que se valide el pedido del POS."
+
+#. module: pos_ticket_base_template
+#: model:ir.model.fields,field_description:pos_ticket_base_template.field_pos_config__automatic_print_electronic_invoice
+#: model:ir.model.fields,field_description:pos_ticket_base_template.field_res_config_settings__pos_automatic_print_electronic_invoice
+msgid "Automatic Electronic Invoice Printing"
+msgstr "Impresión automática factura electrónica"
+
+#. module: pos_ticket_base_template
+#: model:ir.model.fields,help:pos_ticket_base_template.field_pos_config__automatic_print_electronic_invoice
+#: model:ir.model.fields,help:pos_ticket_base_template.field_res_config_settings__pos_automatic_print_electronic_invoice
+msgid "If enabled, the system will automatically trigger the print dialog for the electronic invoice PDF immediately after the POS order is validated."
+msgstr "Si está activado, el sistema abrirá automáticamente el cuadro de diálogo de impresión para el PDF de la factura electrónica inmediatamente después de que se valide el pedido del POS."
+
+#. module: pos_ticket_base_template
+#: model:ir.model,name:pos_ticket_base_template.model_res_config_settings
+msgid "Config Settings"
+msgstr "Ajustes de configuración"
+
+#. module: pos_ticket_base_template
+#: model:ir.model,name:pos_ticket_base_template.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuración de Punto de Venta"
+
+#. module: pos_ticket_base_template
+#: model:ir.model,name:pos_ticket_base_template.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Pedidos de Punto de Venta"
