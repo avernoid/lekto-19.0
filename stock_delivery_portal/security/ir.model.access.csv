@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_delivery_state_user,stock.delivery.state.user,model_stock_delivery_state,base.group_user,1,1,1,1
+access_stock_delivery_state_portal,stock.delivery.state.portal,model_stock_delivery_state,base.group_portal,1,0,0,0

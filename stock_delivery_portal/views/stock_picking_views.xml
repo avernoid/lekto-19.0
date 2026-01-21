@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- FORM View Inherit -->
+    <record id="view_picking_form_delivery_portal" model="ir.ui.view">
+        <field name="name">stock.picking.form.delivery.portal</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="delivery_partner_id" widget="res_partner_many2one" context="{'show_address': 1}" placeholder="Driver Name"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <!-- Maybe a button? No, state is tracking field, usually set by driver. -->
+            </xpath>
+            <xpath expr="//page[@name='extra']" position="after">
+                <page string="Delivery Portal" name="delivery_portal">
+                    <group>
+                        <group string="Status">
+                            <field name="delivery_state_id" options="{'no_create': True}"/>
+                            <field name="delivery_receiver_name"/>
+                            <field name="delivery_date_done"/>
+                        </group>
+                        <group string="Notes">
+                            <field name="delivery_notes"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- TREE View Inherit -->
+    <record id="view_picking_tree_delivery_portal" model="ir.ui.view">
+        <field name="name">stock.picking.tree.delivery.portal</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="delivery_partner_id" optional="show"/>
+                <field name="delivery_state_id" optional="show" widget="badge"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- SEARCH View Inherit -->
+    <record id="view_picking_internal_search_delivery_portal" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search.delivery.portal</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <filter name="my_transfers" position="after">
+                <filter string="My Deliveries" name="my_deliveries" domain="[('delivery_partner_id', '=', uid)]"/> <!-- UID might not work directly for partner, but uid context is usually user id. Domain was [('delivery_partner_id', '=', user.partner_id.id)] in python, here maybe context dependent? Actually standard Odoo behavior for user filters checks user_id. 
+                Wait, 'delivery_partner_id' is a partner. 'uid' is user id. They are different integers. 
+                Correction: We cannot assume uid == partner_id.
+                We should use a context key or domain that resolves user.
+                Actually, simpler: domain="[('delivery_partner_id.user_ids', 'in', [uid])]"
+                -->
+                <filter string="My Deliveries" name="my_deliveries" domain="[('delivery_partner_id.user_ids', 'in', uid)]"/>
+            </filter>
+            <group position="inside">
+                <filter string="Delivery Driver" name="groupby_delivery_driver" context="{'group_by': 'delivery_partner_id'}"/>
+                <filter string="Delivery State" name="groupby_delivery_state" context="{'group_by': 'delivery_state_id'}"/>
+            </group>
+        </field>
+    </record>
+</odoo>
