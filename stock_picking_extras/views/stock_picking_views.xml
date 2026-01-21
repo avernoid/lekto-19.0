@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_extras" model="ir.ui.view">
+        <field name="name">stock.picking.form.extras</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Add Logistics Counts group to the Additional Info tab -->
+            <xpath expr="//page[@name='extra']/group" position="inside">
+                <group string="Logistics Counts" name="logistics_counts">
+                    <field name="total_packages"/>
+                    <field name="total_bundles"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="vpicktree_extras" model="ir.ui.view">
+        <field name="name">stock.picking.tree.extras</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="total_packages" optional="show"/>
+                <field name="total_bundles" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>
