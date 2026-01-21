@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_inherit_select_invoice_format_pos" model="ir.ui.view">
+        <field name="name">res.config.settings.form.view.inherit.select_invoice_format_pos</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='automatic_print_electronic_invoice']" position="before">
+                <setting id="invoice_report_id">
+                    <field name="pos_invoice_report_id"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

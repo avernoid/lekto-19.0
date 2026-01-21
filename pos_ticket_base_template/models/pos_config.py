@@ -17,7 +17,7 @@ class PosConfig(models.Model):
     def _load_pos_data_fields(self, config_id):
         params = super()._load_pos_data_fields(config_id)
         fields_to_add = ['trusted_config_ids', 'automatic_print_electronic_invoice', 'automatic_download_electronic_invoice']
-        if isinstance(params, list) and params:
+        if params:
             for field in fields_to_add:
                 if field not in params:
                     params.append(field)

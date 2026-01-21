@@ -1,0 +1,20 @@
+---Models in module 'select_invoice_format_pos'---
+- pos.config: Added 'invoice_report_id' Many2one field.
+- res.config.settings: Added 'pos_invoice_report_id' related field.
+- pos.session: Overrides '_load_pos_data_models' to include 'ir.actions.report'.
+- ir.actions.report: Inherits 'pos.load.mixin' and overrides '_load_pos_data_fields' to include 'type'.
+
+---Fields in module 'select_invoice_format_pos'---
+- pos.config.invoice_report_id
+- res.config.settings.pos_invoice_report_id
+
+---XML records in module 'select_invoice_format_pos'---
+- views/res_config_settings_views.xml: UI for selecting the invoice format.
+
+---Migration Odoo 18 to 19---
+- Updated manifest version to 19.0.1.0.0.
+- Added '_load_pos_data_fields' to 'pos.config' to explicitly load 'invoice_report_id' in the frontend. (Fixed: added missing 'api' import in 'pos_config.py').
+- Updated JS import for 'PosStore' from '@point_of_sale/app/store/pos_store' to '@point_of_sale/app/services/pos_store' to align with Odoo 19/18 standard paths.
+- Verified that 'pos.load.mixin' and '_load_pos_data_models' are still the standard way to load data in Odoo 19.
+- Verified JavaScript assets and Owl component overrides.
+- No structural changes needed in Odoo 19 for this specific functionality as it already uses the Odoo 18+ data loading mechanism.
