@@ -1,6 +1,6 @@
 {
     'name': 'Stock Delivery Portal Backend',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'summary': 'Backend logic for delivery driver portal',
     'description': """
         Backend module for managing delivery states and driver assignments.
@@ -10,7 +10,7 @@
         - Automated notifications (Email, WhatsApp)
     """,
     'category': 'Inventory/Delivery',
-    'author': 'Antigravity',
+    'author': 'Ganemo',
     'depends': ['stock', 'mail'],
     'data': [
         'security/ir.model.access.csv',
