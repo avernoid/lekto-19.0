@@ -15,6 +15,9 @@
             <xpath expr="//page[@name='extra']" position="after">
                 <page string="Delivery Portal" name="delivery_portal">
                     <group>
+                        <group string="Contact Information">
+                            <field name="delivery_phone"/>
+                        </group>
                         <group string="Status">
                             <field name="delivery_state_id" options="{'no_create': True}"/>
                             <field name="delivery_receiver_name"/>

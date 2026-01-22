@@ -8,12 +8,9 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Delivery Portal" name="delivery_portal">
-                    <group string="Contact Information" name="contact_info">
-                        <field name="delivery_phone"/>
-                    </group>
                     <group string="Portal Settings" name="portal_settings">
-                        <field name="delivery_portal_show_items"/>
-                        <field name="allow_driver_contact"/>
+                        <field name="delivery_portal_show_items" help="Show product items in the delivery portal"/>
+                        <field name="allow_driver_contact" help="Allow drivers to contact recipients via call, SMS, WhatsApp"/>
                     </group>
                 </page>
             </xpath>
