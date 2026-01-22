@@ -1,0 +1,1011 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- SCREEN 1: LIST / HOME -->
+    <template id="delivery_app_home" name="Delivery Driver App">
+        <t t-call="portal_app_launcher.portal_app_layout">
+            <t t-set="manifest_url" t-value="'/portal_app/manifest.webmanifest?app_mode=delivery'"/>
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=delivery"/>
+                <meta name="theme-color" content="#714B67"/>
+                <style>
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    .btn:active { transform: scale(0.98); transition: transform 0.05s; }
+                    
+                    @media all and (display-mode: standalone) {
+                        .pwa-only-hidden { display: none !important; }
+                    }
+                </style>
+                <script>
+                    if ('serviceWorker' in navigator) {
+                        window.addEventListener('load', function() {
+                            navigator.serviceWorker.register('/service-worker.js');
+                        });
+                    }
+                    
+                    // Robust Install Pattern
+                    let deferredPrompt;
+                    window.addEventListener('beforeinstallprompt', (e) => {
+                        e.preventDefault();
+                        deferredPrompt = e;
+                        const btn = document.getElementById('pwaInstallBtn');
+                        if(btn) btn.style.display = 'block';
+                    });
+
+                    document.addEventListener('click', (e) => {
+                         if (e.target.closest('#pwaInstallBtn')) {
+                             if (deferredPrompt) {
+                                 deferredPrompt.prompt();
+                                 deferredPrompt.userChoice.then((choiceResult) => {
+                                     if (choiceResult.outcome === 'accepted') {
+                                         document.getElementById('pwaInstallBtn').style.display = 'none';
+                                     }
+                                     deferredPrompt = null;
+                                 });
+                             }
+                         }
+                    });
+                </script>
+            </t>
+            <div class="container py-4">
+                <!-- Header -->
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                     <div class="d-flex align-items-center">
+                        <a href="/my/home" class="btn btn-light rounded-circle shadow-sm me-3 pwa-only-hidden">
+                            <i class="fa fa-arrow-left"/>
+                        </a>
+                        <div>
+                            <h4 class="m-0 text-white">Deliveries</h4>
+                        </div>
+                     </div>
+                     <div class="d-flex gap-2">
+                         <!-- PWA Install Button -->
+                         <button id="pwaInstallBtn" class="btn btn-sm btn-outline-light rounded-pill" style="display:none;">
+                            <i class="fa fa-download me-1"/> Install
+                         </button>
+                     </div>
+                </div>
+
+                <!-- Toolbar Second Level: Search, History, Clear Filters -->
+                <div class="d-flex gap-2 mb-3 flex-wrap align-items-center">
+                    <!-- Search/Scanner Button -->
+                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill" onclick="toggleDeliverySearchBar()">
+                        <i class="fa fa-search me-1"/> Search
+                    </button>
+                    <!-- History Toggle -->
+                    <a t-attf-href="/my/delivery?{{ '&amp;history=0' if history else '&amp;history=1' }}" 
+                       t-attf-class="btn btn-sm rounded-pill {{ 'btn-light text-primary' if history else 'btn-outline-light' }}">
+                        <i class="fa fa-clock-o me-1"/> <t t-esc="'To Do' if history else 'History'"/>
+                    </a>
+                    <!-- Clear Filters Button (visible only when filters are active) -->
+                    <a href="/my/delivery" t-if="filter_state or filter_type or search" class="btn btn-sm btn-outline-danger rounded-pill">
+                        <i class="fa fa-times me-1"/> Clear
+                    </a>
+                </div>
+
+                <!-- Active Filters Display -->
+                <div class="mb-3" t-if="filter_state or filter_type or search">
+                    <div class="d-flex align-items-center flex-wrap gap-1">
+                        <t t-if="search">
+                             <span class="badge bg-light text-primary border rounded-pill">
+                                Search: <t t-esc="search"/>
+                                <a href="/my/delivery" class="text-danger ms-1"><i class="fa fa-times"/></a>
+                             </span>
+                        </t>
+                        <t t-if="filter_state">
+                             <span class="badge bg-info text-dark border rounded-pill">
+                                Status: <t t-esc="request.env['stock.delivery.state'].sudo().browse(filter_state).name"/>
+                                <a t-attf-href="/my/delivery?{{ '&amp;filter_type=%s' % filter_type if filter_type else '' }}{{ '&amp;search=%s' % search if search else '' }}" class="text-dark ms-1"><i class="fa fa-times"/></a>
+                             </span>
+                        </t>
+                        <t t-if="filter_type">
+                             <span class="badge bg-warning text-dark border rounded-pill">
+                                 Type: <t t-esc="request.env['stock.picking.type'].sudo().browse(filter_type).name"/>
+                                <a t-attf-href="/my/delivery?{{ '&amp;filter_state=%s' % filter_state if filter_state else '' }}{{ '&amp;search=%s' % search if search else '' }}" class="text-dark ms-1"><i class="fa fa-times"/></a>
+                             </span>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- List Content -->
+                <div class="row">
+                    <t t-foreach="pickings" t-as="picking">
+                        <div class="col-12 mb-3">
+                            <div class="card shadow-sm border-0 rounded-3">
+                                <div class="card-body">
+                                    <!-- Header: Picking Name & Status -->
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h5 class="card-title text-primary mb-0"><t t-esc="picking.name"/></h5>
+                                            <t t-if="picking.delivery_state_id.is_result_state">
+                                                 <span class="badge bg-success text-white border mt-1">
+                                                    <t t-esc="picking.delivery_state_id.name"/>
+                                                 </span>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="badge bg-light text-dark border mt-1">
+                                                   <t t-esc="picking.delivery_state_id.name or picking.state"/>
+                                                </span>
+                                            </t>
+                                        </div>
+                                        
+                                        <!-- Contact Buttons (Call, SMS, WhatsApp) -->
+                                        <t t-if="picking.sudo().picking_type_id.allow_driver_contact and not picking.delivery_state_id.is_result_state and picking.delivery_phone">
+                                            <div class="d-flex gap-1">
+                                                <a t-attf-href="tel:{{picking.delivery_phone}}" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="Call">
+                                                    <i class="fa fa-phone text-success"/>
+                                                </a>
+                                                <a t-attf-href="sms:{{picking.delivery_phone}}" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="SMS">
+                                                    <i class="fa fa-comment text-primary"/>
+                                                </a>
+                                                <a t-attf-href="https://api.whatsapp.com/send?phone={{picking.delivery_phone}}" target="_blank" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="WhatsApp">
+                                                    <i class="fa fa-whatsapp" style="color: #25D366;"/>
+                                                </a>
+                                            </div>
+                                        </t>
+                                        
+                                        <!-- Map Button (Aligned right) -->
+                                        <button type="button"
+                                           t-if="picking.partner_id.partner_latitude and picking.partner_id.partner_longitude"
+                                           t-attf-onclick="openMapSelector('{{picking.partner_id.partner_latitude}}', '{{picking.partner_id.partner_longitude}}', '{{picking.partner_id.contact_address}}')"
+                                           class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" 
+                                           style="width: 36px; height: 36px;">
+                                            <i class="fa fa-map-marker text-dark"/>
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- Body: Customer Info -->
+                                    <div class="mb-3">
+                                        <div class="fw-bold"><i class="fa fa-user me-1 text-muted"/> <t t-esc="picking.partner_id.name"/></div>
+                                        <div class="text-muted small ms-3"><t t-esc="picking.partner_id.contact_address" /></div>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center gap-2 mt-2">
+                                        <!-- Alert if Delayed -->
+                                        <t t-if="picking.scheduled_date and picking.scheduled_date &lt; datetime.datetime.now() and picking.state not in ['done', 'cancel']">
+                                            <div class="alert alert-danger py-1 px-3 mb-0 d-flex align-items-center text-nowrap" style="height: 38px;">
+                                                <i class="fa fa-clock-o me-2"/> <strong>Delayed</strong>
+                                            </div>
+                                        </t>
+                                        
+                                        <!-- Footer: Button -->
+                                        <a t-att-href="'/my/delivery/%s' % picking.id" class="btn btn-outline-primary rounded-pill flex-grow-1">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    
+                    <!-- Empty State -->
+                    <t t-if="not pickings">
+                         <div class="col-12 text-center text-white mt-5">
+                            <i class="fa fa-truck fa-4x mb-3 opacity-50"/>
+                            <h3>No deliveries found</h3>
+                            <p class="text-white-50">Try identifying the filters or search.</p>
+                        </div>
+                    </t>
+
+                    <!-- Pager -->
+                    <div class="col-12 d-flex justify-content-center mt-3" t-if="pager['page_count'] > 1">
+                        <t t-call="portal.pager"/>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Removed independent floating scanner button -->
+
+             <!-- Search Bar Overlay (Hidden by default) -->
+            <div id="deliverySearchBar" class="fixed-bottom bg-white border-top shadow p-3" style="bottom: 0px; display: none; z-index: 1060; border-radius: 15px 15px 0 0;">
+                <form action="/my/delivery" method="get">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="fa fa-search text-muted"/></span>
+                        <input type="text" name="search" class="form-control bg-light border-0" placeholder="Search name, barcode..." t-att-value="search"/>
+                        <button type="submit" class="btn btn-primary rounded-end-pill px-4">Go</button>
+                    </div>
+                    <!-- Preserve Mode -->
+                    <input type="hidden" name="filter_state" t-att-value="filter_state"/>
+                    <input type="hidden" name="filter_type" t-att-value="filter_type"/>
+                </form>
+            </div>
+
+            <!-- Sticky Bottom Navigation Bar (2 Levels) -->
+             <div class="fixed-bottom bg-white border-top shadow-lg" style="z-index: 1040;">
+                 <!-- Level 1: Actions -->
+                 <div class="px-3 pt-3 pb-2">
+                    <button class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm" onclick="openScannerModal()">
+                        <i class="fa fa-qrcode me-2"/> Scan Delivery
+                    </button>
+                 </div>
+                 
+                 <!-- Level 2: Navigation -->
+                 <div class="d-flex align-items-center gap-2 overflow-auto no-scrollbar px-3 pb-3" style="white-space: nowrap;">
+                     
+                     <!-- Search Toggle -->
+                     <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-primary" onclick="window.toggleDeliverySearchBar()">
+                        <i class="fa fa-search"/>
+                     </button>
+                     <div class="vr mx-1"></div>
+
+                     <!-- Filters -->
+                     <!-- Operation Type -->
+                     <div class="dropup" t-if="available_types">
+                         <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleDeliveryFilterMenu('filter_type_menu')">
+                            <i class="fa fa-filter"/> 
+                            <t t-if="filter_type">
+                                <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['stock.picking.type'].sudo().browse(filter_type).name"/></span>
+                            </t>
+                         </button>
+                         <ul id="filter_type_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 140px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                            <li><a class="dropdown-item" t-attf-href="/my/delivery?{{ '&amp;filter_state=%s' % filter_state if filter_state else '' }}{{ '&amp;search=%s' % search if search else '' }}">All Types</a></li>
+                            <t t-foreach="available_types" t-as="t">
+                                <li><a t-attf-class="dropdown-item {{ 'active' if filter_type == t.id else '' }}" t-attf-href="/my/delivery?filter_type={{t.id}}{{ '&amp;filter_state=%s' % filter_state if filter_state else '' }}{{ '&amp;search=%s' % search if search else '' }}"><t t-esc="t.name"/></a></li>
+                            </t>
+                         </ul>
+                     </div>
+
+                     <!-- Delivery State -->
+                     <div class="dropup" t-if="available_states">
+                         <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleDeliveryFilterMenu('filter_state_menu')">
+                            <i class="fa fa-tasks"/> 
+                            <t t-if="filter_state">
+                                <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['stock.delivery.state'].sudo().browse(filter_state).name"/></span>
+                            </t>
+                         </button>
+                         <ul id="filter_state_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 140px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                            <li><a class="dropdown-item" t-attf-href="/my/delivery?{{ '&amp;filter_type=%s' % filter_type if filter_type else '' }}{{ '&amp;search=%s' % search if search else '' }}">All Statuses</a></li>
+                            <t t-foreach="available_states" t-as="s">
+                                <li><a t-attf-class="dropdown-item {{ 'active' if filter_state == s.id else '' }}" t-attf-href="/my/delivery?filter_state={{s.id}}{{ '&amp;filter_type=%s' % filter_type if filter_type else '' }}{{ '&amp;search=%s' % search if search else '' }}"><t t-esc="s.name"/></a></li>
+                            </t>
+                         </ul>
+                     </div>
+                     
+                     <!-- Menu Hamburguesa (User Menu) -->
+                     <div class="dropup ms-auto">
+                         <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0" type="button" onclick="toggleDeliveryFilterMenu('userMenu')">
+                            <i class="fa fa-bars"/>
+                         </button>
+                         <ul id="userMenu" class="dropdown-menu dropdown-menu-end shadow" style="display: none; position: fixed !important; bottom: 80px !important; right: 10px !important; z-index: 1050 !important; min-width: 180px;">
+                            <li>
+                                <span class="dropdown-item-text fw-bold small text-muted">
+                                    <i class="fa fa-user me-1"/> <t t-esc="request.env.user.partner_id.name or request.env.user.name"/>
+                                </span>
+                            </li>
+                            <li><hr class="dropdown-divider"/></li>
+                            <li>
+                                <a href="/my/home" class="dropdown-item">
+                                    <i class="fa fa-home me-2"/> Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/web/session/logout?redirect=/" class="dropdown-item text-danger">
+                                    <i class="fa fa-power-off me-2"/> Logout
+                                </a>
+                            </li>
+                         </ul>
+                     </div>
+                 </div>
+                 <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>
+             </div>
+             
+             <!-- Spacer for Fixed Bottom (approx 160px for 2 rows) -->
+             <div style="height: 180px;"></div>
+             
+             <!-- Scanner Modal -->
+             <div class="modal fade" id="scannerModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Scan Delivery</h5>
+                            <button type="button" class="btn-close" onclick="closeScannerModal()"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <div id="reader" style="width: 100%;"></div>
+                            <div class="mt-3">
+                                <label>Or type Manually:</label>
+                                <div class="input-group">
+                                    <input type="text" id="manualBarcode" class="form-control" placeholder="Barcode / Name"/>
+                                    <button class="btn btn-primary" onclick="searchBarcode()">Go</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script src="/stock_delivery_portal/static/src/js/delivery_portal.js"></script>
+            
+            <!-- Async Load html5-qrcode for better performance (non-blocking) -->
+            <script>
+                // Load scanner library asynchronously AFTER page renders
+                window.addEventListener('DOMContentLoaded', function() {
+                    var script = document.createElement('script');
+                    script.src = 'https://unpkg.com/html5-qrcode@2.3.8/esm/html5-qrcode.min.js';
+                    script.async = true;
+                    script.onerror = function() {
+                        console.warn('html5-qrcode CDN failed. Scanner will show error on first use.');
+                    };
+                    document.body.appendChild(script);
+                });
+            </script>
+            
+            <div style="height: 180px;"></div> <!-- Spacer -->
+        </t>
+    </template>
+
+    <!-- SCREEN 2: DETAIL -->
+    <template id="delivery_app_detail" name="Delivery Detail">
+        <t t-call="portal_app_launcher.portal_app_layout">
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=delivery"/>
+                <meta name="theme-color" content="#714B67"/>
+                <style>
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    .btn:active { transform: scale(0.98); transition: transform 0.05s; }
+                </style>
+            </t>
+            <div class="container py-4">
+                <!-- Header -->
+                <div class="d-flex align-items-center mb-3">
+                    <a href="/my/delivery" class="btn btn-light rounded-circle shadow-sm me-3">
+                        <i class="fa fa-arrow-left"/>
+                    </a>
+                    <h4 class="m-0 text-white">Delivery Detail</h4>
+                </div>
+
+                <!-- Customer Card -->
+                <div class="card shadow-sm border-0 rounded-3 mb-3">
+                    <div class="card-body">
+                         <div class="d-flex justify-content-between">
+                            <h5><t t-esc="picking.partner_id.name"/></h5>
+                            <span class="badge bg-info text-dark align-self-start"><t t-esc="picking.delivery_state_id.name"/></span>
+                         </div>
+                         <p class="text-muted small mb-3"><t t-esc="picking.partner_id.contact_address"/></p>
+                         
+                         <!-- Contact Buttons (Call, SMS, WhatsApp) -->
+                         <t t-if="picking.sudo().picking_type_id.allow_driver_contact and not picking.delivery_state_id.is_result_state and picking.delivery_phone">
+                             <div class="d-flex gap-2 mb-3">
+                                 <a t-attf-href="tel:{{picking.delivery_phone}}" class="btn btn-sm btn-outline-success rounded-pill" title="Call">
+                                     <i class="fa fa-phone me-1"/> Call
+                                 </a>
+                                 <a t-attf-href="sms:{{picking.delivery_phone}}" class="btn btn-sm btn-outline-primary rounded-pill" title="SMS">
+                                     <i class="fa fa-comment me-1"/> SMS
+                                 </a>
+                                 <a t-attf-href="https://api.whatsapp.com/send?phone={{picking.delivery_phone}}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill" title="WhatsApp">
+                                     <i class="fa fa-whatsapp me-1"/> WhatsApp
+                                 </a>
+                             </div>
+                         </t>
+                         
+                         <!-- Map Navigation -->
+                         <div class="d-grid">
+                            <button type="button" 
+                                t-if="picking.partner_id.partner_latitude and picking.partner_id.partner_longitude"
+                                t-attf-onclick="openMapSelector('{{picking.partner_id.partner_latitude}}', '{{picking.partner_id.partner_longitude}}', '{{picking.partner_id.contact_address}}')"
+                                class="btn btn-primary btn-sm rounded-pill">
+                                <i class="fa fa-map-marker me-1"/> Navigate with Maps
+                            </button>
+                            <div t-else="" class="alert alert-warning text-center py-2 mb-0">
+                                <small><i class="fa fa-exclamation-triangle me-1"/> No location available</small>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+
+                <!-- Summary Grid -->
+                <div class="card shadow-sm border-0 rounded-3 mb-3">
+                     <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted uppercase">Summary</h6>
+                        <div class="row g-2 small">
+                            <div class="col-6">
+                                <div class="text-muted">Type</div>
+                                <div class="fw-bold"><t t-esc="picking.picking_type_id.name"/></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted">ID</div>
+                                <div class="fw-bold text-break"><t t-esc="picking.name"/></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted">Scheduled</div>
+                                <div class="fw-bold"><span t-field="picking.scheduled_date" t-options='{"format": "dd MMM, HH:mm"}'/></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted">Packages</div>
+                                <div class="fw-bold"><t t-esc="picking.packages_count"/></div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-muted">Bundles</div>
+                                <div class="fw-bold"><t t-esc="picking.total_bundles"/></div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Items -->
+                <t t-if="picking.sudo().picking_type_id.delivery_portal_show_items">
+                    <h5 class="text-white mb-2">Items</h5>
+                    <div class="card shadow-sm border-0 rounded-3 mb-3">
+                        <ul class="list-group list-group-flush rounded-3">
+                            <t t-foreach="picking.move_line_ids" t-as="item">
+                                <li class="list-group-item d-flex align-items-center p-3">
+                                    <!-- Product Image (Placeholder or Actual) -->
+                                    <div class="bg-light rounded p-1 me-3" style="width: 50px; height: 50px; flex-shrink:0;">
+                                         <img t-att-src="image_data_uri(item.product_id.image_128)" class="w-100 h-100 object-fit-cover" t-if="item.product_id.image_128"/>
+                                         <i class="fa fa-box text-muted w-100 h-100 d-flex align-items-center justify-content-center" t-else=""/>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="fw-bold"><t t-esc="item.product_id.name"/></div>
+                                        <div class="small text-muted">
+                                            Qty: <span class="fw-bold text-dark"><t t-esc="item.quantity"/></span> <t t-esc="item.product_uom_id.name"/>
+                                        </div>
+                                        <t t-if="item.result_package_id">
+                                            <div class="small text-primary"><i class="fa fa-cube me-1"/> <t t-esc="item.result_package_id.name"/></div>
+                                        </t>
+                                    </div>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+
+                <!-- Evidence Preview (Only if data exists) -->
+                <div class="row g-2 mb-3" t-if="evidence_photos or picking.signature">
+                    <div class="col-6" t-if="evidence_photos">
+                        <div class="card shadow-sm h-100 rounded-3 text-center p-2">
+                             <div class="text-muted small mb-2"><i class="fa fa-camera"/> Photo</div>
+                             <t t-foreach="evidence_photos" t-as="photo">
+                                  <img t-att-src="image_data_uri(photo.datas)" class="img-fluid rounded mb-1" style="max-height: 80px; object-fit: contain;"/>
+                             </t>
+                        </div>
+                    </div>
+                    <div class="col-6" t-if="picking.signature">
+                        <div class="card shadow-sm h-100 rounded-3 text-center p-2">
+                             <div class="text-muted small mb-2"><i class="fa fa-pencil"/> Signature</div>
+                             <img t-att-src="image_data_uri(picking.signature)" class="img-fluid rounded" style="max-height: 80px; object-fit: contain;"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Action Buttons (State Updates) -->
+                 <!-- Only show if state is not result state -->
+            <!-- Removed buttons from body, moved to footer -->
+
+            </div>
+            
+            <!-- Bottom Actions Bar (2 Levels) -->
+            <div class="fixed-bottom bg-white border-top shadow-lg" style="z-index: 1040;">
+                 <!-- Level 1: Non-Final States (Scrollable) -->
+                 <t t-if="non_final_states and not picking.delivery_state_id.is_result_state">
+                     <div class="d-flex gap-2 p-2 overflow-auto no-scrollbar border-bottom" style="white-space: nowrap;">
+                         <t t-foreach="non_final_states" t-as="state">
+                             <button class="btn btn-outline-secondary rounded-pill btn-sm px-3" 
+                                     t-att-onclick="'updateDeliveryState(%s, %s)' % (picking.id, state.id)">
+                                 <t t-if="state.icon"><i t-attf-class="fa {{state.icon}} me-1"/></t>
+                                 <t t-esc="state.name"/>
+                             </button>
+                         </t>
+                     </div>
+                 </t>
+
+                 <!-- Level 2: Main Actions -->
+                 <div class="d-flex justify-content-around align-items-center p-2">
+                      <button class="btn btn-link text-muted d-flex flex-column align-items-center text-decoration-none" onclick="window.history.back()">
+                         <i class="fa fa-arrow-left fa-lg mb-1"/>
+                         <span style="font-size: 10px;">Back</span>
+                      </button>
+                      
+                      <!-- Finalize Button (Central) -->
+                      <a t-if="not picking.delivery_state_id.is_result_state" t-att-href="'/my/delivery/%s/finalize' % picking.id" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow">
+                         FINALIZE
+                      </a>
+                      
+                      <!-- Photo Button (Conditional) -->
+                      <t t-if="picking.delivery_state_id.require_photo and not picking.delivery_state_id.is_result_state">
+                          <form id="quickPhotoForm" t-att-action="'/my/delivery/%s/upload_photo' % picking.id" method="POST" enctype="multipart/form-data" style="display:none;">
+                               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                               <input type="hidden" name="photo_64" id="quickPhoto64"/>
+                               <input type="file" name="photo" id="quickPhotoInput" accept="image/*" capture="environment" onchange="handleQuickPhoto(this)"/>
+                          </form>
+                          <button id="quickPhotoBtn" class="btn btn-link text-muted d-flex flex-column align-items-center text-decoration-none" onclick="document.getElementById('quickPhotoInput').click();">
+                             <i class="fa fa-camera fa-lg mb-1"/>
+                             <span style="font-size: 10px;">Photo</span>
+                          </button>
+                      </t>
+                      <t t-else="">
+                          <!-- Spacer if button Hidden to balance layout? Or just empty -->
+                           <div style="width: 40px;"></div>
+                      </t>
+                 </div>
+                 <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>
+            </div>
+            <div style="height: 120px;"></div>
+
+            <!-- Simple Script for State Update -->
+            <script>
+                function handleQuickPhoto(input) {
+                    if (input.files &amp;&amp; input.files[0]) {
+                        var btn = document.getElementById('quickPhotoBtn');
+                        var originalHtml = btn.innerHTML;
+                        btn.innerHTML = '<i class="fa fa-spinner fa-spin fa-lg mb-1"/> <span style="font-size: 10px;">Processing...</span>';
+                        
+                        window.compressImage(input.files[0], function(base64) {
+                            document.getElementById('quickPhoto64').value = base64;
+                            // Remove name from file input to prevent uploading big file
+                            input.removeAttribute('name');
+                            document.getElementById('quickPhotoForm').submit();
+                        });
+                    }
+                }
+
+                function updateDeliveryState(pickingId, stateId) {
+                    fetch('/my/delivery/update_state', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            jsonrpc: "2.0",
+                            method: "call",
+                            params: {
+                                picking_id: pickingId,
+                                state_id: stateId
+                            }
+                        })
+                    }).then(res => res.json()).then(data => {
+                        if(data.result &amp;&amp; data.result.success) {
+                            location.reload();
+                        } else {
+                            alert('Error updating state');
+                        }
+                    });
+                }
+            </script>
+        </t>
+    </template>
+
+    <!-- SCREEN 3: FINALIZE -->
+    <template id="delivery_app_finalize" name="Finalize Delivery">
+        <t t-call="portal_app_launcher.portal_app_layout">
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=delivery"/>
+                <meta name="theme-color" content="#714B67"/>
+                <style>
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    .btn:active { transform: scale(0.98); transition: transform 0.05s; }
+                </style>
+            </t>
+            <div class="container py-4">
+                 <!-- Header -->
+                <div class="d-flex align-items-center mb-4">
+                    <a t-att-href="'/my/delivery/%s' % picking.id" class="btn btn-light rounded-circle shadow-sm me-3">
+                        <i class="fa fa-arrow-left"/>
+                    </a>
+                    <h4 class="m-0 text-white">Finalize Delivery</h4>
+                </div>
+
+                <form t-att-action="'/my/delivery/%s/submit' % picking.id" method="POST" enctype="multipart/form-data" id="finalizeForm">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" name="photo_64" id="photo64"/>
+                    
+                    <!-- Result Selection -->
+                    <div class="card shadow-sm border-0 rounded-3 mb-4">
+                        <div class="card-body">
+                            <h6 class="mb-3">Select Result</h6>
+                            <div class="row g-2">
+                                <t t-foreach="final_states" t-as="state">
+                                        <div class="col-6">
+                                        <input type="radio" class="btn-check" name="delivery_state_id" t-att-id="'state_%s' % state.id" t-att-value="state.id" required="required"
+                                               t-att-data-require-signature="state.require_signature"
+                                               t-att-data-require-photo="state.require_photo"
+                                               t-att-data-require-receiver-name="state.require_receiver_name"
+                                               t-att-data-mandatory-signature="state.is_signature_mandatory"
+                                               t-att-data-mandatory-photo="state.is_photo_mandatory"
+                                               t-att-data-mandatory-receiver-name="state.is_receiver_name_mandatory"
+                                               onclick="updateRequirements(this)"/>
+                                        <label class="btn btn-outline-primary w-100 py-3 rounded-3 position-relative d-flex flex-column align-items-center justify-content-center" t-att-for="'state_%s' % state.id">
+                                            <t t-if="state.icon">
+                                                <i t-attf-class="fa {{state.icon}} fa-lg mb-2"/>
+                                            </t>
+                                            <t t-esc="state.name"/>
+                                        </label>
+                                        <!-- Hidden Metadata for Help/Legal -->
+                                        <div t-att-id="'help_text_%s' % state.id" style="display:none;"><t t-esc="state.help_delivery"/></div>
+                                        <div t-att-id="'legal_text_%s' % state.id" style="display:none;"><t t-esc="state.legal_text"/></div>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Help/Legal Info -->
+                    <div id="stateInfoSection" style="display:none;" class="mb-3">
+                         <div id="helpAlert" class="alert alert-info border-0 shadow-sm rounded-3 mb-3 d-flex" style="display:none !important;">
+                             <i class="fa fa-info-circle fa-lg me-3 mt-1"/>
+                             <div>
+                                 <strong>INFORMATION REQUIRED</strong>
+                                 <div id="helpAlertText" class="small mt-1"></div>
+                             </div>
+                         </div>
+                         <div id="legalAlert" class="alert alert-light border shadow-sm rounded-3 mb-2 small" style="display:none !important;">
+                             <div class="d-flex align-items-center mb-1 text-muted">
+                                  <i class="fa fa-shield me-2"/> <strong>Declaration</strong>
+                             </div>
+                             <div id="legalAlertText" class="text-muted"></div>
+                         </div>
+                    </div>
+
+                    <!-- Dynamic Fields -->
+                    <div id="requirementsSection" style="display:none;">
+                        
+                        <!-- Receiver Name -->
+                        <div class="mb-4" id="receiverNameBlock" style="display:none;">
+                            <label class="form-label text-white">Receiver Name</label>
+                            <input type="text" name="receiver_name" id="receiverNameInput" class="form-control rounded-pill py-2" placeholder="Ej. Juan Pérez"/>
+                        </div>
+
+                        <!-- Notes (Always Visible or Conditional? User asked for it, likely always visible or at least available) -->
+                        <div class="mb-4">
+                            <label class="form-label text-white">Delivery Notes</label>
+                            <textarea name="delivery_notes" class="form-control rounded-3 py-2" rows="3" placeholder="Add any comments here..."></textarea>
+                        </div>
+
+                        <!-- Signature -->
+                        <div class="mb-4" id="signatureBlock" style="display:none;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label class="form-label text-white m-0">Signature</label>
+                                <button type="button" class="btn btn-sm btn-link text-white text-decoration-none p-0" onclick="clearSignature()">CLEAR</button>
+                            </div>
+                            <div class="bg-light rounded-3 p-3 shadow-sm position-relative" style="background-color: #f8f9fa !important;">
+                                <div id="signaturePlaceholder" class="position-absolute top-50 start-50 translate-middle text-muted opacity-50 pointer-events-none">
+                                    <i class="fa fa-pencil fa-3x"/>
+                                </div>
+                                <canvas id="signatureCanvas" width="300" height="180" class="w-100 rounded mb-0 border border-2 border-secondary" style="touch-action: none; background: white; cursor: crosshair;"></canvas>
+                                <input type="hidden" name="signature" id="signatureInput"/>
+                            </div>
+                        </div>
+
+                        <!-- Photo -->
+                        <div class="mb-4" id="photoBlock" style="display:none;">
+                             <label class="form-label text-white">Photo Evidence</label>
+                             <div class="bg-white rounded-3 p-1 shadow-sm">
+                                 <button type="button" class="btn btn-outline-light text-dark w-100 py-3 fw-bold border-0 d-flex align-items-center justify-content-center gap-2" onclick="document.getElementById('photoInput').click()">
+                                     <i class="fa fa-camera fa-lg"/> Take Photo
+                                 </button>
+                                 <input type="file" name="photo" id="photoInput" class="form-control d-none" accept="image/*" capture="environment" onchange="updatePhotoLabel(this)"/>
+                                 <div id="photoLabel" class="text-center small text-muted pb-2" style="display:none;">File Selected</div>
+                             </div>
+                        </div>
+                   </div>
+
+                   <!-- Confirm Button -->
+                   <div class="d-grid mt-4">
+                       <button type="submit" class="btn btn-success btn-lg rounded-pill shadow" onclick="prepareSubmit(event)">
+                           Confirm &amp; Send
+                       </button>
+                   </div>
+                </form>
+                
+                <!-- Offline Feedback Toast -->
+                <div id="offlineToast" class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 1060; display: none;">
+                    <div class="toast show align-items-center text-white bg-warning border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body fw-bold">
+                                <i class="fa fa-cloud-upload me-2"/> <span id="offlineToastMsg">Connection lost. Saved to device.</span>
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" onclick="document.getElementById('offlineToast').style.display='none'"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script type="text/javascript" src="/stock_delivery_portal/static/src/js/signature_pad.min.js"></script> 
+            
+            <script>
+                // Vanilla JS Signature Pad
+                var canvas = document.getElementById('signatureCanvas');
+                var ctx = canvas.getContext('2d');
+                var drawing = false;
+                var hasSigned = false;
+                
+                // Set default stroke styles
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = '#333';
+
+                // Mouse events
+                canvas.addEventListener('mousedown', function(e) { drawing = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); });
+                canvas.addEventListener('mousemove', function(e) { if(drawing) { ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); hasSigned = true; } });
+                canvas.addEventListener('mouseup', function() { drawing = false; });
+                
+                // Touch events (Mobile)
+                canvas.addEventListener('touchstart', function(e) { 
+                    e.preventDefault(); 
+                    var touch = e.touches[0];
+                    var rect = canvas.getBoundingClientRect();
+                    drawing = true; 
+                    ctx.beginPath(); 
+                    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top); 
+                });
+                canvas.addEventListener('touchmove', function(e) { 
+                    e.preventDefault(); 
+                    if(drawing) { 
+                        var touch = e.touches[0];
+                        var rect = canvas.getBoundingClientRect();
+                        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top); 
+                        ctx.stroke(); 
+                        hasSigned = true;
+                    } 
+                });
+                canvas.addEventListener('touchend', function(e) { e.preventDefault(); drawing = false; });
+
+                function resizeCanvas() {
+                    var container = canvas.parentElement;
+                    var rect = container.getBoundingClientRect();
+                    // Maintain aspect ratio (5:3), max 600px wide
+                    var newWidth = Math.min(rect.width - 24, 600); // 24px for padding
+                    var newHeight = (newWidth * 3) / 5;
+                    
+                    // Update canvas resolution
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    
+                    // Reset line styling
+                    ctx.lineWidth = 2;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.strokeStyle = '#333';
+                }
+                
+                // Call on page load and orientation change
+                window.addEventListener('load', resizeCanvas);
+                window.addEventListener('orientationchange', resizeCanvas);
+                window.addEventListener('resize', debounce(resizeCanvas, 250));
+                
+                // Debounce helper
+                function debounce(func, wait) {
+                    let timeout;
+                    return function() {
+                        clearTimeout(timeout);
+                        timeout = setTimeout(func, wait);
+                    };
+                }
+
+                function clearSignature() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    hasSigned = false;
+                    document.getElementById('signatureInput').value = '';
+                    document.getElementById('signaturePlaceholder').style.display = 'block';
+                }
+
+                function updatePhotoLabel(input) {
+                    var label = document.getElementById('photoLabel');
+                    if(input.files &amp;&amp; input.files[0]) {
+                        label.textContent = "Processing...";
+                        label.style.display = 'block';
+                        
+                        // Compress immediately using global function
+                        window.compressImage(input.files[0], function(base64) {
+                            document.getElementById('photo64').value = base64;
+                            label.textContent = input.files[0].name + " (Optimized)";
+                            label.className = "text-center small text-success pb-2";
+                        });
+                    } else {
+                        label.style.display = 'none';
+                        document.getElementById('photo64').value = '';
+                    }
+                }
+
+                function updateRequirements(radio) {
+                    var section = document.getElementById('requirementsSection');
+                    section.style.display = 'block';
+                    
+                    var reqSig = radio.getAttribute('data-require-signature') === 'True';
+                    var reqPhoto = radio.getAttribute('data-require-photo') === 'True';
+                    var reqName = radio.getAttribute('data-require-receiver-name') === 'True';
+                    
+                    document.getElementById('signatureBlock').style.display = reqSig ? 'block' : 'none';
+                    if (reqSig) {
+                        // Resize canvas when it becomes visible
+                        setTimeout(() => resizeCanvas(), 50);
+                    }
+                    
+                    document.getElementById('photoBlock').style.display = reqPhoto ? 'block' : 'none';
+                    document.getElementById('receiverNameBlock').style.display = reqName ? 'block' : 'none';
+                    
+                    // Update Help/Legal Text
+                    var stateId = radio.value;
+                    var helpText = document.getElementById('help_text_' + stateId).textContent.trim();
+                    var legalText = document.getElementById('legal_text_' + stateId).textContent.trim();
+                    
+                    var infoSection = document.getElementById('stateInfoSection');
+                    var helpAlert = document.getElementById('helpAlert');
+                    var legalAlert = document.getElementById('legalAlert');
+                    
+                    if (helpText || legalText) {
+                        infoSection.style.display = 'block';
+                        
+                        if (helpText) {
+                            document.getElementById('helpAlertText').textContent = helpText;
+                            helpAlert.style.setProperty('display', 'flex', 'important');
+                        } else {
+                            helpAlert.style.setProperty('display', 'none', 'important');
+                        }
+                        
+                        if (legalText) {
+                             document.getElementById('legalAlertText').textContent = legalText;
+                             legalAlert.style.setProperty('display', 'block', 'important');
+                        } else {
+                             legalAlert.style.setProperty('display', 'none', 'important');
+                        }
+                    } else {
+                        infoSection.style.display = 'none';
+                    }
+                    
+                    resizeCanvas(); // Ensure canvas is sized correctly if revealed
+                }
+                
+                function showToast(msg, bgClass='bg-warning') {
+                     var toast = document.getElementById('offlineToast');
+                     var toastBody = toast.querySelector('.toast');
+                     document.getElementById('offlineToastMsg').textContent = msg;
+                     toastBody.className = 'toast show align-items-center text-white border-0 ' + bgClass;
+                     toast.style.display = 'block';
+                     setTimeout(() => { toast.style.display = 'none'; }, 4000);
+                }
+
+                // OFFLINE SYNC LOGIC
+                // Use a dynamic key unique per delivery
+                const PENDING_KEY = 'pending_delivery_' + '<t t-esc="picking.id"/>';
+
+                function saveOfflineData(formData) {
+                    try {
+                        const data = {};
+                        formData.forEach((value, key) => data[key] = value);
+                        data.timestamp = new Date().toISOString();
+                        localStorage.setItem(PENDING_KEY, JSON.stringify(data));
+                        showToast('Connection lost. Saved to device (Draft).', 'bg-warning');
+                    } catch(e) {
+                        console.error('Storage failed', e);
+                        alert('Storage full. Cannot save offline.');
+                    }
+                }
+
+                function checkAndSync() {
+                     const pendingData = localStorage.getItem(PENDING_KEY);
+                     if (pendingData &amp;&amp; navigator.onLine) {
+                         showToast('Connection restored. Syncing...', 'bg-info');
+                         const data = JSON.parse(pendingData);
+                         
+                         // Reconstruct FormData
+                         const formData = new FormData();
+                         for (const key in data) {
+                             formData.append(key, data[key]);
+                         }
+                         
+                         // Submit via fetch
+                         fetch(document.getElementById('finalizeForm').action, {
+                             method: 'POST',
+                             body: formData
+                         }).then(response => {
+                             if (response.ok || response.redirected) {
+                                 localStorage.removeItem(PENDING_KEY);
+                                 showToast('Sync Complete! Redirecting...', 'bg-success');
+                                 if (response.redirected) {
+                                     window.location.href = response.url;
+                                 } else {
+                                     window.location.href = '/my/delivery';
+                                 }
+                             } else {
+                                 console.error("Sync server error");
+                             }
+                         }).catch(err => {
+                             console.log("Sync failed again, keeping data.");
+                         });
+                     }
+                }
+
+                // Check on load and online event
+                window.addEventListener('load', () => {
+                     if(localStorage.getItem(PENDING_KEY)) {
+                         showToast('You have unsynced data. Waiting for connection...', 'bg-warning');
+                         checkAndSync();
+                     }
+                });
+                window.addEventListener('online', checkAndSync);
+                
+                function resizeCanvas() {
+                    var ratio = Math.max(window.devicePixelRatio || 1, 1);
+                    // This part can clear the canvas, so only do it if necessary or handle state
+                    // Simple approach: rely on CSS 100% width
+                }
+
+                function prepareSubmit(e) {
+                    e.preventDefault(); // Control submission manually
+                    
+                    var selectedState = document.querySelector('input[name="delivery_state_id"]:checked');
+                    if (!selectedState) {
+                        alert("Please select a result state.");
+                        return; 
+                    }
+
+                    var isSigMandatory = selectedState.getAttribute('data-mandatory-signature') === 'True';
+                    var isPhotoMandatory = selectedState.getAttribute('data-mandatory-photo') === 'True';
+                    var isNameMandatory = selectedState.getAttribute('data-mandatory-receiver-name') === 'True';
+
+                    // 1. Signature
+                    var dataUrl = canvas.toDataURL();
+                    // We trust 'hasSigned' if canvas is visible, unless user cleared it.
+                    if (document.getElementById('signatureBlock').style.display !== 'none' &amp;&amp; isSigMandatory &amp;&amp; !hasSigned) {
+                        alert('Signature is required for this state.');
+                        return false;
+                    }
+                    document.getElementById('signatureInput').value = dataUrl;
+
+                    // 2. Photo
+                    if (document.getElementById('photoBlock').style.display !== 'none' &amp;&amp; isPhotoMandatory) {
+                        var photoInput = document.getElementById('photoInput');
+                        var photo64 = document.getElementById('photo64').value;
+                        
+                        if ((!photoInput.files || photoInput.files.length === 0) &amp;&amp; !photo64) {
+                             alert('Photo evidence is required for this state.');
+                             return false;
+                        }
+                    }
+                    
+                    if (document.getElementById('photo64').value) {
+                         document.getElementById('photoInput').removeAttribute('name');
+                    }
+
+                    // 3. Receiver Name
+                    if (document.getElementById('receiverNameBlock').style.display !== 'none' &amp;&amp; isNameMandatory) {
+                         var nameInput = document.getElementById('receiverNameInput');
+                         if (!nameInput.value.trim()) {
+                             alert('Receiver Name is required.');
+                             return false;
+                         }
+                    }
+
+                    // SUBMISSION LOGIC
+                    var form = document.getElementById('finalizeForm');
+                    var formData = new FormData(form);
+                    var btn = e.target;
+                    // Fix: Ensure we are targeting button if click was on icon
+                    if (btn.tagName === 'I') btn = btn.closest('button');
+                    
+                    var originalText = btn.innerHTML;
+
+                    if (navigator.onLine) {
+                         btn.innerHTML = '<i class="fa fa-spinner fa-spin"/> Sending...';
+                         btn.disabled = true;
+
+                         fetch(form.action, {
+                             method: 'POST',
+                             body: formData
+                         }).then(response => {
+                             if (response.ok || response.redirected) {
+                                 window.location.href = response.url || '/my/delivery';
+                             } else {
+                                 // Server Error - alert keeping offline? No, server error means connected but failed logic.
+                                 alert('Server Error. Please try again.');
+                                 btn.innerHTML = originalText;
+                                 btn.disabled = false;
+                             }
+                         }).catch(error => {
+                             // Network Error -> Offline Fallback
+                             saveOfflineData(formData);
+                             btn.innerHTML = originalText;
+                             btn.disabled = false;
+                         });
+                    } else {
+                         // Offline immediately
+                         saveOfflineData(formData);
+                    }
+                }
+            </script>
+        </t>
+    </template>
+</odoo>

@@ -4,51 +4,91 @@
 
 ## 🌟 Overview
 
-The **Portal App Launcher** is a foundational module that transforms the standard Odoo Portal into a high-performance, mobile-first app dashboard. It provides users with a clean, navigable interface optimized for "one-hand" operation, making it ideal for field services, logistics, and on-the-go client portals.
+The **Portal App Launcher** is a foundational module that transforms the standard Odoo Portal into a high-performance, mobile-first **Progressive Web App (PWA)** dashboard. 
+
+It is designed with a **"Hyper-Optimized" philosophy**: eliminating complex configurations for end-users while ensuring professional, harmonized aesthetics through a **Hybrid Theming Engine**. Whether for field service drivers, logistics operators, or client portals, this launcher provides a native-app feel directly in the browser.
 
 ---
 
 ## 🚀 Key Features
 
-### 📱 App-Like Experience
-*   **Grid Navigation**: A simple, intuitive 3x3 grid (or list) of available apps.
-*   **PWA Ready**: Built-in Progressive Web App (PWA) manifest and service worker configuration.
-*   **Home Screen Install**: Prompt users to "install" the portal as a smartphone app.
+### 🎨 Hybrid Theming Engine
+We use a dual-layer approach to ensure the app looks perfect on every device:
+*   **CSS Themes**: Rich, gradient-based styling with Glassmorphism effects (e.g., Ocean Blue, Sunset Orange) injected directly into the DOM.
+*   **Native Sync**: The backend automatically calculates the perfect hex codes for the **Browser Status Bar** and **Splash Screen**, ensuring the browser UI matches the app design.
 
-### 🛠️ Developer Friendly
-*   **Modular Architecture**: Easily register new portal apps from any module using the `portal.app` model.
-*   **Custom Icons**: Support for FontAwesome and custom SVG icons for each app.
-*   **Sequential Logic**: Control the order of apps on the dashboard directly from the configuration.
+### 📱 Full PWA Capabilities
+*   **One-Click Install**: Built-in "Install App" button that triggers the native Android/iOS installation prompt.
+*   **Smart Manifest**: Automatically generates `manifest.webmanifest` based on the active app's metadata.
+*   **Offline Ready**: Service workers (if configured) allow the launcher to load instantly even on flaky networks.
 
-### 🧩 Seamless Integration
-*   **Breadcrumb Optimization**: Intelligent navigation that returns users to the launcher after completing tasks.
-*   **One-Hand UX**: Bottom navigation bar for core shortcuts.
-
----
-
-## ⚙️ Configuration
-
-1.  **Install the Module**: Go to Apps and search for `portal_app_launcher`.
-2.  **Configure Apps**: Navigate to **Website > Configuration > Portal Apps**.
-3.  **App Setup**:
-    *   **Name**: The label shown to the user.
-    *   **Icon**: FontAwesome class (e.g., `fa-camera`).
-    *   **URL**: The portal route to redirect to.
-    *   **Sequence**: Lower numbers appear first.
-    *   **Is Published**: Only published apps are visible.
+### 🔒 Enterprise-Grade Access
+*   **Granular Permissions**: Limit visibility of specific apps to specific User Groups (e.g., "Drivers" only see "Deliveries", "Managers" see "Reports").
+*   **Secure Routing**: Prevents unauthorized access to app routes if the user doesn't belong to the allowed group.
 
 ---
 
-## 🛠️ Technical Details
+## ⚙️ Configuration Guide
 
-*   **PWA Assets**: The module serves a `manifest.json` at `/portal/manifest.json`.
-*   **Routing**: The default portal home (`/my`) is enhanced to display the launcher.
-*   **CSS Architecture**: Uses a specific `portal_launcher.css` for isolation and performance.
+### 1. Registering a New App
+Navigate to **Website > Configuration > Portal Apps** (or search "App Launcher" in the main menu).
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | The label shown under the icon (e.g., "Evidence"). |
+| **Action URL** | The portal route to open (e.g., `/my/tasks`). |
+| **Allowed Groups** | (Optional) Limit visibility to specific user groups. |
+| **Technical Name** | Unique ID for PWA scoping (e.g., `evidence`). |
+
+### 2. Design & Theming
+Instead of manually picking colors, we provide **Pre-Optimized Themes**. Select one, and the system handles the rest.
+
+| Theme | Aesthetic Profile | Best For |
+| :--- | :--- | :--- |
+| **Light (Clean)** | Professional White/Grey. High contrast. | Standard Business, Admin Tools |
+| **Ocean (Blue)** | Cyan-to-Blue Linear Gradient. Glass Cards. | Logistics, Maritime, Standard UI |
+| **Sunset (Orange)** | Red-to-Orange Gradient. Warm Tones. | Alerts, Urgent Tasks, Food |
+| **Purple (Royalty)** | Deep Purple-to-Violet. Premium Feel. | HR, Employee Services, VIP |
+| **Dark Mode** | OLED Black Background. Dark Grey Cards. | Night Shift, Low-Light Environments |
+
+> **Note**: The "Theme Color" and "Background Color" fields are **read-only**. They are automatically computed to ensure the PWA meta tags match your chosen visual theme.
+
+---
+
+## 🛠️ Technical Architecture
+
+### The "Hidden" Logic
+While the UI is simple, the backend performs robust calculations:
+
+1.  **CSS Injection**: When a user selects `Ocean`, the specific class `.theme-ocean` is injected into the HTML `<body>`. This triggers the CSS gradients defined in `static/src/css/portal_launcher.css`.
+2.  **Meta Sync**: Simultaneously, the model sets `theme_color` to `#007BFF`. This value is rendered in `<meta name="theme-color" content="#007BFF"/>`, causing the Chrome/Safari toolbar to turn blue.
+3.  **Scope Filtering**: The launcher intelligently detects which app is "Active" based on the URL path, dynamically switching the theme as the user moves between apps.
+
+### PWA Assets
+*   **Manifest**: `/portal_app/manifest.webmanifest` (Dynamic JSON)
+*   **Service Worker**: `/service-worker.js` (Root scope registration)
+*   **Icons**: Supports SVG and PNG. Adaptive icons are recommended.
+
+---
+
+## ❓ Troubleshooting
+
+**Q: I don't see the "Install App" button.**
+*   **A**: The button automatically hides if:
+    1.  The app is **already installed**.
+    2.  You are not serving Odoo over **HTTPS** (PWAs require secure contexts).
+    3.  You are in a private/incognito window.
+
+**Q: The colors look flat.**
+*   **A**: Ensure you have upgraded the module to the latest version. The new **CSS Themes** require the updated `portal_launcher.css` and `portal_templates.xml`.
+
+**Q: My customized colors disappeared.**
+*   **A**: We deprecated manual color picking in favor of the **Theme System** to prevent inconsistent designs. Choose the theme that significantly matches your brand.
 
 ---
 
 ## 💳 Credits
 
 **Author**: [Ganemo](https://www.ganemo.co)  
-**Industry**: Specialized in Enterprise Odoo Localizations and Operational Excellence.  
-**Support**: [leads@ganemo.com](mailto:leads@ganemo.com)
+**Maintained by**: Fernando Pastor  
+**License**: Odoo Proprietary License v1.0

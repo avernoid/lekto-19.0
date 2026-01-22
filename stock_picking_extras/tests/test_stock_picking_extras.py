@@ -77,6 +77,7 @@ class TestStockPickingExtras(common.TransactionCase):
         })
         
         # Force recompute if necessary, accessing the fields should trigger it
-        self.assertEqual(picking.total_packages, 2, "Should have 2 distinct packages (A and B)")
+        # Rely on native packages_count field behavior
+        self.assertEqual(picking.packages_count, 2, "Should have 2 distinct packages (A and B)")
         # Total bundles = 2 (from packages A & B) + 2 (from loose quantity) = 4
         self.assertEqual(picking.total_bundles, 4, "Should have 4 bundles (2 packages + 2 loose units)")

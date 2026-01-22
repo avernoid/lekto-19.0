@@ -72,26 +72,46 @@ class ProjectTask(models.Model):
     )
 
     @api.depends('evidence_ids', 'evidence_ids.exclude_from_report', 'evidence_product_ids', 'evidence_product_ids.evidence_required', 'evidence_product_ids.evidence_min_qty', 'sale_line_id.product_uom_qty')
+    def _get_missing_evidence_requirements(self):
+        """Returns a list of dicts describing missing evidence."""
+        self.ensure_one()
+        missing = []
+        # Check requirements for ALL configured evidence products
+        # FIX: access 'evidence_product_ids' via sudo() as Portal Users may not have read access to products
+        # but validation logic needs to check them.
+        for product in self.sudo().evidence_product_ids:
+            if product.evidence_required and product.evidence_min_qty > 0:
+                # Determine required quantity (Multiplier logic)
+                required_qty = product.evidence_min_qty
+                if self.sale_line_id and self.sale_line_id.product_id == product:
+                        # Scale by SOL quantity
+                        required_qty = int(product.evidence_min_qty * self.sale_line_id.product_uom_qty)
+                
+                # Count valid evidences for this specific product
+                # We filter 'evidence_ids' on 'self' (the user's view of the task) to ensure they own the evidence
+                # No need for sudo() on evidence_ids if the user created them.
+                # FIX: Use sudo() to avoid AccessErrors if the portal user has restricted access to the field or model
+                # Validation should check existential evidence, not just visible evidence.
+                valid_evidences = self.sudo().evidence_ids.filtered(lambda e: e.product_id == product and not e.exclude_from_report)
+                if len(valid_evidences) < required_qty:
+                    missing.append({
+                        'product_name': product.name,
+                        'required': required_qty,
+                        'current': len(valid_evidences)
+                    })
+        return missing
+
+    @api.depends('evidence_ids', 'evidence_ids.exclude_from_report', 'evidence_product_ids', 'evidence_product_ids.evidence_required', 'evidence_product_ids.evidence_min_qty', 'sale_line_id.product_uom_qty')
     def _compute_evidence_warning_msg(self):
         for task in self:
-            warnings = []
-            # Check requirements for ALL configured evidence products
-            for product in task.evidence_product_ids:
-                if product.evidence_required and product.evidence_min_qty > 0:
-                    # Determine required quantity (Multiplier logic)
-                    required_qty = product.evidence_min_qty
-                    if task.sale_line_id and task.sale_line_id.product_id == product:
-                         # Scale by SOL quantity (rounded up usually, but simple mult here)
-                         required_qty = int(product.evidence_min_qty * task.sale_line_id.product_uom_qty)
-                    
-                    # Count valid evidences for this specific product
-                    valid_evidences = task.evidence_ids.filtered(lambda e: e.product_id == product and not e.exclude_from_report)
-                    if len(valid_evidences) < required_qty:
-                        warnings.append(_(
-                            '<li><b>%s</b>: Requires %s photos (Current: %s)</li>'
-                        ) % (product.name, required_qty, len(valid_evidences)))
-            
-            if warnings:
+            missing_items = task._get_missing_evidence_requirements()
+            if missing_items:
+                warnings = []
+                for item in missing_items:
+                    warnings.append(_(
+                        '<li><b>%s</b>: Requires %s photos (Current: %s)</li>'
+                    ) % (item['product_name'], item['required'], item['current']))
+                
                 msg = _('<div class="alert alert-warning" role="alert" style="margin-bottom: 10px;">'
                         '<strong>⚠️ Evidence Missing:</strong><ul>%s</ul></div>') % "".join(warnings)
                 task.evidence_warning_msg = msg

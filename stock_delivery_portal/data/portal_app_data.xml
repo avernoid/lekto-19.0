@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="portal_app_delivery" model="portal.app">
+            <field name="name">Delivery</field>
+            <field name="pwa_name">Delivery</field>
+            <field name="technical_name">delivery</field>
+            <field name="sequence">20</field>
+            <field name="action_url">/my/delivery</field>
+            <field name="theme_color">#007bff</field>
+            <field name="background_color">#007bff</field>
+            <field name="image" type="base64" file="stock_delivery_portal/static/description/icon.png"/>
+        </record>
+    </data>
+</odoo>

@@ -189,12 +189,10 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-map-marker mr-2"></i> Real GPS Verification</h4>
+                            <h4 style="color: #5154a5;"><i class="fa fa-map-marker mr-2"></i> Tamper-Proof GPS</h4>
                             <p style="text-align: justify;">Stop relying on manual inputs. The system automatically
-                                grabs
-                                the **Latitude and Longitude** from the device's GPS the moment the photo wizard is
-                                opened.
-                                Know exactly where your team is.</p>
+                                captures **Read-Only Latitude and Longitude** from the device's sensor.
+                                Ensure integrity: Field staff cannot spoof their location manually.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
@@ -232,13 +230,20 @@
                             style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
                                 Product Configuration & Multiple Evidence</h3>
-                            <p class="lead">Define photo requirements per product. You can link multiple products to one task for diverse evidence needs.</p>
+                            <p class="lead">Define photo requirements per product. You can link multiple products to one
+                                task for diverse evidence needs.</p>
                             <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
-                                <li><i class="fa fa-angle-right text-muted mr-2"></i> Open any <strong>Product</strong> and navigate to the <strong>"Sales"</strong> tab.</li>
-                                <li><i class="fa fa-check-square-o text-success mr-2"></i> Enable <strong>"Evidence Required"</strong>.</li>
-                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Min Qty:</strong> Scaling requirement based on Order Line quantity (Triggers warnings).</li>
-                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Max Qty:</strong> Hard limit to prevent data overload (Blocks uploads).</li>
-                                <li><i class="fa fa-briefcase text-info mr-2"></i> <strong>Task Setup:</strong> On the Task form, add these products to the <strong>"Evidence Requirement"</strong> tab.</li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> Open any <strong>Product</strong>
+                                    and navigate to the <strong>"Sales"</strong> tab.</li>
+                                <li><i class="fa fa-check-square-o text-success mr-2"></i> Enable <strong>"Evidence
+                                        Required"</strong>.</li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Min Qty:</strong> Scaling
+                                    requirement based on Order Line quantity (Triggers warnings).</li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Max Qty:</strong> Hard
+                                    limit to prevent data overload (Blocks uploads).</li>
+                                <li><i class="fa fa-briefcase text-info mr-2"></i> <strong>Task Setup:</strong> On the
+                                    Task form, add these products to the <strong>"Evidence Requirement"</strong> tab.
+                                </li>
                             </ul>
                         </div>
 
@@ -295,28 +300,39 @@
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
                                         <h5>1. Install App</h5>
-                                        <p class="text-muted small">Open the Portal. Click <strong>"Install App"</strong> in the header to add it to your Home Screen.</p>
+                                        <p class="text-muted small">Open the Portal. Click <strong>"Install
+                                                App"</strong> in the header to add it to your Home Screen.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
                                         <h5>2. Smart Launch</h5>
-                                        <p class="text-muted small">Open the <strong>"Photos"</strong> app from the Launcher to see all assigned tasks.</p>
+                                        <p class="text-muted small">Open the <strong>"Photos"</strong> app from the
+                                            Launcher to see all assigned tasks.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
                                         <h5>3. Filter & Search</h5>
-                                        <p class="text-muted small">Use the <strong>Unified Bottom Bar</strong> to scroll through filters or use the 🔍 Search toggle.</p>
+                                        <p class="text-muted small">Use the <strong>Unified Bottom Bar</strong> to
+                                            scroll through filters or use the 🔍 Search toggle.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-3 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
                                         <h5>4. Upload & GPS</h5>
-                                        <p class="text-muted small">Upload photos. Ensure <strong>Location</strong> is enabled for automatic geotagging.</p>
+                                        <p class="text-muted small">Upload photos. A "Location" indicator confirms GPS
+                                            capture.</p>
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <div class="alert alert-warning small">
+                                        <i class="fa fa-lock mr-2"></i> <strong>Critical:</strong> GPS features REQUIRE
+                                        a secure <strong>HTTPS</strong> connection. Browsers verify this before allowing
+                                        access to the location sensor.
                                     </div>
                                 </div>
                             </div>
@@ -571,10 +587,14 @@
                                         Scenario 1: App Installation & Navigation</h4>
                                     <ol class="mt-3">
                                         <li>Log in as a Portal User on a mobile device.</li>
-                                        <li><strong>Action:</strong> Click "Install App" in the top bar. Verify it adds to Home Screen.</li>
-                                        <li><strong>Action:</strong> Use the 🔍 Search toggle to find a task by Project name.</li>
-                                        <li><strong>Action:</strong> Scroll the bottom navigation bar to filter by a specific "Tag".</li>
-                                        <li><strong>Result:</strong> Tasks should filter instantly without page reloads.</li>
+                                        <li><strong>Action:</strong> Click "Install App" in the top bar. Verify it adds
+                                            to Home Screen.</li>
+                                        <li><strong>Action:</strong> Use the 🔍 Search toggle to find a task by Project
+                                            name.</li>
+                                        <li><strong>Action:</strong> Scroll the bottom navigation bar to filter by a
+                                            specific "Tag".</li>
+                                        <li><strong>Result:</strong> Tasks should filter instantly without page reloads.
+                                        </li>
                                     </ol>
                                 </div>
 
@@ -587,9 +607,12 @@
                                     <ol class="mt-3">
                                         <li>Assign a product with <strong>Max Qty=1</strong> to a task.</li>
                                         <li><strong>Test A (Max):</strong> In the portal, upload 2 photos.</li>
-                                        <li><strong>Result:</strong> Verify a red "Maximum quantity reached" alert appears.</li>
-                                        <li><strong>Test B (Completion):</strong> Upload required photos and click "Finalize Task".</li>
-                                        <li><strong>Result:</strong> The task should disappear from "To Do" and move to the project's "Done Stage".</li>
+                                        <li><strong>Result:</strong> Verify a red "Maximum quantity reached" alert
+                                            appears.</li>
+                                        <li><strong>Test B (Completion):</strong> Upload required photos and click
+                                            "Finalize Task".</li>
+                                        <li><strong>Result:</strong> The task should disappear from "To Do" and move to
+                                            the project's "Done Stage".</li>
                                     </ol>
                                 </div>
 
@@ -609,6 +632,24 @@
                                         <li>Click "Generate Share Link". Copy URL.</li>
                                         <li><strong>Result:</strong> A public URL is generated properly. Open it in
                                             Incognito Mode to verify it loads without login.</li>
+                                    </ol>
+                                </div>
+
+                                <!-- Scenario 4 -->
+                                <div class="mb-4 p-4 shadow-sm"
+                                    style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                                    <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-map-marker mr-2"></i>
+                                        Scenario 4:
+                                        GPS Integrity Check</h4>
+                                    <ol class="mt-3">
+                                        <li><strong>Setup:</strong> Ensure your Odoo is on HTTPS (or localhost). Allow
+                                            Browser Location.</li>
+                                        <li><strong>Action:</strong> Upload a photo for a task.</li>
+                                        <li><strong>Result:</strong> Go to Backend > Task > Evidence Tab. Verify
+                                            "Latitude" and "Longitude" are populated.</li>
+                                        <li><strong>Test Limit:</strong> Try to edit the Latitude field in the backend.
+                                        </li>
+                                        <li><strong>Result:</strong> Field should be Read-Only.</li>
                                     </ol>
                                 </div>
                             </div>
@@ -639,7 +680,8 @@
                                     <p class="text-muted mt-2"><strong>Reason:</strong> Browser permissions denied or
                                         non-secure connection.</p>
                                     <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong>
-                                        Ensure you are using <strong>HTTPS</strong> and have granted "Location" permissions. Note: Browser settings can reset these permissions.</p>
+                                        Ensure you are using <strong>HTTPS</strong> and have granted "Location"
+                                        permissions. Note: Browser settings can reset these permissions.</p>
                                 </div>
                             </div>
 
@@ -653,7 +695,8 @@
                                         restrictive.</p>
                                     <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i>
                                         <strong>Fix:</strong> Change Project Visibility to <em>"Invited internal users
-                                            and portal users"</em> or <em>"Public"</em> to enable sharing features.</p>
+                                            and portal users"</em> or <em>"Public"</em> to enable sharing features.
+                                    </p>
                                 </div>
                             </div>
 
@@ -678,7 +721,8 @@
                                     <p class="small text-dark"><i class="fa fa-file-pdf-o mr-1"></i>
                                         <strong>Answer:</strong> Go to the Project Dashboard. Click the 3-dots menu on a
                                         Project card or check the "Internal Report" smart button inside the Project
-                                        Form.</p>
+                                        Form.
+                                    </p>
                                 </div>
                             </div>
                         </div>

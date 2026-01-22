@@ -30,6 +30,12 @@ class ProjectProject(models.Model):
         default='1_done',
         help="State to set on tasks when evidence is completed from the portal."
     )
+    
+    force_min_photos = fields.Boolean(
+        string='Force Min Photos',
+        default=True,
+        help="If checked, tasks cannot be marked as Done in the portal unless all minimum photo requirements are met."
+    )
 
     @api.depends('access_token')
     def _compute_evidence_report_url(self):

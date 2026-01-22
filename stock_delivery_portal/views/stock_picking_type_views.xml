@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- STOCK PICKING TYPE FORM VIEW EXTENSION -->
+    <record id="view_picking_type_form_delivery_portal" model="ir.ui.view">
+        <field name="name">stock.picking.type.form.delivery.portal</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Delivery Portal" name="delivery_portal">
+                    <group string="Contact Information" name="contact_info">
+                        <field name="delivery_phone"/>
+                    </group>
+                    <group string="Portal Settings" name="portal_settings">
+                        <field name="delivery_portal_show_items"/>
+                        <field name="allow_driver_contact"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

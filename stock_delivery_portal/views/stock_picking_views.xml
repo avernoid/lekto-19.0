@@ -7,7 +7,7 @@
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='origin']" position="after">
-                <field name="delivery_partner_id" widget="res_partner_many2one" context="{'show_address': 1}" placeholder="Driver Name"/>
+                <field name="delivery_partner_id" widget="res_partner_many2one" placeholder="Driver Name"/>
             </xpath>
             <xpath expr="//header" position="inside">
                 <!-- Maybe a button? No, state is tracking field, usually set by driver. -->
@@ -19,6 +19,7 @@
                             <field name="delivery_state_id" options="{'no_create': True}"/>
                             <field name="delivery_receiver_name"/>
                             <field name="delivery_date_done"/>
+                            <field name="hide_from_portal"/>
                         </group>
                         <group string="Notes">
                             <field name="delivery_notes"/>
@@ -38,6 +39,7 @@
             <field name="state" position="before">
                 <field name="delivery_partner_id" optional="show"/>
                 <field name="delivery_state_id" optional="show" widget="badge"/>
+                <field name="hide_from_portal" optional="hide"/>
             </field>
         </field>
     </record>

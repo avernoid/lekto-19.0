@@ -9,20 +9,28 @@ class StockPicking(models.Model):
         string='Delivery Driver',
         domain=[('is_company', '=', False)],
         check_company=True,
-        tracking=True
+        tracking=True,
+        help="Partner (driver) responsible for the delivery."
     )
     
     delivery_state_id = fields.Many2one(
         'stock.delivery.state',
         string='Delivery State',
-        domain="[('company_id', '=', company_id), ('picking_type_ids', 'in', picking_type_id)]",
+        domain="[('company_id', '=', company_id), ('picking_type_ids', '=', picking_type_id)]",
         tracking=True,
-        copy=False
+        copy=False,
+        help="Current state of the delivery in the portal."
     )
     
-    delivery_receiver_name = fields.Char(string='Receiver Name', tracking=True, copy=False)
-    delivery_notes = fields.Text(string='Delivery Notes', tracking=True, copy=False)
-    delivery_date_done = fields.Datetime(string='Delivery Date', tracking=True, copy=False)
+    delivery_receiver_name = fields.Char(string='Receiver Name', tracking=True, copy=False, help="Name of the person who received the package.")
+    delivery_notes = fields.Text(string='Delivery Notes', tracking=True, copy=False, help="Optional notes added by the driver.")
+    delivery_date_done = fields.Datetime(string='Delivery Date', tracking=True, copy=False, help="Date and time when the delivery reached a final state.")
+    delivery_phone = fields.Char(string='Contact Phone', tracking=True, help="Phone number for driver contact (auto-filled from partner but editable).")
+    hide_from_portal = fields.Boolean(
+        string="Hide from Portal Delivery",
+        default=False,
+        help="If enabled, this picking will not be visible in the delivery portal. Use this as a security measure to restrict access to specific pickings."
+    )
 
     @api.constrains('delivery_state_id')
     def _check_delivery_state_requirements(self):
@@ -37,6 +45,12 @@ class StockPicking(models.Model):
             # The prompt says "Validaciones obligatorias: Firma si require_signature..."
             # I will implement a method validation that is called during the state transition.
             pass
+
+    @api.onchange('partner_id')
+    def _onchange_partner_id_phone(self):
+        """Auto-fill phone from partner when partner changes"""
+        if self.partner_id and self.partner_id.phone:
+            self.delivery_phone = self.partner_id.phone
 
     def _validate_delivery_state_change(self, new_state, values=None):
         """
@@ -94,37 +108,20 @@ class StockPicking(models.Model):
                 
             # Send WhatsApp
             if state.whatsapp_template_id:
-                # Using standard Odoo WhatsApp logic if available
-                # Usually: template.send_whatsapp_message(...)
-                # Or: self.env['whatsapp.composer'].create(...).action_send_whatsapp_template()
-                # Simplified approach assuming standard method presence or generic call
-                # Note: In Odoo 16+ Enterprise, it's often via composer.
-                # I will try to call a method on the template if it exists.
                 try:
-                    # Generic attempt to trigger WA
-                    # If Odoo 17/18/19 follows `_send_whatsapp` or similar on model.
-                    # Or manually use the composer.
-                    # For now, I'll allow the error to bubble or just log if missing, 
-                    # but prompt asked for "Motor WhatsApp Nativo".
-                    # Best guess implementation:
-                    if hasattr(state.whatsapp_template_id, 'button_send_whatsapp'):
-                         # This might be for the wizard.
-                         pass
-                    
-                    # Implementation for standard Odoo WhatsApp (Enterprise)
-                    # compos = picking.env['whatsapp.composer'].create({
-                    #     'wa_template_id': state.whatsapp_template_id.id,
-                    #     'res_ids': [picking.id],
-                    #     'res_model': 'stock.picking',
-                    # })
-                    # compos.action_send_whatsapp_template()
-                    
-                    # Alternatively, if there is a simplified method:
-                    # picking.message_post_with_source(state.whatsapp_template_id, ...)
-                    pass
+                    # Logic adapted from whatsapp_stock/models/stock_picking.py
+                    composer = picking.env['whatsapp.composer'].create({
+                        'wa_template_id': state.whatsapp_template_id.id,
+                        'res_model': 'stock.picking',
+                        'res_ids': [picking.id],
+                        'batch_mode': False,
+                    })
+                    # Force send to avoid manual confirmation wizard
+                    composer._send_whatsapp_template(force_send_by_cron=True)
                 except Exception as e:
-                    # Log error or ignore if module not installed (but it should be)
-                    pass
+                    # Log error but don't block state change if WA fails
+                    # Ideally we should log this to the picking chatter
+                    picking.message_post(body=f"Failed to send WhatsApp: {str(e)}")
 
             # Final State Logic
             if state.is_result_state:
@@ -226,6 +223,8 @@ class StockPicking(models.Model):
                 write_vals['delivery_receiver_name'] = values['delivery_receiver_name']
             if 'delivery_notes' in values:
                 write_vals['delivery_notes'] = values['delivery_notes']
+            if 'delivery_phone' in values:
+                write_vals['delivery_phone'] = values['delivery_phone']
                 
         # Validate requirements
         self._validate_delivery_state_change(state, values)
@@ -234,3 +233,19 @@ class StockPicking(models.Model):
         self.write(write_vals)
         
         return True
+
+
+class StockPickingType(models.Model):
+    _inherit = 'stock.picking.type'
+
+    delivery_portal_show_items = fields.Boolean(
+        string="Show Items in Portal Delivery",
+        default=True,
+        help="If enabled, delivery items (product name, quantity, photos) will be visible in the delivery portal. Disable this for confidentiality in sensitive sectors."
+    )
+    
+    allow_driver_contact = fields.Boolean(
+        string="Allow Driver Contact",
+        default=True,
+        help="If enabled, drivers can contact the recipient via call, SMS, or WhatsApp from the portal. Disable for high-security deliveries."
+    )

@@ -2,7 +2,12 @@
 <odoo>
     <record id="group_portal_app_user" model="res.groups">
         <field name="name">Portal App User</field>
-        <!-- category_id removed in Odoo 19, replaced by privilege_id hierarchy -->
+        <!-- category_id removed in Odoo 19 -->
         <field name="comment">Users in this group will see the App Launcher instead of the standard portal.</field>
+    </record>
+
+    <record id="group_portal_app_manager" model="res.groups">
+        <field name="name">Portal App Manager</field>
+        <field name="comment">Users in this group can configure Portal Apps.</field>
     </record>
 </odoo>

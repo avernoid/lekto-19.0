@@ -160,7 +160,7 @@
                     </h2>
                     <p class="my-1 text-center text-uppercase"
                         style="letter-spacing:4px !important; color:#74788D !important">
-                        Easy Configuration</p>
+                        Hyper-Optimized Configuration</p>
                 </div>
 
                 <div class="row mt-5">
@@ -168,25 +168,25 @@
                         <div class="p-4"
                             style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1. Managing
-                                Apps Dashboard</h3>
+                                Apps & Themes</h3>
                             <p class="lead">Configure your custom portal hub with precision:</p>
                             <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
                                 <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Navigation:</strong> Go to
                                     <strong>Website > Configuration > Portal Apps</strong>.
                                 </li>
-                                <li><i class="fa fa-cube text-info mr-2"></i> <strong>Name & Translation:</strong>
-                                    Ensure you set a name. Use the globe icon for multi-language support.</li>
-                                <li><i class="fa fa-sort-numeric-asc text-warning mr-2"></i> <strong>Sequence:</strong>
-                                    Lower numbers (e.g., 1, 5, 10) will appear first in the mobile grid.</li>
-                                <li><i class="fa fa-link text-primary mr-2"></i> <strong>Action URL:</strong> Provide
-                                    the relative portal route (e.g., <code>/my/evidence/tasks</code>). The launcher
-                                    handles secure redirects automatically.</li>
+                                <li><i class="fa fa-cube text-info mr-2"></i> <strong>Name & Basics:</strong>
+                                    Set the Name, Action URL (e.g., <code>/my/orders</code>), and Icon.</li>
+                                <li><i class="fa fa-paint-brush text-warning mr-2"></i> <strong>Design Theme:</strong>
+                                    Select a <strong>Color Scheme</strong> (Ocean, Sunset, Purple, Dark, Light).
+                                    <br><small class="text-muted">The system automatically applies beautiful CSS
+                                        gradients and configuring the PWA splash screen. Manual color picking acts in
+                                        read-only mode to prevent design errors.</small>
+                                </li>
                                 <li><i class="fa fa-shield text-danger mr-2"></i> <strong>Visibility (Groups):</strong>
-                                    Add specific user groups to restrict apps to certain roles (e.g., Managers only). If
-                                    empty, all portal users see it.</li>
+                                    Add specific user groups to restrict apps to certain roles (e.g., Managers only).
+                                </li>
                                 <li><i class="fa fa-check-square-o text-success mr-2"></i> <strong>Active
-                                        Status:</strong> Toggle to hide/show apps instantly without losing
-                                    configuration.</li>
+                                        Status:</strong> Toggle to hide/show apps instantly.</li>
                             </ul>
                         </div>
                     </div>
@@ -245,41 +245,46 @@
                         <!-- Scenario 1 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
-                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-shield mr-2"></i>
-                                Scenario 1: Group-Based Visibility</h4>
-                            <p class="small text-muted">Verify that sensitive apps are only visible to authorized roles.
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-paint-brush mr-2"></i>
+                                Scenario 1: Hybrid Theming Validation</h4>
+                            <p class="small text-muted">Verify the transition between backend metadata and frontend CSS.
                             </p>
                             <ol class="mt-3">
-                                <li>Create an app "Financial Tasks" and set its <strong>Allowed Groups</strong> to
-                                    "Accountant".</li>
-                                <li>Log in with a user who does NOT have that group.</li>
-                                <li><strong>Result:</strong> Verify the app does NOT appear in the Launcher grid.</li>
+                                <li>Set an App's updated theme to <strong>"Ocean"</strong>.</li>
+                                <li>Open the App in the portal.</li>
+                                <li><strong>Result:</strong> Verify the background shows a Blue Gradient (CSS) AND the
+                                    browser address bar turns Blue (Meta Tag).</li>
+                                <li>Switch the theme to <strong>"Sunset"</strong>. Reload.</li>
+                                <li><strong>Result:</strong> Verify the background changes to Red/Orange Gradient.</li>
                             </ol>
                         </div>
 
                         <!-- Scenario 2 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
-                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-sort mr-2"></i>
-                                Scenario 2: Dynamic Ordering (Sequence)</h4>
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-shield mr-2"></i>
+                                Scenario 2: Group Permission Security</h4>
                             <ol class="mt-3">
-                                <li>Create App A (Seq 10) and App B (Seq 5).</li>
-                                <li>Go to the Portal Home.</li>
-                                <li><strong>Result:</strong> Verify App B (lower sequence) appears physically before App
-                                    A.</li>
+                                <li>Set an App's visibility to <strong>Authorized Group Only</strong>.</li>
+                                <li>Login as a different user without that group.</li>
+                                <li><strong>Result:</strong> The App icon must vanish from the launcher grid.</li>
+                                <li>Attempt to access the URL directly (e.g. <code>/my/orders</code>).</li>
+                                <li><strong>Result:</strong> Standard Odoo Access Error (if controller constrained) or
+                                    redirect.</li>
                             </ol>
                         </div>
 
                         <!-- Scenario 3 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
-                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-language mr-2"></i>
-                                Scenario 3: Global Localization</h4>
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-mobile mr-2"></i>
+                                Scenario 3: PWA Installation (HTTPS)</h4>
                             <ol class="mt-3">
-                                <li>Set a translated name for an app in Spanish.</li>
-                                <li>Switch the Portal User's preference to Spanish.</li>
-                                <li><strong>Result:</strong> Verify the Launcher name updates instantly to the localized
-                                    version.</li>
+                                <li>Access the portal via HTTPS (or localhost).</li>
+                                <li><strong>Result:</strong> The "Install App" button appears (Android/Chrome).</li>
+                                <li>Install the App.</li>
+                                <li><strong>Result:</strong> Verify the app opens in "Standalone" mode (no browser UI)
+                                    with the correct Splash Screen color.</li>
                             </ol>
                         </div>
 
@@ -287,12 +292,12 @@
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
                             <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-sitemap mr-2"></i>
-                                Scenario 4: Deep Link Validation</h4>
+                                Scenario 4: Deep Linking</h4>
                             <ol class="mt-3">
-                                <li>Configure an App with a deep URL like <code>/my/orders/123</code>.</li>
-                                <li>Click the app icon in the Launcher.</li>
-                                <li><strong>Result:</strong> Verify the portal redirects accurately to the specific
-                                    record, bypassing the generic list.</li>
+                                <li>Configure an App with a deep URL like <code>/my/invoice/1</code>.</li>
+                                <li>Click the app icon.</li>
+                                <li><strong>Result:</strong> Direct navigation to the document, retaining the layout
+                                    theme.</li>
                             </ol>
                         </div>
                     </div>
@@ -329,36 +334,34 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
-                            <h5 style="font-weight: 700; color: #333;">App not showing up in Launcher?</h5>
-                            <p class="text-muted small">1. Check if the app is marked as <strong>Active</strong>.<br>2.
-                                Verify if you are in an <strong>Allowed Group</strong>.<br>3. Ensure the User is logged
-                                in (Portal status).</p>
+                            <h5 style="font-weight: 700; color: #333;">Why can't I edit colors manually?</h5>
+                            <p class="text-muted small">We enforce a <strong>Theme System</strong> to guarantee perfect
+                                contrast and aesthetics. Manual editing is locked in read-only mode to prevent design
+                                inconsistencies.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
-                            <h5 style="font-weight: 700; color: #333;">Why can't I see the "Install" Button?</h5>
-                            <p class="text-muted small">PWA features require a <strong>Secure Context (HTTPS)</strong>.
-                                Modern browsers block "Add to Home Screen" on non-SSL environments (except localhost).
-                            </p>
+                            <h5 style="font-weight: 700; color: #333;">Why isn't the "Install" Button visible?</h5>
+                            <p class="text-muted small">PWA installation requires a secure <strong>HTTPS</strong>
+                                context. Also, if the app is already installed, the button automatically hides.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
-                            <h5 style="font-weight: 700; color: #333;">Can I link to external domains?</h5>
-                            <p class="text-muted small">Yes. The <strong>Action URL</strong> accepts both relative
-                                portal paths and absolute external URLs (e.g., https://yourdocs.com).</p>
+                            <h5 style="font-weight: 700; color: #333;">Does it work with existing modules?</h5>
+                            <p class="text-muted small">Yes. Just create a new Portal App record pointing to your
+                                existing module's portal URL (e.g., <code>/my/invoices</code>).</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6c757d;">
-                            <h5 style="font-weight: 700; color: #333;">Why does the icon looks blurry?</h5>
-                            <p class="text-muted small"><strong>Solution:</strong> Use Vector graphics (SVG) or
-                                high-resolution PNGs (512px). The launcher scales them to fit the mobile grid precisely.
-                            </p>
+                            <h5 style="font-weight: 700; color: #333;">How to change the default theme?</h5>
+                            <p class="text-muted small">Go to the App config and change the <strong>Color
+                                    Scheme</strong> field. The CSS and PWA meta tags will update instantly.</p>
                         </div>
                     </div>
                 </div>

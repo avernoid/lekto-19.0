@@ -1,13 +1,13 @@
 {
     'name': 'Stock Picking Extras',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'category': 'Inventory',
     'summary': """Instant logistical information for Stock Transfers: Package and Bundle counts.""",
     'description': """
         This module extends Odoo Stock Pickings to provide essential logistical data without altering stock flows.
         
         Key Features:
-        - Total Packages: Counts unique packages in the operations.
+        - Packages Count: Uses Odoo's native package count.
         - Total Bundles: Logistics unit count (Packages + Loose Items).
         - Read-only fields in Form and List views.
         - Passive logic: Does not affect reservations or accounting.

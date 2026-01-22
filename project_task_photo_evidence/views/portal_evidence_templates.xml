@@ -2,43 +2,75 @@
 <odoo>
     <template id="evidence_app_home" name="My Evidence Tasks">
         <t t-call="portal_app_launcher.portal_app_layout">
+            <t t-set="manifest_url" t-value="'/portal_app/manifest.webmanifest?app_mode=evidence'"/>
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=evidence"/>
+                <meta name="theme-color" content="#667eea"/>
+                <style>
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    .btn:active { transform: scale(0.98); transition: transform 0.05s; }
+                    @media all and (display-mode: standalone) {
+                        .pwa-only-hidden { display: none !important; }
+                    }
+                </style>
+                <script>
+                    if ('serviceWorker' in navigator) {
+                        window.addEventListener('load', function() {
+                            navigator.serviceWorker.register('/service-worker.js');
+                        });
+                    }
+                    
+                    // Robust Install Pattern
+                    let deferredPrompt;
+                    window.addEventListener('beforeinstallprompt', (e) => {
+                        e.preventDefault();
+                        deferredPrompt = e;
+                        const btn = document.getElementById('pwaInstallBtn');
+                        if(btn) btn.style.display = 'block';
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (e.target.closest('#pwaInstallBtn')) {
+                            if (deferredPrompt) {
+                                deferredPrompt.prompt();
+                                deferredPrompt.userChoice.then((choiceResult) => {
+                                    if (choiceResult.outcome === 'accepted') {
+                                        document.getElementById('pwaInstallBtn').style.display = 'none';
+                                        const msg = document.getElementById('pwaInstalledMsg');
+                                        if(msg) msg.style.display = 'block';
+                                    }
+                                    deferredPrompt = null;
+                                });
+                            }
+                        }
+                    });
+                </script>
+            </t>
             <div class="container py-4">
                 <div class="d-flex align-items-center justify-content-between mb-3">
                      <div class="d-flex align-items-center">
-                        <a href="/my/home" class="btn btn-light rounded-circle shadow-sm me-3">
+                        <a href="/my/home" class="btn btn-light rounded-circle shadow-sm me-3 pwa-only-hidden">
                             <i class="fa fa-arrow-left"/>
                         </a>
                         <div>
                             <h4 class="m-0 text-white">Photos</h4>
-                            <button id="pwaInstallBtn" class="btn btn-sm btn-outline-light rounded-pill mt-1" style="display: none;">
-                                <i class="fa fa-download me-1"/> Install App
-                            </button>
                         </div>
+                     </div>
+                     
+                     <!-- Right Side: PWA Controls -->
+                     <div class="d-flex align-items-center gap-2">
+                        <button id="pwaInstallBtn" class="btn btn-sm btn-outline-light rounded-pill" style="display:none;">
+                            <i class="fa fa-download me-1"/> Install
+                        </button>
+                        <div id="pwaInstalledMsg" class="text-white small fw-bold" style="display: none;">
+                            <i class="fa fa-check-circle me-1"/> Installed
+                        </div>
+                     </div>
                      </div>
                 </div>
 
-                <script type="text/javascript">
-                    let deferredPrompt;
-                    const installBtn = document.getElementById('pwaInstallBtn');
 
-                    window.addEventListener('beforeinstallprompt', (e) => {
-                        e.preventDefault();
-                        deferredPrompt = e;
-                        if(installBtn) installBtn.style.display = 'block';
-                    });
-
-                    if(installBtn) {
-                        installBtn.addEventListener('click', (e) => {
-                            installBtn.style.display = 'none';
-                            if(deferredPrompt) {
-                                deferredPrompt.prompt();
-                                deferredPrompt.userChoice.then((choiceResult) => {
-                                    deferredPrompt = null;
-                                });
-                            }
-                        });
-                    }
-                </script>
 
                 <!-- Smart Filters moved to bottom bar -->
 
@@ -202,15 +234,25 @@
                  </div>
                  <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>
              </div>
-             </div>
+
         </t>
     </template>
 
     <template id="evidence_app_task_upload" name="Upload Evidence">
         <t t-call="portal_app_launcher.portal_app_layout">
-             <div class="container py-4">
+            <t t-set="manifest_url" t-value="'/portal_app/manifest.webmanifest?app_mode=evidence'"/>
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=evidence"/>
+                <meta name="theme-color" content="#667eea"/>
+                <style>
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    .btn:active { transform: scale(0.98); transition: transform 0.05s; }
+                </style>
+            </t>
+            <div class="container py-4">
                 <div class="d-flex align-items-center mb-4">
-                    <a href="/my/evidence/tasks" class="btn btn-light rounded-circle shadow-sm me-3">
+                    <a href="/my/evidence/tasks" class="btn btn-light rounded-circle shadow-sm me-3 pwa-only-hidden">
                         <i class="fa fa-arrow-left"/>
                     </a>
                     <h4 class="m-0 text-white"><t t-esc="task.name"/></h4>
@@ -223,10 +265,22 @@
                     </div>
                 </t>
 
-                <!-- Validation Error (Max Qty) -->
+                <!-- Validation Error (Max Qty / Missing Evidence) -->
                 <t t-if="request.params.get('error')">
                     <div class="alert alert-danger mb-4 shadow-sm">
-                        <i class="fa fa-times-circle me-1"/> <t t-esc="request.params.get('error')"/>
+                        <i class="fa fa-times-circle me-1"/> 
+                        <t t-if="request.params.get('error') == 'missing_evidence'">
+                            <strong>Evidence Missing:</strong>
+                            <t t-set="missing" t-value="task._get_missing_evidence_requirements()"/>
+                            <ul class="mb-0 ps-3">
+                                <t t-foreach="missing" t-as="item">
+                                    <li><strong><t t-esc="item['product_name']"/></strong>: Need <t t-esc="item['required']"/>, Have <t t-esc="item['current']"/></li>
+                                </t>
+                            </ul>
+                        </t>
+                        <t t-else="">
+                            <t t-esc="request.params.get('error')"/>
+                        </t>
                     </div>
                 </t>
 
@@ -238,11 +292,31 @@
                             <input type="hidden" name="latitude" id="latitude"/>
                             <input type="hidden" name="longitude" id="longitude"/>
                             
+                            <script>
+                                function submitUpload() {
+                                    // 1. Hide Button and Help Text to prevent double clicks/interruption
+                                    document.getElementById('uploadLabel').style.display = 'none';
+                                    var helpText = document.getElementById('uploadHelpText');
+                                    if(helpText) helpText.style.display = 'none';
+                                    
+                                    // 2. Hide Complete Form to prevent race conditions
+                                    var completeForm = document.getElementById('completeForm');
+                                    if(completeForm) completeForm.style.display = 'none';
+                                    
+                                    // 3. Show local processing message
+                                    document.getElementById('uploadingMsg').style.display = 'block';
+                                    
+                                    // 4. Submit
+                                    document.getElementById('uploadForm').submit();
+                                }
+                            </script>
+                            
                             <!-- Product Selection -->
                             <t t-if="task.evidence_product_ids and len(task.evidence_product_ids) > 1">
                                 <div class="mb-3 text-start">
                                     <label class="form-label fw-bold">Evidence For:</label>
                                     <select name="product_id" class="form-select">
+                                        <option value="" selected="selected" disabled="disabled">Select Product...</option>
                                         <t t-foreach="task.evidence_product_ids" t-as="p">
                                             <option t-att-value="p.id"><t t-esc="p.name"/></option>
                                         </t>
@@ -263,24 +337,60 @@
                                 <input type="text" name="evidence_name" class="form-control" placeholder="e.g. Broken screen..."/>
                             </div>
 
-                            <label for="evidence_file" class="btn btn-lg btn-primary rounded-pill px-5 py-3 shadow">
+                            <label for="evidence_file" id="uploadLabel" class="btn btn-lg btn-primary rounded-pill px-5 py-3 shadow">
                                 <i class="fa fa-camera fa-2x mb-2 d-block"/>
                                 <span class="h5">Take Photo</span>
                             </label>
-                            <input type="file" name="evidence_file" id="evidence_file" accept="image/*" capture="environment" class="d-none" onchange="document.getElementById('uploadForm').submit();"/>
+                            
+                            <!-- Hidden Uploading Message -->
+                            <div id="uploadingMsg" style="display: none;" class="text-primary animate-pulse">
+                                <div class="spinner-border mb-2" role="status"></div>
+                                <h5 class="fw-bold">Uploading...</h5>
+                            </div>
+                            
+                            <!-- Trigger upload on file selection -->
+                            <input type="file" name="evidence_file" id="evidence_file" accept="image/*" capture="environment" class="d-none" onchange="submitUpload();"/>
                         </form>
-                        <p class="text-muted mt-3 mb-0">Tap to open camera</p>
+                        <p id="uploadHelpText" class="text-muted mt-3 mb-0">Tap to open camera</p>
                     </div>
                 </div>
 
+
                 <!-- Complete Task Button (Only if configured) -->
                 <t t-if="task.project_id.evidence_final_stage_id or task.project_id.evidence_final_state">
-                    <form t-att-action="'/my/evidence/task/%s/complete' % task.id" method="post" class="mb-4 text-center">
+                    <form id="completeForm" t-att-action="'/my/evidence/task/%s/complete' % task.id" method="post" class="mb-4 text-center" onsubmit="submitComplete(this);">
                          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                         <button type="submit" class="btn btn-success btn-lg rounded-pill shadow w-100" confirm="Are you sure you want to mark this task as done?">
+                         <button type="submit" id="btn-complete" class="btn btn-success btn-lg rounded-pill shadow w-100" confirm="Are you sure you want to mark this task as done?">
                             <i class="fa fa-check-circle me-2"/> Mark as Done
                          </button>
                     </form>
+                    
+                    <script>
+                        function submitComplete(form) {
+                             var btn = document.getElementById('btn-complete');
+                             btn.disabled = true;
+                             btn.innerHTML = '<i class="fa fa-spinner fa-spin me-2"></i> Processing...';
+                        }
+                        
+                        // Restore Button State if page is loaded from BFCache (Back button)
+                        window.addEventListener('pageshow', function(event) {
+                             var btn = document.getElementById('btn-complete');
+                             var form = document.getElementById('completeForm');
+                             
+                             if (btn) {
+                                 btn.disabled = false;
+                                 btn.innerHTML = '<i class="fa fa-check-circle me-2"></i> Mark as Done';
+                             }
+                             if (form) {
+                                 form.style.display = 'block'; // Ensure form is visible again
+                             }
+                             
+                             var msg = document.getElementById('uploadingMsg');
+                             if (msg) {
+                                 msg.style.display = 'none';
+                             }
+                        });
+                    </script>
                 </t>
 
                 <!-- Previous Evidence -->
@@ -310,6 +420,9 @@
                     });
                 }
              </script>
+             
+             <!-- Load Photo Evidence Portal JS for offline optimizations -->
+             <script src="/project_task_photo_evidence/static/src/js/photo_evidence_portal.js"></script>
         </t>
     </template>
 </odoo>

@@ -8,7 +8,7 @@
             <!-- Add Logistics Counts group to the Additional Info tab -->
             <xpath expr="//page[@name='extra']/group" position="inside">
                 <group string="Logistics Counts" name="logistics_counts">
-                    <field name="total_packages"/>
+                    <field name="packages_count"/>
                     <field name="total_bundles"/>
                 </group>
             </xpath>
@@ -21,7 +21,7 @@
         <field name="inherit_id" ref="stock.vpicktree"/>
         <field name="arch" type="xml">
             <field name="origin" position="after">
-                <field name="total_packages" optional="show"/>
+                <field name="packages_count" optional="show"/>
                 <field name="total_bundles" optional="show"/>
             </field>
         </field>

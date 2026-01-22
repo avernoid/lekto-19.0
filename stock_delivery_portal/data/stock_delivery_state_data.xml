@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- NON-FINAL STATES -->
+        <record id="delivery_state_pending" model="stock.delivery.state">
+            <field name="name">Pendiente</field>
+            <field name="sequence">10</field>
+            <field name="is_result_state">False</field>
+            <field name="icon">fa-exclamation-circle</field>
+            <field name="help_delivery">El pedido está listo para ser entregado. Verifique que la carga coincida con el albarán antes de iniciar la ruta.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="delivery_state_on_way" model="stock.delivery.state">
+            <field name="name">En Camino</field>
+            <field name="sequence">20</field>
+            <field name="is_result_state">False</field>
+            <field name="icon">fa-truck</field>
+            <field name="help_delivery">El conductor está en ruta hacia el destino. Asegúrese de tener la ubicación correcta.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="delivery_state_delayed" model="stock.delivery.state">
+            <field name="name">Retrasado</field>
+            <field name="sequence">30</field>
+            <field name="is_result_state">False</field>
+            <field name="require_photo">True</field>
+            <field name="icon">fa-hourglass-end</field>
+            <field name="help_delivery">La entrega se ha retrasado (tráfico, problemas mecánicos). Por favor reporte la incidencia a la central.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="delivery_state_reschedule" model="stock.delivery.state">
+            <field name="name">Reprogramar</field>
+            <field name="sequence">40</field>
+            <field name="is_result_state">False</field>
+            <field name="icon">fa-calendar</field>
+            <field name="help_delivery">El cliente ha solicitado cambio de fecha o no es posible entregar hoy. Coordinar nueva fecha.</field>
+            <field name="active">True</field>
+        </record>
+
+        <!-- FINAL STATES -->
+        <record id="delivery_state_delivered" model="stock.delivery.state">
+            <field name="name">Entregado</field>
+            <field name="sequence">50</field>
+            <field name="is_result_state">True</field>
+            <field name="result_type">success</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="require_signature">True</field>
+            <field name="is_signature_mandatory">True</field>
+            <field name="require_photo">True</field>
+            <field name="is_photo_mandatory">True</field>
+            <field name="require_receiver_name">True</field>
+            <field name="is_receiver_name_mandatory">True</field>
+            <field name="help_delivery">Entrega realizada con éxito. Solicite al cliente que firme el dispositivo para confirmar la recepción.</field>
+            <field name="legal_text">Declaro recibir la mercancía descrita en este documento en buenas condiciones y conformidad. La firma de este documento implica la aceptación de la entrega.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="delivery_state_partial" model="stock.delivery.state">
+            <field name="name">Parcial</field>
+            <field name="sequence">60</field>
+            <field name="is_result_state">True</field>
+            <field name="result_type">partial</field>
+            <field name="icon">fa-exclamation-circle</field>
+            <field name="require_signature">True</field>
+            <field name="is_signature_mandatory">True</field>
+            <field name="help_delivery">Entrega incompleta. Indique en las notas qué productos fueron rechazados y el motivo.</field>
+            <field name="legal_text">Declaro recibir PARCIALMENTE la mercancía. Los productos no entregados quedan pendientes de resolución o devolución según las políticas de la empresa.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="delivery_state_not_delivered" model="stock.delivery.state">
+            <field name="name">No Entregado</field>
+            <field name="sequence">70</field>
+            <field name="is_result_state">True</field>
+            <field name="result_type">failure</field>
+            <field name="icon">fa-times-circle</field>
+            <field name="help_delivery">No se pudo entregar (dirección errónea, rechazado total). Regrese la mercancía al almacén.</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="delivery_state_absent" model="stock.delivery.state">
+            <field name="name">Ausente</field>
+            <field name="sequence">80</field>
+            <field name="is_result_state">True</field>
+            <field name="result_type">failure</field>
+            <field name="icon">fa-user-times</field>
+            <field name="require_photo">True</field>
+            <field name="help_delivery">Cliente no se encuentra en el domicilio. Tome una foto de la fachada/timbre como prueba de visita.</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

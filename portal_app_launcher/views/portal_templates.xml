@@ -7,6 +7,7 @@
 
                 <!-- PWA Install Button (Hidden by default) -->
                 <!-- PWA Install Button (Always Visible) -->
+                <!-- PWA Install Button (Always Visible by default, hidden by JS if installed) -->
                 <button id="pwaInstallBtn" class="btn btn-light rounded-pill mb-4 shadow-sm fw-bold px-4">
                     <i class="fa fa-download me-2"/> Install App
                 </button>
@@ -53,19 +54,70 @@
                 <title t-esc="title or 'In-House App'"/>
                 
                 <!-- PWA Meta Tags -->
-                <link rel="manifest" href="/portal_app/manifest.webmanifest"/>
-                <meta name="theme-color" content="#667eea"/>
+                <link rel="manifest" t-att-href="manifest_url or '/portal_app/manifest.webmanifest'"/>
+                
+                <!-- Dynamic Aesthetics based on Active App (inferred from URL) -->
+                <t t-set="active_app" t-value="request.env['portal.app'].sudo().search([]).filtered(lambda a: request.httprequest.path.startswith(a.action_url))[:1]"/>
+
+                <meta name="theme-color" t-att-content="active_app.theme_color if active_app else '#667eea'"/>
                 <meta name="apple-mobile-web-app-capable" content="yes"/>
                 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-                <meta name="apple-mobile-web-app-title" content="Portal App"/>
+                <meta name="apple-mobile-web-app-title" t-att-content="active_app.pwa_name or active_app.name if active_app else 'Portal App'"/>
+                
+                <!-- CSS-based Theming: We use classes instead of inline styles for richer aesthetics -->
+                <!-- The computed fields (theme_color, etc.) are still used for the PWA meta tags above -->
                 <link rel="apple-touch-icon" href="/web/binary/company_logo"/>
 
                 <t t-call-assets="web.assets_frontend" t-js="false"/>
                 <t t-call-assets="web.assets_frontend" t-css="false"/>
                 
+                <style>
+                    /* Dynamic Theme Variables */
+                    :root {
+                        --app-bg: <t t-esc="active_app.app_background_color or '#f0f4f7'"/>;
+                        --app-text: <t t-esc="active_app.app_text_color or '#212529'"/>;
+                        /* Auto-Dark Mode for Cards if scheme is 'dark' */
+                        --app-card-bg: <t t-esc="'#1e1e1e' if active_app and active_app.color_scheme == 'dark' else '#ffffff'"/>;
+                        --app-card-text: <t t-esc="'#ffffff' if active_app and active_app.color_scheme == 'dark' else '#212529'"/>;
+                    }
+
+                    body.portal_app_body {
+                         background-color: var(--app-bg) !important;
+                         color: var(--app-text) !important;
+                    }
+
+                    /* Override Bootstrap text utilities within the app to respect our theme */
+                    body.portal_app_body .text-white, 
+                    body.portal_app_body .text-dark,
+                    body.portal_app_body h1, body.portal_app_body h2, body.portal_app_body h3, 
+                    body.portal_app_body h4, body.portal_app_body h5, body.portal_app_body h6 {
+                        color: var(--app-text) !important;
+                    }
+
+                    /* Card Theming */
+                    body.portal_app_body .card {
+                        background-color: var(--app-card-bg) !important;
+                        color: var(--app-card-text) !important;
+                    }
+                    /* Ensure text inside cards respects the card contrast, NOT the body contrast */
+                    body.portal_app_body .card h1, body.portal_app_body .card h2, 
+                    body.portal_app_body .card h3, body.portal_app_body .card h4, 
+                    body.portal_app_body .card h5, body.portal_app_body .card h6,
+                    body.portal_app_body .card .text-dark, body.portal_app_body .card .text-white {
+                        color: var(--app-card-text) !important;
+                    }
+
+                    /* Utilities to hide elements when installed as PWA */
+                    @media all and (display-mode: standalone) {
+                        .pwa-only-hidden {
+                            display: none !important;
+                        }
+                    }
+                </style>
+                
 
             </head>
-            <body class="portal_app_body">
+            <body t-attf-class="portal_app_body theme-{{ active_app.color_scheme if active_app else 'light' }}">
                 <main>
                     <t t-out="0"/>
                 </main>
@@ -80,20 +132,24 @@
                         });
                     }
                     
-                    // PWA Install Logic
+                    // PWA Install Logic - Robust Event Delegation
                     let deferredPrompt;
-                    const installBtn = document.getElementById('pwaInstallBtn');
-                    const installedMsg = document.getElementById('pwaInstalledMsg');
                     
                     window.addEventListener('beforeinstallprompt', (e) => {
                         // Prevent Chrome 67 and earlier from automatically showing the prompt
                         e.preventDefault();
                         // Stash the event so it can be triggered later.
                         deferredPrompt = e;
+                        console.log("PWA: beforeinstallprompt captured");
                     });
 
-                    if(installBtn) {
-                        installBtn.addEventListener('click', (e) => {
+                    // Use event delegation to handle clicks even if button loads late
+                    document.addEventListener('click', (e) => {
+                        const btn = e.target.closest('#pwaInstallBtn');
+                        if (btn) {
+                            console.log("PWA: Install button clicked");
+                            const installedMsg = document.getElementById('pwaInstalledMsg');
+                            
                             // Show the prompt
                             if(deferredPrompt) {
                                 deferredPrompt.prompt();
@@ -102,21 +158,23 @@
                                     if (choiceResult.outcome === 'accepted') {
                                         console.log('User accepted the A2HS prompt');
                                         if(installedMsg) installedMsg.style.display = 'block';
-                                        installBtn.style.display = 'none';
+                                        btn.style.display = 'none';
                                     } else {
                                         console.log('User dismissed the A2HS prompt');
                                     }
                                     deferredPrompt = null;
                                 });
                             } else {
-                                // Manual Instructions Fallback (e.g. iOS)
-                                alert('To install: Tap the Share button (bottom or top bar) and select "Add to Home Screen".');
+                                // Manual Instructions Fallback
+                                alert('To install this app:\n\n1. Tap the Share/Menu button (three dots).\n2. Select "Add to Home Screen" or "Install App".');
                             }
-                        });
-                    }
+                        }
+                    });
 
                     // Check if already installed
                     if (window.matchMedia('(display-mode: standalone)').matches) {
+                        const installBtn = document.getElementById('pwaInstallBtn');
+                        const installedMsg = document.getElementById('pwaInstalledMsg');
                         if(installBtn) installBtn.style.display = 'none';
                         if(installedMsg) installedMsg.style.display = 'block';
                     }

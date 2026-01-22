@@ -1,0 +1,339 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_delivery_portal
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-21 00:00+0000\n"
+"PO-Revision-Date: 2026-01-21 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__active
+msgid "If unchecked, it will allow you to hide the state without removing it."
+msgstr "Si no está marcado, le permitirá ocultar el estado sin eliminarlo."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__company_id
+msgid "Company this state belongs to."
+msgstr "Compañía a la que pertenece este estado."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking__delivery_date_done
+msgid "Delivery Date"
+msgstr "Fecha de Entrega"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking__delivery_date_done
+msgid "Date and time when the delivery reached a final state."
+msgstr "Fecha y hora cuando la entrega alcanzó un estado final."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking__delivery_partner_id
+msgid "Delivery Driver"
+msgstr "Conductor de Reparto"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking__delivery_partner_id
+msgid "Partner (driver) responsible for the delivery."
+msgstr "Contacto (conductor) responsable de la entrega."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking__delivery_notes
+msgid "Delivery Notes"
+msgstr "Notas de Entrega"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking__delivery_notes
+msgid "Optional notes added by the driver."
+msgstr "Notas opcionales añadidas por el conductor."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking__delivery_state_id
+msgid "Delivery State"
+msgstr "Estado de Entrega"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking__delivery_state_id
+msgid "Current state of the delivery in the portal."
+msgstr "Estado actual de la entrega en el portal."
+
+#. module: stock_delivery_portal
+#: model:ir.actions.act_window,name:stock_delivery_portal.action_stock_delivery_state
+#: model:ir.ui.menu,name:stock_delivery_portal.menu_stock_delivery_state
+msgid "Delivery States"
+msgstr "Estados de Entrega"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__mail_template_id
+msgid "Email Template"
+msgstr "Plantilla de Correo"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__mail_template_id
+msgid "Email template to send automatically when entering this state."
+msgstr "Plantilla de correo para enviar automáticamente al entrar en este estado."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields.selection,name:stock_delivery_portal.selection__stock_delivery_state__result_type__failure
+msgid "Failure"
+msgstr "Fallo"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__help_delivery
+msgid "Help for Drivers"
+msgstr "Ayuda para Conductores"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__help_delivery
+msgid "Instructions shown to the driver in the portal during this state."
+msgstr "Instrucciones mostradas al conductor en el portal durante este estado."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__is_result_state
+msgid "Is Result State"
+msgstr "Es Estado de Resultado"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__is_result_state
+msgid "Check this if this state represents a final outcome (e.g. Delivered, Failed)."
+msgstr "Marque esto si este estado representa un resultado final (ej. Entregado, Fallido)."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__legal_text
+msgid "Legal Text"
+msgstr "Texto Legal"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__legal_text
+msgid "Legal text to display/accept during this state"
+msgstr "Texto legal para mostrar/aceptar durante este estado"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__picking_type_ids
+msgid "Operation Types"
+msgstr "Tipos de Operación"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__picking_type_ids
+msgid "Operation types where this state can be used."
+msgstr "Tipos de operación donde se puede usar este estado."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields.selection,name:stock_delivery_portal.selection__stock_delivery_state__result_type__partial
+msgid "Partial Success"
+msgstr "Éxito Parcial"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking__delivery_receiver_name
+msgid "Receiver Name"
+msgstr "Nombre del Receptor"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking__delivery_receiver_name
+msgid "Name of the person who received the package."
+msgstr "Nombre de la persona que recibió el paquete."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__require_photo
+msgid "Require Photo"
+msgstr "Requerir Foto"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__require_photo
+msgid "If true, the driver must provide at least one photo to switch to this state."
+msgstr "Si es verdadero, el conductor debe proporcionar al menos una foto para cambiar a este estado."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__require_receiver_name
+msgid "Require Receiver Name"
+msgstr "Requerir Nombre del Receptor"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__require_receiver_name
+msgid "If true, the driver must provide the receiver's name."
+msgstr "Si es verdadero, el conductor debe proporcionar el nombre del receptor."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__require_signature
+msgid "Require Signature"
+msgstr "Requerir Firma"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__require_signature
+msgid "If true, the driver must provide a signature to switch to this state."
+msgstr "Si es verdadero, el conductor debe proporcionar una firma para cambiar a este estado."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__result_type
+msgid "Result Type"
+msgstr "Tipo de Resultado"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__result_type
+msgid "Classification of the result: Success, Partial or Failure."
+msgstr "Clasificación del resultado: Éxito, Parcial o Fallo."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__sequence
+msgid "Sequence for sorting states in the list."
+msgstr "Secuencia para ordenar estados en la lista."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__name
+msgid "Name of the delivery state (e.g. Delivered, On the way)."
+msgstr "Nombre del estado de entrega (ej. Entregado, En camino)."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields.selection,name:stock_delivery_portal.selection__stock_delivery_state__result_type__success
+msgid "Success"
+msgstr "Éxito"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__whatsapp_template_id
+msgid "WhatsApp Template"
+msgstr "Plantilla de WhatsApp"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__whatsapp_template_id
+msgid "WhatsApp template to send automatically when entering this state."
+msgstr "Plantilla de WhatsApp para enviar automáticamente al entrar en este estado."
+
+#. module: stock_delivery_portal
+#: code:addons/stock_delivery_portal/models/stock_picking.py:0
+#, python-format
+msgid "Signature is required for state %s."
+msgstr "Se requiere firma para el estado %s."
+
+#. module: stock_delivery_portal
+#: code:addons/stock_delivery_portal/models/stock_picking.py:0
+#, python-format
+msgid "Receiver name is required for state %s."
+msgstr "Se requiere nombre del receptor para el estado %s."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking__delivery_phone
+msgid "Contact Phone"
+msgstr "Teléfono de Contacto"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking__delivery_phone
+msgid "Phone number for driver contact (auto-filled from partner but editable)."
+msgstr "Número de teléfono para contacto del conductor (se auto-completa del contacto pero es editable)."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking__hide_from_portal
+msgid "Hide from Portal Delivery"
+msgstr "Ocultar en Portal de Entrega"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking__hide_from_portal
+msgid "If enabled, this picking will not be visible in the delivery portal. Use this as a security measure to restrict access to specific pickings."
+msgstr "Si está habilitado, este albarán no será visible en el portal de entrega. Úselo como medida de seguridad para restringir el acceso a albaranes específicos."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__icon
+msgid "Font Awesome Icon"
+msgstr "Icono Font Awesome"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__icon
+msgid "Font Awesome icon class (e.g. fa-truck, fa-check, fa-upload). Do not include 'fa' prefix, only the icon name (e.g. 'fa-truck')."
+msgstr "Clase de icono Font Awesome (ej. fa-truck, fa-check, fa-upload). No incluya el prefijo 'fa', solo el nombre del icono (ej. 'fa-truck')."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__is_signature_mandatory
+msgid "Signature Mandatory"
+msgstr "Firma Obligatoria"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__is_signature_mandatory
+msgid "If checked, the user CANNOT submit without a signature."
+msgstr "Si está marcado, el usuario NO PUEDE enviar sin una firma."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__is_photo_mandatory
+msgid "Photo Mandatory"
+msgstr "Foto Obligatoria"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__is_photo_mandatory
+msgid "If checked, the user CANNOT submit without a photo."
+msgstr "Si está marcado, el usuario NO PUEDE enviar sin una foto."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_delivery_state__is_receiver_name_mandatory
+msgid "Receiver Name Mandatory"
+msgstr "Nombre del Receptor Obligatorio"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_delivery_state__is_receiver_name_mandatory
+msgid "If checked, the user CANNOT submit without a receiver name."
+msgstr "Si está marcado, el usuario NO PUEDE enviar sin un nombre de receptor."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_picking_type.field_delivery_portal_show_items
+msgid "Show Items in Portal Delivery"
+msgstr "Mostrar Artículos en Portal de Entrega"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_picking_type.field_delivery_portal_show_items
+msgid "If enabled, delivery items (product name, quantity, photos) will be visible in the delivery portal. Disable this for confidentiality in sensitive sectors."
+msgstr "Si está habilitado, los artículos de entrega (nombre del producto, cantidad, fotos) serán visibles en el portal de entrega. Deshabilite esto para confidencialidad en sectores sensibles."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_picking_type.field_allow_driver_contact
+msgid "Allow Driver Contact"
+msgstr "Permitir Contacto del Conductor"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_picking_type.field_allow_driver_contact
+msgid "If enabled, drivers can contact the recipient via call, SMS, or WhatsApp from the portal. Disable for high-security deliveries."
+msgstr "Si está habilitado, los conductores pueden contactar al destinatario mediante llamada, SMS o WhatsApp desde el portal. Deshabilite para entregas de alta seguridad."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_state.field_is_result_state
+msgid "Is Result State"
+msgstr "Es Estado de Resultado"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_state.field_is_result_state
+msgid "Check this if this state represents a final outcome (e.g. Delivered, Failed)."
+msgstr "Marque esto si este estado representa un resultado final (ej. Entregado, Fallido)."
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,field_description:stock_delivery_state.field_legal_text
+msgid "Legal Text"
+msgstr "Texto Legal"
+
+#. module: stock_delivery_portal
+#: model:ir.model.fields,help:stock_delivery_state.field_legal_text
+msgid "Legal text to display/accept during this state"
+msgstr "Texto legal a mostrar/aceptar durante este estado"

@@ -28,6 +28,7 @@
                             <field name="sequence"/>
                             <field name="active" widget="boolean_toggle"/>
                             <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="icon"/>
                         </group>
                         <group name="classification" string="Classification">
                             <field name="is_result_state"/>
@@ -42,8 +43,11 @@
                                 </group>
                                 <group string="Requirements">
                                     <field name="require_signature"/>
+                                    <field name="is_signature_mandatory" invisible="not require_signature"/>
                                     <field name="require_photo"/>
+                                    <field name="is_photo_mandatory" invisible="not require_photo"/>
                                     <field name="require_receiver_name"/>
+                                    <field name="is_receiver_name_mandatory" invisible="not require_receiver_name"/>
                                 </group>
                             </group>
                         </page>
@@ -70,9 +74,10 @@
         <field name="name">stock.delivery.state.tree</field>
         <field name="model">stock.delivery.state</field>
         <field name="arch" type="xml">
-            <list editable="bottom">
+            <list editable="bottom" multi_edit="1" open_form_view="True">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
+                <field name="icon"/>
                 <field name="picking_type_ids" widget="many2many_tags"/>
                 <field name="is_result_state"/>
                 <field name="result_type"/>

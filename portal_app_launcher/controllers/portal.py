@@ -10,10 +10,14 @@ class AppLauncherPortal(CustomerPortal):
         if request.env.user.has_group('portal_app_launcher.group_portal_app_user'):
             # Fetch available apps for this user
             apps = request.env['portal.app'].sudo().search([])
-            # Filter apps by group if necessary
-            # We use sudo() on apps to allow reading the 'group_ids' field (which points to res.groups, usually restricted)
-            # We compare with user.groups_id which the user can read about themselves
-            visible_apps = apps.filtered(lambda a: not a.group_ids or (a.group_ids & request.env.user.groups_id))
+            
+            # DIRECT SQL: The most robust way to check groups if ORM is restricted/broken in this context.
+            # This bypasses 'res.users' attribute access and 'res.groups' ACLs entirely.
+            request.env.cr.execute("SELECT gid FROM res_groups_users_rel WHERE uid = %s", (request.env.user.id,))
+            user_group_ids = [row[0] for row in request.env.cr.fetchall()]
+            
+            # Filter apps
+            visible_apps = apps.filtered(lambda a: not a.group_ids or any(g.id in user_group_ids for g in a.group_ids))
             
             return request.render('portal_app_launcher.portal_app_launcher_home', {
                 'apps': visible_apps,

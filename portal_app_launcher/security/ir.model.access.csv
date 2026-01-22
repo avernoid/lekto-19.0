@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_portal_app_user,portal.app.user,model_portal_app,group_portal_app_user,1,0,0,0
-access_portal_app_manager,portal.app.manager,model_portal_app,base.group_system,1,1,1,1
+access_portal_app_manager,portal.app.manager,model_portal_app,group_portal_app_manager,1,1,1,1
+access_portal_app_portal,portal.app.portal,model_portal_app,base.group_portal,1,0,0,0
