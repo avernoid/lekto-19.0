@@ -1,35 +1,69 @@
 /** @odoo-module **/
 
+// Filtrado de items por paquete en la vista de picking portal
+window.currentFilteredPackageId = null;
+window.filterItemsByPackage = function (btn) {
+    if (!btn) return;
+    var pkgId = String(btn.getAttribute('data-package-id') || "");
+    var items = document.querySelectorAll('#itemsList li');
+    var clearBtn = document.getElementById('clearPackageFilterBtn');
+
+    // Toggle logic
+    if (window.currentFilteredPackageId === pkgId) {
+        items.forEach(function (li) { li.style.setProperty('display', '', 'important'); });
+        if (clearBtn) clearBtn.classList.add('d-none');
+        window.currentFilteredPackageId = null;
+    } else {
+        items.forEach(function (li) {
+            var itemPkgId = String(li.getAttribute('data-package-id') || "");
+            if (itemPkgId === pkgId) {
+                li.style.setProperty('display', '', 'important');
+            } else {
+                li.style.setProperty('display', 'none', 'important');
+            }
+        });
+        if (clearBtn) clearBtn.classList.remove('d-none');
+        window.currentFilteredPackageId = pkgId;
+    }
+}
+window.clearPackageFilter = function () {
+    var items = document.querySelectorAll('#itemsList li');
+    var clearBtn = document.getElementById('clearPackageFilterBtn');
+    items.forEach(function (li) { li.style.setProperty('display', '', 'important'); });
+    if (clearBtn) clearBtn.classList.add('d-none');
+    window.currentFilteredPackageId = null;
+}
+
 // Simple vanilla JS implementation for the Portal App
 
 // Network Status Monitoring (detect 3G/4G/5G/WiFi)
-window.getNetworkInfo = function() {
+window.getNetworkInfo = function () {
     if (navigator.connection) {
         return navigator.connection.effectiveType; // 'slow-2g', '2g', '3g', '4g'
     }
     return null; // Not available
 }
 
-window.isSlowConnection = function() {
+window.isSlowConnection = function () {
     var type = window.getNetworkInfo();
     return type === 'slow-2g' || type === '2g' || type === '3g';
 }
 
 // Image Compression Utility
-window.compressImage = function(file, callback) {
+window.compressImage = function (file, callback) {
     if (!file) return;
     var reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         var img = new Image();
         img.src = event.target.result;
-        img.onload = function() {
+        img.onload = function () {
             var elem = document.createElement('canvas');
             var width = img.width;
             var height = img.height;
             var MAX_WIDTH = 1024;
             var MAX_HEIGHT = 1024;
-            
+
             if (width > height) {
                 if (width > MAX_WIDTH) {
                     height *= MAX_WIDTH / width;
@@ -96,7 +130,7 @@ document.addEventListener('click', function (e) {
 // Scanner Logic
 let html5QrcodeScanner = null;
 
-function openScannerModal() {
+window.openScannerModal = function () {
     var modalEl = document.getElementById('scannerModal');
     // Manual Modal Show
     modalEl.classList.add('show');
@@ -189,38 +223,102 @@ function processScanResult(query) {
             }
         })
     }).then(res => res.json()).then(data => {
+        if (data.error) {
+            console.error("JSONRPC Error:", data.error);
+            alert("Error in search request: " + (data.error.message || "Unknown error"));
+            return;
+        }
         if (data.result) {
             var res = data.result;
             if (res.match_type === 'exact') {
                 window.location.href = res.action_url;
-            } else if (res.match_type === 'multiple') {
-                window.location.href = '/my/delivery?search=' + encodeURIComponent(query);
+            } else if (res.match_type === 'multiple' && Array.isArray(res.picking_ids) && res.picking_ids.length > 0) {
+                filterDeliveriesByIds(res.picking_ids);
+            } else if (res.match_type === 'error') {
+                console.error("Server Logic Error:", res.message);
+                alert("Search failed: " + res.message);
             } else {
                 alert("No delivery found for: " + query);
             }
         } else {
-            alert("Error searching.");
+            alert("Internal search error (Missing result)");
         }
+    }).catch(err => {
+        console.error("Fetch/Network Error:", err);
+        alert("Connection error or search failed.");
     });
 }
 
+// Filtra la lista de cards de entregas mostrando solo los que tengan un data-picking-id en la lista
+function filterDeliveriesByIds(ids) {
+    // Oculta todos los cards excepto los que coinciden
+    var cards = document.querySelectorAll('[data-picking-id]');
+    var found = false;
+    window._activeIdFilter = ids;
+    cards.forEach(function (card) {
+        var pid = card.getAttribute('data-picking-id');
+        if (ids.includes(Number(pid)) || ids.includes(pid)) {
+            card.style.display = '';
+            found = true;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    // Show Clear buttons if scan result is active
+    ['clearAllFiltersBtnTop', 'clearAllFiltersBtnBottom'].forEach(id => {
+        var btn = document.getElementById(id);
+        if (btn) btn.classList.remove('d-none');
+    });
+
+    if (!found) {
+        alert('No deliveries found for this scan.');
+    }
+}
+
+// Limpia el filtro por IDs y muestra todos los cards
+function clearIdFilter() {
+    var cards = document.querySelectorAll('[data-picking-id]');
+    cards.forEach(function (card) {
+        card.style.display = '';
+    });
+    window._activeIdFilter = null;
+
+    // Hide Clear buttons if no other server-side filters
+    if (!window.filter_state && !window.filter_type && !window.search_query) {
+        ['clearAllFiltersBtnTop', 'clearAllFiltersBtnBottom'].forEach(id => {
+            var btn = document.getElementById(id);
+            if (btn) btn.classList.add('d-none');
+        });
+    }
+}
+
+// Hook para los botones Clear existentes
+window.clearAllFilters = function () {
+    clearIdFilter();
+    // Si hay otros filtros activos, recargar a /my/delivery (comportamiento original)
+    if (window.filter_state || window.filter_type || window.search_query) {
+        window.location.href = '/my/delivery';
+    }
+}
+
 // Map Navigation with App Selector
-window.openMapSelector = function(latitude, longitude, address) {
+window.openMapSelector = function (latitude, longitude, address) {
     // Parse coordinates
     var lat = parseFloat(latitude);
     var lng = parseFloat(longitude);
-    
+
     // Double-check coordinates validity (safety net)
     if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
         alert("Location coordinates are invalid.");
         return;
     }
-    
+
     // Store coordinates for modal buttons
     window._mapCoordinates = { lat: lat, lng: lng };
     // Escape address for safe HTML display
     var addressDisplay = address ? address.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/'/g, '&#039;') : 'Unknown location';
-    
+
     // Create modal backdrop
     var backdrop = document.createElement('div');
     backdrop.className = 'modal-backdrop fade show';
@@ -282,26 +380,26 @@ window.openMapSelector = function(latitude, longitude, address) {
     document.body.appendChild(modal);
 }
 
-window.closeMapSelector = function() {
+window.closeMapSelector = function () {
     var modal = document.getElementById('mapSelectorModal');
     var backdrop = document.getElementById('mapSelectorBackdrop');
     if (modal) modal.remove();
     if (backdrop) backdrop.remove();
 }
 
-window.openMapApp = function(appType) {
+window.openMapApp = function (appType) {
     // Get stored coordinates
     if (!window._mapCoordinates) {
         alert("Location data not available");
         return;
     }
-    
+
     var lat = window._mapCoordinates.lat;
     var lng = window._mapCoordinates.lng;
     var url = '';
 
     // Handle different app types
-    switch(appType) {
+    switch (appType) {
         case 'google':
             // Google Maps (works on web and mobile)
             url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;

@@ -1,6 +1,6 @@
 {
     'name': 'Stock Delivery Portal Backend',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.2',
     'category': 'Inventory/Delivery',
     'summary': 'Backend logic for delivery driver portal',
     'description': """
@@ -34,4 +34,9 @@
     'currency': 'USD',
     'price': 397.0,
     'module_type': 'official',
+    'assets': {
+        'web.assets_frontend': [
+            'stock_delivery_portal/static/src/js/delivery_portal.js',
+        ],
+    },
 }

@@ -1,3 +1,26 @@
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking_type__show_reference_in_portal
+msgid "Show Internal Reference in Portal"
+msgstr "Mostrar referencia en Portal"
+
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking_type__show_reference_in_portal
+msgid "If enabled, the product's internal reference will be shown in the portal."
+msgstr "Si está activo, se mostrará la referencia interna del producto en el portal."
+
+#: model:ir.model.fields,field_description:stock_delivery_portal.field_stock_picking_type__show_barcode_in_portal
+msgid "Show Barcode in Portal"
+msgstr "Mostrar Barcode en Portal"
+
+#: model:ir.model.fields,help:stock_delivery_portal.field_stock_picking_type__show_barcode_in_portal
+msgid "If enabled, the product's barcode will be shown in the portal."
+msgstr "Si está activo, se mostrará el código de barras del producto en el portal."
+
+#: template:stock_delivery_portal.delivery_portal_templates
+msgid "Internal Reference:"
+msgstr "Referencia:"
+
+#: template:stock_delivery_portal.delivery_portal_templates
+msgid "Barcode:"
+msgstr "Barcode:"
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* stock_delivery_portal

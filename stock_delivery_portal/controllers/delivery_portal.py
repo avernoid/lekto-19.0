@@ -1,8 +1,7 @@
-from odoo import http, _
+from odoo import http
 from odoo.http import request
 from odoo.addons.portal.controllers.portal import CustomerPortal
 import base64
-import json
 
 class DeliveryPortal(CustomerPortal):
 
@@ -24,11 +23,11 @@ class DeliveryPortal(CustomerPortal):
         history_mode = bool(history and history != '0')
 
         if history_mode:
-             # Only show finalized states
-             domain += [('delivery_state_id.is_result_state', '=', True)]
+            # Only show finalized states
+            domain += [('delivery_state_id.is_result_state', '=', True)]
         else:
-             # Default: Hide finalized states (Show active states OR no state)
-             domain += ['|', ('delivery_state_id', '=', False), ('delivery_state_id.is_result_state', '=', False)]
+            # Default: Hide finalized states (Show active states OR no state)
+            domain += ['|', ('delivery_state_id', '=', False), ('delivery_state_id.is_result_state', '=', False)]
 
         # 0. Get attributes for smart filters (based on all assigned pickings)
         # We search all to get unique values for filters
@@ -41,13 +40,29 @@ class DeliveryPortal(CustomerPortal):
 
         # 1. Search logic (if search term provided)
         if search:
-             domain += ['|', '|', ('name', 'ilike', search), ('origin', 'ilike', search), ('partner_id.name', 'ilike', search)]
+            search_terms = [
+                ('name', 'ilike', search),
+                ('origin', 'ilike', search),
+                ('partner_id.name', 'ilike', search),
+                ('move_line_ids.product_id.name', 'ilike', search),
+                ('move_line_ids.product_id.default_code', 'ilike', search),
+                ('move_line_ids.product_id.barcode', 'ilike', search),
+                ('move_line_ids.result_package_id.name', 'ilike', search),
+            ]
+            if len(search_terms) == 1:
+                domain += search_terms
+            else:
+                # Construir lista OR plana: n condiciones requieren n-1 '|' al inicio
+                or_domain = ['|'] * (len(search_terms) - 1)
+                for term in search_terms:
+                    or_domain.append(term)
+                domain += or_domain
         
         # 2. Apply Filters
         if filter_state:
             domain += [('delivery_state_id', '=', int(filter_state))]
         if filter_type:
-             domain += [('picking_type_id', '=', int(filter_type))]
+            domain += [('picking_type_id', '=', int(filter_type))]
 
         # Count and Pager
         total = Picking.search_count(domain)
@@ -86,7 +101,7 @@ class DeliveryPortal(CustomerPortal):
             picking = request.env['stock.picking'].sudo().browse(picking_id)
             # Security Check
             if not picking.exists() or picking.delivery_partner_id != request.env.user.partner_id:
-                 return request.redirect('/my/delivery')
+                return request.redirect('/my/delivery')
             
             # Pass non-final states for the action buttons
             non_final_states = request.env['stock.delivery.state'].sudo().search([('is_result_state', '=', False)])
@@ -114,65 +129,53 @@ class DeliveryPortal(CustomerPortal):
     def search_delivery(self, query):
         if not query:
             return {'match_type': 'none'}
-            
-        """
-        Search for pickings by:
-        - Picking Name
-        - Origin
-        - Product Name or Barcode (inside items)
-        - Product Internal Reference/SKU (inside items)
-        - Package Name (inside items)
-        
-        Returns:
-        - match_type: 'exact' | 'multiple' | 'none'
-        - action_url: url to redirect (if exact)
-        - pickings: list of ids (if multiple)
-        """
-        user = request.env.user
+
         domain = self._get_delivery_domain()
-        
-        # Base search on picking fields
-        base_domain = domain + ['|', ('name', 'ilike', query), ('origin', 'ilike', query)]
-        pickings = request.env['stock.picking'].sudo().search(base_domain)
-        
-        # If no result, search deep (Products, Packages)
-        if not pickings:
-             # Search matches via move lines
-             # Validating ownership via the domain on picking
-             # Search by: product name, product barcode, product default_code (SKU/internal ref), or package name
-             deep_domain = domain + [
-                 '|',
-                 ('move_line_ids.product_id.name', 'ilike', query),
-                 '|',
-                 ('move_line_ids.product_id.barcode', '=', query),
-                 '|',
-                 ('move_line_ids.product_id.default_code', '=', query),
-                 '|',
-                 ('move_line_ids.result_package_id.name', 'ilike', query),
-                 # Also search for barcode case-insensitive and partial match
-                 ('move_line_ids.product_id.barcode', 'ilike', query)
-             ]
-             pickings = request.env['stock.picking'].sudo().search(deep_domain)
-             
-        if not pickings:
-            return {'match_type': 'none'}
-            
-        if len(pickings) == 1:
-            return {
-                'match_type': 'exact',
-                'action_url': f'/my/delivery/{pickings.id}'
-            }
-            
-        return {
-            'match_type': 'multiple',
-            'picking_ids': pickings.ids
-        }
+        Picking = request.env['stock.picking'].sudo()
+
+        # 1. Buscar por código de barras exacto de picking (si existiera ese campo)
+        # (No estándar en stock.picking, omitir si no se usa)
+
+        # 2. Buscar por código de barras exacto de producto
+        pickings = Picking.search(domain + [('move_line_ids.product_id.barcode', '=', query)])
+        if pickings:
+            if len(pickings) == 1:
+                return {'match_type': 'exact', 'action_url': f'/my/delivery/{pickings.id}'}
+            else:
+                return {'match_type': 'multiple', 'picking_ids': pickings.ids}
+
+        # 3. Buscar por referencia interna exacta de producto
+        pickings = Picking.search(domain + [('move_line_ids.product_id.default_code', '=', query)])
+        if pickings:
+            if len(pickings) == 1:
+                return {'match_type': 'exact', 'action_url': f'/my/delivery/{pickings.id}'}
+            else:
+                return {'match_type': 'multiple', 'picking_ids': pickings.ids}
+
+        # 4. Buscar por nombre de picking, origen, nombre de producto, nombre de paquete, barcode parcial
+        try:
+            or_domain = ['|'] * 5 + [
+                ('name', 'ilike', query),
+                ('origin', 'ilike', query),
+                ('move_line_ids.product_id.name', 'ilike', query),
+                ('move_line_ids.product_id.barcode', 'ilike', query),
+                ('move_line_ids.product_id.default_code', 'ilike', query),
+                ('move_line_ids.result_package_id.name', 'ilike', query),
+            ]
+            pickings = Picking.search(domain + or_domain)
+            if not pickings:
+                return {'match_type': 'none'}
+            if len(pickings) == 1:
+                return {'match_type': 'exact', 'action_url': f'/my/delivery/{pickings.id}'}
+            return {'match_type': 'multiple', 'picking_ids': pickings.ids}
+        except Exception as e:
+            return {'match_type': 'error', 'message': str(e)}
 
     @http.route(['/my/delivery/<int:picking_id>/finalize'], type='http', auth="user", website=True)
     def delivery_finalize_view(self, picking_id, **kw):
         picking = request.env['stock.picking'].sudo().browse(picking_id)
         if not picking.exists() or picking.delivery_partner_id != request.env.user.partner_id:
-             return request.redirect('/my/delivery')
+            return request.redirect('/my/delivery')
         
         # Get allowed final states (where is_result_state=True)
         final_states = request.env['stock.delivery.state'].sudo().search([('is_result_state', '=', True)])
@@ -203,21 +206,21 @@ class DeliveryPortal(CustomerPortal):
         if delivery_notes:
             vals['delivery_notes'] = delivery_notes
         if signature:
-             if ',' in signature:
-                 signature = signature.split(',')[1]
-             vals['signature'] = signature
+            if ',' in signature:
+                signature = signature.split(',')[1]
+            vals['signature'] = signature
 
         picking.write(vals)
 
         # Handle Photo (Prioritize Optimized Base64)
         photo_data = False
         if photo_64:
-             if ',' in photo_64:
-                 photo_data = base64.b64decode(photo_64.split(',')[1])
-             else:
-                 photo_data = base64.b64decode(photo_64)
+            if ',' in photo_64:
+                photo_data = base64.b64decode(photo_64.split(',')[1])
+            else:
+                photo_data = base64.b64decode(photo_64)
         elif photo:
-             photo_data = photo.read()
+            photo_data = photo.read()
 
         if photo_data:
             state_name = picking.delivery_state_id.name
@@ -234,23 +237,23 @@ class DeliveryPortal(CustomerPortal):
     def delivery_upload_photo(self, picking_id, **kw):
         picking = request.env['stock.picking'].sudo().browse(picking_id)
         if not picking.exists() or picking.delivery_partner_id != request.env.user.partner_id:
-             return request.redirect('/my/delivery')
+            return request.redirect('/my/delivery')
         
         photo = kw.get('photo')
         photo_64 = kw.get('photo_64')
         
         photo_data = False
         if photo_64:
-             if ',' in photo_64:
-                 photo_data = base64.b64decode(photo_64.split(',')[1])
-             else:
-                 photo_data = base64.b64decode(photo_64)
+            if ',' in photo_64:
+                photo_data = base64.b64decode(photo_64.split(',')[1])
+            else:
+                photo_data = base64.b64decode(photo_64)
         elif photo:
-             photo_data = photo.read()
+            photo_data = photo.read()
 
         if photo_data:
-             state_name = picking.delivery_state_id.name or 'Unknown State'
-             picking.message_post(
+            state_name = picking.delivery_state_id.name or 'Unknown State'
+            picking.message_post(
                 body=f"Evidencia Estado de Entrega: {state_name}",
                 message_type='comment',
                 subtype_xmlid='mail.mt_note',
@@ -268,7 +271,7 @@ class DeliveryPortal(CustomerPortal):
     def update_delivery_state(self, picking_id, state_id):
         picking = request.env['stock.picking'].sudo().browse(picking_id)
         if not picking.exists() or picking.delivery_partner_id != request.env.user.partner_id:
-             return {'error': 'Access Denied'}
+            return {'error': 'Access Denied'}
         
         picking.write({'delivery_state_id': state_id})
         return {'success': True}

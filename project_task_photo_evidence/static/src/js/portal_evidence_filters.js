@@ -18,7 +18,7 @@ window.toggleEvidenceSearchBar = function () {
 
 window.toggleFilterMenu = function (menuId) {
     // Close all others first
-    const menus = ['filter_product_menu', 'filter_project_menu', 'filter_tag_menu'];
+    const menus = ['filter_product_menu', 'filter_project_menu', 'filter_tag_menu', 'userMenu'];
     menus.forEach(function (id) {
         var el = document.getElementById(id);
         if (id !== menuId && el) {
@@ -42,7 +42,7 @@ window.toggleFilterMenu = function (menuId) {
 document.addEventListener('click', function (event) {
     // Check if click is outside of any toggle button or menu
     if (!event.target.closest('.dropup') && !event.target.closest('.dropdown-menu')) {
-        const menus = ['filter_product_menu', 'filter_project_menu', 'filter_tag_menu'];
+        const menus = ['filter_product_menu', 'filter_project_menu', 'filter_tag_menu', 'userMenu'];
         menus.forEach(function (id) {
             var el = document.getElementById(id);
             if (el) el.style.display = 'none';

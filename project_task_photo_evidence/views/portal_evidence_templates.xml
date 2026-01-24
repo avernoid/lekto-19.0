@@ -4,7 +4,7 @@
         <t t-call="portal_app_launcher.portal_app_layout">
             <t t-set="manifest_url" t-value="'/portal_app/manifest.webmanifest?app_mode=evidence'"/>
             <t t-set="head">
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover"/>
                 <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=evidence"/>
                 <meta name="theme-color" content="#667eea"/>
                 <style>
@@ -47,14 +47,20 @@
                     });
                 </script>
             </t>
-            <div class="container py-4">
-                <div class="d-flex align-items-center justify-content-between mb-3">
+            <!-- Fixed Top Bar (Bulletproof Inline Styles) -->
+            <div style="position: fixed !important; top: 0 !important; left: 0; right: 0; z-index: 1050; background: #667eea; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 2px 10px rgba(0,0,0,0.2); padding-top: calc(0.8rem + env(safe-area-inset-top, 0px)); padding-bottom: 0.8rem;">
+                <div class="container d-flex align-items-center justify-content-between">
                      <div class="d-flex align-items-center">
                         <a href="/my/home" class="btn btn-light rounded-circle shadow-sm me-3 pwa-only-hidden">
                             <i class="fa fa-arrow-left"/>
                         </a>
                         <div>
-                            <h4 class="m-0 text-white">Photos</h4>
+                            <h4 class="m-0 text-white">
+                                Tareas 
+                                <span class="badge rounded-pill bg-white text-primary small ms-2" style="font-size: 0.7em;">
+                                    <t t-esc="len(tasks)"/> / <t t-esc="task_count"/>
+                                </span>
+                            </h4>
                         </div>
                      </div>
                      
@@ -67,8 +73,11 @@
                             <i class="fa fa-check-circle me-1"/> Installed
                         </div>
                      </div>
-                     </div>
                 </div>
+            </div>
+
+            <!-- Content Container with Bulletproof Margin Top -->
+            <div class="container py-4" style="margin-top: calc(95px + env(safe-area-inset-top, 0px)) !important;">
 
 
 
@@ -127,11 +136,13 @@
                         <t t-call="portal.pager"/>
                     </div>
                 </div>
-            <!-- Bottom Spacer for Fixed Bar -->
-            <div style="height: 80px;"></div>
+            </div>
+
+            <!-- Bottom Spacer for Fixed Bar (Larger for thumb-friendly bar) -->
+                <div style="height: 110px;"></div>
             
-            <!-- Search Bar Overlay (Hidden by default) -->
-            <div id="evidenceSearchBar" class="fixed-bottom bg-white border-top shadow p-3" style="bottom: 70px; display: none; z-index: 1040; border-radius: 15px 15px 0 0;">
+            <!-- Search Bar Overlay (Hidden by default) - Positioned above enlarged bar -->
+            <div id="evidenceSearchBar" class="fixed-bottom bg-white border-top shadow p-3" style="bottom: 95px; display: none; z-index: 1040; border-radius: 15px 15px 0 0;">
                 <form action="/my/evidence/tasks" method="get">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="fa fa-search text-muted"/></span>
@@ -144,13 +155,13 @@
             </div>
 
             <!-- Sticky Bottom Navigation Bar (Unified Scroll) -->
-             <div class="fixed-bottom bg-white border-top shadow-lg py-2 px-3">
+             <div class="fixed-bottom bg-white border-top shadow-lg py-3 px-3" style="min-height: 85px; padding-bottom: calc(1rem + env(safe-area-inset-bottom)) !important;">
                  <!-- Container with horizontal scroll -->
                  <div class="d-flex align-items-center gap-2 overflow-auto no-scrollbar" style="white-space: nowrap;">
                      
-                     <!-- Search Toggle -->
-                     <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-primary" onclick="toggleEvidenceSearchBar()">
-                        <i class="fa fa-search"/>
+                     <!-- Search Toggle (Larger Icon) -->
+                     <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-primary d-flex align-items-center justify-content-center" style="width: 55px; height: 55px;" onclick="toggleEvidenceSearchBar()">
+                        <i class="fa fa-search fa-lg"/>
                      </button>
 
                      
@@ -168,13 +179,13 @@
                      <t t-if="filter_by == 'pending' and (available_tags or available_products or available_projects)">
                          <t t-if="available_products">
                              <div class="dropup">
-                                 <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleFilterMenu('filter_product_menu')">
-                                    <i class="fa fa-cube"/> 
+                                 <button class="btn btn-light rounded-pill shadow-sm py-3 px-4 d-flex align-items-center gap-2" type="button" onclick="toggleFilterMenu('filter_product_menu')">
+                                    <i class="fa fa-cube fa-lg"/> 
                                     <t t-if="current_product">
                                         <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['product.product'].sudo().browse(current_product).name"/></span>
                                     </t>
                                  </button>
-                                 <ul id="filter_product_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 80px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                                 <ul id="filter_product_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 105px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
                                     <li><a class="dropdown-item" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">All Products</a></li>
                                     <t t-foreach="available_products" t-as="p">
                                         <li><a t-attf-class="dropdown-item {{ 'active' if current_product == p.id else '' }}" t-attf-href="/my/evidence/tasks?filter_by=pending&amp;filter_product={{p.id}}{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}"><t t-esc="p.name"/></a></li>
@@ -185,13 +196,13 @@
 
                          <t t-if="available_projects">
                              <div class="dropup">
-                                 <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleFilterMenu('filter_project_menu')">
-                                    <i class="fa fa-briefcase"/> 
+                                 <button class="btn btn-light rounded-pill shadow-sm py-3 px-4 d-flex align-items-center gap-2" type="button" onclick="toggleFilterMenu('filter_project_menu')">
+                                    <i class="fa fa-briefcase fa-lg"/> 
                                     <t t-if="current_project">
                                         <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['project.project'].sudo().browse(current_project).name"/></span>
                                     </t>
                                  </button>
-                                 <ul id="filter_project_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 80px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                                 <ul id="filter_project_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 105px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
                                     <li><a class="dropdown-item" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">All Projects</a></li>
                                     <t t-foreach="available_projects" t-as="p">
                                         <li><a t-attf-class="dropdown-item {{ 'active' if current_project == p.id else '' }}" t-attf-href="/my/evidence/tasks?filter_by=pending&amp;filter_project={{p.id}}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}"><t t-esc="p.name"/></a></li>
@@ -202,13 +213,13 @@
 
                          <t t-if="available_tags">
                              <div class="dropup">
-                                 <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleFilterMenu('filter_tag_menu')">
-                                    <i class="fa fa-tag"/> 
+                                 <button class="btn btn-light rounded-pill shadow-sm py-3 px-4 d-flex align-items-center gap-2" type="button" onclick="toggleFilterMenu('filter_tag_menu')">
+                                    <i class="fa fa-tag fa-lg"/> 
                                     <t t-if="current_tag">
                                         <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['project.tags'].sudo().browse(current_tag).name"/></span>
                                     </t>
                                  </button>
-                                 <ul id="filter_tag_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 80px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                                 <ul id="filter_tag_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 105px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
                                     <li><a class="dropdown-item" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">All Tags</a></li>
                                     <t t-foreach="available_tags" t-as="t">
                                         <li><a t-attf-class="dropdown-item {{ 'active' if current_tag == t.id else '' }}" t-attf-href="/my/evidence/tasks?filter_by=pending&amp;filter_tag={{t.id}}{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}"><t t-esc="t.name"/></a></li>
@@ -218,7 +229,8 @@
                          </t>
                      </t>
                      
-                     <!-- Mode Toggle (To Do / History) -->
+                                           <!-- Mode Toggle (To Do / History) - Enlarged -->
+
                      <div class="btn-group bg-light rounded-pill p-1 shadow-sm flex-shrink-0" role="group">
                         <a t-attf-class="btn btn-sm rounded-pill {{ 'btn-primary' if filter_by == 'pending' else 'btn-light text-muted' }}" t-attf-href="/my/evidence/tasks?filter_by=pending{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">To Do</a>
                         <a t-attf-class="btn btn-sm rounded-pill {{ 'btn-primary' if filter_by == 'done' else 'btn-light text-muted' }}" title="History" t-attf-href="/my/evidence/tasks?filter_by=done{{ '&amp;filter_project=%s' % current_project if current_project else '' }}{{ '&amp;filter_tag=%s' % current_tag if current_tag else '' }}{{ '&amp;filter_product=%s' % current_product if current_product else '' }}{{ '&amp;search=%s' % request.params.get('search') if request.params.get('search') else '' }}">
@@ -226,10 +238,32 @@
                         </a>
                      </div>
                      
-                     <!-- Logout (Thumb-Friendly) -->
-                     <a href="/web/session/logout?redirect=/" class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-danger ms-auto">
-                        <i class="fa fa-power-off"/>
-                     </a>
+                      <!-- User Menu Dropup (Hamburger) -->
+                      <div class="dropup ms-auto">
+                          <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 55px; height: 55px;" type="button" onclick="toggleFilterMenu('userMenu')">
+                             <i class="fa fa-bars fa-lg"/>
+                          </button>
+                          <ul id="userMenu" class="dropdown-menu dropdown-menu-end shadow mb-2" style="display: none; position: fixed !important; bottom: 105px !important; right: 10px !important; z-index: 1050 !important; min-width: 200px; border-radius: 15px; border: none;">
+                             <li>
+                                 <div class="px-3 py-2">
+                                     <div class="fw-bold text-dark"><t t-esc="request.env.user.name"/></div>
+                                     <div class="small text-muted text-truncate"><t t-esc="request.env.user.login"/></div>
+                                 </div>
+                             </li>
+                             <li><hr class="dropdown-divider"/></li>
+                             <li>
+                                 <a href="/my/home" class="dropdown-item py-2">
+                                     <i class="fa fa-th-large me-2 text-primary"/> App Launcher
+                                 </a>
+                             </li>
+                             <li><hr class="dropdown-divider"/></li>
+                             <li>
+                                 <a href="/web/session/logout?redirect=/" class="dropdown-item py-2 text-danger">
+                                     <i class="fa fa-power-off me-2"/> Logout
+                                 </a>
+                             </li>
+                          </ul>
+                      </div>
                      
                  </div>
                  <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>

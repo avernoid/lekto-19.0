@@ -4,12 +4,11 @@
     <template id="delivery_app_home" name="Delivery Driver App">
         <t t-call="portal_app_launcher.portal_app_layout">
             <t t-set="manifest_url" t-value="'/portal_app/manifest.webmanifest?app_mode=delivery'"/>
-            <t t-set="head">
+            <t t-set="extra_head">
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                 <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=delivery"/>
-                <meta name="theme-color" content="#714B67"/>
                 <style>
-                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
                     .btn:active { transform: scale(0.98); transition: transform 0.05s; }
                     
                     @media all and (display-mode: standalone) {
@@ -45,6 +44,11 @@
                              }
                          }
                     });
+
+                    // Inject Filters into JS Scope
+                    window.filter_state = <t t-esc="filter_state or 'false'"/>;
+                    window.filter_type = <t t-esc="filter_type or 'false'"/>;
+                    window.search_query = <t t-esc="'&quot;%s&quot;' % search if search else 'false'"/>;
                 </script>
             </t>
             <div class="container py-4">
@@ -55,7 +59,7 @@
                             <i class="fa fa-arrow-left"/>
                         </a>
                         <div>
-                            <h4 class="m-0 text-white">Deliveries</h4>
+                            <h4 class="m-0">Deliveries</h4>
                         </div>
                      </div>
                      <div class="d-flex gap-2">
@@ -66,21 +70,12 @@
                      </div>
                 </div>
 
-                <!-- Toolbar Second Level: Search, History, Clear Filters -->
+                <!-- Toolbar Second Level: Clear Filters Only -->
                 <div class="d-flex gap-2 mb-3 flex-wrap align-items-center">
-                    <!-- Search/Scanner Button -->
-                    <button type="button" class="btn btn-sm btn-outline-light rounded-pill" onclick="toggleDeliverySearchBar()">
-                        <i class="fa fa-search me-1"/> Search
-                    </button>
-                    <!-- History Toggle -->
-                    <a t-attf-href="/my/delivery?{{ '&amp;history=0' if history else '&amp;history=1' }}" 
-                       t-attf-class="btn btn-sm rounded-pill {{ 'btn-light text-primary' if history else 'btn-outline-light' }}">
-                        <i class="fa fa-clock-o me-1"/> <t t-esc="'To Do' if history else 'History'"/>
-                    </a>
-                    <!-- Clear Filters Button (visible only when filters are active) -->
-                    <a href="/my/delivery" t-if="filter_state or filter_type or search" class="btn btn-sm btn-outline-danger rounded-pill">
+                    <!-- Clear Filters Button -->
+                    <button type="button" id="clearAllFiltersBtnTop" t-attf-class="btn btn-sm btn-outline-danger rounded-pill {{ 'd-none' if not (filter_state or filter_type or search) else '' }}" onclick="window.clearAllFilters()">
                         <i class="fa fa-times me-1"/> Clear
-                    </a>
+                    </button>
                 </div>
 
                 <!-- Active Filters Display -->
@@ -110,7 +105,7 @@
                 <!-- List Content -->
                 <div class="row">
                     <t t-foreach="pickings" t-as="picking">
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-3" t-att-data-picking-id="picking.id">
                             <div class="card shadow-sm border-0 rounded-3">
                                 <div class="card-body">
                                     <!-- Header: Picking Name & Status -->
@@ -144,14 +139,13 @@
                                             </div>
                                         </t>
                                         
-                                        <!-- Map Button (Aligned right) -->
-                                        <button type="button"
-                                           t-if="picking.partner_id.partner_latitude and picking.partner_id.partner_longitude"
-                                           t-attf-onclick="openMapSelector('{{picking.partner_id.partner_latitude}}', '{{picking.partner_id.partner_longitude}}', '{{picking.partner_id.contact_address}}')"
-                                           class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" 
-                                           style="width: 36px; height: 36px;">
+                                        <!-- Map Link (abre selector de apps del SO) -->
+                                        <a t-if="picking.partner_id.partner_latitude and picking.partner_id.partner_longitude"
+                                           t-att-href="'geo:%s,%s' % (picking.partner_id.partner_latitude, picking.partner_id.partner_longitude)"
+                                           class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0"
+                                           style="width: 36px; height: 36px;" target="_blank" rel="noopener">
                                             <i class="fa fa-map-marker text-dark"/>
-                                        </button>
+                                        </a>
                                     </div>
                                     
                                     <!-- Body: Customer Info -->
@@ -198,6 +192,9 @@
 
              <!-- Search Bar Overlay (Hidden by default) -->
             <div id="deliverySearchBar" class="fixed-bottom bg-white border-top shadow p-3" style="bottom: 0px; display: none; z-index: 1060; border-radius: 15px 15px 0 0;">
+                <div class="d-flex justify-content-end mb-2">
+                    <button type="button" class="btn-close" aria-label="Close" onclick="document.getElementById('deliverySearchBar').style.display='none';"></button>
+                </div>
                 <form action="/my/delivery" method="get">
                     <div class="input-group">
                         <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="fa fa-search text-muted"/></span>
@@ -221,13 +218,20 @@
                  
                  <!-- Level 2: Navigation -->
                  <div class="d-flex align-items-center gap-2 overflow-auto no-scrollbar px-3 pb-3" style="white-space: nowrap;">
-                     
-                     <!-- Search Toggle -->
-                     <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-primary" onclick="window.toggleDeliverySearchBar()">
-                        <i class="fa fa-search"/>
+                     <!-- Search Button (Lupa) -->
+                     <button type="button" class="btn btn-light rounded-pill shadow-sm flex-shrink-0" onclick="document.getElementById('deliverySearchBar').style.display = 'block';">
+                         <i class="fa fa-search"/>
                      </button>
+                     <!-- To Do / History Toggle -->
+                     <a t-attf-href="/my/delivery?{{ '&amp;history=0' if history else '&amp;history=1' }}"
+                        t-attf-class="btn btn-light rounded-pill shadow-sm flex-shrink-0 {{ 'text-primary' if history else '' }}">
+                         <i class="fa fa-clock-o me-1"/> <t t-esc="'To Do' if history else 'History'"/>
+                     </a>
                      <div class="vr mx-1"></div>
-
+                     <!-- Clear Filters Button -->
+                     <button type="button" id="clearAllFiltersBtnBottom" t-attf-class="btn btn-outline-danger rounded-pill flex-shrink-0 {{ 'd-none' if not (filter_state or filter_type or search) else '' }}" onclick="window.clearAllFilters()">
+                         <i class="fa fa-times me-1"/> Clear
+                     </button>
                      <!-- Filters -->
                      <!-- Operation Type -->
                      <div class="dropup" t-if="available_types">
@@ -244,7 +248,6 @@
                             </t>
                          </ul>
                      </div>
-
                      <!-- Delivery State -->
                      <div class="dropup" t-if="available_states">
                          <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleDeliveryFilterMenu('filter_state_menu')">
@@ -260,7 +263,6 @@
                             </t>
                          </ul>
                      </div>
-                     
                      <!-- Menu Hamburguesa (User Menu) -->
                      <div class="dropup ms-auto">
                          <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0" type="button" onclick="toggleDeliveryFilterMenu('userMenu')">
@@ -314,14 +316,14 @@
                 </div>
             </div>
             
-            <script src="/stock_delivery_portal/static/src/js/delivery_portal.js"></script>
+
             
             <!-- Async Load html5-qrcode for better performance (non-blocking) -->
             <script>
                 // Load scanner library asynchronously AFTER page renders
                 window.addEventListener('DOMContentLoaded', function() {
                     var script = document.createElement('script');
-                    script.src = 'https://unpkg.com/html5-qrcode@2.3.8/esm/html5-qrcode.min.js';
+                    script.src = 'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'; // UMD version, not ESM
                     script.async = true;
                     script.onerror = function() {
                         console.warn('html5-qrcode CDN failed. Scanner will show error on first use.');
@@ -337,14 +339,27 @@
     <!-- SCREEN 2: DETAIL -->
     <template id="delivery_app_detail" name="Delivery Detail">
         <t t-call="portal_app_launcher.portal_app_layout">
-            <t t-set="head">
+            <t t-set="extra_head">
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                 <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=delivery"/>
-                <meta name="theme-color" content="#714B67"/>
                 <style>
-                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
                     .btn:active { transform: scale(0.98); transition: transform 0.05s; }
                 </style>
+                <script>
+                    // Fallback for image compression if main JS not loaded yet
+                    if (typeof window.compressImage === 'undefined') {
+                        window.compressImage = function(file, callback) {
+                            if (!file) return;
+                            var reader = new FileReader();
+                            reader.readAsDataURL(file);
+                            reader.onload = function(event) {
+                                // No compression fallback: return original dataURL
+                                callback(event.target.result);
+                            };
+                        };
+                    }
+                </script>
             </t>
             <div class="container py-4">
                 <!-- Header -->
@@ -352,7 +367,7 @@
                     <a href="/my/delivery" class="btn btn-light rounded-circle shadow-sm me-3">
                         <i class="fa fa-arrow-left"/>
                     </a>
-                    <h4 class="m-0 text-white">Delivery Detail</h4>
+                    <h4 class="m-0">Delivery Detail</h4>
                 </div>
 
                 <!-- Customer Card -->
@@ -381,12 +396,11 @@
                          
                          <!-- Map Navigation -->
                          <div class="d-grid">
-                            <button type="button" 
-                                t-if="picking.partner_id.partner_latitude and picking.partner_id.partner_longitude"
-                                t-attf-onclick="openMapSelector('{{picking.partner_id.partner_latitude}}', '{{picking.partner_id.partner_longitude}}', '{{picking.partner_id.contact_address}}')"
-                                class="btn btn-primary btn-sm rounded-pill">
+                            <a t-if="picking.partner_id.partner_latitude and picking.partner_id.partner_longitude"
+                               t-att-href="'geo:%s,%s' % (picking.partner_id.partner_latitude, picking.partner_id.partner_longitude)"
+                               class="btn btn-primary btn-sm rounded-pill" target="_blank" rel="noopener">
                                 <i class="fa fa-map-marker me-1"/> Navigate with Maps
-                            </button>
+                            </a>
                             <div t-else="" class="alert alert-warning text-center py-2 mb-0">
                                 <small><i class="fa fa-exclamation-triangle me-1"/> No location available</small>
                             </div>
@@ -423,13 +437,43 @@
                      </div>
                 </div>
 
-                <!-- Items -->
-                <t t-if="picking.sudo().picking_type_id.delivery_portal_show_items">
-                    <h5 class="text-white mb-2">Items</h5>
+                    <!-- Packages -->
+                    <t t-set="packages" t-value="picking.sudo().move_line_ids.mapped('result_package_id')"/>
+                    <t t-if="packages">
+                        <h5 class="mb-2">Packages</h5>
+                        <div class="card shadow-sm border-0 rounded-3 mb-3">
+                            <ul class="list-group list-group-flush rounded-3">
+                                <t t-foreach="packages" t-as="pkg">
+                                    <t t-if="pkg and pkg.exists()">
+                                        <li class="list-group-item d-flex align-items-center p-3">
+                                            <div class="flex-grow-1">
+                                                <div class="fw-bold"><t t-esc="pkg.name"/></div>
+                                                <div class="small text-muted">
+                                                    <t t-if="pkg.package_type_id">Type: <span class="fw-bold text-dark"><t t-esc="pkg.package_type_id.name"/></span></t>
+                                                    <t t-else="">Type: <span class="fw-bold text-dark">-</span></t>
+                                                </div>
+                                            </div>
+                                            <button t-if="picking.sudo().picking_type_id.delivery_portal_show_items" type="button" class="btn btn-outline-primary btn-sm ms-2 filter-package-btn" t-att-data-package-id="pkg.id" onclick="filterItemsByPackage(this)">
+                                                <i class="fa fa-filter me-1"/> Ver items
+                                            </button>
+                                        </li>
+                                    </t>
+                                </t>
+                            </ul>
+                        </div>
+                    </t>
+
+                    <!-- Items -->
+                    <t t-if="picking.sudo().picking_type_id.delivery_portal_show_items">
+                    <h5 class="mb-2 d-flex align-items-center">Items
+                        <button type="button" class="btn btn-link btn-sm ms-2 p-0 text-decoration-none d-none" id="clearPackageFilterBtn" onclick="clearPackageFilter()">
+                            <i class="fa fa-times me-1"/> Mostrar todos
+                        </button>
+                    </h5>
                     <div class="card shadow-sm border-0 rounded-3 mb-3">
-                        <ul class="list-group list-group-flush rounded-3">
+                        <ul class="list-group list-group-flush rounded-3" id="itemsList">
                             <t t-foreach="picking.move_line_ids" t-as="item">
-                                <li class="list-group-item d-flex align-items-center p-3">
+                                <li class="list-group-item d-flex align-items-center p-3" t-att-data-package-id="item.result_package_id and item.result_package_id.id or 0">
                                     <!-- Product Image (Placeholder or Actual) -->
                                     <div class="bg-light rounded p-1 me-3" style="width: 50px; height: 50px; flex-shrink:0;">
                                          <img t-att-src="image_data_uri(item.product_id.image_128)" class="w-100 h-100 object-fit-cover" t-if="item.product_id.image_128"/>
@@ -437,6 +481,21 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <div class="fw-bold"><t t-esc="item.product_id.name"/></div>
+                                        <t t-if="item.product_id.product_template_variant_value_ids">
+                                            <div class="mb-1 d-flex flex-wrap gap-1">
+                                                <t t-foreach="item.product_id.product_template_variant_value_ids" t-as="attr">
+                                                    <span class="badge rounded-pill bg-light text-dark border" style="font-size:90%">
+                                                        <t t-esc="attr.display_name"/>
+                                                    </span>
+                                                </t>
+                                            </div>
+                                        </t>
+                                        <t t-if="picking.sudo().picking_type_id.show_reference_in_portal and item.product_id.default_code">
+                                            <div class="small text-muted">Internal Reference: <span class="fw-bold text-dark"><t t-esc="item.product_id.default_code"/></span></div>
+                                        </t>
+                                        <t t-if="picking.sudo().picking_type_id.show_barcode_in_portal and item.product_id.barcode">
+                                            <div class="small text-muted">Barcode: <span class="fw-bold text-dark"><t t-esc="item.product_id.barcode"/></span></div>
+                                        </t>
                                         <div class="small text-muted">
                                             Qty: <span class="fw-bold text-dark"><t t-esc="item.quantity"/></span> <t t-esc="item.product_uom_id.name"/>
                                         </div>
@@ -448,6 +507,7 @@
                             </t>
                         </ul>
                     </div>
+                            <!-- JS de filtrado ahora en static/src/js/delivery_portal.js -->
                 </t>
 
                 <!-- Evidence Preview (Only if data exists) -->
@@ -524,6 +584,44 @@
 
             <!-- Simple Script for State Update -->
             <script>
+                // Image Compression Utility (Inline to avoid dependency on delivery_portal.js)
+                if (typeof window.compressImage === 'undefined') {
+                    window.compressImage = function(file, callback) {
+                        if (!file) return;
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function(event) {
+                            var img = new Image();
+                            img.src = event.target.result;
+                            img.onload = function() {
+                                var elem = document.createElement('canvas');
+                                var width = img.width;
+                                var height = img.height;
+                                var MAX_WIDTH = 1024;
+                                var MAX_HEIGHT = 1024;
+                                
+                                if (width > height) {
+                                    if (width > MAX_WIDTH) {
+                                        height *= MAX_WIDTH / width;
+                                        width = MAX_WIDTH;
+                                    }
+                                } else {
+                                    if (height > MAX_HEIGHT) {
+                                        width *= MAX_HEIGHT / height;
+                                        height = MAX_HEIGHT;
+                                    }
+                                }
+                                elem.width = width;
+                                elem.height = height;
+                                var ctx = elem.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                var dataUrl = elem.toDataURL('image/webp', 0.6);
+                                callback(dataUrl);
+                            };
+                        };
+                    };
+                }
+
                 function handleQuickPhoto(input) {
                     if (input.files &amp;&amp; input.files[0]) {
                         var btn = document.getElementById('quickPhotoBtn');
@@ -568,12 +666,11 @@
     <!-- SCREEN 3: FINALIZE -->
     <template id="delivery_app_finalize" name="Finalize Delivery">
         <t t-call="portal_app_launcher.portal_app_layout">
-            <t t-set="head">
+            <t t-set="extra_head">
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                 <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=delivery"/>
-                <meta name="theme-color" content="#714B67"/>
                 <style>
-                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
                     .btn:active { transform: scale(0.98); transition: transform 0.05s; }
                 </style>
             </t>
@@ -583,7 +680,7 @@
                     <a t-att-href="'/my/delivery/%s' % picking.id" class="btn btn-light rounded-circle shadow-sm me-3">
                         <i class="fa fa-arrow-left"/>
                     </a>
-                    <h4 class="m-0 text-white">Finalize Delivery</h4>
+                    <h4 class="m-0">Finalize Delivery</h4>
                 </div>
 
                 <form t-att-action="'/my/delivery/%s/submit' % picking.id" method="POST" enctype="multipart/form-data" id="finalizeForm">
@@ -642,21 +739,21 @@
                         
                         <!-- Receiver Name -->
                         <div class="mb-4" id="receiverNameBlock" style="display:none;">
-                            <label class="form-label text-white">Receiver Name</label>
+                            <label class="form-label">Receiver Name</label>
                             <input type="text" name="receiver_name" id="receiverNameInput" class="form-control rounded-pill py-2" placeholder="Ej. Juan Pérez"/>
                         </div>
 
                         <!-- Notes (Always Visible or Conditional? User asked for it, likely always visible or at least available) -->
                         <div class="mb-4">
-                            <label class="form-label text-white">Delivery Notes</label>
+                            <label class="form-label">Delivery Notes</label>
                             <textarea name="delivery_notes" class="form-control rounded-3 py-2" rows="3" placeholder="Add any comments here..."></textarea>
                         </div>
 
                         <!-- Signature -->
                         <div class="mb-4" id="signatureBlock" style="display:none;">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <label class="form-label text-white m-0">Signature</label>
-                                <button type="button" class="btn btn-sm btn-link text-white text-decoration-none p-0" onclick="clearSignature()">CLEAR</button>
+                                <label class="form-label m-0">Signature</label>
+                                <button type="button" class="btn btn-sm btn-link text-decoration-none p-0" onclick="clearSignature()">CLEAR</button>
                             </div>
                             <div class="bg-light rounded-3 p-3 shadow-sm position-relative" style="background-color: #f8f9fa !important;">
                                 <div id="signaturePlaceholder" class="position-absolute top-50 start-50 translate-middle text-muted opacity-50 pointer-events-none">
@@ -669,7 +766,7 @@
 
                         <!-- Photo -->
                         <div class="mb-4" id="photoBlock" style="display:none;">
-                             <label class="form-label text-white">Photo Evidence</label>
+                             <label class="form-label">Photo Evidence</label>
                              <div class="bg-white rounded-3 p-1 shadow-sm">
                                  <button type="button" class="btn btn-outline-light text-dark w-100 py-3 fw-bold border-0 d-flex align-items-center justify-content-center gap-2" onclick="document.getElementById('photoInput').click()">
                                      <i class="fa fa-camera fa-lg"/> Take Photo
@@ -741,6 +838,44 @@
                     } 
                 });
                 canvas.addEventListener('touchend', function(e) { e.preventDefault(); drawing = false; });
+
+                // Image Compression Utility (Inline to avoid dependency on delivery_portal.js)
+                if (typeof window.compressImage === 'undefined') {
+                    window.compressImage = function(file, callback) {
+                        if (!file) return;
+                        var reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = function(event) {
+                            var img = new Image();
+                            img.src = event.target.result;
+                            img.onload = function() {
+                                var elem = document.createElement('canvas');
+                                var width = img.width;
+                                var height = img.height;
+                                var MAX_WIDTH = 1024;
+                                var MAX_HEIGHT = 1024;
+                                
+                                if (width > height) {
+                                    if (width > MAX_WIDTH) {
+                                        height *= MAX_WIDTH / width;
+                                        width = MAX_WIDTH;
+                                    }
+                                } else {
+                                    if (height > MAX_HEIGHT) {
+                                        width *= MAX_HEIGHT / height;
+                                        height = MAX_HEIGHT;
+                                    }
+                                }
+                                elem.width = width;
+                                elem.height = height;
+                                var ctx = elem.getContext('2d');
+                                ctx.drawImage(img, 0, 0, width, height);
+                                var dataUrl = elem.toDataURL('image/webp', 0.6);
+                                callback(dataUrl);
+                            };
+                        };
+                    };
+                }
 
                 function resizeCanvas() {
                     var container = canvas.parentElement;

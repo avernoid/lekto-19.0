@@ -46,140 +46,120 @@
 
     <!-- Minimal Layout for Apps -->
     <template id="portal_app_layout" name="Portal App Layout">
-        &lt;!DOCTYPE html&gt;
-        <html t-att-lang="lang" t-att-data-website-id="website.id if website else None" t-att-dir="lang_direction">
-            <head>
-                <meta charset="utf-8"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-                <title t-esc="title or 'In-House App'"/>
-                
-                <!-- PWA Meta Tags -->
-                <link rel="manifest" t-att-href="manifest_url or '/portal_app/manifest.webmanifest'"/>
-                
-                <!-- Dynamic Aesthetics based on Active App (inferred from URL) -->
-                <t t-set="active_app" t-value="request.env['portal.app'].sudo().search([]).filtered(lambda a: request.httprequest.path.startswith(a.action_url))[:1]"/>
-
-                <meta name="theme-color" t-att-content="active_app.theme_color if active_app else '#667eea'"/>
+        <t t-call="website.layout">
+            <t t-set="no_header" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <t t-set="active_app" t-value="request.env['portal.app'].sudo().search([]).filtered(lambda a: request.httprequest.path.startswith(a.action_url))[:1]"/>
+            <t t-set="title" t-value="title or 'In-House App'"/>
+            <t t-set="manifest_url" t-value="manifest_url or '/portal_app/manifest.webmanifest'"/>
+            <t t-set="theme_color" t-value="active_app.theme_color if active_app else '#667eea'"/>
+            <t t-set="pwa_name" t-value="active_app.pwa_name or active_app.name if active_app else 'Portal App'"/>
+            <t t-set="app_bg" t-value="active_app.app_background_color or '#f0f4f7'"/>
+            <t t-set="app_text" t-value="active_app.app_text_color or '#212529'"/>
+            <t t-set="app_card_bg" t-value="'#1e1e1e' if active_app and active_app.color_scheme == 'dark' else '#ffffff'"/>
+            <t t-set="app_card_text" t-value="'#ffffff' if active_app and active_app.color_scheme == 'dark' else '#212529'"/>
+            <t t-set="color_scheme" t-value="active_app.color_scheme if active_app else 'light'"/>
+            <t t-set="website_id" t-value="website.id if website else None"/>
+            <t t-set="lang_direction" t-value="lang_direction"/>
+            <t t-set="apple_touch_icon" t-value="'/web/binary/company_logo'"/>
+            
+            <t t-set="head">
+                <meta name="theme-color" t-att-content="theme_color"/>
                 <meta name="apple-mobile-web-app-capable" content="yes"/>
                 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-                <meta name="apple-mobile-web-app-title" t-att-content="active_app.pwa_name or active_app.name if active_app else 'Portal App'"/>
-                
-                <!-- CSS-based Theming: We use classes instead of inline styles for richer aesthetics -->
-                <!-- The computed fields (theme_color, etc.) are still used for the PWA meta tags above -->
-                <link rel="apple-touch-icon" href="/web/binary/company_logo"/>
-
-                <t t-call-assets="web.assets_frontend" t-js="false"/>
-                <t t-call-assets="web.assets_frontend" t-css="false"/>
+                <meta name="apple-mobile-web-app-title" t-att-content="pwa_name"/>
+                <link rel="manifest" t-att-href="manifest_url"/>
+                <link rel="apple-touch-icon" t-att-href="apple_touch_icon"/>
                 
                 <style>
-                    /* Dynamic Theme Variables */
                     :root {
-                        --app-bg: <t t-esc="active_app.app_background_color or '#f0f4f7'"/>;
-                        --app-text: <t t-esc="active_app.app_text_color or '#212529'"/>;
-                        /* Auto-Dark Mode for Cards if scheme is 'dark' */
-                        --app-card-bg: <t t-esc="'#1e1e1e' if active_app and active_app.color_scheme == 'dark' else '#ffffff'"/>;
-                        --app-card-text: <t t-esc="'#ffffff' if active_app and active_app.color_scheme == 'dark' else '#212529'"/>;
+                        --app-bg: <t t-esc="app_bg"/>;
+                        --app-text: <t t-esc="app_text"/>;
+                        --app-card-bg: <t t-esc="app_card_bg"/>;
+                        --app-card-text: <t t-esc="app_card_text"/>;
                     }
-
                     body.portal_app_body {
-                         background-color: var(--app-bg) !important;
-                         color: var(--app-text) !important;
+                        background-color: var(--app-bg) !important;
+                        color: var(--app-text) !important;
                     }
-
-                    /* Override Bootstrap text utilities within the app to respect our theme */
                     body.portal_app_body .text-white, 
                     body.portal_app_body .text-dark,
                     body.portal_app_body h1, body.portal_app_body h2, body.portal_app_body h3, 
                     body.portal_app_body h4, body.portal_app_body h5, body.portal_app_body h6 {
                         color: var(--app-text) !important;
                     }
-
-                    /* Card Theming */
                     body.portal_app_body .card {
                         background-color: var(--app-card-bg) !important;
                         color: var(--app-card-text) !important;
                     }
-                    /* Ensure text inside cards respects the card contrast, NOT the body contrast */
                     body.portal_app_body .card h1, body.portal_app_body .card h2, 
                     body.portal_app_body .card h3, body.portal_app_body .card h4, 
                     body.portal_app_body .card h5, body.portal_app_body .card h6,
                     body.portal_app_body .card .text-dark, body.portal_app_body .card .text-white {
                         color: var(--app-card-text) !important;
                     }
-
-                    /* Utilities to hide elements when installed as PWA */
                     @media all and (display-mode: standalone) {
                         .pwa-only-hidden {
                             display: none !important;
                         }
                     }
                 </style>
-                
+                <!-- Inherit extra_head if defined elsewhere -->
+                <t t-out="extra_head or ''"/>
+            </t>
 
-            </head>
-            <body t-attf-class="portal_app_body theme-{{ active_app.color_scheme if active_app else 'light' }}">
-                <main>
-                    <t t-out="0"/>
-                </main>
-                <script>
-                    if ('serviceWorker' in navigator) {
-                        window.addEventListener('load', function() {
-                            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                                console.log('ServiceWorker registration successful');
-                            }, function(err) {
-                                console.log('ServiceWorker registration failed: ', err);
-                            });
+            <t t-set="body_class" t-value="'portal_app_body theme-' + color_scheme"/>
+            
+            <main>
+                <t t-out="0"/>
+            </main>
+
+            <script>
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                            console.log('ServiceWorker registration successful');
+                        }, function(err) {
+                            console.log('ServiceWorker registration failed: ', err);
                         });
-                    }
-                    
-                    // PWA Install Logic - Robust Event Delegation
-                    let deferredPrompt;
-                    
-                    window.addEventListener('beforeinstallprompt', (e) => {
-                        // Prevent Chrome 67 and earlier from automatically showing the prompt
-                        e.preventDefault();
-                        // Stash the event so it can be triggered later.
-                        deferredPrompt = e;
-                        console.log("PWA: beforeinstallprompt captured");
                     });
-
-                    // Use event delegation to handle clicks even if button loads late
-                    document.addEventListener('click', (e) => {
-                        const btn = e.target.closest('#pwaInstallBtn');
-                        if (btn) {
-                            console.log("PWA: Install button clicked");
-                            const installedMsg = document.getElementById('pwaInstalledMsg');
-                            
-                            // Show the prompt
-                            if(deferredPrompt) {
-                                deferredPrompt.prompt();
-                                // Wait for the user to respond to the prompt
-                                deferredPrompt.userChoice.then((choiceResult) => {
-                                    if (choiceResult.outcome === 'accepted') {
-                                        console.log('User accepted the A2HS prompt');
-                                        if(installedMsg) installedMsg.style.display = 'block';
-                                        btn.style.display = 'none';
-                                    } else {
-                                        console.log('User dismissed the A2HS prompt');
-                                    }
-                                    deferredPrompt = null;
-                                });
-                            } else {
-                                // Manual Instructions Fallback
-                                alert('To install this app:\n\n1. Tap the Share/Menu button (three dots).\n2. Select "Add to Home Screen" or "Install App".');
-                            }
-                        }
-                    });
-
-                    // Check if already installed
-                    if (window.matchMedia('(display-mode: standalone)').matches) {
-                        const installBtn = document.getElementById('pwaInstallBtn');
+                }
+                let deferredPrompt;
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+                    console.log("PWA: beforeinstallprompt captured");
+                });
+                document.addEventListener('click', (e) => {
+                    const btn = e.target.closest('#pwaInstallBtn');
+                    if (btn) {
+                        console.log("PWA: Install button clicked");
                         const installedMsg = document.getElementById('pwaInstalledMsg');
-                        if(installBtn) installBtn.style.display = 'none';
-                        if(installedMsg) installedMsg.style.display = 'block';
+                        if(deferredPrompt) {
+                            deferredPrompt.prompt();
+                            deferredPrompt.userChoice.then((choiceResult) => {
+                                if (choiceResult.outcome === 'accepted') {
+                                    console.log('User accepted the A2HS prompt');
+                                    if(installedMsg) installedMsg.style.display = 'block';
+                                    btn.style.display = 'none';
+                                } else {
+                                    console.log('User dismissed the A2HS prompt');
+                                }
+                                deferredPrompt = null;
+                            });
+                        } else {
+                            alert('To install this app:\n\n1. Tap the Share/Menu button (three dots).\n2. Select "Add to Home Screen" or "Install App".');
+                        }
                     }
-                </script>
-            </body>
-        </html>
+                });
+                if (window.matchMedia('(display-mode: standalone)').matches) {
+                    const installBtn = document.getElementById('pwaInstallBtn');
+                    const installedMsg = document.getElementById('pwaInstalledMsg');
+                    if(installBtn) installBtn.style.display = 'none';
+                    if(installedMsg) installedMsg.style.display = 'block';
+                }
+            </script>
+            <t t-set="extra_footer" t-value="extra_footer or ''"/>
+        </t>
     </template>
 </odoo>

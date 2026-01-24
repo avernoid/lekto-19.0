@@ -101,6 +101,7 @@ class EvidencePortal(CustomerPortal):
         
         return request.render('project_task_photo_evidence.evidence_app_home', {
             'tasks': tasks,
+            'task_count': task_count,
             'pager': pager,
             'filter_by': filter_by,
             'current_tag': int(filter_tag) if filter_tag else False,

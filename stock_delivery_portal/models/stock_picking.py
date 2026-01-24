@@ -1,5 +1,5 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
@@ -12,7 +12,7 @@ class StockPicking(models.Model):
         tracking=True,
         help="Partner (driver) responsible for the delivery."
     )
-    
+
     delivery_state_id = fields.Many2one(
         'stock.delivery.state',
         string='Delivery State',
@@ -21,7 +21,7 @@ class StockPicking(models.Model):
         copy=False,
         help="Current state of the delivery in the portal."
     )
-    
+
     delivery_receiver_name = fields.Char(string='Receiver Name', tracking=True, copy=False, help="Name of the person who received the package.")
     delivery_notes = fields.Text(string='Delivery Notes', tracking=True, copy=False, help="Optional notes added by the driver.")
     delivery_date_done = fields.Datetime(string='Delivery Date', tracking=True, copy=False, help="Date and time when the delivery reached a final state.")
@@ -38,7 +38,6 @@ class StockPicking(models.Model):
             state = picking.delivery_state_id
             if not state:
                 continue
-                
             # These validations are mostly strictly enforced when modifying via Portal/API, 
             # but we can enforce some here if data is missing. 
             # However, typical backend usage might want flexibility. 
@@ -238,12 +237,24 @@ class StockPicking(models.Model):
 class StockPickingType(models.Model):
     _inherit = 'stock.picking.type'
 
+    show_reference_in_portal = fields.Boolean(
+        string="Show Internal Reference in Portal",
+        default=False,
+        help="If enabled, the product's internal reference will be shown in the portal."
+    )
+
+    show_barcode_in_portal = fields.Boolean(
+        string="Show Barcode in Portal",
+        default=False,
+        help="If enabled, the product's barcode will be shown in the portal."
+    )
+
     delivery_portal_show_items = fields.Boolean(
         string="Show Items in Portal Delivery",
         default=True,
         help="If enabled, delivery items (product name, quantity, photos) will be visible in the delivery portal. Disable this for confidentiality in sensitive sectors."
     )
-    
+
     allow_driver_contact = fields.Boolean(
         string="Allow Driver Contact",
         default=True,

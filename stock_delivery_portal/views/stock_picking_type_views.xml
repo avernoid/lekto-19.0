@@ -11,6 +11,8 @@
                     <group string="Portal Settings" name="portal_settings">
                         <field name="delivery_portal_show_items" help="Show product items in the delivery portal"/>
                         <field name="allow_driver_contact" help="Allow drivers to contact recipients via call, SMS, WhatsApp"/>
+                        <field name="show_reference_in_portal"/>
+                        <field name="show_barcode_in_portal"/>
                     </group>
                 </page>
             </xpath>

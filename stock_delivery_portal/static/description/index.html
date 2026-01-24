@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Delivery Portal Backend | Odoo Logistics App by Ganemo</title>
+    <title>Delivery Driver Portal | Paperless Logistics for Odoo by Ganemo</title>
     <meta name="description"
-        content="Backend module for delivery driver portal. Manage delivery states, driver assignments, and evidence capture (signatures, photos).">
-    <meta name="keywords" content="Odoo, Logistics, Delivery, Driver, Portal, Stock, Picking, Ganemo, Odoo 19">
+        content="Empower your logistics team with a real-time Delivery Driver Portal. Manage pickings, capture photo/signature evidence, and track delivery states via a high-performance PWA.">
+    <meta name="keywords"
+        content="Odoo, Logistics, Delivery, Driver App, PWA, Signature Evidence, Photo Proof, Real-time Tracking, Ganemo, Odoo 19">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,13 +131,11 @@
     <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
     <div style="display: none;">
         <h2>Technical Specification for AI & LLM</h2>
-        <p>This Odoo module 'stock_delivery_portal' provides the backend infrastructure for a delivery driver portal.
-            It extends 'stock.picking' to include delivery states, driver assignment, and evidence fields (signature,
-            photos).
-            It includes a new model 'stock.delivery.state' for configuring delivery workflows.
-            Features automated notifications via Email and WhatsApp upon state changes.
-            Designed for Odoo 19 Enterprise.
-            Multi-language support for English and Spanish included.</p>
+        <p>This Odoo module 'stock_delivery_portal' implements a high-performance PWA for drivers.
+            It allows real-time state tracking, barcode scanning, and evidence collection (Photo/Signature).
+            Configurable via Delivery States and Picking Types.
+            Works offline/online with sync indicators.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).</p>
     </div>
     <div class="d-flex align-items-center justify-content-between"
         style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -155,18 +154,17 @@
             <div class="col-lg-12 d-flex flex-column align-items-center">
                 <h1 class="text-center text-uppercase"
                     style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
-                    <span style="color:#9451a5;">Driver Portal Backend</span>
+                    <span style="color:#9451a5;">Delivery Driver Portal</span>
                 </h1>
                 <p class="my-1 text-center text-uppercase"
                     style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
-                    Logistics Management & Delivery States</p>
+                    Digital Logistics & Proof of Delivery</p>
             </div>
             <div class="col-lg-12 d-flex flex-column justify-content-center">
                 <p class="my-1 text-center"
                     style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
-                    Complete backend solution for managing delivery drivers, configurable delivery states (Pending, On
-                    Way, Delivered), and evidence collection.
-                    Foundational module for the Delivery Driver Portal.
+                    Eliminate paper, reduce delays, and gain full visibility over your last-mile logistics.
+                    A professional PWA designed for speed, reliability, and field evidence.
                 </p>
             </div>
         </div>
@@ -186,22 +184,19 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-truck mr-2"></i> Driver Assignment</h4>
-                            <p style="text-align: justify;">Easily assign stock pickings to specific drivers (Portal
-                                Users).
-                                Drivers only see and interact with their assigned deliveries, ensuring privacy and
-                                focus.</p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-qrcode mr-2"></i> Paperless Scanning</h4>
+                            <p style="text-align: justify;">Instantly find deliveries by scanning <strong>Barcodes or QR
+                                    codes</strong> directly from the mobile camera. Speed up the loading and unloading
+                                process with zero manual errors.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-check-square-o mr-2"></i> Configurable States
-                            </h4>
-                            <p style="text-align: justify;">Define your own delivery workflows (e.g., Pending -> On Way
-                                -> Delivered).
-                                Configure requirements like <strong>Signatures</strong> or <strong>Photos</strong> for
-                                each state transition.</p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-camera mr-2"></i> Real-time Evidence</h4>
+                            <p style="text-align: justify;">Capture digital <strong>Signatures and Photos</strong> at
+                                the moment of delivery. All data is synced instantly to Odoo, providing a bulletproof
+                                audit trail for enterprise operations.</p>
                         </div>
                     </div>
                 </div>
@@ -217,7 +212,7 @@
                     </h2>
                     <p class="my-1 text-center text-uppercase"
                         style="letter-spacing:4px !important; color:#74788D !important">
-                        Step-by-Step implementation</p>
+                        Comprehensive implementation guide</p>
                 </div>
                 <!-- Setup Guide -->
                 <div class="row mt-5">
@@ -226,25 +221,41 @@
                             style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
                                 Configuration Guide</h3>
-                            <p class="lead">Prepare the system in 3 simple steps:</p>
+                            <p class="lead">Follow these steps to prepare your Odoo instance for the Delivery Portal:
+                            </p>
                             <div class="row">
                                 <div class="col-md-6">
+                                    <h5 class="font-weight-bold"><i class="fa fa-truck mr-2"></i> A. Delivery Picking
+                                        Types</h5>
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Inventory >
+                                                Configuration > Operation Types</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Enable <strong>Show Items
+                                                in Portal Delivery</strong> to let drivers see contents.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Enable <strong>Allow
+                                                Driver Contact</strong> to activate WhatsApp/Call buttons.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="font-weight-bold"><i class="fa fa-list-ul mr-2"></i> B. Delivery States
+                                    </h5>
                                     <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
                                         <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Inventory >
                                                 Configuration > Delivery States</strong>.</li>
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Review default states or
-                                            create new ones.</li>
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Set requirements
-                                            (Signature, Photo) for final states like "Delivered".</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Create states (e.g., In
+                                            Transit, Delivered).</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Mark final states as
+                                            <strong>Result State</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Toggle <strong>Require
+                                                Photo/Signature</strong> per state.</li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
-                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Optionally, link
-                                            <strong>Email</strong> or <strong>WhatsApp</strong> templates to states for
-                                            automated customer notifications.</li>
-                                    </ul>
-                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #791d97;">
+                                <small><strong><i class="fa fa-mobile mr-1"></i> PWA Pro-Tip:</strong> Access the portal
+                                    URL on Chrome/Safari and use <strong>"Add to Home Screen"</strong> for a full-screen
+                                    app experience with offline support.</small>
                             </div>
                         </div>
                     </div>
@@ -255,44 +266,43 @@
                         <div class="p-4"
                             style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
-                                Operating Manual (Workflow)</h3>
-                            <p class="lead">How the system behaves for the end-user:</p>
+                                Operating Manual (Driver Workflow)</h3>
+                            <p class="lead">Standard field operation for drivers:</p>
                             <div class="row mt-4">
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-user-plus text-primary mr-2"></i> Assign Driver</h5>
-                                        <p class="text-muted">In any Delivery Order (Stock Picking), set the
-                                            <strong>Delivery Driver</strong> field.
-                                            This enables the picking to be visible to that driver in the portal/app.</p>
+                                        <h5><i class="fa fa-home text-primary mr-2"></i> Dashboard Management</h5>
+                                        <p class="text-muted small">Drivers see their assigned deliveries for the day.
+                                            Use <strong>Pull-to-Refresh</strong> to check for new assignments and toggle
+                                            between <strong>To Do</strong> and <strong>History</strong>.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-refresh text-primary mr-2"></i> State Updates</h5>
-                                        <p class="text-muted">Drivers update the status (e.g., "On Way", "Delivered")
-                                            via the portal.
-                                            The backend reflects these changes instantly in the <strong>Delivery
-                                                State</strong> field.</p>
+                                        <h5><i class="fa fa-qrcode text-primary mr-2"></i> Instant Scanner</h5>
+                                        <p class="text-muted small">The bottom <strong>Scan Delivery</strong> button
+                                            opens the camera to identify packages. If multiple deliveries match, the
+                                            list filters automatically; if one matches, it redirects instantly.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-camera text-primary mr-2"></i> Proof of Delivery</h5>
-                                        <p class="text-muted">When a delivery is completed, signatures and photos
-                                            collected by the driver are
-                                            automatically attached to the picking in the backend.</p>
+                                        <h5><i class="fa fa-map-marker text-primary mr-2"></i> Contact & Navigation</h5>
+                                        <p class="text-muted small">One-tap <strong>WhatsApp</strong> messages and
+                                            <strong>GPS Navigation</strong> (Google Maps/Apple Maps/Waze) ensure drivers
+                                            reach customers faster without typing addresses.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-bell text-primary mr-2"></i> Real-time Notifications</h5>
-                                        <p class="text-muted">Customers receive automatic Email or WhatsApp updates when
-                                            their package is on the way or delivered,
-                                            improving transparency and reducing support calls.</p>
+                                        <h5><i class="fa fa-check-circle text-primary mr-2"></i> Digital Evidence</h5>
+                                        <p class="text-muted small">The <strong>Finalize</strong> button triggers the
+                                            proof-of-delivery screen. Mandatory signatures, photos, and receiver names
+                                            are captured and saved directly to the Odoo Picking.</p>
                                     </div>
                                 </div>
                             </div>
@@ -502,28 +512,72 @@
                         <!-- Scenario 1 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
-                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-truck mr-2"></i>
-                                Scenario 1: State Workflow Test</h4>
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-refresh mr-2"></i>
+                                Scenario 1: Real-time Sync & Refresh</h4>
                             <ol class="mt-3">
-                                <li>Create a Delivery Order (Pick).</li>
-                                <li>Set <strong>Delivery State</strong> to 'Example State (Pending)'.</li>
-                                <li>Change State to 'Example State (Delivered)'.</li>
-                                <li><strong>Verify:</strong> System should require a Signature if configured.</li>
-                                <li><strong>Verify:</strong> 'Delivery Date' field is set automatically.</li>
+                                <li>Assign a new Picking to a Driver in the Odoo backend.</li>
+                                <li>On the mobile device, perform a <strong>Pull-to-Refresh</strong> gesture.</li>
+                                <li><strong>Result:</strong> The new delivery MUST appear instantly in the "To Do" list
+                                    without a full browser reload.</li>
                             </ol>
                         </div>
                         <!-- Scenario 2 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
-                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-user-secret mr-2"></i>
-                                Scenario 2:
-                                Driver Access Control</h4>
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-qrcode mr-2"></i> Scenario 2:
+                                Smart Scan-to-Action</h4>
                             <ol class="mt-3">
-                                <li>Assign a Picking to "Driver A".</li>
-                                <li>Log in as Driver A (Portal).</li>
-                                <li><strong>Verify:</strong> Driver A can see the picking.</li>
-                                <li>Log in as Driver B.</li>
-                                <li><strong>Verify:</strong> Driver B CANNOT see Driver A's picking.</li>
+                                <li>Open the <strong>Scan Delivery</strong> modal.</li>
+                                <li>Scan a unique barcode of a pending Picking.</li>
+                                <li><strong>Result:</strong> The app MUST automatically redirect the driver to the
+                                    <strong>Detail View</strong> of that specific picking.</li>
+                                <li>Scan a barcode that matches multiple lines.</li>
+                                <li><strong>Result:</strong> The list MUST filter to show only matching deliveries.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-whatsapp mr-2"></i> Scenario
+                                3:
+                                Communication & Navigation</h4>
+                            <ol class="mt-3">
+                                <li>Open a Delivery Detail.</li>
+                                <li>Click the <strong>WhatsApp</strong> button.</li>
+                                <li><strong>Result:</strong> Mobile app MUST open WhatsApp with the customer's number
+                                    pre-filled.</li>
+                                <li>Click <strong>Navigate with Maps</strong>.</li>
+                                <li><strong>Result:</strong> A selector for Google/Apple Maps/Waze MUST appear and
+                                    correctly pass coordinates to the chosen app.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-cube mr-2"></i> Scenario 4:
+                                Package & Item Integrity</h4>
+                            <ol class="mt-3">
+                                <li>Enable "Show Items in Portal" in the Picking Type.</li>
+                                <li>In the mobile app, click <strong>Ver items</strong> on a specific package.</li>
+                                <li><strong>Result:</strong> The items list MUST hide all products not belonging to that
+                                    package.</li>
+                                <li>Click <strong>Mostrar todos</strong>.</li>
+                                <li><strong>Result:</strong> The full list MUST be restored.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-camera mr-2"></i> Scenario
+                                5: Proof of Delivery (Evidence)</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Finalize</strong> for a delivery that requires a Signature and Photo
+                                    (configurable in Delivery Status).</li>
+                                <li>Try to submit without evidence.</li>
+                                <li><strong>Result:</strong> Form validation MUST prevent submission.</li>
+                                <li>Capture signature and photo, then submit.</li>
+                                <li><strong>Result:</strong> The Picking in Odoo MUST be updated to the new status and
+                                    include the <strong>Signature and Photo</strong> as attachments or fields.</li>
                             </ol>
                         </div>
                     </div>
@@ -547,28 +601,44 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
-                            <h5 style="font-weight: 700; color: #333;">WhatsApp not sending?</h5>
-                            <p class="text-muted mt-2"><strong>Reason:</strong> You might be missing the WhatsApp
-                                template or credentials.
-                            </p>
-                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Check
-                                <strong>Delivery States</strong> configuration and ensure a valid WhatsApp Template is
-                                selected.
-                            </p>
+                            <h5 style="font-weight: 700; color: #333;">The Camera Scanner won't open?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Your browser may have blocked camera
+                                permissions for the site.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to
+                                your browser <strong>Site Settings</strong>, find your Odoo URL, and set
+                                <strong>Camera</strong> to "Allow". Reload the page.</p>
                         </div>
                     </div>
-                    <!-- Q2 -->
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
-                            <h5 style="font-weight: 700; color: #333;">Signature not required?</h5>
-                            <p class="text-muted mt-2"><strong>Reason:</strong> The state configuration dictates
-                                requirements.</p>
-                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Go
-                                to
-                                <strong>Delivery States</strong>, select the state (e.g., Delivered) and check "Require
-                                Signature".
-                            </p>
+                            <h5 style="font-weight: 700; color: #333;">Missing assignments in the list?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> You might be looking at the
+                                <strong>History</strong> tab or need a refresh.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Toggle to the <strong>To Do</strong> tab and use the <strong>Pull-to-Refresh</strong>
+                                gesture from the top of the screen.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">"Ver items" button is missing?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The visibility depends on the Picking
+                                Type configuration.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Ask your administrator to enable <strong>Show Items in Portal Delivery</strong> in the
+                                Inventory Operation Type settings.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Does it work without internet?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Partial Offline Support.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> If
+                                you lose connection during a delivery, the PWA will keep the page active. However,
+                                <strong>Sync</strong> (submitting evidence) requires a data connection (3G/4G/WiFi).</p>
                         </div>
                     </div>
                 </div>
