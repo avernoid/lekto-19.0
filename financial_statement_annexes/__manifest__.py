@@ -1,6 +1,6 @@
 {
     'name': 'Financial Statement Annexes',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.3',
     'author': 'Ganemo',
     'website': 'https://www.ganemo.com',
     'summary': 'Accounts receivable and payable reports with cut-off date and aging reports.',
