@@ -17,7 +17,7 @@ class FinancialAnnexReportLine(models.TransientModel):
     name = fields.Char(string='Label')
     company_currency_id = fields.Many2one(related='company_id.currency_id', string='Company Currency', readonly=True)
     balance = fields.Monetary(string='Residual Amount', currency_field='company_currency_id')
-    amount_currency = fields.Float(string='Amount Currency', digits='Product Price')
+    amount_currency = fields.Float(string='Amount Currency', digits=(16, 2))
     currency_id = fields.Many2one('res.currency', string='Currency')
     reconcile_name = fields.Char(string='Paid')
     date_reconcile = fields.Date(string='Payment Date')
