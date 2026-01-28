@@ -1,6 +1,6 @@
 {
     'name': 'First and Last Name Details',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.2',
     'category': 'Extra Tools',
     'summary': """Desegregates contact names into first name, paternal surname, and maternal surname for legal compliance.""",
     'description': """This module adds three new fields to the contact form: First Name, Paternal Surname, and Maternal Surname. 

@@ -6,14 +6,14 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="parent_id" position="before">
-                <label for="partner_name" string="Name Details" invisible="is_company"/>
-                <div class="o_address_format" invisible="is_company">
-                    <field name="partner_name" placeholder="First Names" class="o_address_street"/>
-                    <field name="first_name" placeholder="Paternal Surname" class="o_address_city" style="width: 50%"/>
-                    <field name="second_name" placeholder="Maternal Surname" class="o_address_state" style="width: 50%"/>
+            <xpath expr="//field[@name='name']/parent::h1" position="after">
+                <div class="d-flex align-items-center gap-2 mb-1" invisible="is_company">
+                    <i class="fa fa-fw me-1 fa-id-card-o text-primary" title="Name Details"/>
+                    <field name="partner_name" placeholder="First Names" nolabel="1"/>
+                    <field name="first_name" placeholder="Paternal Surname" nolabel="1"/>
+                    <field name="second_name" placeholder="Maternal Surname" nolabel="1"/>
                 </div>
-            </field>
+            </xpath>
         </field>
     </record>
 

@@ -8,7 +8,7 @@ Separate and manage individual contact names with precision. This module adds de
 
 - **Structured Identification**: Adds specific fields for First Name, Paternal Surname, and Maternal Surname.
 - **Smart Visibility**: Fields are context-aware and automatically hidden for company/entity contacts to keep the form clean.
-- **Native Experience**: Integrated using Odoo's native address format classes for a seamless, "out-of-the-box" look and feel.
+- **Header Integration**: Seamlessly integrated into the contact header (right below the main name), ensuring high visibility without conflicting with address blocks or localization modules.
 - **Data Integrity**: Keeps detailed name components independent from Odoo's standard `name` field, allowing for flexible reporting and display.
 - **Multi-Language Support**: Fully internationalized with native English base and complete Spanish translation included.
 - **Odoo 19 Ready**: Built and tested specifically for Odoo 19 environments, including support for Odoo.sh and multi-company setups.
@@ -27,7 +27,7 @@ The "Name Details" section is designed for **Individual** contacts only. If a co
 
 1. Open any **Contact** or create a new one.
 2. Select **Individual** as the contact type.
-3. You will see the **Name Details** block above the standard name field.
+3. You will see the **Name Details** fields immediately below the main Name field in the header.
 4. Fill in the breakdown of the name.
 5. Save the contact. The standard Odoo `name` field remains independent, allowing you to manually set the display name as needed.
 
@@ -37,7 +37,6 @@ No additional configuration is required. The module works immediately after inst
 
 ---
 
-**Author**: [Ganemo](https://www.ganemo.co)
+**Author**: [Ganemo](https://www.ganemo.com)
 **License**: OPL-1
 **Category**: Extra Tools
-**Version**: 19.0.1.0.0

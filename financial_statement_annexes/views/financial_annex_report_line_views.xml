@@ -18,8 +18,8 @@
                 <field name="expected_pay_date" optional="hide"/>
                 <field name="name" optional="show"/>
                 <field name="balance" sum="Total Balance"/>
+                <field name="currency_id" optional="show"/>
                 <field name="amount_currency" sum="Total Amount Currency"/>
-                <field name="currency_id" optional="hide"/>
                 <field name="reconcile_name" optional="hide"/>
                 <field name="date_reconcile" optional="hide"/>
                 <field name="internal_note" optional="hide"/>
