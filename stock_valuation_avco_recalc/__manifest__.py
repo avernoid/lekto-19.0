@@ -33,7 +33,7 @@ Key Features:
     'auto_install': False,
     'application': False,
     'currency': 'USD',
-    'price': 60.0,
+    'price': 299.0,
     'module_type': 'official',
     'images': ['static/description/banner.png'],
     'icon': '/stock_valuation_avco_recalc/static/description/icon.png',
