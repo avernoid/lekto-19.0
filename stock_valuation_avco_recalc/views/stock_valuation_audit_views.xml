@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Audit Log Form View -->
+    <record id="view_stock_valuation_audit_form" model="ir.ui.view">
+        <field name="name">stock.valuation.recalc.audit.form</field>
+        <field name="model">stock.valuation.recalc.audit</field>
+        <field name="arch" type="xml">
+            <form string="Recalculation Audit" create="0" edit="0" delete="0">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="execution_date"/>
+                        </group>
+                    </group>
+                    <field name="log_notes" placeholder="No details..."/>
+                    <separator string="Affected Products"/>
+                    <field name="audit_lines">
+                        <list decoration-info="moves_affected_count > 0">
+                            <field name="product_id"/>
+                            <field name="recalc_start_date"/>
+                            <field name="initial_qty_used"/>
+                            <field name="initial_value_used"/>
+                            <field name="moves_affected_count" sum="Total Moves"/>
+                            <field name="value_correction_total" sum="Total Value Shift"/>
+                            <field name="currency_id" column_invisible="True"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Audit Log Tree View -->
+    <record id="view_stock_valuation_audit_tree" model="ir.ui.view">
+        <field name="name">stock.valuation.recalc.audit.tree</field>
+        <field name="model">stock.valuation.recalc.audit</field>
+        <field name="arch" type="xml">
+            <list string="Audit Logs" create="0" delete="0">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="execution_date"/>
+                <field name="log_notes"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_stock_valuation_audit" model="ir.actions.act_window">
+        <field name="name">Valuation audits</field>
+        <field name="res_model">stock.valuation.recalc.audit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu Item (Hidden under Inventory > Reporting or Configuration?) -->
+    <!-- Placing it in Configuration -> Valuation Fix (New) -->
+    <menuitem id="menu_stock_valuation_avco_recalc"
+              name="AVCO Re-Valuation History"
+              parent="stock.menu_stock_config_settings"
+              action="action_stock_valuation_audit"
+              sequence="100"/>
+</odoo>
