@@ -63,6 +63,8 @@
             <t t-set="lang_direction" t-value="lang_direction"/>
             <t t-set="apple_touch_icon" t-value="'/web/binary/company_logo'"/>
             
+            <t t-set="btn_text_color" t-value="'#212529' if color_scheme == 'light' else '#fff'"/>
+            
             <t t-set="head">
                 <meta name="theme-color" t-att-content="theme_color"/>
                 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -73,31 +75,122 @@
                 
                 <style>
                     :root {
+                        --app-theme-color: <t t-esc="theme_color"/>;
                         --app-bg: <t t-esc="app_bg"/>;
                         --app-text: <t t-esc="app_text"/>;
                         --app-card-bg: <t t-esc="app_card_bg"/>;
                         --app-card-text: <t t-esc="app_card_text"/>;
+                        --btn-text-color: <t t-esc="btn_text_color"/>;
                     }
-                    body.portal_app_body {
+                    /* SCOPED STYLES: Target #portal_app_scope or .portal_app_body */
+                    
+                    .portal_app_body {
                         background-color: var(--app-bg) !important;
                         color: var(--app-text) !important;
                     }
-                    body.portal_app_body .text-white, 
-                    body.portal_app_body .text-dark,
-                    body.portal_app_body h1, body.portal_app_body h2, body.portal_app_body h3, 
-                    body.portal_app_body h4, body.portal_app_body h5, body.portal_app_body h6 {
+                    .portal_app_body .text-white, 
+                    .portal_app_body .text-dark,
+                    .portal_app_body h1, .portal_app_body h2, .portal_app_body h3, 
+                    .portal_app_body h4, .portal_app_body h5, .portal_app_body h6 {
                         color: var(--app-text) !important;
                     }
-                    body.portal_app_body .card {
+                    .portal_app_body .card {
                         background-color: var(--app-card-bg) !important;
                         color: var(--app-card-text) !important;
                     }
-                    body.portal_app_body .card h1, body.portal_app_body .card h2, 
-                    body.portal_app_body .card h3, body.portal_app_body .card h4, 
-                    body.portal_app_body .card h5, body.portal_app_body .card h6,
-                    body.portal_app_body .card .text-dark, body.portal_app_body .card .text-white {
+                    .portal_app_body .card h1, .portal_app_body .card h2, 
+                    .portal_app_body .card h3, .portal_app_body .card h4, 
+                    .portal_app_body .card h5, .portal_app_body .card h6,
+                    .portal_app_body .card .text-dark, .portal_app_body .card .text-white {
                         color: var(--app-card-text) !important;
                     }
+
+                    /* Theme Utilities */
+                    .app-text-primary { color: var(--app-theme-color) !important; }
+                    .app-bg-primary { background-color: var(--app-theme-color) !important; }
+                    .app-border-primary { border-color: var(--app-theme-color) !important; }
+                    
+                    /* Custom Button Primary that respects theme */
+                    .btn-app-primary {
+                        background-color: var(--app-theme-color);
+                        border-color: var(--app-theme-color);
+                        color: var(--btn-text-color) !important; 
+                    }
+                    .btn-app-primary:hover {
+                         opacity: 0.9;
+                         color: var(--btn-text-color) !important; 
+                    }
+                    
+                    .btn-outline-app-primary {
+                        color: var(--app-theme-color);
+                        border-color: var(--app-theme-color);
+                        background-color: transparent;
+                    }
+                    .btn-outline-app-primary:hover {
+                        background-color: var(--app-theme-color);
+                        color: var(--btn-text-color) !important;
+                    }
+
+                    /* ============================================================
+                       FIX: Light Theme High Contrast Overrides (Scoped and Enforced)
+                       ============================================================ */
+
+                    /* 1. Force Text Elements (Headers, Icons using app-text-primary) to be DARK in Light Theme */
+                    .portal_app_body.theme-light .app-text-primary {
+                        color: #212529 !important;
+                    }
+
+                    /* 2. Forces text-white elements to be dark when using Light theme (e.g. Deliveries Header) */
+                    .portal_app_body.theme-light .text-white,
+                    .portal_app_body.theme-light .app-bg-primary.text-white,
+                    .portal_app_body.theme-light .delivery-top-bar.text-white,
+                    .portal_app_body.theme-light h4.text-white {
+                        color: #212529 !important;
+                    }
+                    
+                    /* 3. Ensure headers in Light theme have a bottom border if they are white */
+                    .portal_app_body.theme-light .app-bg-primary,
+                    .portal_app_body.theme-light .delivery-top-bar {
+                        border-bottom: 1px solid #dee2e6;
+                    }
+                    
+                    /* 4. Ensure Primary Buttons (Upload, etc) have a visible border and dark text/icon in Light Theme */
+                    .portal_app_body.theme-light .btn-app-primary {
+                         border: 1px solid #ced4da !important;
+                         background-color: #ffffff !important;
+                         color: #212529 !important;
+                    }
+                    .portal_app_body.theme-light .btn-app-primary i,
+                    .portal_app_body.theme-light .btn-app-primary span {
+                         color: #212529 !important;
+                    }
+                    
+                    /* 5. Fix Outline Buttons in Light Theme (View Details) */
+                    .portal_app_body.theme-light .btn-outline-app-primary {
+                        color: #212529 !important;
+                        border-color: #ced4da !important;
+                        background-color: #ffffff !important;
+                    }
+                    .portal_app_body.theme-light .btn-outline-app-primary:hover {
+                         background-color: #e9ecef !important;
+                    }
+
+                    /* 6. Fix Opacity elements inside forced dark containers (e.g. delivery count) */
+                    /* Targeted specifically to override the .text-white containment */
+                    .portal_app_body.theme-light .text-white .opacity-75,
+                    .portal_app_body.theme-light .app-bg-primary .opacity-75,
+                    .portal_app_body.theme-light .delivery-top-bar .opacity-75 {
+                        color: rgba(33, 37, 41, 0.75) !important;
+                        opacity: 1 !important;
+                    }
+                    
+                    /* 7. Extra: Fix Badges in Light Theme */
+                    .portal_app_body.theme-light .badge.text-white,
+                    .portal_app_body.theme-light .badge.app-text-primary {
+                        color: #212529 !important;
+                        border: 1px solid #dee2e6;
+                    }
+
                     @media all and (display-mode: standalone) {
                         .pwa-only-hidden {
                             display: none !important;
@@ -110,9 +203,16 @@
 
             <t t-set="body_class" t-value="'portal_app_body theme-' + color_scheme"/>
             
-            <main>
+            <!-- Wrapper to guarantee class application -->
+            <div id="portal_app_scope" t-att-class="'portal_app_body theme-' + color_scheme" style="min-height: 100vh;">
                 <t t-out="0"/>
-            </main>
+            </div>
+            
+            <!-- Force Body Class via JS as backup for Modals/Fixed elements stuck on Body -->
+            <script>
+                document.body.classList.add('portal_app_body', 'theme-<t t-esc="color_scheme"/>');
+            </script>
+            <main class="d-none"> <!-- Deprecated --> </main>
 
             <script>
                 if ('serviceWorker' in navigator) {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="category_partner_offline" model="ir.module.category">
+        <field name="name">Partner Offline Portal</field>
+        <field name="description">Access levels for the Partner Offline Portal</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Group: Assigned Only -->
+    <record id="group_portal_assigned" model="res.groups">
+        <field name="name">View Assigned Portal Contacts</field>
+        <!-- Removed category_id as per DEV_GUIDELINES: Invalid field in this env -->
+    </record>
+
+    <!-- Group: Assigned + Unassigned -->
+    <record id="group_portal_assigned_unassigned" model="res.groups">
+        <field name="name">View Assigned &amp; Unassigned Portal Contacts</field>
+        <!-- Removed category_id -->
+        <field name="implied_ids" eval="[(4, ref('group_portal_assigned'))]"/>
+    </record>
+
+    <!-- Group: All -->
+    <record id="group_portal_all" model="res.groups">
+        <field name="name">View All Portal Contacts</field>
+        <!-- Removed category_id -->
+        <field name="implied_ids" eval="[(4, ref('group_portal_assigned_unassigned'))]"/>
+    </record>
+
+</odoo>

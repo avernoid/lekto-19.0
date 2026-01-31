@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="portal_app_partner_offline" model="portal.app">
+            <field name="name">Partners</field>
+            <field name="pwa_name">Partner Portal</field>
+            <field name="technical_name">partner_offline</field>
+            <field name="sequence">20</field>
+            <field name="action_url">/my/partners</field>
+            <field name="theme_color">#667eea</field>
+            <field name="background_color">#667eea</field>
+            <field name="image" type="base64" file="partner_offline/static/description/icon.png"/>
+        </record>
+    </data>
+</odoo>

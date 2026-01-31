@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+import uuid
 
 class ProjectTask(models.Model):
     _inherit = 'project.task'
@@ -155,3 +156,32 @@ class ProjectTask(models.Model):
                      evidences = task.evidence_ids.filtered(lambda e: e.product_id == product)
                      if len(evidences) > max_qty:
                          raise ValidationError(_("You cannot add more than %s evidence(s) for product %s.") % (max_qty, product.name))
+
+    # --- Website Report Public Access ---
+    website_access_token = fields.Char('Website Access Token', copy=False)
+    
+    website_report_url = fields.Char(
+        string='Website Report URL', 
+        compute='_compute_website_report_url',
+        help="Public link to share the modern Website Evidence report."
+    )
+
+    @api.depends('website_access_token')
+    def _compute_website_report_url(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for task in self:
+            if task.website_access_token:
+                task.website_report_url = f"{base_url}/project/website/evidence/{task.id}?access_token={task.website_access_token}"
+            else:
+                task.website_report_url = False
+
+    def action_generate_website_token(self):
+        for task in self:
+            if not task.website_access_token:
+                task.website_access_token = str(uuid.uuid4())
+        return True
+
+    def action_revoke_website_token(self):
+        self.sudo().write({'website_access_token': False})
+        return True
+

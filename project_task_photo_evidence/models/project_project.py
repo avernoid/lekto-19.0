@@ -86,3 +86,31 @@ class ProjectProject(models.Model):
     def action_view_internal_evidence(self):
         self.ensure_one()
         return self.env.ref('project_task_photo_evidence.action_report_project_evidence').report_action(self)
+
+    # --- Website Report Public Access ---
+    website_access_token = fields.Char('Website Access Token', copy=False)
+    
+    website_report_url = fields.Char(
+        string='Website Report URL', 
+        compute='_compute_website_report_url',
+        help="Public link to share the modern Website Evidence report."
+    )
+
+    @api.depends('website_access_token')
+    def _compute_website_report_url(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for project in self:
+            if project.website_access_token:
+                project.website_report_url = f"{base_url}/project/website/evidence/project/{project.id}?access_token={project.website_access_token}"
+            else:
+                project.website_report_url = False
+
+    def action_generate_website_token(self):
+        for project in self:
+            if not project.website_access_token:
+                project.website_access_token = str(uuid.uuid4())
+        return True
+
+    def action_revoke_website_token(self):
+        self.sudo().write({'website_access_token': False})
+        return True

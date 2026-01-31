@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <record id="quick_reply_customer_not_home" model="delivery.quick.reply">
+            <field name="name">Customer not home</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="quick_reply_wrong_address" model="delivery.quick.reply">
+            <field name="name">Wrong address</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="quick_reply_neighbor" model="delivery.quick.reply">
+            <field name="name">Delivered to neighbor</field>
+            <field name="sequence">30</field>
+        </record>        
+
+        <record id="quick_reply_traffic" model="delivery.quick.reply">
+            <field name="name">Traffic delay</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="quick_reply_later" model="delivery.quick.reply">
+            <field name="name">Will return later</field>
+            <field name="sequence">50</field>
+        </record>
+
+    </data>
+</odoo>

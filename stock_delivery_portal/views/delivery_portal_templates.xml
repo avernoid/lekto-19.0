@@ -8,11 +8,34 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
                 <link rel="manifest" href="/portal_app/manifest.webmanifest?app_mode=delivery"/>
                 <style>
-                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; overscroll-behavior-y: none; }
                     .btn:active { transform: scale(0.98); transition: transform 0.05s; }
                     
                     @media all and (display-mode: standalone) {
                         .pwa-only-hidden { display: none !important; }
+                    }
+                    /* Scroll-Aware Top Bar */
+                    .delivery-top-bar {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 60px;
+                        background: var(--app-theme-color); /* Fallback */
+                        z-index: 1050;
+                        transition: top 0.3s ease-in-out;
+                        padding-top: env(safe-area-inset-top);
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        display: flex;
+                        align-items: center;
+                        padding-left: 1rem;
+                        padding-right: 1rem;
+                    }
+                    .nav-up {
+                        top: -80px; /* Hide */
+                    }
+                    .app-bg-primary-gradient {
+                        background: linear-gradient(135deg, var(--app-theme-color) 0%, #2c3e50 100%); /* Subtle gradient */
                     }
                 </style>
                 <script>
@@ -48,27 +71,65 @@
                     // Inject Filters into JS Scope
                     window.filter_state = <t t-esc="filter_state or 'false'"/>;
                     window.filter_type = <t t-esc="filter_type or 'false'"/>;
-                    window.search_query = <t t-esc="'&quot;%s&quot;' % search if search else 'false'"/>;
+                    window.search_query = <t t-esc="json.dumps(search) if search else 'false'"/>;
+
+                    // Scroll Hide/Show Logic
+                    let lastScrollTop = 0;
+                    const delta = 5;
+                    const navbarHeight = 60;
+
+                    window.addEventListener('scroll', function() {
+                        const st = window.pageYOffset;
+                        if (Math.abs(lastScrollTop - st) &lt;= delta) return;
+                        
+                        const navbar = document.getElementById('deliveryTopBar');
+                        if(navbar) {
+                            if (st > lastScrollTop &amp;&amp; st > navbarHeight){
+                                // Scroll Down
+                                navbar.classList.add('nav-up');
+                            } else {
+                                // Scroll Up
+                                if(st + window.innerHeight &lt; document.body.scrollHeight) {
+                                    navbar.classList.remove('nav-up');
+                                }
+                            }
+                        }
+                        lastScrollTop = st;
+                    });
                 </script>
             </t>
-            <div class="container py-4">
-                <!-- Header -->
-                <div class="d-flex align-items-center justify-content-between mb-3">
+            <!-- Fixed Scroll-Aware Top Bar -->
+            <div id="deliveryTopBar" class="delivery-top-bar app-bg-primary text-white">
+                <div class="d-flex align-items-center w-100 justify-content-between">
                      <div class="d-flex align-items-center">
-                        <a href="/my/home" class="btn btn-light rounded-circle shadow-sm me-3 pwa-only-hidden">
+                        <a href="/my/home" class="btn btn-outline-light rounded-circle shadow-sm me-3 border-0 p-0 d-flex align-items-center justify-content-center pwa-only-hidden" style="width:36px; height:36px;">
                             <i class="fa fa-arrow-left"/>
                         </a>
                         <div>
-                            <h4 class="m-0">Deliveries</h4>
+                            <h5 class="m-0 fw-bold">Deliveries</h5>
+                            <small class="opacity-75" style="font-size: 0.8rem;">
+                                <t t-esc="len(pickings)"/> / <t t-esc="picking_count"/>
+                            </small>
                         </div>
                      </div>
                      <div class="d-flex gap-2">
                          <!-- PWA Install Button -->
-                         <button id="pwaInstallBtn" class="btn btn-sm btn-outline-light rounded-pill" style="display:none;">
+                         <button id="pwaInstallBtn" class="btn btn-sm btn-light rounded-pill text-dark fw-bold shadow-sm" style="display:none; font-size: 0.75rem;">
                             <i class="fa fa-download me-1"/> Install
                          </button>
                      </div>
                 </div>
+            </div>
+
+            <!-- Pull to Refresh Loader -->
+            <div id="ptr-loader" style="position: fixed; top: 80px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; z-index: 1060; transform: translateY(0); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);">
+                <div class="bg-white rounded-circle shadow p-2 text-primary">
+                    <i class="fa fa-refresh fa-lg"></i>
+                </div>
+            </div>
+
+            <div class="container py-4" style="margin-top: 60px;">
+                <!-- Header Removed (Moved to Top Bar) -->
 
                 <!-- Toolbar Second Level: Clear Filters Only -->
                 <div class="d-flex gap-2 mb-3 flex-wrap align-items-center">
@@ -111,7 +172,7 @@
                                     <!-- Header: Picking Name & Status -->
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <div>
-                                            <h5 class="card-title text-primary mb-0"><t t-esc="picking.name"/></h5>
+                                            <h5 class="card-title app-text-primary mb-0"><t t-esc="picking.name"/></h5>
                                             <t t-if="picking.delivery_state_id.is_result_state">
                                                  <span class="badge bg-success text-white border mt-1">
                                                     <t t-esc="picking.delivery_state_id.name"/>
@@ -131,7 +192,7 @@
                                                     <i class="fa fa-phone text-success"/>
                                                 </a>
                                                 <a t-attf-href="sms:{{picking.delivery_phone}}" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="SMS">
-                                                    <i class="fa fa-comment text-primary"/>
+                                                    <i class="fa fa-comment app-text-primary"/>
                                                 </a>
                                                 <a t-attf-href="https://api.whatsapp.com/send?phone={{picking.delivery_phone}}" target="_blank" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="WhatsApp">
                                                     <i class="fa fa-whatsapp" style="color: #25D366;"/>
@@ -163,7 +224,7 @@
                                         </t>
                                         
                                         <!-- Footer: Button -->
-                                        <a t-att-href="'/my/delivery/%s' % picking.id" class="btn btn-outline-primary rounded-pill flex-grow-1">
+                                        <a t-att-href="'/my/delivery/%s' % picking.id" class="btn btn-outline-app-primary rounded-pill flex-grow-1">
                                             View Details
                                         </a>
                                     </div>
@@ -199,7 +260,7 @@
                     <div class="input-group">
                         <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="fa fa-search text-muted"/></span>
                         <input type="text" name="search" class="form-control bg-light border-0" placeholder="Search name, barcode..." t-att-value="search"/>
-                        <button type="submit" class="btn btn-primary rounded-end-pill px-4">Go</button>
+                        <button type="submit" class="btn btn-app-primary rounded-end-pill px-4">Go</button>
                     </div>
                     <!-- Preserve Mode -->
                     <input type="hidden" name="filter_state" t-att-value="filter_state"/>
@@ -211,7 +272,7 @@
              <div class="fixed-bottom bg-white border-top shadow-lg" style="z-index: 1040;">
                  <!-- Level 1: Actions -->
                  <div class="px-3 pt-3 pb-2">
-                    <button class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm" onclick="openScannerModal()">
+                    <button class="btn btn-app-primary w-100 rounded-pill py-3 fw-bold shadow-sm" onclick="openScannerModal()">
                         <i class="fa fa-qrcode me-2"/> Scan Delivery
                     </button>
                  </div>
@@ -224,7 +285,7 @@
                      </button>
                      <!-- To Do / History Toggle -->
                      <a t-attf-href="/my/delivery?{{ '&amp;history=0' if history else '&amp;history=1' }}"
-                        t-attf-class="btn btn-light rounded-pill shadow-sm flex-shrink-0 {{ 'text-primary' if history else '' }}">
+                        t-attf-class="btn btn-light rounded-pill shadow-sm flex-shrink-0 {{ 'app-text-primary' if history else '' }}">
                          <i class="fa fa-clock-o me-1"/> <t t-esc="'To Do' if history else 'History'"/>
                      </a>
                      <div class="vr mx-1"></div>
@@ -238,7 +299,7 @@
                          <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleDeliveryFilterMenu('filter_type_menu')">
                             <i class="fa fa-filter"/> 
                             <t t-if="filter_type">
-                                <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['stock.picking.type'].sudo().browse(filter_type).name"/></span>
+                                <span class="ps-1 fw-bold app-text-primary"><t t-esc="request.env['stock.picking.type'].sudo().browse(filter_type).name"/></span>
                             </t>
                          </button>
                          <ul id="filter_type_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 140px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
@@ -253,7 +314,7 @@
                          <button class="btn btn-light rounded-pill shadow-sm" type="button" onclick="toggleDeliveryFilterMenu('filter_state_menu')">
                             <i class="fa fa-tasks"/> 
                             <t t-if="filter_state">
-                                <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['stock.delivery.state'].sudo().browse(filter_state).name"/></span>
+                                <span class="ps-1 fw-bold app-text-primary"><t t-esc="request.env['stock.delivery.state'].sudo().browse(filter_state).name"/></span>
                             </t>
                          </button>
                          <ul id="filter_state_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 400px; overflow-y: auto; position: fixed !important; bottom: 140px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
@@ -275,6 +336,11 @@
                                 </span>
                             </li>
                             <li><hr class="dropdown-divider"/></li>
+                            <li>
+                                <a href="#" onclick="window.location.reload(); return false;" class="dropdown-item text-primary">
+                                    <i class="fa fa-refresh me-2"/> Refresh
+                                </a>
+                            </li>
                             <li>
                                 <a href="/my/home" class="dropdown-item">
                                     <i class="fa fa-home me-2"/> Home
@@ -308,7 +374,7 @@
                                 <label>Or type Manually:</label>
                                 <div class="input-group">
                                     <input type="text" id="manualBarcode" class="form-control" placeholder="Barcode / Name"/>
-                                    <button class="btn btn-primary" onclick="searchBarcode()">Go</button>
+                                    <button class="btn btn-app-primary" onclick="searchBarcode()">Go</button>
                                 </div>
                             </div>
                         </div>
@@ -361,6 +427,14 @@
                     }
                 </script>
             </t>
+
+            <!-- Pull to Refresh Loader -->
+            <div id="ptr-loader" style="position: fixed; top: 80px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; z-index: 1060; transform: translateY(0); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);">
+                <div class="bg-white rounded-circle shadow p-2 text-primary">
+                    <i class="fa fa-refresh fa-lg"></i>
+                </div>
+            </div>
+
             <div class="container py-4">
                 <!-- Header -->
                 <div class="d-flex align-items-center mb-3">
@@ -385,7 +459,7 @@
                                  <a t-attf-href="tel:{{picking.delivery_phone}}" class="btn btn-sm btn-outline-success rounded-pill" title="Call">
                                      <i class="fa fa-phone me-1"/> Call
                                  </a>
-                                 <a t-attf-href="sms:{{picking.delivery_phone}}" class="btn btn-sm btn-outline-primary rounded-pill" title="SMS">
+                                 <a t-attf-href="sms:{{picking.delivery_phone}}" class="btn btn-sm btn-outline-app-primary rounded-pill" title="SMS">
                                      <i class="fa fa-comment me-1"/> SMS
                                  </a>
                                  <a t-attf-href="https://api.whatsapp.com/send?phone={{picking.delivery_phone}}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill" title="WhatsApp">
@@ -398,7 +472,7 @@
                          <div class="d-grid">
                             <a t-if="picking.partner_id.partner_latitude and picking.partner_id.partner_longitude"
                                t-att-href="'geo:%s,%s' % (picking.partner_id.partner_latitude, picking.partner_id.partner_longitude)"
-                               class="btn btn-primary btn-sm rounded-pill" target="_blank" rel="noopener">
+                               class="btn btn-app-primary btn-sm rounded-pill" target="_blank" rel="noopener">
                                 <i class="fa fa-map-marker me-1"/> Navigate with Maps
                             </a>
                             <div t-else="" class="alert alert-warning text-center py-2 mb-0">
@@ -453,7 +527,7 @@
                                                     <t t-else="">Type: <span class="fw-bold text-dark">-</span></t>
                                                 </div>
                                             </div>
-                                            <button t-if="picking.sudo().picking_type_id.delivery_portal_show_items" type="button" class="btn btn-outline-primary btn-sm ms-2 filter-package-btn" t-att-data-package-id="pkg.id" onclick="filterItemsByPackage(this)">
+                                            <button t-if="picking.sudo().picking_type_id.delivery_portal_show_items" type="button" class="btn btn-outline-app-primary btn-sm ms-2 filter-package-btn" t-att-data-package-id="pkg.id" onclick="filterItemsByPackage(this)">
                                                 <i class="fa fa-filter me-1"/> Ver items
                                             </button>
                                         </li>
@@ -500,7 +574,7 @@
                                             Qty: <span class="fw-bold text-dark"><t t-esc="item.quantity"/></span> <t t-esc="item.product_uom_id.name"/>
                                         </div>
                                         <t t-if="item.result_package_id">
-                                            <div class="small text-primary"><i class="fa fa-cube me-1"/> <t t-esc="item.result_package_id.name"/></div>
+                                            <div class="small app-text-primary"><i class="fa fa-cube me-1"/> <t t-esc="item.result_package_id.name"/></div>
                                         </t>
                                     </div>
                                 </li>
@@ -528,6 +602,44 @@
                     </div>
                 </div>
                 
+                
+                <!-- Communication History (Chatter) -->
+                <div class="card shadow-sm border-0 rounded-3 mb-4" id="chatter">
+                     <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center" 
+                          data-bs-toggle="collapse" data-bs-target="#chatterBody" aria-expanded="false" style="cursor: pointer;">
+                        <h6 class="m-0 fw-bold app-text-primary"><i class="fa fa-comments me-2"/> Communication History</h6>
+                        <i class="fa fa-chevron-down text-muted"/>
+                     </div>
+                     <div id="chatterBody" class="collapse show">
+                         <div class="card-body bg-light p-3" style="max-height: 400px; overflow-y: auto;">
+                             <t t-if="messages">
+                                 <div class="d-flex flex-column gap-3">
+                                     <t t-foreach="messages" t-as="msg">
+                                         <div t-attf-class="d-flex {{ 'justify-content-end' if msg.author_id.id == request.env.user.partner_id.id else 'justify-content-start' }}">
+                                             <div t-attf-class="card border-0 shadow-sm p-2 {{ 'app-bg-primary text-white' if msg.author_id.id == request.env.user.partner_id.id else 'bg-white text-dark' }}" 
+                                                  style="max-width: 85%; border-radius: 15px; border-bottom-right-radius: 2px;">
+                                                 <div class="small fw-bold mb-1 opacity-75">
+                                                     <t t-esc="msg.author_id.name"/> <span class="fw-light ms-1" style="font-size: 0.7em;"><t t-esc="msg.date" t-options='{"widget": "datetime", "format": "HH:mm"}'/></span>
+                                                 </div>
+                                                 <!-- Render Body Safe -->
+                                                 <div class="small" style="word-wrap: break-word;">
+                                                     <t t-out="msg.body"/> <!-- Only if trusted? body is html. -->
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </t>
+                                 </div>
+                             </t>
+                             <t t-else="">
+                                 <div class="text-center text-muted py-3">
+                                     <i class="fa fa-comment-o fa-2x mb-2 opacity-50"/>
+                                     <p class="small mb-0">No messages yet.</p>
+                                 </div>
+                             </t>
+                         </div>
+                     </div>
+                </div>
+
                 <!-- Action Buttons (State Updates) -->
                  <!-- Only show if state is not result state -->
             <!-- Removed buttons from body, moved to footer -->
@@ -557,7 +669,7 @@
                       </button>
                       
                       <!-- Finalize Button (Central) -->
-                      <a t-if="not picking.delivery_state_id.is_result_state" t-att-href="'/my/delivery/%s/finalize' % picking.id" class="btn btn-primary rounded-pill px-5 py-2 fw-bold shadow">
+                      <a t-if="not picking.delivery_state_id.is_result_state" t-att-href="'/my/delivery/%s/finalize' % picking.id" class="btn btn-app-primary rounded-pill px-5 py-2 fw-bold shadow">
                          FINALIZE
                       </a>
                       
@@ -577,6 +689,11 @@
                           <!-- Spacer if button Hidden to balance layout? Or just empty -->
                            <div style="width: 40px;"></div>
                       </t>
+                      <!-- Message Button -->
+                      <button class="btn btn-link text-muted d-flex flex-column align-items-center text-decoration-none" data-bs-toggle="modal" data-bs-target="#messageModal">
+                         <i class="fa fa-commenting-o fa-lg mb-1"/>
+                         <span style="font-size: 10px;">Message</span>
+                      </button>
                  </div>
                  <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>
             </div>
@@ -660,6 +777,50 @@
                     });
                 }
             </script>
+
+            <!-- Message Modal -->
+            <div class="modal fade" id="messageModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border-0 shadow">
+                        <div class="modal-header border-bottom-0 pb-0">
+                            <h5 class="modal-title fw-bold">Add Note</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form t-att-action="'/my/delivery/%s/submit_message' % picking.id" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                
+                                <!-- Quick Replies -->
+                                <div class="d-flex flex-wrap gap-2 mb-3" t-if="quick_replies">
+                                    <t t-foreach="quick_replies" t-as="reply">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill" 
+                                                t-att-onclick="'fillMessage(\'%s\')' % reply.name">
+                                            <t t-esc="reply.name"/>
+                                        </button>
+                                    </t>
+                                </div>
+                                
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Type your message here..." id="messageBody" name="message_body" style="height: 100px" required="required"></textarea>
+                                    <label for="messageBody">Message</label>
+                                </div>
+                                
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-app-primary rounded-pill py-2 shadow-sm">
+                                        <i class="fa fa-paper-plane me-1"/> Send Note
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                function fillMessage(text) {
+                    document.getElementById('messageBody').value = text;
+                }
+            </script>
         </t>
     </template>
 
@@ -702,7 +863,7 @@
                                                t-att-data-mandatory-photo="state.is_photo_mandatory"
                                                t-att-data-mandatory-receiver-name="state.is_receiver_name_mandatory"
                                                onclick="updateRequirements(this)"/>
-                                        <label class="btn btn-outline-primary w-100 py-3 rounded-3 position-relative d-flex flex-column align-items-center justify-content-center" t-att-for="'state_%s' % state.id">
+                                        <label class="btn btn-outline-app-primary w-100 py-3 rounded-3 position-relative d-flex flex-column align-items-center justify-content-center" t-att-for="'state_%s' % state.id">
                                             <t t-if="state.icon">
                                                 <i t-attf-class="fa {{state.icon}} fa-lg mb-2"/>
                                             </t>

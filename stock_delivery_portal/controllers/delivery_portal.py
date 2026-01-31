@@ -83,6 +83,7 @@ class DeliveryPortal(CustomerPortal):
         
         values = {
             'pickings': pickings,
+            'picking_count': total,  # Explicitly passed for counters
             'pager': pager,
             'search': search,
             'sortby': sortby,
@@ -112,12 +113,31 @@ class DeliveryPortal(CustomerPortal):
                 ('mimetype', 'like', 'image/')
             ])
             
+            # Fetch Chatter Messages (Comments & Notes) - Limiting to recent history
+            # ROBUST FILTER: Use 'mail.mt_comment' subtype to fetch ONLY discussions.
+            # This automatically excludes 'mail.mt_note' (which covers our Auto-Evidence logs and system notifications).
+            mt_comment_id = request.env.ref('mail.mt_comment').id
+            messages = request.env['mail.message'].sudo().search([
+                ('model', '=', 'stock.picking'),
+                ('res_id', '=', picking.id),
+                ('message_type', 'in', ['comment']), 
+                ('subtype_id', '=', mt_comment_id),
+                ('body', '!=', ''),
+            ], order='date desc', limit=20)
+            
+            # Fetch Dynamic Quick Replies
+            quick_replies = request.env['delivery.quick.reply'].sudo().search([
+                ('active', '=', True)
+            ], order='sequence, name')
+            
             # Using native/extra fields (total_packages/total_bundles) in template
             
             response = request.render("stock_delivery_portal.delivery_app_detail", {
                 'picking': picking,
                 'evidence_photos': evidence_photos,
                 'non_final_states': non_final_states,
+                'messages': messages,
+                'quick_replies': quick_replies,
             })
             # Force rendering to catch template errors inside this try block
             response.flatten()
@@ -262,6 +282,25 @@ class DeliveryPortal(CustomerPortal):
         
         # Redirect back to detail view
         return request.redirect(f'/my/delivery/{picking.id}')
+
+    @http.route(['/my/delivery/<int:picking_id>/submit_message'], type='http', auth="user", website=True, methods=['POST'])
+    def delivery_submit_message(self, picking_id, **kw):
+        picking = request.env['stock.picking'].sudo().browse(picking_id)
+        if not picking.exists() or picking.delivery_partner_id != request.env.user.partner_id:
+            return request.redirect('/my/delivery')
+        
+        body = kw.get('message_body')
+        if body:
+            # Post message as the current user (driver)
+            # subtype_xmlid='mail.mt_comment' ensures it notifies followers
+            picking.message_post(
+                body=body,
+                message_type='comment',
+                subtype_xmlid='mail.mt_comment',
+                author_id=request.env.user.partner_id.id
+            )
+        
+        return request.redirect(f'/my/delivery/{picking.id}#chatter')
 
     # PWA Support Routes - DELEGATED TO PORTAL_APP_LAUNCHER
     # We use /portal_app/manifest.webmanifest?app_mode=delivery

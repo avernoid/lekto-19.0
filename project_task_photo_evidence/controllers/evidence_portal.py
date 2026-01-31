@@ -119,9 +119,44 @@ class EvidencePortal(CustomerPortal):
         if not task.exists() or request.env.user.id not in task.user_ids.ids:
              return request.redirect('/my/evidence/tasks') # Simple security check
 
+        # Fetch Chatter (Comments only)
+        mt_comment_id = request.env.ref('mail.mt_comment').id
+        messages = request.env['mail.message'].sudo().search([
+            ('model', '=', 'project.task'),
+            ('res_id', '=', task.id),
+            ('message_type', 'in', ['comment']), 
+            ('subtype_id', '=', mt_comment_id),
+            ('body', '!=', ''),
+        ], order='date desc', limit=20)
+        
+        # Fetch Quick Replies
+        quick_replies = request.env['project.quick.reply'].sudo().search([
+            ('active', '=', True)
+        ], order='sequence, name')
+
         return request.render('project_task_photo_evidence.evidence_app_task_upload', {
             'task': task,
+            'messages': messages,
+            'quick_replies': quick_replies,
         })
+    
+    @http.route(['/my/evidence/task/<int:task_id>/submit_message'], type='http', auth="user", website=True, methods=['POST'])
+    def submit_task_message(self, task_id, **kw):
+        """ Allow portal users (technicians) to leave notes on the task """
+        task = request.env['project.task'].sudo().browse(task_id)
+        if not task.exists() or request.env.user.id not in task.user_ids.ids:
+            return request.redirect('/my/evidence/tasks')
+
+        body = kw.get('message_body')
+        if body:
+            task.message_post(
+                body=body,
+                message_type='comment',
+                subtype_xmlid='mail.mt_comment',
+                author_id=request.env.user.partner_id.id
+            )
+        
+        return request.redirect(f'/my/evidence/task/{task.id}/upload#chatter')
 
     @http.route(['/my/evidence/task/<int:task_id>/process_upload'], type='http', auth="user", website=True, methods=['POST'])
     def process_upload(self, task_id, **kw):

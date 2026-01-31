@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_project" model="ir.ui.view">
+        <field name="name">project.project.form.inherit.portal.assign</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <!-- Add to Settings tab -->
+            <xpath expr="//page[@name='settings']" position="inside">
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box" id="portal_assignment_setting">
+                        <div class="o_setting_left_pane">
+                            <field name="allow_portal_user"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="allow_portal_user"/>
+                            <div class="text-muted">
+                                Allow assigning tasks to Portal Users (External)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

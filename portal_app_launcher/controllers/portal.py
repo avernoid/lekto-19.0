@@ -5,9 +5,10 @@ from odoo.addons.portal.controllers.portal import CustomerPortal
 class AppLauncherPortal(CustomerPortal):
 
     @http.route(['/my', '/my/home'], type='http', auth="user", website=True)
-    def home(self, **kw):
-        # Check if user is in the "Portal App User" group
-        if request.env.user.has_group('portal_app_launcher.group_portal_app_user'):
+    def home(self, access_mode=None, **kw):
+        # Override to show App Launcher if configured for this user
+        # Allow bypass if access_mode='standard' is passed
+        if access_mode != 'standard' and request.env.user.has_group('portal_app_launcher.group_portal_app_user'):
             # Fetch available apps for this user
             apps = request.env['portal.app'].sudo().search([])
             

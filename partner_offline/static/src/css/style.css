@@ -1,0 +1,110 @@
+/* Partner Portal Styles */
+
+/* 1. Safe Area Spacing (Notch Support) */
+body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    /* Dynamic background color integration handled by template injection */
+}
+
+/* 2. Standalone Mode tweaks */
+@media all and (display-mode: standalone) {
+
+    /* Hide elements that shouldn't be in the app */
+    .pwa-hidden,
+    #top_menu_container,
+    .o_footer,
+    .o_main_navbar {
+        display: none !important;
+    }
+
+    /* Ensure full height */
+    html,
+    body {
+        height: 100%;
+        overscroll-behavior-y: none;
+        /* Prevent pull-to-refresh on body (handled by specific containers) */
+    }
+}
+
+/* 3. Card & List Styles */
+.list-group-item {
+    transition: background-color 0.2s;
+}
+
+.list-group-item:active {
+    background-color: #f1f1f1;
+}
+
+/* 4. Quick Actions */
+.btn-outline-primary,
+.btn-outline-info,
+.btn-outline-success,
+.btn-outline-secondary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-width: 2px;
+}
+
+/* 5. Purple Theme Utilities */
+.text-primary,
+.app-text-primary {
+    color: #6F42C1 !important;
+}
+
+.btn-primary,
+.btn-app-primary {
+    background-color: #6F42C1;
+    border-color: #6F42C1;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-app-primary:hover {
+    background-color: #59359a;
+    border-color: #59359a;
+}
+
+.btn-outline-primary {
+    color: #6F42C1;
+    border-color: #6F42C1;
+}
+
+.btn-outline-primary:hover {
+    background-color: #6F42C1;
+    color: #fff;
+}
+
+/* 6. Pull to Refresh */
+#ptr-loader {
+    position: fixed;
+    top: 60px; /* Below navbar */
+    left: 0;
+    width: 100%;
+    height: 60px; /* Threshold area */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1040; 
+    pointer-events: none;
+    opacity: 0;
+    transition: transform 0.2s ease-out;
+}
+#ptr-loader i {
+    font-size: 24px;
+    color: var(--app-theme-color, #6F42C1);
+    transition: transform 0.2s;
+}
+.ptr-loading {
+    transition: all 0.3s ease !important;
+    transform: translateY(80px) !important;
+    opacity: 1 !important;
+}
+.ptr-loading i {
+    animation: ptr-spin 1s infinite linear;
+}
+@keyframes ptr-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

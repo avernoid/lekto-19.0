@@ -18,8 +18,8 @@ class PwaController(http.Controller):
             "display": "standalone",
             "background_color": "#667eea",
             "theme_color": "#667eea",
-            "scope": "/my/home", # Restrict scope to allow other apps
-            "id": "/my/home",    # Unique ID for Portal App
+            "scope": "/my/",     # Broad scope for launcher
+            "id": "/pwa/portal-launcher", # Explicit unique ID
             "icons": [
                 {
                     "src": "/portal_app_launcher/static/description/icon.png",
@@ -34,20 +34,27 @@ class PwaController(http.Controller):
             ]
         }
 
-        # Override for Evidence App
-        # Override based on App Technical Name
+        # Override for specific Apps
         if app_mode:
             # Sudo to read configuration (safe as it is just colors/names)
             app = request.env['portal.app'].sudo().search([('technical_name', '=', app_mode)], limit=1)
             if app:
+                # Default Scope Logic
+                scope = app.action_url
+
+                # SPECIFIC FIXES:
+                # Evidence App: Action is /my/evidence/tasks but Detail is /my/evidence/task/...
+                # So we need a slightly broader scope for it.
+                if app.technical_name == 'evidence':
+                    scope = '/my/evidence/'
+
                 manifest_data.update({
                     "name": app.pwa_name or app.name,
                     "short_name": app.pwa_name or app.name,
                     "start_url": app.action_url,
-                    # Dynamic Scope: Use the action_url base path or default to root
-                    "scope": app.action_url if app.action_url.endswith('/') else f"{app.action_url}/", 
-                    
-                    "id": f"/my/{app.technical_name}/",    
+                    "scope": scope,
+                    "display": "standalone", # Re-assert standalone
+                    "id": f"/pwa/app-{app.technical_name}", # Explicit unique ID per app
                     "background_color": app.background_color,
                     "theme_color": app.theme_color,
                     "icons": [
@@ -70,7 +77,13 @@ class PwaController(http.Controller):
         
         return request.make_response(
             json.dumps(manifest_data),
-            headers=[('Content-Type', 'application/manifest+json')]
+            headers=[
+                ('Content-Type', 'application/manifest+json'),
+                ('Cache-Control', 'no-cache, no-store, must-revalidate'),
+                ('Pragma', 'no-cache'),
+                ('Expires', '0'),
+                ('Vary', 'Accept, Cookie')
+            ]
         )
 
     @http.route('/portal_app/icon/<int:app_id>', type='http', auth='public', website=True)

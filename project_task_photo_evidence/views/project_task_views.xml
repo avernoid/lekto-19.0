@@ -24,6 +24,15 @@
                         <button name="action_generate_evidence_token" string="Generate Share Link" type="object" class="btn-secondary" invisible="evidence_report_url"/>
                         <button name="action_revoke_evidence_token" string="Revoke Link" type="object" class="btn-warning" invisible="not evidence_report_url" confirm="Are you sure you want to revoke the public link? This will make the current link invalid immediately."/>
                     </div>
+                    
+                    <separator string="Website Report (New)"/>
+                    <group>
+                        <field name="website_report_url" widget="copy_clipboard" readonly="1" invisible="not website_report_url"/>
+                    </group>
+                    <div class="mb-3">
+                        <button name="action_generate_website_token" string="Generate Website Link" type="object" class="btn-secondary" invisible="website_report_url"/>
+                        <button name="action_revoke_website_token" string="Revoke Website Link" type="object" class="btn-warning" invisible="not website_report_url" confirm="Are you sure you want to revoke the website link?"/>
+                    </div>
                     <field name="sale_product_id" invisible="1"/>
                     <field name="evidence_ids" mode="kanban" context="{'default_product_id': sale_product_id}">
                         <kanban>
@@ -63,4 +72,16 @@
             </notebook>
         </field>
     </record>
+
+    <record id="view_task_tree2_evidence" model="ir.ui.view">
+        <field name="name">project.task.tree.evidence</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <field name="user_ids" position="after">
+                <field name="evidence_product_ids" widget="many2many_tags" optional="show"/>
+            </field>
+        </field>
+    </record>
+
 </odoo>

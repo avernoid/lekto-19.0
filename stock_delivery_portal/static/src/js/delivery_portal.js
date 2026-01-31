@@ -148,7 +148,7 @@ window.openScannerModal = function () {
     startScanner();
 }
 
-function closeScannerModal() {
+window.closeScannerModal = function () {
     var modalEl = document.getElementById('scannerModal');
     modalEl.classList.remove('show');
     modalEl.style.display = 'none';
@@ -195,20 +195,20 @@ function startScanner() {
 function onScanSuccess(decodedText, decodedResult) {
     // Determine what to do
     // Stop scanning and close
-    closeScannerModal();
+    window.closeScannerModal();
     // Perform Search
-    processScanResult(decodedText);
+    window.processScanResult(decodedText);
 }
 
-function searchBarcode() {
+window.searchBarcode = function () {
     var val = document.getElementById('manualBarcode').value;
     if (val) {
-        closeScannerModal();
-        processScanResult(val);
+        window.closeScannerModal();
+        window.processScanResult(val);
     }
 }
 
-function processScanResult(query) {
+window.processScanResult = function (query) {
     // Call controller
     fetch('/my/delivery/search', {
         method: 'POST',
@@ -233,7 +233,7 @@ function processScanResult(query) {
             if (res.match_type === 'exact') {
                 window.location.href = res.action_url;
             } else if (res.match_type === 'multiple' && Array.isArray(res.picking_ids) && res.picking_ids.length > 0) {
-                filterDeliveriesByIds(res.picking_ids);
+                window.filterDeliveriesByIds(res.picking_ids);
             } else if (res.match_type === 'error') {
                 console.error("Server Logic Error:", res.message);
                 alert("Search failed: " + res.message);
@@ -250,7 +250,7 @@ function processScanResult(query) {
 }
 
 // Filtra la lista de cards de entregas mostrando solo los que tengan un data-picking-id en la lista
-function filterDeliveriesByIds(ids) {
+window.filterDeliveriesByIds = function (ids) {
     // Oculta todos los cards excepto los que coinciden
     var cards = document.querySelectorAll('[data-picking-id]');
     var found = false;
@@ -277,15 +277,18 @@ function filterDeliveriesByIds(ids) {
 }
 
 // Limpia el filtro por IDs y muestra todos los cards
-function clearIdFilter() {
+window.clearIdFilter = function () {
     var cards = document.querySelectorAll('[data-picking-id]');
     cards.forEach(function (card) {
         card.style.display = '';
     });
     window._activeIdFilter = null;
 
-    // Hide Clear buttons if no other server-side filters
-    if (!window.filter_state && !window.filter_type && !window.search_query) {
+    // Check if we also have server-side filters
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasServerFilters = urlParams.has('search') || urlParams.has('filter_state') || urlParams.has('filter_type');
+
+    if (!hasServerFilters) {
         ['clearAllFiltersBtnTop', 'clearAllFiltersBtnBottom'].forEach(id => {
             var btn = document.getElementById(id);
             if (btn) btn.classList.add('d-none');
@@ -295,10 +298,21 @@ function clearIdFilter() {
 
 // Hook para los botones Clear existentes
 window.clearAllFilters = function () {
-    clearIdFilter();
-    // Si hay otros filtros activos, recargar a /my/delivery (comportamiento original)
-    if (window.filter_state || window.filter_type || window.search_query) {
-        window.location.href = '/my/delivery';
+    window.clearIdFilter();
+
+    // Use URLSearchParams for more robust filter detection
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasSearch = urlParams.has('search') && urlParams.get('search');
+    const hasState = urlParams.has('filter_state') && urlParams.get('filter_state');
+    const hasType = urlParams.has('filter_type') && urlParams.get('filter_type');
+
+    if (hasSearch || hasState || hasType) {
+        // Redirigir a /my/delivery preservando solo el parámetro history si existe
+        let targetUrl = '/my/delivery';
+        if (urlParams.has('history')) {
+            targetUrl += '?history=' + urlParams.get('history');
+        }
+        window.location.href = targetUrl;
     }
 }
 
@@ -424,3 +438,118 @@ window.openMapApp = function (appType) {
         window.location.href = url;
     }
 }
+
+// --- Pull to Refresh ---
+
+window.initPullToRefresh = function () {
+    const el = document.getElementById('ptr-loader');
+    const content = document.querySelector('.container'); // Target the main content
+    if (!el || !content) return;
+
+    let startY = 0;
+    let currentY = 0;
+    let pulling = false;
+    const threshold = 80;
+
+    // Helper to reset styles
+    const reset = () => {
+        el.style.transition = 'transform 0.3s, opacity 0.3s';
+        el.style.transform = 'translateY(0)';
+        el.style.opacity = '0';
+
+        content.style.transition = 'transform 0.3s';
+        content.style.transform = 'translateY(0)';
+
+        pulling = false;
+        startY = 0;
+        currentY = 0;
+    };
+
+    window.addEventListener('touchstart', (e) => {
+        // Only trigger if we are at the very top of the page
+        if (window.scrollY === 0) {
+            startY = e.touches[0].clientY;
+            pulling = false; // Wait for move to confirm direction
+        } else {
+            startY = 0;
+        }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+        if (startY === 0) return;
+
+        const y = e.touches[0].clientY;
+        const delta = y - startY;
+
+        // Check if we are pulling down
+        if (delta > 0 && window.scrollY === 0) {
+            pulling = true;
+
+            // Prevent native scroll/overscroll since we handle it
+            if (e.cancelable) e.preventDefault();
+
+            // Store current Y
+            currentY = y;
+
+            // Resistance curve (logarithmic for native feel)
+            const translate = Math.min(delta * 0.45, 150);
+
+            // 1. Move Loader
+            el.style.transition = 'none';
+            el.style.transform = `translateY(${translate}px)`;
+
+            // 2. Fade in Loader (start showing after 15px pull)
+            const opacity = Math.min(Math.max(translate - 15, 0) / (threshold - 15), 1);
+            el.style.opacity = opacity;
+
+            // 3. Move Content (Physically push content down)
+            content.style.transition = 'none';
+            content.style.transform = `translateY(${translate}px)`;
+
+            // 4. Rotate Icon
+            const icon = el.querySelector('i');
+            if (icon) icon.style.transform = `rotate(${translate * 2}deg)`;
+
+        } else {
+            // Scrolled back up or down-page, cancel pull
+            pulling = false;
+        }
+    }, { passive: false });
+
+    window.addEventListener('touchend', (e) => {
+        if (!pulling) return;
+
+        const delta = currentY - startY;
+        // Check if we pulled enough (visual translation approx matches delta * resist)
+        // Let's use computed style or just the logic
+        const translate = Math.min(delta * 0.45, 150);
+
+        if (translate > 65) { // Threshold reached
+            // Show Loading State
+            el.style.transition = 'transform 0.3s';
+            el.style.transform = `translateY(70px)`;
+            el.style.opacity = '1';
+
+            // Keep content pushed down momentarily
+            content.style.transition = 'transform 0.3s';
+            content.style.transform = `translateY(70px)`;
+
+            // Spin icon
+            const icon = el.querySelector('i');
+            if (icon) icon.className = "fa fa-refresh fa-spin fa-2x"; // Use big spinner
+
+            // Reload
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        } else {
+            // Snap back
+            reset();
+        }
+    });
+}
+
+// Init on Load
+document.addEventListener('DOMContentLoaded', function () {
+    window.initPullToRefresh();
+});

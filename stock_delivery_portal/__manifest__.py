@@ -1,6 +1,6 @@
 {
     'name': 'Stock Delivery Portal Backend',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.7',
     'category': 'Inventory/Delivery',
     'summary': 'Backend logic for delivery driver portal',
     'description': """
@@ -19,8 +19,10 @@
         'security/ir.model.access.csv',
         'security/stock_delivery_security.xml',
         'data/stock_delivery_state_data.xml',
+        'data/delivery_quick_reply_data.xml',
         'data/portal_app_data.xml',
         'views/stock_delivery_state_views.xml',
+        'views/delivery_config_views.xml',
         'views/stock_picking_type_views.xml',
         'views/stock_picking_views.xml',
         'views/delivery_portal_templates.xml',

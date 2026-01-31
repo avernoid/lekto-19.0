@@ -1,6 +1,6 @@
 {
     'name': 'Portal App Launcher',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.3',
     'category': 'Portal',
     'summary': 'Mobile-First App Launcher for Portal Users',
     'description': """
@@ -19,6 +19,7 @@ Key features:
     'data': [
         'security/portal_app_security.xml',
         'security/ir.model.access.csv',
+        'data/standard_portal_app_data.xml',
         'views/portal_app_views.xml',
         'views/portal_templates.xml',
     ],

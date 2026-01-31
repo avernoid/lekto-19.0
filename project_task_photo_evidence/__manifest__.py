@@ -1,6 +1,6 @@
 {
     'name': 'Project Task Photo Evidence',
-    'version': '19.0.1.0.4',
+    'version': '19.0.1.0.12',
     'category': 'Services/Project',
     'summary': 'Capture photo proof with geolocation for project tasks.',
     'description': """
@@ -19,6 +19,8 @@
     'data': [
         'security/ir.model.access.csv',
         'data/portal_app_data.xml',
+        'data/project_quick_reply_data.xml',
+        'views/project_config_views.xml',
         'views/product_template_views.xml',
         'views/project_task_evidence_views.xml',
         'wizard/project_task_evidence_wizard_views.xml',
@@ -26,11 +28,13 @@
         'views/project_project_views.xml',
 
         'reports/project_task_evidence_report.xml',
+        'reports/project_evidence_website_report.xml',
         'views/portal_evidence_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
             'project_task_photo_evidence/static/src/js/portal_evidence_filters.js',
+            'project_task_photo_evidence/static/src/js/photo_evidence_portal.js',
         ],
         'web.assets_backend': [
             'project_task_photo_evidence/static/src/js/evidence_wizard_controller.js',
@@ -46,6 +50,6 @@
     'auto_install': False,
     'application': False,
     'currency': 'USD',
-    'price': 197.0,
+    'price': 297.0,
     'module_type': 'official',
 }

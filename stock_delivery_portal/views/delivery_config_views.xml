@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==============================================
+         PARENT MENU: Delivery Management
+         ============================================== -->
+    <menuitem id="menu_stock_delivery_management"
+              name="Delivery Management"
+              parent="stock.menu_stock_config_settings"
+              sequence="50"/>
+
+    <!-- ==============================================
+         RE-LINKED MENU: Delivery States
+         ============================================== -->
+    <menuitem id="menu_stock_delivery_state"
+              name="Delivery States"
+              parent="menu_stock_delivery_management"
+              action="action_stock_delivery_state"
+              sequence="10"/>
+
+    <!-- ==============================================
+         MODEL: delivery.quick.reply
+         ============================================== -->
+    
+    <!-- TREE View -->
+    <record id="view_delivery_quick_reply_tree" model="ir.ui.view">
+        <field name="name">delivery.quick.reply.tree</field>
+        <field name="model">delivery.quick.reply</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM View (Simple) -->
+    <record id="view_delivery_quick_reply_form" model="ir.ui.view">
+        <field name="name">delivery.quick.reply.form</field>
+        <field name="model">delivery.quick.reply</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_delivery_quick_reply" model="ir.actions.act_window">
+        <field name="name">Quick Replies</field>
+        <field name="res_model">delivery.quick.reply</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create preset messages for drivers
+            </p>
+        </field>
+    </record>
+
+    <!-- MENU -->
+    <menuitem id="menu_delivery_quick_reply"
+              name="Quick Replies"
+              parent="menu_stock_delivery_management"
+              action="action_delivery_quick_reply"
+              sequence="20"/>
+
+</odoo>

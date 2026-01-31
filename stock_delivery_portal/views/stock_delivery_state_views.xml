@@ -98,11 +98,6 @@
         </field>
     </record>
 
-    <!-- MENU -->
-    <menuitem id="menu_stock_delivery_state"
-              name="Delivery States"
-              parent="stock.menu_stock_config_settings"
-              action="action_stock_delivery_state"
-              sequence="50"/>
-
 </odoo>
+
+

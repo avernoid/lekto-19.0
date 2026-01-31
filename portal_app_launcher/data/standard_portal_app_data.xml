@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="portal_app_standard" model="portal.app">
+            <field name="name">Odoo Portal</field>
+            <field name="pwa_name">Portal</field>
+            <field name="technical_name">standard_portal</field>
+            <field name="sequence">90</field>
+            <field name="action_url">/my/home?access_mode=standard</field>
+            <field name="theme_color">#714B67</field>
+            <field name="background_color">#714B67</field>
+            <!-- No custom icon, will fallback to generic cube -->
+        </record>
+    </data>
+</odoo>

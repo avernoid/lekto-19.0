@@ -41,3 +41,37 @@ class ProjectTaskEvidenceController(http.Controller):
             'docs': project,
             'public_view': True,
         })
+
+    # --- New Routes for Website Report (Modern) ---
+
+    @http.route('/project/website/evidence/<int:task_id>', type='http', auth='public', website=True)
+    def task_evidence_website_report(self, task_id, access_token=None, **kwargs):
+        """ Render the NEW Website Evidence report if website_access_token is valid. """
+        task = request.env['project.task'].sudo().browse(task_id)
+        
+        if not task.exists():
+            raise NotFound()
+
+        # Validate Website Access Token
+        if not access_token or not task.website_access_token or access_token != task.website_access_token:
+             raise Forbidden("Invalid access token.")
+
+        return request.render('project_task_photo_evidence.report_evidence_website_template', {
+            'docs': task,
+        })
+
+    @http.route('/project/website/evidence/project/<int:project_id>', type='http', auth='public', website=True)
+    def project_evidence_website_report(self, project_id, access_token=None, **kwargs):
+        """ Render the NEW Website Evidence report for Project if website_access_token is valid. """
+        project = request.env['project.project'].sudo().browse(project_id)
+        
+        if not project.exists():
+            raise NotFound()
+
+        # Validate Website Access Token
+        if not access_token or not project.website_access_token or access_token != project.website_access_token:
+             raise Forbidden("Invalid access token.")
+
+        return request.render('project_task_photo_evidence.report_project_evidence_website_template', {
+            'docs': project,
+        })

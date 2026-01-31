@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        
+        <record id="proj_reply_site_closed" model="project.quick.reply">
+            <field name="name">Site Closed / No Access</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="proj_reply_work_done" model="project.quick.reply">
+            <field name="name">Work Completed successfully</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="proj_reply_issues" model="project.quick.reply">
+            <field name="name">Found issues on site</field>
+            <field name="sequence">30</field>
+        </record>        
+
+        <record id="proj_reply_incomplete" model="project.quick.reply">
+            <field name="name">Work Incomplete - Missing materials</field>
+            <field name="sequence">40</field>
+        </record>
+
+    </data>
+</odoo>

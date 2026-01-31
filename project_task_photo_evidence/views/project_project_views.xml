@@ -33,6 +33,15 @@
                             <i class="fa fa-info-circle" title="Visibility Requirements"/> <i>Requires Project Visibility to be "Invited internal and portal users" or "Public".</i>
                         </div>
                     </div>
+
+                    <separator string="Website Report (New)"/>
+                    <group>
+                        <field name="website_report_url" widget="copy_clipboard" readonly="1" invisible="not website_report_url"/>
+                    </group>
+                    <div class="mb-3">
+                        <button name="action_generate_website_token" string="Generate Website Link" type="object" class="btn-secondary" invisible="website_report_url"/>
+                        <button name="action_revoke_website_token" string="Revoke Website Link" type="object" class="btn-warning" invisible="not website_report_url" confirm="Are you sure you want to revoke the website link?"/>
+                    </div>
                  </group>
             </xpath>
         </field>

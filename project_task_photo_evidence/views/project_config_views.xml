@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==============================================
+         MODEL: project.quick.reply
+         ============================================== -->
+    
+    <!-- TREE View -->
+    <record id="view_project_quick_reply_tree" model="ir.ui.view">
+        <field name="name">project.quick.reply.tree</field>
+        <field name="model">project.quick.reply</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM View -->
+    <record id="view_project_quick_reply_form" model="ir.ui.view">
+        <field name="name">project.quick.reply.form</field>
+        <field name="model">project.quick.reply</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_project_quick_reply" model="ir.actions.act_window">
+        <field name="name">Evidence Quick Replies</field>
+        <field name="res_model">project.quick.reply</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create preset messages for operators
+            </p>
+        </field>
+    </record>
+
+    <!-- MENU -->
+    <!-- Placing it under Project > Configuration -->
+    <menuitem id="menu_project_quick_reply"
+              name="Evidence Quick Replies"
+              parent="project.menu_project_config"
+              action="action_project_quick_reply"
+              sequence="90"/>
+
+</odoo>

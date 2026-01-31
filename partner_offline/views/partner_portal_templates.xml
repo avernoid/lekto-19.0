@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. INJECT PWA METADATA & STYLES INTO HEAD -->
+    <!-- We inherit immediate 'frontend_layout' or specific portal layout? 
+         Best to use 'portal.frontend_layout' or 'web.layout' inheritance, 
+         but often easiest to inject inside the main page call if we want it isolated.
+         However, for dynamic theme-color in <head>, we often need xpath on layout. -->
+    
+    <template id="partner_layout_head_injection" inherit_id="portal.frontend_layout" priority="99">
+        <xpath expr="//head" position="inside">
+            <!-- Detect if we are in this app -->
+            <t t-if="request.httprequest.path.startswith('/my/partners')">
+                <!-- PWA Manifest -->
+                <link rel="manifest" href="/partner_offline/manifest.json"/>
+                
+                <!-- Viewport Fit -->
+                <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+                
+                <!-- Service Worker Registration -->
+                <script>
+                    if ('serviceWorker' in navigator) {
+                        navigator.serviceWorker.register('/partner_offline/static/src/js/partner_service_worker.js', {scope: '/my/partners'})
+                        .then(function(reg) { console.log('PartnerSW Registered', reg); })
+                        .catch(function(err) { console.log('PartnerSW Error', err); });
+                    }
+                </script>
+            </t>
+        </xpath>
+    </template>
+
+
+    <!-- 2. PARTNER LIST VIEW -->
+    <!-- 2. PARTNER LIST VIEW -->
+    <template id="partner_list_view" name="My Partners">
+        <t t-call="portal_app_launcher.portal_app_layout">
+            <t t-set="manifest_url" t-value="'/partner_offline/manifest.json'"/>
+            <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover"/>
+                <link rel="manifest" href="/partner_offline/manifest.json"/>
+                <meta name="theme-color" content="#667eea"/>
+                <style>
+                    html, body { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+                    .btn:active { transform: scale(0.98); transition: transform 0.05s; }
+
+                    @media all and (display-mode: standalone) {
+                        .pwa-only-hidden { display: none !important; }
+                    }
+                    /* Scroll-Aware Top Bar */
+                    .partner-top-bar {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 60px;
+                        background: var(--app-theme-color); /* Fallback */
+                        z-index: 1050;
+                        transition: top 0.3s ease-in-out;
+                        padding-top: env(safe-area-inset-top);
+                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        display: flex;
+                        align-items: center;
+                        padding-left: 1rem;
+                        padding-right: 1rem;
+                    }
+                    .nav-up {
+                        top: -80px; /* Hide */
+                    }
+                    .app-bg-primary-gradient {
+                        background: linear-gradient(135deg, var(--app-theme-color) 0%, #2c3e50 100%); /* Subtle gradient */
+                    }
+                </style>
+                <script>
+                    if ('serviceWorker' in navigator) {
+                        window.addEventListener('load', function() {
+                            navigator.serviceWorker.register('/partner_offline/service-worker.js');
+                        });
+                    }
+                    
+                    // PWA Install Logic
+                    let deferredPrompt;
+                    window.addEventListener('beforeinstallprompt', (e) => {
+                        e.preventDefault();
+                        deferredPrompt = e;
+                        const installBtn = document.getElementById('pwaInstallBtn');
+                        if(installBtn) installBtn.style.display = 'flex';
+                    });
+                    
+                    async function installPWA() {
+                        if (deferredPrompt) {
+                            deferredPrompt.prompt();
+                            const { outcome } = await deferredPrompt.userChoice;
+                            console.log('User response to install prompt:', outcome);
+                            deferredPrompt = null;
+                            document.getElementById('pwaInstallBtn').style.display = 'none';
+                        }
+                    }
+                    
+                    // Scroll Hide/Show Logic
+                    let lastScrollTop = 0;
+                    const delta = 5;
+                    const navbarHeight = 60;
+
+                    window.addEventListener('scroll', function() {
+                        const st = window.pageYOffset;
+                        if (Math.abs(lastScrollTop - st) &lt;= 5) return;
+                        
+                        const navbar = document.getElementById('partnerTopBar');
+                        if(navbar) {
+                            if (st > lastScrollTop &amp;&amp; st > navbarHeight){
+                                // Scroll Down -> Hide
+                                navbar.classList.add('nav-up');
+                            } else {
+                                // Scroll Up -> Show
+                                if(st + window.innerHeight &lt; document.body.scrollHeight) {
+                                    navbar.classList.remove('nav-up');
+                                }
+                            }
+                        }
+                        lastScrollTop = st;
+                    });
+                    
+                   function openMap(lat, long, address) {
+                        if (lat &amp;&amp; long) {
+                            window.location.href = 'geo:' + lat + ',' + long;
+                        } else if (address) {
+                            var safeAddress = encodeURIComponent(address.replace(/\n/g, ' '));
+                            window.open('https://www.google.com/maps/search/?api=1&amp;query=' + safeAddress, '_blank');
+                        }
+                    }
+                    
+                    function togglePartnerSearchBar() {
+                        var x = document.getElementById("partnerSearchBar");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                            x.querySelector('input').focus();
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                    function toggleFilterMenu(menuId) {
+                        var x = document.getElementById(menuId);
+                        var isHidden = x.style.display === "none";
+                        document.querySelectorAll('.dropdown-menu').forEach(el => el.style.display = 'none');
+                        if (isHidden) {
+                            x.style.display = "block";
+                        }
+                    }
+                </script>
+            </t>
+
+            <!-- Fixed Scroll-Aware Top Bar -->
+            <div id="partnerTopBar" class="partner-top-bar app-bg-primary text-white">
+                <div class="d-flex align-items-center w-100 justify-content-between">
+                     <div class="d-flex align-items-center">
+                        <a href="/my/home" class="btn btn-outline-light rounded-circle shadow-sm me-3 border-0 p-0 d-flex align-items-center justify-content-center pwa-only-hidden" style="width:36px; height:36px;">
+                            <i class="fa fa-arrow-left"/>
+                        </a>
+                        <div>
+                            <h4 class="m-0 fw-bold">Contacts</h4>
+                            <small class="opacity-75" style="font-size: 0.8rem;">
+                                <t t-esc="len(partners)"/> / <t t-esc="partner_count"/>
+                            </small>
+                        </div>
+                     </div>
+                     
+                     <!-- Install Button (Hidden by default) -->
+                     <button id="pwaInstallBtn" onclick="installPWA()" class="btn btn-sm btn-light text-primary fw-bold shadow-sm align-items-center gap-2 px-3 rounded-pill" style="display: none;">
+                        <i class="fa fa-download"/> Install
+                     </button>
+                </div>
+            </div>
+            
+            <!-- Pull to Refresh Loader -->
+            <div id="ptr-loader" style="position: fixed; top: 80px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; z-index: 1060; transform: translateY(0); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);">
+                <div class="bg-white rounded-circle shadow p-2 text-primary">
+                    <i class="fa fa-refresh fa-lg"></i>
+                </div>
+            </div>
+
+            <div class="container py-4" style="margin-top: 60px;">
+                
+                <!-- Active Filters Display -->
+                <div class="mb-3" t-if="search or filter_tag">
+                    <div class="d-flex align-items-center flex-wrap gap-1">
+                        <t t-if="search">
+                             <span class="badge bg-light text-primary border rounded-pill">
+                                Search: <t t-esc="search"/>
+                                <a t-attf-href="/my/partners?{{ '&amp;filter_tag=%s' % filter_tag if filter_tag else '' }}" class="text-danger ms-1"><i class="fa fa-times"/></a>
+                             </span>
+                        </t>
+                        <t t-if="filter_tag">
+                             <span class="badge bg-info text-dark border rounded-pill">
+                                Tag: <t t-esc="request.env['res.partner.category'].sudo().browse(filter_tag).name"/>
+                                <a t-attf-href="/my/partners?{{ '&amp;search=%s' % search if search else '' }}" class="text-dark ms-1"><i class="fa fa-times"/></a>
+                             </span>
+                        </t>
+                    </div>
+                </div>
+            
+                <!-- Partners List (Cards) -->
+                <div class="list-group">
+                    <t t-foreach="partners" t-as="partner">
+                        <a t-att-href="'/my/partners/%s' % partner.id" class="list-group-item list-group-item-action p-3 mb-3 shadow-sm border-0 rounded-3">
+                            
+                            <!-- User Header: Avatar + Name (Row 1) -->
+                            <div class="d-flex align-items-center mb-3 border-bottom pb-2">
+                                <img t-att-src="image_data_uri(partner.avatar_128)" 
+                                     class="rounded-circle me-3 shadow-sm" 
+                                     style="width: 50px; height: 50px; object-fit: cover; flex-shrink: 0;"/>
+                                <div style="min-width: 0;">
+                                    <h5 class="mb-0 fw-bold text-dark text-truncate"><t t-esc="partner.name"/></h5>
+                                    <t t-if="partner.parent_id">
+                                        <small class="text-muted text-truncate d-block">
+                                            <i class="fa fa-building text-muted me-1" style="font-size: 0.8em;"/>
+                                            <t t-esc="partner.parent_id.name"/>
+                                        </small>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <!-- Phone Row (Row 2) -->
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="d-flex align-items-center gap-2" style="min-width: 0; flex: 1;">
+                                    <i class="fa fa-phone text-muted" style="width: 20px; text-align: center;"/>
+                                    <span class="text-dark text-truncate fw-medium" t-if="partner.phone"><t t-esc="partner.phone"/></span>
+                                    <span class="text-muted fst-italic small" t-else="">No phone</span>
+                                </div>
+                                <div class="d-flex gap-1 flex-shrink-0" t-if="partner.phone">
+                                    <button t-att-onclick="'event.stopPropagation(); window.location.href=\'tel:%s\'' % partner.phone" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="Call">
+                                        <i class="fa fa-phone text-success"/>
+                                    </button>
+                                    <button t-att-onclick="'event.stopPropagation(); window.location.href=\'sms:%s\'' % partner.phone" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="SMS">
+                                       <i class="fa fa-comment app-text-primary"/>
+                                    </button>
+                                    <button t-att-onclick="'event.stopPropagation(); window.open(\'https://wa.me/%s\', \'_blank\')' % (partner.phone or '').replace(' ', '').replace('+', '')" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="WhatsApp">
+                                        <i class="fa fa-whatsapp" style="color: #25D366;"/>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Email Row (Row 3) -->
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="d-flex align-items-center gap-2" style="min-width: 0; flex: 1;">
+                                    <i class="fa fa-envelope text-muted" style="width: 20px; text-align: center;"/>
+                                    <span class="text-dark text-truncate" t-if="partner.email"><t t-esc="partner.email"/></span>
+                                     <span class="text-muted fst-italic small" t-else="">No email</span>
+                                </div>
+                                <div class="d-flex gap-1 flex-shrink-0" t-if="partner.email">
+                                     <button t-att-onclick="'event.stopPropagation(); window.location.href=\'mailto:%s\'' % partner.email" class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="Email">
+                                        <i class="fa fa-envelope text-secondary"/>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Address Row (Row 4) -->
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-2" style="min-width: 0; flex: 1;">
+                                    <i class="fa fa-map-marker text-muted" style="width: 20px; text-align: center;"/>
+                                    <span class="text-dark text-truncate smaller" t-if="partner.contact_address" style="font-size: 0.9rem;">
+                                        <t t-esc="(partner.city or '') + (', ' + partner.state_id.code if partner.state_id else '')"/>
+                                    </span>
+                                     <span class="text-muted fst-italic small" t-else="">No address</span>
+                                </div>
+                                <div class="d-flex gap-1 flex-shrink-0" t-if="partner.contact_address">
+                                    <t t-if="'partner_latitude' in partner and partner.partner_latitude and partner.partner_longitude">
+                                        <button t-att-data-lat="partner.partner_latitude" t-att-data-long="partner.partner_longitude"
+                                                onclick="event.stopPropagation(); openMap(this.dataset.lat, this.dataset.long, null)"
+                                                class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="Navigate (Geo)">
+                                            <i class="fa fa-map-marker text-primary"/>
+                                        </button>
+                                    </t>
+                                    <t t-else="">
+                                        <button t-att-data-address="partner.contact_address"
+                                                onclick="event.stopPropagation(); openMap(null, null, this.dataset.address)"
+                                                class="btn btn-light border rounded-circle shadow-sm d-flex align-items-center justify-content-center p-0" style="width: 36px; height: 36px;" title="Navigate (Address)">
+                                            <i class="fa fa-map-marker text-primary"/>
+                                        </button>
+                                    </t>
+                                </div>
+                            </div>
+                        </a>
+                    </t>
+                </div>
+                
+                <!-- Pager -->
+                <div class="d-flex justify-content-center mt-3">
+                    <t t-call="portal.pager"/>
+                </div>
+                
+                <!-- Bottom Spacer for Fixed Bar -->
+                <div style="height: 110px;"></div>
+
+                <!-- Search Bar Overlay (Hidden by default) -->
+                <!-- Search Bar Overlay (Hidden by default) -->
+                <div id="partnerSearchBar" class="fixed-bottom bg-white border-top shadow p-3" style="bottom: 95px; display: none; z-index: 1040; border-radius: 15px 15px 0 0;">
+                    <form action="/my/partners" method="get">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-0 rounded-start-pill ps-3"><i class="fa fa-search text-muted"/></span>
+                            <input type="text" name="search" class="form-control bg-light border-0" placeholder="Name, phone, city..." t-att-value="search"/>
+                            <button type="submit" class="btn btn-primary rounded-end-pill px-4">Go</button>
+                        </div>
+                        <input type="hidden" name="filter_tag" t-att-value="filter_tag"/>
+                    </form>
+                </div>
+
+                <!-- Sticky Bottom Navigation Bar (Scrollable Action Bar) -->
+                <div class="fixed-bottom bg-white border-top shadow-lg py-3 px-3" style="min-height: 85px; padding-bottom: calc(1rem + env(safe-area-inset-bottom)) !important;">
+                     <!-- Flex Container with Horizontal Scroll -->
+                     <div class="d-flex align-items-center gap-2 overflow-auto no-scrollbar" style="white-space: nowrap;">
+                         
+                         <!-- Search Toggle -->
+                         <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 text-primary d-flex align-items-center justify-content-center" style="width: 55px; height: 55px;" onclick="togglePartnerSearchBar()">
+                            <i class="fa fa-search fa-lg"/>
+                         </button>
+                         
+                         <!-- Separator -->
+                         <div class="vr mx-1"></div>
+
+                         <!-- Clear All Filters (Smart Reset) -->
+                         <t t-if="search or filter_tag">
+                            <a href="/my/partners" class="btn btn-outline-danger rounded-pill shadow-sm flex-shrink-0 d-flex align-items-center gap-1" title="Clear All">
+                                <i class="fa fa-times"/> <span class="small">Clear Search</span>
+                            </a>
+                         </t>
+
+                         <!-- Tag Smart Filter -->
+                         <t t-if="available_tags">
+                             <div class="dropup">
+                                 <button class="btn btn-light rounded-pill shadow-sm py-3 px-4 d-flex align-items-center gap-2" type="button" onclick="toggleFilterMenu('filter_tag_menu')">
+                                    <i class="fa fa-tag fa-lg"/> 
+                                    <t t-if="filter_tag">
+                                        <span class="ps-1 fw-bold text-primary"><t t-esc="request.env['res.partner.category'].sudo().browse(filter_tag).name"/></span>
+                                    </t>
+                                    <t t-else="">
+                                        <span class="ps-1 small">Tags</span>
+                                    </t>
+                                 </button>
+                                 <ul id="filter_tag_menu" class="dropdown-menu shadow mb-2" style="display: none; max-height: 300px; overflow-y: auto; position: fixed !important; bottom: 105px !important; left: 10px !important; right: 10px !important; width: auto !important; margin: 0 auto !important; z-index: 1050 !important;">
+                                    <li><a class="dropdown-item" t-attf-href="/my/partners?{{ '&amp;search=%s' % search if search else '' }}">All Tags</a></li>
+                                    <t t-foreach="available_tags" t-as="t">
+                                        <li><a t-attf-class="dropdown-item {{ 'active' if filter_tag == t.id else '' }}" t-attf-href="/my/partners?filter_tag={{t.id}}{{ '&amp;search=%s' % search if search else '' }}"><t t-esc="t.name"/></a></li>
+                                    </t>
+                                 </ul>
+                             </div>
+                         </t>
+
+                          <!-- User Menu Dropup (Hamburger) -->
+                          <div class="dropup ms-auto">
+                              <button class="btn btn-light rounded-circle shadow-sm flex-shrink-0 d-flex align-items-center justify-content-center" style="width: 55px; height: 55px;" type="button" onclick="togglePartnerMenu('partnerUserMenu')">
+                                 <i class="fa fa-bars fa-lg"/>
+                              </button>
+                              <ul id="partnerUserMenu" class="dropdown-menu dropdown-menu-end shadow mb-2" style="display: none; position: fixed !important; bottom: 105px !important; right: 10px !important; z-index: 1050 !important; min-width: 200px; border-radius: 15px; border: none;">
+                                 <li>
+                                     <div class="px-3 py-2">
+                                         <div class="fw-bold text-dark"><t t-esc="request.env.user.name"/></div>
+                                         <div class="small text-muted text-truncate"><t t-esc="request.env.user.login"/></div>
+                                     </div>
+                                 </li>
+                                 <li><div class="dropdown-divider"/></li>
+                                 <li>
+                                     <a href="/my/home" class="dropdown-item py-2">
+                                         <i class="fa fa-th-large me-2 text-primary"/> App Launcher
+                                     </a>
+                                 </li>
+                                 <li><div class="dropdown-divider"/></li>
+                                 <li>
+                                     <a href="/web/session/logout?redirect=/" class="dropdown-item py-2 text-danger">
+                                         <i class="fa fa-power-off me-2"/> Logout
+                                     </a>
+                                 </li>
+                              </ul>
+                          </div>
+                     </div>
+                     <style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>
+                </div>
+
+                <script>
+                    function openMap(lat, long, address) {
+                        if (lat &amp;&amp; long) {
+                            window.location.href = 'geo:' + lat + ',' + long;
+                        } else if (address) {
+                            // Safe URL encoding for the address
+                            var safeAddress = encodeURIComponent(address.replace(/\n/g, ' '));
+                            window.open('https://www.google.com/maps/search/?api=1&amp;query=' + safeAddress, '_blank');
+                        }
+                    }
+                    function togglePartnerSearchBar() {
+                        var x = document.getElementById("partnerSearchBar");
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                            x.querySelector('input').focus();
+                        } else {
+                            x.style.display = "none";
+                        }
+                    }
+                    function togglePartnerMenu() {
+                        var x = document.getElementById("partnerUserMenu");
+                        x.style.display = (x.style.display === "none") ? "block" : "none";
+                    }
+                </script>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- 3. PARTNER DETAIL VIEW -->
+    <template id="partner_detail_view" name="Partner Details">
+        <t t-call="portal_app_launcher.portal_app_layout">
+             <t t-set="manifest_url" t-value="'/partner_offline/manifest.json'"/>
+             <t t-set="head">
+                <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+                <link rel="manifest" href="/partner_offline/manifest.json"/>
+             </t>
+             <t t-set="no_breadcrumbs" t-value="True"/> 
+             
+             <!-- Sticky Header (Custom Back Button) -->
+             <div class="fixed-top bg-white border-bottom shadow-sm d-flex align-items-center px-3" 
+                  style="height: 60px; top: 0; padding-top: env(safe-area-inset-top); z-index: 1000;">
+                 <a href="/my/partners" class="btn btn-link text-dark p-0 mr-3">
+                     <i class="fa fa-arrow-left fa-lg"/>
+                 </a>
+                 <h5 class="m-0 text-truncate"><t t-esc="partner.name"/></h5>
+             </div>
+
+            <!-- Pull to Refresh Loader -->
+            <div id="ptr-loader" style="position: fixed; top: 80px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; z-index: 1060; transform: translateY(0); opacity: 0; pointer-events: none; transition: transform 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);">
+                <div class="bg-white rounded-circle shadow p-2 text-primary">
+                    <i class="fa fa-refresh fa-lg"></i>
+                </div>
+            </div>
+
+             <div class="container mt-5 pt-5" style="max-width: 600px;">
+                
+                <!-- Main Info Card -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body text-center pt-4">
+                        <img t-att-src="image_data_uri(partner.avatar_128)" 
+                             class="rounded-circle mb-3" 
+                             style="width: 100px; height: 100px; object-fit: cover;"/>
+                        <h3 class="mb-1"><t t-esc="partner.name"/></h3>
+                        <p class="text-muted mb-3"><t t-esc="partner.function or ''"/> <t t-if="partner.parent_id"> at <t t-esc="partner.parent_id.name"/></t></p>
+                        
+                        <!-- Quick Actions Row -->
+                        <div class="d-flex justify-content-center gap-3 mb-3">
+                             <!-- Call -->
+                             <a t-att-href="'tel:%s' % partner.phone" class="btn btn-outline-primary rounded-circle p-3" style="width: 50px; height: 50px;" t-if="partner.phone">
+                                 <i class="fa fa-phone"/>
+                             </a>
+                             <!-- SMS -->
+                             <a t-att-href="'sms:%s' % partner.phone" class="btn btn-outline-info rounded-circle p-3" style="width: 50px; height: 50px;" t-if="partner.phone">
+                                 <i class="fa fa-comment"/>
+                             </a>
+                             <!-- WhatsApp -->
+                             <a t-att-href="'https://wa.me/%s' % (partner.phone or '').replace(' ', '').replace('+', '')" 
+                                class="btn btn-outline-success rounded-circle p-3" style="width: 50px; height: 50px;" target="_blank" t-if="partner.phone">
+                                 <i class="fa fa-whatsapp"/>
+                             </a>
+                             <!-- Email -->
+                             <a t-att-href="'mailto:%s' % partner.email" class="btn btn-outline-secondary rounded-circle p-3" style="width: 50px; height: 50px;" t-if="partner.email">
+                                 <i class="fa fa-envelope"/>
+                             </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info List: Address & Website -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            <!-- Address Section -->
+                            <li class="list-group-item p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="text-muted fw-bold text-uppercase small"><i class="fa fa-map-marker me-1"/> Address</span>
+                                    <a t-att-href="'https://www.google.com/maps/search/?api=1&amp;query=%s' % ((partner.contact_address or '').replace('\n', ' '))"  
+                                       target="_blank" class="btn btn-sm btn-light text-primary rounded-pill px-3">
+                                        <i class="fa fa-location-arrow me-1"/> Navigate
+                                    </a>
+                                </div>
+                                <div class="ps-1">
+                                    <h5 class="mb-0 text-dark">
+                                        <t t-esc="partner.street"/>
+                                        <t t-if="partner.street2"><br/><t t-esc="partner.street2"/></t>
+                                    </h5>
+                                    <div class="text-muted mt-1">
+                                        <t t-esc="partner.city"/>, <t t-esc="partner.state_id.code"/> <t t-esc="partner.zip"/>
+                                        <br t-if="partner.country_id"/><t t-esc="partner.country_id.name"/>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                            <!-- Website Section -->
+                            <li class="list-group-item p-3" t-if="partner.website">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                     <span class="text-muted fw-bold text-uppercase small"><i class="fa fa-globe me-1"/> Website</span>
+                                     <a t-att-href="partner.website" target="_blank" class="btn btn-sm btn-light text-primary rounded-pill px-3">
+                                         Visit <i class="fa fa-external-link ms-1"/>
+                                     </a>
+                                </div>
+                                <div class="ps-1">
+                                    <a t-att-href="partner.website" target="_blank" class="text-dark text-decoration-none h6"><t t-esc="partner.website"/></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sales & Receivables Section -->
+                <t t-set="show_sales" t-value="partner.user_id or partner.property_payment_term_id or partner.credit or (partner.days_sales_outstanding > 0) or (partner.use_partner_credit_limit and partner.credit)"/>
+                <div class="card border-0 shadow-sm mb-4" t-if="show_sales">
+                     <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="m-0 fw-bold app-text-primary"><i class="fa fa-usd me-2"/> Sales &amp; Receivables</h6>
+                     </div>
+                     <div class="card-body p-0">
+                         <ul class="list-group list-group-flush">
+                             <li class="list-group-item d-flex justify-content-between p-3" t-if="partner.user_id">
+                                 <span class="text-muted small">Salesperson</span>
+                                 <span class="fw-bold text-dark text-end"><t t-esc="partner.user_id.name"/></span>
+                             </li>
+                             <li class="list-group-item d-flex justify-content-between p-3" t-if="partner.property_payment_term_id">
+                                 <span class="text-muted small">Payment Terms</span>
+                                 <span class="fw-bold text-dark text-end"><t t-esc="partner.property_payment_term_id.name"/></span>
+                             </li>
+                             <!-- Payment Method (Inbound) often in different modules, checking standard field name? -->
+                             <!-- Assuming property_inbound_payment_method_line_id exists if requested, or we skip for safety if unsure of module -->
+                             
+                             <li class="list-group-item d-flex justify-content-between p-3" t-if="partner.credit">
+                                 <span class="text-muted small">Total Receivable</span>
+                                 <span class="fw-bold text-danger text-end"><t t-esc="partner.credit" t-options='{"widget": "monetary", "display_currency": partner.currency_id}'/></span>
+                             </li>
+                             <li class="list-group-item d-flex justify-content-between p-3" t-if="'days_sales_outstanding' in partner and partner.days_sales_outstanding > 0">
+                                 <span class="text-muted small">DSO</span>
+                                 <span class="fw-bold text-dark text-end"><t t-esc="partner.days_sales_outstanding"/> Days</span>
+                             </li>
+                             <li class="list-group-item d-flex justify-content-between p-3" t-if="partner.use_partner_credit_limit">
+                                 <span class="text-muted small">Credit Limit</span>
+                                 <span class="fw-bold text-dark text-end"><t t-esc="partner.credit_limit" t-options='{"widget": "monetary", "display_currency": partner.currency_id}'/></span>
+                             </li>
+                         </ul>
+                     </div>
+                </div>
+
+                <!-- Purchase & Payables Section -->
+                <t t-set="show_purchase" t-value="partner.property_supplier_payment_term_id"/>
+                <div class="card border-0 shadow-sm mb-4" t-if="show_purchase">
+                     <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="m-0 fw-bold text-danger"><i class="fa fa-shopping-cart me-2"/> Purchase &amp; Payables</h6>
+                     </div>
+                     <div class="card-body p-0">
+                         <ul class="list-group list-group-flush">
+                             <li class="list-group-item d-flex justify-content-between p-3" t-if="partner.property_supplier_payment_term_id">
+                                 <span class="text-muted small">Payment Terms</span>
+                                 <span class="fw-bold text-dark text-end"><t t-esc="partner.property_supplier_payment_term_id.name"/></span>
+                             </li>
+                         </ul>
+                     </div>
+                </div>
+
+                <!-- Notes Section -->
+                <div class="card border-0 shadow-sm mb-4" t-if="partner.comment">
+                     <div class="card-header bg-white border-bottom py-3">
+                        <h6 class="m-0 fw-bold text-muted"><i class="fa fa-sticky-note me-2"/> Notes</h6>
+                     </div>
+                     <div class="card-body p-3">
+                         <div class="text-muted small" style="white-space: pre-wrap;"><t t-esc="partner.comment"/></div>
+                     </div>
+                </div>
+                
+                 <!-- Bottom Spacer -->
+                <div style="height: calc(80px + env(safe-area-inset-bottom));"></div>
+             </div>
+        </t>
+    </template>
+
+</odoo>

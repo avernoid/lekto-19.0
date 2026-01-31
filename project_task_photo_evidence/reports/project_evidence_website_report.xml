@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Task Report Action -->
+    <record id="action_report_project_task_evidence_website" model="ir.actions.report">
+        <field name="name">Project Evidence Website</field>
+        <field name="model">project.task</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">project_task_photo_evidence.report_evidence_website_template</field>
+        <field name="report_file">project_task_photo_evidence.report_evidence_website_template</field>
+        <field name="binding_model_id" ref="project.model_project_task"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Project Report Action -->
+    <record id="action_report_project_project_evidence_website" model="ir.actions.report">
+        <field name="name">Project Evidence Website</field>
+        <field name="model">project.project</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">project_task_photo_evidence.report_project_evidence_website_template</field>
+        <field name="report_file">project_task_photo_evidence.report_project_evidence_website_template</field>
+        <field name="binding_model_id" ref="project.model_project_project"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Shared Style & Scripts -->
+    <template id="evidence_website_assets">
+        <style>
+            .evidence-body {
+                background-color: #f8f9fa;
+                font-family: 'Inter', system-ui, -apple-system, sans-serif;
+                color: #2d3748;
+            }
+            .evidence-container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+            .header-card {
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+                padding: 2rem;
+                margin-bottom: 2rem;
+                border-left: 6px solid #5D38A4;
+            }
+            .header-title {
+                color: #1a202c;
+                font-weight: 800;
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+                letter-spacing: -0.02em;
+            }
+            .header-subtitle {
+                color: #718096;
+                font-size: 1.1rem;
+            }
+            .product-section {
+                margin-bottom: 3rem;
+            }
+            .product-title-row {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.5rem;
+                padding-bottom: 1rem;
+                border-bottom: 2px solid #e2e8f0;
+            }
+            .product-title {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #4a5568;
+                margin: 0;
+            }
+            .evidence-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 1.5rem;
+            }
+            .evidence-card {
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.05);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                border: 1px solid #edf2f7;
+                display: flex;
+                flex-direction: column;
+            }
+            .evidence-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            }
+            .card-img-wrapper {
+                position: relative;
+                padding-top: 75%; /* 4:3 Aspect Ratio */
+                overflow: hidden;
+                background-color: #edf2f7;
+                cursor: pointer;
+            }
+            .card-img-wrapper img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Cover for modern look, unlike contain in PDF report */
+                transition: transform 0.5s ease;
+            }
+            .evidence-card:hover .card-img-wrapper img {
+                transform: scale(1.05);
+            }
+            .card-content {
+                padding: 1rem;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+            .evidence-name {
+                font-weight: 600;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+                color: #2d3748;
+            }
+            .evidence-meta {
+                font-size: 0.85rem;
+                color: #718096;
+            }
+            .geo-tag {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.25rem;
+                color: #5D38A4;
+                background-color: #f3f0ff;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                font-weight: 500;
+                font-size: 0.75rem;
+                text-decoration: none;
+                transition: background-color 0.2s;
+            }
+            .geo-tag:hover {
+                background-color: #e9d8fd;
+                text-decoration: none;
+                color: #44337a;
+            }
+            .customer-badge {
+                display: inline-block;
+                background: #ebf8ff;
+                color: #2b6cb0;
+                padding: 0.5rem 1rem;
+                border-radius: 8px;
+                font-weight: 600;
+            }
+            .alert-modern {
+                border-left: 4px solid #ecc94b;
+                background-color: #fffff0;
+                color: #b7791f;
+                padding: 1rem;
+                border-radius: 8px;
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            }
+            .project-task-divider {
+                height: 4px;
+                background: linear-gradient(90deg, #5D38A4 0%, #a78bfa 100%);
+                border-radius: 2px;
+                margin: 3rem 0;
+                opacity: 0.2;
+            }
+            /* Modal / Lightbox simple implementation */
+            .lightbox-target {
+                position: fixed;
+                top: -100%;
+                width: 100%;
+                background: rgba(0,0,0,0.9);
+                width: 100%;
+                opacity: 0;
+                transition: opacity .5s ease-in-out;
+                overflow: hidden;
+                z-index: 9999;
+            }
+            .lightbox-target img {
+                margin: auto;
+                position: absolute;
+                top: 0; left:0; right:0; bottom:0;
+                max-height: 90vh;
+                max-width: 90vw;
+                box-shadow: 0px 0px 8px rgba(0,0,0,.3);
+                border: 3px solid white;
+            }
+            .lightbox-target:target {
+                opacity: 1;
+                top: 0;
+                bottom: 0;
+                pointer-events: auto;
+            }
+            .lightbox-close {
+                display: block;
+                width: 50px;
+                height: 50px;
+                box-sizing: border-box;
+                background: white;
+                color: black;
+                text-decoration: none;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 50px;
+                font-size: 24px;
+                font-weight: bold;
+            }
+        </style>
+    </template>
+
+    <!-- Task Report Template -->
+    <template id="report_evidence_website_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="task">
+                <t t-call="web.basic_layout">
+                    <t t-call="project_task_photo_evidence.evidence_website_assets"/>
+                    <div class="evidence-body">
+                        <div class="evidence-container">
+                            <!-- Header -->
+                            <div class="header-card">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="header-subtitle">PROJECT EVIDENCE WEBSITE</div>
+                                        <h1 class="header-title" t-field="task.name"/>
+                                        <div class="d-flex align-items-center mt-2 text-muted">
+                                            <i class="fa fa-folder-open mr-2"></i>
+                                            <span t-field="task.project_id.name" class="mr-4"/>
+                                            <i class="fa fa-clock-o mr-2"></i>
+                                            <span t-field="task.date_last_stage_update" t-options='{"widget": "date"}'/>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 text-lg-right mt-3 mt-lg-0">
+                                        <div t-if="task.partner_id" class="customer-badge text-left">
+                                            <div class="small text-uppercase text-muted mb-1" style="font-size: 0.7rem;">Customer</div>
+                                            <div t-field="task.partner_id" t-options='{"widget": "contact", "fields": ["name", "city"], "no_marker": True}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Content -->
+                            <t t-set="valid_evidences" t-value="task.evidence_ids.filtered(lambda x: not x.exclude_from_report)"/>
+                            
+                            <t t-if="not valid_evidences">
+                                <div class="alert alert-info text-center p-5 rounded-lg shadow-sm">
+                                    <h4>No evidence photos available</h4>
+                                    <p>There are no photos captured for this task yet.</p>
+                                </div>
+                            </t>
+
+                            <t t-if="valid_evidences">
+                                <t t-foreach="valid_evidences.sorted(key=lambda s: s.product_id.name or '').grouped(lambda s: s.product_id).items()" t-as="product_group">
+                                    <t t-set="product" t-value="product_group[0]"/>
+                                    <t t-set="evidences" t-value="product_group[1]"/>
+
+                                    <div class="product-section">
+                                        <div class="product-title-row">
+                                            <h2 class="product-title">
+                                                <i class="fa fa-cube mr-2 text-primary" t-if="product"></i>
+                                                <span t-esc="product.name if product else 'General Evidence'"/>
+                                            </h2>
+                                            <span class="badge badge-pill badge-light ml-3 border"><t t-esc="len(evidences)"/> Photos</span>
+                                        </div>
+
+                                        <!-- Warning -->
+                                        <t t-if="product and product.evidence_required and product.evidence_min_qty > 0 and len(evidences) &lt; product.evidence_min_qty">
+                                            <div class="alert-modern">
+                                                <i class="fa fa-exclamation-triangle fa-2x"></i>
+                                                <div>
+                                                    <strong>Requirement Missing:</strong> This product requires a minimum of <t t-esc="product.evidence_min_qty"/> photos.
+                                                </div>
+                                            </div>
+                                        </t>
+
+                                        <!-- Grid -->
+                                        <div class="evidence-grid">
+                                            <t t-foreach="evidences" t-as="evidence">
+                                                <div class="evidence-card">
+                                                    <!-- Lightbox Anchor -->
+                                                    <a t-att-href="'#img_' + str(evidence.id)" class="card-img-wrapper">
+                                                        <img t-if="evidence.image" t-att-src="image_data_uri(evidence.image)" loading="lazy"/>
+                                                    </a>
+                                                    
+                                                    <!-- Lightbox Target -->
+                                                    <div t-att-id="'img_' + str(evidence.id)" class="lightbox-target">
+                                                        <img t-if="evidence.image" t-att-src="image_data_uri(evidence.image)"/>
+                                                        <a class="lightbox-close" href="#_">×</a>
+                                                    </div>
+
+                                                    <div class="card-content">
+                                                        <div class="evidence-name text-truncate" t-att-title="evidence.name">
+                                                            <t t-if="evidence.name and not (len(evidence.name) &gt; 25 and ' ' not in evidence.name)">
+                                                                <span t-field="evidence.name"/>
+                                                            </t>
+                                                        </div>
+                                                        <div class="evidence-meta">
+                                                            <div t-if="evidence.create_date" class="mb-2">
+                                                                <i class="fa fa-calendar-o mr-1"></i> <span t-field="evidence.create_date" t-options='{"format": "d MMM, HH:mm"}'/>
+                                                            </div>
+                                                            <div t-if="evidence.latitude and evidence.longitude" class="d-flex justify-content-between align-items-center">
+                                                                <div t-if="evidence.map_url">
+                                                                    <a t-att-href="evidence.map_url" target="_blank" class="geo-tag">
+                                                                        <i class="fa fa-map-marker"></i> View Map
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                 </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Project Report Template -->
+    <template id="report_project_evidence_website_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="project">
+                <t t-call="web.basic_layout">
+                    <t t-call="project_task_photo_evidence.evidence_website_assets"/>
+                    <div class="evidence-body">
+                        <div class="evidence-container">
+                            <!-- Project Header -->
+                            <div class="header-card">
+                                <div class="row align-items-center">
+                                    <div class="col-lg-8">
+                                        <div class="header-subtitle">PROJECT EVIDENCE REPORT</div>
+                                        <h1 class="header-title" t-field="project.name"/>
+                                        <div class="d-flex align-items-center mt-2 text-muted">
+                                            <i class="fa fa-tasks mr-2"></i>
+                                            <span class="mr-4"><t t-esc="len(project.task_ids)"/> Tasks</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 text-lg-right mt-3 mt-lg-0">
+                                        <div t-if="project.partner_id" class="customer-badge text-left">
+                                            <div class="small text-uppercase text-muted mb-1" style="font-size: 0.7rem;">Customer</div>
+                                            <div t-field="project.partner_id" t-options='{"widget": "contact", "fields": ["name", "city"], "no_marker": True}'/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tasks Loop -->
+                            <t t-foreach="project.task_ids.sorted(key=lambda t: t.sequence)" t-as="task">
+                                <t t-set="valid_evidences" t-value="task.evidence_ids.filtered(lambda x: not x.exclude_from_report)"/>
+                                <t t-if="valid_evidences">
+                                    
+                                    <div class="mb-5">
+                                        <div class="d-flex align-items-center mb-4">
+                                            <div style="background: #5D38A4; width: 4px; height: 30px; border-radius: 4px; margin-right: 15px;"></div>
+                                            <h2 class="m-0 text-dark"><span t-field="task.name"/></h2>
+                                        </div>
+
+                                        <t t-foreach="valid_evidences.sorted(key=lambda s: s.product_id.name or '').grouped(lambda s: s.product_id).items()" t-as="product_group">
+                                            <t t-set="product" t-value="product_group[0]"/>
+                                            <t t-set="evidences" t-value="product_group[1]"/>
+
+                                            <div class="product-section ml-4 border-left pl-4" style="border-color: #e2e8f0 !important;">
+                                                <div class="product-title-row" style="border-bottom: 1px dashed #e2e8f0;">
+                                                    <h4 class="product-title" style="font-size: 1.2rem;">
+                                                        <span t-esc="product.name if product else 'General Evidence'"/>
+                                                    </h4>
+                                                    <span class="badge badge-pill badge-light ml-3 border"><t t-esc="len(evidences)"/> Photos</span>
+                                                </div>
+
+                                                  <!-- Warning -->
+                                                <t t-if="product and product.evidence_required and product.evidence_min_qty > 0 and len(evidences) &lt; product.evidence_min_qty">
+                                                    <div class="alert-modern py-2">
+                                                        <i class="fa fa-exclamation-triangle"></i>
+                                                        <small>Min: <t t-esc="product.evidence_min_qty"/> photos required.</small>
+                                                    </div>
+                                                </t>
+
+                                                <div class="evidence-grid">
+                                                    <t t-foreach="evidences" t-as="evidence">
+                                                        <div class="evidence-card">
+                                                             <!-- Lightbox Anchor -->
+                                                             <a t-att-href="'#img_' + str(evidence.id)" class="card-img-wrapper">
+                                                                <img t-if="evidence.image" t-att-src="image_data_uri(evidence.image)" loading="lazy"/>
+                                                            </a>
+                                                            
+                                                            <!-- Lightbox Target -->
+                                                            <div t-att-id="'img_' + str(evidence.id)" class="lightbox-target">
+                                                                <img t-if="evidence.image" t-att-src="image_data_uri(evidence.image)"/>
+                                                                <a class="lightbox-close" href="#_">×</a>
+                                                            </div>
+
+                                                            <div class="card-content">
+                                                                <div class="evidence-name text-truncate" t-att-title="evidence.name">
+                                                                    <t t-if="evidence.name and not (len(evidence.name) &gt; 25 and ' ' not in evidence.name)">
+                                                                        <span t-field="evidence.name"/>
+                                                                    </t>
+                                                                </div>
+                                                                <div class="evidence-meta">
+                                                                    <div t-if="evidence.create_date" class="mb-2">
+                                                                        <i class="fa fa-calendar-o mr-1"></i> <span t-field="evidence.create_date" t-options='{"format": "d MMM"}'/>
+                                                                    </div>
+                                                                    <div t-if="evidence.latitude and evidence.longitude">
+                                                                        <div t-if="evidence.map_url">
+                                                                            <a t-att-href="evidence.map_url" target="_blank" class="geo-tag">
+                                                                                View Map
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="project-task-divider"></div>
+                                </t>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
