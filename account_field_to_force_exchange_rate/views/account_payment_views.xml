@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_payment_form_inherit_force_rate" model="ir.ui.view">
+        <field name="name">account.payment.form.inherit.force.rate</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date']" position="after">
+                <field name="company_currency_id" invisible="1"/>
+                <field name="to_force_exchange_rate" 
+                       groups="base.group_multi_currency"
+                       readonly="state != 'draft'"
+                       invisible="currency_id == company_currency_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

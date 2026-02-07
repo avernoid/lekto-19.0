@@ -1,0 +1,7 @@
+---Models in module 'account_field_to_force_exchange_rate'---
+---Fields in module 'account_field_to_force_exchange_rate'---
+---XML records in module 'account_field_to_force_exchange_rate'---
+NEW ir.ui.view: account_move_view_form_inherit_account_exchange_currency
+DEL ir.ui.view: account_move_form_view_inherit_account_exchange_currency (OLD)
+NEW ir.ui.view: account_payment_view_form_inherit
+DEL ir.ui.view: view_account_payment_form_inherit (OLD)
