@@ -1,0 +1,23 @@
+UPGRADE ANALYSIS: ruc_validation_sunat (Optimization Strategy)
+================================================================
+
+1. SUMMARY OF CHANGES
+---------------------
+This module has been decoupled from `l10n_country_filter` to optimize performance.
+- **Dependency Removed**: `l10n_country_filter` is no longer required.
+- **Logic Replaced**: Python-based view manipulation (`_get_view`) has been replaced by native XML attributes.
+
+2. WHY WAS THIS CHANGED?
+------------------------
+For simple visibility requirements (like a single button or page), using the `l10n_country_filter` Mixin was unnecessary ("overkill") as it forced `res.partner` to duplicate its view cache per company.
+By using native Odoo XML attributes, we allow `res.partner` to maintain a single **Global Cache** shared across all companies, significantly reducing server memory usage.
+
+3. TECHNICAL IMPLEMENTATION
+---------------------------
+- **XML**: Used `invisible="country_code != 'PE'"` on the "Validar RUC" button and "Ficha RUC" page.
+- **Context**: `country_code` is a native computed field in Odoo that reflects the current company's fiscal country. This logic is handled entirely by the web client (JavaScript), imposing zero load on the server cache.
+
+4. VERIFICATION
+---------------
+1. Open a Partner in Company PE (Peru). "Validar RUC" button should be visible.
+2. Switch to a Company without localization (e.g., US). Button should be hidden dynamically by the browser.

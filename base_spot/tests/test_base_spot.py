@@ -43,15 +43,11 @@ class TestBaseSpot(TransactionCase):
         account_move_unit1.write({
             'detraction_id': account_spot_detraction[0].id,
             'retention_id': account_spot_retention_unit1.id,
-            'voucher_payment_date': '2024-02-01',
-            'voucher_number': '1234567890',
             'operation_type_detraction': '01',
         })
         account_move_unit2.write({
             'detraction_id': account_spot_detraction[1].id,
             'retention_id': account_spot_retention_unit2.id,
-            'voucher_payment_date': '2024-02-01',
-            'voucher_number': '0987654321',
             'operation_type_detraction': '02',
         })
 

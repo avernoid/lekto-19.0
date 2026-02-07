@@ -1,12 +1,23 @@
----Models in module 'type_bank_accounts'---
----Fields in module 'type_bank_accounts'---
----XML records in module 'type_bank_accounts'---
------------------------------------------------------------------------------
-DEPENDS
-model: localization_menu
-field:
-xml_id: localization_menu.account_spot_detraction_view_form
 
-model: localization_menu
-field:
-xml_id: localization_menu.account_spot_detraction_view_tree
+=============================================================================
+BREAKING CHANGES / MIGRATION GUIDE (Version 19.0.2.0.0+)
+=============================================================================
+
+REMOVED FIELDS
+-----------------------------------------------------------------------------
+The following fields have been REMOVED from `account.move` and `account.move.line` in `base_spot` to avoid duplication with Odoo Native Localization.
+
+| Removed Field (base_spot) | Native Replacement (l10n_pe_reports) |
+|---------------------------|----------------------------------------|
+| voucher_payment_date      | l10n_pe_detraction_date                |
+| voucher_number            | l10n_pe_detraction_number              |
+
+ACTION REQUIRED
+-----------------------------------------------------------------------------
+If your module depends on `base_spot` for these fields:
+1.  Add `l10n_pe_reports` to your module's `depends`.
+2.  Update your code/views to use the Native Replacement fields listed above.
+3.  `base_spot` now ONLY provides:
+    - `detraction_id` (Detraction Type)
+    - `retention_id` (Retention Type)
+    - `operation_type_detraction` (Operation Code)

@@ -132,7 +132,7 @@
         <h2>Technical Specification for AI & LLM</h2>
         <p>This Odoo module 'base_spot' implements the necessary fields and logic to manage SPOT (System of Payment of
             Tax Obligations) detractions in Peru.
-            It adds fields to account.move to track if an invoice involves detractions, the detraction type, date, and
+            It adds fields to account.move to track if an invoice involves detractions, the detraction type and
             operation code.
             Essential for Peruvian accounting localization compliance.
             Compatible with Odoo 19.
@@ -190,8 +190,7 @@
                             <h4 style="color: #5154a5;"><i class="fa fa-calculator mr-2"></i> Detraction Data Fields
                             </h4>
                             <p style="text-align: justify;">Adds dedicated fields to the Purchase Invoice form to record
-                                <strong>Detraction Amount</strong>, <strong>Percentage</strong>, <strong>Payment
-                                    Date</strong>,
+                                <strong>Detraction Amount</strong>, <strong>Percentage</strong>,
                                 and <strong>Operation Code</strong>.
                             </p>
                         </div>
@@ -257,7 +256,7 @@
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
                                         <h5><i class="fa fa-pencil-square-o text-primary mr-2"></i> Enter SPOT Data</h5>
                                         <p class="text-muted">Find the section for Detractions/SPOT and fill in the
-                                            Detraction Type, Date, and Code if applicable.</p>
+                                            Detraction Type and Code if applicable.</p>
                                     </div>
                                 </div>
                             </div>
@@ -478,7 +477,7 @@
                             <ol class="mt-3">
                                 <li>Create a new Vendor Bill.</li>
                                 <li>Check if the SPOT fields are visible.</li>
-                                <li>Fill in the fields: Detraction Amount, Date, etc.</li>
+                                <li>Fill in the fields: Detraction Amount, Operation Type, etc.</li>
                             </ol>
                         </div>
                     </div>

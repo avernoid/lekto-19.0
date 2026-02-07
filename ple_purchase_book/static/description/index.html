@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Purchase Record | PLE Sunat | Odoo Peru Localization by Ganemo</title>
+    <meta name="description"
+        content="Automatically generate SUNAT PLE Purchase Book (8.1 and 8.2) for Peruvian Accounting. Supports Non-Domiciled, Detractions, and native Odoo Taxes.">
+    <meta name="keywords"
+        content="Odoo, PLE, Purchase Book, Registro de Compras, Sunat, Peru, Localization, Ganemo, Accounting, 8.1, 8.2">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'ple_purchase_book' implements the Peruvian Electronic Purchase Record (PLE) generation.
+            It generates TXT files complying with SUNAT Resolution 8.1 (General Purchase Register) and 8.2
+            (Non-Domiciled).
+            Supports detractions, custom exchange rates, and multi-currency.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">PLE Purchase Record</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    SUNAT 8.1 & 8.2 Compliance</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Generate your Electronic Purchase Books (Registro de Compras) in one click. Fully compliant with
+                    SUNAT regulations, including Non-Domiciled operations.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-text-o mr-2"></i> Automated Reporting</h4>
+                            <p style="text-align: justify;">Forget about manual Excel sheets. This module pulls data
+                                directly from your Vendor Bills and generates the strict TXT format required by SUNAT
+                                PLE application, saving hours of work.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-globe mr-2"></i> Non-Domiciled Support</h4>
+                            <p style="text-align: justify;">Handle complex "No Domiciliado" operations (Format 8.2)
+                                seamlessly. The module correctly maps foreign vendor bills, retentions, and service
+                                types to the required SUNAT columns.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> Select records and click
+                                    <strong>"Update Tags"</strong> to apply rules.
+                                </li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> Configure <strong>Document
+                                        Types</strong> (01, 03, etc.) correctly.</li>
+                                <li><i class="fa fa-angle-right text-muted mr-2"></i> In
+                                    <strong>Contacts</strong>, ensure Vendors have valid ID types.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Workflow / Operating Manual -->
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="p-4"
+                        style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                        <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                            Operating Manual (Workflow)</h3>
+                        <p class="lead">How to generate the PLE files:</p>
+                        <div class="row mt-4">
+                            <div class="col-md-6 mb-4">
+                                <div class="bg-white p-3 shadow-sm h-100"
+                                    style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                    <h5><i class="fa fa-pencil-square-o text-primary mr-2"></i> Register Bills</h5>
+                                    <p class="text-muted">Create Vendor Bills as usual. Ensure correct Document
+                                        Types (Factura, Boleta) and Taxes are selected.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="bg-white p-3 shadow-sm h-100"
+                                    style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                    <h5><i class="fa fa-download text-primary mr-2"></i> Generate PLE</h5>
+                                    <p class="text-muted">Go to <strong>Informes PLE > PLE Mensual > Registro de
+                                            Compras</strong>. Select the period and click "Generate".</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="bg-white p-3 shadow-sm h-100"
+                                    style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                    <h5><i class="fa fa-file-text text-primary mr-2"></i> Download TXT</h5>
+                                    <p class="text-muted">The system creates attachments for the 8.1 and 8.2 TXTs.
+                                        Download and validate them in the SUNAT PLE application.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <!-- REPORT COLUMN MAPPING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Report Column Mapping</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Data Source Reference</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="table-responsive shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                            <table class="table table-striped table-hover mb-0" style="background-color: white;">
+                                <thead style="background-color: #333; color: white;">
+                                    <tr>
+                                        <th style="width: 5%;">#</th>
+                                        <th style="width: 25%;">PLE Column Name</th>
+                                        <th style="width: 40%;">Data Logic / Source</th>
+                                        <th style="width: 30%;">Internal Odoo Field</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><strong>Period</strong></td>
+                                        <td>YYYYMM00 format from Accounting Date.</td>
+                                        <td><code style="color: #e83e8c;">move.date</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><strong>CUO</strong></td>
+                                        <td>Operation Unique Code (Sanitized Name).</td>
+                                        <td><code style="color: #e83e8c;">move.name</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><strong>Correlativo</strong></td>
+                                        <td>M-Series or M-RER based on Journal/Company.</td>
+                                        <td><code style="color: #e83e8c;">ple_correlative</code> / 'M-RER'</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td><strong>Fecha Emisión</strong></td>
+                                        <td>invoice Issue Date.</td>
+                                        <td><code style="color: #e83e8c;">move.invoice_date</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td><strong>Fecha Vencimiento</strong></td>
+                                        <td>Due Date (Only if Doc Type = 14).</td>
+                                        <td><code style="color: #e83e8c;">move.invoice_date_due</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td><strong>Tipo Comprobante</strong></td>
+                                        <td>SUNAT Code (01, 03, 07, 08).</td>
+                                        <td><code style="color: #e83e8c;">l10n_latam_document_type.code</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td><strong>Serie</strong></td>
+                                        <td>First part of Invoice Number.</td>
+                                        <td><code style="color: #e83e8c;">move.ref</code> (split)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td><strong>Año DUA</strong></td>
+                                        <td>Year of issuance for DUA/DSI.</td>
+                                        <td><code style="color: #e83e8c;">move.year_aduana</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td><strong>Número</strong></td>
+                                        <td>Second part of Invoice Number.</td>
+                                        <td><code style="color: #e83e8c;">move.ref</code> (split)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td><strong>Tipo Doc. Prov.</strong></td>
+                                        <td>VAT Code (6=RUC, 1=DNI, 0=NoDom).</td>
+                                        <td><code style="color: #e83e8c;">l10n_latam_identification_type</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td><strong>Num. Doc. Prov.</strong></td>
+                                        <td>Supplier VAT Number.</td>
+                                        <td><code style="color: #e83e8c;">partner.vat</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td><strong>Razón Social</strong></td>
+                                        <td>Supplier Name (Sanitized).</td>
+                                        <td><code style="color: #e83e8c;">partner.name</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td><strong>Base Imponible</strong></td>
+                                        <td>Base Gravado Destinado a Gravado.</td>
+                                        <td>Tag: <code style="color: #28a745;">P_BASE_GDG</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td><strong>IGV / IPM</strong></td>
+                                        <td>IGV Gravado Destinado a Gravado.</td>
+                                        <td>Tag: <code style="color: #28a745;">P_TAX_GDG</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td><strong>Base Mixta</strong></td>
+                                        <td>Base Gravado Destinado a Mixto.</td>
+                                        <td>Tag: <code style="color: #28a745;">P_BASE_GDM</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td><strong>IGV Mixto</strong></td>
+                                        <td>IGV Gravado Destinado a Mixto.</td>
+                                        <td>Tag: <code style="color: #28a745;">P_TAX_GDM</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>21</td>
+                                        <td><strong>ISC</strong></td>
+                                        <td>Impuesto Selectivo al Consumo.</td>
+                                        <td>Tag: <code style="color: #28a745;">P_TAX_ISC</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>22</td>
+                                        <td><strong>ICBP</strong></td>
+                                        <td>Impuesto Bolsas Plásticas.</td>
+                                        <td>Tag: <code style="color: #28a745;">P_TAX_ICBP</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>23</td>
+                                        <td><strong>Otros Tributos</strong></td>
+                                        <td>Other Charges/Taxes.</td>
+                                        <td>Tag: <code style="color: #28a745;">P_TAX_OTHER</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>24</td>
+                                        <td><strong>Importe Total</strong></td>
+                                        <td>Document Total Amount.</td>
+                                        <td>Sum(<code style="color: #28a745;">All Tags</code>)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>25</td>
+                                        <td><strong>Moneda</strong></td>
+                                        <td>Currency Code (PEN, USD).</td>
+                                        <td><code style="color: #e83e8c;">currency.name</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>26</td>
+                                        <td><strong>Tipo Cambio</strong></td>
+                                        <td>Exchange Rate (3 decimals).</td>
+                                        <td><code style="color: #e83e8c;">move.invoice_currency_rate</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>27</td>
+                                        <td><strong>Fecha Ref.</strong></td>
+                                        <td>Origin Invoice Date (Credit Notes).</td>
+                                        <td><code style="color: #e83e8c;">move.origin_invoice_date</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>28</td>
+                                        <td><strong>Tipo Ref.</strong></td>
+                                        <td>Origin Document Type.</td>
+                                        <td><code style="color: #e83e8c;">origin_document_type.code</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>29-30</td>
+                                        <td><strong>Serie-Num Ref.</strong></td>
+                                        <td>Origin Series and Number.</td>
+                                        <td><code style="color: #e83e8c;">move.origin_number</code> (split)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31</td>
+                                        <td><strong>Fec. Constancia</strong></td>
+                                        <td>Detraction Payment Date.</td>
+                                        <td><code style="color: #e83e8c;">move.l10n_pe_detraction_date</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>32</td>
+                                        <td><strong>Num. Constancia</strong></td>
+                                        <td>Detraction Number.</td>
+                                        <td><code style="color: #e83e8c;">move.l10n_pe_detraction_number</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td><strong>Clasif. Bienes</strong></td>
+                                        <td>Classification Code.</td>
+                                        <td><code style="color: #e83e8c;">type_services.code</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td><strong>Estado PLE</strong></td>
+                                        <td>1 (Reg), 6 (Date), 9 (Rect), etc.</td>
+                                        <td><code style="color: #e83e8c;">move.ple_state</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="alert alert-info" role="alert">
+                            <i class="fa fa-info-circle mr-2"></i> Use these scenarios to validate the module
+                            implementation in a Staging environment before going Live.
+                        </div>
+
+                        <!-- Scenarios Grid -->
+                        <div class="row">
+                            <!-- Scenario 1 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="p-4 shadow-sm h-100"
+                                    style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                                    <h5 style="color: #791d97; font-weight: 700;">Scenario 1: Standard Domestic Purchase
+                                    </h5>
+                                    <ul class="text-muted small mt-2 pl-3">
+                                        <li><strong>Action:</strong> Register a Vendor Bill (Factura 01) from a local
+                                            supplier with IGV 18%.</li>
+                                        <li><strong>Expected:</strong> The bill appears in Format 8.1. Columns for "Base
+                                            Imponible" and "IGV" are correctly populated (Col 14 & 15).</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Scenario 2 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="p-4 shadow-sm h-100"
+                                    style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                                    <h5 style="color: #3c6dac; font-weight: 700;">Scenario 2: Non-Domiciled (Import of
+                                        Services)</h5>
+                                    <ul class="text-muted small mt-2 pl-3">
+                                        <li><strong>Action:</strong> Register a Bill from a foreign vendor (Country !=
+                                            Peru, Document Type 00 or 91). Tax: No Domiciliado.</li>
+                                        <li><strong>Expected:</strong> The bill is excluded from Format 8.1 and appears
+                                            ONLY in Format 8.2 with correct retention codes.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Scenario 3 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="p-4 shadow-sm h-100"
+                                    style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                                    <h5 style="color: #28a745; font-weight: 700;">Scenario 3: Credit Note (Reversal)
+                                    </h5>
+                                    <ul class="text-muted small mt-2 pl-3">
+                                        <li><strong>Action:</strong> Create a Rectificative Invoices (Credit Note) for a
+                                            previously posted bill. Link it to the original invoice.</li>
+                                        <li><strong>Expected:</strong> Format 8.1 shows the entry with negative amounts.
+                                            Reference to the original document (Col 24, 25, 26) is mandatory and
+                                            populated.</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Scenario 4 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="p-4 shadow-sm h-100"
+                                    style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                                    <h5 style="color: #ffc107; font-weight: 700;">Scenario 4: Mixed Taxes (Gravado + No
+                                        Gravado)</h5>
+                                    <ul class="text-muted small mt-2 pl-3">
+                                        <li><strong>Action:</strong> Create a bill with two lines: one with IGV 18% and
+                                            another with EXO/INA (Exempt).</li>
+                                        <li><strong>Expected:</strong> Format 8.1 splits the bases correctly. IGV base
+                                            goes to Col 14, Exempt base goes to Col 16 or 17 (depending on destination).
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Scenario 5 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="p-4 shadow-sm h-100"
+                                    style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                                    <h5 style="color: #dc3545; font-weight: 700;">Scenario 5: ISC & Other Taxes</h5>
+                                    <ul class="text-muted small mt-2 pl-3">
+                                        <li><strong>Action:</strong> Purchase items subject to ISC (Impuesto Selectivo
+                                            al Consumo) or ICBP (Plastic Bags).</li>
+                                        <li><strong>Expected:</strong> Values appear in their specific columns (Col 19
+                                            for ISC, Col 22 for ICBP) and not mixed with IGV.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Scenario 6 -->
+                            <div class="col-md-6 mb-4">
+                                <div class="p-4 shadow-sm h-100"
+                                    style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                                    <h5 style="color: #17a2b8; font-weight: 700;">Scenario 6: Cancelled (Voided)
+                                        Documents</h5>
+                                    <ul class="text-muted small mt-2 pl-3">
+                                        <li><strong>Action:</strong> Register a bill and then Cancel it in Odoo. Ensure
+                                            "Include Voided" is checked in report options.</li>
+                                        <li><strong>Expected:</strong> The document appears with status '2' (Anulado)
+                                            and amounts at 0.00 (depending on PLE logic for voided).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Why is my bill completely missing?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Invalid Company, Date Range, or Journal
+                                type.</p>
+                            <ul class="small text-muted pl-4">
+                                <li>Check the Bill Date vs Report Period.</li>
+                                <li>Ensure the Journal Type is 'Purchase'.</li>
+                                <li>Verify the Company's Country is 'Peru'.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">SUNAT Error: "Tax Base does not match"</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The calculated IGV doesn't match the
+                                Base * 18%.</p>
+                            <p class="small text-dark"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> This
+                                usually happens with manual overrides. Check if the tax amount was manually edited on
+                                the invoice line. Use the "Update Tags" wizard to re-sync tags if configurations
+                                changed.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;">Missing "Tipo de Cambio" (Exchange Rate)</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Logic requires a rate for USD bills.</p>
+                            <p class="small text-dark"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ensure a
+                                valid Exchange Rate exists for the invoice date (Accounting > Configuration >
+                                Currencies). Even for PEN bills, if a line is in USD, a rate is needed.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">How to fix "Obligatory field missing"?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> PLE requires specific fields like
+                                Document Type or Series.</p>
+                            <p class="small text-dark"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Check the
+                                vendor bill. Ensure "Document Type" (e.g., 01 Factura) is selected and the "Number"
+                                field follows the Series-Number format (e.g., F001-123456).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:help@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        help@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

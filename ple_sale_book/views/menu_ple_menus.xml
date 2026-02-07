@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem 
+        id="menu_ple_pe_root" 
+        name="Informes PLE" 
+        web_icon="ple_sale_book,static/description/icon.png" 
+        groups="account.group_account_user"
+    />
+    <menuitem 
+        id="menu_ple_pe_monthly" 
+        name="PLE Mensual" 
+        parent="menu_ple_pe_root"
+    />
+    <menuitem 
+        id="menu_ple_pe_yearly" 
+        name="PLE Anual" 
+        parent="menu_ple_pe_root"
+    />
+    <menuitem 
+        id="menu_ple_inv_bal" 
+        name="PLE Inventarios y Balances" 
+        parent="menu_ple_pe_root"
+    />
+    <!--
+    <menuitem 
+        id="menu_action_account_account_tag_ple" 
+        parent="menu_ple_pe_root" 
+        action="action_account_account_tag_ple"
+    />
+    -->
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_ple_config" name="Configuration" parent="menu_ple_pe_root" sequence="100"/>
+    <menuitem id="menu_ple_sale_tax_config" parent="menu_ple_config" action="action_ple_sale_tax_config" sequence="10" name="Sale Tax Rules"/>
+</odoo>

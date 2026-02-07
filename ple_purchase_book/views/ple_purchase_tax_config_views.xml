@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Config Tree View -->
+    <record id="view_ple_purchase_tax_config_tree" model="ir.ui.view">
+        <field name="name">ple.purchase.tax.config.tree</field>
+        <field name="model">ple.purchase.tax.config</field>
+        <field name="arch" type="xml">
+            <list string="PLE Purchase Tax Rules" editable="bottom">
+                <field name="name"/>
+                <field name="tax_xml_prefix"/>
+                <field name="tax_xml_suffix"/>
+                <field name="repartition_type"/>
+                <field name="tag_invoice_id"/>
+                <field name="tag_refund_id"/>
+                <button name="action_update_tags_wizard" string="Run Update" type="object" icon="fa-cogs"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Config Action -->
+    <record id="action_ple_purchase_tax_config" model="ir.actions.act_window">
+        <field name="name">PLE Purchase Tax Rules</field>
+        <field name="res_model">ple.purchase.tax.config</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define Tax Mapping Rules for PLE
+            </p>
+            <p>
+                Configure which Tags should be applied to specific Taxes (by XML ID suffix) based on Repartition Type.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_ple_purchase_tax_config"
+              name="Purchase Tax Rules"
+              parent="ple_sale_book.menu_ple_config"
+              action="action_ple_purchase_tax_config"
+              sequence="15"/>
+
+    <record id="action_ple_purchase_tax_config_bulk_update_tags" model="ir.actions.server">
+        <field name="name">Update Tags</field>
+        <field name="model_id" ref="model_ple_purchase_tax_config"/>
+        <field name="binding_model_id" ref="model_ple_purchase_tax_config"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'ple.update.purchase.tags.wizard',
+                'view_mode': 'form',
+                'target': 'new',
+                'context': {'default_config_ids': records.ids},
+            }
+        </field>
+    </record>
+
+</odoo>

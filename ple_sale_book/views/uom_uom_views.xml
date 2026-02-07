@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="uom_uom_view_form_inherit_ple_sale_book" model="ir.ui.view">
+        <field name="name">uom.uom.view.form.inherit.ple_sale_book</field>
+        <field name="model">uom.uom</field>
+        <field name="inherit_id" ref="uom.product_uom_form_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="l10n_pe_edi_measure_unit_code"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

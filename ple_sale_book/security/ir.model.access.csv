@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ple_report_base,ple.report.base,model_ple_report_base,account.group_account_user,1,1,1,1
+access_ple_report_sale,ple.report.sale,model_ple_report_sale,account.group_account_user,1,1,1,1
+access_ple_sale_tax_config,ple.sale.tax.config,model_ple_sale_tax_config,account.group_account_user,1,1,1,1
+access_ple_update_tags_wizard,ple.update.tags.wizard,model_ple_update_tags_wizard,account.group_account_user,1,1,1,1

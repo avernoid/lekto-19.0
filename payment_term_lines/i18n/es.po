@@ -1,0 +1,42 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_term_lines
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-04 00:00+0000\n"
+"PO-Revision-Date: 2024-02-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: payment_term_lines
+#: model:ir.model.fields,field_description:payment_term_lines.field_account_payment_term_line__l10n_pe_is_detraction_retention
+#: model:ir.model.fields,field_description:payment_term_lines.field_account_move_line__l10n_pe_is_detraction_retention
+msgid "Is Detraction/Retention?"
+msgstr "¿Es un descuento?"
+
+#. module: payment_term_lines
+#: model:ir.model.fields,help:payment_term_lines.field_account_payment_term_line__l10n_pe_is_detraction_retention
+msgid "Check this box if this payment term line represents a detraction or retention that should be separated."
+msgstr "Marque esta casilla si esta línea de plazo de pago representa una detracción o retención que debe separarse."
+
+#. module: payment_term_lines
+#: model:ir.model.fields,selection:payment_term_lines.selection__account_payment_term_line__delay_type__days_after_accounting_date
+msgid "Days after accounting date"
+msgstr "Días después de la fecha contable"
+
+#. module: payment_term_lines
+#: model:ir.model.fields,field_description:payment_term_lines.field_account_move_line__tmp_date_maturity
+msgid "Temporary Maturity Date"
+msgstr "Fecha de Vencimiento Temporal"
+
+#. module: payment_term_lines
+#: model:ir.model.fields,help:payment_term_lines.field_account_move_line__tmp_date_maturity
+msgid "Technical field used to prevent automatic grouping of payment lines that share the same maturity date."
+msgstr "Campo técnico utilizado para evitar la agrupación automática de líneas de pago que comparten la misma fecha de vencimiento."

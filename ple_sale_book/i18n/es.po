@@ -1,0 +1,81 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ple_sale_book
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-06 00:00+0000\n"
+"PO-Revision-Date: 2024-02-06 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: ple_sale_book
+#: model:ir.model.fields,field_description:ple_sale_book.field_account_move__ple_state
+msgid "Status PLE"
+msgstr "Estado PLE"
+
+#. module: ple_sale_book
+#: model:ir.model.fields,help:ple_sale_book.field_account_move__ple_state
+msgid "Indicates the status of the document in the PLE. 1: Registered in the period. 2: Cancelled document. 8: Registered in a previous period. 9: Correction of a previous period."
+msgstr "Indica el estado del documento en el PLE. 1: Registrado en el periodo. 2: Documento cancelado. 8: Registrado en un periodo previo. 9: Corrección de un periodo previo."
+
+#. module: ple_sale_book
+#: model:ir.model.fields,field_description:ple_sale_book.field_account_move__ple_its_declared
+msgid "Declared?"
+msgstr "¿Declarado?"
+
+#. module: ple_sale_book
+#: model:ir.model.fields,help:ple_sale_book.field_account_move__ple_its_declared
+msgid "Checked if this document has already been declared to SUNAT."
+msgstr "Marcado si este documento ya fue declarado a SUNAT."
+
+#. module: ple_sale_book
+#: model:ir.model.fields,field_description:ple_sale_book.field_account_move__ple_date
+msgid "Date PLE"
+msgstr "Fecha PLE"
+
+#. module: ple_sale_book
+#: model:ir.model.fields,help:ple_sale_book.field_account_move__ple_date
+msgid "Date used to determine the PLE reporting period. Defaults to Invoice Date."
+msgstr "Fecha usada para decidir el periodo de reporte PLE. Por defecto es la Fecha de Factura."
+
+#. module: ple_sale_book
+#: model:ir.model.fields,field_description:ple_sale_book.field_account_move__bool_pay_invoice
+msgid "Paid Invoice Indicator"
+msgstr "Indicador de Comprobante Cancelado"
+
+#. module: ple_sale_book
+#: model:ir.model.fields,help:ple_sale_book.field_account_move__bool_pay_invoice
+msgid "Indicates if the payment voucher has been cancelled (paid)."
+msgstr "Indica si el comprobante de pago ha sido cancelado (pagado)."
+
+#. module: ple_sale_book
+#: model:ir.model.fields,field_description:ple_sale_book.field_ple_report_sale__move_ids
+msgid "Related Invoices"
+msgstr "Facturas Relacionadas"
+
+#. module: ple_sale_book
+#: model:ir.model.fields,help:ple_sale_book.field_ple_report_sale__move_ids
+msgid "Invoices included in this PLE report period."
+msgstr "Facturas incluidas en este periodo de reporte PLE."
+
+#. module: ple_sale_book
+#: model:ir.ui.menu,name:ple_sale_book.menu_ple_sale_tax_config
+msgid "Sale Tax Rules"
+msgstr "Reglas de Impuestos de Venta"
+
+#. module: ple_sale_book
+#: code:addons/ple_sale_book/views/ple_report_sale_views.xml:0
+msgid "Period"
+msgstr "Periodo"
+
+#. module: ple_sale_book
+#: code:addons/ple_sale_book/views/ple_report_sale_views.xml:0
+msgid "To"
+msgstr "Hasta"

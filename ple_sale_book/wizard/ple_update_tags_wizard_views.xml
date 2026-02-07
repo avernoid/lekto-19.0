@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ple_update_tags_wizard_form" model="ir.ui.view">
+        <field name="name">ple.update.tags.wizard.form</field>
+        <field name="model">ple.update.tags.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update PLE Tags">
+                <group>
+                    <group>
+                        <field name="company_id" readonly="1"/>
+                    </group>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    <p>This action will update the selected Tax Configurations for the current company.</p>
+                    <p>It will identify the relevant Taxes and Repartition Lines and apply the configured Tags.</p>
+                </div>
+                <field name="config_ids">
+                    <list>
+                        <field name="name"/>
+                        <field name="tax_code"/>
+                        <field name="repartition_type"/>
+                    </list>
+                </field>
+                <footer>
+                    <button string="Apply Updates" name="action_execute" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ple_update_tags_wizard" model="ir.actions.act_window">
+        <field name="name">Update PLE Tags</field>
+        <field name="res_model">ple.update.tags.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

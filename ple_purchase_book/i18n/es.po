@@ -1,0 +1,211 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ple_purchase_book
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-06 12:00+0000\n"
+"PO-Revision-Date: 2026-02-06 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__igv_withholding_indicator
+msgid "Purchases IGV or Rent Withholding Indicator"
+msgstr "Indicador de retención del IGV o Renta en Compras"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__igv_withholding_indicator
+msgid "If the field is activated, it automatically appears in the purchase record that the payment receipt is subject to IGV, Rent or both withholding inclusive"
+msgstr "Si el campo se activa, de forma automática aparece el en registro de compras que el comprobante de pago registrado está afecto a retención del IGV, Renta o ambas inclusive"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__inv_id
+msgid "Proof of Payment"
+msgstr "C. P. Sustento"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__inv_type_document
+msgid "Document Type"
+msgstr "Tipo documento"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__inv_type_document
+msgid "Document Type that supports the fiscal credit."
+msgstr "Tipo de Comprobante de Pago o Documento que sustenta el crédito fiscal."
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__inv_serie
+msgid "Receipt Series"
+msgstr "Serie de Comprabante"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__inv_serie
+msgid "Series of the payment voucher or document that supports the fiscal credit.In the cases of the Single Customs Declaration (DUA) or the Simplified Import Declaration (DSI) the code of the Customs dependency shall be entered."
+msgstr "Serie del comprobante de pago o documento que sustenta el crédito fiscal.En los casos de la Declaración Única de Aduanas (DUA) o de la Declaración Simplificada de Importación (DSI) se consignará el código de la dependencia Aduanera."
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__inv_correlative
+msgid "Receipt Correlative"
+msgstr "Correlativo de Comprobante"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__inv_correlative
+msgid "Number of the payment voucher or document or order number of the physical or virtual form where the payment of the tax is stated, in the case of the use of services provided by non-domiciled or others, number of the DUA or DSI, which supports the fiscal credit."
+msgstr "Número del comprobante de pago o documento o número de orden del formulario físico o virtual donde conste el pago del impuesto, tratándose de la utilización de servicios prestados por no domiciliados u otros, número de la DUA o de la DSI, que sustente el crédito fiscal."
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__inv_year_dua_dsi
+msgid "Year of Issuance DUA or DSI"
+msgstr "Año emisión DUA o DSI"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__inv_year_dua_dsi
+msgid "Year of issuance of the DUA or DSI that supports the fiscal credit. Odoo validates that this field registers a number greater than 1981 and less than or equal to the year of the reported period"
+msgstr "Año de emisión de la DUA o DSI que sustenta el crédito fiscal. Odoo valida que en este campo se registre número mayor a 1981 y menor o igual al año del periodo informado"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__inv_retention_igv
+msgid "IGV Withholding Amount"
+msgstr "Monto retención de IGV"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__inv_retention_igv
+msgid "Amount of IGV Withholding"
+msgstr "Monto de retención del IGV"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__is_nodomicilied
+msgid "Non-Domiciled"
+msgstr "No Domiciliado"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__linkage_id
+msgid "Linkage"
+msgstr "Vinculación"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__linkage_id
+msgid "Link between the taxpayer and the resident abroad.Completed according to Table 27 of SUNAT Annex 2."
+msgstr "Vínculo entre el contribuyente y el residente en el extranjero.Se completan de acuerdo a la tabla 27 del Anexo 2 de SUNAT."
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__hard_rent
+msgid "Gross Income"
+msgstr "Renta Bruta"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__deduccion_cost
+msgid "Deduction/Cost"
+msgstr "Deducción/Costo"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__neto_rent
+msgid "Net Income"
+msgstr "Renta Neta"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__retention_rate
+msgid "Withholding Rate"
+msgstr "Tasa de Retención"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__tax_withheld
+msgid "Tax Withheld"
+msgstr "Impuesto retenido"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__cdi
+msgid "CDI"
+msgstr "CDI"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__00
+msgid "NONE"
+msgstr "NINGUNO"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__01
+msgid "CANADA"
+msgstr "CANADA"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__02
+msgid "CHILE"
+msgstr "CHILE"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__03
+msgid "ANDEAN COMMUNITY OF NATIONS (CAN)"
+msgstr "COMUNIDAD ANDINA DE NACIONES (CAN)"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__04
+msgid "BRAZIL"
+msgstr "BRASIL"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__05
+msgid "MEXICO"
+msgstr "ESTADOS UNIDOS MEXICANOS"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__06
+msgid "SOUTH KOREA"
+msgstr "REPUBLICA DE COREA"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__07
+msgid "SWISS CONFEDERATION"
+msgstr "CONFEDERACIÓN SUIZA"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__08
+msgid "PORTUGAL"
+msgstr "PORTUGAL"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,selection:ple_purchase_book.field_account_move__cdi__09
+msgid "OTHERS"
+msgstr "OTROS"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__cdi
+msgid "Conventions to avoid double taxation.This field is autocompleted with the field “Double Taxation Avoidance Convention Code”.Completed according to Table 25 of SUNAT Annex 2."
+msgstr "Convenios para evitar la doble imposición.Es campo se autocompleta con el campo “Código de Convenio para evitar doble imposición”.Se completan de acuerdo a la tabla 25 del Anexo 2 de SUNAT."
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__exoneration_nodomicilied_id
+msgid "Non-Domiciled Exoneration"
+msgstr "Exoneracion de No Domiciliado"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__type_rent_id
+msgid "Rent Type"
+msgstr "Tipo de Renta"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__taken_id
+msgid "Service Rendered Provided"
+msgstr "Modalidad de servicio prestado"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__application_article
+msgid "Application Art. 76°"
+msgstr "Aplicación Art. 76°"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,help:ple_purchase_book.field_account_move__application_article
+msgid "Enter 1 if applicable, otherwise leave blank. (Application of the penultimate paragraph of Art. 76 of the Income Tax Law)"
+msgstr "Consignar 1 si aplica, sino se queda en Blanco. (Aplicación del penúltimo párrafo del Art. 76° de la Ley del Impuesto a la Renta)"
+
+#. module: ple_purchase_book
+#: model:ir.model.fields,field_description:ple_purchase_book.field_account_move__types_goods_services_id
+msgid "Classification of Goods/Services Acquired"
+msgstr "Clasificación de los bienes y servicios adquiridos"

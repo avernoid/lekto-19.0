@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_ple_report_sale" model="ir.actions.act_window">
+        <field name="name">Reporte PLE Ventas</field>
+        <field name="res_model">ple.report.sale</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem 
+        id="menu_action_ple_report_sale" 
+        name="Registro de Ventas" 
+        parent="ple_sale_book.menu_ple_pe_monthly" 
+        action="action_ple_report_sale" 
+        sequence="1"
+    />
+</odoo>

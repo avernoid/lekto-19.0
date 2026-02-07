@@ -16,8 +16,8 @@ msgstr ""
 
 #. module: base_spot
 #: model:ir.model.fields,field_description:base_spot.field_account_move__detraction_id
-msgid "Detraction"
-msgstr "Detracción"
+msgid "Detraction Type"
+msgstr "Tipo de Detracción"
 
 #. module: base_spot
 #: model:ir.model.fields,help:base_spot.field_account_move__detraction_id
@@ -34,27 +34,6 @@ msgstr "Retención"
 msgid "Select the Retention type applicable to this invoice."
 msgstr "Seleccione el tipo de retención aplicable a esta factura."
 
-#. module: base_spot
-#: model:ir.model.fields,field_description:base_spot.field_account_move__voucher_payment_date
-msgid "Payment Date"
-msgstr "Fecha pago"
-
-#. module: base_spot
-#: model:ir.model.fields,help:base_spot.field_account_move__voucher_payment_date
-#: model:ir.model.fields,help:base_spot.field_account_move_line__voucher_payment_date
-msgid "Date when the detraction payment was made."
-msgstr "Fecha en que se realizó el pago de la detracción."
-
-#. module: base_spot
-#: model:ir.model.fields,field_description:base_spot.field_account_move__voucher_number
-msgid "Voucher Number"
-msgstr "Número recibo"
-
-#. module: base_spot
-#: model:ir.model.fields,help:base_spot.field_account_move__voucher_number
-#: model:ir.model.fields,help:base_spot.field_account_move_line__voucher_number
-msgid "Number of the payment voucher issued by the bank."
-msgstr "Número del comprobante de pago emitido por el banco."
 
 #. module: base_spot
 #: model:ir.model.fields,field_description:base_spot.field_account_move__operation_type_detraction

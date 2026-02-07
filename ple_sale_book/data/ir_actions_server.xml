@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+    <record id="action_update_ple_tax_tags" model="ir.actions.server">
+        <field name="name">Update PLE Tax Tags</field>
+        <field name="model_id" ref="account.model_account_tax"/>
+        <field name="binding_model_id" ref="account.model_account_tax"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+            # action = env['account.tax']._link_tags_ids_update(force=True)
+            pass
+        </field>
+    </record>
+    -->
+</odoo>

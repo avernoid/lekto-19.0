@@ -1,0 +1,286 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ruc_validation_sunat
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-05 15:00+0000\n"
+"PO-Revision-Date: 2026-02-05 15:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_PE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_activity_economic_sunat__name
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_document_pay_sunat__name
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_pattern_sunat__name
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_system_electronic_sunat__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_activity_economic_sunat__partner_id
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_document_pay_sunat__partner_id
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_pattern_sunat__partner_id
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_system_electronic_sunat__partner_id
+msgid "Partner"
+msgstr "Socio"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__document_type_sunat_id
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__document_type_sunat_id
+msgid "SUNAT Document Type"
+msgstr "Tipo de documento en SUNAT"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__document_type_sunat_id
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__document_type_sunat_id
+msgid "Identification type used in SUNAT records."
+msgstr "Tipo de documento en SUNAT"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__number_document_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__number_document_sunat
+msgid "SUNAT Document Number"
+msgstr "N° de Documento en SUNAT"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__number_document_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__number_document_sunat
+msgid "The unique number identifying the document in SUNAT."
+msgstr "N° de Documento en SUNAT"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__type_contributor_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__type_contributor_sunat
+msgid "Contributor Type"
+msgstr "Tipo de Contribuyente"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__type_contributor_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__type_contributor_sunat
+msgid "Classification of the taxpayer (e.g., Natural Person, Legal Entity)."
+msgstr "Tipo de Contribuyente"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__type_document_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__type_document_sunat
+msgid "Document Type"
+msgstr "Tipo de Documento"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__type_document_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__type_document_sunat
+msgid "Type of identity document."
+msgstr "Tipo de Documento"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__date_inscription_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__date_inscription_sunat
+msgid "Inscription Date"
+msgstr "Fecha de Inscripción"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__date_inscription_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__date_inscription_sunat
+msgid "Date registered in SUNAT. If prior to 1900, it records as 01/01/1900."
+msgstr "Aquí se consigna la fecha de acuerdo con SUNAT, pero en caso la fecha sea anterior al año 1900, se consignará 01/01/1900"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__date_start_activity_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__date_start_activity_sunat
+msgid "Activity Start Date"
+msgstr "Fecha de inicio de Actividades"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__date_start_activity_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__date_start_activity_sunat
+msgid "Date when business activities commenced associated with this RUC."
+msgstr "Aquí se consigna la fecha de acuerdo con SUNAT, pero en caso la fecha sea anterior al año 1900, se consignará 01/01/1900"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__ple_date_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__ple_date_sunat
+msgid "Affiliated to PLE since"
+msgstr "Afiliado al PLE desde"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__ple_date_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__ple_date_sunat
+msgid "Date since the taxpayer is affiliated with the Electronic Books Program (PLE)."
+msgstr "Afiliado al PLE desde"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__emissor_date_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__emissor_date_sunat
+msgid "Electronic Issuer since"
+msgstr "Emisor electrónico desde"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__emissor_date_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__emissor_date_sunat
+msgid "Date since the taxpayer is authorized to issue electronic receipts."
+msgstr "Emisor electrónico desde"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__document_electronic_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__document_electronic_sunat
+msgid "Electronic Receipts"
+msgstr "Comprobantes electrónico"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__document_electronic_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__document_electronic_sunat
+msgid "Types of electronic receipts authorized for this taxpayer."
+msgstr "Comprobantes electrónico"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__state_contributor_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__state_contributor_sunat
+msgid "Contributor State"
+msgstr "Estado del contribuyente"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__state_contributor_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__state_contributor_sunat
+msgid "Current status of the taxpayer (e.g., Active, Suspended)."
+msgstr "Estado del contribuyente"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__condition_contributor_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__condition_contributor_sunat
+msgid "Contributor Condition"
+msgstr "Condición del Contribuyente"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__condition_contributor_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__condition_contributor_sunat
+msgid "Fiscal condition of the taxpayer (e.g., Habido, No Habido)."
+msgstr "Condición del Contribuyente"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__office_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__office_sunat
+msgid "Profession or Trade"
+msgstr "Profesión u Oficio"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__office_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__office_sunat
+msgid "Registered profession or trade of the taxpayer."
+msgstr "Profesión u Oficio"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__system_emission_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__system_emission_sunat
+msgid "Emission System"
+msgstr "Sistema de emisión del comprobante"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__system_emission_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__system_emission_sunat
+msgid "System used for issuing receipts (e.g., Portal, OSE)."
+msgstr "Sistema de emisión del comprobante"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__system_account_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__system_account_sunat
+msgid "Accounting System"
+msgstr "Sistema de contabilidad"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__system_account_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__system_account_sunat
+msgid "Accounting system used (e.g., Manual, Computerized)."
+msgstr "Sistema de contabilidad"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__foreign_activity_commerce_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__foreign_activity_commerce_sunat
+msgid "Foreign Trade Activity"
+msgstr "Actividad de comercio exterior"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__foreign_activity_commerce_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__foreign_activity_commerce_sunat
+msgid "Indicates if the taxpayer engages in import/export activities."
+msgstr "Actividad de comercio exterior"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__activity_economic_ids
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__activity_economic_ids
+msgid "Economic Activities"
+msgstr "Actividad(es) Económica(s)"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__activity_economic_ids
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__activity_economic_ids
+msgid "List of economic activities registered."
+msgstr "Actividad(es) Económica(s)"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__document_pay_ids
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__document_pay_ids
+msgid "Payment Vouchers (F. 806 or 816)"
+msgstr "Comprobantes de Pago c/aut. de impresión (F. 806 u 816)"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__document_pay_ids
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__document_pay_ids
+msgid "Authorized payment vouchers."
+msgstr "Comprobantes de Pago c/aut. de impresión (F. 806 u 816)"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__system_electronic_ids
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__system_electronic_ids
+msgid "Electronic Emission System"
+msgstr "Sistema de Emision Electronica"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__system_electronic_ids
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__system_electronic_ids
+msgid "Details of the electronic emission systems used."
+msgstr "Sistema de Emision Electronica"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_partner__pattern_sunat_ids
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_users__pattern_sunat_ids
+msgid "Agreements/Patterns"
+msgstr "Padrones"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_partner__pattern_sunat_ids
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_users__pattern_sunat_ids
+msgid "Specific taxpayer patterns or agreements."
+msgstr "Padrones"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,field_description:ruc_validation_sunat.field_res_company__token_api_ruc
+msgid "RUC Query Token"
+msgstr "Token consulta RUC"
+
+#. module: ruc_validation_sunat
+#: model:ir.model.fields,help:ruc_validation_sunat.field_res_company__token_api_ruc
+msgid "API Token for querying RUC data from the service."
+msgstr "Token consulta RUC"
+
+#. module: ruc_validation_sunat
+#: model:ir.ui.view,arch_db:ruc_validation_sunat.res_partner_form_view_inherit_ruc_validation_sunat
+msgid "SUNAT"
+msgstr "SUNAT"
+
+#. module: ruc_validation_sunat
+#: model:ir.ui.view,arch_db:ruc_validation_sunat.res_partner_form_view_inherit_ruc_validation_sunat
+msgid "This button queries SUNAT for the RUC data and auto-completes the form with the information found."
+msgstr "Este botón realiza una consulta en SUNAT de los datos del documento ingresado, y auto completa la información de este formulario con los datos que encuentra en 'Consulta RUC SUNAT'"
+
+#. module: ruc_validation_sunat
+#: model:ir.ui.view,arch_db:ruc_validation_sunat.res_partner_form_view_inherit_ruc_validation_sunat
+msgid "RUC Data"
+msgstr "Ficha RUC"

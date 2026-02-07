@@ -1,0 +1,33 @@
+---Models in module 'ple_purchase_book'---
+---Fields in module 'ple_purchase_book'---
+---XML records in module 'ple_purchase_book'---
+UPD ir.ui.view: ple_purchase_book.ple_report_purchase_view_tree -> ple_purchase_book.ple_report_purchase_view_list
+----------------------------------------------------------------
+DEPENDS [ ple_sale_book ]
+model:  account_account
+field: UPD company_id -> company_ids
+
+V19 - Tax Configuration Refactoring & UX Improvements (Feb 2026)
+----------------------------------------------------------------
+OBJECTIVE: Align Purchase module with Sales module standards, fix layout issues, and improve Wizard usability.
+
+1. Wizard Logic Improvements:
+   - [FIXED] `ple.purchase.tax.config`: Added `ir.actions.server` ("Update Tags") to support bulk updates.
+     - Context `default_config_ids` is now correctly passed, fixing the "empty wizard" issue on mass selection.
+   - [REMOVED] `ir.actions.act_window` "Update PLE Purchase Tags":
+     - Removed redundant menu item that caused confusion and lacked proper context support.
+
+2. Documentation Layout:
+   - [FIXED] `index.html`: Corrected HTML structure and nesting.
+     - Removed premature `</div>` closures to ensure "boxed" layout (`width: 84vw`) applies to all sections (Setup, Workflow, Report Mapping).
+
+3. REFACTORING GUIDE for Dependent Modules:
+   - AUTOMATION: To trigger tag updates programmatically, use `ple.update.purchase.tags.wizard` passing `default_config_ids` in context.
+   - UI: The "Update PLE Purchase Tags" menu item is gone. Use "Actions > Update Tags" for bulk operations.
+
+4. Report Logic Refinement:
+   - [CHANGED] `get_excel_data` (SQL Query):
+     - Priority logic for "Serie" and "Correlativo":
+       - 1st: Check `am.name` (Internal Number). If it contains '-', scrape Serie/Correlativo from there.
+       - 2nd: Fallback to `am.ref` (Vendor Reference) as before.
+     - Reason: Handles cases where the official document number is stored in Name instead of Ref (e.g., imported entries).

@@ -1,0 +1,50 @@
+UPGRADE ANALYSIS: l10n_country_filter Refactoring (Odoo 19+)
+============================================================
+
+1. SUMMARY OF CHANGES
+---------------------
+We have refactored `l10n_country_filter` to move the View Cache Key logic from a global patch on `base` model to a specific Mixin: `l10n.country.filter.mixin`.
+
+2. WHY WAS THIS CHANGED?
+------------------------
+*   **Previous Behavior (Legacy):** The module globally modified `_get_view_cache_key` on the `base` model. This forced Odoo to create separate view caches for EVERY model in the system per company, significantly increasing RAM usage (Redis/LRU) even for models that didn't use country filtering.
+*   **New Behavior (Optimized):** The cache logic is now encapsulated in `l10n.country.filter.mixin`. Only models that explicitly inherit this mixin will have company-dependent caching.
+
+3. IMPACT ON DEPENDENT MODULES
+------------------------------
+Any module that uses `_tags_invisible_per_country` MUST be updated.
+If you do not update your models, the field visibility logic will effectively break when switching companies (the view from the previous company will be served from cache).
+
+4. MIGRATION STEPS
+------------------
+
+STEP A: Identify Affected Models
+Search your codebase for usages of `_tags_invisible_per_country`.
+Command: `grep -r "_tags_invisible_per_country" .`
+
+STEP B: Add the Mixin
+For every model found in Step A, add `l10n.country.filter.mixin` to the inheritance list.
+
+[BEFORE]
+class ResPartner(models.Model):
+    _inherit = 'res.partner'
+
+    def _get_view(self, ...):
+        # ... logic ...
+        return self._tags_invisible_per_country(...)
+
+[AFTER]
+class ResPartner(models.Model):
+    _inherit = ['res.partner', 'l10n.country.filter.mixin']  # <--- ADD THIS
+
+    def _get_view(self, ...):
+        # ... logic ...
+        return self._tags_invisible_per_country(...)
+
+5. VERIFICATION
+---------------
+1. Restart Odoo.
+2. Log in to Company A (e.g., Peru). Check that fields are visible/hidden as expected.
+3. Switch to Company B (e.g., USA). Check that fields update immediately.
+4. Switch back to Company A.
+5. If the view does NOT update between switches, you forgot the Mixin!

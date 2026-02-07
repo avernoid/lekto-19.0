@@ -1,0 +1,108 @@
+---Models in module 'ple_sale_book'---
+---Fields in module 'ple_sale_book'---
+account      / account.move            / account.move.bool_pay_invoice : NEW
+---XML records in module 'ple_sale_book'---
+
+UPD ir.actions.act_window: ple_sale_book.account_account_tag_ple_action -> ple_sale_book.action_account_account_tag_ple
+UPD ir.actions.act_window: ple_sale_book.ple_report_sale_action -> ple_sale_book.action_ple_report_sale
+UPD ir.ui.menu: ple_sale_book.account_tag_menu -> ple_sale_book.menu_action_account_account_tag_ple
+UPD ir.ui.menu: ple_sale_book.menu_ple_sale -> ple_sale_book.menu_action_ple_report_sale
+UPD ir.ui.view: ple_sale_book.account_account_form_view_inherit_ple_sale_book -> ple_sale_book.account_account_view_form_inherit_ple_sale_book
+UPD ir.ui.view: ple_sale_book.account_journal_form_view_inherit_ple_sale_book -> ple_sale_book.account_journal_view_form_inherit_ple_sale_book
+UPD ir.ui.view: ple_sale_book.account_move_form_view_inherit_ple_sale_book -> ple_sale_book.account_move_view_form_inherit_ple_sale_book
+UPD ir.ui.view: ple_sale_book.ple_report_sale_tree_view -> ple_sale_book.ple_report_sale_view_tree
+UPD ir.ui.view: ple_sale_book.ple_report_sale_form_view -> ple_sale_book.ple_report_sale_view_form
+UPD ir.ui.view: ple_sale_book.res_company_form_view_inherit_ple_sale_book -> ple_sale_book.res_company_view_form_inherit_ple_sale_book
+UPD ir.ui.view: ple_sale_book.uom_uom_form_view_inherit_ple_sale_book -> ple_sale_book.uom_uom_view_form_inherit_ple_sale_book
+
+V18
+UPD ir.ui.view: ple_sale_book.ple_report_sale_view_tree -> ple_sale_book.ple_report_sale_view_list
+ADD ir.ui.view: ple_sale_book.move_form_inherit_ple_sale_book
+----------------------------------------------------------------
+DEPENDS [ l10n_country_filter ]
+model:  account.move
+field:
+xml_id:
+
+DEPENDS [ account_origin_invoice ]
+model:  account_move
+field:  ple_date,
+        ple_state,
+        ple_its_declared,
+        ple_correlative
+xml_id: account_origin_invoice.account_move_form_view_inherit_account_origin_invoice
+
+
+DEPENDS [ dua_in_invoice ]
+model:  account_move
+field:  year_aduana,
+        code_aduana
+xml_id: 
+
+
+DEPENDS [ account_exchange_currency ] (REMOVED IN V19)
+model:  account_move
+field:  to_force_exchange_rate, (REPLACED BY invoice_currency_rate)
+        bool_pay_invoice,
+        ple_date,
+        ple_state,
+        ple_its_declared,
+        ple_correlative
+xml_id: account_origin_invoice.account_move_form_view_inherit_account_origin_invoice
+
+model:  account_payment
+field:  to_force_exchange_rate (REPLACED BY invoice_currency_rate)
+xml_id: 
+
+DEPENDS [ l10n_pe ]
+model:  
+field:  
+xml_id: 
+
+DEPENDS [ account ]
+model:  account_journal
+field:  ple_no_include,
+        ple_journal_correlative
+xml_id: account.view_account_journal_form
+
+model:  account_account
+field:  ple_date_account,
+        ple_state_account,
+        ple_selection
+xml_id: account.view_account_journal_form
+
+V19
+
+- Migrated code inheritance to `l10n.country.filter.mixin`.
+- Replaced `account_exchange_currency` dependency.
+- Used `invoice_currency_rate` (inverted) for PLE reports.
+- Removed invalid field `filter_fiscal_position` from `account.report` data (deprecated).
+
+V19 - Tax Configuration Refactoring (Feb 2026)
+----------------------------------------------
+OBJECTIVE: Shift from code-based tax mapping (hardcoded dicts) to data-driven configuration managed via UI/Wizard.
+
+1. New Models & Wizards:
+   - [NEW] `ple.sale.tax.config`: Stores tax mapping rules (Prefix, Code, Repartition Type, Tags).
+   - [NEW] `ple.update.tags.wizard`: Transient model to execute mass updates of tax tags based on the config.
+
+2. Unsigned Tags Strategy:
+   - [CHANGED] Tags are now UNSIGNED (e.g., `S_BASE_OG` instead of `+S_BASE_OG` or `-S_BASE_OG`).
+   - Why? Simplifies Odoo standard report generation & SQL queries.
+   - Migrated `ple_sale_tax_config_data.xml` to use single tags for parsing both invoices/refunds.
+
+3. Deprecations & Removals:
+   - [DEPRECATED] `models/account_tax_tags.py`: The logic for `_link_tags_ids` is disabled/removed.
+   - [REMOVED] `post_init_hook` call to `_link_tags_ids`: Tag assignment is now MANUAL via the Wizard.
+
+4. Dependencies:
+   - [ADDED] `l10n_pe_reports` (Localization): Replaces `account_reports` to align with Peruvian standards and avoid redundancy.
+   - [REMOVED] `account_reports`: Now included transitively via `l10n_pe_reports`.
+
+5. Critical Files:
+   - `data/ple_sale_tax_config_data.xml`: Contains the default Peru tax rules.
+   - `models/account_report.py`: Injects columns into the standard RVIE report.
+
+REFACTORING GUIDE for Dependent Modules:
+- If your module relied on `account.tax` having tags auto-assigned on install: YOU MUST NOW RUN THE WIZARD manually or call `ple.update.tags.wizard` programmatically.
+- If your module looked for `+S_BASE_OG` tag names: UPDATE to look for `S_BASE_OG`.

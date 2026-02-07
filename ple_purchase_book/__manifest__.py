@@ -1,0 +1,48 @@
+{
+    'name': 'Electronic Purchase Record',
+    'icon': '/ple_purchase_book/static/description/icon.png',
+    'version': '19.0.1.0.0',
+    'author': 'Ganemo',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': 'https://www.ganemo.co',
+    'category': 'Human Resources/Accounting',
+    'summary': 'Generate your Electronic Purchase Record for PLE SUNAT',
+    'description': """ 
+The module provides the ability to generate detailed reports in Excel and TXT format for both national and non-domiciled purchases. These reports include comprehensive data on purchasing transactions, such as supplier details, billing information, payment data, and other relevant aspects.
+""",
+    'depends': [
+        'ple_sale_book',
+        'base_spot',
+        'l10n_pe_catalog',
+        'l10n_pe_reports',
+        'l10n_country_filter',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/ple_purchase_tax_config_data.xml',
+        'data/account_tax_report_data.xml',
+        'data/exoneration_nodomicilied_data.xml',
+        'data/link_economic_data.xml',
+        'data/service_taken_data.xml',
+        'data/type_rent_data.xml',
+        'data/account_function_data.xml',
+        'views/ple_report_purchase_menus.xml',
+        'views/ple_report_purchase_views.xml',
+        'views/account_move_views.xml',
+        'views/link_economic_views.xml',
+        'views/res_country_views.xml',
+        'views/ple_purchase_tax_config_views.xml',
+        'wizard/ple_update_purchase_tags_wizard_views.xml',
+        'sql/get_tax_purchase.sql'
+    ],
+    'icon': '/ple_purchase_book/static/description/icon.png',
+    'images': ['static/description/banner.png'],
+    'license': 'OPL-1',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    'currency': 'USD',
+    'price': 460.00,
+    'module_type': 'official'
+}

@@ -1,479 +1,774 @@
 <!DOCTYPE html>
-<!--FINAL INDEX UPDATED-->
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DUA in Invoice - Peruvian Localization</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>DUA in Invoice | PLE Compliance by Ganemo</title>
+    <meta name="description"
+        content="Add required fields on purchase invoices to register the DUA/DSI. Essential for Peruvian Electronic Books (PLE - Ledger).">
+    <meta name="keywords" content="Odoo, Accounting, Peru, PLE, DUA, DSI, Customs, Import, Ganemo, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            color: #3D3D4E;
+            color: #333;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            font-family: 'Montserrat', sans-serif;
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
         }
 
-        .header-badge {
-            color: #875A7B;
-            font-size: 14px;
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
             font-weight: bold;
-            background-color: white;
-            padding: 5px 15px;
             border-radius: 50px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
 
-        .main-title {
-            font-size: 3.5rem !important;
-            color: #5154a5;
-            font-weight: 900 !important;
-            line-height: 1.2;
-        }
-
-        .section-title {
-            font-size: 2.5rem !important;
-            color: #791d97;
-            font-weight: 900 !important;
-        }
-
-        .section-subtitle {
-            color: #3c6dac;
-        }
-
-        .separator-line {
-            letter-spacing: 4px !important;
-            color: #74788D !important;
-            font-weight: bold;
-        }
-
-        .feature-box {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-            margin-bottom: 2rem;
-        }
-
-        .text-justify {
-            text-align: justify;
-        }
-
-        .contact-card {
-            background-color: #F6F8F9;
-            padding: 30px;
-            border-radius: 15px;
-            height: 100%;
-            transition: transform 0.3s ease;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .btn-custom {
-            border-radius: 35px;
-            padding: 10px 30px;
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
             text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: 600;
         }
 
-        .btn-whatsapp {
-            background-color: #25D366;
-            color: white;
-            border: 1px solid #25D366;
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
         }
 
-        .btn-email {
-            background-color: #3c6dac;
-            color: white;
-            border: 1px solid #3c6dac;
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
         }
 
-        .btn-schedule {
-            background-color: #714B67;
-            color: white;
-            border: 1px solid #714B67;
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
         }
 
-        .btn-custom:hover {
-            opacity: 0.9;
-            text-decoration: none;
+        .copy-link-url {
             color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
         }
     </style>
 </head>
 
 <body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'dua_in_invoice' adds specific fields to the Vendor Bill to support Peruvian customs
+            requirements.
+            It introduces 'Year of Emission' and 'Customs Dependency' (code_aduana) fields on account.move.
+            These fields are technically required for the Peruvian Electronic Purchase Record (PLE).
+            The fields are conditionally visible only when the L10N LATAM Document Type is set to '50' (DUA), '52', or
+            '53'.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
     <div class="d-flex align-items-center justify-content-between"
-        style="border-bottom: 1px solid #EDEDED; padding: 15px; background-color: #F8F9FA;">
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
         <div>
-            <div class="header-badge mr-2">
-                <i class="fa fa-check-circle mr-1"></i>Enterprise (Odoo.SH, Ganemo Online, Ganemo.SH)
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
             </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
         </div>
     </div>
-
-    <!-- MAIN HERO -->
-    <div class="container mt-5 mb-5">
-        <div class="row feature-box">
-            <div class="col-lg-12 d-flex flex-column align-items-center text-center">
-                <h1 class="text-uppercase main-title mb-3">
-                    <span style="color:#9451a5;">DUA IN INVOICE</span>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">DUA in Invoice</span>
                 </h1>
-                <p class="separator-line mb-4">------</p>
-                <div class="col-lg-10">
-                    <h2 class="h4 mb-4" style="color: #212121; font-weight: 600;">
-                        Streamline your Import Accounting in Peru
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    PLE Compliance for Imports</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Complete your Purchase Electronic Record (PLE) in Peru by correctly registering Customs Declarations
+                    (DUA/DSI).
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
                     </h2>
-                    <p style="font-size: 1.1rem; color: #555;">
-                        Automatically handle DUA (SAD) requirements in Purchase Invoices.
-                        Ensure 100% compliance with SUNAT PLE books without manual data entry errors.
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-book mr-2"></i> Missing Legal Fields</h4>
+                            <p style="text-align: justify;">Odoo's standard localization often misses the specific
+                                fields required for <strong>Doc Type 50 (DUA)</strong>. This module adds "Year of
+                                Emission" and "Customs Dependency" to ensure valid tax reporting.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-magic mr-2"></i> Smart Visibility</h4>
+                            <p style="text-align: justify;">The fields only appear when you select Import Document Types
+                                (50, 52, 53). For regular local invoices, these fields utilize
+                                <strong>auto-hide</strong> to keep your interface clean.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">System readiness in seconds.</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 style="color: #555; font-weight: 600;">System Dependencies</h5>
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i> This module relies on
+                                            <strong>l10n_pe_localization_menu</strong>.</li>
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i> <strong>Zero Manual
+                                                Config:</strong> All Customs Codes (Dependencies) are pre-loaded
+                                            automatically.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 style="color: #555; font-weight: 600;">Verification</h5>
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Accounting /
+                                                Accounting / Localization / Customs Codes</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Verify that the list is
+                                            populated (e.g., 118, 235).</li>
+                                        <li><i class="fa fa-info-circle text-info mr-2"></i> If empty, upgrade the
+                                            `l10n_pe_localization_menu` module.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">Correctly registering an Import (DUA/DSI) for PLE:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-file-text-o text-primary mr-2"></i> 1. Create the Vendor
+                                            Bill</h5>
+                                        <p class="text-muted">Navigate to <strong>Accounting / Vendors / Bills</strong>
+                                            and click <strong>New</strong>. Select your international vendor.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-list-alt text-primary mr-2"></i> 2. Select Document Type
+                                        </h5>
+                                        <p class="text-muted">In the "Document Type" field, select <strong>50 -
+                                                Declaracion Aduanera de Mercancias - Importacion Definitiva</strong> (or
+                                            52/53). This action triggers the fields to appear.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-calendar-check-o text-primary mr-2"></i> 3. Set Emission
+                                            Year</h5>
+                                        <p class="text-muted">Locate the new <strong>Year of Emission</strong> field
+                                            (usually below the Date). Select the year corresponding to the DUA issuance
+                                            (e.g., 2024).</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-building-o text-primary mr-2"></i> 4. Set Customs Dependency
+                                        </h5>
+                                        <p class="text-muted">In the <strong>Customs Dependency</strong> field, search
+                                            for the Customs Office code/name (e.g., "118 - MARITIMA DEL CALLAO").</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #28a745;">
+                                        <h5><i class="fa fa-check text-success mr-2"></i> Result: PLE Compliance</h5>
+                                        <p class="text-muted">When you generate the PLE 8.1 (Purchase Register), the
+                                            system will concatenate these fields into the Series/Number formats required
+                                            by SUNAT (e.g., `118-2024-001234`).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
                     </p>
                 </div>
             </div>
-        </div>
-
-        <!-- PROBLEM -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">What We're Solving</span>
-                    </h2>
-                    <p class="separator-line">----------------</p>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <h5 class="text-justify" style="line-height: 1.6;">
-                        Importing goods into Peru requires distinct accounting declarations. Recording the <strong
-                            style="color: #791d97;">Declaration of Customs (DUA/SAD)</strong> is mandatory for tax
-                        compliance. Standard Odoo lacks the specific fields for "Year of Emission" and "Customs
-                        Dependency" tied to the official SUNAT tables. Incorrect entries here lead to rejected
-                        Electronic Books (PLE) and potential fines. This module solves that gap instantly.
-                    </h5>
-                </div>
-            </div>
         </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
 
-        <!-- OVERVIEW -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">Overview</span>
-                    </h2>
-                    <p class="separator-line">----------------</p>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <h5 class="text-justify" style="line-height: 1.6;">
-                        This module integrates seamlessly into your Bill processing workflow:
-                        <br><br>
-                        <ul style="list-style-type: none; padding-left: 0;">
-                            <li class="mb-2"><i class="fa fa-check-circle text-success mr-2"></i> <strong>Smart
-                                    Activation:</strong> Fields appear ONLY when you select Import Document types (50,
-                                52, 53).</li>
-                            <li class="mb-2"><i class="fa fa-check-circle text-success mr-2"></i> <strong>Official
-                                    Data:</strong> Pre-loaded with all valid Peruvian Customs Dependency Codes (Code
-                                118, 235, etc.).</li>
-                            <li class="mb-2"><i class="fa fa-check-circle text-success mr-2"></i>
-                                <strong>Validation:</strong> Ensures data integrity before you post the entry.
-                            </li>
-                        </ul>
-                    </h5>
-                </div>
-            </div>
-        </section>
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
 
-        <!-- EASY SETUP -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">Easy Setup</span>
-                    </h2>
-                    <p class="separator-line">----------------</p>
-                </div>
-                <div class="col-sm-12 feature-box text-center">
-                    <h5 style="line-height: 1.6;">
-                        <i class="fa fa-plug fa-3x mb-3" style="color: #3c6dac;"></i><br>
-                        <strong>Plug & Play.</strong><br>
-                        Install the module, and it works immediately. No complex configuration menus.
-                        It simply enhances your existing Document Types functionality.
-                    </h5>
-                </div>
-            </div>
-        </section>
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
 
-        <!-- WORKFLOW -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">Workflow Guide</span>
-                    </h2>
-                    <p class="separator-line">----------------</p>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <h5 style="line-height: 1.6;">
-                        <ol>
-                            <li class="mb-3">Open a <strong>Vendor Bill</strong>.</li>
-                            <li class="mb-3">Set the <strong>Document Type</strong> to <em>"50 - Declaración Única de
-                                    Aduanas"</em>.</li>
-                            <li class="mb-3">Notice the new fields <strong>"Year of Emission"</strong> and
-                                <strong>"Customs Dependency"</strong> appear automatically.
-                            </li>
-                            <li class="mb-3">Select the correct Customs Code from the dropdown list.</li>
-                            <li class="mb-3">Confirm and Post. Your data is now ready for PLE reports.</li>
-                        </ol>
-                    </h5>
-                </div>
-            </div>
-        </section>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
 
-        <!-- SUPPORTED LANGUAGES -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">Supported Languages</span>
-                    </h2>
-                    <p class="separator-line">----------------</p>
-                </div>
-                <div class="col-sm-12 feature-box text-center">
-                    <h5 style="line-height: 1.6;">
-                        This module is fully translated and supported in:
-                        <br><br>
-                        <span class="badge badge-pill badge-primary p-3 mx-2"
-                            style="font-size: 1.2rem; background-color: #3c6dac;"><i class="fa fa-language"></i> English
-                            (EN)</span>
-                        <span class="badge badge-pill badge-warning p-3 mx-2"
-                            style="font-size: 1.2rem; background-color: #f0ad4e; color: white;"><i
-                                class="fa fa-language"></i> Español (ES)</span>
-                    </h5>
-                </div>
-            </div>
-        </section>
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
 
-        <!-- USER MANUAL & GUIDE -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">User Manual & Configuration</span>
-                    </h2>
-                    <p class="separator-line">----------------</p>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <h5 class="text-justify" style="line-height: 1.6;">
-                        <strong>Installation:</strong><br>
-                        This module depends on <code>localization_menu</code>. Ensure the Peruvian Localization is
-                        installed. Upon installation, the module automatically loads the catalog of Customs Dependency
-                        Codes (Catalog No. 11 of SUNAT PLE).
-                        <br><br>
-                        <strong>Configuration:</strong><br>
-                        No manual configuration is required. The logic is hardcoded to respond to specific L10N Latam
-                        Document Types that correspond to Importations (Codes 50, 52, 53). Ensure your Document Types
-                        are correctly set up in <em>Accounting > Configuration > Document Types</em>.
-                    </h5>
-                    <div class="alert alert-info mt-3">
-                        <i class="fa fa-info-circle"></i> <strong>Note:</strong> If you add custom Document Types for
-                        imports, you may need to extend the module or contact support to include them in the visibility
-                        logic.
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- QA / USER TESTING SCENARIOS -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">QA / User Testing Scenarios</span>
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
                     </h2>
-                    <p class="separator-line">----------------</p>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
                 </div>
-                <div class="col-sm-12 feature-box">
-                    <h5 class="text-justify" style="line-height: 1.6;">
-                        Use these scenarios to validate the module functionality in your environment:
-                        <br><br>
-                        <strong>Test Case 1: Standard Import Invoice (Happy Path)</strong>
-                        <ol>
-                            <li>Create a Vendor Bill.</li>
-                            <li>Select Document Type:
-                                <code>50 - Declaración Única de Aduanas - Importación definitiva</code>.</li>
-                            <li><strong>Verify:</strong> The fields "Year of Emission" and "Customs Dependency" become
-                                visible and mandatory (visual indicator).</li>
-                            <li>Select "2024" and "118 - MARÍTIMA DEL CALLAO".</li>
-                            <li>Post the invoice.</li>
-                            <li><strong>Result:</strong> Invoice posts successfully. Data is saved.</li>
-                        </ol>
-
-                        <strong>Test Case 2: Switching Document Types (Dynamic Visibility)</strong>
-                        <ol>
-                            <li>Create a Vendor Bill with Doc Type 50. Fill in the DUA fields.</li>
-                            <li>Change Document Type to <code>01 - Factura</code>.</li>
-                            <li><strong>Verify:</strong> The DUA fields disappear instantly.</li>
-                            <li><strong>Verify:</strong> The internal values for Year and Customs Dependency are cleared
-                                (to prevent pollution of database).</li>
-                        </ol>
-
-                        <strong>Test Case 3: Validation Constraints</strong>
-                        <ol>
-                            <li>Create a Vendor Bill with Doc Type 50.</li>
-                            <li>Leave "Year of Emission" empty.</li>
-                            <li>Try to Post.</li>
-                            <li><strong>Result:</strong> Odoo should raise a validation error or the field should be
-                                marked required (red underline), preventing posting.</li>
-                        </ol>
-                    </h5>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-eye mr-2"></i>
+                                Scenario 1: Field Visibility & Logic</h4>
+                            <ol class="mt-3">
+                                <li>Create a Vendor Bill.</li>
+                                <li>Select <strong>Doc Type 50 (Declaracion Aduanera)</strong>.</li>
+                                <li><strong>Check:</strong> "Year of Emission" and "Customs Dependency" fields MUST
+                                    appear.</li>
+                                <li>Change Doc Type to <strong>01 (Factura)</strong>.</li>
+                                <li><strong>Check:</strong> The fields MUST disappear instantly.</li>
+                                <li>Change Doc Type back to <strong>52 (Simplificada)</strong>.</li>
+                                <li><strong>Check:</strong> The fields MUST reappear.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-shield mr-2"></i> Scenario 2:
+                                Validation Enforced</h4>
+                            <ol class="mt-3">
+                                <li>Set Doc Type to 50.</li>
+                                <li>Fill in the Invoice Number and Date.</li>
+                                <li>Leave "Year of Emission" empty.</li>
+                                <li>Click <strong>Save</strong>.</li>
+                                <li><strong>Result:</strong> Odoo MUST block the save and show a validation error for
+                                    the missing required field.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-database mr-2"></i> Scenario
+                                3:
+                                Data Persistence</h4>
+                            <ol class="mt-3">
+                                <li>Create and Save a DUA (Doc 50) with Year "2024" and Code "118".</li>
+                                <li>Navigate back to the Tree View (List).</li>
+                                <li>Re-open the record.</li>
+                                <li><strong>Result:</strong> The fields must retain the values "2024" and "118". They
+                                    should not be lost.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-refresh mr-2"></i> Scenario 4:
+                                Credit Note Warning</h4>
+                            <p class="mt-2"><em>Goal: Ensure logic holds for Refunds.</em></p>
+                            <ol>
+                                <li>Create a Credit Note (Refund).</li>
+                                <li>Select Doc Type 50 (Unlikely, but testing edge case) or related correction type.
+                                </li>
+                                <li><strong>Result:</strong> If the Doc Type involves Customs, the fields should behave
+                                    identically to the Invoice.</li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </section>
-
         <!-- FAQ & TROUBLESHOOTING -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">FAQ & Troubleshooting</span>
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
                     </h2>
-                    <p class="separator-line">----------------</p>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
                 </div>
-                <div class="col-sm-12 feature-box">
-                    <div id="accordion">
-                        <div class="card mb-2">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
-                                        aria-expanded="true" aria-controls="collapseOne">
-                                        <i class="fa fa-question-circle"></i> I don't see the DUA fields on my bill.
-                                    </button>
-                                </h5>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Where do I find the Customs Code?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The codes (e.g., 118, 235) are
+                                pre-loaded based on the official SUNAT catalog via the dependency module.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Tip:</strong> If the
+                                list is empty, ensure <code>l10n_pe_localization_menu</code> is installed and updated.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Why can't I see the fields?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The fields are dynamically hidden. They
+                                only activate for Import Document Types.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Ensure the <strong>L10N LATAM Document Type</strong> is set to 50, 52, or 53.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Does this affect PLE Reports?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes. The data entered here is what fuels
+                                columns 11, 12, and 13 of the PLE 8.1 Register.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Note:</strong>
+                                Without these fields, your PLE 8.1 will likely be rejected by SUNAT for imports.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">I made a mistake in the Year, can I fix it?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, as long as the invoice is in Draft
+                                state.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Fix:</strong> Reset
+                                to Draft, correct the Year/Code, and Post again.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
                             </div>
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                data-parent="#accordion">
-                                <div class="card-body">
-                                    These fields only appear for specific Document Types (Codes 50, 52, 53). Check that
-                                    you have selected one of these types in the "Document Type" (Tipo de Comprobante)
-                                    field.
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="card mb-2">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <i class="fa fa-question-circle"></i> The Customs Code I need is missing.
-                                    </button>
-                                </h5>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
                             </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                data-parent="#accordion">
-                                <div class="card-body">
-                                    The module loads the standard list from SUNAT. If a new code has been created by the
-                                    government recently, you can manually add it in the <code>code.aduana</code> model
-                                    if you have permissions, or contact us to update the module.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-2">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse"
-                                        data-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        <i class="fa fa-question-circle"></i> Is this compatible with PLE 5.0?
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                data-parent="#accordion">
-                                <div class="card-body">
-                                    Yes, the data structure is designed to be compatible with the standard Peruvian
-                                    Localization PLE reports.
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- WHY GANEMO -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 d-flex flex-column align-items-center mb-4">
-                    <h2 class="text-uppercase section-title text-center">
-                        <span class="section-subtitle">Why Choose Ganemo?</span>
-                    </h2>
-                    <p class="separator-line">----------------</p>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <h5 class="text-justify" style="line-height: 1.6;">
-                        Ganemo is the <strong>#1 Odoo Partner for Localization</strong> in Latin America.
-                        With over 5 years of experience and recognition as the Best Partner in Peru, USA, Mexico, Chile,
-                        Spain, Colombia, and Ecuador,
-                        we deliver apps that are robust, compliant, and continuously updated. Trust the experts who
-                        define the standard for Odoo localization.
-                    </h5>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
                 </div>
             </div>
-        </section>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
 
-        <!-- FOOTER / SUPPORT -->
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center mb-4">
-                    <h2 style="font-weight:bold; color:#3D3D4E">Support & Contact</h2>
-                    <p style="color:#777783">We are here to help you succeed.</p>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <div class="contact-card text-center">
-                        <i class="fab fa-whatsapp fa-2x mb-2" style="color: #25D366;"></i>
-                        <h4>WhatsApp</h4>
-                        <p>Instant support</p>
-                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
-                            class="btn-custom btn-whatsapp">
-                            Chat with Us
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <div class="contact-card text-center">
-                        <i class="fa fa-envelope fa-2x mb-2" style="color: #3c6dac;"></i>
-                        <h4>Email</h4>
-                        <p>Detailed inquiries</p>
-                        <a href="mailto:leads@ganemo.co" target="_blank" class="btn-custom btn-email">
-                            Email Us
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <div class="contact-card text-center">
-                        <i class="fa fa-calendar-check fa-2x mb-2" style="color: #714B67;"></i>
-                        <h4>Meeting</h4>
-                        <p>Schedule a Demo</p>
-                        <a href="https://www.ganemo.co/appointment/5" target="_blank" class="btn-custom btn-schedule">
-                            Book Now
-                        </a>
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ayuda@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

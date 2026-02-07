@@ -1,0 +1,28 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-05 00:00+0000\n"
+"PO-Revision-Date: 2024-02-05 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_country_filter
+#: model:ir.module.module,summary:l10n_country_filter.module_l10n_country_filter
+msgid "Hide specific fields in views depending on company localization automatically."
+msgstr "Oculta campos específicos en las vistas dependiendo de la localización de la compañía automáticamente."
+
+#. module: l10n_country_filter
+#: model:ir.module.module,description:l10n_country_filter.module_l10n_country_filter
+msgid "Technical module to hide fields in views based on the company country."
+msgstr "Módulo técnico para ocultar campos en vistas basado en el país de la compañía."
+
+#. module: l10n_country_filter
+#: model:ir.module.module,shortdesc:l10n_country_filter.module_l10n_country_filter
+msgid "L10n Country Filter"
+msgstr "Filtro de País L10n"

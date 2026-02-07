@@ -5,10 +5,10 @@
 **Author**: [Ganemo](https://www.ganemo.com)
 
 ## Description
-Create additional fields on purchase invoices that allow you to identify if an invoice is affected by legal deductions, the type of deduction, the payment date of the deduction and the payment operation code of the deduction.
+Create additional fields on purchase invoices that allow you to identify if an invoice is affected by legal deductions, the type of deduction and the payment operation code.
 
 ## Features
-- **Detraction Fields**: Adds `Detraction Amount`, `Percentage`, `Date`, and `Code` to invoices.
+- **Detraction Fields**: Adds `Detraction`, `Retention`, and `Operation Type` to invoices.
 - **Compliance**: Helps meet Peruvian SUNAT requirements for SPOT.
 - **Integration**: Seamlessly integrates with the Accounting vendor bill form.
 

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        
+        <!-- ======================================================== -->
+        <!-- ACCOUNT TAGS (Unsigned Strategy) -->
+        <!-- ======================================================== -->
+        
+        <!-- P_BASE_GDG: Gravado Destinado a Gravado -->
+        <record id="tag_ple_purchase_base_gdg" model="account.account.tag">
+            <field name="name">P_BASE_GDG</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <record id="tag_ple_purchase_tax_gdg" model="account.account.tag">
+            <field name="name">P_TAX_GDG</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <!-- P_BASE_GDM: Gravado Destinado a Mixto -->
+        <record id="tag_ple_purchase_base_gdm" model="account.account.tag">
+            <field name="name">P_BASE_GDM</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <record id="tag_ple_purchase_tax_gdm" model="account.account.tag">
+            <field name="name">P_TAX_GDM</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <!-- P_BASE_GDNG: Gravado Destinado a No Gravado -->
+        <record id="tag_ple_purchase_base_gdng" model="account.account.tag">
+            <field name="name">P_BASE_GDNG</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <record id="tag_ple_purchase_tax_gdng" model="account.account.tag">
+            <field name="name">P_TAX_GDNG</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <!-- P_BASE_NG: No Gravado -->
+        <record id="tag_ple_purchase_base_ng" model="account.account.tag">
+            <field name="name">P_BASE_NG</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+        
+        <!-- P_TAX_ISC: Impuesto Selectivo al Consumo -->
+        <record id="tag_ple_purchase_tax_isc" model="account.account.tag">
+            <field name="name">P_TAX_ISC</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <!-- P_TAX_OTHER: Otros -->
+        <record id="tag_ple_purchase_tax_other" model="account.account.tag">
+            <field name="name">P_TAX_OTHER</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+        <!-- P_TAX_ICBP: Bolsas Plasticas -->
+        <record id="tag_ple_purchase_tax_icbp" model="account.account.tag">
+            <field name="name">P_TAX_ICBP</field>
+            <field name="applicability">taxes</field>
+            <field name="country_id" ref="base.pe"/>
+        </record>
+
+
+        <!-- ======================================================== -->
+        <!-- CONFIGURATION RULES (Unsigned Tags Usage) -->
+        <!-- ======================================================== -->
+
+        <!-- 1. IGV 18% -->
+        <record id="config_purchase_tax_igv_18_base" model="ple.purchase.tax.config">
+            <field name="name">IGV 18% (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_igv_18</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_gdg"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_gdg"/>
+        </record>
+        <record id="config_purchase_tax_igv_18_tax" model="ple.purchase.tax.config">
+            <field name="name">IGV 18% (Tax)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_igv_18</field>
+            <field name="repartition_type">tax</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_tax_gdg"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_tax_gdg"/>
+        </record>
+
+        <!-- 2. IGV G NG 18% -->
+        <record id="config_purchase_tax_igv_18g_ng_base" model="ple.purchase.tax.config">
+            <field name="name">IGV G NG 18% (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_igv_18g_ng</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_gdm"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_gdm"/>
+        </record>
+        <record id="config_purchase_tax_igv_18g_ng_tax" model="ple.purchase.tax.config">
+            <field name="name">IGV G NG 18% (Tax)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_igv_18g_ng</field>
+            <field name="repartition_type">tax</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_tax_gdm"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_tax_gdm"/>
+        </record>
+
+        <!-- 3. IGV NG 18% -->
+        <record id="config_purchase_tax_igv_18_ng_base" model="ple.purchase.tax.config">
+            <field name="name">IGV NG 18% (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_igv_18_ng</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_gdng"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_gdng"/>
+        </record>
+        <record id="config_purchase_tax_igv_18_ng_tax" model="ple.purchase.tax.config">
+            <field name="name">IGV NG 18% (Tax)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_igv_18_ng</field>
+            <field name="repartition_type">tax</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_tax_gdng"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_tax_gdng"/>
+        </record>
+
+        <!-- 4. EXP 0% -->
+        <record id="config_purchase_tax_exp_0_base" model="ple.purchase.tax.config">
+            <field name="name">EXP 0% (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_exp_0</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_ng"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_ng"/>
+        </record>
+
+        <!-- 5. EXO 0% -->
+        <record id="config_purchase_tax_exo_base" model="ple.purchase.tax.config">
+            <field name="name">EXO 0% (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_exo</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_ng"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_ng"/>
+        </record>
+
+         <!-- 6. INA 0% -->
+        <record id="config_purchase_tax_ina_base" model="ple.purchase.tax.config">
+            <field name="name">INA 0% (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_ina</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_ng"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_ng"/>
+        </record>
+
+         <!-- 7. GRA 0% -->
+        <record id="config_purchase_tax_gra_base" model="ple.purchase.tax.config">
+            <field name="name">GRA 0% (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">purchase_tax_gra</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_ng"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_ng"/>
+        </record>
+
+        <!-- 8. 18% IGV - DUA -->
+        <record id="config_account_tax_igv_18_dua_base" model="ple.purchase.tax.config">
+            <field name="name">18% IGV - DUA (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">account_tax_igv_18_dua</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_gdg"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_gdg"/>
+        </record>
+        <record id="config_account_tax_igv_18_dua_tax" model="ple.purchase.tax.config">
+            <field name="name">18% IGV - DUA (Tax)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">account_tax_igv_18_dua</field>
+            <field name="repartition_type">tax</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_tax_gdg"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_tax_gdg"/>
+        </record>
+
+        <!-- 9. IGV 18% Crédito No Domic. -->
+        <record id="config_account_tax_igv_18_cred_no_dom_base" model="ple.purchase.tax.config">
+            <field name="name">IGV 18% Crédito No Domic. (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">account_tax_igv_18_cred_no_dom</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_gdg"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_gdg"/>
+        </record>
+        <record id="config_account_tax_igv_18_cred_no_dom_tax" model="ple.purchase.tax.config">
+            <field name="name">IGV 18% Crédito No Domic. (Tax)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">account_tax_igv_18_cred_no_dom</field>
+            <field name="repartition_type">tax</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_tax_gdg"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_tax_gdg"/>
+        </record>
+
+        <!-- 10. IGV 18% No Domic. -->
+        <record id="config_account_tax_igv_18_no_dom_base" model="ple.purchase.tax.config">
+            <field name="name">IGV 18% No Domic. (Base)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">account_tax_igv_18_no_dom</field>
+            <field name="repartition_type">base</field>
+            <field name="tag_invoice_id" ref="tag_ple_purchase_base_ng"/>
+            <field name="tag_refund_id" ref="tag_ple_purchase_base_ng"/>
+        </record>
+        
+        <!-- IGV 18% No Domic. (Tax) - No specific tag, or empty -->
+        <record id="config_account_tax_igv_18_no_dom_tax" model="ple.purchase.tax.config">
+            <field name="name">IGV 18% No Domic. (Tax)</field>
+            <field name="tax_xml_prefix">account</field>
+            <field name="tax_xml_suffix">account_tax_igv_18_no_dom</field>
+            <field name="repartition_type">tax</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_account_view_form_inherit_ple_sale_book" model="ir.ui.view">
+        <field name="name">account.account.view.form.inherit.ple_sale_book</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <field name="account_type" position="after">
+                <field name="ple_date_account"/>
+                <field name="ple_state_account"/>
+                <field name="ple_selection"/>
+            </field>
+        </field>
+    </record>
+    <record id="action_account_account_tag_ple" model="ir.actions.act_window">
+        <field name="name">Account Tags</field>
+        <field name="res_model">account.account.tag</field>
+        <field name="search_view_id" ref="account.account_tag_view_search"/>
+    </record>
+</odoo>
