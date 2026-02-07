@@ -1,6 +1,6 @@
 {
-    'name': 'l10n_pe_localization_menu',
-    'version': '19.0.1.0.1',
+    'name': 'Peruvian Localization Menu',
+    'version': '19.0.1.0.3',
     'author': 'Ganemo',
     'maintainer': 'Ganemo',
     'company': 'Ganemo',
