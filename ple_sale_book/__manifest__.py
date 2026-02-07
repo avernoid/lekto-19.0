@@ -24,7 +24,7 @@ It will contain these fields
 The .txt, .xlsx files must be generated successfully
 """,
     'depends': [
-        'l10n_country_filter',
+        'view_multicompany_country_filter',
         'account_origin_invoice',
         'dua_in_invoice',
         'l10n_pe',

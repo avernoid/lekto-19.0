@@ -54,12 +54,12 @@ class PleReportPurchase(models.Model):
             COALESCE(document_type.code, '') AS voucher_sunat_code,
             CASE
                 WHEN am.name LIKE '%-%' THEN split_part(replace(am.name, ' ', ''), '-', 1)
-                ELSE COALESCE(split_part(replace(am.ref, ' ', ''), '-', 1), '0000')
+                ELSE '0000'
             END AS voucher_series,
             COALESCE(am.year_aduana, '') AS year_aduana,
             CASE
                 WHEN am.name LIKE '%-%' THEN split_part(replace(am.name, ' ', ''), '-', 2)
-                ELSE split_part(replace(am.ref, ' ', ''), '-', 2)
+                ELSE ''
             END AS correlative,
             COALESCE(identification_type.l10n_pe_vat_code, '') AS customer_document_type,
             COALESCE(partner.vat, '') AS customer_document_number,
@@ -163,7 +163,55 @@ class PleReportPurchase(models.Model):
     def get_excel_data(self, data_lines):
         list_data = []
         invoices = []
+        
+        move_ids = [line.get('invoice_id') for line in data_lines if line.get('invoice_id')]
+        moves = self.env['account.move'].browse(move_ids)
+        moves_dict = {move.id: move for move in moves}
+
         for obj_line in data_lines:
+            move = moves_dict.get(obj_line.get('invoice_id'))
+            voucher_series = '0000'
+            correlative = ''
+            
+            if move:
+                document_number = move.l10n_latam_document_number
+                ref = move.ref
+                name = move.name
+                
+                # Logic for Series (Column 7)
+                if document_number:
+                    if '-' in document_number:
+                        voucher_series = document_number.split('-')[0].replace(' ', '')
+                    else:
+                        voucher_series = '0000'
+                elif ref:
+                    if '-' in ref:
+                        voucher_series = ref.split('-')[0].replace(' ', '')
+                    else:
+                        voucher_series = '0000'
+                elif name and name != '/':
+                    if '-' in name:
+                        voucher_series = name.split('-')[0].replace(' ', '')
+                    else:
+                        voucher_series = '0000'
+                
+                # Logic for Correlative (Column 9)
+                if document_number:
+                    if '-' in document_number:
+                        correlative = document_number.split('-')[1].replace(' ', '')
+                    else:
+                        correlative = document_number.replace(' ', '')
+                elif ref:
+                    if '-' in ref:
+                        correlative = ref.split('-')[1].replace(' ', '')
+                    else:
+                        correlative = ref.replace(' ', '')
+                elif name and name != '/':
+                    if '-' in name:
+                        correlative = name.split('-')[1].replace(' ', '')
+                    else:
+                        correlative = name.replace(' ', '')
+
             tax_data = ast.literal_eval(obj_line['tax_data'])
             obj_line.update({
                 'P_BASE_GDG': tax_data[0],
@@ -191,9 +239,9 @@ class PleReportPurchase(models.Model):
                 'date_invoice': obj_line.get('date_invoice', ''),
                 'date_due': obj_line.get('date_due', ''),
                 'voucher_sunat_code': obj_line.get('voucher_sunat_code', ''),
-                'voucher_series': obj_line.get('voucher_series', ''),
+                'voucher_series': voucher_series,
                 'voucher_year_dua_dsi': obj_line.get('year_aduana', ''),
-                'correlative': obj_line.get('correlative', ''),
+                'correlative': correlative,
                 'customer_document_type': obj_line.get('customer_document_type', ''),
                 'customer_document_number': obj_line.get('customer_document_number', ''),
                 'customer_name': obj_line.get('customer_name', ''),

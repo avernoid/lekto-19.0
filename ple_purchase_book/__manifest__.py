@@ -16,7 +16,7 @@ The module provides the ability to generate detailed reports in Excel and TXT fo
         'base_spot',
         'l10n_pe_catalog',
         'l10n_pe_reports',
-        'l10n_country_filter',
+        'view_multicompany_country_filter',
     ],
     'data': [
         'security/ir.model.access.csv',

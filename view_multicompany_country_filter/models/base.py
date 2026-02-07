@@ -1,8 +1,19 @@
 from odoo import api, models
 
 
-class Model(models.AbstractModel):
-    _inherit = 'base'
+class ViewMulticompanyCountryFilterMixin(models.AbstractModel):
+    _name = 'view.multicompany.country.filter.mixin'
+    _description = 'Mixin to enable company-dependent view caching'
+
+    @api.model
+    def _get_view_cache_key(self, view_id=None, view_type='form', **options):
+        """
+        Extends view cache key to include the current company.
+        Use this Mixin ONLY on models that utilize _tags_invisible_per_country 
+        to ensure proper view invalidation across companies.
+        """
+        key = super()._get_view_cache_key(view_id, view_type, **options)
+        return key + (self.env.company,)
 
     @api.model
     def _tags_invisible_per_country(self, arch, view, view_type, tags, countries):
@@ -59,19 +70,3 @@ class Model(models.AbstractModel):
                     node.set('column_invisible', 'True')
 
         return arch, view
-
-
-
-class L10nCountryFilterMixin(models.AbstractModel):
-    _name = 'l10n.country.filter.mixin'
-    _description = 'Mixin to enable company-dependent view caching'
-
-    @api.model
-    def _get_view_cache_key(self, view_id=None, view_type='form', **options):
-        """
-        Extends view cache key to include the current company.
-        Use this Mixin ONLY on models that utilize _tags_invisible_per_country 
-        to ensure proper view invalidation across companies.
-        """
-        key = super()._get_view_cache_key(view_id, view_type, **options)
-        return key + (self.env.company,)

@@ -2,7 +2,7 @@ from odoo import fields, models, api
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move', 'l10n.country.filter.mixin']
+    _inherit = ['account.move', 'view.multicompany.country.filter.mixin']
     _name = 'account.move'
 
     igv_withholding_indicator = fields.Boolean(

@@ -68,7 +68,7 @@ class TestDuaInInvoice(TransactionCase):
         })
 
         # Use Form to simulate UI interaction
-        # IMPORTANT: Run with the PE company active so view logic (l10n_country_filter) doesn't hide the field
+        # IMPORTANT: Run with the PE company active so view logic (view_multicompany_country_filter) doesn't hide the field
         invoice_form = Form(
             self.env['account.move'].with_company(company_pe).with_context(
                 default_move_type='in_invoice', 

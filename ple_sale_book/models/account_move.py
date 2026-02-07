@@ -4,7 +4,7 @@ from odoo.exceptions import RedirectWarning, UserError, ValidationError
 
 class AccountMove(models.Model):
     _name = 'account.move'
-    _inherit = ['account.move', 'l10n.country.filter.mixin']
+    _inherit = ['account.move', 'view.multicompany.country.filter.mixin']
 
     ple_state = fields.Selection(
         selection=[

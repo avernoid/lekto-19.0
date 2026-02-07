@@ -1,0 +1,59 @@
+[2026-02-07] REFACTORIZACIÓN COMPLETA: l10n_country_filter -> view_multicompany_country_filter
+=====================================================================================================
+
+MOTIVO DEL CAMBIO:
+------------------
+El módulo original `l10n_country_filter` inyectaba la lógica de filtrado directamente en el modelo base de Odoo (`models.Model`), lo que permitía su uso global sin obligar al desarrollador a heredar del Mixin de caché.
+Esto provocaba un "bug silencioso" grave: Si un modelo usaba el filtro sin el Mixin, Odoo guardaba en caché la vista filtrada para la primera compañía que accedía, y luego servía esa misma vista (posiblemente incorrecta) a usuarios de otras compañías/países (Cross-Company Cache Pollution).
+
+CAMBIOS REALIZADOS:
+-------------------
+1.  **Renombre del Módulo:** La carpeta `l10n_country_filter` ahora es `view_multicompany_country_filter`.
+2.  **Eliminación de Herencia Base:** Se eliminó `_inherit = 'base'` en `models/base.py`.
+3.  **Encapsulamiento en Mixin:** El método `_tags_invisible_per_country` se movió dentro de `view.multicompany.country.filter.mixin`.
+4.  **Renombre del Mixin:** `l10n.country.filter.mixin` -> `view.multicompany.country.filter.mixin`.
+
+GUÍA DE MIGRACIÓN PARA DESARROLLADORES (Cómo actualizar módulos dependientes):
+-------------------------------------------------------------------------------
+
+Si tienes un módulo que depende de esta librería, DEBES realizar los siguientes cambios:
+
+1.  **Actualizar `__manifest__.py`:**
+    Cambia la dependencia:
+    - ANTES: `'depends': [..., 'l10n_country_filter', ...]`
+    - AHORA: `'depends': [..., 'view_multicompany_country_filter', ...]`
+
+2.  **Actualizar Modelos Python (`models/*.py`):**
+    Cualquier modelo que use `_tags_invisible_per_country` DEBE heredar explícitamente del nuevo Mixin.
+
+    - ANTES (Incorrecto o Deprecado):
+      ```python
+      class MyModel(models.Model):
+          _inherit = 'my.model'
+          # ERROR: Usar env['res.partner'] o confiar en base
+          def _get_view(self, ...):
+              arch, view = self.env['res.partner']._tags_invisible_per_country(...)
+      ```
+
+    - AHORA (Correcto):
+      ```python
+      class MyModel(models.Model):
+          _name = 'my.model'
+          _inherit = ['my.model', 'view.multicompany.country.filter.mixin']  # <--- OBLIGATORIO
+
+          def _get_view(self, view_id=None, view_type='form', **options):
+              arch, view = super()._get_view(view_id, view_type, **options)
+              # Llamada directa a self
+              arch, view = self._tags_invisible_per_country(arch, view, view_type, tags, countries)
+              return arch, view
+      ```
+
+3.  **Actualizar Tests:**
+    Si tus tests invocaban al método, asegúrate de hacerlo a través de un modelo que tenga el Mixin, o instancia el Mixin directamente:
+    `self.env['view.multicompany.country.filter.mixin']._tags_invisible_per_country(...)`
+
+EJEMPLOS DE MÓDULOS YA MIGRADOS:
+--------------------------------
+- ple_sale_book
+- ple_purchase_book
+- document_in_supplier_invoice
