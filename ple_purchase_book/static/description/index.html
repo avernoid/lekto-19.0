@@ -341,8 +341,22 @@
                                     <tr>
                                         <td>7</td>
                                         <td><strong>Serie</strong></td>
-                                        <td>First part of Invoice Number.</td>
-                                        <td><code style="color: #e83e8c;">move.ref</code> (split)</td>
+                                        <td>
+                                            <small class="d-block text-muted">Field Priority:</small>
+                                            <ol class="pl-3 mb-1 small" style="line-height: 1.4;">
+                                                <li>l10n_latam_document_number</li>
+                                                <li>ref (Vendor Bill Reference)</li>
+                                                <li>name (Odoo internal sequence)</li>
+                                            </ol>
+                                            <small class="d-block text-muted">Logic:</small>
+                                            <ul class="pl-3 mb-0 small" style="line-height: 1.4;">
+                                                <li>Takes text <strong>before</strong> the first hyphen (-).</li>
+                                                <li>If no hyphen exists, defaults to <strong>0000</strong>.</li>
+                                            </ul>
+                                        </td>
+                                        <td><code
+                                                style="color: #e83e8c;">move.l10n_latam_document_number</code><br><small>(or
+                                                fallback)</small></td>
                                     </tr>
                                     <tr>
                                         <td>8</td>
@@ -353,8 +367,22 @@
                                     <tr>
                                         <td>9</td>
                                         <td><strong>Número</strong></td>
-                                        <td>Second part of Invoice Number.</td>
-                                        <td><code style="color: #e83e8c;">move.ref</code> (split)</td>
+                                        <td>
+                                            <small class="d-block text-muted">Field Priority:</small>
+                                            <ol class="pl-3 mb-1 small" style="line-height: 1.4;">
+                                                <li>l10n_latam_document_number</li>
+                                                <li>ref (Vendor Bill Reference)</li>
+                                                <li>name (Odoo internal sequence)</li>
+                                            </ol>
+                                            <small class="d-block text-muted">Logic:</small>
+                                            <ul class="pl-3 mb-0 small" style="line-height: 1.4;">
+                                                <li>Takes text <strong>after</strong> the first hyphen (-).</li>
+                                                <li>If no hyphen exists, takes the <strong>full content</strong>.</li>
+                                            </ul>
+                                        </td>
+                                        <td><code
+                                                style="color: #e83e8c;">move.l10n_latam_document_number</code><br><small>(or
+                                                fallback)</small></td>
                                     </tr>
                                     <tr>
                                         <td>11</td>

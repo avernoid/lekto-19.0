@@ -54,5 +54,18 @@ Ensure your Taxes are correctly tagged with PLE codes.
 - **Missing Invoices**: Check the Invoice Date. It must fall within the selected reporting period.
 - **Validation Errors**: Use the SUNAT Validator to identify specific row errors (usually missing RUCs or incorrect Currency formats).
 
+## Data Mapping Logic
+### Serie & Correlative (Columns 7 & 9)
+The module uses specific fallback logic to populate the "Serie" and "Número" (Correlative) fields in the PLE TXT info.
+
+**Priority of Fields:**
+1.  `l10n_latam_document_number` (Official Document Number)
+2.  `ref` (Vendor Bill Reference)
+3.  `name` (Odoo Internal Sequence)
+
+**Splitting Logic:**
+-   **Serie (Col 7):** Takes the text **before** the first hyphen (`-`). Defaults to `0000` if no hyphen is found.
+-   **Número (Col 9):** Takes the text **after** the first hyphen. Uses the full content if no hyphen is found.
+
 ## Credits
 **Author**: [Ganemo](https://www.ganemo.com)
