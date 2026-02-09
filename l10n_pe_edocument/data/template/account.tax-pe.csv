@@ -1,0 +1,9 @@
+id,name,description,invoice_label,l10n_pe_edi_tax_code,l10n_pe_edi_affectation_reason,l10n_pe_edi_unece_category,amount,type_tax_use,amount_type,include_base_amount,tax_group_id,repartition_line_ids/repartition_type,repartition_line_ids/document_type,repartition_line_ids/account_id,repartition_line_ids/factor_percent,name@es,description@es,children_tax_ids
+account_tax_withdrawal_due_to_bonus,0% Obsequio - Retiro por bonificación,GRA,GRA,9996,31,Z,0,sale,percent,"",tax_group_gra,base,invoice,"",100,,"",""
+"","","","","","","","","","","","",tax,invoice,,100,"","",""
+"","","","","","","","","","","","",base,refund,"",100,"","",""
+"","","","","","","","","","","","",tax,refund,,100,"","",""
+account_tax_consumption_plastic_bags,ICBPER,ICBPER,ICBPER,7152,,,0.5,sale,fixed,"",tax_group_icbper,base,invoice,"",100,,"",""
+"","","","","","","","","","","","",tax,invoice,,100,"","",""
+"","","","","","","","","","","","",base,refund,"",100,"","",""
+"","","","","","","","","","","","",tax,refund,,100,"","",""

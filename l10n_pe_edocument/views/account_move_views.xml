@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_move_form_view_inherit_l10n_pe_edocument" model="ir.ui.view">
+        <field name="name">account.move.view.form.inherit.l10n_pe_edocument</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="l10n_pe_edi.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="button_abandon_cancel_posted_posted_moves" position="after">
+                <button name="%(action_view_account_invoice_correction)d" string="Add Correction Invoice" type="action" groups="account.group_account_invoice" invisible="move_type != 'out_refund' or state != 'posted' or edi_state != 'sent' or l10n_pe_edi_refund_reason != '13' or country_code != 'PE'"/>
+            </button>
+            <xpath expr="//field[@name='l10n_pe_edi_operation_type']" position="after">
+                <field name="payment_method_id" options="{'no_quick_create': True, 'no_create_edit':True, 'no_open':True}" invisible="not l10n_pe_edi_is_required or move_type in ['in_invoice', 'in_refund', 'in_receipt'] or l10n_pe_edi_operation_type not in ['1001', '1002', '1003', '1004'] or country_code != 'PE'" readonly="state != 'draft'"/>
+            </xpath>
+            <xpath expr="//field[@name='invoice_line_ids']//list/field[@name='l10n_pe_edi_affectation_reason']" position="replace">
+                <field name="l10n_pe_edi_affectation_reason" column_invisible="True"/>
+            </xpath>
+            <xpath expr="//group[@name='sale_info_group']" position="inside">
+                <field name="related_tax_documents_code" invisible="country_code != 'PE'"/>
+            </xpath>
+            <xpath expr="//field[@name='l10n_pe_edi_refund_reason']" position="replace">
+                <field name="l10n_pe_edi_refund_reason" readonly="state != 'draft'" invisible="l10n_latam_document_type_id.code in ['07', '08'] or country_code != 'PE'"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

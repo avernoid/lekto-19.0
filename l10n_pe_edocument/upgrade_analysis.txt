@@ -1,0 +1,15 @@
+---Models in module 'l10n_pe_edocument'---
+---Fields in module 'l10n_pe_edocument'---
+---XML records in module 'l10n_pe_edocument'---
+----------------------------------------------------------------
+DEPENDS
+
+[REMOVAL] tributary_address_extension dependency
+Reason:
+The dependency on `tributary_address_extension` was preventing a clean installation of `l10n_pe_edocument` in environments where the partner's "Annexed Establishment" field is not strictly required.
+Analysis confirmed that `l10n_pe_edocument` does NOT use the `annexed_establishment` field in its Python code, XML generation logic (UBL 2.1), or PDF reports. The field `l10n_pe_edi_address_type_code` (from `l10n_pe_edi`) is used for the company address type code, which is distinct from the partner's establishment code.
+
+Impact:
+- `l10n_pe_edocument` can now be installed without `tributary_address_extension`.
+- The `annexed_establishment` field will NOT be present on `res.partner` unless `tributary_address_extension` is installed separately.
+- Electronic Invoicing functionality remains fully operational.
