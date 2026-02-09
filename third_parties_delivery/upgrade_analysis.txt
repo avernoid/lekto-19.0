@@ -1,0 +1,6 @@
+---Models in module 'third_parties_delivery'---
+---Fields in module 'third_parties_delivery'---
+---XML records in module 'third_parties_delivery'---
+UPD ir.ui.model:  stock_picking_form_view_inherit_third_parties_delivery -> stock_picking_view_form_inherit_third_parties_delivery
+-------------------------------------------------------------------------
+DEPENDS

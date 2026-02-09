@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_form_inherit_l10n_pe_delivery_note_20" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.l10n_pe_delivery_note_20</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="l10n_pe_edi.res_config_settings_form_inherit_l10n_pe_edi"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='invoicing_peruvian_settings']" position="inside">
+                <div class="col-12 col-lg-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="l10n_pe_edi_delivery_test_env"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="l10n_pe_edi_delivery_test_env"/>
+                        <div class="text-muted">
+                            Para evitar firmar GRE en su entorno de prueba coloque como verdadero
+                            cuando no necesite que las GRE sean realmente firmadas.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

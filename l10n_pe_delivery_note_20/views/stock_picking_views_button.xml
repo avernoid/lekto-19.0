@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_edi_form_button" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="name">stock.picking.edi.form</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <field name="backorder_id" position="after">
+                <field name="country_code" invisible="1"/>
+
+                <field name="sunat_sequence" invisible="country_code != 'PE'"/>
+            </field>
+            <xpath expr="//header//button[@name='action_send_delivery_guide']" position="attributes">
+                <attribute name="invisible">state != 'done' or country_code != 'PE' or l10n_pe_edi_status != False</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,56 @@
+# Upgrade Analysis: l10n_pe_delivery_note_20
+
+## 1. Overview of Changes
+This update extends the native `l10n_pe_edi_stock` functionality to support complex logistics scenarios required by SUNAT, specifically regarding the precise identification of "Source" and "Destination" establishments via the `annexed_establishment` code.
+
+## 2. Technical Detail: XML Address Handling (`<cbc:AddressTypeCode>`)
+The core improvement is the intelligent resolution of the **Annexed Establishment Code** (Código de Establecimiento Anexo). Native Odoo often defaults to '0000', which causes rejections for transfers involving branches or third-party warehouses.
+
+### Logic Flow for `cbc:AddressTypeCode`
+The system evaluates 3 main scenarios. The code is filled **ONLY** if the address owner's RUC starts with **'6'** (Legal Entities).
+
+#### A. Source Address (`cac:DespatchAddress`)
+*Where does the merchandise come from?*
+
+| Scenario | Condition (Odoo) | Source of Annex Code |
+| :--- | :--- | :--- |
+| **Return** | `l10n_pe_edi_reason_for_transfer == '06'` | Partner of the document (`record.partner_id`) |
+| **Third Party Delivery** | `deliver_to_third_parties` is True | **In:** Customer (`record.customer_id`)<br>**Out:** Origin Location (`record.location_id.direction_id`) |
+| **Standard** | (None of the above) | **Out/Int:** Origin Location (`record.location_id.direction_id`)<br>**In:** Partner (Vendor) (`record.partner_id`) |
+
+#### B. Destination Address (`cac:DeliveryAddress`)
+*Where does the merchandise arrive?*
+
+| Scenario | Condition (Odoo) | Source of Annex Code |
+| :--- | :--- | :--- |
+| **Return** | `l10n_pe_edi_reason_for_transfer == '06'` | Partner of the document (`record.partner_id`) |
+| **Third Party Delivery** | `deliver_to_third_parties` is True | **In:** Destination Location (`record.location_dest_id.direction_id`)<br>**Out:** Customer (`record.customer_id`) |
+| **Standard** | (None of the above) | **In/Int:** Destination Location (`record.location_dest_id.direction_id`)<br>**Out:** Partner (Customer) (`record.partner_id`) |
+
+## 3. Supported Transfer Reasons (SUNAT Catalog 20)
+The following reasons have been explicitly verified and are fully supported:
+
+*   **02**: Compra (Purchase)
+*   **06**: Devolución (Return) - *Triggers special address logic.*
+*   **07**: Recojo de bienes transformados (Pick up of transformed goods)
+*   **08**: Importación (Import) - *Triggers special transport logic.*
+*   **09**: Exportación (Export)
+*   **13**: Otros (Others) - *Requires description.*
+
+## 4. Configuration Requirements
+To ensure the logic above works:
+1.  **Warehouses/Branches**: Must have a Contact record with the correct `annexed_establishment` code set (e.g., '0001').
+2.  **Locations**: Source/Destination locations must have their `Address` field linked to the corresponding Branch Contact.
+
+## 5. Deprecations and Removals (2026-02-09)
+
+### [REMOVE] `picking_number` Field
+The field `picking_number` ("Guide Number") has been permanently removed from the `stock.picking` model and its views.
+
+**Why?**
+The field was redundant and not used in any logic, report, or XML generation. The correct field for the electronic document number is `l10n_latam_document_number`, which is populated automatically via the `sunat_sequence`.
+
+**Refactoring Guide:**
+If you have custom modules or scripts depending on `picking_number`:
+1.  **For logic:** Replace `record.picking_number` with `record.l10n_latam_document_number` (or `record.name` if checking internal reference).
+2.  **For display/search:** Use the standard Odoo field `l10n_latam_document_number` which is already present in views.

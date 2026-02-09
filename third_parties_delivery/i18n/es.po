@@ -1,0 +1,56 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* third_parties_delivery
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-08 00:00+0000\n"
+"PO-Revision-Date: 2026-02-08 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,field_description:third_parties_delivery.field_stock_picking__customer_id
+msgid "New delivery address"
+msgstr "Nueva dirección de entrega"
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,help:third_parties_delivery.field_stock_picking__customer_id
+msgid "Specific address for the physical delivery of goods. Used when the delivery location differs from the invoice partner address."
+msgstr "Dirección específica para la entrega física de bienes. Se utiliza cuando la ubicación de entrega difiere de la dirección del socio de la factura."
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,field_description:third_parties_delivery.field_stock_picking__deliver_to_third_parties
+msgid "Deliver to third parties"
+msgstr "Entregar a proveedor/comprador a terceros"
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,help:third_parties_delivery.field_stock_picking__deliver_to_third_parties
+msgid "Check this box to specify a different delivery address (Point of Arrival) for the Electronic Delivery Guide."
+msgstr "Marque esta casilla para especificar una dirección de entrega diferente (Punto de Llegada) para la Guía de Remisión Electrónica."
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,field_description:third_parties_delivery.field_stock_picking__third_parties
+msgid "Supplier/Buyer"
+msgstr "Proveedor/Comprador"
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,help:third_parties_delivery.field_stock_picking__third_parties
+msgid "Select the type of third party involved in the operation."
+msgstr "Seleccione el tipo de tercero involucrado en la operación."
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,selection:third_parties_delivery.field_stock_picking__third_parties__01
+msgid "Supplier"
+msgstr "Proveedor"
+
+#. module: third_parties_delivery
+#: model:ir.model.fields,selection:third_parties_delivery.field_stock_picking__third_parties__02
+msgid "Buyer"
+msgstr "Comprador"

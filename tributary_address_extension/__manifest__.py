@@ -2,7 +2,9 @@
     'name': 'Tributary Address Extension',
     'version': '19.0.0.0.1',
     'author': 'Ganemo',
-    'website': 'https://www.ganemo.com',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': 'https://www.ganemo.co',
     'category': 'Localization/Localization',
     'summary': 'Add the field "Establishment Annex" in contact',
     'description': """
@@ -16,11 +18,13 @@ This field is a dependency for many modules of the Peruvian localization such as
     'data': [
         'views/res_partner_views.xml'
     ],
+    'icon': '/tributary_address_extension/static/description/icon.png',
+    'images': ['static/description/banner.png'],
+    'license': 'OPL-1',
     'installable': True,
     'auto_install': False,
     'application': False,
-    'license': 'Other proprietary',
-    'module_type': 'official',
     'currency': 'USD',
-    'price': 20.00
+    'price': 20.00,
+    'module_type': 'official',
 }

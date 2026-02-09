@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_picking_view_form_inherit_third_parties_delivery" model="ir.ui.view">
+        <field name="name">stock.picking.view.form.inherit.third_parties_delivery</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group/div/label[@for='partner_id']/parent::div" position="before">
+                <field name="customer_id" invisible="not deliver_to_third_parties"/>
+                <field name="deliver_to_third_parties" invisible= "l10n_pe_edi_reason_for_transfer not in ['02', '03', '07', '13']"/>
+                <field name="third_parties" invisible="l10n_pe_edi_reason_for_transfer != '13' or  not deliver_to_third_parties"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

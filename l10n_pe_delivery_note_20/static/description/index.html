@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peruvian - Electronic Delivery Note Extension | Odoo Logistics App by Ganemo</title>
+    <meta name="description"
+        content="Extend Odoo native functions for electronic waybill - sender. Manage complex logistics, multi-branch transfers, and full SUNAT compliance.">
+    <meta name="keywords"
+        content="Odoo, Peru, Delivery Note, Guia Remision, SUNAT, Logistics, Warehouse, Ganemo, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'l10n_pe_delivery_note_20' extends 'l10n_pe_edi_stock' to support full SUNAT Catalog 20
+            transfer reasons.
+            It implements 'annexed_establishment' logic to correctly identify branch codes (e.g., 0001, 0002) for source
+            and destination addresses.
+            Supports complex logistics including Returns (06), Imports (08), Exports (09), and Third-Party deliveries.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). Includes handling for Public vs Private
+            transport modes.
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Electronic Delivery Note</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Advanced Peruvian Logistics & SUNAT Compliance</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Master complex transfer scenarios. Handle multi-branch warehouses, returns, imports/exports, and
+                    third-party logistics with full SUNAT validation.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-building mr-2"></i> Multi-Branch & Annex Codes
+                            </h4>
+                            <p style="text-align: justify;">Stop guessing address codes. The system automatically
+                                identifies the correct <strong>Annexed Establishment</strong> (e.g., 0001) for every
+                                source and destination, ensuring seamless transfers between your own locations without
+                                SUNAT errors.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-list-alt mr-2"></i> Full Catalog 20 Support</h4>
+                            <p style="text-align: justify;">Go beyond basic sales. Handle every SUNAT-compliant transfer
+                                reason including <strong>Returns (06)</strong>, Pickups (07), Imports (08), Exports
+                                (09), and customized logic for complex third-party logistics operations.</p>
+                        </div>
+                    </div>
+                    <!-- Benefit: Custom 'Others' Description -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-pencil-square-o mr-2"></i> Smart 'Others'
+                                Management
+                            </h4>
+                            <p style="text-align: justify;">Avoid SUNAT penalties. The native module sends a generic
+                                "Others" tag, but we inject your <strong>custom description</strong> (e.g., "Samples",
+                                "Gifts") directly into the XML, satisfying the strict requirement for specific
+                                implementation of Transfer Reason 13.</p>
+                        </div>
+                    </div>
+                    <!-- Benefit: Third Party Logic -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-users mr-2"></i> Third-Party Logic Fixes</h4>
+                            <p style="text-align: justify;">We fix native gaps. Standard Odoo misses the
+                                <code>SellerSupplierParty</code> tag for Incoming 'Others' transfers. We automatically
+                                inject the correct Buyer/Seller parties based on the context, ensuring your XML is never
+                                rejected for missing actors.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Benefit: Internal Transfers -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-exchange mr-2"></i> Internal Transfers (Same
+                                Company)</h4>
+                            <p style="text-align: justify;">Seamlessly move goods between your own warehouses. The
+                                system
+                                correctly handles the logic where the Sender and Receiver are the SAME company (same
+                                RUC)
+                                but different Establishment Codes, a common scenario that often fails in standard
+                                setups.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Follow these steps to ensure full compliance and avoid blocking errors:</p>
+
+                            <!-- Step 1: Stock Location Addresses -->
+                            <div class="mb-4">
+                                <h5 style="color: #555; font-weight: 700;">1.1 Configure Warehouse Addresses (Critical)
+                                </h5>
+                                <p>To prevent the <em>"No se enviará la GRE..."</em> error for Internal, Incoming, or
+                                    Outgoing transfers:</p>
+                                <ul style="line-height: 1.8;">
+                                    <li>Go to <strong>Inventory > Configuration > Locations</strong>.</li>
+                                    <li>Open your Warehouse locations (e.g., <em>WH/Stock</em>).</li>
+                                    <li><strong>Action:</strong> Set the <strong>Address</strong> field
+                                        (<code>direction_id</code>).</li>
+                                    <li><em>Why?</em> The module uses this specific address to determine the correct
+                                        Annex Code (Establecimiento Anexo) for the XML.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Step 2: SUNAT Sequences -->
+                            <div class="mb-4">
+                                <h5 style="color: #555; font-weight: 700;">1.2 Electronic Guide Sequences</h5>
+                                <ul style="line-height: 1.8;">
+                                    <li>Go to <strong>Inventory > Configuration > Settings</strong>.</li>
+                                    <li>Ensure you have a valid Sequence configured for "Guía de Remisión Remitente"
+                                        (e.g., T001).</li>
+                                    <li>On the Transfer form, this will appear in the <strong>Electronic Guide
+                                            Sequence</strong> field.</li>
+                                </ul>
+                            </div>
+
+                            <!-- Step 3: Test Environment -->
+                            <div class="mb-4">
+                                <h5 style="color: #555; font-weight: 700;">1.3 Enable Test Environment (Sandbox)</h5>
+                                <ul style="line-height: 1.8;">
+                                    <li>Go to <strong>Accounting / Inventory > Configuration > Settings</strong>.</li>
+                                    <li>Locate the <strong>Peruvian Electronic Delivery Note</strong> section.</li>
+                                    <li>Check <strong>"Entorno de prueba GRE"</strong>.</li>
+                                    <li><em>Effect:</em> This directs all XML submissions to the Nubefact Test API
+                                        instead of SUNAT Production.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How to emit a compliant GRE:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-pencil-square-o text-primary mr-2"></i> 1. Create Transfer
+                                        </h5>
+                                        <p class="text-muted">Create a standard Delivery Order or Internal Transfer.
+                                            Select the partner and lines.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-bars text-primary mr-2"></i> 2. Define Logistics Data</h5>
+                                        <p class="text-muted">In the <strong>"Guía de Remisión"</strong> tab:</p>
+                                        <ul class="small text-muted pl-3">
+                                            <li><strong>Reason:</strong> Select from Catalog 20 (e.g., Sale, Import,
+                                                Return).</li>
+                                            <li><strong>Transport Mode:</strong> Public (3rd party) or Private (Own).
+                                            </li>
+                                            <li><strong>Sequence:</strong> Select your T001 series.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-check text-primary mr-2"></i> 3. Validation & Sending</h5>
+                                        <p class="text-muted">Click <strong>Validate</strong>. The system generates the
+                                            number (e.g., T001-000005) and attempts to sign/send the XML. Status changes
+                                            to "Sent" or "Error".</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-print text-primary mr-2"></i> 4. Print & Corrections</h5>
+                                        <p class="text-muted">Download the PDF. If SUNAT rejects it, check the "Error
+                                            SUNAT" field, correct the data (e.g., Driver License), and click "Retry".
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Workflow: Others -->
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="p-4"
+                                        style="border: 2px dashed #ffc107; background-color: #fffbef; border-radius: 15px;">
+                                        <h4 style="color: #d39e00; font-weight: 700;"><i
+                                                class="fa fa-exclamation-circle mr-2"></i> Critical: Handling "Others"
+                                            (Code
+                                            13)</h4>
+                                        <p>According to our deep analysis of the native module vs. this extension, using
+                                            this module is <strong>mandatory</strong> for compliant "Others" transfers.
+                                        </p>
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-6 border-right">
+                                                <h5 style="font-weight: 700;">1. Transfer Reason Description</h5>
+                                                <ul class="small text-muted pl-3">
+                                                    <li><strong>Native Odoo:</strong> Sends the literal word "Others".
+                                                        This
+                                                        is <span class="text-danger">risky</span> because SUNAT requires
+                                                        a
+                                                        specific reason.</li>
+                                                    <li><strong>This Module:</strong> Enables the <strong>"Transfer
+                                                            Reason
+                                                            Description"</strong> field. You can type "Muestras",
+                                                        "Obsequios", etc., ensuring the XML matches strict SUNAT
+                                                        requirements.</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h5 style="font-weight: 700;">2. Buyer/Seller Logic</h5>
+                                                <ul class="small text-muted pl-3">
+                                                    <li><strong>Native Odoo:</strong> Only adds
+                                                        <code>BuyerCustomerParty</code>, and does it indiscriminately
+                                                        for
+                                                        all "Others" cases.
+                                                    </li>
+                                                    <li><strong>This Module:</strong> INTELLIGENTLY manages parties:
+                                                        <ul>
+                                                            <li>Adds <code>SellerSupplierParty</code> for
+                                                                <strong>Incoming</strong> transfers (Native ignores
+                                                                this).
+                                                            </li>
+                                                            <li>Uses the <strong>"Deliver to Third Parties"</strong>
+                                                                checkbox to control exactly when to send these tags,
+                                                                satisfying complex logistics flows.</li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Detail (AddressTypeCode) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #17a2b8; background-color: #f0fdf4; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-code mr-2"></i> 3.
+                                Technical Detail: XML Address Handling</h3>
+                            <p class="lead">How the system fills the crucial <code>&lt;cbc:AddressTypeCode&gt;</code>
+                                tag.</p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="text-justify mb-4">The logic in <code>edi_delivery_guide.xml</code>
+                                        evaluates 3 main scenarios. In all cases, the
+                                        <code>&lt;cbc:AddressTypeCode&gt;</code> is filled ONLY if the address owner's
+                                        RUC starts with <strong>'6'</strong> (Legal Entities/Companies).
+                                    </p>
+
+                                    <!-- PART 1: SOURCE ADDRESS -->
+                                    <h5
+                                        style="color: #333; font-weight: 700; border-bottom: 2px solid #17a2b8; padding-bottom: 5px;">
+                                        1. Source Address (cac:DespatchAddress)</h5>
+                                    <p class="small text-muted mb-2"><em>Where does the merchandise come from?</em></p>
+                                    <div class="table-responsive mb-4">
+                                        <table class="table table-bordered table-sm"
+                                            style="font-size: 13px; background-color: white;">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th style="width: 25%;">Scenario</th>
+                                                    <th style="width: 35%;">Condition (Odoo)</th>
+                                                    <th style="width: 40%;">Source of Annex Code</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="font-weight-bold text-info">Return</td>
+                                                    <td><code>l10n_pe_edi_reason_for_transfer == '06'</code></td>
+                                                    <td>Partner of the document (<code>record.partner_id</code>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold text-info">Third Party Delivery</td>
+                                                    <td><code>deliver_to_third_parties</code> is True</td>
+                                                    <td>
+                                                        <strong>In:</strong> Customer
+                                                        (<code>record.customer_id</code>)<br>
+                                                        <strong>Out:</strong> Origin Location
+                                                        (<code>record.location_id.direction_id</code>)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold text-info">Standard</td>
+                                                    <td>(None of the above)</td>
+                                                    <td>
+                                                        <strong>Out/Int:</strong> Origin Location
+                                                        (<code>record.location_id.direction_id</code>)<br>
+                                                        <strong>In:</strong> Partner (Vendor)
+                                                        (<code>record.partner_id</code>)
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- PART 2: DESTINATION ADDRESS -->
+                                    <h5
+                                        style="color: #333; font-weight: 700; border-bottom: 2px solid #28a745; padding-bottom: 5px;">
+                                        2. Destination Address (cac:DeliveryAddress)</h5>
+                                    <p class="small text-muted mb-2"><em>Where does the merchandise arrive?</em></p>
+                                    <div class="table-responsive mb-4">
+                                        <table class="table table-bordered table-sm"
+                                            style="font-size: 13px; background-color: white;">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th style="width: 25%;">Scenario</th>
+                                                    <th style="width: 35%;">Condition (Odoo)</th>
+                                                    <th style="width: 40%;">Source of Annex Code</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="font-weight-bold text-success">Return</td>
+                                                    <td><code>l10n_pe_edi_reason_for_transfer == '06'</code></td>
+                                                    <td>Partner of the document (<code>record.partner_id</code>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold text-success">Third Party Delivery</td>
+                                                    <td><code>deliver_to_third_parties</code> is True</td>
+                                                    <td>
+                                                        <strong>In:</strong> Destination Location
+                                                        (<code>record.location_dest_id.direction_id</code>)<br>
+                                                        <strong>Out:</strong> Customer (<code>record.customer_id</code>)
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="font-weight-bold text-success">Standard</td>
+                                                    <td>(None of the above)</td>
+                                                    <td>
+                                                        <strong>In/Int:</strong> Destination Location
+                                                        (<code>record.location_dest_id.direction_id</code>)<br>
+                                                        <strong>Out:</strong> Partner (Customer)
+                                                        (<code>record.partner_id</code>)
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- PRACTICAL EXAMPLE -->
+                                    <div class="alert alert-warning" role="alert"
+                                        style="font-size: 13px; border-left: 5px solid #ffc107;">
+                                        <h6 class="alert-heading font-weight-bold"><i
+                                                class="fa fa-lightbulb-o mr-1"></i>
+                                            Practical Example: Standard Sale
+                                            (Out)</h6>
+                                        <p class="mb-1"><strong>Case:</strong> You sell goods to a customer from your
+                                            Main Warehouse.</p>
+                                        <ul class="mb-0 pl-3">
+                                            <li><strong>Departure:</strong> Takes code from YOUR warehouse
+                                                (<code>location_id.direction_id</code>), because it's a standard
+                                                outgoing shipment.</li>
+                                            <li><strong>Arrival:</strong> Takes code from the CUSTOMER
+                                                (<code>partner_id</code>), because it's a standard outgoing shipment.
+                                            </li>
+                                        </ul>
+                                        <hr>
+                                        <p class="mb-0 font-weight-bold small"><em>Crucial: Both your warehouses
+                                                (address type partners) and your customers must have this field
+                                                available.</em></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-share-square-o mr-2"></i>
+                                Scenario 1: Multi-Branch Return</h4>
+                            <ol class="mt-3">
+                                <li>Setup two branches with different Annex Codes (e.g., 0001, 0002) in Contacts.</li>
+                                <li>Create a Transfer from Branch A (0001) to "Supplier X" with Reason "Devolución"
+                                    (06).</li>
+                                <li><strong>Test:</strong> Validate the Transfer.</li>
+                                <li><strong>Result:</strong> The generated XML MUST contain the tag <code>Code</code>
+                                    with "0001" for the Issuer, ensuring SUNAT knows exactly where the goods left from.
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-truck mr-2"></i> Scenario 2:
+                                Import Delivery (Private Transport)</h4>
+                            <ol class="mt-3">
+                                <li>Create a Transfer for incoming goods (Import).</li>
+                                <li>Select Reason "Importación" (08).</li>
+                                <li>Set Transport Type to "Private" and assign a Vehicle/Driver.</li>
+                                <li><strong>Test:</strong> Validate and check the XML.</li>
+                                <li><strong>Result:</strong> The system identifies this as an Import operation and
+                                    correctly structures the delivery note, ignoring standard sale validations.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-exchange mr-2"></i> Scenario
+                                3:
+                                Internal Transfer (Same Company)</h4>
+                            <p class="mt-2"><strong>Context:</strong> Moving goods from Main Warehouse (0000) to Store 1
+                                (0001).</p>
+                            <ul>
+                                <li>Create Internal Transfer.</li>
+                                <li>Reason: "Traslado entre establecimientos" (04).</li>
+                                <li><strong>Result:</strong> The XML correctly identifies both Source and Destination as
+                                    the SAME company RUC but different Establishment Codes.</li>
+                            </ul>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i
+                                    class="fa fa-exclamation-triangle mr-2"></i>
+                                Scenario
+                                4: Missing Code Validation</h4>
+                            <ol class="mt-3">
+                                <li>Remove the "Address" (Direction) from a Stock Location (e.g., WH/Stock).</li>
+                                <li>Try to validate a delivery from that location.</li>
+                                <li><strong>Result:</strong> The system MUST raise a UserError: <em>"No se enviará la
+                                        GRE hasta que no se configure el campo 'dirección'..."</em>. This confirms the
+                                    safety guard is active.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                            <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-list-ul mr-2"></i> Scenario 5:
+                                Verify Supply Chain Codes</h4>
+                            <p class="mt-2"><strong>Goal:</strong> Ensure critical Peruvian transfer reasons are
+                                available in the native Odoo field.</p>
+                            <ol class="mt-3">
+                                <li>Open any Delivery or Receipt operation.</li>
+                                <li>Click on the <strong>"Transfer Reason"</strong> dropdown.</li>
+                                <li><strong>Verify</strong> the presence of these specific codes:
+                                    <ul class="mt-2 mb-2">
+                                        <li><strong>02:</strong> Compra</li>
+                                        <li><strong>06:</strong> Devolución</li>
+                                        <li><strong>07:</strong> Recojo de bienes transformados</li>
+                                        <li><strong>08:</strong> Importación</li>
+                                        <li><strong>09:</strong> Exportación</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Result:</strong> All codes must be selectable. If missing, the module data
+                                    was not loaded correctly.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- Scenario 6 -->
+                    <div class="mb-4 p-4 shadow-sm"
+                        style="background-color: #fff; border-radius: 10px; border-left: 5px solid #fd7e14;">
+                        <h4 style="color: #fd7e14; font-weight: 700;"><i class="fa fa-eye mr-2"></i> Scenario 6:
+                            Verify Handling Instructions Visibility</h4>
+                        <p class="mt-2"><strong>Goal:</strong> Ensure the description field appears only when
+                            needed.</p>
+                        <ol class="mt-3">
+                            <li>Create a new Delivery Note.</li>
+                            <li>Select <strong>"Others" (13)</strong> in "Reason for Transfer".</li>
+                            <li><strong>Verify:</strong> The <strong>"Transfer Reason Description"</strong> field
+                                appears.</li>
+                            <li>Enter a description.</li>
+                            <li>Change "Reason for Transfer" to "Sale" (01).</li>
+                            <li><strong>Verify:</strong> The "Transfer Reason Description" field disappears.</li>
+                        </ol>
+                    </div>
+                    <!-- Scenario 7 -->
+                    <div class="mb-4 p-4 shadow-sm"
+                        style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6f42c1;">
+                        <h4 style="color: #6f42c1; font-weight: 700;"><i class="fa fa-code mr-2"></i> Scenario 7:
+                            Validate 'Others' XML Logic</h4>
+                        <p class="mt-2"><strong>Goal:</strong> Confirm that custom descriptions and special party tags
+                            are correctly injected into the XML.</p>
+                        <ol class="mt-3">
+                            <li>Create a Transfer with Reason <strong>"Others" (13)</strong>.</li>
+                            <li>Write "Muestras Gratuitas" in the <strong>"Transfer Reason Description"</strong> field.
+                            </li>
+                            <li>Validate the document.</li>
+                            <li><strong>XML Verification:</strong>
+                                <ul>
+                                    <li>The text "Muestras Gratuitas" MUST appear in the
+                                        <code>&lt;cbc:HandlingInstructions&gt;</code> tag (or equivalent description
+                                        field).
+                                    </li>
+                                    <li>If <strong>Incoming:</strong> Verify
+                                        <code>&lt;cac:SellerSupplierParty&gt;</code> is PRESENT.
+                                    </li>
+                                    <li>If <strong>Outgoing:</strong> Verify <code>&lt;cac:BuyerCustomerParty&gt;</code>
+                                        is PRESENT.
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Error: "No se enviará la GRE..."?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The Stock Location (Source or
+                                Destination) is missing the linked Address.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to
+                                <em>Configuration > Locations</em>, open the location, and set the
+                                <strong>Address</strong> field.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Can I test without sending to SUNAT?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, checking the "Entorno de prueba
+                                GRE" in Settings will direct everything to the Nubefact Test API.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Tip:</strong> This
+                                is perfect for verifying XML generation logic without legal implications.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">How to handle "Others" (Reason 13)?</h5>
+                            <p class="text-muted mt-2"><strong>Requirement:</strong> SUNAT requires a description.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Tip:</strong>
+                                Selecting "Others" automatically reveals the <strong>"Transfer Reason
+                                    Description"</strong> field. Fill it to avoid rejection.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this Odoo 19 Compatible?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Fully tested on Odoo 19 Enterprise. Supports latest SUNAT 2.0 electronic invoicing
+                                standards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:helpdesk@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        helpdesk@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

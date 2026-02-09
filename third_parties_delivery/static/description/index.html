@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tributary Address Extension | Odoo Localization App by Ganemo</title>
+    <title>Third Parties Delivery | Odoo Inventory App by Ganemo</title>
     <meta name="description"
-        content="Add the field 'Establishment Annex' in contact. Essential for Peruvian localization and electronic invoicing compliance.">
+        content="Add delivery address for third parties in Odoo delivery notes. Compliant with SUNAT (Peru) requirements for triangular operations.">
     <meta name="keywords"
-        content="Odoo, Localization, Peru, Tributary Address, Establishment Annex, Ganemo, Address Extension, SUNAT, Odoo 19">
+        content="Odoo, Inventory, Delivery Guide, SUNAT, Peru, Third Party Delivery, Logistics, Ganemo, Odoo 19">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,13 +131,12 @@
     <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
     <div style="display: none;">
         <h2>Technical Specification for AI & LLM</h2>
-        <p>This Odoo module 'tributary_address_extension' adds the 'Establishment Annex' field to the res.partner model.
-            This field is critical for Peruvian localization, allowing the registration of the SUNAT establishment code
-            (4 digits)
-            for each contact address. It is a dependency for electronic invoicing and official books.
-            It includes view modifications for res.partner form and search views.
-            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
-            Multi-language support for English and Spanish included.</p>
+        <p>This Odoo module 'third_parties_delivery' allows specifying a different delivery address (Point of Arrival)
+            from the invoice partner.
+            It is essential for SUNAT (Peru) compliance, specifically for 'Venta con entrega a terceros' (Sale with
+            delivery to third parties).
+            It adds 'customer_id' and 'deliver_to_third_parties' fields to stock.picking.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).</p>
     </div>
     <div class="d-flex align-items-center justify-content-between"
         style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -156,17 +155,17 @@
             <div class="col-lg-12 d-flex flex-column align-items-center">
                 <h1 class="text-center text-uppercase"
                     style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
-                    <span style="color:#9451a5;">Tributary Address</span>
+                    <span style="color:#9451a5;">Third Parties Delivery</span>
                 </h1>
                 <p class="my-1 text-center text-uppercase"
                     style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
-                    Establishment Annex Extension</p>
+                    Flexible Delivery Addresses for logistics</p>
             </div>
             <div class="col-lg-12 d-flex flex-column justify-content-center">
                 <p class="my-1 text-center"
                     style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
-                    Complete your Peruvian contact data by adding the official Establishment Annex code required by
-                    SUNAT.
+                    Specify a different physical delivery address distinct from the invoice partner. Essential for
+                    triangular operations and third-party logistics.
                 </p>
             </div>
         </div>
@@ -186,20 +185,22 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-map-marker mr-2"></i> Official Annex Codes</h4>
-                            <p style="text-align: justify;">Peruvian companies often have multiple branches, each
-                                identified by a unique 4-digit code (e.g., 0001, 0002) assigned by SUNAT. This module
-                                allows you to register this code correctly in Odoo.</p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-truck mr-2"></i> True Delivery Address</h4>
+                            <p style="text-align: justify;">Standard Odoo often assumes the billing partner is the
+                                delivery partner. We allow you to define a specific <strong>Delivery Address</strong>
+                                (Point of Arrival) that is independent of the invoice recipient, crucial for complex
+                                supply chains.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-file-text-o mr-2"></i> Localization Compliance
-                            </h4>
-                            <p style="text-align: justify;">This field is a strict requirement for <strong>Electronic
-                                    Invoicing</strong> and <strong>PLE (Electronic Books)</strong>. Without it, your
-                                documents may be rejected by SUNAT. This module solves that gap.</p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-text-o mr-2"></i> SUNAT Compliance</h4>
+                            <p style="text-align: justify;">For Peruvian localization, this module ensures the
+                                <strong>Electronic Delivery Guide (GRE)</strong> contains the correct XML tags for
+                                "Point of Arrival" even when the transaction is a "Sale with delivery to third parties"
+                                (Code 03).
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -223,23 +224,76 @@
                         <div class="p-4"
                             style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
-                                Configuration Guide</h3>
-                            <p class="lead">Register the annex code in 3 simple steps:</p>
+                                Configuration & Prerequisites</h3>
+                            <p class="lead">Ensure your environment is ready for SUNAT compliance:</p>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to
-                                            <strong>Contacts</strong> app.</li>
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Open a Contact form.</li>
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i> <strong>Prerequisite
+                                                1:</strong>
+                                            Install <strong>l10n_pe_edi_stock</strong> (Peruvian Localization for
+                                            Stock).
+                                            This module depends on it to inject XML tags.</li>
+                                        <li><i class="fa fa-check-circle text-success mr-2"></i> <strong>Prerequisite
+                                                2:</strong>
+                                            Ensure the "Third Party" contact exists in the <strong>Contacts</strong> app
+                                            with a valid address and RUC/DNI.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i>
+                                            <strong>Installation:</strong>
+                                            Simply install <strong>Third Parties Delivery</strong> from the Apps menu.
+                                            No extra settings configuration is needed.
+                                        </li>
                                     </ul>
                                 </div>
-                                <div class="col-md-6">
-                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Ensure the
-                                            <strong>Country</strong> is set to <strong>Peru</strong>.</li>
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Fill in the
-                                            <strong>Establishment Annex</strong> field (e.g., 0001).</li>
-                                    </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How to use the feature in your daily operations:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-check-square-o text-primary mr-2"></i> Activate Function
+                                        </h5>
+                                        <p class="text-muted">On the <strong>Delivery Note</strong> (Stock Picking),
+                                            check the box <strong>"Deliver to third parties"</strong>. This will reveal
+                                            the address field.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-map-marker text-primary mr-2"></i> Select Address</h5>
+                                        <p class="text-muted">In the <strong>"New Delivery Address"</strong> field,
+                                            select the contact where the goods will actually arrive. This overrides said
+                                            data for the XML generation.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-refresh text-primary mr-2"></i> Smart Sync</h5>
+                                        <p class="text-muted">If you uncheck the option, the delivery address
+                                            automatically reverts to the main Partner address, preventing data errors.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-exchange text-primary mr-2"></i> Transfer Reason</h5>
+                                        <p class="text-muted">Typically used with Transfer Reason <strong>"03 - Venta
+                                                con entrega a terceros"</strong>, but compliant with other reasons where
+                                            the destination differs.</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -448,33 +502,71 @@
                         <!-- Scenario 1 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
-                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-eye mr-2"></i>
-                                Scenario 1: Field Visibility</h4>
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-user-secret mr-2"></i>
+                                Scenario 1: Standard Third Party Delivery</h4>
                             <ol class="mt-3">
-                                <li>Go to <strong>Contacts</strong>.</li>
-                                <li>Create a new contact or open an existing one.</li>
-                                <li>Set <strong>Country</strong> to "Peru".</li>
-                                <li><strong>Result:</strong> The "Establishment Annex" field MUST appear.</li>
-                                <li>Set <strong>Country</strong> to "United States".</li>
-                                <li><strong>Result:</strong> The "Establishment Annex" field MUST disappear.</li>
+                                <li>Create a Delivery Note (Transfer) for a customer.</li>
+                                <li>Enable the checkbox <strong>"Deliver to third parties"</strong>.</li>
+                                <li>The field <strong>"New delivery address"</strong> should appear immediately.</li>
+                                <li>Select a different partner (e.g., "Warehouse B") in this field.</li>
+                                <li><strong>Validate:</strong> Confirm the transfer. The delivery address is preserved.
+                                </li>
                             </ol>
                         </div>
                         <!-- Scenario 2 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
-                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-floppy-o mr-2"></i> Scenario
-                                2:
-                                Data Persistence</h4>
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-ban mr-2"></i> Scenario 2:
+                                Auto-Reset Safety Mechanism</h4>
                             <ol class="mt-3">
-                                <li>With Country = Peru, enter "1234" in "Establishment Annex".</li>
-                                <li>Save the record.</li>
-                                <li>Refresh the page.</li>
-                                <li><strong>Result:</strong> The value "1234" MUST persist and be visible.</li>
+                                <li>Start with a transfer where "Deliver to third parties" is Checked and a Custom
+                                    Address is selected.</li>
+                                <li><strong>Action:</strong> Uncheck the "Deliver to third parties" box.</li>
+                                <li><strong>Result:</strong> Inspect the "New delivery address" field (viewable in
+                                    backend/technical mode if invisible). It must automatically revert to the value of
+                                    the main "Delivery Address" (Partner), ensuring no stale data remains hidden.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-file-code-o mr-2"></i>
+                                Scenario 3:
+                                SUNAT XML Compliance (Technical)</h4>
+                            <ol class="mt-3">
+                                <li>Generate the Electronic Delivery Guide (GRE) for a confirmed transfer with Third
+                                    Party Delivery enabled.</li>
+                                <li><strong>Validation:</strong> Download the XML.</li>
+                                <li>Search for the <strong>DeliveryCustomerParty</strong> or
+                                    <strong>DeliveryAddress</strong> tag.
+                                </li>
+                                <li><strong>Result:</strong> It must contain the RUC/Address of the "New delivery
+                                    address" partner, NOT the invoice partner.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-eye mr-2"></i> Scenario 4:
+                                Conditional Fields Visibility</h4>
+                            <ol class="mt-3">
+                                <li>Create a Transfer with Reason <strong>"01 - Venta"</strong>. Verify <strong>"Deliver
+                                        to
+                                        third parties"</strong> is hidden.</li>
+                                <li>Change Reason to <strong>"03 - Venta con entrega a terceros"</strong>. Verify
+                                    <strong>"Deliver to third parties"</strong> appears.
+                                </li>
+                                <li>Check the box. Verify <strong>"New delivery address"</strong> appears.</li>
+                                <li>Change Reason to <strong>"13 - Otros"</strong>. Verify
+                                    <strong>"Supplier/Buyer"</strong>
+                                    field appears.</li>
+                                <li>Uncheck <strong>"Deliver to third parties"</strong>. Verify all extra fields
+                                    disappear.
+                                </li>
                             </ol>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
         <!-- FAQ & TROUBLESHOOTING -->
         <section class="oe_container pb-5">
@@ -494,12 +586,46 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
-                            <h5 style="font-weight: 700; color: #333;">I don't see the field?</h5>
-                            <p class="text-muted mt-2"><strong>Reason:</strong> The field is conditional based on
-                                country.
+                            <h5 style="font-weight: 700; color: #333;">I can't see the "New delivery address" field?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The field is hidden by default to keep
+                                the interface clean.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> You
+                                must check the <strong>"Deliver to third parties"</strong> box on the transfer form to
+                                reveal it.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">The address keeps reverting to the Partner?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> This is a data consistency feature. If
+                                you uncheck "Deliver to third parties", the module assumes the delivery is standard and
+                                resets the "New delivery address" to match the "Delivery Address" partner.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;">Does this change the Invoice Address?</h5>
+                            <p class="text-muted mt-2"><strong>No.</strong> This module only affects the
+                                <strong>Stock/Delivery</strong> logic and the generated Delivery Guide (GRE). The
+                                invoicing data (Accounting) remains untouched, allowing for correct compliance with
+                                "Triangular Operations" or "Sales to Third Parties".
                             </p>
-                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ensure
-                                the contact's country is set to <strong>Peru</strong>.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Does it support SUNAT 2.0?</h5>
+                            <p class="text-muted mt-2"><strong>Yes.</strong> The module is designed to work with Odoo's
+                                Peruvian Localization and supports the latest SUNAT requirements for dispatch guides,
+                                ensuring the XML generated (via <code>l10n_pe_edi_stock</code>) includes the correct
+                                destination details.</p>
                         </div>
                     </div>
                 </div>
@@ -633,25 +759,18 @@
                                     <div
                                         style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
                                     </div>
-                                    <a href="mailto:soporte@ganemo.com" target="_blank"
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
                                         style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
-                                        soporte@ganemo.com
+                                        ayuda@ganemo.com
                                     </a>
                                 </div>
-                                <p class="small text-muted mb-0">soporte@ganemo.com</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </section>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

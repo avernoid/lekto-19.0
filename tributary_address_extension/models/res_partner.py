@@ -5,7 +5,7 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     annexed_establishment = fields.Char(
-        string='Establecimiento anexo',
+        string='Establishment Annex',
         default='0000',
-        help='Código asignado por SUNAT para el establecimiento anexo declarado en el RUC.'
+        help='Code assigned by SUNAT for the establishment annex declared in the RUC. This code is mandatory for electronic invoicing and official books in Peru.'
     )

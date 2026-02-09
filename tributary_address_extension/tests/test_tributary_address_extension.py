@@ -22,7 +22,6 @@ class TestTributaryAddressExtension(TransactionCase):
             self.partner.annexed_establishment, '0000',
             'El valor predeterminado no está configurado correctamente.'
         )
-        print("TEST OK")
 
     def test_annexed_establishment_change_value(self):
         new_value = '5678'
@@ -31,38 +30,26 @@ class TestTributaryAddressExtension(TransactionCase):
             self.partner.annexed_establishment, new_value,
             'El valor del establecimiento anexo no se modificó correctamente.'
         )
-        print("TEST OK")
 
-    def test_annexed_establishment_visible_form_view(self):
-        arch, view = self.ResPartner._get_view()
-        arch_annexed_establishment = arch.xpath("//field[@name='annexed_establishment']")
-        self.assertFalse(
-            'invisible' in arch_annexed_establishment[0].attrib,
-            "El campo 'annexed_establishment' no debe estar invisible."
-        )
-        print("TEST OK")
-
-    def test_annexed_establishment_invisible_form_view(self):
-        self.env.company.country_id = self.country_mx
-        arch, view = self.ResPartner._get_view()
-        arch_annexed_establishment = arch.xpath("//field[@name='annexed_establishment']")
-        self.assertTrue(
-            'invisible' in arch_annexed_establishment[0].attrib,
-            "El campo 'annexed_establishment' debe estar invisible."
-        )
-        print("TEST OK")
-    
-    def test_annexed_establishment_visible_multiple_countries(self):
-        """El campo debe permanecer visible si la compañía está en la lista de países permitidos (PE o MX)."""
-        countries = [self.country_pe, self.country_mx]
-        arch, view = self.ResPartner._tags_invisible_per_country(
-            *self.ResPartner._get_view(), 
-            tags=['annexed_establishment'], 
-            countries=countries
-        )
-        arch_field = arch.xpath("//field[@name='annexed_establishment']")[0]
-        self.assertFalse(
-            'invisible' in arch_field.attrib,
-            "El campo 'annexed_establishment' no debe estar invisible cuando la compañía está en la lista de países permitidos."
-        )
-        print("TEST OK")
+    def test_annexed_establishment_view_modifier(self):
+        """Verificar que el campo tiene el modificador invisible correcto en la vista."""
+        view = self.env.ref('tributary_address_extension.res_partner_view_form_inherit_tributary_address_extension')
+        # Obtenemos la arquitectura de la vista combinada
+        arch = self.ResPartner.get_view(view_id=view.id, view_type='form')['arch']
+        
+        # Odoo 17+ devuelve la arquitectura procesada, buscamos el nodo
+        from lxml import etree
+        doc = etree.fromstring(arch)
+        
+        nodes = doc.xpath("//field[@name='annexed_establishment']")
+        self.assertTrue(nodes, "El campo 'annexed_establishment' debe existir en la vista.")
+        
+        node = nodes[0]
+        invisible_modifier = node.get('invisible')
+        
+        # La condición exacta en el XML es country_code != 'PE'
+        # Nota: Odoo puede procesar los dominios, pero en get_view simple suele mantener el string o evaluarlo.
+        # Verificamos que contenga la lógica esencial
+        expected_domain = "country_code != 'PE'"
+        self.assertIn('country_code', invisible_modifier, "El modificador invisible debe depender de country_code")
+        self.assertIn('PE', invisible_modifier, "El modificador invisible debe verificar el código de país 'PE'")

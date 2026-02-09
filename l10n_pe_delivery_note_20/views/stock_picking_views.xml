@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_picking_edi_form_inherit_l10n_pe_delivery_note_20" model="ir.ui.view">
+        <field name="name">view.picking.edi.form.inherit.l10n_pe_delivery_note_20</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="l10n_pe_edi_stock.view_picking_edi_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header//button[@name='action_send_delivery_guide']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='l10n_pe_edi_reason_for_transfer']" position="after">
+                <field name="l10n_pe_edi_handling_instructions" invisible="l10n_pe_edi_reason_for_transfer != '13'" readonly="l10n_pe_edi_status == 'sent'"/>
+            </xpath>
+            <xpath expr="//field[@name='l10n_pe_edi_observation']" position="after">
+                <field name="l10n_pe_edi_scheduled_transfer" readonly="l10n_pe_edi_status not in (False, 'to_send', 'to_cancel')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock_location_form_view_inherit_delivery_note_20" model="ir.ui.view">
+        <field name="name">stock.location.form.view.inherit.delivery_note_20</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='next_inventory_date']" position="after">
+                <field name="direction_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="l10n_pe_edi_guiaremision_report_delivery_document" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[hasclass('col-4')]" position="replace">
+            <div class="col-4" t-if="o.l10n_pe_edi_vehicle_id.license_plate">
+                <strong>N° Placa</strong>
+                <p t-field="o.l10n_pe_edi_vehicle_id.license_plate"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('col-4')]" position="after">
+            <div class="col-4" t-if="o.l10n_pe_edi_vehicle_id.operator_id.l10n_pe_edi_operator_license">
+                <strong>N° Licencia</strong>
+                <p t-field="o.l10n_pe_edi_vehicle_id.operator_id.l10n_pe_edi_operator_license"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[hasclass('col-4')]" position="after">
+            <div class="col-4" t-if="o.l10n_pe_edi_operator_id.l10n_pe_edi_mtc_number">
+                <strong>N° MTC</strong>
+                <p t-field="o.l10n_pe_edi_operator_id.l10n_pe_edi_mtc_number"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@id='delivery_guide_details']" position="attributes">
+            <attribute name="style">width: 100% !important;</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='div_incoming_address']" position="replace">
+            <div>
+                <span><strong>Dirección de partida:</strong></span>
+                <div t-if="o.picking_type_id.code == 'incoming'">
+                    <t t-if="o.partner_id.parent_id.name">
+                        <t t-esc="o.partner_id.parent_id.name + ', ' + o.partner_id.name"/>
+                    </t>
+                    <t t-else="">
+                        <t t-esc="o.partner_id.name"/>
+                    </t>
+                    <br/>
+                    <t t-esc="o.partner_id.street"/>
+                    <br/>
+                    <t t-esc="o.partner_id.l10n_pe_district.name"/>
+                    <br/>
+                    <t t-esc="o.partner_id.get_address_format_report()"/>
+                    <br/>
+                    <t t-esc="o.partner_id.l10n_latam_identification_type_id.name"/>:<t t-esc="o.partner_id.vat"/>
+                </div>
+
+                <div t-if="o.picking_type_id.code in ['internal', 'outgoing']">
+                    <t t-if="o.location_id.direction_id.parent_id.name">
+                        <t t-esc="o.location_id.direction_id.parent_id.name + ', ' + o.location_id.direction_id.name"/>
+                    </t>
+                    <t t-else="">
+                        <t t-esc="o.location_id.direction_id.name"/>
+                    </t>
+                    <br/>
+                    <t t-esc="o.location_id.direction_id.street"/>
+                    <br/>
+                    <t t-esc="o.location_id.direction_id.l10n_pe_district.name"/>
+                    <br/>
+                    <t t-esc="o.location_id.direction_id.get_address_format_report()"/>
+                    <br/>
+                    <t t-esc="o.location_id.direction_id.l10n_latam_identification_type_id.name"/>:<t t-esc="o.location_id.direction_id.vat"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='div_outgoing_address']" position="replace">
+            <div name="address_arrival"> 
+                <span><strong>Dirección de Llegada:</strong></span>
+                <div t-if="o.picking_type_id.code == 'incoming'">
+                    <t t-if="o.location_dest_id.direction_id.parent_id.name">
+                        <t t-esc="o.location_dest_id.direction_id.parent_id.name + ', ' + o.location_dest_id.direction_id.name"/>
+                    </t>
+                    <t t-else="">
+                        <t t-esc="o.location_dest_id.direction_id.name"/>
+                    </t>
+                    <br/>
+                    <t t-esc="o.location_dest_id.direction_id.street"/>
+                    <br/>
+                    <t t-esc="o.location_dest_id.direction_id.l10n_pe_district.name"/>
+                    <br/>
+                    <t t-esc="o.location_dest_id.direction_id.get_address_format_report()"/>
+                    <br/>
+                    <t t-esc="o.location_dest_id.direction_id.l10n_latam_identification_type_id.name"/>:<t t-esc="o.location_dest_id.direction_id.vat"/>
+                </div>
+
+                <div t-if="o.picking_type_id.code in ['internal', 'outgoing']">
+                    <t t-if="o.partner_id.parent_id.name">
+                        <t t-esc="o.partner_id.parent_id.name + ', ' + o.partner_id.name"/>
+                    </t>
+                    <t t-else="">
+                        <t t-esc="o.partner_id.name"/>
+                    </t>
+                    <br/>
+                    <t t-esc="o.partner_id.street"/>
+                    <br/>
+                    <t t-esc="o.partner_id.l10n_pe_district.name"/>
+                    <br/>
+                    <t t-esc="o.partner_id.get_address_format_report()"/>
+                    <br/>
+                    <t t-esc="o.partner_id.l10n_latam_identification_type_id.name"/>:<t t-esc="o.partner_id.vat"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="l10n_pe_delivery_report_delivery_document2" inherit_id="stock_delivery.report_delivery_document2">
+        <xpath expr="//div[@t-if='o.shipping_weight']" position="replace">
+            <div t-if="o.shipping_weight" class="col-auto">
+                <strong>Peso y Cantidad Total:</strong>
+                <br/>
+                <span t-field="o.shipping_weight"/>
+                <span t-field="o.weight_uom_name"/>
+                -
+                <t t-set='product' t-value="o.move_ids.mapped('product_uom.name')"/>
+                <t t-set="cont" t-value="0"/>
+                <tr t-foreach="product" t-as="p">
+                    <t t-set="total" t-value="0"/>
+                    <tr t-foreach="o.move_ids" t-as="line">
+                        <t t-if="p == line.product_uom.name">
+                            <t t-set="total" t-value="total+line.quantity"/>
+                        </t>
+                    </tr>
+                    <t t-set="cont" t-value="cont+1"/>
+                    <span t-esc="total"/>
+                    <span t-esc="p"/>
+                    <t t-if="len(product) > cont">
+                        /
+                    </t>
+                </tr>
+            </div>
+        </xpath>
+    </template>
+</odoo>

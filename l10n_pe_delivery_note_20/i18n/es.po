@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_pe_delivery_note_20
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-08 17:00+0000\n"
+"PO-Revision-Date: 2024-02-08 17:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,field_description:l10n_pe_delivery_note_20.field_stock_picking__sunat_sequence
+msgid "Electronic Guide Sequence"
+msgstr "Secuencia Guía Electrónica"
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,help:l10n_pe_delivery_note_20.field_stock_picking__sunat_sequence
+msgid "Sequence used for the Electronic Delivery Note (Guía de Remisión Remitente)."
+msgstr "Secuencia utilizada para la Guía de Remisión Remitente Electrónica."
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,field_description:l10n_pe_delivery_note_20.field_stock_picking__l10n_pe_edi_handling_instructions
+msgid "Transfer Reason Description"
+msgstr "Descripción del motivo de traslado"
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,help:l10n_pe_delivery_note_20.field_stock_picking__l10n_pe_edi_handling_instructions
+msgid "Additional description when the reason for transfer is 'Others'."
+msgstr "Descripción adicional cuando el motivo de traslado es 'Otros'."
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,field_description:l10n_pe_delivery_note_20.field_stock_picking__l10n_pe_edi_scheduled_transfer
+msgid "Scheduled Transfer Indicator"
+msgstr "Indicador de transbordo programado"
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,help:l10n_pe_delivery_note_20.field_stock_picking__l10n_pe_edi_scheduled_transfer
+msgid "Indicates if the transfer involves a scheduled transshipment."
+msgstr "Indica si el traslado implica un transbordo programado."
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,field_description:l10n_pe_delivery_note_20.field_stock_picking__picking_number
+msgid "Guide Number"
+msgstr "N° Guía"
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,help:l10n_pe_delivery_note_20.field_stock_picking__picking_number
+msgid "Unique number of the Delivery Guide."
+msgstr "Número único de la Guía de Remisión."
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,field_description:l10n_pe_delivery_note_20.field_stock_location__direction_id
+msgid "Address"
+msgstr "Dirección"
+
+#. module: l10n_pe_delivery_note_20
+#: model:ir.model.fields,help:l10n_pe_delivery_note_20.field_stock_location__direction_id
+msgid "Physical address associated with this stock location, used for the Delivery Note XML."
+msgstr "Dirección física asociada con esta ubicación de stock, usada para el XML de la Guía de Remisión."
