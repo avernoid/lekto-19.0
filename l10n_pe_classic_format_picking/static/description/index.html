@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Peruvian Format for Delivery Guides | Odoo App by Ganemo</title>
+    <meta name="description"
+        content="Standardized PDF report for Peruvian Delivery Guides (Guía de Remisión). Compliant with SUNAT. Includes QR, Weights, and Transport details.">
+    <meta name="keywords"
+        content="Odoo, Peru, SUNAT, Guía de Remisión, Delivery Guide, Logistics, Warehouse, PDF Report, Ganemo">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'l10n_pe_classic_format_picking' provides a specialized PDF report for 'Stock Picking'
+            compliant with Peruvian SUNAT regulations (Guía de Remisión).
+            Features: Layout restructuring, inclusion of QR code from 'l10n_pe_edi_stock', calculation of total weights,
+            display of carrier/driver details, package grouping, conditional Lot/Serial Number column,
+            and conditional Expiration Date column (per Operation Type).
+            Configuration: Adds settings to Inventory for controlling Batch, Expiry, and Barcode visibility on the slip.
+            Per-Operation-Type booleans control Lot/Serial and Expiry columns independently.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Dependencies: account, stock, l10n_pe_edi_stock.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Classic Format</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Peruvian Delivery Guide (Guía de Remisión)</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Standardized, clean, and compliant PDF report for your logistics operations.
+                    Perfectly integrates with Odoo's native Inventory flow.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Key Features</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-university mr-2"></i> SUNAT Compliance</h4>
+                            <p style="text-align: justify;">Includes all legally required fields for Peru: <strong>QR
+                                    Code</strong>, MTC Registry, Vehicle Plate, Driver License, and Transport Mode.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-balance-scale mr-2"></i> Weight Calculation</h4>
+                            <p style="text-align: justify;">Automatically calculates and displays the <strong>Total
+                                    Gross
+                                    Weight</strong> of the shipment by summing up individual product weights.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-map-marker mr-2"></i> Precise Logistics</h4>
+                            <p style="text-align: justify;">Explicitly details <strong>Origin and Destination</strong>
+                                addresses, pulling data from Warehouse Locations or Partner records.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-cube mr-2"></i> Package Grouping</h4>
+                            <p style="text-align: justify;">When packages are used, the report automatically
+                                <strong>groups product lines by package</strong>, displaying the package name as a
+                                header and its contents underneath — matching Odoo's native delivery slip behavior.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-barcode mr-2"></i> Lot/Serial Numbers</h4>
+                            <p style="text-align: justify;">Conditionally displays a <strong>Lot/Serial Number
+                                    column</strong> on the report. Controlled per Operation Type via the
+                                <strong>"Serie/Lote en e-Guía"</strong> checkbox — more granular than the
+                                company-wide setting.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-calendar mr-2"></i> Expiration Date</h4>
+                            <p style="text-align: justify;">Adds an optional <strong>Expiration Date column</strong>
+                                next to the Lot/Serial column. Enabled per Operation Type via
+                                <strong>"Expiration Date en e-Guía"</strong>. Only visible when the Lot/Serial
+                                column is also active.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step Implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Configure the report details in 3 simple steps:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="text-primary mt-3">A. Report Content Options</h5>
+                                    <ul style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Inventory >
+                                                Configuration > Settings</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Scroll to the
+                                            <strong>Traceability / Lots</strong> section.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> You will see new options:
+                                        </li>
+                                        <li class="ml-4"><i class="fa fa-check-square-o text-success mr-2"></i> Display
+                                            Lot/Serial Numbers</li>
+                                        <li class="ml-4"><i class="fa fa-check-square-o text-success mr-2"></i> Display
+                                            Expiry Dates</li>
+                                        <li class="ml-4"><i class="fa fa-check-square-o text-success mr-2"></i> Display
+                                            Product Barcodes</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="text-primary mt-3">B. Warehouse Addresses</h5>
+                                    <ul style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Inventory >
+                                                Configuration > Warehouses</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Select your Warehouse.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Ensure the
+                                            <strong>Address</strong> field is linked to a partner with a complete
+                                            address
+                                            (Street, District, Province, Department).
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h5 class="text-primary mt-3">C. Operation Type Settings (Lot/Serial & Expiry)</h5>
+                                    <ul style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Inventory >
+                                                Configuration > Operation Types</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Select the Operation
+                                            Type (e.g., Delivery Orders).</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> In the
+                                            <strong>Lots/Serial Numbers</strong> group, enable:
+                                        </li>
+                                        <li class="ml-4"><i class="fa fa-check-square-o text-success mr-2"></i>
+                                            <strong>Serie/Lote en e-Guía</strong> — Shows Lot/Serial column on the
+                                            report
+                                        </li>
+                                        <li class="ml-4"><i class="fa fa-check-square-o text-success mr-2"></i>
+                                            <strong>Expiration Date en e-Guía</strong> — Shows Expiry column (requires
+                                            Lot enabled)
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #791d97;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Technical Note:</strong> The
+                                    Report
+                                    Origin/Destination addresses are automatically synchronized with the Source and
+                                    Destination <strong>Locations</strong> of the transfer.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How to print the Delivery Guide:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-check-circle text-primary mr-2"></i> 1. Validate Transfer
+                                        </h5>
+                                        <p class="text-muted">Process your Stock Picking (Transfer) as usual. The
+                                            transfer
+                                            must be in <strong>Done</strong> state.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-truck text-primary mr-2"></i> 2. Check Carrier</h5>
+                                        <p class="text-muted">Ensure you have selected a <strong>Carrier</strong> and
+                                            filled
+                                            in Transport details (Vehicle/Driver) in the "Additional Info" tab.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-print text-primary mr-2"></i> 3. Print</h5>
+                                        <p class="text-muted">Click the <strong>Print</strong> (Imprimir) icon/menu and
+                                            select <strong>"e-Guía de Remisión"</strong>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-file-text-o mr-2"></i>
+                                Scenario 1: Standard Printable Generation</h4>
+                            <ol class="mt-3">
+                                <li>Create a Delivery Order (Salida) to a Customer.</li>
+                                <li>Add products with weights defined (e.g., 10kg).</li>
+                                <li>Validate the transfer.</li>
+                                <li><strong>Action:</strong> Print > "e-Guía de Remisión".</li>
+                                <li><strong>Result:</strong> PDF must generate. Check that "Total Gross Weight"
+                                    corresponds
+                                    to the sum of products.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-qrcode mr-2"></i> Scenario 2:
+                                EDI Integration (QR Code)</h4>
+                            <ol class="mt-3">
+                                <li>Ensure the transfer has generated an electronic document (CDR available).</li>
+                                <li><strong>Action:</strong> Print the guide.</li>
+                                <li><strong>Result:</strong> The footer must display a visible <strong>QR Code</strong>.
+                                    Scan it with your phone; it should contain the localized summary string.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-sliders mr-2"></i> Scenario 3:
+                                Toggle Extended Options</h4>
+                            <p class="mt-2">Enable "Display Product Barcodes" in Inventory Settings.</p>
+                            <ul>
+                                <li><strong>Test:</strong> Print a guide for products with Barcodes (EAN13).</li>
+                                <li><strong>Result:</strong> The report column "Code" should display the EAN/Barcode.
+                                </li>
+                                <li>Disable the setting and reprint. The column should disappear or show Internal
+                                    Reference.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Scenario 4 -->
+                    <div class="col-lg-12">
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #5154a5;">
+                            <h4 style="color: #5154a5; font-weight: 700;"><i class="fa fa-barcode mr-2"></i>
+                                Scenario 4: Lot/Serial & Expiration Date Columns</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Inventory > Configuration > Operation Types > Delivery
+                                        Orders</strong>.</li>
+                                <li>Enable <strong>"Serie/Lote en e-Guía"</strong>.</li>
+                                <li>Create a Delivery Order with products tracked by Lot. Validate it.</li>
+                                <li><strong>Action:</strong> Print > "e-Guía de Remisión".</li>
+                                <li><strong>Result:</strong> A <strong>Lot/Serial</strong> column must appear between
+                                    Product and Quantity.</li>
+                                <li>Now also enable <strong>"Expiration Date en e-Guía"</strong> on the same Operation
+                                    Type.</li>
+                                <li><strong>Result:</strong> An additional <strong>Expiration Date</strong> column must
+                                    appear after Lot/Serial.</li>
+                                <li>Disable both checkboxes and reprint. Both columns must disappear and lines should
+                                    aggregate.</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- Scenario 5 -->
+                    <div class="col-lg-12">
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                            <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-cube mr-2"></i>
+                                Scenario 5: Package Grouping</h4>
+                            <ol class="mt-3">
+                                <li>Enable <strong>Packages</strong> in Inventory Settings.</li>
+                                <li>Create a Delivery Order. Put products into different <strong>Destination
+                                        Packages</strong>.</li>
+                                <li>Validate the transfer.</li>
+                                <li><strong>Action:</strong> Print > "e-Guía de Remisión".</li>
+                                <li><strong>Result:</strong> Products must appear <strong>grouped under their package
+                                        name</strong> as a header row.</li>
+                                <li>Compare with a picking that has <strong>no packages</strong> — all lines should
+                                    appear without grouping.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Why is the QR Code missing?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The transfer has not yet generated an
+                                Electronic Document (EDI), or the CDR (SUNAT response) is not attached.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ensure
+                                the
+                                Picking is "Done" and the EDI status is "Sent/Accepted".</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Why is the Weight "0.00"?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The products in the transfer do not have
+                                a
+                                weight defined in their master data.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Go
+                                to
+                                <strong>Product > General Info</strong> and set the Weight field.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Addresses look incomplete?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The Partner associated with the
+                                Warehouse
+                                (Origin) or Customer (Destination) lacks District/Province data.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Edit the Partner address and ensure the Localization fields (Ubigeo/District) are
+                                filled.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #5154a5;">
+                            <h5 style="font-weight: 700; color: #333;">Lot/Serial column not appearing?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Two conditions must be met: (1) the
+                                products must have Lot/Serial numbers assigned on the move lines, and (2) the
+                                <strong>"Serie/Lote en e-Guía"</strong> checkbox must be enabled on the
+                                Operation Type.
+                            </p>
+                            <p class="small" style="color: #5154a5;"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Fix:</strong> Go to <strong>Inventory > Configuration >
+                                    Operation Types</strong>, select the type, and enable the checkbox in the
+                                "Lots/Serial Numbers" group. The "Expiration Date" checkbox only appears once Lot is
+                                enabled.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:soporte@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        soporte@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

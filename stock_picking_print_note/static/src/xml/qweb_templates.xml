@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_delivery_document_inherit_stock_picking_print_note" inherit_id="stock.report_delivery_document">
+        <xpath expr="//div[@name='signature']" position="after">
+                <div name="signature" style="margin-top:10pt;margin-bottom:30pt">
+                    <strong>Observations / Note:</strong>
+                    <span t-field="o.note"/>
+                </div>
+                <div style="width:100%">
+                    <div style="width: 50%;height: 100px;float: right;">
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <br/>______________________________
+                            <br/>
+                            <span>Authorized By</span>
+                        </div>
+                    </div>
+                    <div style="width: 50%;height: 100px;float: left;">
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <br/>_____________________________
+                            <br/>
+                            <span>Received By</span>
+                        </div>
+                    </div>
+                </div>
+
+        </xpath>
+    </template>
+
+</odoo>

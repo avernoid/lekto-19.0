@@ -1,0 +1,51 @@
+UPGRADE ANALYSIS & DEVELOPER GUIDELINES
+=========================================
+Module: invoice_type_document_extension
+Version: 19.0.1.0.1
+
+1. ARCHITECTURAL CHANGES & RATIONALE
+------------------------------------
+A. Removal of 'picking_number' Field
+   - CHANGE: The custom field `picking_number` has been completely removed from `stock.picking`.
+   - RATIONALE: Redundancy. The module now splits document data directly into `serie_transfer_document` and `number_transfer_document` to align with standard Odoo data structures and avoid data duplication.
+   - IMPACT: Any external module or script reading `picking_number` will fail. Developers must migrate to read `serie_transfer_document` and `number_transfer_document`.
+
+B. Dependency Optimization
+   - CHANGE: Removed dependencies on `invoice_type_document` and `l10n_pe_delivery_note_20`.
+   - RATIONALE: To create a lightweight, standalone extension that only requires standard Odoo Enterprise localization modules (`l10n_latam_invoice_document`).
+   - IMPACT: Easier installation and fewer conflicts with 3rd party delivery modules.
+
+C. Native Field Visibility
+   - CHANGE: Replaced Python-based view logic with XML `invisible="country_code != 'PE'"` attribute.
+   - RATIONALE: Performance and maintainability. It leverages Odoo's native web client capabilities instead of costly server-side computation.
+
+2. FUNCTIONAL LOGIC (AUTO-COMPLETE ALGORITHM)
+---------------------------------------------
+The module automates the population of Transfer Document fields based on linked Invoices.
+
+A. Triggers
+   - Automatic: `@api.depends` on `purchase_id.invoice_ids.ref`, `sale_id.invoice_ids.name`.
+     * Note: `l10n_latam_document_number` is NOT in depends because it is not stored. The system relies on `ref` or manual triggers for initial population if the localization field is set late.
+   - Manual: Server Action "Actualizar datos factura" calls `massive_serie_number_type()`.
+
+B. Purchase Logic (Receipts) - PRIORITY ORDER
+   When a Vendor Bill is linked, the system extracts data using this strict hierarchy:
+   1. `l10n_latam_document_number` (Localization Field): Highest priority. Used if present and valid (contains hyphen).
+   2. `ref` (Vendor Reference): Used if priority 1 is missing.
+   3. `name` (Odoo Internal Name): Fallback.
+
+C. Sales Logic (Delivery Orders)
+   - Strict `name` Parsing: The system ONLY looks at `account.move.name`.
+   - Requirement: The name MUST contain a hyphen (e.g., F001-001) to split Series/Number.
+
+3. SERVER ACTION BEHAVIOR
+-------------------------
+Method: `massive_serie_number_type()`
+- Logic: Iterates over selected records and triggers `_compute_transfer_data_picking()`.
+- SAFETY: It includes a guard clause. It will ONLY update records where fields are currently FALSE/EMPTY. It is non-destructive and will not overwrite existing data.
+
+4. INTEGRATION NOTES FOR AGENTS/DEVELOPERS
+------------------------------------------
+- If extending this module, DO NOT re-introduce `picking_number`.
+- Ensure `l10n_latam_invoice_document` is installed in the environment.
+- For Purchase workflows, advise users to populate the Document Number (`l10n_latam_document_number`) on the Bill before validating to ensure correct propagation.

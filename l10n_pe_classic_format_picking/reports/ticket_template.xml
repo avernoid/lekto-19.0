@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="external_layout_stock_picking_classic">
+            <div t-attf-class="header o_company_#{o.company_id.id}_layout" t-att-style="report_header_style">
+                <div class="o_clean_header">
+                    <div class="print-container-CFP">
+                        <div class="table-print-CFP">
+                            <div class="header-CFP">
+                                <div class="row">
+                                    <div class="column" style="width: 20%; display: flex; align-items: center; justify-content: center;">
+                                        <div style="width: 110px; height: 110px;">
+                                            <t t-if="o.company_id.logo">
+                                                <img class="logo-CFP" style="width: 100%" t-if="o.company_id.logo"
+                                                     t-att-src="image_data_uri(o.company_id.logo)" alt="Logo"/>
+                                            </t>
+                                        </div>
+                                    </div>
+                                    <div class="column" style="width: 55%; vertical-align: top;">
+                                        <div class="info-CFP">
+                                            <div>
+                                                <span t-if="o.company_id.name" t-esc="o.company_id.name"
+                                                      style="font-size:15px;font-weight:bold;"/>
+                                            </div>
+                                            <div>
+                                                <span style="font-weight:normal;">Dirección:</span>
+                                                <t t-if="o.company_id.street.title()">
+                                                    <span t-esc="o.company_id.street.title()"
+                                                          style="font-weight:normal;"/>
+                                                    -
+                                                </t>
+                                                <t t-if="o.company_id.state_id.name">
+                                                    <span t-esc="o.company_id.state_id.name"
+                                                          style="font-weight:normal;"/>
+                                                    -
+                                                </t>
+                                                <t t-if="o.company_id.country_id.name">
+                                                    <span t-esc="o.company_id.country_id.name"
+                                                          style="font-weight:normal;"/>
+                                                </t>
+                                            </div>
+                                            <div>
+                                                <span style="font-weight:normal;">Contacto:</span>
+                                                <t t-if="o.company_id.phone">
+                                                    <span t-esc="o.company_id.phone" style="font-weight:normal;"/>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column" style="width: 25%; vertical-align: top;">
+                                        <p class="ruc-CFP" style="font-size:19px">
+                                            <t t-if="o.company_id.vat">
+                                                <span style="font-weight:bold;">RUC:</span>
+                                                <span t-esc="o.company_id.vat" style="font-weight:bold;"/>
+                                            </t>
+                                            <br/>
+                                            <span style="font-weight:bold;letter-spacing: -1.5px;">
+                                                Guía de Remisión
+                                                -
+                                            </span>
+                                            <span style="font-weight:bold;letter-spacing: -1.5px;">
+                                                Remitente Electrónica
+                                            </span>
+                                            <br/>
+                                            <t t-if="o.l10n_latam_document_number">
+                                                <span style="font-weight:bold;">N°</span>
+                                                <span t-esc="o.l10n_latam_document_number" style="font-weight:bold;"/>
+                                            </t>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name"
+                 t-att-data-oe-id="o and o.id"
+                 t-att-data-oe-lang="o and o.env.context.get('lang')">
+                <t t-out="0"/>
+            </div>
+        </template>
+
+        <template id="report_stock_picking_classic">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="l10n_pe_classic_format_picking.report_stock_picking_classic_document" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_stock_picking_classic_document">
+            <t t-call="l10n_pe_classic_format_picking.external_layout_stock_picking_classic">
+                <div class="page">
+                    <div class="client_data-CFP">
+
+                        <div class="client_data_1-CFP">
+                            <div class="row" style="width: 100%;">
+                                <div class="label" style="width: 25%;">
+                                    <strong style="margin-left: 3px;">Señor(es)</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;width:70%;">
+                                    <t t-if="o.partner_id.parent_id and o.partner_id.parent_id">
+                                        <t t-esc="o.partner_id.parent_id.name + ',' + o.partner_id.name"/>
+                                    </t>
+                                    <t t-elif="o.partner_id and o.partner_id.name">
+                                        <t t-esc="o.partner_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 100%;">
+                                <div class="label" style="width: 25%;">
+                                    <strong t-if="o.partner_id.l10n_latam_identification_type_id"
+                                            t-esc="o.partner_id.l10n_latam_identification_type_id.name"/>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong t-if="o.partner_id.l10n_latam_identification_type_id"
+                                            style="font-weight: 800;">:
+                                    </strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;width:70%;">
+                                    <t t-if="o.partner_id.vat" t-esc="o.partner_id.vat"/>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 100%;">
+                                <div class="label" style="width: 25%;">
+                                    <strong>Comprobante</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;width: 70%;">
+                                    <t t-if="o.transfer_document_type_id.name"
+                                       t-esc="o.transfer_document_type_id.name"/>
+                                    <t t-if="o.serie_transfer_document" t-esc="o.serie_transfer_document"/>
+                                    -
+                                    <t t-if="o.number_transfer_document" t-esc="o.number_transfer_document"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="client_data_2-CFP">
+                            <div t-if="o.date_done" class="row" style="width: 100%;">
+                                <div class="label" style="padding-left: 3px; width: 45%;">
+                                    <strong>Fecha Emisión</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;width:52%;">
+                                    <span t-field="o.date_done"
+                                          t-options="{'format': 'dd/MM/yyyy'}"/>
+                                </div>
+                            </div>
+                            <div class="row" style="width: 100%;">
+                                <div class="label" style="padding-left: 3px; width: 45%;">
+                                    <strong>Fecha Traslado</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;width:52%;">
+                                    <span t-if="o.l10n_pe_edi_departure_start_date"
+                                          t-field="o.l10n_pe_edi_departure_start_date"/>
+                                </div>
+                            </div>
+                            <div t-if="o.origin" class="row" style="width: 100%;">
+                                <div class="label" style="padding-left: 3px; width: 45%;">
+                                    <strong>Orden/Ref.</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;width:52%;">
+                                    <span t-esc="o.origin"/>
+                                </div>
+                            </div>
+                            <div t-if="o.l10n_pe_edi_reason_for_transfer" class="row" style="width: 100%;">
+                                <div class="label" style="padding-left: 3px; width: 45%;">
+                                    <strong>Motivo Traslado</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;width:52%;">
+                                    <span t-field="o.l10n_pe_edi_reason_for_transfer"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="client_data_3-CFP">
+                            <div class="row" style="border-top: 1px solid black; width: 100%; margin-bottom: 5px;"></div>
+                            <div class="row" style="width:97%;">
+                                <div class="label" style="padding-left: 3px; width: 15%;">
+                                    <strong>Punto de Partida</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;padding-right:5px;width:80%">
+                                    <t t-if="o.picking_type_id.code in ['outgoing', 'internal']">
+                                        <span t-if="o.location_id.direction_id.street" t-esc="o.location_id.direction_id.street"/>
+                                        -
+                                        <span t-if="o.location_id.direction_id.l10n_pe_district.name" t-esc="o.location_id.direction_id.l10n_pe_district.name"/>
+                                        -
+                                        <span  t-if="o.location_id.direction_id.city" t-esc="o.location_id.direction_id.city"/>
+                                        -
+                                        <span  t-if="o.location_id.direction_id.state_id.name" t-esc="o.location_id.direction_id.state_id.name"/>
+                                        -
+                                        <span t-if="o.location_id.direction_id.country_id.name" t-esc="o.location_id.direction_id.country_id.name"/>
+
+                                    </t>
+                                    <t t-elif="o.picking_type_id.code == 'incoming' or o.deliver_to_third_parties">
+                                        <span t-if="o.partner_id.street" t-esc="o.partner_id.street"/>
+                                         -
+                                        <span t-if="o.partner_id.l10n_pe_district.name" t-esc="o.partner_id.l10n_pe_district.name"/>
+                                         -
+                                        <span t-if="o.partner_id.city" t-esc="o.partner_id.city"/>
+                                         -
+                                        <span t-if="o.partner_id.state_id.name" t-esc="o.partner_id.state_id.name"/>
+                                         -
+                                        <span t-if="o.partner_id.country_id.name" t-esc="o.partner_id.country_id.name"/>
+
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="width:97%;">
+                                <div class="label" style="padding-left: 3px; width: 15%;">
+                                    <strong>Punto de Llegada</strong>
+                                </div>
+                                <div class="separator" style="width: 2%; text-align: left;">
+                                    <strong style="font-weight: 800;">:</strong>
+                                </div>
+                                <div class="data" style="padding-left: 3px;padding-right:5px;width:80%">
+                                    <t t-if="o.deliver_to_third_parties">
+                                        <span t-if="o.customer_id and o.customer_id.street" t-esc="o.customer_id.street" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.customer_id and o.customer_id.l10n_pe_district.name" t-esc="o.customer_id.l10n_pe_district.name" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.customer_id and o.customer_id.city" t-esc="o.customer_id.city" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.customer_id and o.customer_id.state_id.name" t-esc="o.customer_id.state_id.name" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.customer_id and o.customer_id.country_id.name" t-esc="o.customer_id.country_id.name" style="word-wrap: break-word;"/>
+                                    </t>
+                                    <t t-elif="o.picking_type_id.code in ['incoming', 'internal']">
+                                        <span t-if="o.location_dest_id.direction_id.street" t-esc="o.location_dest_id.direction_id.street" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.location_dest_id.direction_id.l10n_pe_district.name" t-esc="o.location_dest_id.direction_id.l10n_pe_district.name" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.location_dest_id.direction_id.city" t-esc="o.location_dest_id.direction_id.city" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.location_dest_id.direction_id.state_id.name" t-esc="o.location_dest_id.direction_id.state_id.name" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.location_dest_id.direction_id.country_id.name" t-esc="o.location_dest_id.direction_id.country_id.name" style="word-wrap: break-word;"/>
+                                    </t>
+                                    <t t-elif="o.picking_type_id.code == 'outgoing'">
+                                        <span t-if="o.partner_id.street" t-esc="o.partner_id.street" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.partner_id.l10n_pe_district.name" t-esc="o.partner_id.l10n_pe_district.name" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.partner_id.city" t-esc="o.partner_id.city" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.partner_id.state_id.name" t-esc="o.partner_id.state_id.name" style="word-wrap: break-word;"/>
+                                        -
+                                        <span t-if="o.partner_id.country_id.name"  t-esc="o.partner_id.country_id.name" style="word-wrap: break-word;"/>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--       Native 1st Table -->
+                    <div class="products_data-CFP">
+                        <t t-set="weight_total" t-value="0.0"/>
+                        <t t-if="o.state!='done'">
+                            <div name="header_data" class="data_header_1-CFP">
+                                <div class="row">
+                                    <div class="column" style="width: 4%; text-align: center;">
+                                        <span>N°</span>
+                                    </div>
+                                    <div class="column" name="th_quantity" style="width: 71%; text-align: left;">
+                                        <span>Producto</span>
+                                    </div>
+                                    <div class="column" name="th_description" style="width: 9%; text-align: center;">
+                                        <span>Cant.</span>
+                                    </div>
+                                    <div class="column" style="width: 8%; text-align: center;">
+                                        <span>Udm</span>
+                                    </div>
+                                    <div class="column" name="th_priceunit" style="width: 8%; text-align: right;">
+                                        <span>Peso</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table_data_product_1-CFP">
+                                <t t-set="weight_total_0" t-value="0.0"/>
+                                <t t-set="add_line" t-value="0"/>
+                                <t t-set="move_line_ids_index" t-value="1"/>
+                                <t t-set="lines"
+                                   t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
+                                <div class="row" t-foreach="lines" t-as="move">
+                                    <t t-set="weight_0" t-value="float(move.product_id.weight or 0.0) * float(move.product_uom_qty or 0.0)"/>
+                                    <div class="column" style="width: 4%; text-align: center;">
+                                        <span t-esc="move_line_ids_index"/>
+                                    </div>
+                                    <div class="column" style="width: 71%; text-align: left;">
+                                        <span t-field="move.product_id"/>
+                                    </div>
+                                    <div class="column" style="width: 9%; text-align: right;">
+                                        <span t-field="move.product_uom_qty"/>
+                                    </div>
+                                    <div class="column" style="width: 8%; text-align: center;">
+                                        <span t-field="move.product_uom.name"/>
+                                    </div>
+                                    <div class="column" style="width: 8%; text-align: right;">
+                                        <span t-esc="weight_0" t-options='{"widget": "float", "decimal_precision": "Stock Weight"}'/>
+                                    </div>
+                                    <t t-set="move_line_ids_index" t-value="move_line_ids_index+1"/>
+                                    <t t-set="weight_total_0" t-value="weight_total_0+weight_0"/>
+                                    <t t-set="add_line" t-value="add_line+1"/>
+                                </div>
+
+                                <t t-if="add_line and add_line &#60; 10">
+                                    <t t-if="add_line%2!=0">
+                                        <t t-foreach="10-add_line" t-as="print_line">
+                                            <div class="impar_lines_extra-CFP">
+                                                <div class="column" colspan="5">
+                                                    <strong>&#8193;</strong>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-foreach="10-add_line" t-as="print_line">
+                                            <div class="par_lines_extra-CFP">
+                                                <div class="column" colspan="5">
+                                                    <strong>&#8193;</strong>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </t>
+                                </t>
+                            </div>
+
+                            <t t-set="weight_total" t-value="weight_total_0 or 0.0"/>
+                        </t>
+                    </div>
+
+                    <!--     2nd Table  -->
+                    <div class="products_data_2-CFP">
+                        <t t-if="o.move_line_ids and o.state=='done'">
+                            <t t-set="has_serial_number" t-value="False"/>
+                            <!--    return a list of lot_id  -->
+                            <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')"
+                               groups="stock.group_lot_on_delivery_slip"/>
+                            <!-- Fallback: if global group is off but per-operation-type boolean is on, still check for lots -->
+                            <t t-if="not has_serial_number and o.picking_type_id.show_lot_on_eguia">
+                                <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')"/>
+                            </t>
+                            <!-- show_lot_col: controlled by picking type boolean instead of company setting -->
+                            <t t-set="show_lot_col" t-value="has_serial_number and o.picking_type_id.show_lot_on_eguia"/>
+                            <t t-set="show_expiry_col" t-value="show_lot_col and o.picking_type_id.show_expiry_on_eguia"/>
+                                <div class="header_data_2">
+                                <div class="row">
+                                    <div class="column" style="width: 4%;text-align: center;">
+                                        <span>N°</span>
+                                    </div>
+                                    <t t-if="show_lot_col and show_expiry_col">
+                                        <div class="column"  style="width: 49%;text-align: left;" name="th_quantity">
+                                            <span>Producto</span>
+                                        </div>
+                                        <div class="column" style="width: 11%;text-align: center;">
+                                            <span>Lote/Serie</span>
+                                        </div>
+                                        <div class="column" style="width: 11%;text-align: center;">
+                                            <span>Exp. Date</span>
+                                        </div>
+                                        <div class="column" style="width: 9%;text-align: center;">
+                                            <span>Cant.</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: center;">
+                                            <span>Udm</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: right;">
+                                            <span>Peso</span>
+                                        </div>
+                                    </t>
+                                    <t t-elif="show_lot_col">
+                                        <div class="column"  style="width: 58%;text-align: left;" name="th_quantity">
+                                            <span>Producto</span>
+                                        </div>
+                                        <div class="column" style="width: 13%;text-align: center;">
+                                            <span>Lote/Serie</span>
+                                        </div>
+                                        <div class="column" style="width: 9%;text-align: center;">
+                                            <span>Cant.</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: center;">
+                                            <span>Udm</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: right;">
+                                            <span>Peso</span>
+                                        </div>
+                                    </t>
+                                    <t t-elif="show_expiry_col">
+                                        <div class="column"  style="width: 58%;text-align: left;" name="th_quantity">
+                                            <span>Producto</span>
+                                        </div>
+                                        <div class="column" style="width: 13%;text-align: center;">
+                                            <span>Exp. Date</span>
+                                        </div>
+                                        <div class="column" style="width: 9%;text-align: center;">
+                                            <span>Cant.</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: center;">
+                                            <span>Udm</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: right;">
+                                            <span>Peso</span>
+                                        </div>
+                                    </t>
+                                    <t t-else="">
+                                        <div class="column"  style="width: 71%;text-align: left;" name="th_quantity">
+                                            <span>Producto</span>
+                                        </div>
+                                        <div class="column" style="width: 9%;text-align: right;" name="th_description">
+                                            <span>Cant.</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: center;" name="th_Udm">
+                                            <span> Udm</span>
+                                        </div>
+                                        <div class="column" style="width: 8%;text-align: right;" name="th_priceunit">
+                                            <span>Peso</span>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="table_data_product_2-CFP">
+                                <t t-set="has_serial_number" t-value="False"/>
+                                <!--      return a list of lot_id-->
+                                <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')"
+                                   groups="stock.group_lot_on_delivery_slip"/>
+                                <!-- Fallback: if global group is off but per-operation-type boolean is on, still check for lots -->
+                                <t t-if="not has_serial_number and o.picking_type_id.show_lot_on_eguia">
+                                    <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')"/>
+                                </t>
+                                <t t-set="show_lot_col" t-value="has_serial_number and o.picking_type_id.show_lot_on_eguia"/>
+                                <t t-set="show_expiry_col" t-value="show_lot_col and o.picking_type_id.show_expiry_on_eguia"/>
+
+                                <!-- This part gets complicated with different use cases (additional use cases in extensions of this report):
+                                        1. If serial numbers are used and set to print on delivery slip => print lines as is, otherwise group them by overlapping
+                                            product + description + uom combinations
+                                        2. If any packages are assigned => split products up by package (or non-package) and then apply use case 1 -->
+                                <!-- If has destination packages => create sections of corresponding products -->
+                                <t t-set="move_line_ids_index" t-value="1"/>
+                                <t t-set="add_line" t-value="0"/>
+                                <t t-set="weight_total" t-value="0.0"/>
+
+                                <t t-if="o.packages_count" name="has_packages">
+                                    <t t-set="packages" t-value="o.package_history_ids.filtered(lambda ph: not ph.parent_dest_id).package_id"/>
+                                    <t t-set="add_line" t-value="0"/>
+                                    <t t-foreach="packages" t-as="package">
+                                        <t t-call="stock.stock_report_delivery_package_section_line"/>
+                                        <t t-set="package_move_lines"
+                                           t-value="o.move_ids.move_line_ids.filtered(lambda l: l.result_package_id == package or l.package_history_id.outermost_dest_id == package).sorted('product_id')"/>
+                                        <!-- If printing lots/serial numbers => keep products in original lines -->
+                                        <t t-if="show_lot_col">
+                                            <t t-set="add_line" t-value="0"/>
+                                            <div class="row" t-foreach="package_move_lines" t-as="move_line">
+                                                <t t-set="weight_total"
+                                                   t-value="weight_total"/>
+                                                <t t-call="l10n_pe_classic_format_picking.stock_report_delivery_has_serial_move_line_1"/>
+                                                <!-- line_index + 1  -->
+                                                <t t-set="add_line" t-value="add_line+1"/>
+                                            </div>
+
+                                        </t>
+                                        <!-- If not printing lots/serial numbers => merge lines with same product+description+uom -->
+                                        <t t-else="">
+                                            <t t-set="aggregated_lines"
+                                               t-value="package_move_lines._get_aggregated_product_weights(strict=True)"/>
+                                            <div class="row-values" t-foreach="aggregated_lines" t-as="line">
+                                                <t t-set="weight_sub" t-value="float(aggregated_lines[line]['weight'] or 0.0) * float(aggregated_lines[line]['quantity'] or 0.0)"/>
+                                                <t t-set="weight_total" t-value="weight_total+weight_sub"/>
+                                            </div>
+                                            <t t-call="l10n_pe_classic_format_picking.stock_report_delivery_aggregated_move_lines_1"/>
+                                        </t>
+                                    </t>
+                                    <!-- Make sure we do another section for package-less products if they exist -->
+                                    <t t-set="move_lines"
+                                       t-value="o.move_ids.move_line_ids.filtered(lambda l: not l.result_package_id and not l.package_history_id).sorted('product_id')"/>
+                                    <t t-if="move_lines" name="no_package_move_lines">
+                                        <t t-call="stock.stock_report_delivery_no_package_section_line"
+                                           name="no_package_section"/>
+                                        <t t-if="show_lot_col">
+                                            <t t-set="add_line" t-value="0"/>
+                                            <div class="row" t-foreach="move_lines" t-as="move_line">
+                                                <t t-set="weight_total"
+                                                   t-value="weight_total"/>
+                                                <t t-call="l10n_pe_classic_format_picking.stock_report_delivery_has_serial_move_line_1"/>
+                                                <!-- line_index + 1  -->
+                                                <t t-set="add_line" t-value="add_line+1"/>
+                                            </div>
+
+                                        </t>
+                                        <t t-else="">
+                                            <t t-set="aggregated_lines"
+                                               t-value="move_lines._get_aggregated_product_weights(strict=True)"/>
+                                            <t t-if="aggregated_lines">
+                                                <div class="row-values" t-foreach="aggregated_lines" t-as="line">
+                                                    <t t-set="weight_sub" t-value="float(aggregated_lines[line]['weight'] or 0.0) * float(aggregated_lines[line]['quantity'] or 0.0)"/>
+                                                    <t t-set="weight_total" t-value="weight_total+weight_sub"/>
+                                                </div>
+                                                <t t-call="l10n_pe_classic_format_picking.stock_report_delivery_aggregated_move_lines_1"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </t>
+                                <!-- No destination packages -->
+                                <t t-else="">
+                                    <!-- If printing lots/serial numbers => keep products in original lines -->
+                                    <t t-if="show_lot_col">
+                                        <t t-set="add_line" t-value="0"/>
+                                        <div class="row" t-foreach="o.move_line_ids" t-as="move_line">
+                                            <t t-set="weight_total"
+                                               t-value="weight_total"/>
+                                            <t t-call="l10n_pe_classic_format_picking.stock_report_delivery_has_serial_move_line_1"/>
+                                            <!-- line_index + 1  -->
+                                            <t t-set="add_line" t-value="add_line+1"/>
+                                        </div>
+
+                                    </t>
+                                    <!-- If not printing lots/serial numbers => merge lines with same product -->
+                                    <t t-else="" name="aggregated_move_lines">
+                                        <t t-set="aggregated_lines"
+                                           t-value="o.move_line_ids._get_aggregated_product_weights(strict=True)"/>
+                                        <div class="row-values" t-foreach="aggregated_lines" t-as="line">
+                                            <t t-set="weight_sub" t-value="float(aggregated_lines[line]['weight'] or 0.0) * float(aggregated_lines[line]['quantity'] or 0.0)"/>
+                                            <t t-set="weight_total" t-value="weight_total+weight_sub"/>
+                                        </div>
+                                        <t t-call="l10n_pe_classic_format_picking.stock_report_delivery_aggregated_move_lines_1"/>
+                                    </t>
+                                </t>
+                            </div>
+
+
+                        </t>
+                    </div>
+
+                    <!--       Info extra Table -->
+                    <div class="row" style="border-top: 1px solid #D7D7D7; width: 100%; margin-bottom: 5px;"/>
+                    <div class="table_info_extra-CFP">
+                        <div class="container-table-CFP">
+                            <span class="page" invisible="page == 2">
+                                <p style="page-break-after: always;"/>
+                            </span>
+                            <div class="row" style="width:100%;">
+                                <div class="column" style="padding-left:3px;width:25%;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01'">
+                                        <strong>Transportista</strong>
+                                    </t>
+                                    <t t-if="o.l10n_pe_edi_transport_type == '02'">
+                                        <strong>Chofer</strong>
+                                    </t>
+                                </div>
+                                <div class="column" style="width:2%;text-align:left;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01' or o.l10n_pe_edi_transport_type == '02'">
+                                        <strong style="font-weight:800;">:</strong>
+                                    </t>
+                                </div>
+                                <div class="column" style="padding-left:3px;width:70%;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01'">
+                                        <t t-if="o.l10n_pe_edi_operator_id">
+                                            <t t-if="o.l10n_pe_edi_operator_id.l10n_latam_identification_type_id.name
+                                             and o.l10n_pe_edi_operator_id.name and o.l10n_pe_edi_operator_id.vat">
+                                                <span t-esc="o.l10n_pe_edi_operator_id.name + ' con ' +
+                                                             o.l10n_pe_edi_operator_id.l10n_latam_identification_type_id.name
+                                                           + ' N°: ' + o.l10n_pe_edi_operator_id.vat"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="l10n_pe_edi_operator_id"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                    <t t-if="o.l10n_pe_edi_transport_type == '02'">
+                                        <t t-if="o.l10n_pe_edi_operator_id">
+                                            <t t-if="o.l10n_pe_edi_operator_id.l10n_latam_identification_type_id.name
+                                             and o.l10n_pe_edi_operator_id.name and o.l10n_pe_edi_operator_id.vat">
+                                                <span t-esc="o.l10n_pe_edi_operator_id.name + ' con ' +
+                                                   o.l10n_pe_edi_operator_id.l10n_latam_identification_type_id.name
+                                                   + ' N°: ' +  o.l10n_pe_edi_operator_id.vat"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc="l10n_pe_edi_operator_id"/>
+                                            </t>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="width:100%;">
+                                <div class="column" style="padding-left:3px;width:25%;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01' or o.l10n_pe_edi_transport_type == ''">
+                                        <strong>Placa Vehículo</strong>
+                                    </t>
+                                    <t t-if="o.l10n_pe_edi_transport_type == '02'">
+                                        <strong>Placa Vehículo</strong>
+                                    </t>
+                                </div>
+                                <div class="column" style="width:2%;text-align:left;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01' or o.l10n_pe_edi_transport_type == '02'">
+                                        <strong style="font-weight:800;">:</strong>
+                                    </t>
+                                </div>
+                                <div class="column" style="padding-left:3px;width:70%;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '02'">
+                                        <t t-if="o.l10n_pe_edi_vehicle_id"
+                                           t-esc="o.l10n_pe_edi_vehicle_id.license_plate"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div t-if="o.l10n_pe_edi_operator_id" class="row" style="width:100%;">
+                                <div class="column" style="padding-left:3px;width:25%;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01'">
+                                        <strong>Registro MTC</strong>
+                                    </t>
+                                    <t t-elif="o.l10n_pe_edi_transport_type == '02'">
+                                        <strong>Nro. Licencia</strong>
+                                    </t>
+                                </div>
+                                <div class="column" style="width:2%;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01' or o.l10n_pe_edi_transport_type == '02'">
+                                        <strong style="font-weight:800;">:</strong>
+                                    </t>
+                                </div>
+                                <div class="column" style="padding-left:3px;width:70%;">
+                                    <t t-if="o.l10n_pe_edi_transport_type == '01'">
+                                        <t t-esc="o.l10n_pe_edi_operator_id.l10n_pe_edi_mtc_number"/>
+                                    </t>
+                                    <t t-elif="o.l10n_pe_edi_transport_type == '02'">
+                                        <t t-esc="o.l10n_pe_edi_operator_id.l10n_pe_edi_operator_license"/>
+                                    </t>
+                                </div>
+                            </div>
+                            <div class="row" style="width:100%;">
+                                <div class="column" style="padding-left:3px;width:25%;">
+                                    <strong>Indicador M1/L</strong>
+                                </div>
+                                <div class="column" style="width:2%;">
+                                    <strong style="font-weight:800;">:</strong>
+                                </div>
+                                <div class="column" style="padding-left:3px;width:70%;">
+                                    <span t-if="o.l10n_pe_edi_vehicle_id.is_m1l">SI</span>
+                                    <span t-else="">No</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image_qr_code-CFP">
+                            <div style="text-align: right; padding-right: 5px; font-size: 12px; margin-top: 5px;">
+                                <strong>Peso T. </strong>
+                                <span t-esc="weight_total or 0.0" t-options='{"widget": "float", "decimal_precision": "Stock Weight"}'/>
+                            </div>
+                            <t t-set="qr_url" t-value="o._l10n_pe_edi_get_qr()"/>
+                            <img style="margin-top:5px;margin-bottom:5px;"
+                                 t-att-src="'/report/barcode/?barcode_type=QR&amp;value=%s&amp;width=100&amp;height=100' % quote_plus(qr_url)"/>
+                        </div>
+                    </div>
+                    <div style="clear:both;margin-top:15px;font-size:14px;">
+                        <div class="row" style="border-top: 1px solid #D7D7D7; width: 100%; margin-bottom: 10px;"/>
+                        <div t-if="o.l10n_pe_edi_vehicle_id.authorization_issuing_entity">
+                            <strong>Entidad emisora de la autorización especial : </strong>
+                            <span t-field="o.l10n_pe_edi_vehicle_id.authorization_issuing_entity"/>
+                        </div>
+                        <div t-if="o.l10n_pe_edi_vehicle_id.authorization_issuing_entity_number">
+                            <strong>Número de autorización especial : </strong>
+                            <span t-field="o.l10n_pe_edi_vehicle_id.authorization_issuing_entity_number"/>
+                        </div>
+                    </div>
+                    <div style="clear:both;margin-top:10px;">
+                        <t t-if="o.note">
+                            <div style="clear:left; padding-bottom:0px;">
+                                <div>
+                                    <strong>OBSERVACIONES/NOTA</strong>
+                                </div>
+                                <div>
+                                    <span t-field="o.note"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div style="margin-top:30px;">
+                    <div style="width:100%;">
+                        <div style="width: 50%;height: 50px;float: right;">
+                            <div style="text-align: center;">
+                                <div style="width: 60%; margin: 0 auto; border-top: 1px solid #333; padding-top: 5px;"/>
+                                <span>Responsable</span>
+                            </div>
+                        </div>
+                        <div style="width: 50%;height: 50px;float: left;">
+                            <div style="text-align: center;">
+                                <div style="width: 60%; margin: 0 auto; border-top: 1px solid #333; padding-top: 5px;"/>
+                                <span>Receptor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div t-attf-class="footer o_background_footer">
+                    <div class="text-center">
+                        <div t-if="report_type == 'pdf'" style="font-size: 12px; color: #888;">
+                            Página
+                            <span class="page"/>
+                            de
+                            <span class="topage"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="stock_report_delivery_has_serial_move_line_1">
+            <t t-set="weight_1" t-value="float(move_line.product_id.weight or 0.0) * float(move_line.quantity or 0.0)"/>
+
+            <t t-if="show_lot_col and show_expiry_col">
+                <div class="column" style="width: 4%;text-align:center;font-size: 14px;">
+                    <span t-esc="move_line_ids_index"/>
+                </div>
+
+                <div class="column" style="width: 49%;text-align:left;font-size: 14px;">
+                    <span t-field="move_line.product_id"/>
+                    <!-- description -->
+
+
+                    <t t-if="o.company_id.is_product_barcode">
+                        <p><strong>Ean del Producto: </strong><span t-field="move_line.product_id.barcode"/></p>
+                    </t>
+                </div>
+
+                <div class="column" style="width: 11%;text-align:center;">
+                    <span t-field="move_line.lot_id.name"/>
+                </div>
+
+                <div class="column" style="width: 11%;text-align:center;">
+                    <span t-field="move_line.lot_id.expiration_date"
+                        t-options='{"format": "dd/MM/yyyy"}'/>
+                </div>
+
+                <div class="column" style="width: 9%;text-align:right;" name="move_line_lot_quantity">
+                    <span t-field="move_line.quantity"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:center;">
+                    <span t-field="move_line.product_uom_id"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:right;">
+                    <span t-esc="weight_1"
+                        t-options='{"widget": "float", "decimal_precision": "Stock Weight"}'/>
+                </div>
+            </t>
+
+            <t t-elif="show_lot_col">
+                <div class="column" style="width: 4%;text-align:center;font-size: 14px;">
+                    <span t-esc="move_line_ids_index"/>
+                </div>
+
+                <div class="column" style="width: 58%;text-align:left;font-size: 14px;">
+                    <span t-field="move_line.product_id"/>
+
+                    <t t-if="o.company_id.is_product_barcode">
+                        <p><strong>Ean del Producto: </strong><span t-field="move_line.product_id.barcode"/></p>
+                    </t>
+                </div>
+
+                <div class="column" style="width: 13%;text-align:center;">
+                    <span t-field="move_line.lot_id.name"/>
+                </div>
+
+                <div class="column" style="width: 9%;text-align:right;" name="move_line_lot_quantity">
+                    <span t-field="move_line.quantity"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:center;">
+                    <span t-field="move_line.product_uom_id"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:right;">
+                    <span t-esc="weight_1"
+                        t-options='{"widget": "float", "decimal_precision": "Stock Weight"}'/>
+                </div>
+            </t>
+
+            <t t-elif="show_expiry_col">
+                <div class="column" style="width: 4%;text-align:center;font-size: 14px;">
+                    <span t-esc="move_line_ids_index"/>
+                </div>
+
+                <div class="column" style="width: 58%;text-align:left;font-size: 14px;">
+                    <span t-field="move_line.product_id"/>
+
+                    <t t-if="o.company_id.is_product_barcode">
+                        <p><strong>Ean del Producto: </strong><span t-field="move_line.product_id.barcode"/></p>
+                    </t>
+                </div>
+
+                <div class="column" style="width: 13%;text-align:center;">
+                    <span t-field="move_line.lot_id.expiration_date"
+                        t-options='{"format": "dd/MM/yyyy"}'/>
+                </div>
+
+                <div class="column" style="width: 9%;text-align:right;" name="move_line_lot_quantity">
+                    <span t-field="move_line.quantity"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:center;">
+                    <span t-field="move_line.product_uom_id"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:right;">
+                    <span t-esc="weight_1"
+                        t-options='{"widget": "float", "decimal_precision": "Stock Weight"}'/>
+                </div>
+            </t>
+
+            <t t-else="">
+                <div class="column" style="width: 4%;text-align:center;font-size: 14px;">
+                    <span t-esc="move_line_ids_index"/>
+                </div>
+
+                <div class="column" style="width: 71%;text-align:left;font-size: 14px;">
+                    <span t-field="move_line.product_id"/>
+
+                    <t t-if="o.company_id.is_product_barcode">
+                        <p><strong>Ean del Producto: </strong><span t-field="move_line.product_id.barcode"/></p>
+                    </t>
+                </div>
+
+                <div class="column" style="width: 9%;text-align:right;" name="move_line_lot_quantity">
+                    <span t-field="move_line.quantity"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:center;">
+                    <span t-field="move_line.product_uom_id"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:right;">
+                    <span t-esc="weight_1"
+                        t-options='{"widget": "float", "decimal_precision": "Stock Weight"}'/>
+                </div>
+            </t>
+
+            <t t-set="move_line_ids_index" t-value="move_line_ids_index+1"/>
+        </template>
+
+        <template id="stock_report_delivery_aggregated_move_lines_1">
+            <t t-set="add_line" t-value="0"/>
+            <div class="row" t-foreach="aggregated_lines" t-as="line">
+                <t t-set="weight_2" t-value="(aggregated_lines[line]['weight'] or 0.0) * (aggregated_lines[line]['quantity'] or 0.0)"/>
+
+                <div class="column" style="width: 6%;text-align:center;">
+                    <span t-esc="move_line_ids_index"/>
+                </div>
+
+                <div class="column" style="width: 65%;text-align:left;">
+                    <span t-esc="aggregated_lines[line]['name']"/>
+
+                </div>
+
+                <div class="column" style="width: 10%;text-align:right;"
+                    name="move_line_aggregated_quantity">
+                    <span t-esc="('%.1f' % aggregated_lines[line]['quantity'])"/>
+                </div>
+
+                <div class="column" style="width: 11%;text-align:center;">
+                    <span t-esc="aggregated_lines[line]['product_uom']['name']"/>
+                </div>
+
+                <div class="column" style="width: 8%;text-align:right;">
+                    <span t-esc="weight_2"
+                        t-options='{"widget": "float", "decimal_precision": "Stock Weight"}'/>
+                </div>
+
+                <t t-set="move_line_ids_index" t-value="move_line_ids_index+1"/>
+                <t t-set="add_line" t-value="add_line+1"/>
+            </div>
+
+
+        </template>
+
+        <template id="add_lines_template">
+            <t t-if="add_line and add_line &#60; 10">
+                <t t-if="add_line%2!=0">
+                    <t t-foreach="10-add_line" t-as="print_line">
+                        <div class="impar_lines_extra-CFP">
+                            <div class="column" colspan="6">
+                                <strong>&#8193;</strong>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+                <t t-else="">
+                    <t t-foreach="10-add_line" t-as="print_line">
+                        <div class="par_lines_extra-CFP">
+                            <div class="column" colspan="6">
+                                <strong>&#8193;</strong>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_stock_picking_classic">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="l10n_pe_classic_format_picking.report_stock_picking_classic_document"
+                       t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

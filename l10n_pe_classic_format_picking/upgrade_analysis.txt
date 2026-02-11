@@ -1,0 +1,110 @@
+---Models in module 'l10n_pe_classic_format_picking'---
+StockPicking (inherit=stock.picking)
+StockMoveLine (inherit=stock.move.line)
+StockLocation (inherit=stock.location)
+StockPickingType (inherit=stock.picking.type)
+
+---Fields in module 'l10n_pe_classic_format_picking'---
+StockLocation.direction_id (Many2one -> res.partner)
+StockPickingType.show_lot_on_eguia (Boolean) — Controls Lot/Serial column visibility on e-Guía report per Operation Type.
+StockPickingType.show_expiry_on_eguia (Boolean) — Controls Expiration Date column visibility on e-Guía report. Requires show_lot_on_eguia to be enabled.
+
+---XML records in module 'l10n_pe_classic_format_picking'---
+report.paperformat: paperformat_print_stock_picking_classic
+ir.actions.report: stock_picking_classic
+template: external_layout_stock_picking_classic
+template: report_stock_picking_classic_document
+template: stock_report_delivery_has_serial_move_line_1
+template: stock_report_delivery_aggregated_move_lines_1
+template: add_lines_template
+template: report_stock_picking_classic
+
+---Migration Analysis (v18 -> v19)---
+1. **Manifest**:
+   - Version updated to 19.0.1.0.5.
+   - Dependencies verified (l10n_pe_edi_stock added previously).
+
+2. **XML Views**:
+   - `reports/ticket_template.xml`:
+     - `t-raw` replaced with `t-out` for security and compatibility.
+     - `attrs` removed from `span` tag, replaced with `invisible="page == 2"`.
+   - `views/res_config_settings_views.xml`:
+     - Compatible with v19 (uses `setting` tag inside `block`).
+   - `views/stock_picking_type_views.xml`:
+     - Added `show_lot_on_eguia` and `show_expiry_on_eguia` fields inside `group[@name='stock_picking_type_lot']`.
+     - `show_expiry_on_eguia` is conditionally invisible when `show_lot_on_eguia` is not enabled.
+
+3. **Python Models**:
+   - `StockPicking`: `_l10n_pe_edi_get_qr` uses `etree`, compatible.
+   - `StockMoveLine`: `_get_aggregated_product_weights` overrides internal method. Checked signature compatibility.
+   - `StockLocation`: `direction_id` uses `@api.depends` and `store=True`. Logic seems sound for v19.
+   - `StockPickingType`: Added `show_lot_on_eguia` and `show_expiry_on_eguia` Boolean fields.
+
+4. **Static Assets**:
+   - `css/main.css`: Registered in `web.report_assets_common` in manifest. Correct for report styling.
+   - `.table_data_product_2-CFP` font-size set to 14px for uniform data rows (was 16px).
+
+5. **Verification**:
+   - Validated `reports/ticket_template.xml` syntax:
+     - `t-raw` replaced by `t-out`.
+     - `attrs` converted to `invisible`.
+   - Validated `__manifest__.py` version `19.0.1.0.5`.
+
+---Changelog (Session 2026-02-11)---
+
+### New Features
+1. **Per-Operation-Type Lot/Serial Column** (`show_lot_on_eguia`):
+   - New Boolean field on `stock.picking.type`.
+   - Controls whether the Lot/Serial column appears on the e-Guía report.
+   - Template variable `show_lot_col = has_serial_number and picking_type.show_lot_on_eguia`.
+   - Includes fallback: if global group `stock.group_lot_on_delivery_slip` is inactive
+     but the per-operation-type boolean IS enabled, lots are still checked independently.
+
+2. **Per-Operation-Type Expiration Date Column** (`show_expiry_on_eguia`):
+   - New Boolean field on `stock.picking.type`.
+   - Requires `show_lot_on_eguia` to be enabled (both in UI visibility and logic).
+   - Template variable `show_expiry_col = show_lot_col and picking_type.show_expiry_on_eguia`.
+
+### Report Template Changes (ticket_template.xml)
+1. **Header Standardization**:
+   - First column header renamed from "ITM" to "N°" in the done-state header.
+   - Expiry column header set to "Exp. Date" (English source; Spanish "F. Exp." via .po files).
+
+2. **Conditional Column Headers** (4 branches):
+   - `show_lot_col AND show_expiry_col`: N°(4%) + Producto(49%) + Lote/Serie(11%) + Exp.Date(11%) + Cant.(9%) + Udm(8%) + Peso(8%)
+   - `show_lot_col` only: N°(4%) + Producto(58%) + Lote/Serie(13%) + Cant.(9%) + Udm(8%) + Peso(8%)
+   - `show_expiry_col` only: N°(4%) + Producto(58%) + Exp.Date(13%) + Cant.(9%) + Udm(8%) + Peso(8%)
+   - Default (none): N°(4%) + Producto(71%) + Cant.(9%) + Udm(8%) + Peso(8%)
+
+3. **Row Sub-Template** (`stock_report_delivery_has_serial_move_line_1`):
+   - Same 4 branches with matching column widths.
+   - Each branch renders appropriate fields (lot_id.name, lot_id.expiration_date, etc.).
+
+4. **Package Grouping Fix**:
+   - Changed `class="row-values"` → `class="row"` in the package+lot branch.
+   - `row-values` lacked `display: flex`, causing columns to stack vertically inside packages.
+   - `row` has `display: flex` defined in CSS, fixing the horizontal layout.
+
+### CSS Changes (main.css)
+1. **Data Row Font Size**: `.table_data_product_2-CFP` font-size changed from 16px to 14px.
+   - Ensures all columns (N°, Producto, Lote, Exp, Cant, Udm, Peso) render at uniform 14px.
+
+### Documentation Updates (index.html)
+1. **LLM Metadata**: Updated to reflect package grouping, conditional lot/serial, conditional expiry capabilities.
+2. **Key Features**: Added 3 new cards (Package Grouping, Lot/Serial Numbers, Expiration Date).
+3. **Setup Section**: Added step "C. Operation Type Settings" with configuration instructions.
+4. **QA Scenarios**: Added Scenario 4 (Lot/Expiry toggle) and Scenario 5 (Package Grouping).
+5. **FAQ**: Added Q4 "Lot/Serial column not appearing?" with troubleshooting steps.
+
+---Gotchas & Lessons Learned---
+1. **groups attribute on t-set**: The `groups="stock.group_lot_on_delivery_slip"` attribute on
+   `<t t-set="has_serial_number">` prevents execution if the global Inventory setting is off.
+   Added a fallback block that bypasses the groups check when the per-operation-type boolean is enabled.
+
+2. **row-values vs row CSS class**: The `row-values` class does NOT have `display: flex`.
+   When using sub-templates that output column divs directly (not wrapped in their own row div),
+   the parent MUST use `class="row"` for proper horizontal layout.
+
+3. **Font-size inheritance**: Inline `font-size: 14px` on some columns but not others causes
+   visual inconsistency when the container has a different default (16px). Fix at the CSS
+   container level rather than adding inline overrides to every div.

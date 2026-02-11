@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_type_form_inherit_classic_format" model="ir.ui.view">
+        <field name="name">stock.picking.type.form.inherit.classic.format</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='stock_picking_type_lot']" position="inside">
+                <field name="show_lot_on_eguia"/>
+                <field name="show_expiry_on_eguia" invisible="not show_lot_on_eguia"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

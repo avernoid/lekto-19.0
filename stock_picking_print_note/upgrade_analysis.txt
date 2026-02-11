@@ -1,0 +1,15 @@
+---Models in module 'stock_picking_print_note'---
+---Fields in module 'stock_picking_print_note'---
+---XML records in module 'stock_picking_print_note'---
+UPD  l10n_pe_edi_guiaremision_report_delivery_document_inherit_stock_picking_print_note -> report_delivery_document_inherit_stock_picking_print_note
+-------------------------------------------------------------------
+DEPENDS [stock]
+model:
+field:
+xml_id: report_delivery_document
+
+-------------------------------------------------------------------
+VERSION UPGRADE [18.0.1.0.1] -> [19.0.1.0.0]
+- Updated manifest version.
+- Validated XML syntax for Odoo 19 compatibility.
+-------------------------------------------------------------------

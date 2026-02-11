@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* invoice_type_document_extension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-10 01:50+0000\n"
+"PO-Revision-Date: 2026-02-10 01:50+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_picking__transfer_document_type_id
+msgid "Transfer Doc Type"
+msgstr "Tipo doc. traslado"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_picking__serie_transfer_document
+msgid "Transfer Doc Series"
+msgstr "Serie doc. traslado"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_picking__number_transfer_document
+msgid "Transfer Doc Number"
+msgstr "Número doc. traslado"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_picking__transfer_document_type_id
+msgid "This document type is used for PLE 13.1 validation. If left blank, Odoo will attempt to fill it from the Remission Guide, Purchase/Sales Order, or default to 00."
+msgstr "Esta serie se utiliza para el PLE 13.1, si lo deja en Blanco, Odoo lo completará con valores por defecto que provienen de la guía de Remisión, sino, de la Orden de compra o de venta, sino, lo completará con 00."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_picking__serie_transfer_document
+msgid "This series is used for PLE 13.1 validation. If left blank, Odoo will attempt to fill it from the Remission Guide, Purchase/Sales Order, or default to 00."
+msgstr "Esta serie se utiliza para el PLE 13.1, si lo deja en Blanco, Odoo lo completará con valores por defecto que provienen de la guía de Remisión, sino, de la Orden de compra o de venta, sino, lo completará con 00."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_picking__number_transfer_document
+msgid "This number is used for PLE 13.1 validation. If left blank, Odoo will attempt to fill it from the Remission Guide, Purchase/Sales Order, or default to 00."
+msgstr "Este número se utiliza para el PLE 13.1, si lo deja en Blanco, Odoo lo completará con valores por defecto que provienen de la guía de Remisión, sino, de la Orden de compra o de venta, sino, lo completará con 00."
