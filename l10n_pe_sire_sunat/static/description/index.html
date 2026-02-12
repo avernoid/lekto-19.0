@@ -1,0 +1,2442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Format SIRE SUNAT | Odoo Peruvian Localization App by Ganemo</title>
+    <meta name="description"
+        content="Generate SIRE SUNAT compliant TXT and XLSX files for Peruvian purchase (RCE) and sales (RVIE) electronic registries directly from Odoo.">
+    <meta name="keywords"
+        content="Odoo, SIRE, SUNAT, Peru, Localization, Purchase Book, Sale Book, RCE, RVIE, PLE, Ganemo, Accounting, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'l10n_pe_sire_sunat' generates SIRE SUNAT compliant reports for Peruvian purchase (RCE)
+            and sales (RVIE) electronic registries. It extends account.move with complement fields and uses
+            PostgreSQL functions (get_tax, get_tax_purchase, validate_string) for high-performance tax calculations.
+            Outputs TXT and XLSX files ready for upload to the SUNAT SIRE platform.
+            Supports national purchases, non-domiciled purchases, and sales with multiple report variants
+            (general, complements, proposed modifications, subsequent adjustments).
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). NOT supported on Odoo Online due to custom
+            code restrictions.
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Format SIRE</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    SUNAT Purchase & Sales Electronic Registry</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Generate SIRE-compliant TXT and XLSX files for Peruvian RCE (Purchase) and RVIE (Sales) books
+                    directly from Odoo. Ready to upload to SUNAT's electronic registry platform.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-text-o mr-2"></i> SIRE Compliance</h4>
+                            <p style="text-align: justify;">SUNAT requires taxpayers to submit their purchase and sales
+                                registries through the <strong>SIRE platform</strong> in specific TXT formats. This
+                                module automates the generation of these files, eliminating manual data entry and
+                                reducing
+                                errors in your tax filings.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-calculator mr-2"></i> Automated Tax Calculation
+                            </h4>
+                            <p style="text-align: justify;">Uses <strong>PostgreSQL functions</strong> to calculate
+                                tax amounts per tag (IGV, ISC, ICBP, IVAP, etc.) directly at the database level.
+                                High-performance queries ensure accurate results even with thousands of invoices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Prerequisites</h3>
+                            <p class="lead">Ensure these modules are installed before using SIRE:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>PLE Sale
+                                                Book</strong> (ple_sale_book)</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>PLE Purchase
+                                                Book</strong> (ple_purchase_book)</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Tax tags must be properly
+                                            configured via the <strong>PLE Tax Config Wizard</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Invoices must have
+                                            <strong>PLE dates</strong> assigned.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Generating Reports</h3>
+                            <p class="lead">How to generate SIRE files step by step:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-shopping-cart text-primary mr-2"></i> RVIE (Sales)</h5>
+                                        <p class="text-muted">Navigate to <strong>Accounting > Reports > Reporte SIRE >
+                                                Reporte RVIE</strong>.
+                                            Select the year, month, and send state. Click <strong>Generate
+                                                Report</strong>
+                                            to download TXT and XLSX files.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-truck text-primary mr-2"></i> RCE - National Purchases</h5>
+                                        <p class="text-muted">Navigate to <strong>Accounting > Reports > Reporte SIRE >
+                                                Reporte RCE - Compras nacionales</strong>.
+                                            Select period and parameters. Click <strong>Generate Report</strong>.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-globe text-primary mr-2"></i> RCE - Non-Domiciled</h5>
+                                        <p class="text-muted">Navigate to <strong>Accounting > Reports > Reporte SIRE >
+                                                Reporte RCE - Compras no domiciliadas</strong>.
+                                            Generates specific formats for non-domiciled supplier transactions.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-check-circle text-primary mr-2"></i> Multiple Variants</h5>
+                                        <p class="text-muted">Each report supports variants: <strong>General</strong>,
+                                            <strong>Complements</strong>, <strong>Add/Accept/Replace Proposed</strong>,
+                                            and <strong>Subsequent Adjustments</strong>.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column Reference Tables -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #28a745; background-color: #f9fff9; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #28a745; font-weight: 700;"><i class="fa fa-columns mr-2"></i> 3.
+                                Report Column Reference</h3>
+                            <p class="lead">Complete technical-functional mapping of every column generated in each
+                                report.</p>
+
+                            <!-- RVIE Sales Columns -->
+                            <h4 class="mt-4 mb-3" style="color: #3c6dac; font-weight: 700;">
+                                <i class="fa fa-shopping-cart mr-2"></i> RVIE — Sales Report Columns
+                            </h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" style="font-size: 13px;">
+                                    <thead style="background-color: #3c6dac; color: white;">
+                                        <tr>
+                                            <th style="width: 20%;">Column</th>
+                                            <th style="width: 25%;">Source (Model.field / SQL)</th>
+                                            <th style="width: 45%;">Description</th>
+                                            <th style="width: 10%;">Conditions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>company_vat</code></td>
+                                            <td>Wizard <code>company_id.vat</code></td>
+                                            <td>Company's RUC number. Taken from the selected company at wizard level,
+                                                truncated to 11 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>company_name</code></td>
+                                            <td><code>res.company.name</code></td>
+                                            <td>Legal name of the company. Max 1500 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>period</code></td>
+                                            <td>Wizard <code>year + month</code></td>
+                                            <td>Concatenation of the selected year and month (e.g.,
+                                                <code>202601</code>).
+                                                6 chars.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>invoice_date</code></td>
+                                            <td><code>account.move.invoice_date</code></td>
+                                            <td>Invoice emission date, formatted as <code>DD/MM/YYYY</code>.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>document_type_code</code></td>
+                                            <td><code>l10n_latam_document_type.code</code></td>
+                                            <td>SUNAT document type code (e.g., <code>01</code>=Factura,
+                                                <code>03</code>=Boleta, <code>07</code>=Nota Crédito). Via
+                                                <code>account_move.l10n_latam_document_type_id</code>.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>invoice_serie</code></td>
+                                            <td><code>account.move.name</code></td>
+                                            <td>Serie portion of the invoice number. Extracted by splitting
+                                                <code>name</code> at <code>-</code> (first part). Spaces removed.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>invoice_correlative</code></td>
+                                            <td><code>account.move.name</code></td>
+                                            <td>Correlative portion of the invoice number. Extracted by splitting
+                                                <code>name</code> at <code>-</code> (second part).
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>invoice_line_correlative</code></td>
+                                            <td><code>account.move.line.ple_correlative</code></td>
+                                            <td>PLE correlative of the receivable line with the longest maturity
+                                                distance. Found via subquery on <code>account_move_line</code> where
+                                                <code>account_type = 'asset_receivable'</code>, ordered by
+                                                <code>ABS(date_maturity - invoice_date)</code> DESC, LIMIT 1.
+                                            </td>
+                                            <td>Only lines with <code>asset_receivable</code> account type.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>partner_identification_code</code></td>
+                                            <td><code>l10n_latam_identification_type.l10n_pe_vat_code</code></td>
+                                            <td>Partner identification type code (e.g., <code>6</code>=RUC,
+                                                <code>1</code>=DNI). Via
+                                                <code>partner.l10n_latam_identification_type_id</code>.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>partner_vat</code></td>
+                                            <td><code>res.partner.vat</code></td>
+                                            <td>Partner's tax identification number (RUC/DNI). Max 15 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>partner_name</code></td>
+                                            <td><code>res.partner.name</code></td>
+                                            <td>Partner's legal name. Cleaned via <code>validate_string()</code>
+                                                PostgreSQL function (removes special chars). Max 1500 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_base_exp</code></td>
+                                            <td><code>get_tax()</code> → index 0</td>
+                                            <td>Tax base for export operations. Calculated by the
+                                                <code>get_tax</code> PostgreSQL function matching tax tags.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_base_og</code></td>
+                                            <td><code>get_tax()</code> → index 1</td>
+                                            <td>Tax base for taxed operations (operaciones gravadas). IGV base
+                                                amount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_base_ogd</code></td>
+                                            <td><code>get_tax()</code> → index 2</td>
+                                            <td>Tax base for taxed operations with discount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_tax_og</code></td>
+                                            <td><code>get_tax()</code> → index 3</td>
+                                            <td>IGV tax amount for taxed operations.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_tax_ogd</code></td>
+                                            <td><code>get_tax()</code> → index 4</td>
+                                            <td>IGV tax amount for taxed operations with discount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_base_oe</code></td>
+                                            <td><code>get_tax()</code> → index 5</td>
+                                            <td>Tax base for exonerated operations.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_base_ou</code></td>
+                                            <td><code>get_tax()</code> → index 6</td>
+                                            <td>Tax base for unaffected operations (inafectas).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_tax_isc</code></td>
+                                            <td><code>get_tax()</code> → index 7</td>
+                                            <td>ISC (Selective Consumption Tax) amount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_tax_icbp</code></td>
+                                            <td><code>get_tax()</code> → index 8</td>
+                                            <td>ICBP (Plastic Bag Tax) amount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_base_ivap</code></td>
+                                            <td><code>get_tax()</code> → index 9</td>
+                                            <td>Base for IVAP (Tax on Sale of Rice).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_tax_ivap</code></td>
+                                            <td><code>get_tax()</code> → index 10</td>
+                                            <td>IVAP tax amount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>s_tax_other</code></td>
+                                            <td><code>get_tax()</code> → index 11</td>
+                                            <td>Other taxes amount not classified above.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>amount_total</code></td>
+                                            <td>Python: <code>sum(tax_data[:12])</code></td>
+                                            <td>Invoice total. Calculated as the sum of all 12 tax data values
+                                                returned by <code>get_tax()</code>.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>currency_name</code></td>
+                                            <td><code>res.currency.name</code></td>
+                                            <td>ISO 4217 currency code (e.g., <code>PEN</code>, <code>USD</code>). Via
+                                                <code>account_move.currency_id</code>. Max 3 chars.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>exchange_rate</code></td>
+                                            <td><code>account.move.invoice_currency_rate</code></td>
+                                            <td>Exchange rate = <code>1 / invoice_currency_rate</code>, rounded to 3
+                                                decimals. Represents the direct rate (e.g., 3.750 for
+                                                USD→PEN).</td>
+                                            <td>Only for non-PEN currencies. PEN invoices return <code>NULL</code>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>origin_invoice_date</code></td>
+                                            <td><code>account.move.origin_invoice_date</code></td>
+                                            <td>Date of the original document (for credit/debit notes). Formatted
+                                                <code>DD/MM/YYYY</code>.
+                                            </td>
+                                            <td>Populated only for refund-type documents.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>origin_document_type_code</code></td>
+                                            <td><code>l10n_latam_document_type.code</code></td>
+                                            <td>Document type code of the original invoice being modified. Via
+                                                <code>account_move.origin_l10n_latam_document_type_id</code>.
+                                            </td>
+                                            <td>Populated only for credit/debit notes.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>origin_number_serie</code></td>
+                                            <td><code>account.move.origin_number</code></td>
+                                            <td>Serie of the original document. Extracted from
+                                                <code>origin_number</code> splitting at <code>-</code>.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>origin_number_correlative</code></td>
+                                            <td><code>account.move.origin_number</code></td>
+                                            <td>Correlative of the original document. Second part after
+                                                <code>-</code> split.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>bool_pay_invoice</code></td>
+                                            <td><code>account.move.bool_pay_invoice</code></td>
+                                            <td>Payment indicator. Returns <code>1</code> if set, empty otherwise.
+                                            </td>
+                                            <td>Only when <code>bool_pay_invoice IS NOT NULL</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>ple_state</code></td>
+                                            <td><code>account.move.ple_state</code></td>
+                                            <td>PLE declaration state indicator. 1 char.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>detraction</code></td>
+                                            <td><code>account.move.l10n_pe_edi_operation_type</code></td>
+                                            <td>Detraction marker. Returns <code>TieneDetraccion</code> flag.</td>
+                                            <td>Only when <code>l10n_pe_edi_operation_type</code> is
+                                                <code>1001</code>,
+                                                <code>1002</code>, <code>1003</code>, or <code>1004</code>.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- RCE Purchase Columns -->
+                            <h4 class="mt-5 mb-3" style="color: #791d97; font-weight: 700;">
+                                <i class="fa fa-truck mr-2"></i> RCE — Purchase Report Columns
+                            </h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" style="font-size: 13px;">
+                                    <thead style="background-color: #791d97; color: white;">
+                                        <tr>
+                                            <th style="width: 20%;">Column</th>
+                                            <th style="width: 25%;">Source (Model.field / SQL)</th>
+                                            <th style="width: 45%;">Description</th>
+                                            <th style="width: 10%;">Conditions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>company_vat</code></td>
+                                            <td>Wizard <code>company_id.vat</code></td>
+                                            <td>Company's RUC number. Max 11 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>company_name</code></td>
+                                            <td><code>res.company.name</code></td>
+                                            <td>Legal name of the company. Max 1500 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>period</code></td>
+                                            <td>Wizard <code>year + month</code></td>
+                                            <td>Fiscal period in <code>YYYYMM</code> format (e.g.,
+                                                <code>202601</code>).
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>invoice_date</code></td>
+                                            <td><code>account.move.invoice_date</code></td>
+                                            <td>Invoice emission date. <code>DD/MM/YYYY</code>.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>invoice_date_due</code></td>
+                                            <td><code>account.move.invoice_date_due</code></td>
+                                            <td>Invoice due date. <code>DD/MM/YYYY</code>.</td>
+                                            <td>Only for doc types <code>14, 46, 50, 51, 52, 53, 54</code>. Empty
+                                                otherwise.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>document_type_code</code></td>
+                                            <td><code>l10n_latam_document_type.code</code></td>
+                                            <td>SUNAT document type code. Max 2 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>ref_serie</code></td>
+                                            <td>Priority: <code>l10n_latam_document_number</code> → <code>ref</code>
+                                                → <code>name</code></td>
+                                            <td>Serie (first part before <code>-</code>) of the supplier invoice
+                                                number. Uses a 3-level ORM+SQL priority:
+                                                (1) <code>l10n_latam_document_number</code> via ORM (only if
+                                                journal has <code>l10n_latam_use_documents = True</code>),
+                                                (2) <code>account_move.ref</code> (supplier reference),
+                                                (3) <code>account_move.name</code> (journal entry name, e.g.
+                                                <code>BILL/2024/0001</code>).
+                                                Post-processed in Python's <code>_process_query_results()</code>.
+                                                Applies to both National and Non-Domiciled purchase reports.
+                                            </td>
+                                            <td>If doc type = <code>46</code>, serie is zero-padded to 4 chars.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>ref_correlative</code></td>
+                                            <td>Same priority as <code>ref_serie</code></td>
+                                            <td>Correlative (second part after <code>-</code>) of the supplier invoice
+                                                number. Same 3-level priority:
+                                                <code>l10n_latam_document_number</code> → <code>ref</code> →
+                                                <code>name</code>.
+                                                In the Non-Domiciled report, leading zeros are stripped via
+                                                <code>.lstrip('0')</code>.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>year_aduana</code></td>
+                                            <td><code>account.move.year_aduana</code></td>
+                                            <td>Customs year (DUA/DSI). 4-digit year. Only for import documents.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>invoice_line_correlative</code></td>
+                                            <td><code>account.move.line.ple_correlative</code></td>
+                                            <td>PLE correlative of the payable line with the longest maturity
+                                                distance. Subquery on <code>account_move_line</code> where
+                                                <code>account_type = 'liability_payable'</code>, ordered by
+                                                maturity distance DESC, LIMIT 1.
+                                            </td>
+                                            <td>Only lines with <code>liability_payable</code> account type.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>voucher_payment_date</code></td>
+                                            <td><code>account.move.l10n_pe_detraction_date</code></td>
+                                            <td>Detraction payment voucher date. Formatted <code>DD/MM/YYYY</code>.
+                                                Uses the V19 field <code>l10n_pe_detraction_date</code> (migrated
+                                                from deprecated <code>voucher_payment_date</code>).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>voucher_number</code></td>
+                                            <td><code>account.move.l10n_pe_detraction_number</code></td>
+                                            <td>Detraction voucher number. Max 24 chars. Uses the V19 field
+                                                <code>l10n_pe_detraction_number</code> (migrated from deprecated
+                                                <code>voucher_number</code>).
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>igv_withholding_indicator</code></td>
+                                            <td><code>account.move.igv_withholding_indicator</code></td>
+                                            <td>IGV withholding indicator. Returns <code>1</code> if true, empty
+                                                otherwise.</td>
+                                            <td>Only when <code>igv_withholding_indicator = true</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>country_code</code></td>
+                                            <td><code>res.country.l10n_pe_sunat_code</code></td>
+                                            <td>SUNAT country code of the partner. Via
+                                                <code>partner.country_id</code>. Max 4 chars. Used for non-domiciled.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>partner_identification_code</code></td>
+                                            <td><code>l10n_latam_identification_type.l10n_pe_vat_code</code></td>
+                                            <td>Partner identification type code (e.g., <code>6</code>=RUC). 1
+                                                char.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>partner_vat</code></td>
+                                            <td><code>res.partner.vat</code></td>
+                                            <td>Partner's RUC/DNI. Max 15 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>partner_name</code></td>
+                                            <td><code>res.partner.name</code></td>
+                                            <td>Partner's legal name. Cleaned via <code>validate_string()</code>. Max
+                                                1500 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_base_gdg</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 0</td>
+                                            <td>Tax base for taxed purchases destined to taxed operations
+                                                (gravadas destinadas a op. gravadas).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_tax_gdg</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 1</td>
+                                            <td>IGV for taxed purchases destined to taxed operations.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_base_gdm</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 2</td>
+                                            <td>Tax base for taxed purchases destined to mixed operations (gravadas
+                                                destinadas a op. mixtas).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_tax_gdm</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 3</td>
+                                            <td>IGV for taxed purchases destined to mixed operations.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_base_gdng</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 4</td>
+                                            <td>Tax base for taxed purchases destined to non-taxed operations
+                                                (gravadas destinadas a op. no gravadas).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_tax_gdng</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 5</td>
+                                            <td>IGV for taxed purchases destined to non-taxed operations.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_base_ng</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 6</td>
+                                            <td>Tax base for non-taxed purchases (adquisiciones no gravadas).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_tax_isc</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 7</td>
+                                            <td>ISC (Selective Consumption Tax) amount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_tax_icbp</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 8</td>
+                                            <td>ICBP (Plastic Bag Tax) amount.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>p_tax_other</code></td>
+                                            <td><code>get_tax_purchase()</code> → index 9</td>
+                                            <td>Other taxes (not classified in the categories above).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>amount_total</code></td>
+                                            <td>Python: <code>sum(tax_data[:10])</code></td>
+                                            <td>Invoice total. Sum of all 10 tax data values.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>currency_name</code></td>
+                                            <td><code>res.currency.name</code></td>
+                                            <td>ISO 4217 currency code. Max 3 chars.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>exchange_rate</code></td>
+                                            <td><code>account.move.invoice_currency_rate</code></td>
+                                            <td>Exchange rate = <code>1 / invoice_currency_rate</code>. Rounded 3
+                                                decimals.</td>
+                                            <td>Only non-PEN. PEN returns <code>NULL</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>origin_invoice_date</code></td>
+                                            <td><code>account.move.origin_invoice_date</code></td>
+                                            <td>Date of the original document. <code>DD/MM/YYYY</code>.</td>
+                                            <td>For credit/debit notes.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>origin_document_type_code</code></td>
+                                            <td><code>l10n_latam_document_type.code</code></td>
+                                            <td>Document type code of the original invoice. Via
+                                                <code>origin_l10n_latam_document_type_id</code>.
+                                            </td>
+                                            <td>For credit/debit notes.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>origin_number_serie / correlative</code></td>
+                                            <td><code>account.move.origin_number</code></td>
+                                            <td>Serie and correlative of the original document. Split at
+                                                <code>-</code>.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>code_aduana</code></td>
+                                            <td><code>code_aduana.code</code></td>
+                                            <td>Customs office code (DUA). Via
+                                                <code>account_move.code_aduana</code>. Max 3 chars.
+                                            </td>
+                                            <td>Only for <code>in_refund</code> move type. Empty otherwise.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>linkage_code</code></td>
+                                            <td><code>link_economic.code</code></td>
+                                            <td>Economic linkage type code. Via
+                                                <code>account_move.linkage_id</code>. For non-domiciled.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>hard_rent / deduccion_cost / neto_rent</code></td>
+                                            <td><code>account.move.hard_rent</code>,
+                                                <code>.deduccion_cost</code>, <code>.neto_rent</code>
+                                            </td>
+                                            <td>Gross rent, deduction cost, and net rent. Decimal amounts.
+                                                Post-processed to handle <code>.00</code> → <code>0.00</code>
+                                                edge case.</td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>retention_rate / tax_withheld</code></td>
+                                            <td><code>account.move.retention_rate</code>,
+                                                <code>.tax_withheld</code>
+                                            </td>
+                                            <td>Retention rate and withheld tax amount. Decimal.</td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>type_rent_code</code></td>
+                                            <td><code>type_rent.code</code></td>
+                                            <td>Income type code. Via <code>account_move.type_rent_id</code>.</td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>taken_code</code></td>
+                                            <td><code>service_taken.code</code></td>
+                                            <td>Service utilization marker. Via <code>account_move.taken_id</code>.
+                                                1 char.</td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>application_article</code></td>
+                                            <td><code>account.move.application_article</code></td>
+                                            <td>Double taxation agreement article application indicator.
+                                                <code>1</code> if set, empty otherwise.
+                                            </td>
+                                            <td>Only when <code>application_article IS NOT NULL</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>cdi</code></td>
+                                            <td><code>account.move.cdi</code></td>
+                                            <td>International double taxation agreement code. Max 2 chars.</td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>exoneration_nodomicilied_code</code></td>
+                                            <td><code>exoneration_nodomicilied.code</code></td>
+                                            <td>Non-domiciled exoneration code. Via
+                                                <code>account_move.exoneration_nodomicilied_id</code>. 1 char.
+                                            </td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>classification_services_code</code></td>
+                                            <td><code>classification_services.code</code></td>
+                                            <td>Classification of goods/services code. Via
+                                                <code>account_move.types_goods_services_id</code>.
+                                            </td>
+                                            <td>Only when <code>company.exceeds_1500_uit = TRUE</code>. Empty
+                                                otherwise.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>detraction</code></td>
+                                            <td><code>account.move.detraction_id</code></td>
+                                            <td>Detraction marker. Returns <code>TieneDetraccion</code>.</td>
+                                            <td>Only when <code>detraction_id IS NOT NULL</code>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>inv_serie / inv_correlative / inv_year_dua_dsi</code></td>
+                                            <td><code>account.move.inv_serie</code>,
+                                                <code>.inv_correlative</code>,
+                                                <code>.inv_year_dua_dsi</code>
+                                            </td>
+                                            <td>Additional invoice reference fields (serie, correlative, DUA/DSI
+                                                year) for complex document cross-references.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>inv_retention_igv</code></td>
+                                            <td><code>account.move.inv_retention_igv</code></td>
+                                            <td>IGV retention amount for the referenced invoice. Decimal(9,2).</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>inv_type_document_code</code></td>
+                                            <td><code>l10n_latam_document_type.code</code></td>
+                                            <td>Document type code of the referenced invoice. Via
+                                                <code>account_move.inv_type_document</code>.
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>country_name</code></td>
+                                            <td><code>res.country.name</code></td>
+                                            <td>Country name of the partner. Post-processed in Python to handle
+                                                dict-type returns from translated fields.</td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>partner_street</code></td>
+                                            <td><code>res.partner.street</code></td>
+                                            <td>Partner's street address.</td>
+                                            <td>Non-domiciled purchases only.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="mt-4 p-3"
+                                style="background-color: #eef7ee; border-radius: 10px; border: 1px solid #c3e6cb;">
+                                <h5 style="color: #155724; font-weight: 700;"><i class="fa fa-info-circle mr-2"></i>
+                                    Important Notes</h5>
+                                <ul class="mb-0" style="line-height: 2;">
+                                    <li>All tax columns (<code>get_tax()</code> and
+                                        <code>get_tax_purchase()</code>) are calculated via
+                                        <strong>PostgreSQL functions</strong> that match tax tags on invoice
+                                        lines. Tags must be configured via the PLE Tax Config Wizard.
+                                    </li>
+                                    <li>The Serie/Correlativo on <strong>purchases</strong> uses a
+                                        <strong>3-level ORM+SQL priority</strong>:
+                                        <code>l10n_latam_document_number</code> (ORM, non-stored) →
+                                        <code>name</code> (SQL) → <code>ref</code> (SQL).
+                                    </li>
+                                    <li>Exchange rate uses Odoo's <code>invoice_currency_rate</code> with
+                                        inverse formula: <code>1 / rate</code>. PEN invoices show no rate.
+                                    </li>
+                                    <li>Detraction fields use V19 names:
+                                        <code>l10n_pe_detraction_date</code> and
+                                        <code>l10n_pe_detraction_number</code>.
+                                    </li>
+                                    <li>Non-domiciled specific columns (linkage, rent, withholding, etc.)
+                                        are only populated for purchase invoices from foreign suppliers.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <!-- ═══════════════════════════════════════════════════
+                     GROUP A — RVIE (SALES) SCENARIOS
+                     ═══════════════════════════════════════════════════ -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <h3 class="mb-4"
+                            style="color: #791d97; font-weight: 800; border-bottom: 3px solid #791d97; padding-bottom: 8px;">
+                            <i class="fa fa-bar-chart mr-2"></i> Group A — RVIE Sales Report Scenarios
+                        </h3>
+
+                        <!-- Scenario A1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-file-text mr-2"></i>
+                                A1: RVIE — Accept Proposal (Opportunity Code 01)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Period has posted customer
+                                invoices (Facturas, Boletas) with taxes applied. SUNAT proposal is ready to be accepted.
+                            </p>
+                            <ol class="mt-2">
+                                <li>Go to <strong>Accounting › Reports › Reporte SIRE › Reporte RVIE</strong>.</li>
+                                <li>Select <strong>Year</strong> = current year, <strong>Month</strong> = current month.
+                                </li>
+                                <li>Set <strong>Estado de Envío</strong> = <code>[1] Empresa o entidad operativa</code>.
+                                </li>
+                                <li>Set <strong>Código de Oportunidad</strong> =
+                                    <code>[01] RVIE — Cuando acepta la propuesta</code>.
+                                </li>
+                                <li>Click <strong>Generar Reporte</strong>.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>TXT, XLSX, and ZIP files are generated and available for download.</li>
+                                <li>TXT file contains pipe-delimited (<code>|</code>) rows — one per invoice line.</li>
+                                <li>Each row shows: period, CUO, correlative, invoice date, due date, document type,
+                                    series, number, customer RUC/DNI, customer name, export value, taxable base, IGV
+                                    amount, exempt amount, non-taxable amount, ISC, tax on plastic bags (ICBP), other
+                                    taxes, total amount, currency code, and exchange rate.</li>
+                                <li>XLSX mirrors the TXT content with headers for human review.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario A2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-refresh mr-2"></i>
+                                A2: RVIE — Replace Proposal (Opportunity Code 02)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> You have corrections to SUNAT's
+                                proposed data. At least one invoice in the period has been modified after the initial
+                                proposal.</p>
+                            <ol class="mt-2">
+                                <li>Open <strong>Reporte RVIE</strong> wizard.</li>
+                                <li>Set <strong>Código de oportunidad</strong> =
+                                    <code>[02] RVIE — Cuando reemplaza la propuesta</code>.
+                                </li>
+                                <li>Enter a <strong>Correlativo</strong> if requested.</li>
+                                <li>Click <strong>Generar Reporte</strong>.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Generated files use the "Replace Proposed" report format.</li>
+                                <li>The <strong>Correlativo</strong> field resets to empty when you change the
+                                    opportunity code (verify onchange behavior).</li>
+                                <li>All invoice data matches the corrected values in Odoo.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario A3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-pencil-square-o mr-2"></i>
+                                A3: RVIE — Subsequent Adjustments (Opportunity Code 03)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> A Credit Note or Debit Note was
+                                posted in the period after the original report was submitted. The adjustment needs to be
+                                reported.</p>
+                            <ol class="mt-2">
+                                <li>Create and post a <strong>Credit Note</strong> referencing invoice F001-0001.</li>
+                                <li>Open <strong>Reporte RVIE</strong>, set opportunity code =
+                                    <code>[03] Ajustes posteriores</code>.
+                                </li>
+                                <li>Generate the report for the same period.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>The Credit Note appears in the TXT with corresponding negative amounts.</li>
+                                <li>The <code>document_type</code> column reflects the correct type (07 for Credit Note,
+                                    08 for Debit Note).</li>
+                                <li>The reference fields (original document type, series, number, and date) are
+                                    populated correctly.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario A4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-history mr-2"></i>
+                                A4: RVIE — General Format for Prior Periods (Opportunity Code 04)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> You need to report adjustments for
+                                periods that were managed under the <em>old</em> system (before SIRE migration).</p>
+                            <ol class="mt-2">
+                                <li>Set <strong>Year</strong> and <strong>Month</strong> to an older period (e.g.,
+                                    2023-06).</li>
+                                <li>Set opportunity code =
+                                    <code>[04] Reporte de ajustes posteriores — Formato general</code>.
+                                </li>
+                                <li>Generate the report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Report uses the General Format layout (different from codes 01-03).</li>
+                                <li>The filename includes the correct period and format identifier.</li>
+                                <li>Data for old-period invoices is correctly retrieved from Odoo.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario A5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-plus-circle mr-2"></i>
+                                A5: RVIE — Add to Proposal from Invoice Selection</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> You have specific invoices that
+                                need to be added to the SUNAT proposal but are not included in the automatic batch.</p>
+                            <ol class="mt-2">
+                                <li>Go to <strong>Accounting › Invoices</strong> list view.</li>
+                                <li>Select 3-5 posted invoices from the <strong>same month and year</strong>.</li>
+                                <li>Use the <strong>Action</strong> menu → <strong>Agregar a propuesta RVIE</strong>.
+                                </li>
+                                <li>In the wizard, verify that <strong>Year</strong> and <strong>Month</strong> are
+                                    auto-populated and read-only.</li>
+                                <li>Enter a <strong>Correlativo</strong> and click <strong>Generar Reporte</strong>.
+                                </li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>The wizard only generates data for the explicitly selected invoices.</li>
+                                <li>Year and Month fields are read-only and match the invoice dates.</li>
+                                <li>TXT/XLSX/ZIP files are generated containing only the selected records.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario A6 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i
+                                    class="fa fa-exclamation-triangle mr-2"></i>
+                                A6: RVIE — Add to Proposal with Mixed Months (Error)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Test validation of the multi-month
+                                guard.</p>
+                            <ol class="mt-2">
+                                <li>Select invoices from <strong>different months</strong> (e.g., January and February).
+                                </li>
+                                <li>Trigger the <strong>Agregar a propuesta RVIE</strong> action.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>A <strong>UserError</strong> is raised: <em>"No todos los movimientos seleccionados
+                                        son del mismo mes y año."</em></li>
+                                <li>No wizard opens; the user must re-select invoices from the same period.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════
+                     GROUP B — RCE NATIONAL PURCHASES SCENARIOS
+                     ═══════════════════════════════════════════════════ -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <h3 class="mb-4"
+                            style="color: #3c6dac; font-weight: 800; border-bottom: 3px solid #3c6dac; padding-bottom: 8px;">
+                            <i class="fa fa-shopping-bag mr-2"></i> Group B — RCE National Purchases Scenarios
+                        </h3>
+
+                        <!-- Scenario B1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-check-circle mr-2"></i>
+                                B1: RCE National — Accept Proposal (Code 01)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Period has vendor bills with
+                                national suppliers (domiciled, <code>is_nodomicilied = false</code>). Bills have IGV
+                                gravada, mixta, and no gravada taxes.</p>
+                            <ol class="mt-2">
+                                <li>Go to <strong>Accounting › Reports › Reporte SIRE › Reporte RCE — Compras
+                                        nacionales</strong>.</li>
+                                <li>Select period, set <strong>Estado de Envío</strong> and <strong>Código de
+                                        Oportunidad = [01]</strong>.</li>
+                                <li>Click <strong>Generar Reporte</strong>.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>TXT/XLSX/ZIP generated with all national purchase invoices.</li>
+                                <li>Tax columns show correct values: <code>base_gravada</code>,
+                                    <code>igv_gravada</code>, <code>base_mixta</code>, <code>igv_mixta</code>,
+                                    <code>base_no_gravada</code>, <code>igv_no_gravada</code>,
+                                    <code>valor_adquisiciones_no_gravadas</code>, <code>isc</code>, <code>icbp</code>,
+                                    <code>otros_tributos</code>.
+                                </li>
+                                <li>Non-domiciled vendor bills are <strong>excluded</strong> from this report.</li>
+                                <li>The SQL function <code>get_tax_purchase()</code> correctly breaks down taxes by
+                                    category.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario B2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-refresh mr-2"></i>
+                                B2: RCE National — Replace Proposal (Code 02)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> SUNAT's proposal for purchases has
+                                errors that need to be overridden.</p>
+                            <ol class="mt-2">
+                                <li>Open the <strong>RCE — Compras nacionales</strong> wizard.</li>
+                                <li>Set <strong>Código de oportunidad = [02] Cuando reemplaza la propuesta</strong>.
+                                </li>
+                                <li>Generate the report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Replace Proposed format is used for both TXT and XLSX.</li>
+                                <li>Correlative resets when switching opportunity codes.</li>
+                                <li>Data reflects the Odoo-corrected purchase records.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario B3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-pencil mr-2"></i>
+                                B3: RCE National — Subsequent Adjustments (Code 03)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Vendor credit notes or debit notes
+                                posted after the purchase book was submitted.</p>
+                            <ol class="mt-2">
+                                <li>Post a <strong>Vendor Credit Note</strong> referencing a purchase invoice.</li>
+                                <li>Generate RCE National with code <code>[03]</code>.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Credit note shows negative tax amounts in the correct columns.</li>
+                                <li>Reference document fields (original type, series, number, date) are populated.</li>
+                                <li>The report format matches "Subsequent Adjustments" layout.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario B4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-list-alt mr-2"></i>
+                                B4: RCE National — Full Tax Breakdown Verification</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Create vendor bills with diverse
+                                tax scenarios to stress the <code>get_tax_purchase()</code> SQL function.</p>
+                            <ol class="mt-2">
+                                <li>Create <strong>Bill A</strong>: Products with only IGV (18%).</li>
+                                <li>Create <strong>Bill B</strong>: Mixed tax — some lines with IGV, some exempt
+                                    (Exonerado).</li>
+                                <li>Create <strong>Bill C</strong>: Products with ISC + IGV (e.g., fuel, alcohol).</li>
+                                <li>Create <strong>Bill D</strong>: Products with ICBP (Impuesto a las Bolsas
+                                    Plásticas).</li>
+                                <li>Create <strong>Bill E</strong>: Fully non-taxable (Inafecto) purchase.</li>
+                                <li>Post all bills and generate the RCE National report for the period.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li><strong>Bill A:</strong> <code>base_gravada</code> and <code>igv_gravada</code>
+                                    populated; all other tax columns empty or zero.</li>
+                                <li><strong>Bill B:</strong> <code>base_mixta</code> + <code>igv_mixta</code> populated,
+                                    plus <code>valor_adquisiciones_no_gravadas</code>.</li>
+                                <li><strong>Bill C:</strong> <code>isc</code> column shows separate ISC amount.</li>
+                                <li><strong>Bill D:</strong> <code>icbp</code> column has the plastic bag tax amount.
+                                </li>
+                                <li><strong>Bill E:</strong> Only <code>valor_adquisiciones_no_gravadas</code> is
+                                    populated.</li>
+                                <li>Total amount (<code>importe_total</code>) matches the sum of all tax components for
+                                    each bill.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════
+                     GROUP C — RCE NON-DOMICILED PURCHASES SCENARIOS
+                     ═══════════════════════════════════════════════════ -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <h3 class="mb-4"
+                            style="color: #28a745; font-weight: 800; border-bottom: 3px solid #28a745; padding-bottom: 8px;">
+                            <i class="fa fa-globe mr-2"></i> Group C — RCE Non-Domiciled Purchases Scenarios
+                        </h3>
+
+                        <!-- Scenario C1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-plane mr-2"></i>
+                                C1: RCE Non-Domiciled — Informed Report (Code 00)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Create a vendor bill with a
+                                non-domiciled supplier. The partner must have: <code>is_nodomicilied = True</code>, a
+                                foreign country set, and linkage type / rent type configured.</p>
+                            <ol class="mt-2">
+                                <li>Create and post a vendor bill with a <strong>non-domiciled</strong> partner (e.g., a
+                                    US-based SaaS provider).</li>
+                                <li>Go to <strong>Reporte RCE — Compras no domiciliadas</strong>.</li>
+                                <li>Set <strong>Código de oportunidad = [00] No domiciliados informado</strong>.</li>
+                                <li>Generate the report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Report includes the invoice with all non-domiciled specific fields:
+                                    <code>country_code</code>, <code>partner_name</code> (foreign entity name),
+                                    <code>partner_domicile</code>, <code>income_type</code>, <code>linkage_type</code>.
+                                </li>
+                                <li>Withholding tax columns are correctly populated if applicable.</li>
+                                <li>National vendor bills are <strong>excluded</strong> (filter:
+                                    <code>is_nodomicilied = true</code>).
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario C2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-pencil-square mr-2"></i>
+                                C2: RCE Non-Domiciled — Subsequent Adjustments (Code 03)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> A credit note was issued against a
+                                non-domiciled vendor bill after the report period.</p>
+                            <ol class="mt-2">
+                                <li>Post a vendor credit note for the non-domiciled supplier.</li>
+                                <li>Generate RCE Non-Domiciled with code <code>[03]</code>.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Credit note appears with negative amounts in taxable/total columns.</li>
+                                <li>Non-domiciled fields (country, income type) are still populated.</li>
+                                <li>Reference to original document is included.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario C3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-university mr-2"></i>
+                                C3: RCE Non-Domiciled — Double Tax Agreement Scenario</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Your company has transactions with
+                                a supplier from a country that has a double tax agreement with Peru (e.g., Chile,
+                                Canada, Brazil).</p>
+                            <ol class="mt-2">
+                                <li>Create a vendor bill for a Brazilian supplier with appropriate <strong>rent
+                                        type</strong> and <strong>linkage type</strong>.</li>
+                                <li>Configure the <strong>Convenio para evitar la doble imposición</strong> flag if
+                                    applicable.</li>
+                                <li>Generate the Non-Domiciled report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>The double taxation agreement field is correctly reflected in the TXT output.</li>
+                                <li>Withholding rates may differ from non-agreement countries — verify amounts.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario C4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-filter mr-2"></i>
+                                C4: Verify National vs. Non-Domiciled Mutual Exclusion</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Both national and non-domiciled
+                                vendor bills exist in the same period.</p>
+                            <ol class="mt-2">
+                                <li>Generate <strong>RCE National</strong> report for the period.</li>
+                                <li>Verify that <strong>no non-domiciled</strong> invoices appear (filter:
+                                    <code>is_nodomicilied IS NULL OR is_nodomicilied = false</code>).
+                                </li>
+                                <li>Generate <strong>RCE Non-Domiciled</strong> report for the same period.</li>
+                                <li>Verify that <strong>no national</strong> invoices appear (filter:
+                                    <code>is_nodomicilied = true</code>).
+                                </li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>The two reports are <strong>mutually exclusive</strong> — no invoices appear in
+                                    both.</li>
+                                <li>Combined record count = total posted vendor bills for the period.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════
+                     GROUP D — COMPLEMENTS & RATES SCENARIOS
+                     ═══════════════════════════════════════════════════ -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <h3 class="mb-4"
+                            style="color: #e67e22; font-weight: 800; border-bottom: 3px solid #e67e22; padding-bottom: 8px;">
+                            <i class="fa fa-puzzle-piece mr-2"></i> Group D — Complements &amp; Currency Rates Scenarios
+                        </h3>
+
+                        <!-- Scenario D1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #e67e22;">
+                            <h4 style="color: #e67e22; font-weight: 700;"><i class="fa fa-plus mr-2"></i>
+                                D1: Purchase Complement — Add Data to Proposal</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> You have vendor bills that need to
+                                be manually added to the SUNAT proposal (not auto-included).</p>
+                            <ol class="mt-2">
+                                <li>Go to <strong>Accounting › Vendor Bills</strong> list view.</li>
+                                <li>Select 2-3 vendor bills from the <strong>same period</strong>.</li>
+                                <li>Use <strong>Action</strong> → <strong>Complementar propuesta RCE</strong>.</li>
+                                <li>Set <strong>Acción a realizar = Agregar datos a la propuesta</strong>.</li>
+                                <li>Enter the <strong>Correlativo</strong> and generate.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Wizard auto-populates Year and Month from the selected bills (read-only).</li>
+                                <li>Generated report includes only the selected move IDs.</li>
+                                <li>TXT uses the "Add Proposed" format.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario D2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #e67e22;">
+                            <h4 style="color: #e67e22; font-weight: 700;"><i class="fa fa-pencil mr-2"></i>
+                                D2: Purchase Complement — Modify Proposal Data</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Bills already in the SUNAT
+                                proposal need corrections.</p>
+                            <ol class="mt-2">
+                                <li>Select the bills to modify, open the complement wizard.</li>
+                                <li>Set <strong>Acción a realizar = Modificar datos de la propuesta</strong>.</li>
+                                <li>Generate the report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Report uses the "Modify Proposed" format.</li>
+                                <li>Correlative resets when switching the <code>action_taken</code> field.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario D3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #e67e22;">
+                            <h4 style="color: #e67e22; font-weight: 700;"><i class="fa fa-toggle-on mr-2"></i>
+                                D3: Purchase Complement — Include/Exclude from Proposal</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Specific bills need to be included
+                                in or excluded from the existing proposal.</p>
+                            <ol class="mt-2">
+                                <li>Select the bills, open the complement wizard.</li>
+                                <li>Set <strong>Acción a realizar = Incluir/Excluir datos de la propuesta</strong>.</li>
+                                <li>Generate the report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Report uses the "Include/Exclude Proposed" format.</li>
+                                <li>Only selected bills appear in the output. No extra data is included.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario D4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #e67e22;">
+                            <h4 style="color: #e67e22; font-weight: 700;"><i class="fa fa-money mr-2"></i>
+                                D4: Currency Rate Complement — TXT from Exchange Rates</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Multiple currency rates exist for
+                                the same period (e.g., daily USD/PEN rates for January 2025).</p>
+                            <ol class="mt-2">
+                                <li>Go to <strong>Accounting › Configuration › Currencies › Currency Rates</strong>.
+                                </li>
+                                <li>Select 5-10 <code>res.currency.rate</code> records for USD from the <strong>same
+                                        month</strong>.</li>
+                                <li>Use <strong>Action</strong> → <strong>Complementar tasas RCE</strong>.</li>
+                                <li>Enter the <strong>Correlativo</strong> and generate.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>TXT file contains one row per rate record: <code>period</code>, <code>date</code>
+                                    (dd/mm/yyyy), <code>currency_name</code> (USD), <code>inverse_company_rate</code>
+                                    (e.g., 3.750).</li>
+                                <li><strong>No XLSX</strong> is generated — only TXT + ZIP.</li>
+                                <li>Rates from different months trigger a <strong>UserError</strong>.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario D5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #e67e22;">
+                            <h4 style="color: #e67e22; font-weight: 700;"><i class="fa fa-flag mr-2"></i>
+                                D5: SIRE Complement Flag on Invoices</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> The
+                                <code>l10n_pe_is_complement_sire</code> field is available on invoices.
+                            </p>
+                            <ol class="mt-2">
+                                <li>Open a customer invoice form view.</li>
+                                <li>Locate the <strong>SIRE Complement</strong> boolean checkbox.</li>
+                                <li>Enable it and save the invoice.</li>
+                                <li>Verify the invoice is correctly flagged in the database
+                                    (<code>l10n_pe_is_complement_sire = True</code>).</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>The checkbox is visible and functional on the invoice form.</li>
+                                <li>Flagged invoices can be identified and included in complement reports.</li>
+                                <li>The help tooltip explains the purpose clearly.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════
+                     GROUP E — EDGE CASES, MULTI-CURRENCY & VALIDATION
+                     ═══════════════════════════════════════════════════ -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <h3 class="mb-4"
+                            style="color: #dc3545; font-weight: 800; border-bottom: 3px solid #dc3545; padding-bottom: 8px;">
+                            <i class="fa fa-shield mr-2"></i> Group E — Edge Cases, Multi-Currency &amp; Validation
+                        </h3>
+
+                        <!-- Scenario E1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-exchange mr-2"></i>
+                                E1: Multi-Currency Invoice — Exchange Rate Rendering</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Both PEN and USD invoices exist in
+                                the same period.</p>
+                            <ol class="mt-2">
+                                <li>Create and post a <strong>customer invoice in USD</strong> (e.g., $1,000.00 with
+                                    exchange rate 3.750).</li>
+                                <li>Create and post a <strong>customer invoice in PEN</strong> (e.g., S/ 5,000.00).</li>
+                                <li>Generate the RVIE report for the period.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li><strong>USD invoice:</strong> <code>currency_code</code> = <code>USD</code>,
+                                    <code>exchange_rate</code> = <code>3.750</code> (3 decimal format).
+                                </li>
+                                <li><strong>PEN invoice:</strong> <code>currency_code</code> = <code>PEN</code>,
+                                    <code>exchange_rate</code> = empty or <code>0.000</code>.
+                                </li>
+                                <li>Tax amounts are always in PEN regardless of invoice currency.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-compress mr-2"></i>
+                                E2: Empty Period — No Invoices for Report</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Select a period where no posted
+                                invoices exist (e.g., a future month).</p>
+                            <ol class="mt-2">
+                                <li>Open any SIRE wizard and select a period with zero invoices.</li>
+                                <li>Generate the report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>The <strong>Error Dialog</strong> field shows: <em>"No hay contenido que presentar
+                                        para este periodo."</em></li>
+                                <li>TXT file is generated with a single newline character (<code>\n</code>).</li>
+                                <li>ZIP file is still created (contains the empty TXT).</li>
+                                <li>No crash or exception occurs — graceful handling.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-id-card mr-2"></i>
+                                E3: Document Number Priority Logic (3-Level Fallback)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Test the 3-level priority for
+                                Serie and Correlativo extraction: (1) ORM <code>l10n_latam_document_number</code>, (2)
+                                <code>sequence_prefix</code> / <code>sequence_number</code>, (3) SQL split of
+                                <code>name</code>.
+                            </p>
+                            <ol class="mt-2">
+                                <li>Create <strong>Invoice A</strong>: Has a valid
+                                    <code>l10n_latam_document_number</code> (e.g., <code>F001-00000123</code>). Post it.
+                                </li>
+                                <li>Create <strong>Invoice B</strong>: <code>l10n_latam_document_number</code> is empty,
+                                    but <code>sequence_prefix</code> = <code>F002-</code> and
+                                    <code>sequence_number</code> = <code>456</code>. Post it.
+                                </li>
+                                <li>Create <strong>Invoice C</strong>: Both fields empty, but <code>name</code> =
+                                    <code>INV/2025/0001</code>. Post it.
+                                </li>
+                                <li>Generate the RVIE report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li><strong>Invoice A:</strong> Serie = <code>F001</code>, Number =
+                                    <code>00000123</code> (from <code>l10n_latam_document_number</code>).
+                                </li>
+                                <li><strong>Invoice B:</strong> Serie from <code>sequence_prefix</code>, Number from
+                                    <code>sequence_number</code>.
+                                </li>
+                                <li><strong>Invoice C:</strong> Parsed via SQL <code>split_part(name, '-', ...)</code>
+                                    or <code>split_part(name, '/', ...)</code>.</li>
+                                <li>No empty Series or Number fields in the output for any invoice.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-building-o mr-2"></i>
+                                E4: UIT Threshold (Exceeds 1,500 UIT) Configuration</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> The company may or may not exceed
+                                the 1,500 UIT annual income threshold. This affects certain report fields.</p>
+                            <ol class="mt-2">
+                                <li>Go to <strong>Settings › Companies</strong> and open the company form.</li>
+                                <li>Locate the <strong>Exceeds 1,500 UIT</strong> boolean field.</li>
+                                <li>Toggle it to <strong>True</strong> and save.</li>
+                                <li>Generate any purchase report with this setting active.</li>
+                                <li>Toggle back to <strong>False</strong> and regenerate.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>When <code>exceeds_1500_uit = True</code>: Additional detail columns related to cash
+                                    payment and classification are populated in the purchase TXT.</li>
+                                <li>When <code>exceeds_1500_uit = False</code>: Those columns remain empty or are
+                                    omitted.</li>
+                                <li>The field has a clear help tooltip explaining the UIT threshold rule.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-file-zip-o mr-2"></i>
+                                E5: File Integrity — ZIP Contains Valid TXT</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Any successfully generated report.
+                            </p>
+                            <ol class="mt-2">
+                                <li>Generate any SIRE report.</li>
+                                <li>Download the <strong>ZIP</strong> file.</li>
+                                <li>Extract it and open the contained TXT file.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>ZIP extracts without errors (valid ZIP_DEFLATED format).</li>
+                                <li>The TXT filename inside the ZIP matches the expected SUNAT naming convention.</li>
+                                <li>Content is identical to the standalone TXT download.</li>
+                                <li>Character encoding is correct (no garbled accents or special characters).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E6 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-repeat mr-2"></i>
+                                E6: Re-generation — Second Run Clears Previous Files</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> A report has already been
+                                generated for a period.</p>
+                            <ol class="mt-2">
+                                <li>Generate the RVIE report for January 2025.</li>
+                                <li>Note the filenames of the generated TXT, XLSX, and ZIP.</li>
+                                <li>Without closing the wizard, click <strong>Generar Reporte</strong> again.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Before regeneration, previous binary fields are cleared
+                                    (<code>xlsx_binary = False</code>, <code>zip_binary = False</code>).</li>
+                                <li>New files are generated fresh — no stale data from the previous run.</li>
+                                <li>The wizard view reloads with the new file download links.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E7 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-columns mr-2"></i>
+                                E7: XLSX vs. TXT Column Parity</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> A report with multiple invoices
+                                has been generated.</p>
+                            <ol class="mt-2">
+                                <li>Generate any SIRE report.</li>
+                                <li>Download both <strong>XLSX</strong> and <strong>TXT</strong> files.</li>
+                                <li>Open the XLSX in a spreadsheet application.</li>
+                                <li>Open the TXT in a text editor.</li>
+                                <li>Compare row counts and column values.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Both files have the <strong>exact same number of data rows</strong>.</li>
+                                <li>Column values are identical in both formats (TXT pipe-delimited vs. XLSX cells).
+                                </li>
+                                <li>XLSX has a header row with descriptive column names; TXT does not.</li>
+                                <li>Numeric formats (decimals, trailing zeros) match SUNAT specifications.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E8 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-users mr-2"></i>
+                                E8: Multi-Company Isolation</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> Odoo instance has multiple
+                                companies set up. Each company has its own invoices.</p>
+                            <ol class="mt-2">
+                                <li>Log in as <strong>Company A</strong> and generate the RVIE report for January.</li>
+                                <li>Switch to <strong>Company B</strong> and generate the same report for the same
+                                    period.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Reports are <strong>completely isolated</strong> — Company A's report only contains
+                                    Company A's invoices.</li>
+                                <li>The RUC in the header/filename corresponds to the active company.</li>
+                                <li>No data leakage between companies.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E9 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-calendar-times-o mr-2"></i>
+                                E9: Invoice with Missing Due Date</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> An invoice may not have a due date
+                                set (e.g., immediate payment terms).</p>
+                            <ol class="mt-2">
+                                <li>Create an invoice with <strong>no due date</strong> (Immediate Payment terms).</li>
+                                <li>Post it and generate the RVIE report.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>The <code>due_date</code> column falls back to the <code>invoice_date</code> or
+                                    shows empty — no error.</li>
+                                <li>The SQL query handles NULL <code>invoice_date_due</code> gracefully.</li>
+                                <li>Report generates successfully without exceptions.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Scenario E10 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-bolt mr-2"></i>
+                                E10: High-Volume Stress Test (500+ Invoices)</h4>
+                            <p class="text-muted mb-2"><strong>Precondition:</strong> A period with a large number of
+                                posted invoices (500+). Typical for wholesale or retail companies.</p>
+                            <ol class="mt-2">
+                                <li>Ensure the period has <strong>500+ posted invoices</strong> (mix of Facturas,
+                                    Boletas, Credit Notes).</li>
+                                <li>Generate the RVIE report.</li>
+                                <li>Measure the generation time.</li>
+                            </ol>
+                            <p class="mt-2"><strong>Expected Result:</strong></p>
+                            <ul>
+                                <li>Report generates successfully without timeout.</li>
+                                <li>All 500+ records appear in the TXT/XLSX files.</li>
+                                <li>SQL query performance is acceptable (under 30 seconds).</li>
+                                <li>ZIP file size and download work correctly for large files.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Report shows "Error al ejecutar la consulta"?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> A required PostgreSQL function may not
+                                be installed yet.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Update
+                                the module to reinstall SQL functions (get_tax, get_tax_purchase, validate_string).
+                                Go to Apps > l10n_pe_sire_sunat > Upgrade.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Tax amounts are all zero?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Tax tags are not linked to your
+                                company's taxes.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Run
+                                the <strong>PLE Tax Config Wizard</strong> from the PLE Sale Book or PLE Purchase Book
+                                module to link tags to taxes.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Exchange rate shows 1.000 for USD invoices?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The invoice was created without a
+                                proper currency rate.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Ensure currency rates are configured in <strong>Accounting > Configuration >
+                                    Currencies</strong>
+                                before creating invoices.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Each wizard filters by the current company. Reports are generated per-company
+                                with correct RUC and company name in the output files.</p>
+                        </div>
+                    </div>
+
+                    <!-- ═══ NEW FAQ & TROUBLESHOOTING ENTRIES ═══ -->
+
+                    <!-- Q5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;"><i
+                                    class="fa fa-exclamation-circle mr-1 text-danger"></i> "Error: function get_tax does
+                                not exist"</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The SQL functions (<code>get_tax</code>,
+                                <code>get_tax_purchase</code>, <code>validate_string</code>) were not created in the
+                                database. This typically happens after restoring a backup or migrating databases.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to
+                                <strong>Apps</strong>, search for <code>l10n_pe_sire_sunat</code>, and click
+                                <strong>Upgrade</strong>. The module's <code>init</code> hooks will recreate the
+                                functions. Alternatively, run the SQL scripts from the <code>sql/</code> folder manually
+                                via <code>psql</code>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-file-o mr-1 text-warning"></i>
+                                Report includes draft or cancelled invoices?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> This should never happen. The SQL query
+                                filters by <code>state = 'posted'</code> and specific <code>move_type</code> values.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> If
+                                you see unexpected records, check whether the invoice <code>state</code> was manually
+                                altered in the database. Re-post or properly cancel the affected invoices and regenerate
+                                the report.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #791d97;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-cubes mr-1"
+                                    style="color: #791d97;"></i> Which dependency modules are required?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> This module depends on
+                                <code>ple_sale_book</code>, <code>ple_purchase_book</code>, and <code>base</code>. These
+                                must be installed first.
+                            </p>
+                            <p class="small" style="color: #791d97;"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Detail:</strong> The PLE modules provide the SQL tax functions and the tax tag
+                                configuration wizard needed to correctly calculate IGV, ISC, ICBP, etc. Without them,
+                                all tax columns will show zeroes.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-ban mr-1 text-danger"></i> "No
+                                todos los movimientos seleccionados son del mismo mes y año"</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> You selected invoices from different
+                                months or years when trying to use the Add to Proposal or Complement wizard.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go back
+                                to the invoice list view, filter by a single month/year using the date filters, then
+                                select only invoices within that period. The wizard requires all selected records to
+                                share the same month and year.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-globe mr-1 text-success"></i>
+                                Non-domiciled fields are empty in the report?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The partner's non-domiciled
+                                configuration is incomplete.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Fix:</strong> Open
+                                the vendor's partner form and ensure these fields are configured: <strong>(1)</strong>
+                                <code>is_nodomicilied = True</code>, <strong>(2)</strong> A foreign
+                                <strong>Country</strong> is set, <strong>(3)</strong> <strong>Linkage Type</strong>
+                                (Tipo de vínculo) is selected, <strong>(4)</strong> <strong>Rent Type</strong> (Tipo de
+                                renta) is selected, <strong>(5)</strong> <strong>Income Type</strong> is configured. All
+                                five are required for a complete non-domiciled report row.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q10 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-hashtag mr-1 text-primary"></i>
+                                Serie or Correlativo shows strange values?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The document number extraction uses a
+                                3-level priority fallback. If the primary source
+                                (<code>l10n_latam_document_number</code>) is empty, it falls back to
+                                <code>sequence_prefix</code>/<code>sequence_number</code>, then to SQL parsing of the
+                                <code>name</code> field.
+                            </p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Ensure invoices have a valid <code>l10n_latam_document_number</code> in the format
+                                <code>F001-00000123</code>. For Peruvian localization, install the
+                                <code>l10n_latam_invoice_document</code> module and configure document types correctly.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q11 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-building mr-1 text-warning"></i>
+                                What does "Exceeds 1,500 UIT" mean?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> SUNAT requires companies whose annual
+                                income exceeds 1,500 UIT (Unidades Impositivas Tributarias) to provide additional detail
+                                in purchase reports — specifically cash payment classification and related fields.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Action:</strong>
+                                Go to <strong>Settings › Companies</strong>, open your company form, and set the
+                                <strong>Exceeds 1,500 UIT</strong> checkbox accordingly. This should be reviewed
+                                annually when UIT values are updated by SUNAT.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q12 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;"><i
+                                    class="fa fa-cloud-upload mr-1 text-danger"></i> SUNAT rejects the TXT file during
+                                upload?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The TXT file format or content doesn't
+                                match SUNAT's expected structure for the selected opportunity code.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong>
+                                <strong>(1)</strong> Verify you selected the correct <strong>Opportunity Code</strong>
+                                matching what SUNAT expects. <strong>(2)</strong> Open the TXT and count the
+                                pipe-delimited columns — they must match the SUNAT specification exactly.
+                                <strong>(3)</strong> Check for empty mandatory fields (RUC, document type).
+                                <strong>(4)</strong> Ensure no extra blank lines at the end of the file.
+                                <strong>(5)</strong> Upload the <strong>ZIP</strong> file instead of the raw TXT if
+                                SUNAT requires it.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q13 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-download mr-1 text-primary"></i>
+                                Download button doesn't work or file is empty?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The Binary field may not have been saved
+                                correctly, or the wizard was closed before downloading.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                <strong>(1)</strong> Re-open the wizard and click <strong>Generar Reporte</strong> again
+                                — the files are regenerated fresh each time. <strong>(2)</strong> If using Odoo.sh or a
+                                reverse proxy, check that the <code>Content-Disposition</code> headers are not being
+                                stripped. <strong>(3)</strong> Try downloading the ZIP file instead of the XLSX if one
+                                format fails. <strong>(4)</strong> Check the <strong>Errors</strong> field — if it shows
+                                "No hay contenido que presentar," the period has no data.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q14 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-cloud mr-1 text-success"></i>
+                                Does this work on Odoo.sh?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes! The module is fully compatible with
+                                Odoo.sh.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> SQL
+                                functions are created via module hooks and work in Odoo.sh's managed PostgreSQL. File
+                                downloads (Binary fields) work natively. Just ensure the dependency modules
+                                (<code>ple_sale_book</code>, <code>ple_purchase_book</code>) are also deployed in your
+                                Odoo.sh branch.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q15 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #791d97;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-link mr-1"
+                                    style="color: #791d97;"></i> What is the relationship between PLE and SIRE modules?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The PLE (Programa de Libros
+                                Electrónicos) modules generate the traditional electronic books format. The SIRE
+                                (Sistema Integrado de Registros Electrónicos) module generates the newer SUNAT format
+                                that is progressively replacing PLE.</p>
+                            <p class="small" style="color: #791d97;"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Detail:</strong> This SIRE module <strong>depends</strong> on PLE because it
+                                reuses the tax calculation SQL functions (<code>get_tax</code>,
+                                <code>get_tax_purchase</code>) and tax tag configurations provided by
+                                <code>ple_sale_book</code> and <code>ple_purchase_book</code>. You need both PLE modules
+                                installed even if you only file via SIRE.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q16 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;"><i
+                                    class="fa fa-text-width mr-1 text-warning"></i> Special characters or accents appear
+                                garbled in the TXT?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The TXT file is encoded in UTF-8, but
+                                some text editors or SUNAT's platform may expect a different encoding.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                <strong>(1)</strong> Open the TXT file with a UTF-8 aware editor (Notepad++, VS Code).
+                                <strong>(2)</strong> The <code>validate_string()</code> SQL function already strips
+                                problematic characters — check if the partner name itself has unusual Unicode.
+                                <strong>(3)</strong> If SUNAT requires ASCII-only, review partner names and replace
+                                accented characters (á→a, ñ→n) in the partner form before regenerating.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q17 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-calendar mr-1 text-danger"></i>
+                                Report shows invoices from the wrong period?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The SQL query filters by the
+                                <code>date</code> field of the <code>account.move</code> record, not by
+                                <code>invoice_date</code>.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Verify
+                                that the <strong>Accounting Date</strong> of the invoice matches the intended reporting
+                                period. In Odoo, the <code>date</code> field is the accounting date used for fiscal
+                                period assignment. If an invoice has <code>invoice_date = Jan 31</code> but
+                                <code>date = Feb 01</code>, it will appear in the February report.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q18 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;"><i
+                                    class="fa fa-credit-card mr-1 text-success"></i> How is the "Medio de Pago" (payment
+                                method) determined?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The payment method column in purchase
+                                reports is populated based on the <code>l10n_pe_payment_method</code> field on the
+                                vendor bill.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> If
+                                this field is empty, the column will show blank in the TXT. For companies exceeding the
+                                1,500 UIT threshold, SUNAT requires this field. Configure the payment method on each
+                                vendor bill before generating the report.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q19 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-refresh mr-1 text-primary"></i>
+                                Can I regenerate a report after correcting invoices?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, absolutely. Reports are generated
+                                on-the-fly from live database data.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Detail:</strong> Simply correct the invoice data (amounts, taxes, dates, partner
+                                info), then re-open the wizard and click <strong>Generar Reporte</strong>. The previous
+                                files are cleared automatically before new ones are generated. There is no "locked" or
+                                "submitted" state in Odoo — you can regenerate as many times as needed before uploading
+                                to SUNAT.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Q20 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-database mr-1 text-warning"></i>
+                                "No hay contenido que presentar para este periodo" — but I have invoices!</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The invoices exist but are filtered out
+                                by the SQL query conditions.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Check these common causes: <strong>(1)</strong> Invoices are in <strong>Draft</strong>
+                                state — they must be <strong>Posted</strong>. <strong>(2)</strong> The
+                                <code>move_type</code> doesn't match the report (e.g., vendor bills won't appear in RVIE
+                                Sales). <strong>(3)</strong> The <strong>company</strong> on the invoice doesn't match
+                                your active company. <strong>(4)</strong> For non-domiciled reports,
+                                <code>is_nodomicilied</code> must be <code>True</code> on the partner.
+                                <strong>(5)</strong> The accounting <code>date</code> falls outside the selected
+                                Year/Month.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ayuda@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+---Models in module 'l10n_pe_sire_sunat'---
+---Fields in module 'l10n_pe_sire_sunat'---
+---XML records in module 'l10n_pe_sire_sunat'---
+UPD ir.ui.view: l10n_pe_sire_sunat.account_move_form_view_inherit_l10n_pe_sire_sunat -> l10n_pe_sire_sunat.account_move_view_form_inherit_l10n_pe_sire_sunat
+----------------------------------------------------------------
+
+V19 Migration (Feb 2026)
+------------------------
+OBJECTIVE: Migrate from V18 to V19 + fix breaking changes from updated dependencies.
+
+1. Manifest:
+   - [CHANGED] version: 18.0.1.0.7 -> 19.0.1.0.0
+   - [ADDED] depends: account_origin_invoice, dua_in_invoice, base_spot
+     Reason: These modules provide fields referenced directly in SQL queries
+     (origin_*, year_aduana/code_aduana, detraction_id). Previously implicit
+     via ple_sale_book/ple_purchase_book chain.
+
+2. Exchange Rate:
+   - [CHANGED] SQL: account_move.exchange_rate -> ROUND(CASE WHEN account_move.invoice_currency_rate > 0 THEN 1 / account_move.invoice_currency_rate ELSE 1 END, 3)
+     Files: models/sire_purchase_base.py, models/sire_sale_base.py
+     Reason: account_exchange_currency module deprecated. Odoo 19 uses native
+     invoice_currency_rate field (inverted rate). Formula matches ple_sale_book V19.
+
+3. Detraction Fields:
+   - [CHANGED] SQL: account_move.voucher_payment_date -> account_move.l10n_pe_detraction_date
+   - [CHANGED] SQL: account_move.voucher_number -> account_move.l10n_pe_detraction_number
+     File: models/sire_purchase_base.py
+     Reason: Fields renamed in l10n_pe_reports module. Old field names no longer
+     exist in account_move table.
+
+4. Serie/Correlativo Priority (Purchases):
+   - [CHANGED] Priority: l10n_latam_document_number (ORM) > name (SQL) > ref (SQL)
+     File: models/sire_purchase_base.py (_process_query_results)
+     Reason: Align with ple_purchase_book V19 priority logic. Note that
+     l10n_latam_document_number is a computed non-stored field, so it must be
+     resolved via ORM browse, not in SQL.
+   - [ADDED] SQL field: account_move.name AS move_name (for 2nd-level fallback)
+
+5. XML View ID:
+   - [CHANGED] account_move_form_view_inherit_l10n_pe_sire_sunat -> account_move_view_form_inherit_l10n_pe_sire_sunat
+     Reason: V19 naming convention (view_form before inherit).
+
+DEPENDS [ ple_sale_book ]
+model:  account_move
+field:  ple_date, ple_state, ple_its_declared, ple_correlative, bool_pay_invoice
+xml_id: ple_sale_book.account_move_view_form_inherit_ple_sale_book
+
+DEPENDS [ ple_purchase_book ]
+model:  account_move
+field:  igv_withholding_indicator, inv_serie, inv_correlative, inv_year_dua_dsi,
+        inv_retention_igv, inv_type_document, is_nodomicilied, linkage_id,
+        exoneration_nodomicilied_id, type_rent_id, taken_id, hard_rent,
+        deduccion_cost, neto_rent, retention_rate, tax_withheld, cdi,
+        application_article, types_goods_services_id
+xml_id:
+
+DEPENDS [ account_origin_invoice ]
+model:  account_move
+field:  origin_invoice_date, origin_number, origin_l10n_latam_document_type_id
+xml_id:
+
+DEPENDS [ dua_in_invoice ]
+model:  account_move
+field:  year_aduana, code_aduana
+xml_id:
+
+DEPENDS [ base_spot ]
+model:  account_move
+field:  detraction_id
+xml_id:
+
+DEPENDS [ l10n_pe_reports ] (transitive via ple_sale_book)
+model:  account_move
+field:  l10n_pe_detraction_date, l10n_pe_detraction_number
+xml_id:

@@ -1,0 +1,197 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_pe_sire_sunat
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-11 00:00+0000\n"
+"PO-Revision-Date: 2026-02-11 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_account_move__l10n_pe_is_complement_sire
+msgid "SIRE Complement"
+msgstr "Complemento para SIRE"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_account_move__l10n_pe_is_complement_sire
+msgid "Enable this field if the invoice is a physical CPE (Comprobante de Pago Electrónico) that needs to be included in the SIRE complement TXT file. When activated, the record will be picked up by the complement report generator."
+msgstr "Active este campo si la factura es un CPE (Comprobante de Pago Electrónico) físico que necesita ser incluido en el archivo TXT de complemento SIRE. Cuando se activa, el registro será recogido por el generador de reportes de complemento."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_res_company__exceeds_1500_uit
+msgid "Exceeds 1500 UIT"
+msgstr "Supera 1500 UIT"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_res_company__exceeds_1500_uit
+msgid "Enable this if the company's annual income exceeds 1500 UIT (Unidades Impositivas Tributarias). This flag affects specific fields in the SIRE purchase reports as required by SUNAT regulations."
+msgstr "Active esta opción si los ingresos anuales de la empresa superan las 1500 UIT (Unidades Impositivas Tributarias). Esta marca afecta campos específicos en los reportes de compras SIRE según lo requiere la normativa SUNAT."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__company_id
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_purchase_base__company_id
+msgid "Company for which the SIRE purchase report will be generated."
+msgstr "Compañía para la cual se generará el reporte de compras SIRE."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_sale_base__company_id
+msgid "Company for which the SIRE sales report will be generated."
+msgstr "Compañía para la cual se generará el reporte de ventas SIRE."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__year
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__year
+msgid "Year"
+msgstr "Año"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_purchase_base__year
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_sale_base__year
+msgid "Fiscal year for the SIRE report period."
+msgstr "Año fiscal para el periodo del reporte SIRE."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__month
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__month
+msgid "Period"
+msgstr "Periodo"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_purchase_base__month
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_sale_base__month
+msgid "Month of the fiscal period for the SIRE report."
+msgstr "Mes del periodo fiscal para el reporte SIRE."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__xlsx_filename
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__xlsx_filename
+msgid "Excel Filename"
+msgstr "Nombre del archivo Excel"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__xlsx_binary
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__xlsx_binary
+msgid "Excel Report"
+msgstr "Reporte Excel"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_purchase_base__xlsx_binary
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_sale_base__xlsx_binary
+msgid "Download the generated XLSX report for review and audit purposes."
+msgstr "Descargue el reporte XLSX generado para fines de revisión y auditoría."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__zip_filename
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__zip_filename
+msgid "TXT Filename"
+msgstr "Nombre del archivo TXT"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__zip_binary
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__zip_binary
+msgid "TXT Report"
+msgstr "Reporte TXT"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_purchase_base__zip_binary
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_sale_base__zip_binary
+msgid "Download the generated TXT file ready for upload to the SUNAT SIRE platform."
+msgstr "Descargue el archivo TXT generado listo para subir a la plataforma SIRE de SUNAT."
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_purchase_base__error_dialog
+#: model:ir.model.fields,field_description:l10n_pe_sire_sunat.field_sire_sale_base__error_dialog
+msgid "Errors"
+msgstr "Errores"
+
+#. module: l10n_pe_sire_sunat
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_purchase_base__error_dialog
+#: model:ir.model.fields,help:l10n_pe_sire_sunat.field_sire_sale_base__error_dialog
+msgid "Displays any errors encountered during report generation."
+msgstr "Muestra los errores encontrados durante la generación del reporte."
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "January"
+msgstr "Enero"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "February"
+msgstr "Febrero"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "March"
+msgstr "Marzo"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "April"
+msgstr "Abril"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "May"
+msgstr "Mayo"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "June"
+msgstr "Junio"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "July"
+msgstr "Julio"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "August"
+msgstr "Agosto"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "September"
+msgstr "Setiembre"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "October"
+msgstr "Octubre"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "November"
+msgstr "Noviembre"
+
+#. module: l10n_pe_sire_sunat
+#: selection:sire.purchase.base,month:0
+#: selection:sire.sale.base,month:0
+msgid "December"
+msgstr "Diciembre"
