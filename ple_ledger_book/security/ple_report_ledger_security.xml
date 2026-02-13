@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="ple_report_ledger_comp_rule" model="ir.rule">
+        <field name="name">PLE Ledger: multi-company</field>
+        <field name="model_id" ref="model_ple_report_ledger"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,77 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ple_ledger_book
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-13 00:00+0000\n"
+"PO-Revision-Date: 2026-02-13 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: ple_ledger_book
+#: model:ir.model,name:ple_ledger_book.model_ple_report_ledger
+msgid "PLE Report - General Ledger"
+msgstr "Reporte PLE - Libro Mayor"
+
+#. module: ple_ledger_book
+#: model:ir.model.fields,field_description:ple_ledger_book.field_ple_report_ledger__xls_binary_ledger
+msgid "Excel Report - General Ledger"
+msgstr "Reporte Excel - Libro Mayor"
+
+#. module: ple_ledger_book
+#: model:ir.model.fields,help:ple_ledger_book.field_ple_report_ledger__xls_binary_ledger
+msgid "Download the General Ledger report in Excel format (.xlsx) for internal review and audit purposes."
+msgstr "Descargue el reporte del Libro Mayor en formato Excel (.xlsx) para revisión interna y auditoría."
+
+#. module: ple_ledger_book
+#: model:ir.model.fields,field_description:ple_ledger_book.field_ple_report_ledger__txt_binary_ledger
+msgid "TXT Report"
+msgstr "Reporte TXT"
+
+#. module: ple_ledger_book
+#: model:ir.model.fields,help:ple_ledger_book.field_ple_report_ledger__txt_binary_ledger
+msgid "Download the TXT file ready to upload to SUNAT's PLE application. The filename follows SUNAT's naming convention."
+msgstr "Descargue el archivo TXT listo para cargar en la aplicación PLE de SUNAT. El nombre del archivo sigue la convención de nomenclatura de SUNAT."
+
+#. module: ple_ledger_book
+#: model:ir.actions.act_window,name:ple_ledger_book.action_ple_report_ledger
+msgid "General Ledger"
+msgstr "Libro Mayor"
+
+#. module: ple_ledger_book
+#: model:ir.ui.menu,name:ple_ledger_book.menu_ple_report_ledger
+msgid "General Ledger"
+msgstr "Libro Mayor"
+
+#. module: ple_ledger_book
+#: model:ir.ui.view,arch_db:ple_ledger_book.ple_report_ledger_view_form
+msgid "Generate Report"
+msgstr "Generar Reporte"
+
+#. module: ple_ledger_book
+#: model:ir.ui.view,arch_db:ple_ledger_book.ple_report_ledger_view_form
+msgid "Declare to SUNAT"
+msgstr "Declarar a SUNAT"
+
+#. module: ple_ledger_book
+#: model:ir.ui.view,arch_db:ple_ledger_book.ple_report_ledger_view_form
+msgid "Return to Draft"
+msgstr "Regresar a Borrador"
+
+#. module: ple_ledger_book
+#: model:ir.ui.view,arch_db:ple_ledger_book.ple_report_ledger_view_form
+msgid "PLE Reports"
+msgstr "Reportes PLE"
+
+#. module: ple_ledger_book
+#: model:ir.ui.view,arch_db:ple_ledger_book.ple_report_ledger_view_form
+msgid "Period"
+msgstr "Periodo"
