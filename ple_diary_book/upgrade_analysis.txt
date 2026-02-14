@@ -1,0 +1,42 @@
+---Models in module 'ple_diary_book'---
+    ple.report.diary (updated)
+---Fields in module 'ple_diary_book'---
+    No field changes
+---XML records in module 'ple_diary_book'---
+    ple_report_diary_view_tree → ple_report_diary_view_list (renamed)
+
+MIGRATION TO V19.0
+==================
+Updated manifest version to 19.0.1.0.0.
+Updated license from 'Other proprietary' to 'OPL-1'.
+
+1. SQL Query Security (models/ple_diary.py):
+   - [CHANGED] Replaced unsafe `.format()` string interpolation with parameterized `%(param)s` placeholders.
+   - [CHANGED] Query now uses `self.env.cr.execute(query, params)` with named parameters dict.
+
+2. code_store JSONB Key Fix (models/ple_diary.py):
+   - [FIXED] Changed `code_store ->> '{company_id}'` to `code_store->>%(active_company_root_id)s`.
+   - Reason: V19 uses `company.root_id.id` as the JSONB key for multi-company account codes.
+   - Reference: Pattern taken from migrated sibling module `ple_ledger_book`.
+
+3. data_structured Optimization (models/ple_diary.py):
+   - [CHANGED] Removed `get_data_structured_sire()` SQL function call from the ELSE branch of the CASE statement.
+   - Reason: Python code in `action_generate_report()` already constructs the post-SIRE structured data
+     and overwrites the SQL result. The SQL function was executing but its result was discarded.
+   - The pre-SIRE branch (`get_data_structured_diary()`) is preserved as-is since Python uses it directly.
+
+4. Analytic Distribution Cleanup (models/ple_diary.py):
+   - [CHANGED] Replaced complex lambda-based analytic account lookup with dict-based approach.
+   - Old: `list(map(lambda x: ..., account_analytic_data))` with nested list comprehension.
+   - New: `{str(aa.id): aa.name for aa in ...}` dict, then simple list comprehension with `key in dict`.
+   - Reference: Pattern taken from migrated sibling module `ple_ledger_book`.
+
+5. VAT Validation (models/ple_diary.py):
+   - [ADDED] Early validation before SQL execution: raises `ValidationError` if `company_id.vat` is empty.
+
+6. Test Updates (tests/test_ple_diary.py):
+   - [FIXED] Replaced `exchange_rate` with `invoice_currency_rate` (field from removed `account_exchange_currency` module).
+
+7. View XML ID (views/ple_diary_views.xml):
+   - [CHANGED] Renamed `ple_report_diary_view_tree` → `ple_report_diary_view_list` (V19 naming convention).
+   - Note: The `<list>` tag was already in use, only the XML ID needed updating.

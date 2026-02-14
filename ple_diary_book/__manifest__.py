@@ -1,0 +1,38 @@
+{
+    'name': 'Electronic Journal Perú',
+    'version': '19.0.1.0.0',
+    'author': 'Ganemo',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': 'https://www.ganemo.co',
+    'summary': 'Generate the Electronic Journal (Libro Diario) for SUNAT PLE compliance in Peru.',
+    'description': """Generate the Electronic Journal (Libro Diario Electrónico) required by SUNAT for Peruvian companies.
+Produces PLE TXT files (5.1, 5.2, 5.3, 5.4) and a comprehensive Excel report ready to upload
+through SUNAT's electronic book program (PLE).""",
+    'category': 'Accounting',
+    'depends': [
+        'ple_sale_book',
+        'invoice_type_document',
+        'ple_purchase_book',
+    ],
+    'data': [
+        'views/company_views.xml',
+        'views/ple_diary_views.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
+        'sql/get_data_structured_diary.sql',
+        'sql/get_journal_correlative.sql',
+        'sql/string_ref.sql',
+        'sql/UDF_numeric_char_diary.sql',
+        'sql/get_data_structured_sire.sql',
+    ],
+    'icon': '/ple_diary_book/static/description/icon.png',
+    'images': ['static/description/banner.png'],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    'license': 'OPL-1',
+    'currency': 'USD',
+    'price': 160.00,
+    'module_type': 'official',
+}

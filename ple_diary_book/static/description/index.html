@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronic Journal PLE - SUNAT (Perú) | Odoo Accounting App by Ganemo</title>
+    <meta name="description"
+        content="Generate the Electronic Journal (Libro Diario Electrónico) required by SUNAT for Peruvian companies. Automatically produces PLE TXT (5.1, 5.2, 5.3, 5.4) and Excel files ready to upload.">
+    <meta name="keywords"
+        content="Odoo, PLE, SUNAT, Peru, Libro Diario, Electronic Journal, Accounting, Ganemo, Odoo 19, TXT, Excel, 5.1, 5.3">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'ple_diary_book' generates the Electronic Journal (Libro Diario Electrónico, PLE Register
+            5.1)
+            required by SUNAT for Peruvian companies. It produces TXT files (5.1 Journal, 5.2 Simplified Journal,
+            5.3 Chart of Accounts with values, 5.4 Chart of Accounts without values) and a comprehensive Excel report.
+            Uses custom PostgreSQL UDFs for data formatting and supports both pre-SIRE and post-SIRE structured data
+            formats.
+            Requires ple_sale_book, invoice_type_document, and ple_purchase_book as dependencies.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). NOT supported on Odoo Online due to custom
+            code restrictions.
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Electronic Journal</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    PLE Libro Diario — SUNAT Perú</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Automatically generate the Electronic Journal (Libro Diario) required by SUNAT.
+                    Produces TXT files (5.1, 5.2, 5.3, 5.4) and a comprehensive Excel report ready for submission
+                    through SUNAT's PLE application.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-text-o mr-2"></i> Multiple PLE Books</h4>
+                            <p style="text-align: justify;">Generate all required journal books in one click:
+                                <strong>5.1 Journal</strong>, <strong>5.2 Simplified Journal</strong>,
+                                <strong>5.3 Chart of Accounts (with values)</strong>, and
+                                <strong>5.4 Chart of Accounts (without values)</strong>. Each file follows SUNAT's
+                                exact naming convention and format specifications.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-download mr-2"></i> Ready-to-Upload TXT</h4>
+                            <p style="text-align: justify;">The generated TXT files are <strong>ready to upload</strong>
+                                directly to SUNAT's PLE application without any manual formatting or modification.
+                                The file naming follows SUNAT's standard: LE + RUC + Period + Book Code + Flags.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-table mr-2"></i> Excel Report</h4>
+                            <p style="text-align: justify;">A comprehensive Excel report is generated alongside the TXT
+                                files
+                                for <strong>internal review and audit</strong> purposes. All accounting data is
+                                presented
+                                in a structured spreadsheet format with proper headers and formatting.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-calendar-check-o mr-2"></i> SIRE Compatibility
+                            </h4>
+                            <p style="text-align: justify;">Automatically handles the transition between pre-SIRE
+                                (before October 2023) and post-SIRE structured data formats. The system detects the
+                                report period and applies the <strong>correct format</strong> automatically.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Step 1: Prerequisites -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Prerequisites</h3>
+                            <p class="lead">Ensure these modules are installed before using the Electronic Journal:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i>
+                                            <strong>ple_sale_book</strong>
+                                            — Provides the base PLE report model and core SQL functions.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i>
+                                            <strong>invoice_type_document</strong>
+                                            — Provides series and correlative number propagation to journal entries.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i>
+                                            <strong>ple_purchase_book</strong>
+                                            — Provides complementary purchase data fields.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>Company
+                                                VAT</strong>
+                                            must be configured (Settings → Companies → NIF/RUC).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #791d97;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Chart of Accounts:</strong>
+                                    Configure the <em>Code Prefix</em> on your Company (Settings → Companies) to match
+                                    SUNAT's Table 17 for the Chart of Accounts classification used in PLE reports 5.3
+                                    and 5.4.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Step 2: Company Configuration -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #28a745; background-color: #f9fcf9; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #28a745; font-weight: 700;"><i class="fa fa-building mr-2"></i> 2.
+                                Company Configuration</h3>
+                            <p class="lead">Configure your company for SUNAT compliance before generating reports:</p>
+                            <ol class="mt-3" style="line-height: 2.2;">
+                                <li>Go to <strong>Settings → Companies</strong> and select your company.</li>
+                                <li>Fill in the <strong>NIF/RUC</strong> field with your 11-digit RUC number (e.g.,
+                                    <code>20557912879</code>). <em>This is mandatory — the module will block report
+                                        generation if missing.</em>
+                                </li>
+                                <li>Ensure the <strong>Country</strong> is set to <strong>Peru</strong>.</li>
+                                <li>Set the <strong>PLE Contributor Type</strong> to <strong>CUO</strong> (most
+                                    common) or <strong>M-RLE</strong> depending on your contributor category. This
+                                    controls the journal correlative format in the TXT files.</li>
+                                <li>Configure the <strong>Code Prefix</strong> to match SUNAT's Chart of Accounts Table
+                                    17 classification. This prefix is used for reports 5.3 and 5.4.</li>
+                            </ol>
+                            <div class="mt-3 p-3"
+                                style="border-radius: 10px; background-color: #d4edda; border: 1px solid #c3e6cb;">
+                                <small><strong><i class="fa fa-exclamation-triangle mr-1"></i> Important:</strong> If
+                                    you
+                                    operate multiple companies, repeat this configuration for each one. Reports are
+                                    filtered by company — you will only see reports belonging to your active
+                                    company.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Step 3: Creating & Generating Reports -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 3.
+                                Creating & Generating Reports</h3>
+                            <p class="lead">Complete workflow from creation to SUNAT submission:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-plus-circle text-primary mr-2"></i> Step A: Create New
+                                            Report</h5>
+                                        <p class="text-muted">Navigate to <strong>Accounting → PLE Reports → Electronic
+                                                Journal</strong>.
+                                            Click <strong>New</strong>. The system automatically fills:</p>
+                                        <ul class="text-muted small">
+                                            <li><strong>Period</strong> = Previous month (Start → End).</li>
+                                            <li><strong>Company</strong> = Your active company.</li>
+                                            <li><strong>Reporting Status</strong> = "Operating Entity".</li>
+                                        </ul>
+                                        <p class="text-muted small"><em>No manual date entry needed for the most common
+                                                use case.</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-calendar text-primary mr-2"></i> Step B: Adjust Period (if
+                                            needed)</h5>
+                                        <p class="text-muted">If you need a different period, change the <strong>Start
+                                                Date</strong>.
+                                            The <strong>End Date automatically updates</strong> to the last day of that
+                                            month. Example: set Start Date to <code>March 1</code> → End Date
+                                            auto-fills to <code>March 31</code>.</p>
+                                        <p class="text-muted small"><em>The system validates that End Date is never
+                                                before Start Date.</em></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-cog text-primary mr-2"></i> Step C: Generate Files</h5>
+                                        <p class="text-muted">Click <strong>"Generate Report"</strong>. The system
+                                            extracts all posted journal entries for the period and produces:</p>
+                                        <ul class="text-muted small">
+                                            <li>1 Excel file (internal audit)</li>
+                                            <li>TXT 5.1 — Main Electronic Journal</li>
+                                            <li>TXT 5.2 — Simplified Journal</li>
+                                            <li>TXT 5.3 — Chart of Accounts (with/without values)</li>
+                                            <li>TXT 5.4 — Chart of Accounts (simplified, with/without values)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-upload text-primary mr-2"></i> Step D: Download & Upload to
+                                            SUNAT</h5>
+                                        <p class="text-muted">Download the TXT files from the form. Upload them directly
+                                            to <strong>SUNAT's PLE application</strong>. The filename already follows
+                                            SUNAT's naming convention (<code>LE + RUC + Period + BookCode +
+                                                Flags</code>), so <strong>no renaming is needed</strong>.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-legal text-primary mr-2"></i> Step E: Declare to SUNAT</h5>
+                                        <p class="text-muted">After uploading the TXT files, click
+                                            <strong>"Declare to SUNAT"</strong> to mark the report as officially
+                                            declared. This locks the report, preventing accidental modifications. The
+                                            state changes to <strong>"Declared"</strong>.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-undo text-primary mr-2"></i> Step F: Rollback (if needed)
+                                        </h5>
+                                        <p class="text-muted">Need to regenerate? Click <strong>"Rollback"</strong> to
+                                            clear all generated files and return to <strong>Draft</strong> state. Then
+                                            re-run <strong>"Generate Report"</strong> with updated data.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Step 4: Search, Filter & Group -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #ffc107; background-color: #fffef5; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #d4a017; font-weight: 700;"><i class="fa fa-search mr-2"></i> 4.
+                                Search, Filter & Group</h3>
+                            <p class="lead">Quickly find and organize your reports using the built-in search
+                                view:</p>
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <h5><i class="fa fa-filter text-warning mr-2"></i> Quick Filters</h5>
+                                    <ul class="text-muted" style="line-height: 2;">
+                                        <li><strong>Draft</strong> — Reports not yet generated.</li>
+                                        <li><strong>Generated</strong> — Files ready for download.</li>
+                                        <li><strong>Declared</strong> — Officially submitted to SUNAT.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5><i class="fa fa-search text-warning mr-2"></i> Search By</h5>
+                                    <ul class="text-muted" style="line-height: 2;">
+                                        <li><strong>Company</strong> — Filter by company name.</li>
+                                        <li><strong>Period</strong> — Search by start date.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5><i class="fa fa-object-group text-warning mr-2"></i> Group By</h5>
+                                    <ul class="text-muted" style="line-height: 2;">
+                                        <li><strong>Company</strong> — Group across entities.</li>
+                                        <li><strong>State</strong> — See draft vs declared.</li>
+                                        <li><strong>Period (month)</strong> — Organize by month.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Step 5: Multi-Company -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #17a2b8; background-color: #f0f9fb; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-building mr-2"></i> 5.
+                                Multi-Company Isolation</h3>
+                            <p class="lead">Reports are <strong>strictly isolated per company</strong>:</p>
+                            <ul class="mt-3" style="line-height: 2;">
+                                <li><i class="fa fa-check text-info mr-2"></i> You will <strong>only see
+                                        reports</strong> belonging to the company you are currently logged into.</li>
+                                <li><i class="fa fa-check text-info mr-2"></i> If you switch companies using the company
+                                    selector, the report list <strong>automatically updates</strong> to show only that
+                                    company's data.</li>
+                                <li><i class="fa fa-check text-info mr-2"></i> Each company must have its own
+                                    <strong>RUC, Chart of Accounts prefix, and PLE contributor type</strong> configured
+                                    independently.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FIELD MAPPING REFERENCE -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Field Mapping Reference</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Detailed Column-by-Column Documentation</p>
+                </div>
+
+                <!-- Table 1: TXT 5.1 / 5.2 — Journal -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                            <h3 style="color: #791d97; font-weight: 700;" class="mb-4">
+                                <i class="fa fa-file-text-o mr-2"></i> TXT 5.1 / 5.2 — Electronic Journal (Libro Diario)
+                            </h3>
+                            <p class="text-muted mb-4">
+                                Each row represents one <strong>journal entry line</strong>
+                                (<code>account.move.line</code>).
+                                Fields are separated by the pipe character <code>|</code>. Row order: date descending,
+                                then
+                                move name descending, then line ID ascending.
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" style="font-size: 13px;">
+                                    <thead style="background-color: #791d97; color: white;">
+                                        <tr>
+                                            <th style="width: 3%;">#</th>
+                                            <th style="width: 17%;">SUNAT Field Name</th>
+                                            <th style="width: 10%;">Source</th>
+                                            <th style="width: 70%;">Completion Logic</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><strong>Periodo</strong></td>
+                                            <td><code>account_move_line.date</code></td>
+                                            <td>Formatted as <code>YYYYMM00</code> using the journal entry line date.
+                                                The
+                                                last two digits are always <code>00</code> as required by SUNAT for
+                                                monthly
+                                                period identification. Example: <code>20260200</code> for February 2026.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td><strong>CUO</strong><br><small>(Código Único de Operación)</small></td>
+                                            <td><code>account_move.name</code></td>
+                                            <td>The journal entry name with all <code>/</code>, <code>-</code>, and
+                                                spaces
+                                                stripped. Example: <code>INV/2026/00001</code> becomes
+                                                <code>INV202600001</code>. Serves as the unique operation identifier for
+                                                SUNAT.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td><strong>Número Correlativo</strong><br><small>del Asiento</small></td>
+                                            <td>SQL UDF: <code>get_journal_correlative()</code></td>
+                                            <td>Computed via a PostgreSQL UDF. Depends on the company's <strong>PLE
+                                                    Contributor
+                                                    Type</strong>:
+                                                <ul class="mt-1 mb-0">
+                                                    <li><strong>CUO type:</strong> Uses the line's
+                                                        <code>ple_correlative</code> value directly (sequential within
+                                                        the
+                                                        move).
+                                                    </li>
+                                                    <li><strong>M-RLE type:</strong> Applies the simplified correlative
+                                                        format required for M-RLE contributors.</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td><strong>Código Cuenta Contable</strong></td>
+                                            <td><code>account_account.code_store</code></td>
+                                            <td>The account code extracted from the JSONB <code>code_store</code> field
+                                                using
+                                                the active company's <code>root_id</code> as key. All <code>/</code>,
+                                                <code>-</code>, and <code>.</code> separators are stripped. Example:
+                                                <code>60.1.1.01</code> → <code>6011101</code>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td><strong>Código Unidad de Operación</strong></td>
+                                            <td><em>Hardcoded empty</em></td>
+                                            <td>Always empty (<code>''</code>). This field is optional per SUNAT and not
+                                                used
+                                                in the current implementation.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td><strong>Código Centro de Costo</strong></td>
+                                            <td><code>account_move_line.analytic_distribution</code></td>
+                                            <td>Derived from the <strong>analytic distribution</strong> of the journal
+                                                entry line. The system:
+                                                <ol class="mt-1 mb-0" style="padding-left: 15px;">
+                                                    <li>Reads the JSON dictionary of analytic account IDs →
+                                                        percentages.</li>
+                                                    <li>Resolves each ID to its <code>account.analytic.account</code>
+                                                        name.</li>
+                                                    <li>Extracts the <strong>initial letter</strong> of each word in the
+                                                        name.</li>
+                                                    <li>Concatenates initials. Example: <code>"Centro de Costos
+                                                            Administrativos"</code> → <code>CCA</code>.</li>
+                                                </ol>
+                                                If no analytic distribution, the field is empty.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td><strong>Tipo de Moneda</strong></td>
+                                            <td><code>res_currency.name</code></td>
+                                            <td>The ISO 4217 currency code from the journal entry line's currency.
+                                                Defaults
+                                                to <code>PEN</code> if no currency is set. Common values:
+                                                <code>PEN</code>, <code>USD</code>, <code>EUR</code>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                            <td><strong>Tipo Doc. Identidad Emisor</strong></td>
+                                            <td><code>l10n_latam_identification_type.l10n_pe_vat_code</code></td>
+                                            <td>The SUNAT identification type code of the partner (issuer). Sourced from
+                                                the
+                                                partner's LATAM identification type. Common values:
+                                                <code>6</code> = RUC, <code>1</code> = DNI, <code>4</code> = Carnet
+                                                Extranjería.
+                                                Empty if the partner has no identification type.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td><strong>Número Doc. Identidad Emisor</strong></td>
+                                            <td><code>res_partner.vat</code></td>
+                                            <td>The partner's VAT/RUC/DNI number. <strong>Post-processing:</strong>
+                                                if the number exceeds 11 characters, only the
+                                                <strong>last 11 characters</strong> are kept (to handle prefixed
+                                                formats like <code>PE20557912879</code> → <code>20557912879</code>).
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td><strong>Tipo Comprobante de Pago</strong></td>
+                                            <td><code>l10n_latam_document_type.code</code></td>
+                                            <td>The SUNAT document type code from the LATAM document type. Examples:
+                                                <code>01</code> = Factura, <code>03</code> = Boleta,
+                                                <code>07</code> = Nota de Crédito, <code>08</code> = Nota de Débito.
+                                                <strong>Fallback:</strong> defaults to <code>00</code> if not set
+                                                (miscellaneous entries).
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>11</td>
+                                            <td><strong>Serie Comprobante</strong></td>
+                                            <td><code>account_move_line.serie_correlative</code></td>
+                                            <td>The document series, resolved using <strong>conditional logic by journal
+                                                    type</strong>:
+                                                <ul class="mt-1 mb-0">
+                                                    <li><strong>Sales</strong> (<code>out_invoice</code>,
+                                                        <code>out_refund</code>): First tries
+                                                        <code>serie_correlative</code> (split by <code>-</code>, part
+                                                        1),
+                                                        falls back to <code>move_name</code> part 1.
+                                                    </li>
+                                                    <li><strong>Purchases</strong> (<code>in_invoice</code>,
+                                                        <code>in_refund</code>): First tries
+                                                        <code>serie_correlative</code>, falls back to <code>ref</code>
+                                                        part 1.
+                                                    </li>
+                                                    <li><strong>Cash/Bank/General</strong> (<code>entry</code>): Uses
+                                                        <code>serie_correlative</code> part 1 only.
+                                                    </li>
+                                                    <li><strong>Other:</strong> defaults to <code>0000</code>.</li>
+                                                </ul>
+                                                Truncated to <strong>4 characters</strong>.
+                                                <strong>Fallback:</strong> <code>00000000</code> if empty after
+                                                processing.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>12</td>
+                                            <td><strong>Número Comprobante</strong></td>
+                                            <td><code>account_move_line.serie_correlative</code></td>
+                                            <td>The document correlative number. Same <strong>conditional logic by
+                                                    journal
+                                                    type</strong> as field 11, but extracting <strong>part 2</strong>
+                                                (after the <code>-</code> separator):
+                                                <ul class="mt-1 mb-0">
+                                                    <li><strong>Sales:</strong> <code>serie_correlative</code> part 2 →
+                                                        fallback to <code>move_name</code> part 2.</li>
+                                                    <li><strong>Purchases:</strong> <code>serie_correlative</code> part
+                                                        2
+                                                        → fallback to <code>ref</code> part 2.</li>
+                                                    <li><strong>Cash/Bank/General:</strong>
+                                                        <code>serie_correlative</code> part 2.
+                                                    </li>
+                                                    <li><strong>Other:</strong> <code>00000000</code>.</li>
+                                                </ul>
+                                                Truncated to <strong>8 characters</strong>.
+                                                <strong>Fallback:</strong> <code>0000</code> if empty after processing.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>13</td>
+                                            <td><strong>Fecha Contable</strong></td>
+                                            <td><code>account_move.date</code></td>
+                                            <td>The accounting date of the journal entry, formatted as
+                                                <code>DD/MM/YYYY</code>. Example: <code>15/02/2026</code>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>14</td>
+                                            <td><strong>Fecha de Vencimiento</strong></td>
+                                            <td><code>account_move.invoice_date_due</code></td>
+                                            <td>The invoice due date, formatted as <code>DD/MM/YYYY</code>. Empty if not
+                                                applicable (e.g., non-invoice journal entries).</td>
+                                        </tr>
+                                        <tr>
+                                            <td>15</td>
+                                            <td><strong>Fecha de Operación / Emisión</strong></td>
+                                            <td><code>account_move.date</code></td>
+                                            <td>Same as field 13 (Fecha Contable). Uses the journal entry's accounting
+                                                date as the operation date.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>16</td>
+                                            <td><strong>Glosa de la Operación</strong></td>
+                                            <td><code>account_move_line.name</code></td>
+                                            <td>The journal entry line's description/label. Newlines replaced by spaces.
+                                                <strong>Truncated to 200 characters</strong>. Falls back to the move
+                                                name if the line label is empty. Validated via SQL UDF
+                                                <code>validate_string()</code>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>17</td>
+                                            <td><strong>Glosa Referencial</strong></td>
+                                            <td><em>Conditional source</em></td>
+                                            <td>Depends on the <strong>move type</strong>:
+                                                <ul class="mt-1 mb-0">
+                                                    <li><strong>Entries, Purchases</strong> (<code>entry</code>,
+                                                        <code>in_invoice</code>, <code>in_refund</code>,
+                                                        <code>in_receipt</code>):
+                                                        Uses <code>account_move.ref</code>. Falls back to the line label
+                                                        if ref is empty.
+                                                    </li>
+                                                    <li><strong>Sales</strong> (<code>out_invoice</code>,
+                                                        <code>out_refund</code>):
+                                                        Uses <code>account_move.payment_reference</code>. Falls back to
+                                                        the line label.
+                                                    </li>
+                                                </ul>
+                                                Newlines replaced by spaces. <strong>Truncated to 200
+                                                    characters</strong>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>18</td>
+                                            <td><strong>Debe</strong><br><small>(Debit)</small></td>
+                                            <td><code>account_move_line.debit</code></td>
+                                            <td>The debit amount of the journal entry line in company currency.
+                                                Formatted
+                                                with <strong>2 decimal places</strong>. Example: <code>1500.00</code>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>19</td>
+                                            <td><strong>Haber</strong><br><small>(Credit)</small></td>
+                                            <td><code>account_move_line.credit</code></td>
+                                            <td>The credit amount of the journal entry line in company currency.
+                                                Formatted
+                                                with <strong>2 decimal places</strong>. Example: <code>1500.00</code>.
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color: #f8f0ff;">
+                                            <td>20</td>
+                                            <td><strong>Dato Estructurado</strong></td>
+                                            <td><em>Conditional logic</em></td>
+                                            <td>
+                                                <strong style="color: #791d97;">⚠ SIRE Transition Logic:</strong>
+                                                <div class="mt-2 mb-2 p-2"
+                                                    style="border: 1px dashed #791d97; border-radius: 8px; background: #faf5ff;">
+                                                    <strong>If period ≤ September 2023</strong> (pre-SIRE):<br>
+                                                    Uses SQL UDF <code>get_data_structured_diary()</code> which builds a
+                                                    legacy string with <code>&amp;</code> separators based on:
+                                                    journal type, <code>ple_no_include</code> flag, non-domiciled
+                                                    status,
+                                                    move name, and date.
+                                                </div>
+                                                <div class="p-2"
+                                                    style="border: 1px dashed #3c6dac; border-radius: 8px; background: #f0f7ff;">
+                                                    <strong>If period ≥ October 2023</strong> (post-SIRE):<br>
+                                                    Concatenation of 4 zero-padded values:
+                                                    <code>{partner_doc_number(11)}{doc_type_code(2)}{serie(4)}{correlative(10)}</code>
+                                                    <br>
+                                                    Example: <code>20557912879010001000000123</code>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>21</td>
+                                            <td><strong>Estado de la Operación</strong></td>
+                                            <td><em>Hardcoded</em></td>
+                                            <td>Always <code>1</code>. Indicates the entry is an active/valid operation
+                                                (not cancelled or deleted). Required by SUNAT's format specification.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table 2: TXT 5.3 / 5.4 — Chart of Accounts -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.08);">
+                            <h3 style="color: #3c6dac; font-weight: 700;" class="mb-4">
+                                <i class="fa fa-sitemap mr-2"></i> TXT 5.3 / 5.4 — Chart of Accounts (Plan Contable)
+                            </h3>
+                            <p class="text-muted mb-4">
+                                Each row represents one <strong>account</strong> (<code>account.account</code>)
+                                belonging to
+                                the company. Fields are separated by <code>|</code>. Sorted by account code ascending.
+                                <strong>5.3</strong> includes all accounts; <strong>5.4</strong> is the companion for
+                                the simplified journal. The "without values" variant is always empty.
+                            </p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" style="font-size: 13px;">
+                                    <thead style="background-color: #3c6dac; color: white;">
+                                        <tr>
+                                            <th style="width: 3%;">#</th>
+                                            <th style="width: 17%;">SUNAT Field Name</th>
+                                            <th style="width: 15%;">Source</th>
+                                            <th style="width: 65%;">Completion Logic</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><strong>Periodo</strong></td>
+                                            <td><code>account_account.ple_date_account</code></td>
+                                            <td>Formatted as <code>YYYYMMDD</code> using the account's PLE registration
+                                                date. If not set, the field is empty. Example:
+                                                <code>20260101</code>.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td><strong>Código Cuenta</strong></td>
+                                            <td><code>account_account.code</code></td>
+                                            <td>The account code with all <code>.</code> separators stripped. Example:
+                                                <code>10.4.1.01</code> → <code>1041101</code>. Sorted ascending to
+                                                ensure consistent ordering.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td><strong>Nombre Cuenta</strong></td>
+                                            <td><code>account_account.name</code></td>
+                                            <td>The account name. <strong>Truncated to 100 characters</strong>.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td><strong>Código Prefijo Plan Contable</strong></td>
+                                            <td><code>res_company.code_prefix</code></td>
+                                            <td>The chart of accounts classification code configured at the company
+                                                level.
+                                                Must match <strong>SUNAT's Table 17</strong> (e.g., <code>01</code> for
+                                                PCGE 2019). Same value for all rows in the report. Empty if not
+                                                configured.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td><strong>Nombre del Grupo</strong></td>
+                                            <td><code>account_account.group_id.name</code></td>
+                                            <td>The name of the account's group (classification). Newlines are removed.
+                                                <strong>Truncated to 60 characters</strong>. Empty if the account has no
+                                                group assigned.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td><em>Empty fields</em></td>
+                                            <td>—</td>
+                                            <td>Two empty pipe-separated fields (columns 6 and 7 in the TXT). Reserved
+                                                by
+                                                SUNAT for future use.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td><strong>Estado Cuenta</strong></td>
+                                            <td><code>account_account.ple_state_account</code></td>
+                                            <td>The account's PLE state. Indicates whether the account is active or
+                                                deprecated per SUNAT classification. Common values: <code>1</code> =
+                                                Active, <code>0</code> = Inactive.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TXT Filename Convention -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #28a745; background-color: #f9fcf9; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #28a745; font-weight: 700;">
+                                <i class="fa fa-file-o mr-2"></i> TXT Filename Convention
+                            </h3>
+                            <p class="lead">All generated filenames follow SUNAT's standard naming pattern:</p>
+                            <div class="p-3 bg-white shadow-sm" style="border-radius: 10px; font-family: monospace;">
+                                <code
+                                    style="font-size: 15px;">LE{RUC}{YYYY}{MM}000{BOOK_CODE}0000{STATE_SEND}{HAS_INFO}{CURRENCY}1.txt</code>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <ul class="text-muted" style="line-height: 2.2;">
+                                        <li><strong>LE</strong> — Fixed prefix (Libro Electrónico)</li>
+                                        <li><strong>RUC</strong> — Company's 11-digit RUC</li>
+                                        <li><strong>YYYY/MM</strong> — Year and month of the period</li>
+                                        <li><strong>BOOK_CODE</strong> — <code>5010</code> (5.1), <code>5020</code>
+                                            (5.2), <code>5030</code> (5.3), <code>5040</code> (5.4)</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="text-muted" style="line-height: 2.2;">
+                                        <li><strong>STATE_SEND</strong> — <code>1</code> (Operating Entity) or
+                                            <code>0</code> (Inactive / Ceased)
+                                        </li>
+                                        <li><strong>HAS_INFO</strong> — <code>1</code> if data exists, <code>0</code> if
+                                            empty</li>
+                                        <li><strong>CURRENCY</strong> — <code>1</code> (PEN) or <code>2</code> (other)
+                                        </li>
+                                        <li><strong>1</strong> — Fixed suffix (version identifier)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Generated Files Detail -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Generated Files Reference</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        PLE Output Documentation</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-code-o mr-2"></i> TXT 5.1 — Journal</h4>
+                            <p style="text-align: justify;">The main Electronic Journal file containing all posted
+                                journal entries with their debit/credit amounts, account codes, partner information,
+                                document types, and structured data. This is the primary report for SUNAT submission.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-code-o mr-2"></i> TXT 5.2 — Simplified</h4>
+                            <p style="text-align: justify;">The Simplified Journal version for companies under the
+                                <strong>RER (Régimen Especial)</strong> regime. Contains the same data structure as 5.1
+                                but adapted for simplified contributors.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-sitemap mr-2"></i> TXT 5.3 — Chart (with values)
+                            </h4>
+                            <p style="text-align: justify;">The Chart of Accounts with values, listing all accounts used
+                                during the period with their codes, names, account groups, and the company's chart
+                                prefix
+                                according to SUNAT's Table 17.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-sitemap mr-2"></i> TXT 5.4 — Chart (no values)
+                            </h4>
+                            <p style="text-align: justify;">The Chart of Accounts without associated transactional
+                                values.
+                                Lists the account structure for reference purposes alongside the main journal report.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-file-text mr-2"></i>
+                                Scenario 1: Generate Full Report</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Accounting → PLE Reports → Electronic Journal</strong>.</li>
+                                <li>Create a new report for the current month.</li>
+                                <li>Ensure the company has a valid <strong>RUC/VAT</strong>.</li>
+                                <li>Click <strong>"Generar"</strong>.</li>
+                                <li><strong>Result:</strong> All 7 files should be generated (1 Excel + 6 TXT files for
+                                    5.1, 5.2, 5.3, 5.4 with/without values).</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-undo mr-2"></i> Scenario 2:
+                                Rollback & Regenerate</h4>
+                            <ol class="mt-3">
+                                <li>Generate a report as in Scenario 1.</li>
+                                <li>Click <strong>"Rollback"</strong>.</li>
+                                <li><strong>Result:</strong> All generated files should be cleared. State returns to
+                                    "Draft".</li>
+                                <li>Click <strong>"Generar"</strong> again.</li>
+                                <li><strong>Result:</strong> Files are regenerated successfully.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-calendar mr-2"></i> Scenario
+                                3:
+                                Pre-SIRE Period (Before Oct 2023)</h4>
+                            <ol class="mt-3">
+                                <li>Create a report for a period <strong>before October 2023</strong> (e.g., September
+                                    2023).</li>
+                                <li>Ensure there are posted journal entries in that period.</li>
+                                <li><strong>Result:</strong> The "Structured Data" column in the TXT should use the
+                                    legacy format with <code>&</code> separators.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-shield mr-2"></i> Scenario 4:
+                                Missing VAT Validation</h4>
+                            <ol class="mt-3">
+                                <li>Remove the VAT/RUC from the company (Settings → Companies).</li>
+                                <li>Attempt to generate a report.</li>
+                                <li><strong>Result:</strong> A clear validation error should appear instructing the user
+                                    to configure the VAT.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                            <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-ban mr-2"></i> Scenario 5:
+                                Date Constraint Validation</h4>
+                            <ol class="mt-3">
+                                <li>Create a new report.</li>
+                                <li>Manually set <strong>End Date</strong> to a date <strong>before</strong> the Start
+                                    Date.</li>
+                                <li><strong>Result:</strong> A validation error should appear: <em>"The end date cannot
+                                        be earlier than the start date."</em></li>
+                                <li>Correct the End Date to be after the Start Date.</li>
+                                <li><strong>Result:</strong> You can save successfully.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 6 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6f42c1;">
+                            <h4 style="color: #6f42c1; font-weight: 700;"><i class="fa fa-magic mr-2"></i> Scenario 6:
+                                Smart Period Defaults</h4>
+                            <ol class="mt-3">
+                                <li>Create a new report.</li>
+                                <li><strong>Result:</strong> Start Date should be the 1st of the <strong>previous
+                                        month</strong> and End Date should be the last day of the previous month.</li>
+                                <li>Change the Start Date to <strong>June 1, 2025</strong>.</li>
+                                <li><strong>Result:</strong> End Date should automatically update to <strong>June 30,
+                                        2025</strong>.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 7 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #e83e8c;">
+                            <h4 style="color: #e83e8c; font-weight: 700;"><i class="fa fa-building mr-2"></i> Scenario
+                                7:
+                                Multi-Company Isolation</h4>
+                            <ol class="mt-3">
+                                <li>Switch to <strong>Company A</strong> using the company selector.</li>
+                                <li>Create and generate a report for Company A.</li>
+                                <li>Switch to <strong>Company B</strong>.</li>
+                                <li><strong>Result:</strong> The report created for Company A should
+                                    <strong>not</strong> be visible. Only Company B reports should appear.
+                                </li>
+                                <li>Create a report for Company B.</li>
+                                <li><strong>Result:</strong> Both reports exist independently, each under its respective
+                                    company.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 8 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #fd7e14;">
+                            <h4 style="color: #fd7e14; font-weight: 700;"><i class="fa fa-search mr-2"></i> Scenario 8:
+                                Search, Filter & Grouping</h4>
+                            <ol class="mt-3">
+                                <li>Go to the Electronic Journal list view.</li>
+                                <li>Activate the <strong>"Draft"</strong> quick filter.</li>
+                                <li><strong>Result:</strong> Only reports in Draft state should be displayed.</li>
+                                <li>Use the <strong>"Group by → Period"</strong> option.</li>
+                                <li><strong>Result:</strong> Reports should be grouped by month (e.g., "January 2026",
+                                    "February 2026").</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Empty report / no data?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> No posted journal entries exist for the
+                                selected period and company.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ensure
+                                your invoices and journal entries are in "Posted" state for the selected date range.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">VAT/RUC validation error?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The company's VAT field is empty.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Go
+                                to
+                                Settings → Companies → select your company → fill in the NIF/RUC field with your
+                                11-digit RUC.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Chart of Accounts prefix missing in 5.3/5.4?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The company's Code Prefix is not
+                                configured.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Go to Settings → Companies → select your company → set the "Code Prefix" field to match
+                                SUNAT's Table 17 for your Chart of Accounts.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Can I regenerate a report?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes! Use the Rollback feature.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Click "Rollback" to clear all files and return to draft. Then click "Generar" again to
+                                produce updated reports with the latest posted data.</p>
+                        </div>
+                    </div>
+                    <!-- Q5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;">I can't see reports from another company?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Reports are isolated per company via
+                                record rules.</p>
+                            <p class="small text-info"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Switch to the correct company using the company selector in the top navigation bar.
+                                Reports only appear for the active company.</p>
+                        </div>
+                    </div>
+                    <!-- Q6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6f42c1;">
+                            <h5 style="font-weight: 700; color: #333;">"End date cannot be earlier than start date"
+                                error?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The End Date was manually set to a date
+                                before the Start Date.</p>
+                            <p class="small" style="color: #6f42c1;"><i class="fa fa-calendar-check-o mr-1"></i>
+                                <strong>Fix:</strong>
+                                Ensure the End Date is on or after the Start Date. Changing the Start Date will
+                                automatically update the End Date to the last day of that month.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #e83e8c;">
+                            <h5 style="font-weight: 700; color: #333;">Why does the TXT format change for older periods?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> SUNAT changed the Structured Data format
+                                in October 2023 (SIRE transition).</p>
+                            <p class="small" style="color: #e83e8c;"><i class="fa fa-exchange mr-1"></i>
+                                <strong>Detail:</strong>
+                                Periods before October 2023 use the legacy <code>&amp;</code> separator format. Periods
+                                from October 2023 onward use the new SIRE structure. The module detects this
+                                automatically.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #fd7e14;">
+                            <h5 style="font-weight: 700; color: #333;">Does this module work on Odoo Online?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No. This module uses custom PostgreSQL
+                                UDFs (User-Defined Functions).</p>
+                            <p class="small" style="color: #fd7e14;"><i class="fa fa-exclamation-circle mr-1"></i>
+                                <strong>Detail:</strong>
+                                Odoo Online does not allow custom code or database functions. This module is compatible
+                                with <strong>Odoo.SH</strong>, <strong>Ganemo Online</strong>, and self-hosted
+                                <strong>Enterprise</strong> installations only.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:help@ganemo.co" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        help@ganemo.co
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

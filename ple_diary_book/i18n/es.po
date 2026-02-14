@@ -1,0 +1,129 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ple_diary_book
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-13 00:00+0000\n"
+"PO-Revision-Date: 2026-02-13 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: ple_diary_book
+#: model:ir.model,name:ple_diary_book.model_ple_report_diary
+msgid "Report PLE Registro Diario"
+msgstr "Reporte PLE Registro Diario"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__xls_binary_diary
+msgid "Excel Report - Journal"
+msgstr "Reporte Excel - Libro Diario"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__xls_binary_diary
+msgid "Complete Excel spreadsheet of the Electronic Journal for internal review and audit purposes."
+msgstr "Hoja de cálculo Excel completa del Libro Diario Electrónico para revisión interna y auditoría."
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__txt_binary_diary
+msgid "TXT Report 5.1"
+msgstr "Reporte TXT 5.1"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__txt_binary_diary
+msgid "Main Electronic Journal TXT file (PLE Book 5.1). Ready to upload to SUNAT's PLE application."
+msgstr "Archivo TXT principal del Libro Diario Electrónico (PLE Libro 5.1). Listo para cargar en la aplicación PLE de SUNAT."
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__txt_binary_diary1
+msgid "TXT Chart of Accounts with values 5.3"
+msgstr "TXT Plan de Cuentas con valores 5.3"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__txt_binary_diary1
+msgid "Chart of Accounts with transactional values (PLE Book 5.3). Lists all accounts used during the period with their codes, names, and group classification."
+msgstr "Plan de Cuentas con valores transaccionales (PLE Libro 5.3). Lista todas las cuentas usadas durante el período con sus códigos, nombres y clasificación de grupo."
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__txt_binary_diary2
+msgid "TXT Chart of Accounts without values 5.3"
+msgstr "TXT Plan de Cuentas sin valores 5.3"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__txt_binary_diary2
+msgid "Chart of Accounts without transactional values (PLE Book 5.3). Account structure for reference."
+msgstr "Plan de Cuentas sin valores transaccionales (PLE Libro 5.3). Estructura de cuentas para referencia."
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__txt_binary_diary3
+msgid "TXT Report 5.2 Simplified Journal"
+msgstr "Reporte TXT 5.2 Diario Simplificado"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__txt_binary_diary3
+msgid "Simplified Electronic Journal TXT file (PLE Book 5.2). For companies under the RER (Régimen Especial) regime."
+msgstr "Archivo TXT del Libro Diario Simplificado Electrónico (PLE Libro 5.2). Para empresas bajo el régimen RER (Régimen Especial)."
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__txt_binary_diary4
+msgid "TXT Chart of Accounts with values 5.4"
+msgstr "TXT Plan de Cuentas con valores 5.4"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__txt_binary_diary4
+msgid "Chart of Accounts with values (PLE Book 5.4). Companion to the simplified journal 5.2."
+msgstr "Plan de Cuentas con valores (PLE Libro 5.4). Acompañante del diario simplificado 5.2."
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__txt_binary_diary5
+msgid "TXT Chart of Accounts without values 5.4"
+msgstr "TXT Plan de Cuentas sin valores 5.4"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__txt_binary_diary5
+msgid "Chart of Accounts without values (PLE Book 5.4). Companion to the simplified journal 5.2."
+msgstr "Plan de Cuentas sin valores (PLE Libro 5.4). Acompañante del diario simplificado 5.2."
+
+#. module: ple_diary_book
+#: model:ir.model.fields,field_description:ple_diary_book.field_ple_report_diary__error_dialog_5_3
+msgid "Errors 5.3/5.4"
+msgstr "Errores 5.3/5.4"
+
+#. module: ple_diary_book
+#: model:ir.model.fields,help:ple_diary_book.field_ple_report_diary__error_dialog_5_3
+msgid "Displays any errors or warnings encountered during the generation of PLE reports 5.3 and 5.4."
+msgstr "Muestra cualquier error o advertencia encontrado durante la generación de los reportes PLE 5.3 y 5.4."
+
+#. module: ple_diary_book
+#: code:addons/ple_diary_book/models/ple_diary.py:0
+#, python-format
+msgid "La compañía \"%s\" no tiene RUC/VAT configurado.\nVaya a Ajustes → Compañías → %s y complete el campo \"NIF/RUC\" antes de generar el reporte PLE."
+msgstr "La compañía \"%s\" no tiene RUC/VAT configurado.\nVaya a Ajustes → Compañías → %s y complete el campo \"NIF/RUC\" antes de generar el reporte PLE."
+
+#. module: ple_diary_book
+#: code:addons/ple_diary_book/models/ple_diary.py:0
+#, python-format
+msgid "Error al ejecutar la query, comunicarse con el administrador:"
+msgstr "Error al ejecutar la consulta, comunicarse con el administrador:"
+
+#. module: ple_diary_book
+#: model:ir.ui.view,arch_db:ple_diary_book.view_ple_report_diary_form
+msgid "Period"
+msgstr "Periodo"
+
+#. module: ple_diary_book
+#: model:ir.ui.view,arch_db:ple_diary_book.view_ple_report_diary_form
+msgid "Start date"
+msgstr "Fecha inicio"
+
+#. module: ple_diary_book
+#: model:ir.ui.view,arch_db:ple_diary_book.view_ple_report_diary_form
+msgid "End date"
+msgstr "Fecha fin"
