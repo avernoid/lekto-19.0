@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLE Cash & Bank Book | Odoo SUNAT Compliance by Ganemo</title>
+    <meta name="description"
+        content="Generate the electronic Cash & Bank Register (Libro Caja y Bancos) in TXT format for SUNAT PLE compliance. Mandatory e-book for Peruvian companies with complete accounting.">
+    <meta name="keywords"
+        content="Odoo, PLE, SUNAT, Cash Book, Bank Book, Libro Caja, Bancos, Peru, Accounting, TXT, Excel, Ganemo, Odoo 19, Localization">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'ple_cash_book' generates the PLE Cash & Bank Book reports required by SUNAT (Peru).
+            It produces TXT 1.1 (Cash) and TXT 1.2 (Bank) files from journal entries, using parameterized SQL queries
+            for security. Extends account.account with bank_id and account.payment with means_payment_id fields.
+            Multi-company support via company_root_id JSONB filtering on account codes.
+            Compatible with Odoo 19 Enterprise (Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">PLE Cash & Bank</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    SUNAT Electronic Book Compliance</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Generate the official Cash & Bank Register (Libro Caja y Bancos) in TXT format,
+                    ready to present to SUNAT via the PLE electronic book program. Mandatory for companies
+                    with complete accounting in Peru.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-file-text-o mr-2"></i> TXT 1.1 — Cash Report
+                            </h4>
+                            <p style="text-align: justify;">Automatically generates the <strong>Cash Register</strong>
+                                report in SUNAT's required TXT format. Extracts journal entries from cash-type
+                                accounts, including account codes, document types, correlatives, dates, descriptions,
+                                debit/credit amounts, and operation codes — all structured per SUNAT specifications.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-university mr-2"></i> TXT 1.2 — Bank Report</h4>
+                            <p style="text-align: justify;">Generates the <strong>Bank Account Register</strong>
+                                report with bank-specific fields like SUNAT bank codes, account numbers,
+                                payment methods, operation descriptions, and reconciliation data.
+                                Pulls bank identification from Peru's official bank catalog via <code>l10n_pe</code>.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-shield mr-2"></i> Secure SQL Queries</h4>
+                            <p style="text-align: justify;">All database queries use <strong>parameterized SQL</strong>
+                                to prevent SQL injection vulnerabilities. Date ranges and company IDs are passed
+                                as parameters, not interpolated strings — ensuring data integrity and security.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-building mr-2"></i> Multi-Company Ready</h4>
+                            <p style="text-align: justify;">Supports <strong>multi-company environments</strong>
+                                natively. Reports filter data by the active company using Odoo's
+                                <code>company_root_id</code> JSONB field on account codes, ensuring each company
+                                generates its own isolated PLE reports.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Prerequisites -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Prerequisites & Initial Configuration</h3>
+                            <p class="lead">Complete all steps below <strong>before</strong> generating your first PLE
+                                report. Each step is critical — missing any will result in empty or incomplete reports.
+                            </p>
+
+                            <!-- Step 1.1 -->
+                            <div class="mt-4 p-3"
+                                style="background-color: #f9f5fc; border-radius: 10px; border: 1px solid #e8d5f0;">
+                                <h5 style="color: #791d97; font-weight: 700;"><i class="fa fa-download mr-2"></i> Step
+                                    1.1 — Install Dependencies</h5>
+                                <p>This module requires the following modules to be installed <strong>before</strong>
+                                    installation:</p>
+                                <ul style="line-height: 2;">
+                                    <li><strong><code>ple_purchase_book</code></strong> — Provides the base PLE report
+                                        framework (<code>ple.report.base</code>) and shared SQL functions.</li>
+                                    <li><strong><code>invoice_type_document</code></strong> — Provides document type
+                                        integration for serie/correlative fields on journal entries.</li>
+                                    <li><strong><code>l10n_pe</code></strong> (Peruvian Localization) — <strong>Must
+                                            already be active</strong> with the Peruvian chart of accounts loaded. It
+                                        provides the bank catalog with SUNAT codes (<code>l10n_pe_edi_code</code>).</li>
+                                </ul>
+                                <div class="p-2 bg-light" style="border-radius: 8px; border: 1px dashed #791d97;">
+                                    <small><i class="fa fa-info-circle text-primary mr-1"></i> <strong>Path:</strong>
+                                        Apps → Search "ple_cash_book" → Install. Dependencies install automatically if
+                                        available.</small>
+                                </div>
+                            </div>
+
+                            <!-- Step 1.2 -->
+                            <div class="mt-4 p-3"
+                                style="background-color: #f5f8fc; border-radius: 10px; border: 1px solid #d5e0f0;">
+                                <h5 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-building mr-2"></i> Step
+                                    1.2 — Configure Company Settings</h5>
+                                <p>The PLE reports need your company's contributor type defined. This determines how
+                                    <strong>correlative numbers</strong> appear in the TXT file.
+                                </p>
+                                <ol style="line-height: 2.2;">
+                                    <li>Go to <strong>Settings → Companies → Your Company</strong>.</li>
+                                    <li>Find the field <strong>"PLE Contributor Type"</strong>
+                                        (<code>ple_type_contributor</code>).</li>
+                                    <li>Set it to one of the following:
+                                        <ul>
+                                            <li><strong>CUO</strong> — Standard companies: Uses unique operation codes
+                                                from journal entries (<code>ple_correlative</code>).</li>
+                                            <li><strong>RER</strong> — Simplified regime: Fills correlative as
+                                                <code>M-RER</code> for all entries.
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>Ensure the company has a valid <strong>RUC</strong> (Peruvian tax ID) set in the
+                                        <strong>VAT</strong> field.
+                                    </li>
+                                </ol>
+                                <div class="p-2 bg-light" style="border-radius: 8px; border: 1px dashed #dc3545;">
+                                    <small><i class="fa fa-exclamation-triangle text-danger mr-1"></i>
+                                        <strong>Critical:</strong> If <code>ple_type_contributor</code> is not set, the
+                                        correlative column in the TXT will be empty, which causes SUNAT PLE validation
+                                        errors.</small>
+                                </div>
+                            </div>
+
+                            <!-- Step 1.3 -->
+                            <div class="mt-4 p-3"
+                                style="background-color: #f5fcf7; border-radius: 10px; border: 1px solid #d5f0db;">
+                                <h5 style="color: #28a745; font-weight: 700;"><i class="fa fa-list-alt mr-2"></i> Step
+                                    1.3 — Tag Accounts in Chart of Accounts</h5>
+                                <p>This is the <strong>most important step</strong>. The module selects journal entries
+                                    based on the <code>ple_selection</code> field on each account. If no accounts are
+                                    tagged, <strong>the report will be empty</strong>.</p>
+                                <ol style="line-height: 2.2;">
+                                    <li>Go to <strong>Accounting → Configuration → Chart of Accounts</strong>.</li>
+                                    <li>For each <strong>cash account</strong> (e.g., 1011 — Caja, 1012 — Fondo Fijo):
+                                        <ul>
+                                            <li>Set <strong>"PLE Selection"</strong> to <strong>"1.1 Cash & Bank Book:
+                                                    Cash"</strong>.</li>
+                                        </ul>
+                                    </li>
+                                    <li>For each <strong>bank account</strong> (e.g., 1041 — Cuentas Corrientes):
+                                        <ul>
+                                            <li>Set <strong>"PLE Selection"</strong> to <strong>"1.2 Cash & Bank Book:
+                                                    Bank Accounts"</strong>.</li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <div class="p-2 bg-light" style="border-radius: 8px; border: 1px dashed #28a745;">
+                                    <small><i class="fa fa-check-circle text-success mr-1"></i> <strong>Tip:</strong>
+                                        You can filter by "Type = Bank and Cash" in the Chart of Accounts to quickly
+                                        find all relevant accounts.</small>
+                                </div>
+                            </div>
+
+                            <!-- Step 1.4 -->
+                            <div class="mt-4 p-3"
+                                style="background-color: #fdf8f0; border-radius: 10px; border: 1px solid #f0e0c5;">
+                                <h5 style="color: #e67e22; font-weight: 700;"><i class="fa fa-university mr-2"></i> Step
+                                    1.4 — Link Bank Accounts (For TXT 1.2 Only)</h5>
+                                <p>For the <strong>Bank Report (TXT 1.2)</strong> to include bank codes and account
+                                    numbers, you must configure the relationship chain:</p>
+                                <div class="p-3 bg-white mb-3"
+                                    style="border-radius:8px; border:1px solid #eee; text-align:center;">
+                                    <strong style="color:#3c6dac;">Account (account.account)</strong>
+                                    <span class="mx-2">→</span>
+                                    <strong style="color:#791d97;">Bank Account (res.partner.bank)</strong>
+                                    <span class="mx-2">→</span>
+                                    <strong style="color:#28a745;">Bank (res.bank + l10n_pe_edi_code)</strong>
+                                </div>
+                                <ol style="line-height: 2.2;">
+                                    <li>In the <strong>Chart of Accounts</strong>, open each bank-tagged account.</li>
+                                    <li>Set the <strong>"Bank Account"</strong> (<code>bank_id</code>) field to the
+                                        corresponding <code>res.partner.bank</code> record (your company's bank account
+                                        number).</li>
+                                    <li>That bank account must be linked to a <strong>Bank (res.bank)</strong> that has
+                                        a valid <strong>SUNAT code</strong> (<code>l10n_pe_edi_code</code>).</li>
+                                </ol>
+                                <div class="p-2 bg-light" style="border-radius: 8px; border: 1px dashed #e67e22;">
+                                    <small><i class="fa fa-info-circle mr-1" style="color: #e67e22;"></i>
+                                        <strong>Note:</strong> SUNAT bank codes are automatically loaded by the
+                                        <code>l10n_pe</code> module. Go to <strong>Contacts → Configuration →
+                                            Banks</strong> to verify they have codes assigned (e.g., "02" for BCP, "03"
+                                        for Interbank).</small>
+                                </div>
+                            </div>
+
+                            <!-- Step 1.5 -->
+                            <div class="mt-4 p-3"
+                                style="background-color: #f0f5fc; border-radius: 10px; border: 1px solid #c5d5f0;">
+                                <h5 style="color: #5154a5; font-weight: 700;"><i class="fa fa-credit-card mr-2"></i>
+                                    Step 1.5 — Configure Payment Methods (Medio de Pago)</h5>
+                                <p>When registering payments against bank journals, the <strong>"Payment Method (Medio
+                                        de Pago)"</strong> field becomes visible. This maps to SUNAT's payment method
+                                    catalog.</p>
+                                <ol style="line-height: 2.2;">
+                                    <li>This field (<code>means_payment_id</code>) <strong>defaults to code
+                                            "003"</strong> (Transferencia de fondos) automatically.</li>
+                                    <li>When registering a payment, if the journal type is <strong>Bank</strong>, the
+                                        field becomes visible. Change it if needed (e.g., "001" for Cash, "007" for
+                                        Check).</li>
+                                    <li>If the journal type is <strong>Cash</strong>, the field is
+                                        <strong>hidden</strong> since cash payments don't require a SUNAT payment
+                                        method.
+                                    </li>
+                                </ol>
+                                <div class="p-2 bg-light" style="border-radius: 8px; border: 1px dashed #5154a5;">
+                                    <small><i class="fa fa-eye mr-1" style="color: #5154a5;"></i> <strong>Visibility
+                                            Rule:</strong> The field appears only when the payment journal's type is
+                                        "bank". This is controlled by the <code>inv</code> computed field on the payment
+                                        register wizard.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Conditions Checklist -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #dc3545; background-color: #fff8f8; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #dc3545; font-weight: 700;"><i class="fa fa-check-square-o mr-2"></i>
+                                Report Conditions Checklist</h3>
+                            <p class="lead">A journal entry (<code>account.move.line</code>) will appear in the report
+                                <strong>only if ALL</strong> of the following conditions are met:
+                            </p>
+                            <div class="table-responsive mt-3">
+                                <table class="table table-bordered table-hover" style="background-color: #fff;">
+                                    <thead style="background-color: #dc3545; color: white;">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Condition</th>
+                                            <th>Where to Configure</th>
+                                            <th>Applies To</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>1</strong></td>
+                                            <td>Account has <code>ple_selection</code> = 'cash' or 'bank'</td>
+                                            <td>Chart of Accounts → PLE Selection field</td>
+                                            <td>Both</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>2</strong></td>
+                                            <td>Journal entry is in <strong>Posted</strong> state</td>
+                                            <td>Validate/Post the journal entries</td>
+                                            <td>Both</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>3</strong></td>
+                                            <td>Entry date is within the report's <strong>date range</strong></td>
+                                            <td>Report form: Period (Start → End)</td>
+                                            <td>Both</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>4</strong></td>
+                                            <td>Entry belongs to the <strong>same company</strong> as the report</td>
+                                            <td>Automatic (multi-company rule)</td>
+                                            <td>Both</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>5</strong></td>
+                                            <td>Account is assigned to the report's company</td>
+                                            <td>Chart of Accounts → Allowed Companies</td>
+                                            <td>Both</td>
+                                        </tr>
+                                        <tr style="background-color: #f0f5ff;">
+                                            <td><strong>6</strong></td>
+                                            <td>Account has <code>bank_id</code> linked (for bank code/account number)
+                                            </td>
+                                            <td>Chart of Accounts → Bank Account field</td>
+                                            <td>Bank only</td>
+                                        </tr>
+                                        <tr style="background-color: #f0f5ff;">
+                                            <td><strong>7</strong></td>
+                                            <td>Payment has <code>means_payment_id</code> (for payment method column)
+                                            </td>
+                                            <td>Payment registration → Payment Method field</td>
+                                            <td>Bank only</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="p-2 bg-light mt-2" style="border-radius: 8px; border: 1px dashed #dc3545;">
+                                <small><i class="fa fa-exclamation-circle text-danger mr-1"></i> <strong>Common
+                                        pitfall:</strong> If your report generates empty files, check conditions 1-3
+                                    first. The most frequent cause is that no accounts have been tagged with the
+                                    <code>ple_selection</code> field.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Defaults -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #17a2b8; background-color: #f0fafc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-magic mr-2"></i> Smart
+                                Defaults & Auto-Fill</h3>
+                            <p class="lead">When you create a new report, the following fields are pre-filled to save
+                                time:</p>
+                            <div class="row mt-3">
+                                <div class="col-md-4 mb-3">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #17a2b8;">
+                                        <h5><i class="fa fa-calendar text-info mr-2"></i> Period Dates</h5>
+                                        <p class="text-muted"><strong>Start Date</strong> → 1st day of the
+                                            <em>previous</em> month.<br>
+                                            <strong>End Date</strong> → Last day of the <em>previous</em> month.<br>
+                                            <small>Example: If today is Feb 14, defaults to Jan 1 → Jan 31.</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #17a2b8;">
+                                        <h5><i class="fa fa-refresh text-info mr-2"></i> Auto-Adjust End Date</h5>
+                                        <p class="text-muted">When you change the <strong>Start Date</strong>, the
+                                            <strong>End Date</strong> automatically updates to the <em>last day of that
+                                                month</em>.<br>
+                                            <small>Example: Change Start to Mar 15 → End becomes Mar 31.</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #17a2b8;">
+                                        <h5><i class="fa fa-paper-plane text-info mr-2"></i> Submission State</h5>
+                                        <p class="text-muted"><strong>Estado de Envío</strong> defaults to <em>"Empresa
+                                                o Entidad Operativa"</em> — the standard value for active companies.<br>
+                                            <small>Change only if your company has a special SUNAT status.</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Generating PLE Reports — Step by Step</h3>
+                            <p class="lead">Complete workflow from creation to SUNAT submission:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-plus-circle text-primary mr-2"></i> Step 2.1 — Create Report
+                                        </h5>
+                                        <p class="text-muted">Navigate to <strong>Accounting → PLE → Cash & Bank
+                                                Book</strong>.
+                                            Click <strong>New</strong>.
+                                            The <strong>Period</strong> fields auto-fill to the previous month.
+                                            Verify <strong>Company</strong> is correct — it filters to your active
+                                            company.
+                                            Adjust dates if you need a different period.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-play text-primary mr-2"></i> Step 2.2 — Generate Data</h5>
+                                        <p class="text-muted">Click <strong>Generate Report</strong>. The system
+                                            executes SQL
+                                            queries that scan all <strong>posted</strong> journal entries in Cash/Bank
+                                            accounts
+                                            within your date range. Both TXT and Excel files are generated
+                                            simultaneously
+                                            for Cash (1.1) and Bank (1.2) sections.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-download text-primary mr-2"></i> Step 2.3 — Download &
+                                            Review</h5>
+                                        <p class="text-muted">Download the <strong>Excel</strong> files for internal
+                                            review — they contain
+                                            the same data in a human-readable format. Download the <strong>TXT</strong>
+                                            files
+                                            for SUNAT upload. Each section (Cash / Bank Accounts) has its own pair of
+                                            files.
+                                            If a section has no records, a message will indicate it.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-check-circle text-primary mr-2"></i> Step 2.4 — Declare &
+                                            Close</h5>
+                                        <p class="text-muted">After uploading the TXT files to SUNAT's <strong>PLE
+                                                program</strong> and confirming acceptance:
+                                            click <strong>Declare to SUNAT</strong> to mark the report as
+                                            <strong>Declared</strong>.
+                                            If you need to make corrections, click <strong>Return to Draft</strong> to
+                                            rollback,
+                                            modify entries, and regenerate.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2 p-3"
+                                style="background-color: #e8f4f8; border-radius: 10px; border: 1px solid #b8daff;">
+                                <h6 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-exchange mr-2"></i> Report
+                                    Lifecycle (States)</h6>
+                                <div class="text-center mt-2" style="font-size: 16px;">
+                                    <span class="badge badge-secondary p-2">Draft</span>
+                                    <span class="mx-2">→ <small>Generate Report</small> →</span>
+                                    <span class="badge badge-primary p-2">Generated</span>
+                                    <span class="mx-2">→ <small>Declare to SUNAT</small> →</span>
+                                    <span class="badge badge-success p-2">Declared</span>
+                                    <span class="mx-2">← <small>Return to Draft</small> ←</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FIELD MAPPING: TXT 1.1 CASH -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-table mr-2"></i> 3.
+                                TXT 1.1 — Cash Book — Field Mapping (19 Columns)</h3>
+                            <p class="lead">Complete column reference for <strong>Libro Caja y Bancos — Detalle de los
+                                    Movimientos del Efectivo</strong>. Each row maps a TXT column to its SQL data source
+                                and explains the population logic.</p>
+
+                            <div class="table-responsive mt-4">
+                                <table class="table table-bordered table-hover table-sm"
+                                    style="background-color: #fff; font-size: 13px;">
+                                    <thead style="background-color: #791d97; color: white;">
+                                        <tr>
+                                            <th style="width:4%">#</th>
+                                            <th style="width:18%">SUNAT Field Name</th>
+                                            <th style="width:12%">TXT Key</th>
+                                            <th style="width:20%">Data Source</th>
+                                            <th style="width:36%">Population Logic & Conditionals</th>
+                                            <th style="width:10%">Fallback</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>1</strong></td>
+                                            <td>Periodo</td>
+                                            <td><code>period</code></td>
+                                            <td><code>account_move_line.date</code></td>
+                                            <td>Formatted as <code>YYYYMM00</code> using
+                                                <code>TO_CHAR(date, 'YYYYMM00')</code>. The last two digits are always
+                                                <code>00</code> per SUNAT spec.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>2</strong></td>
+                                            <td>CUO (Código Único de Operación)</td>
+                                            <td><code>cuo</code></td>
+                                            <td><code>account_move.name</code></td>
+                                            <td>The journal entry name with all <code>/</code>, <code>-</code>, and
+                                                spaces removed. Example: <code>INV/2026/00001</code> →
+                                                <code>INV202600001</code>.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr style="background-color: #f9f5fc;">
+                                            <td><strong>3</strong></td>
+                                            <td>Número Correlativo del Asiento</td>
+                                            <td><code>correlative</code></td>
+                                            <td><code>res_company.ple_type_contributor</code> +
+                                                <code>account_move_line.ple_correlative</code></td>
+                                            <td>
+                                                <strong>Conditional logic:</strong><br>
+                                                • If <code>ple_type_contributor = 'CUO'</code> → Uses
+                                                <code>ple_correlative</code> from the first move line of the journal
+                                                entry.<br>
+                                                • If <code>ple_type_contributor = 'RER'</code> → Fixed string
+                                                <code>M-RER</code>.<br>
+                                                • Otherwise → Empty string.
+                                            </td>
+                                            <td><code>M000000001</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>4</strong></td>
+                                            <td>Código Cuenta Contable</td>
+                                            <td><code>account_code</code></td>
+                                            <td><code>account_account.code_store</code></td>
+                                            <td>Account code from the JSONB field <code>code_store</code>, keyed by
+                                                active company root ID. All <code>/</code>, <code>-</code>, and
+                                                <code>.</code> characters are stripped. Example: <code>10.11</code> →
+                                                <code>1011</code>.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>5</strong></td>
+                                            <td>Código Unidad de Operación</td>
+                                            <td><code>unit_operation_code</code></td>
+                                            <td>SQL function <code>get_unit_operation_code(move_id)</code></td>
+                                            <td>Custom SQL function that resolves the operation unit code for the
+                                                journal entry. Returns the code associated with the analytic
+                                                distribution of the move.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>6</strong></td>
+                                            <td>Código Centro de Costos</td>
+                                            <td><code>cost_center_code</code></td>
+                                            <td>Hardcoded <code>''</code></td>
+                                            <td>Always empty. Cost center codes are not currently populated in this
+                                                module. Reserved for future implementation.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>7</strong></td>
+                                            <td>Tipo de Moneda de Origen</td>
+                                            <td><code>currency_name</code></td>
+                                            <td><code>res_currency.name</code></td>
+                                            <td>ISO 4217 currency code from the move line's currency. Joined via
+                                                <code>account_move_line.currency_id</code>.</td>
+                                            <td><code>PEN</code></td>
+                                        </tr>
+                                        <tr style="background-color: #f9f5fc;">
+                                            <td><strong>8</strong></td>
+                                            <td>Tipo de Comprobante de Pago</td>
+                                            <td><code>type_payment_document</code></td>
+                                            <td><code>l10n_latam_document_type.code</code></td>
+                                            <td>SUNAT document type code from the move line's
+                                                <code>l10n_latam_document_type_id</code>. Example: <code>01</code> =
+                                                Factura, <code>03</code> = Boleta.</td>
+                                            <td><code>00</code></td>
+                                        </tr>
+                                        <tr style="background-color: #f9f5fc;">
+                                            <td><strong>9</strong></td>
+                                            <td>Número Serie del Comprobante</td>
+                                            <td><code>serie</code></td>
+                                            <td><code>account_move_line.serie_correlative</code></td>
+                                            <td>
+                                                <strong>Conditional logic:</strong><br>
+                                                • If <code>serie_correlative</code> is NOT NULL → Splits by
+                                                <code>-</code>, takes the <strong>first</strong> part, strips spaces,
+                                                truncated to <strong>4 characters</strong>.<br>
+                                                • Otherwise → <code>0000</code>.
+                                            </td>
+                                            <td><code>0000</code></td>
+                                        </tr>
+                                        <tr style="background-color: #f9f5fc;">
+                                            <td><strong>10</strong></td>
+                                            <td>Número del Comprobante de Pago</td>
+                                            <td><code>document_number</code></td>
+                                            <td><code>account_move_line.serie_correlative</code></td>
+                                            <td>
+                                                <strong>Conditional logic:</strong><br>
+                                                • If <code>serie_correlative</code> is NOT NULL → Splits by
+                                                <code>-</code>, takes the <strong>second</strong> part, strips spaces,
+                                                truncated to <strong>8 characters</strong>.<br>
+                                                • Otherwise → <code>00000000</code>.
+                                            </td>
+                                            <td><code>00000000</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>11</strong></td>
+                                            <td>Fecha Contable</td>
+                                            <td><code>accounting_date</code></td>
+                                            <td><code>account_move.date</code></td>
+                                            <td>Formatted as <code>DD/MM/YYYY</code>. The accounting date of the parent
+                                                journal entry.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>12</strong></td>
+                                            <td>Fecha de Vencimiento</td>
+                                            <td><code>date_due</code></td>
+                                            <td><code>account_move.invoice_date_due</code></td>
+                                            <td>Formatted as <code>DD/MM/YYYY</code>. The due date from the journal
+                                                entry. May be empty for non-invoice entries.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>13</strong></td>
+                                            <td>Fecha de la Operación o Emisión</td>
+                                            <td><code>operation_date</code></td>
+                                            <td><code>account_move.date</code></td>
+                                            <td>Formatted as <code>DD/MM/YYYY</code>. Same as accounting date (column
+                                                11). Represents the effective operation date.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr style="background-color: #f9f5fc;">
+                                            <td><strong>14</strong></td>
+                                            <td>Glosa de la Operación</td>
+                                            <td><code>gloss</code></td>
+                                            <td><code>account_move.ref</code> or <code>account_move_line.name</code>
+                                            </td>
+                                            <td>
+                                                <strong>Conditional logic:</strong><br>
+                                                • If <code>account_move.ref</code> is NOT NULL → Uses the move's
+                                                <code>ref</code> (reference) field.<br>
+                                                • Otherwise → Uses the first 200 characters of the move line's
+                                                <code>name</code> (label).
+                                            </td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>15</strong></td>
+                                            <td>Glosa Referencial</td>
+                                            <td><code>referential_gloss</code></td>
+                                            <td><code>account_move_line.name</code></td>
+                                            <td>The move line's label/description. Used as a secondary reference text.
+                                            </td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>16</strong></td>
+                                            <td>Debe (Debit)</td>
+                                            <td><code>debit</code></td>
+                                            <td><code>account_move_line.debit</code></td>
+                                            <td>Formatted via <code>UDF_numeric_char()</code> SQL function which
+                                                converts the numeric value to a string with 2 decimal places. Example:
+                                                <code>1500.5</code> → <code>1500.50</code>.</td>
+                                            <td><code>0.00</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>17</strong></td>
+                                            <td>Haber (Credit)</td>
+                                            <td><code>credit</code></td>
+                                            <td><code>account_move_line.credit</code></td>
+                                            <td>Same formatting as Debit (column 16) via
+                                                <code>UDF_numeric_char()</code>.</td>
+                                            <td><code>0.00</code></td>
+                                        </tr>
+                                        <tr style="background-color: #f9f5fc;">
+                                            <td><strong>18</strong></td>
+                                            <td>Dato Estructurado</td>
+                                            <td><code>data_structured</code></td>
+                                            <td>SQL function <code>data_structured_cash()</code> + Python
+                                                post-processing</td>
+                                            <td>
+                                                <strong>Complex conditional logic (Python post-processing):</strong><br>
+                                                The SQL function <code>data_structured_cash(serie_correlative)</code>
+                                                returns a pipe-delimited string split by <code>**-**</code>.<br>
+                                                Python parses this and applies rules:<br>
+                                                • If journal type = <strong>sale</strong> AND document type =
+                                                <strong>F</strong> → Code <code>140100</code><br>
+                                                • If journal type = <strong>purchase</strong> AND document type =
+                                                <strong>F</strong>:<br>
+                                                &nbsp;&nbsp;- Sub-type <strong>F</strong> → Code <code>080100</code><br>
+                                                &nbsp;&nbsp;- Other sub-types → Code <code>080200</code><br>
+                                                Final format:
+                                                <code>{code}&amp;{field5}&amp;{sanitized_name}&amp;{correlative}</code><br>
+                                                • If no structured data available → Empty string.
+                                            </td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>19</strong></td>
+                                            <td>Estado de la Operación</td>
+                                            <td><code>state</code></td>
+                                            <td>Hardcoded <code>1</code></td>
+                                            <td>Always <code>1</code> (active/valid operation). Set during Python
+                                                post-processing, not from SQL. Per SUNAT spec: <code>1</code> = Active,
+                                                <code>8</code> = Modified, <code>9</code> = Deleted.</td>
+                                            <td><code>1</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="p-2 bg-light mt-2" style="border-radius: 8px; border: 1px dashed #791d97;">
+                                <small><i class="fa fa-file-code-o mr-1" style="color: #791d97;"></i> <strong>TXT
+                                        Separator:</strong> All columns are separated by the pipe character
+                                    <code>|</code>. Each row ends with <code>|</code> followed by <code>\r\n</code>
+                                    (CRLF). The complete template is:
+                                    <code>period|cuo|correlative|account_code|unit_operation_code|cost_center_code|currency_name|type_payment_document|serie|document_number|accounting_date|date_due|operation_date|gloss|referential_gloss|debit|credit|data_structured|state|</code></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FIELD MAPPING: TXT 1.2 BANK -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-table mr-2"></i> 4.
+                                TXT 1.2 — Bank Accounts — Field Mapping (15 Columns)</h3>
+                            <p class="lead">Complete column reference for <strong>Libro Caja y Bancos — Detalle de los
+                                    Movimientos de la Cuenta Corriente</strong>. This report contains bank-specific
+                                fields not present in TXT 1.1.</p>
+
+                            <div class="table-responsive mt-4">
+                                <table class="table table-bordered table-hover table-sm"
+                                    style="background-color: #fff; font-size: 13px;">
+                                    <thead style="background-color: #3c6dac; color: white;">
+                                        <tr>
+                                            <th style="width:4%">#</th>
+                                            <th style="width:18%">SUNAT Field Name</th>
+                                            <th style="width:12%">TXT Key</th>
+                                            <th style="width:20%">Data Source</th>
+                                            <th style="width:36%">Population Logic & Conditionals</th>
+                                            <th style="width:10%">Fallback</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>1</strong></td>
+                                            <td>Periodo</td>
+                                            <td><code>period</code></td>
+                                            <td><code>account_move_line.date</code></td>
+                                            <td>Formatted as <code>YYYYMM00</code>. Same logic as TXT 1.1 column 1.</td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>2</strong></td>
+                                            <td>CUO (Código Único de Operación)</td>
+                                            <td><code>cuo</code></td>
+                                            <td><code>account_move.name</code></td>
+                                            <td>Same logic as TXT 1.1 column 2. Journal entry name with <code>/</code>,
+                                                <code>-</code>, spaces removed.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr style="background-color: #f0f5ff;">
+                                            <td><strong>3</strong></td>
+                                            <td>Número Correlativo del Asiento</td>
+                                            <td><code>correlative</code></td>
+                                            <td><code>res_company.ple_type_contributor</code></td>
+                                            <td>Same conditional logic as TXT 1.1 column 3: CUO →
+                                                <code>ple_correlative</code>, RER → <code>M-RER</code>.</td>
+                                            <td><code>M000000001</code></td>
+                                        </tr>
+                                        <tr style="background-color: #e8f0fe;">
+                                            <td><strong>4</strong></td>
+                                            <td>Código de la Entidad Financiera</td>
+                                            <td><code>bank_code</code></td>
+                                            <td><code>res_bank.l10n_pe_edi_code</code></td>
+                                            <td>
+                                                <strong>Join chain:</strong> <code>account_account.bank_id</code> →
+                                                <code>res_partner_bank.bank_id</code> →
+                                                <code>res_bank.l10n_pe_edi_code</code>.<br>
+                                                SUNAT bank catalog code. Example: <code>02</code> = BCP, <code>03</code>
+                                                = Interbank, <code>11</code> = BBVA.<br>
+                                                <em>Requires Step 1.4 configuration (bank account linked on the
+                                                    accounting account).</em>
+                                            </td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr style="background-color: #e8f0fe;">
+                                            <td><strong>5</strong></td>
+                                            <td>Código de la Cuenta Bancaria</td>
+                                            <td><code>account_bank_code</code></td>
+                                            <td><code>res_partner_bank.acc_number</code></td>
+                                            <td>
+                                                <strong>Join chain:</strong> <code>account_account.bank_id</code> →
+                                                <code>res_partner_bank.acc_number</code>.<br>
+                                                The company's bank account number. Example:
+                                                <code>19123456789012</code>.<br>
+                                                <em>Requires Step 1.4 configuration.</em>
+                                            </td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>6</strong></td>
+                                            <td>Fecha de la Operación</td>
+                                            <td><code>date</code></td>
+                                            <td><code>account_move_line.date</code></td>
+                                            <td>Formatted as <code>DD/MM/YYYY</code>. The accounting date of the move
+                                                line.</td>
+                                            <td>—</td>
+                                        </tr>
+                                        <tr style="background-color: #e8f0fe;">
+                                            <td><strong>7</strong></td>
+                                            <td>Medio de Pago</td>
+                                            <td><code>payment_method</code></td>
+                                            <td><code>payment_methods_codes.code</code></td>
+                                            <td>
+                                                <strong>Join chain:</strong> <code>account_move_line.payment_id</code> →
+                                                <code>account_payment.means_payment_id</code> →
+                                                <code>payment_methods_codes.code</code>.<br>
+                                                SUNAT payment method code. Example: <code>001</code> = Efectivo,
+                                                <code>003</code> = Transferencia, <code>007</code> = Cheque.<br>
+                                                <em>Only populated when the move line is linked to a payment
+                                                    (<code>payment_id</code> IS NOT NULL).</em>
+                                            </td>
+                                            <td><code>003</code></td>
+                                        </tr>
+                                        <tr style="background-color: #f0f5ff;">
+                                            <td><strong>8</strong></td>
+                                            <td>Descripción de la Operación Bancaria</td>
+                                            <td><code>operation_description</code></td>
+                                            <td><code>account_move_line.name</code></td>
+                                            <td>The move line's label/description. Used as the operation narrative for
+                                                the bank statement.</td>
+                                            <td><code>-</code></td>
+                                        </tr>
+                                        <tr style="background-color: #e8f0fe;">
+                                            <td><strong>9</strong></td>
+                                            <td>Tipo de Documento del Girador</td>
+                                            <td><code>partner_type_document</code></td>
+                                            <td><code>l10n_latam_identification_type.l10n_pe_vat_code</code></td>
+                                            <td>
+                                                <strong>Join chain:</strong> <code>account_move_line.partner_id</code> →
+                                                <code>res_partner.l10n_latam_identification_type_id</code> →
+                                                <code>l10n_latam_identification_type.l10n_pe_vat_code</code>.<br>
+                                                SUNAT identification type code. Example: <code>6</code> = RUC,
+                                                <code>1</code> = DNI, <code>4</code> = Carnet de Extranjería.
+                                            </td>
+                                            <td><code>-</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>10</strong></td>
+                                            <td>Número de Documento del Girador</td>
+                                            <td><code>partner_document_number</code></td>
+                                            <td><code>res_partner.vat</code></td>
+                                            <td>The partner's tax identification number (RUC, DNI, etc.). Comes from the
+                                                move line's <code>partner_id</code>.</td>
+                                            <td><code>-</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>11</strong></td>
+                                            <td>Nombre Completo del Girador</td>
+                                            <td><code>partner_name</code></td>
+                                            <td><code>res_partner.name</code></td>
+                                            <td>Full name of the partner associated with the move line. For companies:
+                                                the commercial name.</td>
+                                            <td><code>VARIOS</code></td>
+                                        </tr>
+                                        <tr style="background-color: #f0f5ff;">
+                                            <td><strong>12</strong></td>
+                                            <td>Número de Transacción Bancaria</td>
+                                            <td><code>transaction_number</code></td>
+                                            <td><code>account_move.ref</code> or <code>account_move.name</code></td>
+                                            <td>
+                                                <strong>Conditional logic (SQL + Python):</strong><br>
+                                                SQL step:<br>
+                                                • If <code>account_move.ref</code> IS NOT NULL →
+                                                <code>validate_string(ref, 20)</code> (truncated to 20 chars).<br>
+                                                • Else if <code>account_move.name</code> IS NOT NULL →
+                                                <code>validate_string(name, 20)</code>.<br>
+                                                • Otherwise → Empty string.<br>
+                                                Python post-processing: All non-alphanumeric characters, spaces, and
+                                                line breaks are removed via
+                                                <code>re.sub(r"[^a-zA-Z0-9]", "", name)</code>.
+                                            </td>
+                                            <td>Empty string</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>13</strong></td>
+                                            <td>Debe (Debit)</td>
+                                            <td><code>debit</code></td>
+                                            <td><code>account_move_line.debit</code></td>
+                                            <td>Formatted via <code>UDF_numeric_char()</code>. Same as TXT 1.1 column
+                                                16.</td>
+                                            <td><code>0.00</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>14</strong></td>
+                                            <td>Haber (Credit)</td>
+                                            <td><code>credit</code></td>
+                                            <td><code>account_move_line.credit</code></td>
+                                            <td>Formatted via <code>UDF_numeric_char()</code>. Same as TXT 1.1 column
+                                                17.</td>
+                                            <td><code>0.00</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>15</strong></td>
+                                            <td>Estado de la Operación</td>
+                                            <td><code>state</code></td>
+                                            <td>Hardcoded <code>1</code></td>
+                                            <td>Always <code>1</code> (active). Set in Python, same as TXT 1.1 column
+                                                19.</td>
+                                            <td><code>1</code></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="p-2 bg-light mt-2" style="border-radius: 8px; border: 1px dashed #3c6dac;">
+                                <small><i class="fa fa-file-code-o mr-1" style="color: #3c6dac;"></i> <strong>TXT
+                                        Separator:</strong> Same as TXT 1.1 — pipe <code>|</code> delimited with CRLF
+                                    line endings. Template:
+                                    <code>period|cuo|correlative|bank_code|account_bank_code|date|payment_method|operation_description|partner_type_document|partner_document_number|partner_name|transaction_number|debit|credit|state|</code></small>
+                            </div>
+
+                            <!-- SQL Functions Note -->
+                            <div class="mt-3 p-3"
+                                style="background-color: #e8f0fe; border-radius: 10px; border: 1px solid #b8d4ff;">
+                                <h6 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-database mr-2"></i> SQL
+                                    Helper Functions Used</h6>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <ul class="mb-0" style="font-size: 13px;">
+                                            <li><code>UDF_numeric_char(value)</code> — Converts a numeric to a formatted
+                                                string with 2 decimal places.</li>
+                                            <li><code>get_unit_operation_code(move_id)</code> — Resolves the operation
+                                                unit code for a journal entry.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="mb-0" style="font-size: 13px;">
+                                            <li><code>data_structured_cash(serie_correlative)</code> — Returns
+                                                structured data string for cross-referencing with other PLE books.</li>
+                                            <li><code>validate_string(text, max_length)</code> — Truncates and sanitizes
+                                                text to a maximum length.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-file-text mr-2"></i>
+                                Scenario 1: Generate Cash Report (TXT 1.1)</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Accounting > PLE > Libro Caja y Bancos</strong>.</li>
+                                <li>Create a new record. Set <strong>Start Date</strong> and <strong>End Date</strong>
+                                    for the period.</li>
+                                <li>Click <strong>Generar Reporte</strong>.</li>
+                                <li><strong>Result:</strong> The Cash TXT and Excel files should appear for download.
+                                    Verify the TXT contains valid SUNAT-formatted data with pipe separators.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-university mr-2"></i> Scenario
+                                2:
+                                Generate Bank Report (TXT 1.2)</h4>
+                            <ol class="mt-3">
+                                <li>Ensure at least one bank-type account has a <strong>Bank entity</strong> linked with
+                                    a valid SUNAT code.</li>
+                                <li>Create journal entries in that bank account for the target period.</li>
+                                <li>Generate the report as in Scenario 1.</li>
+                                <li><strong>Result:</strong> The Bank TXT file should include the bank code, account
+                                    number,
+                                    and payment method columns. Verify against SUNAT's format specification.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-refresh mr-2"></i> Scenario 3:
+                                Report Lifecycle (States)</h4>
+                            <ol class="mt-3">
+                                <li>Create and generate a report → State should be <strong>load</strong>.</li>
+                                <li>Click <strong>Declarar a SUNAT</strong> → State should be <strong>closed</strong>.
+                                </li>
+                                <li>Click <strong>Regresar a Borrador</strong> → State should return to
+                                    <strong>draft</strong>.
+                                </li>
+                                <li><strong>Result:</strong> Buttons visibility should change correctly at each state.
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-credit-card mr-2"></i>
+                                Scenario 4:
+                                Payment Method on Register</h4>
+                            <ol class="mt-3">
+                                <li>Go to an invoice and click <strong>Register Payment</strong>.</li>
+                                <li>Select a <strong>Bank</strong> journal → The <em>Payment Method</em> (Medio de Pago)
+                                    field should appear.</li>
+                                <li>Switch to a <strong>Cash</strong> journal → The field should be hidden.</li>
+                                <li><strong>Result:</strong> The <code>inv</code> computed field correctly toggles
+                                    visibility
+                                    based on journal type.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6c757d;">
+                            <h4 style="color: #6c757d; font-weight: 700;"><i class="fa fa-ban mr-2"></i> Scenario 5:
+                                Empty Report (No Matching Records)</h4>
+                            <ol class="mt-3">
+                                <li>Create a new report for a period where <strong>no posted journal entries</strong>
+                                    exist in Cash/Bank accounts.</li>
+                                <li>Click <strong>Generate Report</strong>.</li>
+                                <li><strong>Result:</strong> The report should generate successfully but show an
+                                    informational message: <em>"No hay contenido en el registro..."</em>. TXT files
+                                    should contain the header without data rows. The Excel files should reflect zero
+                                    rows.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 6 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                            <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-building mr-2"></i> Scenario
+                                6:
+                                Multi-Company Isolation</h4>
+                            <ol class="mt-3">
+                                <li>Log in to <strong>Company A</strong>. Create and generate a PLE Cash report.</li>
+                                <li>Switch to <strong>Company B</strong>. Navigate to Cash & Bank Book.</li>
+                                <li><strong>Result:</strong> You should only see reports belonging to Company B. Company
+                                    A's reports must not be visible. Each report's TXT file should contain only data
+                                    from the respective company.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 7 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #e67e22;">
+                            <h4 style="color: #e67e22; font-weight: 700;"><i class="fa fa-calendar-check-o mr-2"></i>
+                                Scenario 7:
+                                Default Date Period Verification</h4>
+                            <ol class="mt-3">
+                                <li>Navigate to <strong>Cash & Bank Book</strong> and click <strong>New</strong>.</li>
+                                <li><strong>Result:</strong> The <em>Start Date</em> should default to the <strong>1st
+                                        day of the previous month</strong> and the <em>End Date</em> to the <strong>last
+                                        day of the previous month</strong>. Example: If today is Feb 14, defaults should
+                                    be Jan 1 → Jan 31.</li>
+                                <li>Verify the <em>Estado de Envío</em> defaults to <strong>"Empresa o Entidad
+                                        Operativa"</strong>.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 8 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i
+                                    class="fa fa-exclamation-triangle mr-2"></i> Scenario 8:
+                                Date Constraint Validation</h4>
+                            <ol class="mt-3">
+                                <li>Create a new report. Set <strong>Start Date</strong> = Feb 28 and <strong>End
+                                        Date</strong> = Feb 01 (end before start).</li>
+                                <li>Attempt to save the record.</li>
+                                <li><strong>Result:</strong> The system should block the save with a validation error:
+                                    <em>"The end date must be equal to or after the start date."</em>. The report must
+                                    not be created.
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 9 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #5154a5;">
+                            <h4 style="color: #5154a5; font-weight: 700;"><i class="fa fa-search mr-2"></i> Scenario 9:
+                                Search View — Filters & Grouping</h4>
+                            <ol class="mt-3">
+                                <li>Go to the Cash & Bank Book list view.</li>
+                                <li>Test each <strong>quick filter</strong>: Draft, Generated, Declared. Verify only
+                                    matching records appear.</li>
+                                <li>Test <strong>Group By</strong> → Company, State, Period (Month). Verify records
+                                    group correctly.</li>
+                                <li>Use the <strong>search bar</strong> to search by Company name and Start Date.</li>
+                                <li><strong>Result:</strong> All filters, groupings, and searches should work
+                                    independently and in combination.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 10 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #20c997;">
+                            <h4 style="color: #20c997; font-weight: 700;"><i class="fa fa-money mr-2"></i> Scenario 10:
+                                Payment Method on Direct Payment</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Accounting → Payments</strong> and create a new payment directly (not
+                                    from an invoice).</li>
+                                <li>Select a <strong>Bank</strong> journal.</li>
+                                <li><strong>Result:</strong> The <em>means_payment_id</em> field should default to code
+                                    <strong>"003"</strong> (Transferencia de fondos). The field should be editable.
+                                </li>
+                                <li>Switch to a <strong>Cash</strong> journal → The field value persists but is less
+                                    relevant for cash operations.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 11 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6610f2;">
+                            <h4 style="color: #6610f2; font-weight: 700;"><i class="fa fa-link mr-2"></i> Scenario 11:
+                                Bank Account Configuration Cascade</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Chart of Accounts</strong>. Select a bank-tagged account
+                                    (ple_selection = bank).</li>
+                                <li>Set the <strong>Bank Account</strong> field to a valid <code>res.partner.bank</code>
+                                    record.</li>
+                                <li>Generate a PLE Cash & Bank report for a period with entries in that account.</li>
+                                <li><strong>Result:</strong> The Bank TXT file should show the SUNAT bank code
+                                    (<code>l10n_pe_edi_code</code>) and account number (<code>acc_number</code>) in the
+                                    corresponding columns.</li>
+                                <li>Remove the <strong>Bank Account</strong> link and regenerate. The bank code and
+                                    account columns should now be empty.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 12 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #fd7e14;">
+                            <h4 style="color: #fd7e14; font-weight: 700;"><i class="fa fa-repeat mr-2"></i> Scenario 12:
+                                Report Re-generation (Overwrite)</h4>
+                            <ol class="mt-3">
+                                <li>Generate a report for January 2026. Note the TXT file names and contents.</li>
+                                <li>Post a <strong>new journal entry</strong> in a Cash account dated January 2026.</li>
+                                <li>Click <strong>Return to Draft</strong> on the existing report, then <strong>Generate
+                                        Report</strong> again.</li>
+                                <li><strong>Result:</strong> The regenerated files should now include the new entry.
+                                    Previous file data is fully overwritten — no duplicate accumulation.</li>
+                            </ol>
+                        </div>
+                    </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Bank code is empty in the TXT file?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The bank entity linked to the account
+                                may not have a SUNAT code assigned.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to
+                                <strong>Contacts > Configuration > Banks</strong> and ensure the bank has a valid
+                                <code>l10n_pe_edi_code</code>. The Peruvian localization module should have populated
+                                this automatically.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Report generates empty files?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> No journal entries exist for the
+                                selected date range in cash or bank accounts.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Verify
+                                that posted journal entries exist in Cash/Bank accounts within the date range.
+                                Also check that the correct company is selected.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">SQL error when generating report?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> A stored SQL function may not be loaded.
+                            </p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                Upgrade the module (<code>-u ple_cash_book</code>) to reload the SQL functions from the
+                                <code>sql/</code> directory. The functions <code>data_structured_cash</code>,
+                                <code>find_full_reconcile</code>, <code>get_unit_operation_code</code>, and
+                                <code>UDF_numeric_char</code> must exist in the database.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Each report filters by the active company using <code>company_root_id</code>. Data from
+                                other companies is automatically excluded. Each company generates its own PLE files.</p>
+                        </div>
+                    </div>
+                    <!-- Q5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #5154a5;">
+                            <h5 style="font-weight: 700; color: #333;">Payment method field not visible during payment?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The "Medio de Pago" field only appears
+                                when the selected journal's type is <strong>Bank</strong>.</p>
+                            <p class="small text-info"><i class="fa fa-info-circle mr-1"></i> <strong>Detail:</strong>
+                                This behavior is intentional. Cash payments don't require a SUNAT payment method code.
+                                If you're using a Bank journal and still don't see it, check that the
+                                <code>invoice_type_document</code> module is installed — it provides the view extension.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #e67e22;">
+                            <h5 style="font-weight: 700; color: #333;">How do I change the PLE contributor type
+                                (CUO/RER)?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Go to <strong>Settings → Companies →
+                                    Your Company</strong> and update the <em>ple_type_contributor</em> field.</p>
+                            <p class="small text-warning"><i class="fa fa-exclamation-triangle mr-1"></i>
+                                <strong>Detail:</strong>
+                                This field controls how the correlative column is filled in TXT files:
+                                <strong>CUO</strong> uses
+                                the journal entry's <code>ple_correlative</code>, while <strong>RER</strong> fills all
+                                entries
+                                with <code>M-RER</code>. The field is provided by the <code>ple_purchase_book</code>
+                                base module.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;">Can I regenerate a report that was already
+                                declared?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, but you must first return it to
+                                Draft.</p>
+                            <p class="small text-info"><i class="fa fa-info-circle mr-1"></i> <strong>Detail:</strong>
+                                Click <strong>Return to Draft</strong> to unlock the report. Then click <strong>Generate
+                                    Report</strong>
+                                again. The new data will overwrite the previous files. This is useful if you posted new
+                                entries
+                                after the initial generation.</p>
+                        </div>
+                    </div>
+                    <!-- Q8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">The report shows data from other companies?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> This should not happen. A record rule
+                                restricts visibility.</p>
+                            <p class="small text-danger"><i class="fa fa-shield mr-1"></i> <strong>Detail:</strong>
+                                The module includes a <code>ir.rule</code> that filters reports by
+                                <code>company_id in company_ids</code>. If you see cross-company data, verify that:
+                                (a) the record rule XML is loaded, (b) you are not a superuser (superusers bypass
+                                rules),
+                                and (c) the module was updated after the security file was added.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q9 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6610f2;">
+                            <h5 style="font-weight: 700; color: #333;">What do the TXT filename codes mean?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The filenames follow SUNAT's naming
+                                convention for PLE files.</p>
+                            <p class="small" style="color: #6610f2;"><i class="fa fa-file-text-o mr-1"></i>
+                                <strong>Structure:</strong>
+                                <code>LE{RUC}{YYYYMM00}{011100}{OperInd}{Content}{Currency}{1}.TXT</code><br>
+                                Example: <code>LE20551583041202601000101110011.TXT</code> — This is a Cash report (0101)
+                                for RUC 20551583041, period Jan 2026, with content (1) in PEN (1).
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q10 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #fd7e14;">
+                            <h5 style="font-weight: 700; color: #333;">Date fields auto-fill with the wrong period?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The defaults are based on the
+                                <strong>server's current date</strong>, not the user's local timezone.
+                            </p>
+                            <p class="small" style="color: #fd7e14;"><i class="fa fa-clock-o mr-1"></i>
+                                <strong>Detail:</strong>
+                                If the server is in UTC and your local time is past midnight but UTC isn't, the
+                                "previous month"
+                                calculation may differ by one day. This is standard Odoo behavior. Simply adjust the
+                                dates manually if needed.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q11 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #20c997;">
+                            <h5 style="font-weight: 700; color: #333;">Can I use this module in Community edition?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, this module is fully compatible
+                                with Odoo Community.</p>
+                            <p class="small text-success"><i class="fa fa-check-circle mr-1"></i>
+                                <strong>Detail:</strong>
+                                The module uses only standard ORM, SQL queries, and base Accounting features.
+                                No Enterprise-only dependencies (like consolidation, analytic plans, or inter-company)
+                                are required.
+                                License: LGPL-3.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q12 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6c757d;">
+                            <h5 style="font-weight: 700; color: #333;">What's the difference between Cash and Bank
+                                sections?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> They correspond to different SUNAT PLE
+                                sub-registers with different columns.</p>
+                            <p class="small text-secondary"><i class="fa fa-columns mr-1"></i> <strong>Detail:</strong>
+                                <strong>Cash (TXT 1.1)</strong> covers accounts tagged as
+                                <code>ple_selection = 'cash'</code> — typically petty cash and cash registers.
+                                <strong>Bank (TXT 1.2)</strong> covers accounts tagged as
+                                <code>ple_selection = 'bank'</code> — with additional columns for bank code, account
+                                number, and payment method.
+                                Both are generated simultaneously from a single report record.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ayuda@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+---Models in module 'ple_cash_book'---
+---Fields in module 'ple_cash_book'---
+---XML records in module 'ple_cash_book'---
+UPD Model ple.report.cash.bank ple_report_cash_bank_view_tree -> ple_report_cash_bank_view_list
+DEL Model account.payment.register account_payment_register_view_form_inherit_ple_cash_book
+----------------------------------------------------------------
+DEPENDS [ ple_purchase_book ]
+model:  account_move_line
+field:  serie_correlative,
+        ple_correlative,
+        l10n_latam_document_type_id
+xml_id:
+
+model:  account_move
+field:  is_nodomicilied
+xml_id:
+
+model:  account_journal
+field:  ple_no_include
+xml_id:
+
+DEPENDS [ invoice_type_document ]
+model:  account_move_line
+field:  serie_correlative,
+        l10n_latam_document_type_id
+xml_id:
+
+DEPENDS [ l10n_pe ] (INDIRECT via ple_purchase_book -> ple_sale_book)
+model:  res_bank
+field:  l10n_pe_edi_code
+xml_id:
+
+DEPENDS [ l10n_pe_catalog ] (INDIRECT via ple_purchase_book)
+model:  payment_methods_codes
+field:  code
+xml_id:
+
+----------------------------------------------------------------
+MIGRATION TO V19.0 (Feb 2026)
+- Updated manifest version to 19.0.1.0.0.
+- [REMOVED] Dependency `financial_entity_sunat_code`: field `sunat_bank_code` on `res.bank`
+  replaced by `l10n_pe_edi_code` from `l10n_pe` (indirect dependency, no manifest change).
+- [REMOVED] `data/rest_bank.xml`: Redundant — `l10n_pe` already provides bank data via `res.bank.csv`
+  with pre-populated `l10n_pe_edi_code` for all major Peruvian banks.
+- [CHANGED] SQL queries parameterized: replaced `.format()` with `%s` params to prevent SQL injection.
+- [CHANGED] `account_payment_register.py`: replaced `@api.onchange('journal_id')` with
+  `@api.depends('journal_id')` + computed `inv` field (v19 compatible).
+- [FIXED] Removed duplicate `payment_method` column in bank query.
+- [FIXED] Rewrote `test_ple_cash_book.py`: removed broken `account.libro` reference,
+  added 3 proper tests for default payment method, report lifecycle, and computed inv field.

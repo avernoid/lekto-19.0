@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ple_report_cash_bank_view_list" model="ir.ui.view">
+        <field name="name">ple.report.cash.bank.list</field>
+        <field name="model">ple.report.cash.bank</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="company_id"/>
+                <field name="date_ple"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="ple_report_purchase_form_view" model="ir.ui.view">
+        <field name="name">ple_report_purchase_view_form</field>
+        <field name="model">ple.report.cash.bank</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_generate_excel" string="Generate Report" type="object" invisible="state in ('load', 'closed')"/>
+                    <button name="action_close" string="Declare to SUNAT" invisible="state in ('draft', 'closed')" type="object"/>
+                    <button name="action_rollback" string="Return to Draft" invisible="state == 'draft'" type="object"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="PLE Reports" id="ple_cash_bank">
+                        <group>
+                            <field name="company_id"/>
+                            <label for="date_start" string="Period"/>
+                            <div class="o_row">
+                                <field name="date_start" placeholder="Start date" class="mx-2"/>
+                                <span class="mx-2">→</span>
+                                <field name="date_end" placeholder="End date" class="mx-2"/>
+                            </div>
+                            <field name="state_send"/>
+                            <field name="date_ple"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Cash">
+                            <field name="xls_filename_cash" invisible="1"/>
+                            <label string="Excel Report" for="xls_binary_cash"/>
+                            <field name="xls_binary_cash" filename="xls_filename_cash" readonly="1" nolabel="1"/>
+                            <field name="txt_filename_cash" invisible="1"/>
+                            <label string="TXT Report" for="txt_binary_cash"/>
+                            <field name="txt_binary_cash" filename="txt_filename_cash" readonly="1" nolabel="1"/>
+                        </group>
+                        <group string="Bank Accounts">
+                            <field name="xls_filename_bank" invisible="1"/>
+                            <label string="Excel Report" for="xls_binary_bank"/>
+                            <field name="xls_binary_bank" filename="xls_filename_bank" readonly="1" nolabel="1"/>
+                            <field name="txt_filename_bank" invisible="1"/>
+                            <label string="TXT Report" for="txt_binary_bank"/>
+                            <field name="txt_binary_bank" filename="txt_filename_bank" readonly="1" nolabel="1"/>
+                        </group>
+                    </group>
+                    <field name="error_dialog" class="errorbox" invisible="error_dialog == False"/>
+                    <notebook>
+                        <page string="Vouchers" invisible="1">
+                            <field name="move_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="ple_report_cash_bank_view_search" model="ir.ui.view">
+        <field name="name">ple.report.cash.bank.search</field>
+        <field name="model">ple.report.cash.bank</field>
+        <field name="arch" type="xml">
+            <search string="Cash &amp; Bank Book">
+                <!-- Search fields -->
+                <field name="company_id"/>
+                <field name="date_start" string="Start Date"/>
+                <!-- Quick filters: States -->
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_generated" string="Generated" domain="[('state', '=', 'load')]"/>
+                <filter name="filter_declared" string="Declared" domain="[('state', '=', 'closed')]"/>
+                <!-- Group by -->
+                <separator/>
+                <filter name="groupby_company" string="Company" context="{'group_by': 'company_id'}"/>
+                <filter name="groupby_state" string="State" context="{'group_by': 'state'}"/>
+                <filter name="groupby_period" string="Period (Month)" context="{'group_by': 'date_start:month'}"/>
+            </search>
+        </field>
+    </record>
+    <record id="ple_report_cash_bank_action" model="ir.actions.act_window">
+        <field name="name">Cash &amp; Bank Book</field>
+        <field name="res_model">ple.report.cash.bank</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ple_report_cash_bank_view_search"/>
+    </record>
+    <menuitem 
+        id="menu_ple_cash_bank" 
+        name="Cash &amp; Bank Book" 
+        parent="ple_sale_book.menu_ple_pe_monthly" 
+        action="ple_report_cash_bank_action" 
+        sequence="5"
+    />
+</odoo>
