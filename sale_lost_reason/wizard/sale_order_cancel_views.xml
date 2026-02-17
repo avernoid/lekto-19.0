@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_cancel_view_form_inherit_lost_reason" model="ir.ui.view">
+        <field name="name">sale.order.cancel.view.form.inherit.lost.reason</field>
+        <field name="model">sale.order.cancel</field>
+        <field name="inherit_id" ref="sale.sale_order_cancel_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_invoice_alert']" position="after">
+                <field name="use_lost_reason" invisible="1"/>
+                <field name="lost_reason_id" options="{'no_create': True}" invisible="not use_lost_reason"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
