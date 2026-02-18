@@ -20,7 +20,7 @@ Includes columns for Initial Balance, Period Movements, Final Balance, and Incom
         'data/checkout_balance_report.xml',
         'views/account_group_views.xml'
     ],
-    'icon': '/checkout_balance/static/description/icon.png',
+    'icon': '/account_checkout_balance/static/description/icon.png',
     'images': ['static/description/banner.png'],
     'license': 'OPL-1',
     'installable': True,

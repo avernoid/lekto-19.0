@@ -131,7 +131,7 @@
     <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
     <div style="display: none;">
         <h2>Technical Specification for AI & LLM</h2>
-        <p>This Odoo module 'checkout_balance' implements an advanced Trial Balance report.
+        <p>This Odoo module 'account_checkout_balance' implements an advanced Trial Balance report.
             It extends standard accounting reports to show columns for Initial Balance, Debit/Credit Movements, Final
             Balance,
             and separate columns for Income Statement by Function and Income Statement by Nature.
@@ -189,7 +189,8 @@
                             <h4 style="color: #5154a5;"><i class="fa fa-table mr-2"></i> Comprehensive View</h4>
                             <p style="text-align: justify;">Standard reports often require jumping between screens.
                                 We combine <strong>Initial Balance</strong>, <strong>Debits/Credits</strong>, and
-                                <strong>Final Balance</strong> into a single, cohesive view.</p>
+                                <strong>Final Balance</strong> into a single, cohesive view.
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
@@ -234,7 +235,8 @@
                                     <ul style="list-style-type: none; padding-left: 0; line-height: 1.8;">
                                         <li><i class="fa fa-angle-right text-muted mr-2"></i> Navigate to
                                             <strong>Accounting</strong> > <strong>Configuration</strong> >
-                                            <strong>Account Groups</strong>.</li>
+                                            <strong>Account Groups</strong>.
+                                        </li>
                                         <li><i class="fa fa-angle-right text-muted mr-2"></i> You will see your existing
                                             COA structure grouped here. If it's empty, you may need to configure your
                                             Chart of Accounts first.</li>
@@ -244,7 +246,8 @@
                                         Types</h5>
                                     <p class="text-muted">For each Account Group (especially parent groups), set the
                                         <strong>Group Type</strong> fields. This determines where the balances of
-                                        accounts within this group will be projected in the Checkout Balance report.</p>
+                                        accounts within this group will be projected in the Checkout Balance report.
+                                    </p>
 
                                     <div class="alert alert-info" role="alert" style="border-left: 4px solid #17a2b8;">
                                         <strong><i class="fa fa-info-circle"></i> Understanding the "Group Type"
@@ -292,7 +295,8 @@
                                                 class="fa fa-search text-primary mr-2"></i> Generatiing the Report</h5>
                                         <ol style="padding-left: 20px;">
                                             <li>Go to <strong>Accounting</strong> > <strong>Reporting</strong> >
-                                                <strong>Audit</strong> > <strong>Checkout x Account</strong>.</li>
+                                                <strong>Audit</strong> > <strong>Checkout x Account</strong>.
+                                            </li>
                                             <li>Select your date range (e.g., Fiscal Year, Last Month).</li>
                                             <li>Click <strong>Apply</strong>.</li>
                                         </ol>
@@ -308,7 +312,8 @@
                                             <li><i class="fa fa-check-square-o text-success mr-2"></i>
                                                 <strong>Hierarchy:</strong> Click the "Hierarchy" button to switch
                                                 between a flat list of accounts and a structured Tree View based on your
-                                                Account Groups.</li>
+                                                Account Groups.
+                                            </li>
                                             <li><i class="fa fa-check-square-o text-success mr-2"></i> <strong>Unfold
                                                     All:</strong> Use this to expand all group levels instantly down to
                                                 the Account level. <em>Note: Individual Journal Items (Move Lines) are
@@ -508,7 +513,8 @@
                             <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i>
                                 <strong>How-to:</strong> While "Unfold All" stops at the Account level to keep the
                                 report performant, you can click on any specific Account line to open its General Ledger
-                                or Journal Items view in a pop-up.</p>
+                                or Journal Items view in a pop-up.
+                            </p>
                         </div>
                     </div>
                     <!-- Q4 -->

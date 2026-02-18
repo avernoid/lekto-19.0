@@ -310,10 +310,10 @@ class CheckoutBalanceCustomHandler(models.AbstractModel):
 
     def _caret_options_initializer(self):
         return {
-            'checkout_balance_account_group': [
+            'account_checkout_balance_account_group': [
                 {'name': _("Open Account Group"), 'action': 'open_account_group'},
             ],
-            'checkout_balance_account_account': [
+            'account_checkout_balance_account_account': [
                 {'name': _("General Ledger"), 'action': 'caret_option_open_general_ledger'},
                 {'name': _("Journal Items"), 'action': 'open_journal_items'},
             ],
@@ -462,7 +462,7 @@ class CheckoutBalanceCustomHandler(models.AbstractModel):
                     line['class'] = line_classes + ' o_account_coa_column_contrast'
 
                 line['unfoldable'] = True
-                line['caret_options'] = 'checkout_balance_account_group'
+                line['caret_options'] = 'account_checkout_balance_account_group'
                 
                 # Logic to handle expansion state:
                 # 1. If 'unfold_all' is ON, force expand.
@@ -481,7 +481,7 @@ class CheckoutBalanceCustomHandler(models.AbstractModel):
                 # Force accounts to be leaves (no children visible)
                 line['unfoldable'] = False
                 line['unfolded'] = False
-                line['caret_options'] = 'checkout_balance_account_account'
+                line['caret_options'] = 'account_checkout_balance_account_account'
                 filtered_lines.append(line)
             
             elif not model:

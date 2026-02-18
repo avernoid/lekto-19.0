@@ -27,3 +27,4 @@ NEW checkout_balance.main_template_checkout_balance
  FIXED: Filtered out `account.move.line` items in `_custom_line_postprocessor` to prevent them from appearing when "Unfold All" is clicked, while retaining Account Groups, Accounts, and generic Total lines. This ensures the report only expands up to the Account level.
  FIXED: Updated `_custom_line_postprocessor` to strictly enforce collapsed state (`unfolded=False`) for Account Groups by default, unless `unfold_all` is active or the specific group was manually unfolded by the user.
  FIXED: Disabled `filter_unfold_all` in report configuration to remove the "Unfold All" option from the UI, as requested.
+ RENAME: Module renamed from `checkout_balance` to `account_checkout_balance` to avoid naming conflict in Odoo App Store. Updated all internal references (manifest, XML IDs, tests, translations).

@@ -16,8 +16,8 @@ class TestCheckoutBalanceCustomHandler(TransactionCase):
 
     def test_caret_options_initializer(self):
         caret_options = self.handler._caret_options_initializer()
-        self.assertIn('checkout_balance_account_group', caret_options)
-        self.assertIn('checkout_balance_account_account', caret_options)
+        self.assertIn('account_checkout_balance_account_group', caret_options)
+        self.assertIn('account_checkout_balance_account_account', caret_options)
         print("<<<<< TEST CARET OPTION >>>>>>")
 
     def test_custom_options_initializer(self):

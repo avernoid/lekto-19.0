@@ -8,7 +8,7 @@ class TestCheckoutBalanceReport(TestAccountReportsCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.report = cls.env.ref('checkout_balance.checkout_balance_report')
+        cls.report = cls.env.ref('account_checkout_balance.checkout_balance_report')
 
     def test_checkout_balance_generation(self):
         # Create some moves
