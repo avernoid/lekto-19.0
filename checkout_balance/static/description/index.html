@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout x Account Report | Odoo Accounting App by Ganemo</title>
+    <meta name="description"
+        content="Advanced Trial Balance report for Odoo. Includes Initial Balance, Period Movements, Final Balance, and Income Statement by Function and Nature.">
+    <meta name="keywords"
+        content="Odoo, Accounting, Trial Balance, Income Statement, Report, Ganemo, Finance, Checkout Balance, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'checkout_balance' implements an advanced Trial Balance report.
+            It extends standard accounting reports to show columns for Initial Balance, Debit/Credit Movements, Final
+            Balance,
+            and separate columns for Income Statement by Function and Income Statement by Nature.
+            Based on account groups configuration.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Checkout x Account</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Advanced Trial Balance & Income Statement</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Get a complete financial overview with initial balances, period movements, final balances, and
+                    detailed analysis by Function and Nature.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-table mr-2"></i> Comprehensive View</h4>
+                            <p style="text-align: justify;">Standard reports often require jumping between screens.
+                                We combine <strong>Initial Balance</strong>, <strong>Debits/Credits</strong>, and
+                                <strong>Final Balance</strong> into a single, cohesive view.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-line-chart mr-2"></i> Dual Analysis</h4>
+                            <p style="text-align: justify;">Analyze your Profit & Loss from two perspectives
+                                simultaneously: <strong>By Function</strong> and <strong>By Nature</strong>, crucial for
+                                detailed financial auditing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Complete Implementation Guide</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">To ensure the report displays accurate data in the "Income by Function" and
+                                "Income by Nature" columns, you must categorize your Account Groups. Follow these
+                                mandatory steps:</p>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5 style="color: #333; font-weight: 600; margin-top: 15px;">Step 1: Access Account
+                                        Groups</h5>
+                                    <ul style="list-style-type: none; padding-left: 0; line-height: 1.8;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Navigate to
+                                            <strong>Accounting</strong> > <strong>Configuration</strong> >
+                                            <strong>Account Groups</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> You will see your existing
+                                            COA structure grouped here. If it's empty, you may need to configure your
+                                            Chart of Accounts first.</li>
+                                    </ul>
+
+                                    <h5 style="color: #333; font-weight: 600; margin-top: 15px;">Step 2: Define Group
+                                        Types</h5>
+                                    <p class="text-muted">For each Account Group (especially parent groups), set the
+                                        <strong>Group Type</strong> fields. This determines where the balances of
+                                        accounts within this group will be projected in the Checkout Balance report.</p>
+
+                                    <div class="alert alert-info" role="alert" style="border-left: 4px solid #17a2b8;">
+                                        <strong><i class="fa fa-info-circle"></i> Understanding the "Group Type"
+                                            Options:</strong>
+                                        <br>
+                                        <ul style="margin-bottom: 0; padding-left: 20px;">
+                                            <li><strong>Balance:</strong> Use for Asset, Liability, and Equity accounts.
+                                                These will appear in the "General Balance" column.</li>
+                                            <li><strong>Income by Function:</strong> Use for expense/income accounts
+                                                related to the <em>function</em> of the expense (e.g., Admin Expenses,
+                                                Sales Expenses). These appear in the "EERR by Function" column.</li>
+                                            <li><strong>Income by Nature:</strong> Use for expense/income accounts
+                                                related to the <em>nature</em> of the expense (e.g., Personnel,
+                                                Services, Taxes). These appear in the "EERR by Nature" column.</li>
+                                            <li><strong>Both Incomes:</strong> Use strictly if an account group belongs
+                                                to BOTH income statements (rare, but supported). It will appear in both
+                                                EERR columns.</li>
+                                        </ul>
+                                    </div>
+
+                                    <h5 style="color: #333; font-weight: 600; margin-top: 15px;">Step 3: Verification
+                                    </h5>
+                                    <p>Ensure that every root or parent Account Group has a type assigned. If a group
+                                        has no type, its accounts might not appear in the specific analysis columns,
+                                        although they will still show in standard debit/credit columns.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual</h3>
+                            <p class="lead">How to generate and interpret the Checkout Balance report:</p>
+
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5 style="color: #3c6dac; font-weight: 600;"><i
+                                                class="fa fa-search text-primary mr-2"></i> Generatiing the Report</h5>
+                                        <ol style="padding-left: 20px;">
+                                            <li>Go to <strong>Accounting</strong> > <strong>Reporting</strong> >
+                                                <strong>Audit</strong> > <strong>Checkout x Account</strong>.</li>
+                                            <li>Select your date range (e.g., Fiscal Year, Last Month).</li>
+                                            <li>Click <strong>Apply</strong>.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5 style="color: #3c6dac; font-weight: 600;"><i
+                                                class="fa fa-sliders text-primary mr-2"></i> Using Filters & Hierarchy
+                                        </h5>
+                                        <ul style="list-style-type: none; padding-left: 0;">
+                                            <li><i class="fa fa-check-square-o text-success mr-2"></i>
+                                                <strong>Hierarchy:</strong> Click the "Hierarchy" button to switch
+                                                between a flat list of accounts and a structured Tree View based on your
+                                                Account Groups.</li>
+                                            <li><i class="fa fa-check-square-o text-success mr-2"></i> <strong>Unfold
+                                                    All:</strong> Use this to expand all group levels instantly down to
+                                                the Account level. <em>Note: Individual Journal Items (Move Lines) are
+                                                    hidden for clarity.</em></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5 style="color: #3c6dac; font-weight: 600;"><i
+                                                class="fa fa-columns text-primary mr-2"></i> Understanding Columns</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-sm">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Column</th>
+                                                        <th>Description</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><strong>Initial Balance</strong></td>
+                                                        <td>The cumulative balance of the account <em>before</em> the
+                                                            start date of the selected period.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Debit / Credit</strong></td>
+                                                        <td>The total sum of movements strictly <em>within</em> the
+                                                            selected period range.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>End Balance</strong></td>
+                                                        <td>Calculated as: Initial Balance + Debit - Credit. Represents
+                                                            the closing balance.</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>General Balance</strong></td>
+                                                        <td>Shows balances for Real Accounts (Asset, Liability, Equity).
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>EERR by Function</strong></td>
+                                                        <td>Shows Profit/Loss balances classified by Function (Costs,
+                                                            Admin expenses, Sales exp).</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>EERR by Nature</strong></td>
+                                                        <td>Shows Profit/Loss balances classified by Nature (Services,
+                                                            Purchases, Personnel).</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-calculator mr-2"></i>
+                                Scenario 1: Mathematical Integrity Check</h4>
+                            <p><strong>Goal:</strong> Validate that the equation <em>Initial + Debit - Credit = End
+                                    Balance</em> holds true for all accounts.</p>
+                            <ol class="mt-3">
+                                <li>Select a random account with activity in the report (e.g., Bank).</li>
+                                <li>Note the <strong>Initial Balance</strong> (e.g., $1,000).</li>
+                                <li>Note the <strong>Debit</strong> ($500) and <strong>Credit</strong> ($200).</li>
+                                <li><strong>Verify:</strong> The <strong>End Balance</strong> MUST display $1,300.</li>
+                                <li><strong>Verify:</strong> If the account is an Asset (Balance Sheet), the $1,300 MUST
+                                    appear in the <strong>General Balance</strong> column.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-tags mr-2"></i>
+                                Scenario 2: Function vs Nature Classification</h4>
+                            <p><strong>Goal:</strong> Ensure expenses are routed to the correct Profit & Loss column
+                                based on Group setup.</p>
+                            <ol class="mt-3">
+                                <li>Identify an Expense Account (e.g., "600000 Advertisement").</li>
+                                <li>Go to its Account Group and set Type to <strong>Income by Function</strong>.</li>
+                                <li>Refresh the report. Verify the balance appears in <strong>EERR by Function</strong>
+                                    column.</li>
+                                <li>Go back and change the Group Type to <strong>Income by Nature</strong>.</li>
+                                <li>Refresh the report. Verify the balance MOVES to the <strong>EERR by Nature</strong>
+                                    column.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-sitemap mr-2"></i>
+                                Scenario 3: Hierarchy & Expansion Logic</h4>
+                            <p><strong>Goal:</strong> Test the "Unfold All" feature and hierarchy stability.</p>
+                            <ol class="mt-3">
+                                <li>Enable the <strong>Hierarchy</strong> option in the report filters.</li>
+                                <li><strong>Check:</strong> The report should load with Account Groups collapsed by
+                                    default.</li>
+                                <li>Click <strong>Unfold All</strong>.</li>
+                                <li><strong>Verify:</strong> All groups should expand revealing the Accounts inside.
+                                </li>
+                                <li><strong>Critical Check:</strong> Verify that NO journal items (individual move lines
+                                    like "MISC/2024/01/0001") are visible. The tree must stop at the Account level.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-calendar mr-2"></i>
+                                Scenario 4: Period Consistency</h4>
+                            <p><strong>Goal:</strong> Verify Initial Balance consistency across periods.</p>
+                            <ol class="mt-3">
+                                <li>Run report for <strong>January</strong>. Note the End Balance of an account.</li>
+                                <li>Run report for <strong>February</strong>.</li>
+                                <li><strong>Verify:</strong> The Initial Balance for February MUST exactly match the End
+                                    Balance of January.</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+        </section>
+
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Why is the "Initial Balance" zero?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> If you are running the report from the
+                                very beginning of your database history, or for a P&L account that was closed in the
+                                previous fiscal year, the initial balance might indeed be zero.</p>
+                            <p class="small text-danger"><i class="fa fa-check mr-1"></i> <strong>Check:</strong> Verify
+                                if there are actual opening entries or if the fiscal year closing has reset P&L
+                                accounts.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Why don't I see the "General Balance" column?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The columns are dynamic. If NO accounts
+                                in the current report are classified as "Balance" type in their groups, the column might
+                                hide to save space.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Ensure your Balance Sheet groups (Assets, Liabilities) have the "Balance" type assigned.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Can I drill down to Journal Entries?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, but responsibly.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>How-to:</strong> While "Unfold All" stops at the Account level to keep the
+                                report performant, you can click on any specific Account line to open its General Ledger
+                                or Journal Items view in a pop-up.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">My totals don't match the General Ledger?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> This report strictly obeys Account Group
+                                configurations.</p>
+                            <p class="small text-success"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> If an
+                                account is not in a group, or the group has no type, it may be excluded from the
+                                Function/Nature columns. Check your "Undefined" group buckets.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:soporte@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        soporte@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

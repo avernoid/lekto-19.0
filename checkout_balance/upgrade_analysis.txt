@@ -1,0 +1,29 @@
+---Models in module 'checkout_balance'---
+DEL model account.checkout.balance.report (AbstractModel)
+NEW model account.checkout.balance.report.handler (AbstractModel)
+---Fields in module 'checkout_balance'---
+checkout_balance    / type_group (selection)      : DEL selection_key: 'default'
+checkout_balance    / type_group (selection)      : NEW selection_key: 'nature'
+---XML records in module 'checkout_balance'---
+DEL ir.ui.view: checkout_balance.account_group_form_view_inherit_checkout_balance
+NEW ir.ui.view: checkout_balance.view_account_group_form
+NEW account.report: checkout_balance.checkout_balance_report
+UPD ID view_account_group_form  -> account_group_view_form_inherit_checkout_balance
+---Template records in module 'checkout_balance'---
+DEL checkout_balance.line_caret_options_inherit_checkout_balance
+NEW checkout_balance.main_template_checkout_balance
+--- VERSION 19.0.1.0.0 MIGRATION ---
+ Manifest updated: version 19.0.1.0.0
+ Verified dependencies: account_reports compatible.
+ Verified Python models: account.checkout.balance.report.handler signatures checked.
+ Verified XML views: account_group_views.xml compatible.
+ Verified Report data: checkout_balance_report.xml account.report configuration compatible.
+ FIXED: Updated parent menu ID to 'account_reports.account_reports_audit_menu' (was 'account_reports_audit_reports_menu').
+ FIXED: Replaced `_get_options_initial_balance` call with local implementation in `account.checkout.balance.report.handler` to resolve AttributeError (method removed from `account.general.ledger.report.handler` in Odoo 19).
+ Verified Static files: No JS/CSS to migrate.
+ FIXED: Updated `_get_options_initial_balance` to set a valid `date_from` (same as `date_to`) instead of `False`, preventing `AttributeError: 'NoneType' object has no attribute 'strftime'` in Odoo 19 GL engine.
+ FIXED: Disabled hierarchy generation (`hierarchy=False`) in the inner General Ledger report call within `_dynamic_lines_generator`. This prevents double-hierarchy processing and line duplication when the hierarchy option is enabled in the Checkout Balance report.
+ FIXED: Updated `_custom_line_postprocessor` to explicitly enabling `unfoldable` and `unfolded=False` for account group lines (except level 2), ensuring that the hierarchy defaults to collapsed but can be expanded by the user in Odoo 19.
+ FIXED: Filtered out `account.move.line` items in `_custom_line_postprocessor` to prevent them from appearing when "Unfold All" is clicked, while retaining Account Groups, Accounts, and generic Total lines. This ensures the report only expands up to the Account level.
+ FIXED: Updated `_custom_line_postprocessor` to strictly enforce collapsed state (`unfolded=False`) for Account Groups by default, unless `unfold_all` is active or the specific group was manually unfolded by the user.
+ FIXED: Disabled `filter_unfold_all` in report configuration to remove the "Unfold All" option from the UI, as requested.
