@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="github_repository_branch_form_view_inherit_github_project_portal" model="ir.ui.view">
+        <field name="name">github.repository.branch.form.view.inherit.github_project_portal</field>
+        <field name="model">github.repository.branch</field>
+        <field name="inherit_id" ref="github_connector.view_github_repository_branch_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position='inside'>
+                <page string="Modulos" name="list_modules">
+                    <field name="modules_ids" widget="many2many"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,94 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* github_connector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-18 17:00+0000\n"
+"PO-Revision-Date: 2024-02-18 17:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: github_connector
+#: model:ir.model.fields,field_description:github_connector.field_github_organization__name
+msgid "Organization Name"
+msgstr "Nombre de Organización"
+
+#. module: github_connector
+#: model:ir.model.fields,help:github_connector.field_github_organization__name
+msgid "The name of the GitHub Organization (e.g., 'ganemo')."
+msgstr "El nombre de la Organización en GitHub (ej. 'ganemo')."
+
+#. module: github_connector
+#: model:ir.model.fields,field_description:github_connector.field_github_organization__repository_sync_limit
+msgid "Branch Sync Limit per Batch"
+msgstr "Límite de Sync de Ramas por Lote"
+
+#. module: github_connector
+#: model:ir.model.fields,help:github_connector.field_github_organization__repository_sync_limit
+msgid ""
+"Maximum number of repositories to synchronize branches for in a single execution. Use this to prevent Timeouts on large organizations."
+msgstr ""
+"Número máximo de repositorios para sincronizar ramas en una sola ejecución. Usa esto para prevenir Timeouts en organizaciones grandes."
+
+#. module: github_connector
+#: model:ir.model.fields,field_description:github_connector.field_github_organization__ignored_repository_names
+msgid "Ignored Repositories"
+msgstr "Repositorios Ignorados"
+
+#. module: github_connector
+#: model:ir.model.fields,help:github_connector.field_github_organization__ignored_repository_names
+msgid ""
+"Set here repository names (one per line) that you want to ignore during synchronization. These repositories will be created in Odoo but will NOT sync branches or download source code. Useful for archiving or ignoring forks.\n"
+" Example:\n"
+" purchase-workflow\n"
+" OCB\n"
+""
+msgstr ""
+"Configura aquí los nombres de repositorios (uno por línea) que deseas ignorar. Se crearán en Odoo pero NO sincronizarán ramas ni código fuente.\n"
+" Ejemplo:\n"
+" purchase-workflow\n"
+" OCB\n"
+""
+
+#. module: github_connector
+#: model:ir.actions.act_window,name:github_connector.action_github_organization
+#: model:ir.ui.menu,name:github_connector.menu_github_organization
+msgid "Organizations"
+msgstr "Organizaciones"
+
+#. module: github_connector
+#: model:ir.actions.act_window,name:github_connector.action_github_repository
+#: model:ir.ui.menu,name:github_connector.menu_github_repository
+msgid "Repositories"
+msgstr "Repositorios"
+
+#. module: github_connector
+#: model:ir.actions.act_window,name:github_connector.action_github_team
+#: model:ir.ui.menu,name:github_connector.menu_github_team
+msgid "Teams"
+msgstr "Equipos"
+
+#. module: github_connector
+#: model:ir.ui.menu,name:github_connector.menu_main_github
+msgid "GitHub"
+msgstr "GitHub"
+
+#. module: github_connector
+#: model:ir.model.fields,field_description:github_connector.field_github_organization__organization_serie_ids
+msgid "Organization Series"
+msgstr "Series de Organización"
+
+#. module: github_connector
+#: model:ir.model.fields,help:github_connector.field_github_organization__organization_serie_ids
+msgid ""
+"Define here the series (e.g., '16.0', '17.0') to filter which branches are synchronized. Only branches matching these series will be synced."
+msgstr ""
+"Define aquí las series (ej. '16.0', '17.0') para filtrar qué ramas se sincronizan. Solo las ramas que coincidan serán sincronizadas."
+

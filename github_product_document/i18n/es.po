@@ -1,0 +1,82 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* github_product_document
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-19 10:00+0000\n"
+"PO-Revision-Date: 2026-02-19 10:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: github_product_document
+#: model:product.product,field:github_branch_id
+msgid "GitHub Branch"
+msgstr "Rama de GitHub"
+
+#. module: github_product_document
+#: model:product.product,help:github_branch_id
+msgid "Link this product variant to a specific GitHub repository branch. When set, you can click \"Sync GitHub Doc\" to download the source code as a ZIP file and store it as a product.document. The ZIP will be delivered to the customer when they confirm a sale order containing this variant. Example: Link variant \"18.0\" to branch \"18.0\" of your module repository."
+msgstr "Vincula esta variante de producto a una rama específica de un repositorio de GitHub. Una vez configurado, puede hacer clic en \"Sincronizar Doc GitHub\" para descargar el código fuente como archivo ZIP y almacenarlo como product.document. El ZIP se entregará al cliente cuando confirme un pedido de venta que contenga esta variante. Ejemplo: Vincular la variante \"18.0\" a la rama \"18.0\" de su repositorio de módulo."
+
+#. module: github_product_document
+#: model:product.product,field:github_doc_needs_update
+msgid "GitHub Doc Needs Update"
+msgstr "Doc GitHub Necesita Actualización"
+
+#. module: github_product_document
+#: model:product.product,help:github_doc_needs_update
+msgid "When True, indicates that the linked GitHub repository has been updated since the last ZIP was generated. The scheduled action \"GitHub: Update Stale Product Documents\" (runs every 12 hours) will automatically download a fresh ZIP and reset this flag to False. You can also manually click \"Sync GitHub Doc\" to update immediately."
+msgstr "Cuando es Verdadero, indica que el repositorio de GitHub vinculado se ha actualizado desde la última vez que se generó el ZIP. La acción planificada \"GitHub: Actualizar Documentos de Producto Obsoletos\" (se ejecuta cada 12 horas) descargará automáticamente un ZIP actualizado y restablecerá este indicador a Falso. También puede hacer clic manualmente en \"Sincronizar Doc GitHub\" para actualizar inmediatamente."
+
+#. module: github_product_document
+#: model:ir.actions.server,name:action_sync_github_doc
+msgid "Sync GitHub Doc"
+msgstr "Sincronizar Doc GitHub"
+
+#. module: github_product_document
+#: model:ir.cron,name:cron_sync_github_documents
+msgid "GitHub: Update Stale Product Documents"
+msgstr "GitHub: Actualizar Documentos de Producto Obsoletos"
+
+#. module: github_product_document
+#: model:ir.ui.view,arch_db:product_product_form_github
+msgid "Sync GitHub Doc"
+msgstr "Sincronizar Doc GitHub"
+
+#. module: github_product_document
+#: model:product.product,field:lines_of_code
+msgid "Lines of Code"
+msgstr "Líneas de Código"
+
+#. module: github_product_document
+#: model:product.product,help:lines_of_code
+msgid "Total lines of source code counted from the GitHub ZIP archive stored in this variant. Updated when you click \"Count Lines of Code\". Uses pygount to identify and count code lines (excludes comments, blanks, and binary files)."
+msgstr "Total de líneas de código fuente contadas del archivo ZIP de GitHub almacenado en esta variante. Se actualiza al hacer clic en \"Contar Líneas de Código\". Usa pygount para identificar y contar líneas de código (excluye comentarios, vacías y archivos binarios)."
+
+#. module: github_product_document
+#: model:product.product,field:lines_of_code_date
+msgid "Last Code Count"
+msgstr "Último Conteo de Código"
+
+#. module: github_product_document
+#: model:product.product,help:lines_of_code_date
+msgid "Date and time of the last successful lines-of-code count."
+msgstr "Fecha y hora del último conteo exitoso de líneas de código."
+
+#. module: github_product_document
+#: model:ir.ui.view,arch_db:product_product_form_github
+msgid "Count Lines"
+msgstr "Contar Líneas"
+
+#. module: github_product_document
+#: model:ir.actions.server,name:action_count_lines_of_code
+msgid "Count Lines of Code"
+msgstr "Contar Líneas de Código"
+
