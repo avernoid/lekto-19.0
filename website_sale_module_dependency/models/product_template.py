@@ -16,7 +16,7 @@ class ProductTemplate(models.Model):
     )
     technical_module_name = fields.Char(
         string='Technical Module Name',
-        help='Technical name of the Odoo module, e.g. "github_connector". '
+        help='Technical name of the Odoo module, e.g. "github_connector_api". '
              'Used for automatic dependency suggestion from module manifests.',
     )
     dependency_ids = fields.Many2many(

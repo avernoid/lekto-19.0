@@ -6,7 +6,7 @@ from unittest import mock
 
 import odoo.tests
 
-from odoo.addons.github_connector.tests.common import TestGithubConnectorCommon
+from odoo.addons.github_connector_api.tests.common import TestGithubConnectorCommon
 
 
 FAKE_ZIP_CONTENT = b"PK\x03\x04fake_zip_bytes_for_testing"

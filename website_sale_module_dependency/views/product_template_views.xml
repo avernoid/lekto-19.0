@@ -26,7 +26,7 @@
                     <group>
                         <group string="Module Info">
                             <field name="technical_module_name"
-                                   placeholder="e.g. github_connector"/>
+                                   placeholder="e.g. github_connector_api"/>
                             <field name="total_price_with_deps"
                                    widget="monetary"/>
                             <field name="dependency_count"/>

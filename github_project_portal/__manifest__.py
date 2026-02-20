@@ -9,7 +9,7 @@
     "description": """
         Integrate Odoo Projects with GitHub. Automate GitFlow, Manage PRs, and Validate Modules directly from Odoo tasks.
     """,
-    'depends': ['project', 'github_connector'],
+    'depends': ['project', 'github_connector_api'],
     'data': [
         'security/ir.model.access.csv',
         'views/github_repository_branch_views.xml',

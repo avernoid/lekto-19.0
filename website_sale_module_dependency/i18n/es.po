@@ -1,4 +1,4 @@
-# Translation of Odoo Server.
+﻿# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #   * website_sale_module_dependency
 #
@@ -36,8 +36,8 @@ msgstr "Nombre Técnico del Módulo"
 
 #. module: website_sale_module_dependency
 #: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__technical_module_name
-msgid "Technical name of the Odoo module, e.g. \"github_connector\". Used for automatic dependency suggestion from module manifests."
-msgstr "Nombre técnico del módulo Odoo, por ejemplo \"github_connector\". Utilizado para sugerencias automáticas de dependencias desde manifiestos de módulos."
+msgid "Technical name of the Odoo module, e.g. \"github_connector_api\". Used for automatic dependency suggestion from module manifests."
+msgstr "Nombre técnico del módulo Odoo, por ejemplo \"github_connector_api\". Utilizado para sugerencias automáticas de dependencias desde manifiestos de módulos."
 
 #. module: website_sale_module_dependency
 #: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__dependency_ids

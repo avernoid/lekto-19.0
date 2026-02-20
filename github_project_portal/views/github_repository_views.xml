@@ -4,7 +4,7 @@
     <record id="github_repository_form_view_inherit_github_project_portal" model="ir.ui.view">
         <field name="name">github.repository.form.view.inherit.github_project_portal</field>
         <field name="model">github.repository</field>
-        <field name="inherit_id" ref="github_connector.view_github_repository_form"/>
+        <field name="inherit_id" ref="github_connector_api.view_github_repository_form"/>
         <field name="arch" type="xml">
             <field name="website" position='after'>
                 <field name="should_validate_module"/>

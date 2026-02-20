@@ -25,7 +25,7 @@ When a sale order is confirmed, the customer sees the download link in their por
 
 ## Dependencies
 
-- `github_connector` — GitHub API integration and branch management
+- `github_connector_api` — GitHub API integration and branch management
 - `sale` — Sale order confirmation triggers document visibility
 
 ---

@@ -11,7 +11,7 @@ Includes smart staleness detection, background cron updates, and eCommerce deliv
     'company': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'depends': [
-        'github_connector',
+        'github_connector_api',
         'sale',
     ],
     'data': [
