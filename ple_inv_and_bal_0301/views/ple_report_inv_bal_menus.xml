@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <record id="ple_report_inv_bal_action" model="ir.actions.act_window">
+        <field name="name">3.1 Estado de Situación financiera</field>
+        <field name="res_model">ple.report.inv.bal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_ple_inv_bal_3__1"
+              name="3.1 Estado de Situación financiera"
+              parent="ple_sale_book.menu_ple_inv_bal"
+              action="ple_report_inv_bal_action"
+              sequence="31"
+    />
+
+</odoo>

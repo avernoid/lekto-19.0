@@ -1,0 +1,127 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * ple_inv_and_bal_0301
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-21 09:00+0000\n"
+"PO-Revision-Date: 2026-02-21 09:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model,name:ple_inv_and_bal_0301.model_ple_report_inv_bal
+msgid "Statement of Financial Position"
+msgstr "Estado de Situación Financiera"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__date_start
+msgid "Start Date"
+msgstr "Fecha Inicio"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__date_start
+msgid "Start date of the reporting period. Defaults to January 1st of the previous year. Changing this field will automatically update the End Date to December 31st of the same year."
+msgstr "Fecha de inicio del periodo de reporte. Por defecto es el 1 de enero del año anterior. Al cambiar este campo se actualizará automáticamente la Fecha Fin al 31 de diciembre del mismo año."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__date_end
+msgid "End Date"
+msgstr "Fecha Fin"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__date_end
+msgid "End date of the reporting period. Defaults to December 31st of the previous year. This field is auto-updated when Start Date changes, but can be manually adjusted. Must be equal to or later than Start Date."
+msgstr "Fecha de fin del periodo de reporte. Por defecto es el 31 de diciembre del año anterior. Este campo se actualiza automáticamente al cambiar la Fecha Inicio, pero se puede ajustar manualmente. Debe ser igual o posterior a la Fecha Inicio."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__state_send
+msgid "Submission Status"
+msgstr "Estado de Envío"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__state_send
+msgid "Indicates whether this report is submitted by the entity itself or by a representative. Defaults to \"Empresa o Entidad Operativa\" (the company submits directly)."
+msgstr "Indica si este reporte es enviado por la entidad misma o por un representante. Por defecto es \"Empresa o Entidad Operativa\" (la empresa envía directamente)."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__line_ids
+msgid "Report Lines"
+msgstr "Líneas del Reporte"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__line_ids
+msgid "Detail lines of the balance sheet report, one per EEFF rubro. Generated automatically when clicking \"Generate Report\"."
+msgstr "Líneas detalladas del reporte de balance, una por rubro EEFF. Se generan automáticamente al hacer clic en \"Generar Reporte\"."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__financial_statements_catalog
+msgid "Financial Statements Catalog"
+msgstr "Catálogo Estados Financieros"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__financial_statements_catalog
+msgid "SUNAT catalog code that identifies the type of financial statements being reported. Most companies should use \"09 - OTROS NO CONSIDERADOS EN LOS ANTERIORES\" unless they are supervised by the SMV (Superintendencia del Mercado de Valores)."
+msgstr "Código de catálogo SUNAT que identifica el tipo de estados financieros reportados. La mayoría de empresas deben usar \"09 - OTROS NO CONSIDERADOS EN LOS ANTERIORES\" a menos que estén supervisadas por la SMV (Superintendencia del Mercado de Valores)."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__eeff_presentation_opportunity
+msgid "EEFF Presentation Opportunity"
+msgstr "Oportunidad de Presentación de EEFF"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__eeff_presentation_opportunity
+msgid "Specifies the occasion for submitting the financial statements to SUNAT. Most companies use \"Al 31 de diciembre\" for annual reporting. Other options apply for mid-year modifications, mergers, or liquidations."
+msgstr "Especifica la ocasión para presentar los estados financieros ante SUNAT. La mayoría de empresas usa \"Al 31 de diciembre\" para el reporte anual. Otras opciones aplican para modificaciones de medio año, fusiones o liquidaciones."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__txt_filename
+msgid "TXT Filename"
+msgstr "Nombre Archivo TXT"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__txt_filename
+msgid "Auto-generated filename for the TXT file in SUNAT PLE format."
+msgstr "Nombre de archivo generado automáticamente para el archivo TXT en formato PLE SUNAT."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__txt_binary
+msgid "TXT Report 3.1"
+msgstr "Reporte TXT 3.1"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__txt_binary
+msgid "The generated TXT file ready for uploading to the SUNAT PLE system."
+msgstr "El archivo TXT generado listo para subir al sistema PLE de SUNAT."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__pdf_filename
+msgid "PDF Filename"
+msgstr "Nombre Archivo PDF"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__pdf_filename
+msgid "Auto-generated filename for the PDF report."
+msgstr "Nombre de archivo generado automáticamente para el reporte PDF."
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,field_description:ple_inv_and_bal_0301.field_ple_report_inv_bal__pdf_binary
+msgid "PDF Report 3.1"
+msgstr "Reporte PDF 3.1"
+
+#. module: ple_inv_and_bal_0301
+#: model:ir.model.fields,help:ple_inv_and_bal_0301.field_ple_report_inv_bal__pdf_binary
+msgid "The generated PDF report showing the Balance Sheet with Level 4 detail breakdown."
+msgstr "El reporte PDF generado mostrando el Balance General con desglose de detalle Nivel 4."
+
+#. module: ple_inv_and_bal_0301
+#: sql_constraint:ple.report.inv.bal:0
+msgid "The end date cannot be earlier than the start date."
+msgstr "La fecha de fin no puede ser anterior a la fecha de inicio."

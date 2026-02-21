@@ -1,0 +1,2004 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Nivel 1 -->
+    <record id="eeff_ple_esf_1d020t" model="eeff.ple">
+        <field name="sequence">32</field>
+        <field name="code">1D020T</field>
+        <field name="description">TOTAL DE ACTIVOS</field>
+        <field name="eeff_type">3.1</field>
+    </record>
+    <record id="eeff_ple_esf_1d070t" model="eeff.ple">
+        <field name="sequence">66</field>
+        <field name="code">1D070T</field>
+        <field name="description">TOTAL PASIVO Y PATRIMONIO</field>
+        <field name="eeff_type">3.1</field>
+    </record>
+    <record id="eeff_ple_eerr_2d07st" model="eeff.ple">
+        <field name="sequence">87</field>
+        <field name="code">2D07ST</field>
+        <field name="description">Ganancia (Pérdida) Neta del Ejercicio</field>
+        <field name="eeff_type">3.20</field>
+    </record>
+    <record id="eeff_ple_efemd_3d0402" model="eeff.ple">
+        <field name="sequence">151</field>
+        <field name="code">3D0402</field>
+        <field name="description">Efectivo y Equivalente al Efectivo al Inicio del Ejercicio</field>
+        <field name="eeff_type">3.18</field>
+    </record>
+    <record id="eeff_ple_efemd_3d04st" model="eeff.ple">
+        <field name="sequence">152</field>
+        <field name="code">3D04ST</field>
+        <field name="description">Efectivo y Equivalente al Efectivo al Final del Ejercicio</field>
+        <field name="eeff_type">3.18</field>
+    </record>
+    <record id="eeff_ple_eri_5d04st" model="eeff.ple">
+        <field name="sequence">173</field>
+        <field name="code">5D04ST</field>
+        <field name="description">Resultado Integral Total del Ejercicio, neto del Impuesto a las Ganancias</field>
+        <field name="eeff_type">3.24</field>
+    </record>
+    <record id="eeff_ple_ecpn_4d01st" model="eeff.ple">
+        <field name="sequence">190</field>
+        <field name="code">4D01ST</field>
+        <field name="description">Saldos al 31 de diciembre de</field>
+        <field name="eeff_type">3.19</field>
+    </record>
+    <record id="eeff_ple_ecpn_4d02st" model="eeff.ple">
+        <field name="sequence">207</field>
+        <field name="code">4D02ST</field>
+        <field name="description">Saldos al 31 de diciembre de</field>
+        <field name="eeff_type">3.19</field>
+    </record>
+    <record id="eeff_ple_efemi_3d0405" model="eeff.ple">
+        <field name="sequence">282</field>
+        <field name="code">3D0405</field>
+        <field name="description">Aumento (Disminución) Neto de Efectivo y Equivalente al Efectivo</field>
+        <field name="eeff_type">3.25</field>
+    </record>
+    <record id="eeff_ple_efemi_3d0402" model="eeff.ple">
+        <field name="sequence">283</field>
+        <field name="code">3D0402</field>
+        <field name="description">Efectivo y Equivalente al Efectivo al Inicio del Ejercicio</field>
+        <field name="eeff_type">3.25</field>
+    </record>
+    <record id="eeff_ple_efemi_3d04st" model="eeff.ple">
+        <field name="sequence">284</field>
+        <field name="code">3D04ST</field>
+        <field name="description">Efectivo y Equivalente al Efectivo al Finalizar el Ejercicio</field>
+        <field name="eeff_type">3.25</field>
+    </record>
+
+    <!-- Nivel 2 -->
+    <record id="eeff_ple_esf_1d01st" model="eeff.ple">
+        <field name="sequence">16</field>
+        <field name="code">1D01ST</field>
+        <field name="description">Total Activos Corrientes</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d020t'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d02st" model="eeff.ple">
+        <field name="sequence">31</field>
+        <field name="code">1D02ST</field>
+        <field name="description">Total Activos No Corrientes</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d020t'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d040t" model="eeff.ple">
+        <field name="sequence">57</field>
+        <field name="code">1D040T</field>
+        <field name="description">Total Pasivos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d070t'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d07st" model="eeff.ple">
+        <field name="sequence">65</field>
+        <field name="code">1D07ST</field>
+        <field name="description">Total Patrimonio</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d070t'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d04st" model="eeff.ple">
+        <field name="sequence">83</field>
+        <field name="code">2D04ST</field>
+        <field name="description">Resultado antes de Impuesto a las Ganancias</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d07st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0502" model="eeff.ple">
+        <field name="sequence">84</field>
+        <field name="code">2D0502</field>
+        <field name="description">Gasto por Impuesto a las Ganancias</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d07st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0504" model="eeff.ple">
+        <field name="sequence">86</field>
+        <field name="code">2D0504</field>
+        <field name="description">Ganancia (pérdida) procedente de operaciones discontinuadas, neta del impuesto a las ganancias</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d07st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0101" model="eeff.ple">
+        <field name="sequence">153</field>
+        <field name="code">5D0101</field>
+        <field name="description">Ganancia (Pérdida) Neta del Ejercicio</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d07st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d05st" model="eeff.ple">
+        <field name="sequence">208</field>
+        <field name="code">3D05ST</field>
+        <field name="description">Ganancia (Pérdida) Neta del Ejercicio</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d07st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0405" model="eeff.ple">
+        <field name="sequence">150</field>
+        <field name="code">3D0405</field>
+        <field name="description">Aumento (Disminución) Neto de Efectivo y Equivalente al Efectivo</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d03st" model="eeff.ple">
+        <field name="sequence">172</field>
+        <field name="code">5D03ST</field>
+        <field name="description">Otros Resultado Integral</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d04st'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0136" model="eeff.ple">
+        <field name="sequence">189</field>
+        <field name="code">4D0136</field>
+        <field name="description">Total incremento (disminución) en el patrimonio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d01st'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0236" model="eeff.ple">
+        <field name="sequence">206</field>
+        <field name="code">4D0236</field>
+        <field name="description">Total incremento (disminución) en el patrimonio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d03st" model="eeff.ple">
+        <field name="sequence">279</field>
+        <field name="code">3D03ST</field>
+        <field name="description">Flujos de Efectivo y Equivalente al Efectivo Procedente de (Utilizados en) Actividades de Financiación</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d0405'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0401" model="eeff.ple">
+        <field name="sequence">280</field>
+        <field name="code">3D0401</field>
+        <field name="description">Aumento (Disminución) Neto de Efectivo y Equivalente al Efectivo, antes de las Variaciones en las Tasas de Cambio</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d0405'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0404" model="eeff.ple">
+        <field name="sequence">281</field>
+        <field name="code">3D0404</field>
+        <field name="description">Efectos de las Variaciones en las Tasas de Cambio sobre el Efectivo y Equivalentes al Efectivo</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d0405'))]"/>
+    </record>
+
+    <!-- Nivel 3 -->
+    <record id="eeff_ple_esf_1d0109" model="eeff.ple">
+        <field name="sequence">1</field>
+        <field name="code">1D0109</field>
+        <field name="description">Efectivo y Equivalentes al Efectivo</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0114" model="eeff.ple">
+        <field name="sequence">2</field>
+        <field name="code">1D0114</field>
+        <field name="description">Otros Activos Financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0121" model="eeff.ple">
+        <field name="sequence">3</field>
+        <field name="code">1D0121</field>
+        <field name="description">Cuentas por cobrar comerciales y otras cuentas por cobrar</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0106" model="eeff.ple">
+        <field name="sequence">8</field>
+        <field name="code">1D0106</field>
+        <field name="description">Inventarios</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0112" model="eeff.ple">
+        <field name="sequence">9</field>
+        <field name="code">1D0112</field>
+        <field name="description">Activos Biológicos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0117" model="eeff.ple">
+        <field name="sequence">10</field>
+        <field name="code">1D0117</field>
+        <field name="description">Activos por Impuestos a las Ganancias</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0113" model="eeff.ple">
+        <field name="sequence">11</field>
+        <field name="code">1D0113</field>
+        <field name="description">Otros Activos no financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0118" model="eeff.ple">
+        <field name="sequence">12</field>
+        <field name="code">1D0118</field>
+        <field name="description">Total Activos Corrientes Distintos de los Activos o Grupos de Activos para su Disposición Clasificados como Mantenidos para la Venta o para Distribuir a los Propietarios</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0115" model="eeff.ple">
+        <field name="sequence">15</field>
+        <field name="code">1D0115</field>
+        <field name="description">Activos no Corrientes o Grupos de Activos para su Disposición Clasificados como Mantenidos para la Venta o como Mantenidos para Distribuir a los Propietarios</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d01st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0217" model="eeff.ple">
+        <field name="sequence">17</field>
+        <field name="code">1D0217</field>
+        <field name="description">Otros Activos Financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0221" model="eeff.ple">
+        <field name="sequence">18</field>
+        <field name="code">1D0221</field>
+        <field name="description">Inversiones en subsidiarias, negocios conjuntos y asociadas</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0219" model="eeff.ple">
+        <field name="sequence">19</field>
+        <field name="code">1D0219</field>
+        <field name="description">Cuentas por cobrar comerciales y otras cuentas por cobrar</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0216" model="eeff.ple">
+        <field name="sequence">24</field>
+        <field name="code">1D0216</field>
+        <field name="description">Activos Biológicos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0211" model="eeff.ple">
+        <field name="sequence">25</field>
+        <field name="code">1D0211</field>
+        <field name="description">Propiedades de Inversión</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0205" model="eeff.ple">
+        <field name="sequence">26</field>
+        <field name="code">1D0205</field>
+        <field name="description">Propiedades, Planta y Equipo (neto)</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0206" model="eeff.ple">
+        <field name="sequence">27</field>
+        <field name="code">1D0206</field>
+        <field name="description">Activos intangibles distintos de la plusvalía</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0207" model="eeff.ple">
+        <field name="sequence">28</field>
+        <field name="code">1D0207</field>
+        <field name="description">Activos por impuestos diferidos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0212" model="eeff.ple">
+        <field name="sequence">29</field>
+        <field name="code">1D0212</field>
+        <field name="description">Plusvalía</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0208" model="eeff.ple">
+        <field name="sequence">30</field>
+        <field name="code">1D0208</field>
+        <field name="description">Otros Activos no financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d02st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d03st" model="eeff.ple">
+        <field name="sequence">45</field>
+        <field name="code">1D03ST</field>
+        <field name="description">Total Pasivos Corrientes</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d040t'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d04st" model="eeff.ple">
+        <field name="sequence">56</field>
+        <field name="code">1D04ST</field>
+        <field name="description">Total Pasivos No Corrientes</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d040t'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0701" model="eeff.ple">
+        <field name="sequence">58</field>
+        <field name="code">1D0701</field>
+        <field name="description">Capital Emitido</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d07st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0702" model="eeff.ple">
+        <field name="sequence">59</field>
+        <field name="code">1D0702</field>
+        <field name="description">Primas de Emisión</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d07st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0703" model="eeff.ple">
+        <field name="sequence">60</field>
+        <field name="code">1D0703</field>
+        <field name="description">Acciones de Inversión</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d07st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0711" model="eeff.ple">
+        <field name="sequence">61</field>
+        <field name="code">1D0711</field>
+        <field name="description">Acciones Propias en Cartera</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d07st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0712" model="eeff.ple">
+        <field name="sequence">62</field>
+        <field name="code">1D0712</field>
+        <field name="description">Otras Reservas de Capital</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d07st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0707" model="eeff.ple">
+        <field name="sequence">63</field>
+        <field name="code">1D0707</field>
+        <field name="description">Resultados Acumulados</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d07st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0708" model="eeff.ple">
+        <field name="sequence">64</field>
+        <field name="code">1D0708</field>
+        <field name="description">Otras Reservas de Patrimonio</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d07st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d03st" model="eeff.ple">
+        <field name="sequence">76</field>
+        <field name="code">2D03ST</field>
+        <field name="description">Ganancia (Pérdida) por actividades de operación</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0401" model="eeff.ple">
+        <field name="sequence">77</field>
+        <field name="code">2D0401</field>
+        <field name="description">Ingresos Financieros</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0402" model="eeff.ple">
+        <field name="sequence">78</field>
+        <field name="code">2D0402</field>
+        <field name="description">Gastos Financieros</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0410" model="eeff.ple">
+        <field name="sequence">79</field>
+        <field name="code">2D0410</field>
+        <field name="description">Diferencias de Cambio neto</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0414" model="eeff.ple">
+        <field name="sequence">80</field>
+        <field name="code">2D0414</field>
+        <field name="description">Otros ingresos (gastos) de las subsidiarias,negocios conjuntos y asociadas</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0411" model="eeff.ple">
+        <field name="sequence">81</field>
+        <field name="code">2D0411</field>
+        <field name="description">Ganancias (Pérdidas) que surgen de la Diferencia entre el Valor Libro Anterior y el Valor Justo de Activos Financieros Reclasificados Medidos a Valor Razonable</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0413" model="eeff.ple">
+        <field name="sequence">82</field>
+        <field name="code">2D0413</field>
+        <field name="description">Diferencia entre el importe en libros de los activos distribuidos y el importe en libros del dividendo a pagar</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0503" model="eeff.ple">
+        <field name="sequence">85</field>
+        <field name="code">2D0503</field>
+        <field name="description">Ganancia (Pérdida) Neta de Operaciones  Continuadas</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d0504'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0404" model="eeff.ple">
+        <field name="sequence">149</field>
+        <field name="code">3D0404</field>
+        <field name="description">Efectos de las Variaciones en las Tasas de Cambio sobre el Efectivo y Equivalentes al Efectivo</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0405'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d02st" model="eeff.ple">
+        <field name="sequence">171</field>
+        <field name="code">5D02ST</field>
+        <field name="description">Suma de Impuestos a las Ganancias Relacionados con Componentes de Otro Resultado Integral</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d03st'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0131" model="eeff.ple">
+        <field name="sequence">180</field>
+        <field name="code">4D0131</field>
+        <field name="description">Resultado Integral Total del Ejercicio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0104" model="eeff.ple">
+        <field name="sequence">181</field>
+        <field name="code">4D0104</field>
+        <field name="description">Dividendos en Efectivo Declarados</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0105" model="eeff.ple">
+        <field name="sequence">182</field>
+        <field name="code">4D0105</field>
+        <field name="description">Emisión (reducción) de patrimonio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0132" model="eeff.ple">
+        <field name="sequence">183</field>
+        <field name="code">4D0132</field>
+        <field name="description">Reducción o Amortización de Acciones de Inversión</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0133" model="eeff.ple">
+        <field name="sequence">184</field>
+        <field name="code">4D0133</field>
+        <field name="description">Incremento (Disminución) por otras Aportaciones de los Propietarios</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0134" model="eeff.ple">
+        <field name="sequence">185</field>
+        <field name="code">4D0134</field>
+        <field name="description">Disminución (Incremento) por otras Distribuciones a los Propietarios</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0135" model="eeff.ple">
+        <field name="sequence">186</field>
+        <field name="code">4D0135</field>
+        <field name="description">Incremento (Disminución) por Cambios en la Participación de Subsidiarias que no impliquen Pérdidas de Control</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0114" model="eeff.ple">
+        <field name="sequence">187</field>
+        <field name="code">4D0114</field>
+        <field name="description">Incremento (disminución) por transacciones con acciones propias en cartera</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0112" model="eeff.ple">
+        <field name="sequence">188</field>
+        <field name="code">4D0112</field>
+        <field name="description">Incremento (Disminución) por Transferencia y Otros Cambios de patrimonio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0136'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0231" model="eeff.ple">
+        <field name="sequence">197</field>
+        <field name="code">4D0231</field>
+        <field name="description">Resultado Integral Total del Ejercicio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0204" model="eeff.ple">
+        <field name="sequence">198</field>
+        <field name="code">4D0204</field>
+        <field name="description">Dividendos en Efectivo Declarados</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0205" model="eeff.ple">
+        <field name="sequence">199</field>
+        <field name="code">4D0205</field>
+        <field name="description">Emisión (reducción) de patrimonio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0232" model="eeff.ple">
+        <field name="sequence">200</field>
+        <field name="code">4D0232</field>
+        <field name="description">Reducción o Amortización de Acciones de Inversión</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0233" model="eeff.ple">
+        <field name="sequence">201</field>
+        <field name="code">4D0233</field>
+        <field name="description">Incremento (Disminución) por otras Aportaciones de los Propietarios</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0234" model="eeff.ple">
+        <field name="sequence">202</field>
+        <field name="code">4D0234</field>
+        <field name="description">Disminución (Incremento) por otras Distribuciones a los Propietarios</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0235" model="eeff.ple">
+        <field name="sequence">203</field>
+        <field name="code">4D0235</field>
+        <field name="description">Incremento (Disminución) por Cambios en la Participación de Subsidiarias que no impliquen Pérdidas de Control</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0214" model="eeff.ple">
+        <field name="sequence">204</field>
+        <field name="code">4D0214</field>
+        <field name="description">Incremento (disminución) por transacciones con acciones propias en cartera</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0212" model="eeff.ple">
+        <field name="sequence">205</field>
+        <field name="code">4D0212</field>
+        <field name="description">Incremento (Disminución) por Transferencia y Otros Cambios de patrimonio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0236'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d02st" model="eeff.ple">
+        <field name="sequence">262</field>
+        <field name="code">3D02ST</field>
+        <field name="description">Flujos de Efectivo y Equivalente al Efectivo Procedente de (Utilizados en) Actividades de Inversión</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0325" model="eeff.ple">
+        <field name="sequence">263</field>
+        <field name="code">3D0325</field>
+        <field name="description">Obtención de Préstamos</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0319" model="eeff.ple">
+        <field name="sequence">264</field>
+        <field name="code">3D0319</field>
+        <field name="description">Préstamos de entidades relacionadas</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0326" model="eeff.ple">
+        <field name="sequence">265</field>
+        <field name="code">3D0326</field>
+        <field name="description">Cambios en las participaciones en la propiedad de subsidiarias que no resultan en pérdida de control</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0327" model="eeff.ple">
+        <field name="sequence">266</field>
+        <field name="code">3D0327</field>
+        <field name="description">Emisión de Acciones</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0328" model="eeff.ple">
+        <field name="sequence">267</field>
+        <field name="code">3D0328</field>
+        <field name="description">Emisión de Otros Instrumentos de Patrimonio</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0329" model="eeff.ple">
+        <field name="sequence">268</field>
+        <field name="code">3D0329</field>
+        <field name="description">Subvenciones del gobierno</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0330" model="eeff.ple">
+        <field name="sequence">269</field>
+        <field name="code">3D0330</field>
+        <field name="description">Amortización o pago de Préstamos</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0322" model="eeff.ple">
+        <field name="sequence">270</field>
+        <field name="code">3D0322</field>
+        <field name="description">Pasivos por Arrendamiento Financiero</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0321" model="eeff.ple">
+        <field name="sequence">271</field>
+        <field name="code">3D0321</field>
+        <field name="description">Préstamos de entidades relacionadas</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0331" model="eeff.ple">
+        <field name="sequence">272</field>
+        <field name="code">3D0331</field>
+        <field name="description">Cambios en las participaciones en la propiedad de subsidiarias que no resultan en pérdida de control</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0310" model="eeff.ple">
+        <field name="sequence">273</field>
+        <field name="code">3D0310</field>
+        <field name="description">Recompra o Rescate de Acciones de la Entidad (Acciones en Cartera)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0323" model="eeff.ple">
+        <field name="sequence">274</field>
+        <field name="code">3D0323</field>
+        <field name="description">Adquisición de Otras Participaciones en el Patrimonio</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0311" model="eeff.ple">
+        <field name="sequence">275</field>
+        <field name="code">3D0311</field>
+        <field name="description">Intereses pagados</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0305" model="eeff.ple">
+        <field name="sequence">276</field>
+        <field name="code">3D0305</field>
+        <field name="description">Dividendos pagados</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0332" model="eeff.ple">
+        <field name="sequence">277</field>
+        <field name="code">3D0332</field>
+        <field name="description">Impuestos a las ganancias (pagados) reembolsados</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0333" model="eeff.ple">
+        <field name="sequence">278</field>
+        <field name="code">3D0333</field>
+        <field name="description">Otros cobros (pagos) de efectivo relativos a la actividad de financiación</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d03st'))]"/>
+    </record>
+
+    <!-- Nivel 4 -->
+    <record id="eeff_ple_esf_1d0103" model="eeff.ple">
+        <field name="sequence">4</field>
+        <field name="code">1D0103</field>
+        <field name="description">Cuentas por Cobrar Comerciales (neto)</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0121'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0105" model="eeff.ple">
+        <field name="sequence">5</field>
+        <field name="code">1D0105</field>
+        <field name="description">Otras Cuentas por Cobrar (neto)</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0121'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0104" model="eeff.ple">
+        <field name="sequence">6</field>
+        <field name="code">1D0104</field>
+        <field name="description">Cuentas por Cobrar a Entidades Relacionadas</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0121'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0107" model="eeff.ple">
+        <field name="sequence">7</field>
+        <field name="code">1D0107</field>
+        <field name="description">Anticipos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0121'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0119" model="eeff.ple">
+        <field name="sequence">13</field>
+        <field name="code">1D0119</field>
+        <field name="description">Activos no Corrientes o Grupos de Activos para su Disposición Clasificados como Mantenidos para la Venta</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0118'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0120" model="eeff.ple">
+        <field name="sequence">14</field>
+        <field name="code">1D0120</field>
+        <field name="description">Activos no Corrientes o Grupos de Activos para su Disposición Clasificados como Mantenidos para Distribuir a los Propietarios</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0118'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0201" model="eeff.ple">
+        <field name="sequence">20</field>
+        <field name="code">1D0201</field>
+        <field name="description">Cuentas por Cobrar Comerciales</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0219'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0203" model="eeff.ple">
+        <field name="sequence">21</field>
+        <field name="code">1D0203</field>
+        <field name="description">Otras Cuentas por Cobrar</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0219'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0202" model="eeff.ple">
+        <field name="sequence">22</field>
+        <field name="code">1D0202</field>
+        <field name="description">Cuentas por Cobrar a Entidades Relacionadas</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0219'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0220" model="eeff.ple">
+        <field name="sequence">23</field>
+        <field name="code">1D0220</field>
+        <field name="description">Anticipos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0219'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0309" model="eeff.ple">
+        <field name="sequence">33</field>
+        <field name="code">1D0309</field>
+        <field name="description">Otros Pasivos Financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d03st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0316" model="eeff.ple">
+        <field name="sequence">34</field>
+        <field name="code">1D0316</field>
+        <field name="description">Cuentas por pagar comerciales y otras cuentas por pagar</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d03st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0313" model="eeff.ple">
+        <field name="sequence">39</field>
+        <field name="code">1D0313</field>
+        <field name="description">Provisión por Beneficios a los Empleados</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d03st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0310" model="eeff.ple">
+        <field name="sequence">40</field>
+        <field name="code">1D0310</field>
+        <field name="description">Otras provisiones</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d03st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0311" model="eeff.ple">
+        <field name="sequence">41</field>
+        <field name="code">1D0311</field>
+        <field name="description">Pasivos por Impuestos a las Ganancias</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d03st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0314" model="eeff.ple">
+        <field name="sequence">42</field>
+        <field name="code">1D0314</field>
+        <field name="description">Otros Pasivos no financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d03st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0315" model="eeff.ple">
+        <field name="sequence">43</field>
+        <field name="code">1D0315</field>
+        <field name="description">Total de Pasivos Corrientes distintos de Pasivos incluidos en Grupos de Activos para su Disposición Clasificados como Mantenidos para la Venta</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d03st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0401" model="eeff.ple">
+        <field name="sequence">46</field>
+        <field name="code">1D0401</field>
+        <field name="description">Otros Pasivos Financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d04st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0411" model="eeff.ple">
+        <field name="sequence">47</field>
+        <field name="code">1D0411</field>
+        <field name="description">Cuentas por pagar comerciales y otras cuentas por pagar</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d04st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0409" model="eeff.ple">
+        <field name="sequence">52</field>
+        <field name="code">1D0409</field>
+        <field name="description">Provisión por Beneficios a los Empleados</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d04st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0406" model="eeff.ple">
+        <field name="sequence">53</field>
+        <field name="code">1D0406</field>
+        <field name="description">Otras provisiones</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d04st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0404" model="eeff.ple">
+        <field name="sequence">54</field>
+        <field name="code">1D0404</field>
+        <field name="description">Pasivos por impuestos diferidos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d04st'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0410" model="eeff.ple">
+        <field name="sequence">55</field>
+        <field name="code">1D0410</field>
+        <field name="description">Otros pasivos no financieros</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d04st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d02st" model="eeff.ple">
+        <field name="sequence">69</field>
+        <field name="code">2D02ST</field>
+        <field name="description">Ganancia (Pérdida) Bruta</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d03st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0302" model="eeff.ple">
+        <field name="sequence">70</field>
+        <field name="code">2D0302</field>
+        <field name="description">Gastos de Ventas y Distribución</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d03st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0301" model="eeff.ple">
+        <field name="sequence">71</field>
+        <field name="code">2D0301</field>
+        <field name="description">Gastos de Administración</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d03st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0407" model="eeff.ple">
+        <field name="sequence">72</field>
+        <field name="code">2D0407</field>
+        <field name="description">Ganancia (Pérdida) de la baja en Activos Financieros medidos al Costo Amortizado</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d03st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0403" model="eeff.ple">
+        <field name="sequence">73</field>
+        <field name="code">2D0403</field>
+        <field name="description">Otros Ingresos Operativos</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d03st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0404" model="eeff.ple">
+        <field name="sequence">74</field>
+        <field name="code">2D0404</field>
+        <field name="description">Otros Gastos Operativos</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d03st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0412" model="eeff.ple">
+        <field name="sequence">75</field>
+        <field name="code">2D0412</field>
+        <field name="description">Otras ganancias (pérdidas)</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d03st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d01st" model="eeff.ple">
+        <field name="sequence">162</field>
+        <field name="code">5D01ST</field>
+        <field name="description">Otro Resultado Integral antes de Impuestos</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0202" model="eeff.ple">
+        <field name="sequence">163</field>
+        <field name="code">5D0202</field>
+        <field name="description">Variación Neta por Coberturas del Flujo de Efectivo</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0208" model="eeff.ple">
+        <field name="sequence">164</field>
+        <field name="code">5D0208</field>
+        <field name="description">Coberturas de inversión neta de negocios en el extranjero</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0203" model="eeff.ple">
+        <field name="sequence">165</field>
+        <field name="code">5D0203</field>
+        <field name="description">Ganancias (Pérdidas) de Inversiones en Instrumentos de Patrimonio al valor razonable</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0204" model="eeff.ple">
+        <field name="sequence">166</field>
+        <field name="code">5D0204</field>
+        <field name="description">Diferencia de Cambio por Conversión de Operaciones en el Extranjero</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0209" model="eeff.ple">
+        <field name="sequence">167</field>
+        <field name="code">5D0209</field>
+        <field name="description">Variación neta de activos no corrientes o grupos de activos mantenidos para la venta</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0206" model="eeff.ple">
+        <field name="sequence">168</field>
+        <field name="code">5D0206</field>
+        <field name="description">Superávit de Revaluación</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0210" model="eeff.ple">
+        <field name="sequence">169</field>
+        <field name="code">5D0210</field>
+        <field name="description">Ganancia (pérdida) actuariales en plan de beneficios definidos</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0211" model="eeff.ple">
+        <field name="sequence">170</field>
+        <field name="code">5D0211</field>
+        <field name="description">Cambios en el valor razonable de pasivos financieros atribuibles a cambios en el riesgo de crédito del pasivo</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d02st'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0128" model="eeff.ple">
+        <field name="sequence">177</field>
+        <field name="code">4D0128</field>
+        <field name="description">Saldo Inicial Reexpresado</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0131'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0129" model="eeff.ple">
+        <field name="sequence">178</field>
+        <field name="code">4D0129</field>
+        <field name="description">Ganancia (Pérdida) Neta del Ejercicio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0131'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0130" model="eeff.ple">
+        <field name="sequence">179</field>
+        <field name="code">4D0130</field>
+        <field name="description">Otro Resultado Integral</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0131'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0228" model="eeff.ple">
+        <field name="sequence">194</field>
+        <field name="code">4D0228</field>
+        <field name="description">Saldo Inicial Reexpresado</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0231'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0229" model="eeff.ple">
+        <field name="sequence">195</field>
+        <field name="code">4D0229</field>
+        <field name="description">Ganancia (Pérdida) Neta del Ejercicio</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0231'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0230" model="eeff.ple">
+        <field name="sequence">196</field>
+        <field name="code">4D0230</field>
+        <field name="description">Otro Resultado Integral</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0231'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d01st" model="eeff.ple">
+        <field name="sequence">237</field>
+        <field name="code">3D01ST</field>
+        <field name="description">Flujos de Efectivo y Equivalente al Efectivo Procedente de (Utilizados en) Actividades de Operación</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0220" model="eeff.ple">
+        <field name="sequence">238</field>
+        <field name="code">3D0220</field>
+        <field name="description">Reembolso de Adelantos de Prestamos y Préstamos Concedidos a Terceros</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0218" model="eeff.ple">
+        <field name="sequence">239</field>
+        <field name="code">3D0218</field>
+        <field name="description">Pérdida de control de subsidiarias u otros negocios</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0209" model="eeff.ple">
+        <field name="sequence">240</field>
+        <field name="code">3D0209</field>
+        <field name="description">Reembolsos recibidos de préstamos a entidades relacionadas</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0201" model="eeff.ple">
+        <field name="sequence">241</field>
+        <field name="code">3D0201</field>
+        <field name="description">Venta de Instrumentos Financieros de Patrimonio o Deuda de Otras Entidades</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0221" model="eeff.ple">
+        <field name="sequence">242</field>
+        <field name="code">3D0221</field>
+        <field name="description">Contratos Derivados (futuro, a término, opciones)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0222" model="eeff.ple">
+        <field name="sequence">243</field>
+        <field name="code">3D0222</field>
+        <field name="description">Venta de Participaciones en Negocios Conjuntos, Neto del Efectivo Desapropiado</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0202" model="eeff.ple">
+        <field name="sequence">244</field>
+        <field name="code">3D0202</field>
+        <field name="description">Venta de Propiedades, Planta y Equipo</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0203" model="eeff.ple">
+        <field name="sequence">245</field>
+        <field name="code">3D0203</field>
+        <field name="description">Venta de Activos Intangibles</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0223" model="eeff.ple">
+        <field name="sequence">246</field>
+        <field name="code">3D0223</field>
+        <field name="description">Venta de Otros Activos de largo plazo</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0231" model="eeff.ple">
+        <field name="sequence">247</field>
+        <field name="code">3D0231</field>
+        <field name="description">Subvenciones del gobierno</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0210" model="eeff.ple">
+        <field name="sequence">248</field>
+        <field name="code">3D0210</field>
+        <field name="description">Intereses Recibidos</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0211" model="eeff.ple">
+        <field name="sequence">249</field>
+        <field name="code">3D0211</field>
+        <field name="description">Dividendos Recibidos</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0225" model="eeff.ple">
+        <field name="sequence">250</field>
+        <field name="code">3D0225</field>
+        <field name="description">Anticipos y Prestamos Concedidos a Terceros</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0232" model="eeff.ple">
+        <field name="sequence">251</field>
+        <field name="code">3D0232</field>
+        <field name="description">Obtener el control de subsidiarias u otros negocios</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0212" model="eeff.ple">
+        <field name="sequence">252</field>
+        <field name="code">3D0212</field>
+        <field name="description">Prestamos concedidos a entidades relacionadas</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0205" model="eeff.ple">
+        <field name="sequence">253</field>
+        <field name="code">3D0205</field>
+        <field name="description">Compra de Instrumentos Financieros de Patrimonio o Deuda de Otras Entidades</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0226" model="eeff.ple">
+        <field name="sequence">254</field>
+        <field name="code">3D0226</field>
+        <field name="description">Contratos Derivados (futuro, a término, opciones)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0219" model="eeff.ple">
+        <field name="sequence">255</field>
+        <field name="code">3D0219</field>
+        <field name="description">Compra de Subsidiarias, Neto del Efectivo Adquirido</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0227" model="eeff.ple">
+        <field name="sequence">256</field>
+        <field name="code">3D0227</field>
+        <field name="description">Compra de Participaciones en Negocios Conjuntos, Neto del Efectivo Adquirido</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0206" model="eeff.ple">
+        <field name="sequence">257</field>
+        <field name="code">3D0206</field>
+        <field name="description">Compra de Propiedades, Planta y Equipo</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0207" model="eeff.ple">
+        <field name="sequence">258</field>
+        <field name="code">3D0207</field>
+        <field name="description">Compra de Activos Intangibles</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0229" model="eeff.ple">
+        <field name="sequence">259</field>
+        <field name="code">3D0229</field>
+        <field name="description">Compra de Otros Activos de largo plazo</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0233" model="eeff.ple">
+        <field name="sequence">260</field>
+        <field name="code">3D0233</field>
+        <field name="description">Impuestos a las ganancias (pagados) reembolsados</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0234" model="eeff.ple">
+        <field name="sequence">261</field>
+        <field name="code">3D0234</field>
+        <field name="description">Otros cobros (pagos) de efectivo relativos a la actividad de inversión</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d02st'))]"/>
+    </record>
+
+    <!-- Nivel 5 -->
+    <record id="eeff_ple_esf_1d0302" model="eeff.ple">
+        <field name="sequence">35</field>
+        <field name="code">1D0302</field>
+        <field name="description">Cuentas por Pagar Comerciales</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0316'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0304" model="eeff.ple">
+        <field name="sequence">36</field>
+        <field name="code">1D0304</field>
+        <field name="description">Otras Cuentas por Pagar</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0316'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0303" model="eeff.ple">
+        <field name="sequence">37</field>
+        <field name="code">1D0303</field>
+        <field name="description">Cuentas por Pagar a Entidades Relacionadas</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0316'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0317" model="eeff.ple">
+        <field name="sequence">38</field>
+        <field name="code">1D0317</field>
+        <field name="description">Ingresos diferidos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0316'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0312" model="eeff.ple">
+        <field name="sequence">44</field>
+        <field name="code">1D0312</field>
+        <field name="description">Pasivos incluidos en Grupos de Activos para su Disposición Clasificados como Mantenidos para la Venta</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0316'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0407" model="eeff.ple">
+        <field name="sequence">48</field>
+        <field name="code">1D0407</field>
+        <field name="description">Cuentas por Pagar Comerciales</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0411'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0408" model="eeff.ple">
+        <field name="sequence">49</field>
+        <field name="code">1D0408</field>
+        <field name="description">Otras Cuentas por Pagar</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0411'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0402" model="eeff.ple">
+        <field name="sequence">50</field>
+        <field name="code">1D0402</field>
+        <field name="description">Cuentas por Pagar a Entidades Relacionadas</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0411'))]"/>
+    </record>
+    <record id="eeff_ple_esf_1d0403" model="eeff.ple">
+        <field name="sequence">51</field>
+        <field name="code">1D0403</field>
+        <field name="description">Ingresos Diferidos</field>
+        <field name="eeff_type">3.1</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_esf_1d0411'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d01st" model="eeff.ple">
+        <field name="sequence">67</field>
+        <field name="code">2D01ST</field>
+        <field name="description">Ingresos de actividades ordinarias</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eerr_2d0201" model="eeff.ple">
+        <field name="sequence">68</field>
+        <field name="code">2D0201</field>
+        <field name="description">Costo de Ventas</field>
+        <field name="eeff_type">3.20</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eerr_2d02st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0103" model="eeff.ple">
+        <field name="sequence">154</field>
+        <field name="code">5D0103</field>
+        <field name="description">Variación Neta por Coberturas del Flujo de Efectivo</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0109" model="eeff.ple">
+        <field name="sequence">155</field>
+        <field name="code">5D0109</field>
+        <field name="description">Coberturas de inversión neta de negocios en el extranjero</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0104" model="eeff.ple">
+        <field name="sequence">156</field>
+        <field name="code">5D0104</field>
+        <field name="description">Ganancias (Pérdidas) de Inversiones en Instrumentos de Patrimonio al valor razonable</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0105" model="eeff.ple">
+        <field name="sequence">157</field>
+        <field name="code">5D0105</field>
+        <field name="description">Diferencia de Cambio por Conversión de Operaciones en el Extranjero</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0110" model="eeff.ple">
+        <field name="sequence">158</field>
+        <field name="code">5D0110</field>
+        <field name="description">Variación neta de activos no corrientes o grupos de activos mantenidos para la venta</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0107" model="eeff.ple">
+        <field name="sequence">159</field>
+        <field name="code">5D0107</field>
+        <field name="description">Superávit de Revaluación</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0111" model="eeff.ple">
+        <field name="sequence">160</field>
+        <field name="code">5D0111</field>
+        <field name="description">Ganancia (pérdida) actuariales en plan de beneficios definidos</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_eri_5d0112" model="eeff.ple">
+        <field name="sequence">161</field>
+        <field name="code">5D0112</field>
+        <field name="description">Cambios en el valor razonable de pasivos financieros atribuibles a cambios en el riesgo de crédito del pasivo</field>
+        <field name="eeff_type">3.24</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_eri_5d01st'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0101" model="eeff.ple">
+        <field name="sequence">174</field>
+        <field name="code">4D0101</field>
+        <field name="description">Saldos al 1ero. de enero de</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0128'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0126" model="eeff.ple">
+        <field name="sequence">175</field>
+        <field name="code">4D0126</field>
+        <field name="description">Cambios en Políticas Contables</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0128'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0127" model="eeff.ple">
+        <field name="sequence">176</field>
+        <field name="code">4D0127</field>
+        <field name="description">Corrección de Errores</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0128'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0201" model="eeff.ple">
+        <field name="sequence">191</field>
+        <field name="code">4D0201</field>
+        <field name="description">Saldos al 1ero. de enero de</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0228'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0226" model="eeff.ple">
+        <field name="sequence">192</field>
+        <field name="code">4D0226</field>
+        <field name="description">Cambios en Políticas Contables</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0228'))]"/>
+    </record>
+    <record id="eeff_ple_ecpn_4d0227" model="eeff.ple">
+        <field name="sequence">193</field>
+        <field name="code">4D0227</field>
+        <field name="description">Corrección de Errores</field>
+        <field name="eeff_type">3.19</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0228'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0608" model="eeff.ple">
+        <field name="sequence">222</field>
+        <field name="code">3D0608</field>
+        <field name="description">Otros ajustes para conciliar la ganancia (pérdida) del ejercicio</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0835" model="eeff.ple">
+        <field name="sequence">223</field>
+        <field name="code">3D0835</field>
+        <field name="description">(Aumento) disminución de cuentas por cobrar comerciales y otras cuentas por cobrar</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0804" model="eeff.ple">
+        <field name="sequence">224</field>
+        <field name="code">3D0804</field>
+        <field name="description">(Aumento) Disminución en Inventarios</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0813" model="eeff.ple">
+        <field name="sequence">225</field>
+        <field name="code">3D0813</field>
+        <field name="description">(Aumento) Disminución en Activos Biológicos</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0818" model="eeff.ple">
+        <field name="sequence">226</field>
+        <field name="code">3D0818</field>
+        <field name="description">(Aumento) Disminución de otros activos no financieros</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0833" model="eeff.ple">
+        <field name="sequence">227</field>
+        <field name="code">3D0833</field>
+        <field name="description">Aumento (disminución) de cuentas por pagar comerciales y otras cuentas por pagar</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0829" model="eeff.ple">
+        <field name="sequence">228</field>
+        <field name="code">3D0829</field>
+        <field name="description">Aumento (Disminución) de Provisión por Beneficios a los Empleados</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0815" model="eeff.ple">
+        <field name="sequence">229</field>
+        <field name="code">3D0815</field>
+        <field name="description">Aumento (Disminución) de Otras Provisiones</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0830" model="eeff.ple">
+        <field name="sequence">230</field>
+        <field name="code">3D0830</field>
+        <field name="description">Total de ajustes por conciliación de ganancias (pérdidas)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0121" model="eeff.ple">
+        <field name="sequence">231</field>
+        <field name="code">3D0121</field>
+        <field name="description">Flujos de efectivo y equivalente al efectivo procedente de (utilizados en) operaciones</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0103" model="eeff.ple">
+        <field name="sequence">232</field>
+        <field name="code">3D0103</field>
+        <field name="description">Intereses recibidos (no incluidos en la Actividad de Inversión)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0107" model="eeff.ple">
+        <field name="sequence">233</field>
+        <field name="code">3D0107</field>
+        <field name="description">Intereses pagados (no incluidos en la Actividad de Financiación)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0111" model="eeff.ple">
+        <field name="sequence">234</field>
+        <field name="code">3D0111</field>
+        <field name="description">Dividendos Recibidos (no incluidos en la Actividad de Inversión)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0116" model="eeff.ple">
+        <field name="sequence">235</field>
+        <field name="code">3D0116</field>
+        <field name="description">Dividendos pagados (no incluidos en la Actividad de Financiación)</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0120" model="eeff.ple">
+        <field name="sequence">236</field>
+        <field name="code">3D0120</field>
+        <field name="description">Impuestos a las ganancias (pagados) reembolsados</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemi_3d01st'))]"/>
+    </record>
+
+    <!-- Nivel 6 -->
+    <record id="eeff_ple_efemi_3d0611" model="eeff.ple">
+        <field name="sequence">209</field>
+        <field name="code">3D0611</field>
+        <field name="description">Gasto por Intereses</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0627" model="eeff.ple">
+        <field name="sequence">210</field>
+        <field name="code">3D0627</field>
+        <field name="description">Ingreso por Intereses</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0628" model="eeff.ple">
+        <field name="sequence">211</field>
+        <field name="code">3D0628</field>
+        <field name="description">Ingreso por Dividendos</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0629" model="eeff.ple">
+        <field name="sequence">212</field>
+        <field name="code">3D0629</field>
+        <field name="description">Pérdida (Ganancia) por Diferencias de Cambio no realizadas</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0620" model="eeff.ple">
+        <field name="sequence">213</field>
+        <field name="code">3D0620</field>
+        <field name="description">Gasto por Impuestos a las Ganancias</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0610" model="eeff.ple">
+        <field name="sequence">214</field>
+        <field name="code">3D0610</field>
+        <field name="description">Pérdidas por Deterioro de Valor (Reversiones de Pérdidas por Deterioro de Valor) reconocidas en el Resultado del Ejercicio</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0602" model="eeff.ple">
+        <field name="sequence">215</field>
+        <field name="code">3D0602</field>
+        <field name="description">Depreciación, Amortización y Agotamiento</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0631" model="eeff.ple">
+        <field name="sequence">216</field>
+        <field name="code">3D0631</field>
+        <field name="description">Pérdidas (Ganancias) por Valor Razonable</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0632" model="eeff.ple">
+        <field name="sequence">217</field>
+        <field name="code">3D0632</field>
+        <field name="description">Pérdida (Ganancias) por la Disposición de Activos no Corrientes Mantenidas para la Venta</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0634" model="eeff.ple">
+        <field name="sequence">218</field>
+        <field name="code">3D0634</field>
+        <field name="description">Diferencia entre el importe en libros de los activos distribuidos y el importe en libros del dividendo a pagar</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0635" model="eeff.ple">
+        <field name="sequence">219</field>
+        <field name="code">3D0635</field>
+        <field name="description">Pérdida (ganancia) en venta de propiedades de inversión</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0605" model="eeff.ple">
+        <field name="sequence">220</field>
+        <field name="code">3D0605</field>
+        <field name="description">Pérdida (Ganancia) en Venta de Propiedades, Planta y Equipo</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+    <record id="eeff_ple_efemi_3d0618" model="eeff.ple">
+        <field name="sequence">221</field>
+        <field name="code">3D0618</field>
+        <field name="description">Pérdida (Ganancia) en Venta de Activos Intangibles</field>
+        <field name="eeff_type">3.25</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_ecpn_4d0227'))]"/>
+    </record>
+
+    <!-- 3.18 EFEMD Método Directo (registros especiales) -->
+    <record id="eeff_ple_efemd_3d0121" model="eeff.ple">
+        <field name="sequence">98</field>
+        <field name="code">3D0121</field>
+        <field name="description">Flujos de efectivo y equivalente al efectivo procedente de (utilizados en) operaciones</field>
+        <field name="eeff_type">3.18</field>
+    </record>
+    <record id="eeff_ple_efemd_3d0101" model="eeff.ple">
+        <field name="sequence">88</field>
+        <field name="code">3D0101</field>
+        <field name="description">Venta de Bienes y Prestación de Servicios</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0112" model="eeff.ple">
+        <field name="sequence">89</field>
+        <field name="code">3D0112</field>
+        <field name="description">Regalías, cuotas, comisiones, otros ingresos de actividades ordinarias</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0110" model="eeff.ple">
+        <field name="sequence">90</field>
+        <field name="code">3D0110</field>
+        <field name="description">Contratos mantenidos con propósito de intermediación o para negociar</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0117" model="eeff.ple">
+        <field name="sequence">91</field>
+        <field name="code">3D0117</field>
+        <field name="description">Arrendamiento y posterior venta de esos activos</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0104" model="eeff.ple">
+        <field name="sequence">92</field>
+        <field name="code">3D0104</field>
+        <field name="description">Otros cobros de efectivo relativos a la actividad de operación</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0109" model="eeff.ple">
+        <field name="sequence">93</field>
+        <field name="code">3D0109</field>
+        <field name="description">Proveedores de Bienes y Servicios</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0118" model="eeff.ple">
+        <field name="sequence">94</field>
+        <field name="code">3D0118</field>
+        <field name="description">Contratos mantenidos con propósito de intermediación o para negociar</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0105" model="eeff.ple">
+        <field name="sequence">95</field>
+        <field name="code">3D0105</field>
+        <field name="description">Pagos a y por cuenta de los empleados</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0119" model="eeff.ple">
+        <field name="sequence">96</field>
+        <field name="code">3D0119</field>
+        <field name="description">Elaboración o adquisición de activos para arrendar y otros mantenidos para la venta</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0108" model="eeff.ple">
+        <field name="sequence">97</field>
+        <field name="code">3D0108</field>
+        <field name="description">Otros Pagos de Efectivo Relativos a la Actividad de Operación</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0121'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d01st" model="eeff.ple">
+        <field name="sequence">105</field>
+        <field name="code">3D01ST</field>
+        <field name="description">Flujos de Efectivo y Equivalente al Efectivo Procedente de (Utilizados en) Actividades de Operación</field>
+        <field name="eeff_type">3.18</field>
+    </record>
+    <record id="eeff_ple_efemd_3d0103" model="eeff.ple">
+        <field name="sequence">99</field>
+        <field name="code">3D0103</field>
+        <field name="description">Intereses recibidos (no incluidos en la Actividad de Inversión)</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0107" model="eeff.ple">
+        <field name="sequence">100</field>
+        <field name="code">3D0107</field>
+        <field name="description">Intereses pagados (no incluidos en la Actividad de Financiación)</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0111" model="eeff.ple">
+        <field name="sequence">101</field>
+        <field name="code">3D0111</field>
+        <field name="description">Dividendos Recibidos (no incluidos en la Actividad de Inversión)</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0116" model="eeff.ple">
+        <field name="sequence">102</field>
+        <field name="code">3D0116</field>
+        <field name="description">Dividendos pagados(no incluidos en la Actividad de Financiación)</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0120" model="eeff.ple">
+        <field name="sequence">103</field>
+        <field name="code">3D0120</field>
+        <field name="description">Impuestos a las ganancias (pagados) reembolsados</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0122" model="eeff.ple">
+        <field name="sequence">104</field>
+        <field name="code">3D0122</field>
+        <field name="description">Otros cobros (pagos) de efectivo</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d02st" model="eeff.ple">
+        <field name="sequence">130</field>
+        <field name="code">3D02ST</field>
+        <field name="description">Flujos de Efectivo y Equivalente al Efectivo Procedente de (Utilizados en) Actividades de Inversión</field>
+        <field name="eeff_type">3.18</field>
+    </record>
+    <record id="eeff_ple_efemd_3d0220" model="eeff.ple">
+        <field name="sequence">106</field>
+        <field name="code">3D0220</field>
+        <field name="description">Reembolso de Adelantos de Prestamos y Préstamos Concedidos a Terceros</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0218" model="eeff.ple">
+        <field name="sequence">107</field>
+        <field name="code">3D0218</field>
+        <field name="description">Pérdida de control de subsidiarias u otros negocios</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0209" model="eeff.ple">
+        <field name="sequence">108</field>
+        <field name="code">3D0209</field>
+        <field name="description">Reembolsos recibidos de préstamos a entidades relacionadas</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0201" model="eeff.ple">
+        <field name="sequence">109</field>
+        <field name="code">3D0201</field>
+        <field name="description">Venta de Instrumentos Financieros de Patrimonio o Deuda de Otras Entidades</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0221" model="eeff.ple">
+        <field name="sequence">110</field>
+        <field name="code">3D0221</field>
+        <field name="description">Contratos Derivados (futuro, a término, opciones)</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0222" model="eeff.ple">
+        <field name="sequence">111</field>
+        <field name="code">3D0222</field>
+        <field name="description">Venta de Participaciones en Negocios Conjuntos, Neto del Efectivo Desapropiado</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0202" model="eeff.ple">
+        <field name="sequence">112</field>
+        <field name="code">3D0202</field>
+        <field name="description">Venta de Propiedades, Planta y Equipo</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0203" model="eeff.ple">
+        <field name="sequence">113</field>
+        <field name="code">3D0203</field>
+        <field name="description">Venta de Activos Intangibles</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0223" model="eeff.ple">
+        <field name="sequence">114</field>
+        <field name="code">3D0223</field>
+        <field name="description">Venta de Otros Activos de largo plazo</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0231" model="eeff.ple">
+        <field name="sequence">115</field>
+        <field name="code">3D0231</field>
+        <field name="description">Subvenciones del gobierno</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0210" model="eeff.ple">
+        <field name="sequence">116</field>
+        <field name="code">3D0210</field>
+        <field name="description">Intereses Recibidos</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0211" model="eeff.ple">
+        <field name="sequence">117</field>
+        <field name="code">3D0211</field>
+        <field name="description">Dividendos Recibidos</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0225" model="eeff.ple">
+        <field name="sequence">118</field>
+        <field name="code">3D0225</field>
+        <field name="description">Anticipos y Prestamos Concedidos a Terceros</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0232" model="eeff.ple">
+        <field name="sequence">119</field>
+        <field name="code">3D0232</field>
+        <field name="description">Obtener el control de subsidiarias u otros negocios</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0212" model="eeff.ple">
+        <field name="sequence">120</field>
+        <field name="code">3D0212</field>
+        <field name="description">Prestamos concedidos a entidades relacionadas</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0205" model="eeff.ple">
+        <field name="sequence">121</field>
+        <field name="code">3D0205</field>
+        <field name="description">Compra de Instrumentos Financieros de Patrimonio o Deuda de Otras Entidades</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0226" model="eeff.ple">
+        <field name="sequence">122</field>
+        <field name="code">3D0226</field>
+        <field name="description">Contratos Derivados (futuro, a término, opciones)</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0219" model="eeff.ple">
+        <field name="sequence">123</field>
+        <field name="code">3D0219</field>
+        <field name="description">Compra de Subsidiarias, Neto del Efectivo Adquirido</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0227" model="eeff.ple">
+        <field name="sequence">124</field>
+        <field name="code">3D0227</field>
+        <field name="description">Compra de Participaciones en Negocios Conjuntos, Neto del Efectivo Adquirido</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0206" model="eeff.ple">
+        <field name="sequence">125</field>
+        <field name="code">3D0206</field>
+        <field name="description">Compra de Propiedades, Planta y Equipo</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0207" model="eeff.ple">
+        <field name="sequence">126</field>
+        <field name="code">3D0207</field>
+        <field name="description">Compra de Activos Intangibles</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0229" model="eeff.ple">
+        <field name="sequence">127</field>
+        <field name="code">3D0229</field>
+        <field name="description">Compra de Otros Activos de largo plazo</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0233" model="eeff.ple">
+        <field name="sequence">128</field>
+        <field name="code">3D0233</field>
+        <field name="description">Impuestos a las ganancias (pagados) reembolsados</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0234" model="eeff.ple">
+        <field name="sequence">129</field>
+        <field name="code">3D0234</field>
+        <field name="description">Otros cobros (pagos) de efectivo relativos a la actividad de inversión</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d02st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d03st" model="eeff.ple">
+        <field name="sequence">147</field>
+        <field name="code">3D03ST</field>
+        <field name="description">Flujos de Efectivo y Equivalente al Efectivo Procedente de (Utilizados en) Actividades de Financiación</field>
+        <field name="eeff_type">3.18</field>
+    </record>
+    <record id="eeff_ple_efemd_3d0325" model="eeff.ple">
+        <field name="sequence">131</field>
+        <field name="code">3D0325</field>
+        <field name="description">Obtención de Préstamos</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0319" model="eeff.ple">
+        <field name="sequence">132</field>
+        <field name="code">3D0319</field>
+        <field name="description">Préstamos de entidades relacionadas</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0326" model="eeff.ple">
+        <field name="sequence">133</field>
+        <field name="code">3D0326</field>
+        <field name="description">Cambios en las participaciones en la propiedad de subsidiarias que no resultan en pérdida de control</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0327" model="eeff.ple">
+        <field name="sequence">134</field>
+        <field name="code">3D0327</field>
+        <field name="description">Emisión de Acciones</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0328" model="eeff.ple">
+        <field name="sequence">135</field>
+        <field name="code">3D0328</field>
+        <field name="description">Emisión de Otros Instrumentos de Patrimonio</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0329" model="eeff.ple">
+        <field name="sequence">136</field>
+        <field name="code">3D0329</field>
+        <field name="description">Subvenciones del gobierno</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0330" model="eeff.ple">
+        <field name="sequence">137</field>
+        <field name="code">3D0330</field>
+        <field name="description">Amortización o pago de Préstamos</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0322" model="eeff.ple">
+        <field name="sequence">138</field>
+        <field name="code">3D0322</field>
+        <field name="description">Pasivos por Arrendamiento Financiero</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0321" model="eeff.ple">
+        <field name="sequence">139</field>
+        <field name="code">3D0321</field>
+        <field name="description">Préstamos de entidades relacionadas</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0331" model="eeff.ple">
+        <field name="sequence">140</field>
+        <field name="code">3D0331</field>
+        <field name="description">Cambios en las participaciones en la propiedad de subsidiarias que no resultan en pérdida de control</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0310" model="eeff.ple">
+        <field name="sequence">141</field>
+        <field name="code">3D0310</field>
+        <field name="description">Recompra o Rescate de Acciones de la Entidad (Acciones en Cartera)</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0323" model="eeff.ple">
+        <field name="sequence">142</field>
+        <field name="code">3D0323</field>
+        <field name="description">Adquisición de Otras Participaciones en el Patrimonio</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0311" model="eeff.ple">
+        <field name="sequence">143</field>
+        <field name="code">3D0311</field>
+        <field name="description">Intereses pagados</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0305" model="eeff.ple">
+        <field name="sequence">144</field>
+        <field name="code">3D0305</field>
+        <field name="description">Dividendos pagados</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0332" model="eeff.ple">
+        <field name="sequence">145</field>
+        <field name="code">3D0332</field>
+        <field name="description">Impuestos a las ganancias (pagados) reembolsados</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0333" model="eeff.ple">
+        <field name="sequence">146</field>
+        <field name="code">3D0333</field>
+        <field name="description">Otros cobros (pagos) de efectivo relativos a la actividad de financiación</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d0401" model="eeff.ple">
+        <field name="sequence">148</field>
+        <field name="code">3D0401</field>
+        <field name="description">Aumento (Disminución) Neto de Efectivo y Equivalente al Efectivo, antes de las Variaciones en las Tasas de Cambio</field>
+        <field name="eeff_type">3.18</field>
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d03st'))]"/>
+    </record>
+
+    <!-- Relaciones padre especiales 3.18 -->
+    <record id="eeff_ple_efemd_3d0121" model="eeff.ple">
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d01st'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d01st" model="eeff.ple">
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0401'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d02st" model="eeff.ple">
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0401'))]"/>
+    </record>
+    <record id="eeff_ple_efemd_3d03st" model="eeff.ple">
+        <field name="parent_ids" eval="[(4, ref('eeff_ple_efemd_3d0401'))]"/>
+    </record>
+
+</odoo>

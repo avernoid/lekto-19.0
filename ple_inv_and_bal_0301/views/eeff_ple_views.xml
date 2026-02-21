@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="eeff_ple_view_form" model="ir.ui.view">
+        <field name="name">eeff.ple.view.form</field>
+        <field name="model">eeff.ple</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="description"/>
+                        <field name="eeff_type"/>
+                        <field name="parent_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="eeff_ple_view_tree" model="ir.ui.view">
+        <field name="name">eeff.ple.view.list</field>
+        <field name="model">eeff.ple</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="description"/>
+                <field name="eeff_type"/>
+                <field name="parent_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="eeff_ple_view_search" model="ir.ui.view">
+        <field name="name">eeff.ple.view.search</field>
+        <field name="model">eeff.ple</field>
+        <field name="arch" type="xml">
+            <search>
+                <field string="Código" name="code"/>
+                <field string="Descripción" name="description"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

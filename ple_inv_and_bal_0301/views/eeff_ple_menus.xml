@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <record id="action_eeff_ple" model="ir.actions.act_window">
+        <field name="name">Catálogo EEFF PLE Sunat</field>
+        <field name="res_model">eeff.ple</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="eeff_ple_menu_localization"
+              name="Catálogo EEFF PLE Sunat"
+              parent="account.account_account_menu"
+              action="action_eeff_ple"
+    />
+
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ple_update_eeff_wizard_form" model="ir.ui.view">
+        <field name="name">ple.update.eeff.wizard.form</field>
+        <field name="model">ple.update.eeff.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Asignar Rubros EEFF a Cuentas">
+                <group>
+                    <group>
+                        <field name="company_id" readonly="1"/>
+                    </group>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    <p>Esta acción asignará el rubro EEFF (campo <strong>eeff_ple_id</strong>) a las cuentas contables de la compañía seleccionada.</p>
+                    <p>Se construirá el XML ID dinámicamente como: <code>{prefix}.{company_id}_{suffix}</code></p>
+                </div>
+                <field name="config_ids">
+                    <list>
+                        <field name="name"/>
+                        <field name="account_suffix"/>
+                        <field name="eeff_ple_id"/>
+                    </list>
+                </field>
+                <footer>
+                    <button string="Aplicar" name="action_execute" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

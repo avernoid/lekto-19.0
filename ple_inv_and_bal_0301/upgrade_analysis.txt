@@ -1,0 +1,72 @@
+---Models in module 'ple_inv_and_bal_0301'---
+---Fields in module 'ple_inv_and_bal_0301'---
+---XML records in module 'ple_inv_and_bal_0301'---
+UPD ir.ui.view: ple_inv_and_bal_0301.account_account_form_view_inherit_ple_inv_and_bal_0301 --> ple_inv_and_bal_0301.account_account_view_form_inherit_ple_inv_and_bal_0301
+UPD ir.ui.view: ple_inv_and_bal_0301.account_move_form_view_inherit_ple_inv_and_bal_0301 --> ple_inv_and_bal_0301.account_move_view_form_inherit_ple_inv_and_bal_0301
+UPD ir.ui.view: ple_inv_and_bal_0301.account_move_line_tree_view_inherit_ple_inv_and_bal_0301_one --> ple_inv_and_bal_0301.account_move_line_view_tree_inherit_ple_inv_and_bal_0301_one
+UPD ir.ui.view: ple_inv_and_bal_0301.account_move_line_tree_view_inherit_ple_inv_and_bal_0301_two --> ple_inv_and_bal_0301.account_move_line_view_tree_inherit_ple_inv_and_bal_0301_two
+UPD ir.ui.view: ple_inv_and_bal_0301.eeff_ple_form_view --> ple_inv_and_bal_0301.eeff_ple_view_form
+UPD ir.ui.view: ple_inv_and_bal_0301.eeff_ple_tree_view --> ple_inv_and_bal_0301.eeff_ple_view_tree
+UPD ir.ui.view: ple_inv_and_bal_0301.eeff_ple_search_view --> ple_inv_and_bal_0301.eeff_ple_view_search
+UPD ir.ui.view: ple_inv_and_bal_0301.ple_inv_bal_line_initial_balances_form_view --> ple_inv_and_bal_0301.ple_inv_bal_line_initial_balances_view_form
+UPD ir.ui.view: ple_inv_and_bal_0301.ple_inv_bal_line_initial_balances_tree_view --> ple_inv_and_bal_0301.ple_inv_bal_line_initial_balances_view_tree
+UPD ir.ui.view: ple_inv_and_bal_0301.ple_inv_and_bal_301_sale_form_view --> ple_inv_and_bal_0301.ple_report_inv_bal_view_form
+UPD ir.ui.view: ple_inv_and_bal_0301.ple_report_inv_bal_tree_view --> ple_inv_and_bal_0301.ple_report_inv_bal_view_tree
+---Reports in the t-field="company.partner_id.name"---
+----------------------------------------------------------------
+DEPENDS [ ple_sale_book ]
+model:  
+field:
+xml_id:
+
+DEPENDS [ l10n_pe_catalog ]
+model:  
+field:
+xml_id:
+
+----------------------------------------------------------------
+MIGRATION TO V19.0 (Feb 2026)
+
+### Security
+- [NEW] `security/ir_rule.xml`: Added multi-company record rule `ple_report_inv_bal_company_rule`
+  with domain `[('company_id', 'in', company_ids)]` to isolate records per company.
+- Registered `security/ir_rule.xml` in manifest `data` list.
+
+### Model Changes (ple_inv_bal.py)
+- [CHANGED] `_description`: from 'Estado de Situación financiera' to 'Statement of Financial Position'.
+- [NEW] `_order = 'date_start desc, id desc'`: Records now sorted by most recent period first.
+- [CHANGED] `_sql_constraints` replaced with `models.Constraint` (Odoo 19 API):
+  `_check_dates = models.Constraint('CHECK(date_end >= date_start)', ...)`.
+- [CHANGED] All field labels (string) translated to English for i18n compliance:
+  - `date_start` → 'Start Date'
+  - `date_end` → 'End Date'
+  - `state_send` → 'Submission Status'
+  - `line_ids` → 'Report Lines'
+  - `financial_statements_catalog` → 'Financial Statements Catalog'
+  - `eeff_presentation_opportunity` → 'EEFF Presentation Opportunity'
+  - `txt_filename` → 'TXT Filename'
+  - `txt_binary` → 'TXT Report 3.1'
+  - `pdf_filename` → 'PDF Filename'
+  - `pdf_binary` → 'PDF Report 3.1'
+- [NEW] Added `help` attribute to all user-facing fields for self-documentation.
+- [FIXED] Removed duplicate `eeff_presentation_opportunity` field definition (was defined twice,
+  first as `default='01'` at line 34, then full definition at line 57).
+
+### Manifest (__manifest__.py)
+- [CHANGED] Updated to Ganemo template format with all required keys:
+  `summary`, `description`, `maintainer`, `company`, `images`, `currency`, `price`, `module_type`.
+- [CHANGED] `icon` path extension from `.svg` to `.png` (per Ganemo convention).
+- [NEW] `images` key: `['static/description/banner.png']`.
+- [NEW] `license`: 'OPL-1'.
+- [NEW] `price`: 35.00 USD.
+
+### Branding & Documentation
+- [NEW] `static/description/icon.svg`: Custom SVG icon (balanced-columns financial document).
+- [NEW] `static/description/banner.svg`: 880x440 promotional banner with embedded icon.
+- [NEW] `static/description/index.html`: Full documentation page with features, setup guide,
+  QA scenarios, FAQ, and contact sections.
+- [NEW] `README.md`: Professional readme with overview, configuration, usage, and technical notes.
+- [NEW] `LICENSE.txt`: OPL-1 license file copied from template.
+
+### Translations
+- [NEW] `i18n/es.po`: Spanish translations for all new English labels and help strings.

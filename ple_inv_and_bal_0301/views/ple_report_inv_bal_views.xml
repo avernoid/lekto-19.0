@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="ple_report_inv_bal_view_form" model="ir.ui.view">
+        <field name="name">ple.report.inv.bal.view.form</field>
+        <field name="model">ple.report.inv.bal</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_generate_excel" 
+                            string="Generar Reporte" 
+                            type="object" 
+                            invisible="state != 'draft'"/>
+
+                    <button name="action_generate_initial_balances_301" 
+                            string="Calcular saldo inicial" 
+                            type="object"
+                            invisible="state != 'draft'" />
+
+                    <button name="action_close" 
+                            string="Declarar a SUNAT" 
+                            invisible="state != 'load'" 
+                            type="object"/>
+
+                    <button name="action_rollback" 
+                            string="Regresar a Borrador" 
+                            invisible="state not in ['load','closed']"
+                            type="object"/>
+
+                    <field name="state" 
+                            widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <label for="date_start" string="Periodo"/>
+                            <div class="d-flex align-items-center">
+                                <field name="date_start" class="mx-2" nolabel="1" placeholder="Inicio"/>
+                                <span class="mx-2">→</span>
+                                <field name="date_end" class="mx-2" nolabel="1" placeholder="Fin"/>
+                            </div>
+                            <field name="state_send"/>
+                            <field name="financial_statements_catalog"/>
+                            <field name="eeff_presentation_opportunity"/>
+                        </group>
+                        <group string="Reportes" name="ple_inv_bal">
+                            <field name="xls_filename" invisible="1"/>
+                            <label string="Reporte Excel" for="xls_binary"/>
+                            <field name="xls_binary" filename="xls_filename" readonly="1" nolabel="1"/>
+                            <field name="txt_filename" invisible="1"/>
+                            <label string="Reporte .TXT 3.1" for="txt_binary"/>
+                            <field name="txt_binary" filename="txt_filename" readonly="1" nolabel="1"/>
+                            <field name="pdf_filename" invisible="1"/>
+                            <label string="Reporte .PDF 3.1" for="pdf_binary"/>
+                            <field name="pdf_binary" filename="pdf_filename" readonly="1" nolabel="1"/>
+                            <field name="date_ple"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Saldo inicial" name="line_ids">
+                            <field name="line_initial_ids"/>
+                        </page>
+                    </notebook>
+                    <field name="error_dialog" class="errorbox" invisible="error_dialog == False"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ple_report_inv_bal_view_tree" model="ir.ui.view">
+        <field name="name">ple.report.inv.bal.view.list</field>
+        <field name="model">ple.report.inv.bal</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="company_id"/>
+                <field name="date_ple"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ple_report_inv_bal_view_search" model="ir.ui.view">
+        <field name="name">ple.report.inv.bal.view.search</field>
+        <field name="model">ple.report.inv.bal</field>
+        <field name="arch" type="xml">
+            <search string="Buscar EEFF 3.1">
+                <field name="company_id"/>
+                <field name="date_start"/>
+                <separator/>
+                <filter name="filter_draft" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_load" string="Generado" domain="[('state', '=', 'load')]"/>
+                <filter name="filter_closed" string="Declarado" domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter name="groupby_company" string="Compañía" context="{'group_by': 'company_id'}"/>
+                <filter name="groupby_state" string="Estado" context="{'group_by': 'state'}"/>
+                <filter name="groupby_period" string="Periodo" context="{'group_by': 'date_start:month'}"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

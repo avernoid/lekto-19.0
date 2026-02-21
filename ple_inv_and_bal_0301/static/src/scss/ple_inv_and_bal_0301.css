@@ -1,0 +1,144 @@
+/* ===== PLE 3.1 Balance Sheet PDF Report ===== */
+
+/* --- Header --- */
+.title_0301 {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+}
+
+.subtitle_0301 {
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+}
+
+.subtitle_0301 div {
+    display: inline-block;
+}
+
+/* --- NUCLEAR BORDER RESET: kill every single border --- */
+.ple_wrapper,
+.ple_wrapper td,
+.ple_wrapper th,
+.ple_wrapper tbody,
+.ple_table,
+.ple_table td,
+.ple_table th,
+.ple_table tr,
+.ple_table tbody,
+.page table,
+.page table td,
+.page table th,
+.page table tr,
+.page table tbody {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    outline: none !important;
+}
+
+/* --- Wrapper: two-column layout with gap, no lines --- */
+.ple_wrapper {
+    width: 100%;
+    border-collapse: separate !important;
+    border-spacing: 24px 0;
+}
+
+.ple_wrapper>tbody>tr>td {
+    vertical-align: top;
+    width: 50%;
+    padding: 0;
+}
+
+/* --- Inner data tables --- */
+.ple_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+/* Column widths: description 78%, amount 22% */
+.ple_table td:first-child {
+    width: 78%;
+}
+
+.ple_table td:last-child {
+    width: 22%;
+    white-space: nowrap;
+}
+
+/* Section header: ACTIVO, PASIVO Y PATRIMONIO */
+.ple_section_header td {
+    padding: 4px 2px;
+    font-weight: bold;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+/* Sub-section: ACTIVO CORRIENTE, etc. */
+.ple_subsection_header td {
+    padding: 4px 2px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* Normal data row */
+.ple_data_row td {
+    padding: 2px 2px;
+}
+
+.ple_data_row td:last-child {
+    text-align: right;
+}
+
+/* Sub-detail row (Level 4) */
+.ple_subdetail_row td {
+    padding: 1px 2px 1px 16px;
+    font-size: 11px;
+    font-style: italic;
+    color: #555;
+}
+
+.ple_subdetail_row td:last-child {
+    text-align: right;
+    padding-left: 2px;
+}
+
+/* --- ONLY borders: horizontal line on the AMOUNT CELL of totals --- */
+/* Subtotal: border only on the amount (last) cell */
+.ple_subtotal_row td:first-child {
+    padding: 3px 2px;
+    font-weight: bold;
+}
+
+.ple_subtotal_row td:last-child {
+    padding: 3px 2px;
+    text-align: right;
+    font-weight: bold;
+    border-top: 1px solid #333 !important;
+}
+
+/* Grand total: double border only on the amount (last) cell */
+.ple_grandtotal_row td:first-child {
+    padding: 4px 2px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.ple_grandtotal_row td:last-child {
+    padding: 4px 2px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 13px;
+    border-top: 2px solid #333 !important;
+    border-bottom: 2px double #333 !important;
+}
+
+/* Spacer */
+.ple_spacer td {
+    padding: 4px 0;
+}

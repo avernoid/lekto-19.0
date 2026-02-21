@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_account_view_form_inherit_ple_inv_and_bal_0301" model="ir.ui.view">
+        <field name="name">account.account.view.form.inherit.ple_inv_and_bal_0301</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="eeff_ple_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
