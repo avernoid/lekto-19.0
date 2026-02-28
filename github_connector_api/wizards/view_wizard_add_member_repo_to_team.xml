@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="view_wizard_member_repo_team_form" model="ir.ui.view">
+        <field name="model">wizard.member.repo.team</field>
+        <field name="arch" type="xml">
+            <form>
+                <group >
+                    
+                    <field 
+                        name="add_oldteam_id" 
+                        widget="many2one_tags" 
+                        options="{'no_create': True, 'no_edit': True, 'delete': False, 'no_open': True}"/>
+                    
+                    <field
+                        name="wizard_not_partner_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True, 'no_edit': True, 'delete': False}"
+                    />
+                    <field
+                        name="wizard_partner_ids"
+                        widget="many2many_tags"  
+                        options="{'no_create': True, 'no_edit': True, 'delete': False}"
+                    />
+                    <field
+                        name="wizard_not_repository_ids"  
+                        options="{'no_create': True, 'no_edit': True, 'delete': False}"
+                        widget="many2many_tags"
+                    />
+
+                    <field
+                        name="wizard_repository_ids"  
+                        options="{'no_create': True, 'no_edit': True, 'delete': False}"
+                        widget="many2many_tags"
+                    />
+                   
+                </group>
+                <footer>
+                    <button
+                        name="button_add_member_repo_to_team"
+                        string="Agregar al equipo"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

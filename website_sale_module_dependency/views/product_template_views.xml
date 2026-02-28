@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- product.template form: Module Dependencies tab                -->
+    <!-- ============================================================ -->
+    <record id="product_template_form_view_dependency" model="ir.ui.view">
+        <field name="name">product.template.form.module.dependency</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Add is_odoo_module checkbox in the boolean row (Sales / Purchase) -->
+            <xpath expr="//div[@name='options']" position="inside">
+                <span class="d-inline-flex">
+                    <field name="is_odoo_module"/>
+                    <label for="is_odoo_module"/>
+                </span>
+            </xpath>
+
+
+            <!-- Add Module Dependencies tab -->
+            <xpath expr="//page[@name='sales']" position="after">
+                <page string="Module Dependencies"
+                      name="module_dependencies"
+                      invisible="not is_odoo_module">
+                    <group>
+                        <group string="Module Info">
+                            <field name="technical_module_name"
+                                   placeholder="e.g. github_connector_api"/>
+                            <field name="total_price_with_deps"
+                                   widget="monetary"/>
+                            <field name="dependency_count"/>
+                        </group>
+                    </group>
+                    <separator string="Dependencies"/>
+                    <field name="dependency_ids"
+                           widget="many2many_tags"
+                           domain="[('is_odoo_module', '=', True), ('id', '!=', id)]"
+                           context="{'default_is_odoo_module': True}"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

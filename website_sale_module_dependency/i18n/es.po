@@ -1,0 +1,200 @@
+﻿# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * website_sale_module_dependency
+#
+# Translators:
+# Ganemo <ayuda@ganemo.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-20 00:00+0000\n"
+"PO-Revision-Date: 2026-02-20 00:00+0000\n"
+"Last-Translator: Ganemo <ayuda@ganemo.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__is_odoo_module
+msgid "Is Odoo Module"
+msgstr "Es un Módulo Odoo"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__is_odoo_module
+msgid "Mark this product as an Odoo module to enable dependency management. When enabled, you can link other module products as dependencies. The eCommerce will auto-add missing dependencies to the cart and display the total price including all required modules."
+msgstr "Marque este producto como un módulo Odoo para habilitar la gestión de dependencias. Al activarlo, puede vincular otros productos-módulo como dependencias. El eCommerce añadirá automáticamente las dependencias faltantes al carrito y mostrará el precio total incluyendo todos los módulos requeridos."
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__technical_module_name
+msgid "Technical Module Name"
+msgstr "Nombre Técnico del Módulo"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__technical_module_name
+msgid "Technical name of the Odoo module, e.g. \"github_connector_api\". Used for automatic dependency suggestion from module manifests."
+msgstr "Nombre técnico del módulo Odoo, por ejemplo \"github_connector_api\". Utilizado para sugerencias automáticas de dependencias desde manifiestos de módulos."
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__dependency_ids
+msgid "Module Dependencies"
+msgstr "Dependencias de Módulo"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__dependency_ids
+msgid "Other module products that this module depends upon. When a customer adds this module to their cart, all dependencies will be automatically added as separate cart lines. Dependencies are resolved recursively."
+msgstr "Otros productos-módulo de los que este módulo depende. Cuando un cliente añade este módulo a su carrito, todas las dependencias se añadirán automáticamente como líneas separadas del carrito. Las dependencias se resuelven de forma recursiva."
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__all_dependency_ids
+msgid "All Dependencies (cached)"
+msgstr "Todas las Dependencias (caché)"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__all_dependency_ids
+msgid "Flattened list of all recursive dependencies. Stored for performance — avoids recursive traversal on every page render."
+msgstr "Lista aplanada de todas las dependencias recursivas. Almacenada para rendimiento — evita el recorrido recursivo en cada renderizado de página."
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__total_price_with_deps
+msgid "Total Price (with Dependencies)"
+msgstr "Precio Total (con Dependencias)"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__total_price_with_deps
+msgid "The total price of this module including all its recursive dependencies. Duplicate dependencies are counted only once."
+msgstr "El precio total de este módulo incluyendo todas sus dependencias recursivas. Las dependencias duplicadas se cuentan solo una vez."
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__dependency_count
+msgid "Dependency Count"
+msgstr "Cantidad de Dependencias"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__dependency_count
+msgid "Total number of unique recursive dependencies."
+msgstr "Número total de dependencias recursivas únicas."
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__published_dependency_ids
+msgid "Published Dependencies"
+msgstr "Dependencias Publicadas"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__published_dependency_ids
+msgid "Only dependencies that are published on the website."
+msgstr "Solo las dependencias que están publicadas en el sitio web."
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,field_description:website_sale_module_dependency.field_product_template__published_dependency_count
+msgid "Published Dependency Count"
+msgstr "Cantidad de Dependencias Publicadas"
+
+#. module: website_sale_module_dependency
+#: model:ir.model.fields,help:website_sale_module_dependency.field_product_template__published_dependency_count
+msgid "Number of published recursive dependencies."
+msgstr "Número de dependencias recursivas publicadas."
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_template_form_view_dependency
+msgid "Module Info"
+msgstr "Información del Módulo"
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_template_form_view_dependency
+msgid "Dependencies"
+msgstr "Dependencias"
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.products_item_dependency_price
+msgid "Includes dependencies"
+msgstr "Incluye dependencias"
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+msgid "Required Dependencies"
+msgstr "Dependencias Requeridas"
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+msgid "This module requires all listed dependencies to work correctly. When you add it to your cart, dependencies are included automatically. If you already own any of these modules for the same version, you can remove them from your cart before checkout."
+msgstr "Este módulo requiere todas las dependencias listadas para funcionar correctamente. Al añadirlo a su carrito, las dependencias se incluyen automáticamente. Si ya posee alguno de estos módulos para la misma versión, puede retirarlos de su carrito antes de finalizar la compra."
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.cart_line_dependency_badge
+msgid "Required by "
+msgstr "Requerido por "
+
+#. module: website_sale_module_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+msgid "Total price (module + "
+msgstr "Precio total (módulo + "
+
+#. module: website_sale_module_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+msgid " dependencies):"
+msgstr " dependencias):"
+
+#. module: website_sale_module_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.products_item_dependency_price
+msgid "Total with "
+msgstr "Total con "
+
+#. module: website_sale_module_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.products_item_dependency_price
+msgid " dependencies: "
+msgstr " dependencias: "
+
+#. module: website_sale_module_dependency
+#: code:addons/website_sale_module_dependency/models/product_template.py:0
+#, python-format
+msgid "Circular dependency detected: '%(name)s' appears in its own dependency chain. Please review the dependency configuration."
+msgstr "Dependencia circular detectada: '%(name)s' aparece en su propia cadena de dependencias. Por favor revise la configuración de dependencias."
+
+#. module: website_sale_module_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+msgid "Not available"
+msgstr "No disponible"
+
+#. module: website_sale_module_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+msgid "Not published on website"
+msgstr "No publicado en el sitio web"
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.sale_order_form_add_dependencies
+msgid "🧩 Add Dependencies"
+msgstr "🧩 Agregar Dependencias"
+
+#. module: website_sale_module_dependency
+#: model:ir.ui.view,arch_db:website_sale_module_dependency.sale_order_form_add_dependencies
+msgid "Auto-add missing module dependencies to this order"
+msgstr "Agregar las dependencias faltantes de módulos a este pedido"
+
+#. module: website_sale_module_dependency
+#: code:addons/website_sale_module_dependency/models/sale_order.py:0
+#, python-format
+msgid "Module Dependencies"
+msgstr "Dependencias de Módulos"
+
+#. module: website_sale_module_dependency
+#: code:addons/website_sale_module_dependency/models/sale_order.py:0
+#, python-format
+msgid "No Odoo modules with dependencies found in this order."
+msgstr "No se encontraron módulos Odoo con dependencias en este pedido."
+
+#. module: website_sale_module_dependency
+#: code:addons/website_sale_module_dependency/models/sale_order.py:0
+#, python-format
+msgid "All dependencies are already satisfied. ✓"
+msgstr "Todas las dependencias ya están satisfechas. ✓"
+
+#. module: website_sale_module_dependency
+#: code:addons/website_sale_module_dependency/models/sale_order.py:0
+#, python-format
+msgid "Added %(count)d dependency(ies): %(names)s"
+msgstr "Se agregaron %(count)d dependencia(s): %(names)s"

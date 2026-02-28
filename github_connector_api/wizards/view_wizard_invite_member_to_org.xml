@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <record id="view_wizard_invite_member_to_org_model_form" model="ir.ui.view">
+        <field name="model">wizard.invite.member.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="username" />
+                    <field name="add_team_id"  widget="many2many_tags"
+                    options="{'no_create': True, 'no_edit': True, 'delete': False, 'no_open': True}"/>
+                </group>
+                <footer>
+                    <button
+                        name="button_invite_member_from_odoo"
+                        string="Invitar a nuevo usuario"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

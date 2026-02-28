@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_github_analysis_rule_list" model="ir.ui.view">
+        <field name="model">github.analysis.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="group_id" />
+            </list>
+        </field>
+    </record>
+    <record id="view_github_analysis_rule_form" model="ir.ui.view">
+        <field name="model">github.analysis.rule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="group_id" />
+                    </group>
+                    <notebook>
+                        <page name="technical" string="Technical Settings">
+                            <group>
+                                <field name="paths"/>
+                                <div
+                                    class="alert alert-warning"
+                                    role="alert"
+                                >
+                                    You can see reference documentation and some examples in:
+                                    <a
+                                        href="https://git-scm.com/docs/gitignore#_pattern_format"
+                                        target="_blank"
+                                    >https://git-scm.com/docs/gitignore#_pattern_format</a>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
