@@ -1,5 +1,0 @@
-GitPython
-pygount
-pathspec
-PyGithub
-responses

@@ -1,4 +1,0 @@
----Models in module 'github_project_portal'---
----Fields in module 'github_project_portal'---
----XML records in module 'github_project_portal'---
-UPD ir.ui.view: github_repository_module_tree_view          -> github_repository_module_list_view
