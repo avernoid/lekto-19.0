@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peru Pension System Types | Odoo HR Payroll App by Ganemo</title>
+    <meta name="description"
+        content="Manage Peruvian pension systems (SNP, AFP) in Odoo. Configure pension types, commission rates, AFP caps, and assign pension systems to employees for accurate payroll calculation.">
+    <meta name="keywords"
+        content="Odoo, Payroll, Pension System, AFP, SNP, Peru, CUSPP, Human Resources, Ganemo, Odoo 19, Localization">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI &amp; LLM</h2>
+        <p>This Odoo module 'types_system_pension' implements a complete Peruvian Pension System catalog for HR and
+            Payroll.
+            It defines the 'pension.system' model with fields for code, name, pension regime, sector coverage (private,
+            public, other), and CUSPP flag.
+            It defines 'comis.system.pension' for storing historical AFP commission rates (fund, bonus, mixed-flow,
+            flow, balance) by date range.
+            It defines 'tope.afp' for storing the AFP monthly limit (tope) applicable by date range.
+            It extends 'hr.employee' with fields: cuspp (CUSPP code), is_cuspp (computed boolean), pension_system_id
+            (Many2one to pension.system), and commission_type (selection: balance/flow).
+            All employee fields are restricted to hr.group_hr_user.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). Multi-language support for English and Spanish
+            included.
+            Requires l10n_pe_localization_menu and hr.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English &amp; Spanish Included</span>
+        </div>
+    </div>
+    <!-- BANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#714B67;">Pension System</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Peru AFP &amp; SNP — Complete Payroll Engine</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Define all Peruvian pension systems (SNP, AFP), manage commission rates and AFP caps by date range,
+                    and assign each employee their pension regime for precise payroll calculations.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-university mr-2"></i> No Pension Catalog</h4>
+                            <p style="text-align: justify;">Standard Odoo does not include a catalog of Peruvian pension
+                                systems. This module adds the complete list of <strong>SNP and AFP</strong> regimes
+                                registered in Peru, with all their official codes and attributes.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-percent mr-2"></i> Commission Rate History</h4>
+                            <p style="text-align: justify;">AFP commission rates change over time. This module stores
+                                all
+                                historical commission rates per pension system by date range (fund, bonus, mixed-flow,
+                                flow, balance), ensuring compliance with current regulations.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-bar-chart mr-2"></i> AFP Monthly Caps</h4>
+                            <p style="text-align: justify;">The AFP contribution has a regulated monthly cap (<em>tope
+                                    AFP</em>). This module allows you to store the cap by date range so the payroll
+                                engine can correctly apply limits when calculating AFP deductions.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-user mr-2"></i> Employee Assignment</h4>
+                            <p style="text-align: justify;">Each employee can be linked to their pension system, CUSPP
+                                code, and commission type (balance vs. flow). This data is available to the payroll
+                                engine for automatic deduction calculation per worker.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">Setup &amp; User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #714B67; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #714B67; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Prepare the pension catalog and limits in 4 simple steps:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Localization
+                                                &gt; Configuration &gt; Pension Systems</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Review or add the
+                                            <strong>SNP and AFP</strong> systems with their code and sector flags.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Under each AFP, add the
+                                            <strong>Commission Rates</strong> by date range.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>AFP Monthly
+                                                Caps</strong> and configure the official cap for each period.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #714B67;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Note:</strong> The module ships
+                                    with pre-loaded Peruvian pension system data. Review the default records and update
+                                    commission rates as regulations change.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #00A09D; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #00A09D; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How to assign pension systems to employees:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-user-circle text-info mr-2"></i> Employee Tab</h5>
+                                        <p class="text-muted">Open any employee record and go to the <strong>Private
+                                                Information</strong> tab. Assign their <strong>Pension System</strong>
+                                            (e.g., AFP Integra, ONP), enter the <strong>CUSPP</strong> code if
+                                            applicable, and select the <strong>Commission Type</strong> (Balance or
+                                            Flow).</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-calculator text-info mr-2"></i> Payroll Integration</h5>
+                                        <p class="text-muted">During payslip computation, the payroll rules can read the
+                                            employee's <strong>pension_system_id</strong> and
+                                            <strong>commission_type</strong>
+                                            to fetch the applicable commission rate and apply monthly AFP caps
+                                            automatically.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-id-card text-info mr-2"></i> CUSPP Auto-Detection</h5>
+                                        <p class="text-muted">The system automatically detects if the assigned pension
+                                            system requires a <strong>CUSPP</strong> code (the Peruvian pension fund
+                                            unique identifier) and activates the <em>is_cuspp</em> flag on the
+                                            employee.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-shield text-info mr-2"></i> Security &amp; Access</h5>
+                                        <p class="text-muted">All pension fields on the employee form are restricted to
+                                            <strong>HR Officers</strong> only, ensuring sensitive compensation data is
+                                            not exposed to regular users or portal users.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #714B67;">
+                <h3 style="color: #714B67; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote &amp; Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #714B67; border-left: 5px solid #714B67;">
+                            <h4 style="color: #714B67; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #00A09D; border-left: 5px solid #00A09D;">
+                            <h4 style="color: #00A09D; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev
+                                &amp;
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #714B67;">
+                            <h4 style="color: #714B67; font-weight: 700;"><i class="fa fa-university mr-2"></i>
+                                Scenario 1: Pension System Catalog</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Localization &gt; Configuration &gt; Pension Systems</strong>.</li>
+                                <li>Verify the pre-loaded records (SNP / AFP) are present with correct codes.</li>
+                                <li>Open an AFP record and add a commission entry for the current period.</li>
+                                <li><strong>Test:</strong> The commission must appear in the "Commissions" tab.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #00A09D;">
+                            <h4 style="color: #00A09D; font-weight: 700;"><i class="fa fa-bar-chart mr-2"></i> Scenario
+                                2:
+                                AFP Monthly Cap</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Localization &gt; Configuration &gt; AFP Caps</strong>.</li>
+                                <li>Create a cap record for the current month with the official SUNAT/SBS value.</li>
+                                <li><strong>Test:</strong> Record is saved and visible in the list with correct dates.
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-user mr-2"></i> Scenario 3:
+                                Employee Assignment</h4>
+                            <ol class="mt-3">
+                                <li>Open an employee record and go to the <strong>Private Information</strong> tab.</li>
+                                <li>Select a Pension System (e.g., AFP Integra) and enter a CUSPP code.</li>
+                                <li><strong>Test:</strong> The <em>CUSPP Active</em> field automatically checks if the
+                                    AFP requires CUSPP.</li>
+                                <li><strong>Test:</strong> Select Commission Type "Balance" or "Flow" and save.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #9a6c00; font-weight: 700;"><i class="fa fa-lock mr-2"></i> Scenario 4:
+                                Access Control</h4>
+                            <ol class="mt-3">
+                                <li>Log in as a regular Odoo user (non-HR Officer).</li>
+                                <li>Open an employee record.</li>
+                                <li><strong>Test:</strong> Pension system fields (CUSPP, pension regime, commission
+                                    type)
+                                    MUST NOT be visible.</li>
+                                <li><strong>Test:</strong> Log in as HR Officer — all fields MUST be visible and
+                                    editable.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">FAQ &amp; Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Pension fields not visible on employee?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The user does not have the HR Officer
+                                role.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to
+                                Settings &gt; Users and assign the <em>Human Resources / Officer</em> group to the user.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">CUSPP Active flag not computing?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The assigned Pension System does not
+                                have
+                                the CUSPP checkbox enabled.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Edit
+                                the Pension System record and enable the <em>CUSPP</em> checkbox to activate automatic
+                                detection.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #00A09D;">
+                            <h5 style="font-weight: 700; color: #333;">Commission rate not applying in payroll?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The payroll rule references the
+                                commission but no rate record exists for the current period.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Fix:</strong> Add a commission entry under the AFP system with a date range that
+                                covers the payroll period.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Pension system records are company-agnostic by default. Each employee assignment is
+                                per-employee and respects multi-company environments.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial &amp; Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:help@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        help@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">help@ganemo.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

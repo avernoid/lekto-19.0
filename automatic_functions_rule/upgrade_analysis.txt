@@ -1,0 +1,86 @@
+===================================================================
+ UPGRADE ANALYSIS — automatic_functions_rule (19.0.1.0.0 → 19.0.1.0.1)
+===================================================================
+
+---Models in module 'automatic_functions_rule'---
+KEEP model hr.payslip      (inherited: adds zero-value cleanup methods and structure input injection)
+KEEP model hr.payslip.run  (inherited: extends generate_payslips to inject structure inputs post-computation)
+
+---Fields in module 'automatic_functions_rule'---
+(no custom fields — module only adds methods to existing models)
+
+---XML records in module 'automatic_functions_rule'---
+KEEP view  hr_payslip_view_form_inherit_automatic_functions_rule  (adds "Eliminate Zeros" button)
+
+---Dependency changes---
+(no changes — depends on hr_payroll only)
+
+---Code changes (19.0.1.0.1)---
+REFACTORED models/hr_payslip_run.py
+  BEFORE: Full rewrite of generate_payslips() without calling super() (81 lines of duplicated native code)
+  AFTER:  Proper super() call + only 2 lines of added logic (11 lines total)
+  REASON: The original code was a copy-paste of the native Odoo 19 generate_payslips().
+          The only addition was calling _onchange_employee() after payslip creation.
+          Using super() preserves compatibility with future Odoo patches.
+
+MODIFIED views/hr_payslip.xml
+  Changed button label from Spanish "Eliminar Ceros" to English "Eliminate Zeros"
+  Added help attribute with descriptive tooltip
+
+REWRITTEN tests/common.py
+  BEFORE: Inherited from TestPayslipContractBase, created hr.contract records (contract_cdi, contract_cdd, contract_jules)
+  AFTER:  Standalone TestPayslipBase(TransactionCase), no hr.contract references
+  REASON: hr.contract no longer exists in Odoo 19 (field 'contract_id' is invalid on hr.payslip).
+          The module only adds zero-removal methods, so contracts are not needed for testing.
+
+REWRITTEN tests/test_automatic_functions.py
+  BEFORE: Single test (test_sum_category) that created payslips with contract_id and tested sum_category('ALW')
+  AFTER:  Three focused tests covering the actual module functionality:
+          - test_compute_sheet_removes_zero_salary_lines
+          - test_action_remove_zeros_cleans_all
+          - test_action_payslip_done_removes_zeros
+  REASON: The old test was testing salary rule accumulation (sum_category), not the module's
+          zero-removal features. It also failed on Odoo 19 due to contract_id references.
+
+---Branding changes (19.0.1.0.1)---
+NEW      static/description/icon.svg       (module icon: funnel with struck-through zero)
+NEW      static/description/banner.svg     (880x440 promotional banner)
+NEW      static/description/index.html     (full Ganemo template documentation)
+NEW      static/description/qr*.png        (QR contact images copied from template)
+NEW      LICENSE.txt                        (OPL-1 license file)
+NEW      README.md                          (professional module documentation)
+NEW      i18n/es.po                         (Spanish translations)
+MODIFIED __manifest__.py                    (updated to Ganemo template: OPL-1, icon/banner .png refs, English labels)
+
+---Rationale---
+1. hr_payslip_run.py was a full copy of native generate_payslips() with only
+   _onchange_employee() added at the end. This is fragile and blocks future Odoo patches.
+   ACTION: Refactored to use super() + only the added logic.
+
+2. Button label was hardcoded in Spanish. For i18n compliance, changed to English
+   with Spanish translation in es.po.
+   ACTION: Updated XML view and created i18n/es.po.
+
+3. Module lacked standard Ganemo branding assets (icon, banner, docs, license, README).
+   ACTION: Created all branding files following /brand_module workflow.
+
+4. Tests referenced hr.contract (removed in Odoo 19) and tested unrelated functionality
+   (sum_category accumulation). Caused ValueError on deployment.
+   ACTION: Rewrote tests to cover actual module features (zero-removal) without contract deps.
+
+---Impact on downstream modules---
+NONE — No external XML IDs or API changes. Only internal method refactoring.
+
+---Files summary---
+MODIFIED  models/hr_payslip_run.py          (81 → 11 lines, super() refactoring)
+MODIFIED  views/hr_payslip.xml              (English label + help attribute)
+MODIFIED  __manifest__.py                   (Ganemo template format)
+REWRITTEN tests/common.py                   (removed hr.contract, simplified base)
+REWRITTEN tests/test_automatic_functions.py (3 tests for zero-removal features)
+NEW       static/description/icon.svg
+NEW       static/description/banner.svg
+NEW       static/description/index.html
+NEW       static/description/qr*.png
+NEW       LICENSE.txt
+NEW       README.md
+NEW       i18n/es.po

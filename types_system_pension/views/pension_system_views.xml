@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pension_system_view_tree" model="ir.ui.view">
+        <field name="name">pension.system.view.list</field>
+        <field name="model">pension.system</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="code"/>
+                <field name="pension_system"/>
+                <field name="name"/>
+                <field name="private_sector"/>
+                <field name="public_sector"/>
+                <field name="other_entities"/>
+                <field name="cuspp"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="pension_system_view_form" model="ir.ui.view">
+        <field name="name">pension.system.view.form</field>
+        <field name="model">pension.system</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="pension_system"/>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Comisiones" name="comisiones">
+                            <field name="comis_pension_ids"/>
+                        </page>
+                    </notebook>
+                    <group colspan="4" col="8">
+                        <field name="private_sector"/>
+                        <field name="public_sector"/>
+                        <field name="other_entities"/>
+                        <field name="cuspp"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <record id="action_special_situation" model="ir.actions.act_window">
+        <field name="name">[35] Situación especial</field>
+        <field name="res_model">special.situation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_localization_special_situation"
+              name="[35] Situación especial"
+              parent="l10n_pe_localization_menu.menu_hr_information_plame"
+              action="action_special_situation"
+              sequence="35"
+    />
+
+</odoo>

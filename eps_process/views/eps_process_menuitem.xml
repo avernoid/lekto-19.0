@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_action_eps_root"
+              name="EPS"
+              parent="hr_payroll.menu_hr_payroll_employees"
+              groups="hr.group_hr_user"
+    />
+
+    <menuitem id="menu_action_eps_credit"
+              name="EPS Credit"
+              parent="eps_process.menu_action_eps_root"
+              action="action_eps_credit"
+              groups="hr.group_hr_user"
+    />
+
+    <menuitem id="menu_action_eps_management"
+              name="EPS Management"
+              parent="eps_process.menu_action_eps_root"
+              action="action_eps_management"
+              groups="hr.group_hr_user"
+    />
+</odoo>

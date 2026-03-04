@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="eps_credit_view_tree" model="ir.ui.view">
+        <field name="name">eps.credit.view.tree</field>
+        <field name="model">eps.credit</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="since"/>
+                <field name="until"/>
+                <field name="create_date" string="Created"/>
+                <field name="final_eps_credit"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="eps_credit_view_form" model="ir.ui.view">
+        <field name="name">eps.credit.view.form</field>
+        <field name="model">eps.credit</field>
+        <field name="arch" type="xml">
+            <form name="form_eps_credit">
+                <header>
+                    <button string="Compute" name="compute_fields" type="object" default_focus="1"/>
+                </header>
+                <sheet name="sheet_eps_credit">
+                    <group string="EPS CALCULATION">
+                        <group>
+                            <group>
+                                <field name="since"/>
+                            </group>
+                            <group>
+                                <field name="until"/>
+                            </group>
+                        </group>
+                        <group string="EPS AFFILIATED WORKERS" colspan="3">
+                            <field name="affiliated_workers"/>
+                            <field name="computable_remuneration_health_input"/>
+                            <field name="eps_credit"/>
+                            <br/>
+                        </group>
+                        <br/>
+                        <group string="EPS LIMITS" colspan="3">
+                            <field name="eps_service_cost"/>
+                            <field name="uit"/>
+                            <field name="uit_limit_affiliated_workers"/>
+                            <field name="adjustment"/>
+                            <field name="final_eps_credit"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_eps_credit" model="ir.actions.act_window">
+        <field name="name">EPS Credit</field>
+        <field name="res_model">eps.credit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

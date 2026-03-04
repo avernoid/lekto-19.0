@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_leave_view_form_inherit_holiday_process" model="ir.ui.view">
+        <field name="name">hr.leave.view.form.inherit.holiday_process</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='request_date_from']" position="before">
+                <field name="hr_leave_id"
+                       invisible="not show_in_time_off_request"
+                       domain="[('pending_holiday','>',0),('employee_id', '=', employee_id),('holiday_status_id', '=', holiday_status_id)]"
+                       options="{'no_create': True}"
+                       context="{'form_view_ref': 'holiday_process.hr_leave_allocation_form_view_employee_holiday_process', 'show_holiday_summary': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

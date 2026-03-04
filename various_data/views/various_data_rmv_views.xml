@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="various_data_rmv_tree" model="ir.ui.view">
+        <field name="name">various.data.rmv.tree</field>
+        <field name="model">various.data.rmv</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="register_date"/>
+                <field name="due_date"/>
+                <field name="rmv_amount"/>
+                <field name="af_amount"/>
+                <field name="is_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_rmv" model="ir.actions.act_window">
+        <field name="name">Minimum Vital Remuneration (RMV)</field>
+        <field name="res_model">various.data.rmv</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_datos_tributarios"
+              name="Tax Data"
+              parent="l10n_pe_localization_menu.menu_hr_sub_localization"
+    />
+
+    <menuitem id="menu_hr_rmv"
+              name="Minimum Vital Remuneration"
+              parent="various_data.menu_hr_datos_tributarios"
+              action="action_rmv"
+    />
+
+</odoo>

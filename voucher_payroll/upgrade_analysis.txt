@@ -1,0 +1,13 @@
+---Models in module 'voucher_payroll'---
+---Fields in module 'voucher_payroll'---
+---XML records in module 'voucher_payroll'---
+---Removed dependencies in module 'voucher_payroll'---
+filter_payroll
+payment_conditions
+
+---Models in module 'voucher_payroll'---
+- Removed: hr.contract (due to Odoo 19 changes replacing it with hr.employee)
+---Fields in module 'voucher_payroll'---
+- Moved: hiden_overtime (From hr.contract to hr.employee)
+- Removed: 'name_get' method from 'type.inputs' model and tests, as it's obsolete in Odoo 19.
+- Updated: version in __manifest__.py to 19.0.1.0.0

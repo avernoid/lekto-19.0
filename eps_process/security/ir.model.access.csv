@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_eps_credit,access.eps.credit,model_eps_credit,hr.group_hr_user,1,1,1,1
+access_eps_management,access.eps.management,model_eps_management,hr.group_hr_user,1,1,1,1

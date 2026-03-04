@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_leave_allocation_view_tree__holiday_process" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.view.tree.inherit.holiday_process</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="from_date"/>
+                <field name="to_date"/>
+                <field name="deadline"/>
+            </field>
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">state == 'refuse' or (deadline and (deadline &lt;= current_date))
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_leave_allocation_view_form_inherit_holiday_process" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.view.form.inherit.holiday_process</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="priority" eval="200"/>
+        <field name="arch" type="xml">
+            <form string="Petición de asignación" create="false" delete="false" edit="false">
+                <field name="can_approve" invisible="1"/>
+                <field name="validation_type" invisible="1"/>
+                <field name="expiring_carryover_days" invisible="1"/>
+                <field name="carried_over_days_expiration_date" invisible="1"/>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="confirm,validate,validate1" invisible="validation_type != 'both'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="confirm,validate" invisible="validation_type == 'both'"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-calendar" type="action" name="178"
+                                context="{'search_default_employee_id': [employee_id], 'search_default_holiday_status_id': [holiday_status_id], 'default_holiday_status_id': holiday_status_id}"
+                                help="Ausencias Tomadas/Total Asignado" options="{}">
+                            <div class="o_stat_info" modifiers="{}">
+                                <span class="o_stat_value" modifiers="{}">
+                                    <field name="leaves_taken" digits="[42,1]" modifiers="{'readonly':true}"/>
+                                    /
+                                    <field name="max_leaves" digits="[42,1]" modifiers="{'readonly':true}"/>
+                                </span>
+                                <span class="o_stat_text" modifiers="{}">
+
+                                    Tiempo libre
+
+                                </span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h2>
+                            <field name="display_name" modifiers="{'readonly':true}"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="type_request_unit" invisible="1"
+                                   modifiers="{'invisible':true,'readonly':true}"/>
+                            <field name="name" readonly= "'state' not in ('draft', 'confirm')"
+                                   required="1" on_change="1"
+                                   modifiers="{'readonly':[['state','not in',['draft','confirm']]],'required':true}"/>
+                            <field name="holiday_status_id" context="{'employee_id':employee_id}" on_change="1"
+                                   can_create="true" can_write="true"
+                                   modifiers="{'readonly':[['state','not in',['draft','confirm']]],'required':true}"/>
+                            <field name="allocation_type" invisible="0" widget="radio"
+                                   modifiers="{'readonly':[['state','not in',['draft','confirm']]],'required':true}"/>
+                            <label for="date_to" string="" invisible="allocation_type == 'regular'"
+                                   modifiers="{'invisible':[['allocation_type','=','regular']]}"/>
+                            <div invisible="allocation_type == 'regular'"
+                                 modifiers="{'invisible':[['allocation_type','=','regular']]}">
+                                <div class="o_row" modifiers="{}">
+
+                                    Ejecutar hasta
+                                    <field name="date_to" string="Ejecutar hasta"
+                                           help="If no value set, runs indefinitely" class="ml-2" widget="date"
+                                           modifiers="{'readonly':[['state','not in',['draft','confirm']]]}"/>
+                                </div>
+                                <div class="o_row" modifiers="{}">
+                                    <span modifiers="{}">
+                                        Agregar
+                                    </span>
+                                    <field name="number_per_interval" class="ml8"
+                                           required="allocation_type == 'accrual'"
+                                           modifiers="{'readonly':[['state','not in',['draft','confirm']]],'required':[['allocation_type','=','accrual']]}"/>
+                                    <field name="unit_per_interval"
+                                           required="allocation_type == 'accrual'"
+                                           modifiers="{'readonly':[['state','not in',['draft','confirm']]],'required':[['allocation_type','=','accrual']]}"/>
+                                    <span class="ml8" modifiers="{}">
+                                        de tiempo libre cada
+                                    </span>
+                                    <field name="interval_number" class="ml8"
+                                           required="allocation_type == 'accrual'"
+                                           modifiers="{'readonly':[['state','not in',['draft','confirm']]],'required':[['allocation_type','=','accrual']]}"/>
+                                    <field name="interval_unit"
+                                           required="allocation_type == 'accrual'"
+                                           modifiers="{'readonly':[['state','not in',['draft','confirm']]],'required':[['allocation_type','=','accrual']]}"/>
+                                </div>
+                            </div>
+                            <field name="number_of_days" invisible="1" on_change="1" modifiers="{'invisible':true}"/>
+                            <label for="number_of_days" string="Duración"
+                                   invisible="allocation_type == 'accrual'"
+                                   modifiers="{'invisible':[['allocation_type','=','accrual']]}"/>
+                            <div invisible="allocation_type == 'accrual'"
+                                 modifiers="{'invisible':[['allocation_type','=','accrual']]}">
+                                <field name="number_of_days_display" class="oe_inline" nolabel="1" 
+                                       readonly="(type_request_unit == 'hour') or ('state' not in ('draft', 'confirm'))"
+                                       invisible="type_request_unit == 'hour'"
+                                       on_change="1"
+                                       modifiers="{'invisible':[['type_request_unit','=','hour']],'readonly':['|',['type_request_unit','=','hour'],['state','not in',['draft','confirm']]]}"/>
+                                <field name="number_of_hours_display" class="oe_inline" nolabel="1"
+                                       readonly="(type_request_unit != 'hour') or ('state' not in ('draft', 'confirm'))"
+                                       invisible="type_request_unit != 'hour'"
+                                       on_change="1"
+                                       modifiers="{'invisible':[['type_request_unit','!=','hour']],'readonly':['|',['type_request_unit','!=','hour'],['state','not in',['draft','confirm']]]}"/>
+                                <span class="ml8" invisible="type_request_unit == 'hour'"
+                                      modifiers="{'invisible':[['type_request_unit','=','hour']]}">
+                                    Dias
+                                </span>
+                                <span class="ml8" invisible="type_request_unit != 'hour'"
+                                      modifiers="{'invisible':[['type_request_unit','!=','hour']]}">
+                                    Horas
+                                </span>
+                            </div>
+                        </group>
+                        <group name="alloc_right_col">
+                            <field name="employee_id"
+                                   invisible="1" readonly="state in ['refuse', 'validate']"/>
+                            <span class="o_form_label" style="font-weight: bold" modifiers="{}">
+                                Periodo
+                            </span>
+                            <span modifiers="{}">
+                                <field name="from_date" style="width: 40%;" placeholder="Desde" modifiers="{}"/>
+
+                                -
+
+                                <field name="to_date" style="width: 40%;" placeholder="Hasta" modifiers="{}"/>
+                            </span>
+                            <field name="deadline" modifiers="{}"/>
+                            <field name="is_holiday" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>
+                            <field name="department_id" invisible="1" readonly="state not in ['confirm']"/>
+                        </group>
+                    </group>
+                    <field name="notes" nolabel="1" placeholder="Añadir una razón..."
+                           modifiers="{'readonly':[['state','not in',['draft','confirm']]]}"/>
+                    <notebook >
+                        <page name="absences" string="Ausencias" invisible="is_holiday == False"
+                              modifiers="{'invisible':[['is_holiday','=',false]]}">
+                            <group>
+                                <field name="computed_holiday" modifiers="{'readonly':true}"/>
+                                <field name="used_holiday" modifiers="{'readonly':true}"/>
+                                <field name="pending_holiday" modifiers="{'readonly':true}"/>
+                            </group>
+                            <field name="absence_ids" on_change="1" modifiers="{}"/>
+                            <separator string="Pagos Sin Goce"/>
+                            <field name="payment_ids" modifiers="{}">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="number_of_days"/>
+                                    <field name="description"/>
+                                    <field name="employee_id" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_leave_allocation_view_form_inherit_holiday_process_manager" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.view.form.inherit.holiday_process.manager</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <span class="o_form_label" style="font-weight: bold">Periodo</span>
+                <span style="display: flex;">
+                    <field name="from_date" style="width:52%" placeholder="Desde"/>
+                    -
+                    <field name="to_date" style="width:52%; text-align:center;" placeholder="Hasta"/>
+                </span>
+                <field name="deadline"/>
+                <field name="is_holiday" invisible="1"/>
+            </xpath>
+            <xpath expr="//form/sheet" position="inside">
+                <notebook>
+                    <page name="absences" string="Ausencias">
+                        <group>
+                            <field name="computed_holiday"/>
+                            <field name="used_holiday"/>
+                            <field name="pending_holiday"/>
+                        </group>
+                        <field name="absence_ids"/>
+                        <separator string="Pagos Sin Goce"/>
+                        <field name="payment_ids">
+                            <list editable="bottom">
+                                <field name="date"/>
+                                <field name="number_of_days"/>
+                                <field name="description"/>
+                                <field name="employee_id" optional="show"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="hr_salary_category_form_view_inherit_voucher_payroll" model="ir.ui.view">
+    <field name="name">hr.salary.rule.category.form.view.inherit.voucher_payroll</field>
+    <field name="model">hr.salary.rule.category</field>
+    <field name="inherit_id" ref="hr_payroll.hr_salary_rule_category_form" />
+    <field name="arch" type="xml">
+      <field name="code" position="after">
+        <field name="invoice_position" />
+      </field>
+    </field>
+  </record>
+
+  <record id="hr_work_entry_type_view_form_inherit_add_model" model="ir.ui.view">
+    <field name="name">hr_work_entry_type_view_form_inherit_add_model</field>
+    <field name="model">hr.work.entry.type</field>
+    <field name="inherit_id" ref="hr_work_entry.hr_work_entry_type_view_form" />
+    <field name="arch" type="xml">
+
+      <xpath expr="//group" position="after">
+        <group string="Boletas">
+          <field name="type_inputs_ids" colspan="2" nolabel="1" mode="list">
+            <form string="Boleta">
+              <sheet>
+                <field name="name" />
+                <field name="code" />
+              </sheet>
+            </form>
+            <list string="Boleta" editable="bottom">
+              <field name="name" />
+              <field name="code" />
+            </list>
+
+          </field>
+        </group>
+      </xpath>
+
+    </field>
+  </record>
+
+  <record id="hr_employee_inherit_voucher_payroll" model="ir.ui.view">
+    <field name="name">hr.employee.inherit.voucher.payroll</field>
+    <field name="model">hr.employee</field>
+    <field name="inherit_id" ref="hr.view_employee_form" />
+    <field name="arch" type="xml">
+      <xpath expr="//group[@name='managers']" position="inside">
+        <field name="hiden_overtime" />
+      </xpath>
+    </field>
+  </record>
+
+
+</odoo>

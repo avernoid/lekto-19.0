@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_payslip_line_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.line.view.tree</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="date_from" readonly="state not in [False, 'draft']"/>
+                <field name="date_to" readonly="state not in [False, 'draft']"/>
+                <field name="date_start_dt"/>
+                <field name="date_start" column_invisible="1"/>
+                <field name="slip_id" readonly="state not in [False, 'draft']"/>
+                <field name="employee_id" />
+                <field name="name"/>
+                <field name="code"/>
+                <field name="quantity" readonly="state not in [False, 'draft']"/>
+                <field name="category_id" readonly="state not in [False, 'draft']"/>
+                <field name="amount" readonly="state not in [False, 'draft']"/>
+                <field name="department_id" column_invisible="1"/>
+                <field name="disability" column_invisible="1"/>
+                <field name="struct_id" column_invisible="1"/>
+                <field name="report_category_id" optional="show"/>
+                <field name="parent_report_category_id" optional="show"/>
+                <field name="salary_rule_id" optional="hidden" readonly="0"/>
+                <field name="state" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="hr_payslip_line_view_pivot" model="ir.ui.view">
+        <field name="name">hr.payslip.line.view.pivot</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="false"/>
+        </field>
+    </record>
+
+    <record id="hr_payslip_line_view_filter" model="ir.ui.view">
+        <field name="name">hr.payslip.line.view.filter</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="arch" type="xml">
+            <search string="Search Payslips Lines">
+                <field name="employee_id" string="Empleado"/>
+                <field name="slip_id" string="Lote" filter_domain="[('slip_id.payslip_run_id', 'ilike', self)]"/>
+                <field name="report_category_id" string="Categoría de Reporte"/>
+                <field name="parent_report_category_id" string="Categoría de Reporte Padre"/>
+                <field name="salary_rule_id" string="Regla"/>
+                <field name="category_id" string="Categoría de Regla"/>
+                <field name="department_id" string="Departamento"/>
+                <field name="struct_id" string="Estructura"/>
+
+                <filter string="Seis meses anteriores" name="six_month_before" domain="[('id','!=','-1')]"/>
+                <separator/>
+                <separator/>
+                <filter string="Fecha (Mes Actual)" name="current_month" date="date_to" default_period="month"/>
+                <filter string="Periodo de Nómina (Mes Actual)" name="current_month_dynamic" date="date_start_dt" default_period="month"/>
+                <separator/>
+                <filter string="Aparece en Nómina de Regla" name="appears_on_payslip" domain="[('salary_rule_id.appears_on_payslip', '=', True)]"/>
+                <filter string="Aparece en Nómina de Categoría" name="appears_on_payslip_category" domain="[('report_category_id.appears_on_payslip', '=', True)]"/>
+                <separator/>
+                <filter string="Borrador" name="draft" domain="[('state','=','draft')]" help="Draft Payslips Lines"/>
+                <filter string="Hecho" name="done" domain="[('state','=','done')]" help="Done Payslips Lines"/>
+                <separator/>
+                <filter string="Discapacidad" name="disability" domain="[('disability','=',True)]"/>
+                <group>
+                    <filter string="Empleado" name="group_employee_id" context="{'group_by':'employee_id'}"/>
+                    <filter string="Categoría de Reporte Padre" name="group_parent_report_category_id" context="{'group_by':'parent_report_category_id'}"/>
+                    <filter string="Categoría de Reporte" name="group_report_category_id" context="{'group_by':'report_category_id'}"/>
+                    <filter string="Regla" name="group_salary_rule_id" context="{'group_by':'salary_rule_id'}"/>
+                    <filter string="Categoría de Regla" name="group_category_id" context="{'group_by':'category_id'}"/>
+                    <filter string="Departamento" name="group_department_id" context="{'group_by':'department_id'}"/>
+                    <filter string="Lote" name="group_run_id" context="{'group_by':'payslip_run_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+</odoo>

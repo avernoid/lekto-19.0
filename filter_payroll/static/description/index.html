@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Payroll | Odoo HR App by Ganemo</title>
+    <meta name="description"
+        content="Add CTS and Gratification filters to Odoo Payroll and Attendance. Streamline days analysis for Peruvian payroll with dedicated filters.">
+    <meta name="keywords" content="Odoo, Payroll, HR, CTS, Gratification, Peru, Ganemo, Attendance, Time Off, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'filter_payroll' extends HR and Payroll by adding dedicated 'CTS' and 'Gratification' fields
+            to hr.attendance, hr.leave, hr.payslip, hr.payslip.worked_days, and hr.work.entry.type.
+            It provides filters in the search views of these models to quickly isolate records related to CTS or
+            Gratification calculations.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). Depends on 'absence_day' and 'payroll_field'.
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#1F8EFA;">Filter Payroll</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    CTS & Gratification Days Analysis</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Streamline your payroll period analysis by adding targeted filters for CTS and Gratifications
+                    directly into Attendances, Time Off, and Payslips.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #1F8EFA;"><i class="fa fa-filter mr-2"></i> Targeted Payroll Filters</h4>
+                            <p style="text-align: justify;">Easily filter leaves, attendances, and worked days by
+                                <strong>CTS</strong> or <strong>Gratification</strong> labels to speed up mandatory
+                                benefit calculations without manual spreadsheet reviews.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #1F8EFA;"><i class="fa fa-cogs mr-2"></i> Seamless Integration</h4>
+                            <p style="text-align: justify;">Works perfectly with Odoo's native Payroll, Attendances, and
+                                Time Off apps. The custom fields are naturally injected into the standard views.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Comprehensive Step-by-Step Implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #1F8EFA; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #1F8EFA; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Prepare the system for accurate filtering by configuring your Leave and Work
+                                Entry Types. This step ensures that the system correctly identifies which days affect
+                                social benefits.</p>
+
+                            <h5 class="mt-4 font-weight-bold text-dark"><i
+                                    class="fa fa-briefcase text-primary mr-2"></i> Configure Work Entry Types (Payslips
+                                & Attendances)</h5>
+                            <ol class="mt-3" style="line-height: 2;">
+                                <li><strong>Navigation:</strong> Go to <strong>Payroll > Configuration > Work Entries >
+                                        Work Entry Types</strong>.</li>
+                                <li><strong>Selection:</strong> Open the specific Work Entry Type you want to categorize
+                                    (e.g., "Regular Attendance", "Overtime", or an Unpaid Absence).</li>
+                                <li><strong>CTS &amp; Gratification Identification:</strong> Locate the
+                                    <strong>"Is License for Social Benefits?"</strong> and
+                                    <strong>"Is Absence for Social Benefits?"</strong> checkboxes.
+                                    These are the two boolean fields this module adds to classify work entry types.
+                                    <em>Note: Enabling either flag will cause records of this type to appear
+                                        in the <strong>CTS</strong> and/or <strong>Gratification</strong>
+                                        search filters across Payslips, Time Off, and Attendances.</em>
+                                </li>
+                                <li><strong>Save:</strong> Save the record. Any Time Off Type linked to this
+                                    Work Entry Type will automatically inherit these flags — no additional
+                                    configuration is needed there.</li>
+                            </ol>
+
+                            <h5 class="mt-4 font-weight-bold text-dark"><i class="fa fa-plane text-primary mr-2"></i>
+                                Time Off Types (Leaves) &mdash; Automatic Inheritance</h5>
+                            <p class="mt-2 mb-2">There is <strong>nothing to configure</strong> directly on
+                                Time Off Types. This module adds the social benefit flags to
+                                <code>hr.leave.type</code> as <strong>hidden, read-only related fields</strong>
+                                that automatically mirror the values of the linked Work Entry Type.</p>
+                            <ol class="mt-3" style="line-height: 2;">
+                                <li><strong>How it works:</strong> Every Time Off Type is linked to a
+                                    <strong>Work Entry Type</strong> (visible in its form). The fields
+                                    <em>&ldquo;Is License for Social Benefits?&rdquo;</em> and
+                                    <em>&ldquo;Is Absence for Social Benefits?&rdquo;</em> on the Time Off Type
+                                    are <strong>automatically inherited</strong> from that linked Work Entry Type
+                                    &mdash; they are intentionally hidden in the UI to avoid confusion.</li>
+                                <li><strong>Where to configure:</strong> Always set the flags at
+                                    <strong>Payroll &gt; Configuration &gt; Work Entries &gt; Work Entry Types</strong>.
+                                    Once saved there, every Time Off Type that references that Work Entry Type
+                                    &mdash; and every leave record derived from it &mdash; becomes instantly
+                                    filterable by CTS or Gratification, with no further action needed.</li>
+                            </ol>
+
+                            <div class="mt-4 p-3 bg-light" style="border-radius: 10px; border: 1px dashed #1F8EFA;">
+                                <small><strong><i class="fa fa-info-circle text-primary mr-1"></i> Why is this
+                                        important?</strong> Properly tagging your types is the foundation of the module.
+                                    If a type is not tagged, any actual record (leave or attendance) generated from it
+                                    will not appear in the CTS or Gratification list, leading to potentially incorrect
+                                    benefit computations at the end of the semester.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual & Workflow</h3>
+                            <p class="lead">How human resources and payroll analysts utilize these filters in their
+                                daily operations:</p>
+
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-search text-primary mr-2"></i> 1. Analyzing Payslip Worked
+                                            Days</h5>
+                                        <p class="text-muted">When a semester ends (e.g., May for CTS), go to
+                                            <strong>Payroll > Payslips</strong>, switch to the List view, and open the
+                                            Search Bar. Under "Filters", you will see <strong>"CTS"</strong> and
+                                            <strong>"Gratification"</strong>. Selecting "CTS" instantly filters all
+                                            worked days records inside the payslips that are tagged as valid for CTS
+                                            accumulation. This replaces hours of manual excel filtering.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-user-times text-primary mr-2"></i> 2. Analyzing Time Off
+                                            (Leaves)</h5>
+                                        <p class="text-muted">To verify discounted days for Gratifications (e.g., in
+                                            July), go to <strong>Time Off > Management > Time Off</strong>. Apply the
+                                            <strong>"Gratification"</strong> filter. You will immediately see all
+                                            approved leaves that legally discount the employee's gratification
+                                            calculation, ensuring absolute legal compliance and fair payment.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-clock-o text-primary mr-2"></i> 3. Analyzing Attendances
+                                        </h5>
+                                        <p class="text-muted">If your company manages direct attendance shifts, you can
+                                            go to <strong>Attendances > Attendances</strong>, click the Search Bar, and
+                                            use the <strong>CTS / Gratification</strong> filters. This applies the
+                                            identical logic inherited from the Work Entry or Holiday Status, unifying
+                                            the data source.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-download text-primary mr-2"></i> 4. Fast Exporting</h5>
+                                        <p class="text-muted">Because the filter is applied directly on the List View,
+                                            the payroll analyst can simply select all the filtered records and click
+                                            <strong>Action > Export</strong>. The exported spreadsheet will contain
+                                            exactly the verified subset of days needed for the financial department.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Filter Reference Table -->
+                            <div class="row mt-5">
+                                <div class="col-lg-12">
+                                    <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-table mr-2"></i>
+                                        Filter Reference Summary</h4>
+                                    <div class="table-responsive mt-3 shadow-sm"
+                                        style="border-radius: 10px; overflow: hidden; border: 1px solid #e0e0e0;">
+                                        <table class="table table-striped table-hover mb-0"
+                                            style="background-color: #fff; text-align: left; vertical-align: middle;">
+                                            <thead style="background-color: #3c6dac; color: #fff;">
+                                                <tr>
+                                                    <th style="padding: 15px;">Filter Name</th>
+                                                    <th style="padding: 15px;">Exact Menu Location</th>
+                                                    <th style="padding: 15px;">Target Model</th>
+                                                    <th style="padding: 15px;">Filtering Conditions (Logic)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="font-weight: 600; color: #1F8EFA; padding: 15px;">CTS
+                                                    </td>
+                                                    <td style="padding: 15px;">Attendances &gt; Attendances</td>
+                                                    <td style="padding: 15px;"><code>hr.attendance</code></td>
+                                                    <td style="padding: 15px;">No Holiday Status (False)
+                                                        <strong>OR</strong> Holiday Code = '20' <strong>OR</strong> Is
+                                                        Tagged as "License for Social Benefits" <strong>OR</strong> Is
+                                                        Tagged as "Absence for Social Benefits"
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: 600; color: #1F8EFA; padding: 15px;">
+                                                        Gratification</td>
+                                                    <td style="padding: 15px;">Attendances &gt; Attendances</td>
+                                                    <td style="padding: 15px;"><code>hr.attendance</code></td>
+                                                    <td style="padding: 15px;">No Holiday Status (False)
+                                                        <strong>OR</strong> Is Tagged as "License for Social Benefits"
+                                                        <strong>OR</strong> Is Tagged as "Absence for Social Benefits"
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: 600; color: #791d97; padding: 15px;">CTS
+                                                    </td>
+                                                    <td style="padding: 15px;">Time Off &gt; Management &gt; Time Off
+                                                    </td>
+                                                    <td style="padding: 15px;"><code>hr.leave</code></td>
+                                                    <td style="padding: 15px;">Holiday Code = '20' <strong>OR</strong>
+                                                        Is Tagged as "License for Social Benefits" <strong>OR</strong>
+                                                        Is Tagged as "Absence for Social Benefits"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: 600; color: #791d97; padding: 15px;">
+                                                        Gratification</td>
+                                                    <td style="padding: 15px;">Time Off &gt; Management &gt; Time Off
+                                                    </td>
+                                                    <td style="padding: 15px;"><code>hr.leave</code></td>
+                                                    <td style="padding: 15px;">Is Tagged as "License for Social
+                                                        Benefits" <strong>OR</strong> Is Tagged as "Absence for Social
+                                                        Benefits"</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #1F8EFA;">
+                            <h4 style="color: #1F8EFA; font-weight: 700;"><i class="fa fa-filter mr-2"></i>
+                                Scenario 1: Filtering Worked Days for CTS</h4>
+                            <ol class="mt-3">
+                                <li>Navigate to <strong>Payroll > Configuration > Work Entry Types</strong>.</li>
+                                <li>Edit the "Generic Time Off" type and check <strong>"Is License for Social
+                                        Benefits?"</strong>. Save.</li>
+                                <li>Go to <strong>Payroll > Payslips</strong> and generate a Payslip for an employee
+                                    that includes "Generic Time Off".</li>
+                                <li>Within the Payslip, go to the <em>Worked Days & Inputs</em> tab. Check that the
+                                    boolean field indicating the License is True.</li>
+                                <li>Go to the global <strong>Worked Days</strong> list view (if exposed) or use the
+                                    Payslip custom filter <strong>CTS</strong>.</li>
+                                <li><strong>Result:</strong> The payslip or the specific worked day record should be
+                                    fully visible when the filter is active, proving the rule inheritance.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-calendar-times-o mr-2"></i>
+                                Scenario 2:
+                                Identifying Gratification Discounts in Time Off</h4>
+                            <ol class="mt-3">
+                                <li>Navigate to <strong>Time Off > Configuration > Time Off Types</strong>.</li>
+                                <li>Edit "Unpaid Leave". Check <strong>"Is Absence for Social Benefits?"</strong>. Save.
+                                </li>
+                                <li>Navigate to <strong>Time Off > Dashboard</strong> and create a Time Off request for
+                                    3 days using the "Unpaid Leave" type. Approve it.</li>
+                                <li>Go to <strong>Time Off > Management > Time Off</strong> (List View).</li>
+                                <li>Click the search bar and select the <strong>"Gratification"</strong> filter.</li>
+                                <li><strong>Result:</strong> Only the Unpaid Leave you just created (and any other
+                                    similarly tagged leaves) MUST appear in the list. Regular paid time off should be
+                                    hidden.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-clock-o mr-2"></i> Scenario 3:
+                                Attendance Cross-Filtering</h4>
+                            <ol class="mt-3">
+                                <li>Ensure you have a Time Off Type configured with <strong>"Is License for Social
+                                        Benefits?"</strong>.</li>
+                                <li>Ensure the Odoo Attendance module has records linked to this type (if your system
+                                    creates attendances based on time off).</li>
+                                <li>Navigate to <strong>Attendances > Attendances</strong>.</li>
+                                <li>Apply the <strong>CTS</strong> filter in the search bar.</li>
+                                <li><strong>Result:</strong> The subset of attendances returned MUST strictly match the
+                                    condition. Verify by opening a record and checking the hidden technical fields.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-times-circle mr-2"></i>
+                                Scenario 4:
+                                Negative Case - Excluded Types</h4>
+                            <ol class="mt-3">
+                                <li>Identify a Time Off Type that has all the Social Benefit flags set to
+                                    <strong>False</strong> (e.g., "Regular Working Day" or a non-computable absence).
+                                </li>
+                                <li>Process a Payslip containing this type.</li>
+                                <li>Go to the list views for Time Off and Payslips, and apply the <strong>CTS /
+                                        Gratification</strong> filters.</li>
+                                <li><strong>Result:</strong> These records MUST NEVER appear in the filtered results.
+                                    This guarantees false positives do not inflate benefit calculations.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Why is my custom Leave Type not showing up when I
+                                apply the CTS filter?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The Leave Type has not been properly
+                                tagged in its configuration.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to
+                                Time Off > Configuration > Time Off Types. Open the missing type and ensure that "Is
+                                License for Social Benefits?" or the respective fields are checked. Once saved, previous
+                                records will automatically become visible in the filter.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Does this module automatically calculate the
+                                monetary value of CTS/Gratification?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> This module is categorized as an
+                                analytical and filtering tool, not a calculator.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Answer:</strong>
+                                No. This module exposes the necessary filters for the HR Analyst to extract the valid
+                                accumulating and discounting days. The actual monetary calculation is typically handled
+                                by Odoo's native Salary Rules using the standard inputs gathered from these filters.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">If I change a Work Entry Type flag, do I need to
+                                recompute existing Payslips?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Data inheritance architecture.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Answer:</strong> No. Because the boolean fields on `hr.payslip.worked_days` and
+                                `hr.leave` are established as `related` fields pointing directly to the master
+                                configuration, updating the Time Off Type or Work Entry Type dynamically updates the
+                                filtering behavior of all historical records instantly.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">I get a "Field not found" error when installing
+                                the module.</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Missing dependencies.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Answer:</strong>
+                                Ensure you have installed the `absence_day` and `payroll_field` modules first, as this
+                                module injects views securely relying on the XML structure of those base models.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:support@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        support@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

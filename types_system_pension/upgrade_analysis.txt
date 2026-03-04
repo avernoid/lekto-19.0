@@ -1,0 +1,27 @@
+---Models in module 'types_system_pension'---
+---Fields in module 'types_system_pension'---
+---XML records in module 'types_system_pension'---
+----------------------------------------------------------------
+DEPENDS [ hr_contract ]
+model:  hr_employee
+field:  cuspp,
+        is_cuspp,
+        pension_system_id,
+        commission_type,
+xml_id: 
+    hr.view_employee_form
+
+DEPENDS [ localization_menu ]
+model:  account_spot_detraction
+field:  name
+xml_id: 
+    
+model:  account_spot_retention
+field:  name
+xml_id: 
+    
+model:  code_aduana
+field:  name,
+        code
+xml_id: 
+    

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_home_payslip" name="Portal de Boletas : Entradas de nómina" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="payslip_count" t-call="portal.portal_docs_entry">
+                <t t-set="title">Boletas de pago</t>
+                <t t-set="url" t-value="'/my/payslip'"/>
+                <t t-set="count" t-value="payslip_count"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_home_menu_payslip" name="Portal layout : Payslip menu entries" inherit_id="portal.portal_breadcrumbs" priority="20">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'payslip' or loan and payslip.state not in ('cancel',)" t-attf-class="breadcrumb-item #{'active ' if not payslip else ''}">
+                <a t-if="payslip" t-attf-href="/my/payslip?{{ keep_query() }}">Boletas de pago</a>
+                <t t-else="">Boletas de pago</t>
+            </li>
+            <li t-if="payslip" class="breadcrumb-item active">
+                <a t-if="payslip" t-attf-href="/my/payslip?{{ keep_query() }}">Payslip</a> / <t t-esc="payslip.name"/>
+            </li>
+        </xpath>
+    </template>
+    <template id="portal_my_payslip" name="Mis Boletas">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Boletas de pago</t>
+            </t>
+            <t t-if="not payslips">
+                <p>Actualmente no tiene boletas de pago para su cuenta.</p>
+            </t>
+            <t t-if="payslips" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Referencia #</th>
+                        <th>Empleado</th>
+                        <th>Periodo</th>
+                        <th class="text-center">Estado de firma</th>
+                        <th class="text-center">Estado de nómina</th>
+                    </tr>
+                </thead>
+                <t t-foreach="payslips" t-as="l">
+                    <tr>
+                        <td><a t-att-href="l.get_portal_url()"><t t-esc="l.name"/></a></td>
+                        <td><span t-field="l.employee_id.name"/></td>
+                        <td><span t-field="l.date_from" t-options='{"widget": "date"}'/> - <span t-field="l.date_to" t-options='{"widget": "date"}'/></td>
+                        <td class="text-center"><span t-field="l.status"/></td>
+                        <td class="text-center"><span t-field="l.state"/></td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+    <template id="payslip_portal_template" name="Boleta de Pago" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+            <t t-set="o_portal_fullwidth_alert">
+                <t t-call="portal.portal_back_in_edit_mode">
+                    <t t-set="backend_url" t-value="'/web#model=%s&amp;id=%s&amp;view_type=form' % (payslip._name, payslip.id)"/>
+                </t>
+            </t>
+            <div class="row mt16 o_portal_sale_sidebar">
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-lg-auto d-print-none'"/>
+                    <t t-set="title">
+                        <h2 class="mb-0">
+                            <b t-field="payslip.name"/>
+                        </h2>
+                    </t>                        
+                    <t t-set="entries">
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1">
+                                <a t-if="(payslip.status == 'to_sign') and (payslip.state == 'validated' or payslip.state == 'paid')" role="button" class="btn btn-primary btn-block mb8" style="color:#FFFFFF;" data-bs-toggle="modal" data-bs-target="#modalaccept">
+                                    <i class="fa fa-check"/> Aceptar y Firmar
+                                </a>  
+                                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                    <div class="btn-group  flex-grow-1 mr-1 mb-1">
+                                        <a class="btn btn-secondary btn-block o_download_btn" t-att-href="payslip.get_portal_url(report_type='pdf', download=True)" title="Download">
+                                            <i class="fa fa-download"/> Descargar
+                                        </a>
+                                    </div>
+                                    <div class="btn-group flex-grow-1 mb-1">
+                                        <a class="btn btn-secondary btn-block o_print_btn o_portal_payslip_print" t-att-href="payslip.get_portal_url(report_type='pdf')" id="print_payslip_report" title="Print" target="_blank">
+                                            <i class="fa fa-print"/> Imprimir
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li t-if="payslip" class="list-group-item flex-grow-1">
+                                <div class="small mb-1">
+                                    <strong class="text-muted">RRHH</strong>
+                                </div>
+                                <div class="row flex-nowrap">
+                                    <div class="col flex-grow-0 pr-2">
+                                        <img class="rounded-circle mr4 float-left o_portal_contact_img" t-att-src="image_data_uri(payslip.employee_id.avatar_1024)" alt="Contact"/>
+                                    </div>
+                                    <div class="col pl-0" style="min-width: 150px">
+                                        <span t-field="payslip.employee_id.user_id" t-options='{"widget": "contact", "fields": ["name", "phone"], "no_marker": True}'/>
+                                        <a href="#discussion" class="small">
+                                            <i class="fa fa-comment"></i> Enviar mensaje</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </t>
+                </t>
+                <div id="quote_content" class="col-12 col-lg justify-content-end">
+                    <!-- Here you can go a personalized report for the payment slip in the web portal -->
+                    <!--<div class="o_portal_html_view shadow p-3">
+                        <t t-call="voucher_sending.payslip_portal_content"/>
+                    </div>-->
+                    <!-- modal relative to the actions sign and pay -->
+                    <div role="dialog" class="modal fade" id="modalaccept">
+                        <div class="modal-dialog" t-if="payslip.status != 'signed'">
+                            <form id="accept" method="POST" t-att-data-order-id="payslip.id" t-att-data-token="payslip._portal_ensure_token()" class="js_accept_json modal-content js_website_submit_form">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <header class="modal-header">
+                                    <h4 class="modal-title">Firmar nómina</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
+                                </header>
+                                <main class="modal-body" id="sign-dialog">
+                                    <p>
+                                        <span>Al firmar la propuesta debe aceptar los siguientes términos: </span>
+                                        <ul>
+                                            <li><span>Aceptar a razón de:</span> <b t-field="payslip.company_id.name"/></li>
+                                            <li><span>Por la cantidad de:</span> <b data-id="total_amount" t-field="payslip.net_wage"/></li>
+                                        </ul>
+                                    </p>
+                                    <t t-call="portal.signature_form">
+                                        <t t-set="call_url" t-value="payslip.get_portal_url(suffix='/accept')"/>
+                                        <t t-set="default_name" t-value="payslip.employee_id.name"/>
+                                        <t t-set="mode" t-value="'draw'"/>
+                                    </t>
+                                </main>
+                            </form>
+                        </div>
+                    </div>
+                    <t t-if="payslip.status == 'signed'">
+                        <center>
+                            <div class="o_portal_html_view shadow p-3">
+                                <br/><br/><br/><br/><br/>
+                                <h3><b>LA BOLETA DE PAGO FUE FIRMADA Y ENVIADA</b></h3>
+                                <br/><br/><br/><br/><br/>
+                            </div>
+                        </center>                        
+                    </t>
+                    <t t-else="">
+                        <center>
+                            <div class="o_portal_html_view shadow p-3">
+                                <br/><br/><br/><br/><br/>
+                                <h3><b>LA BOLETA AÚN NO ESTA FIRMADA</b></h3>
+                                <br/><br/><br/><br/><br/>
+                            </div>
+                        </center> 
+                    </t>
+                    <div id="payslip_communication" class="mt-4">
+                        <h2>Historial</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="payslip"/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

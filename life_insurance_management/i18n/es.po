@@ -1,0 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* life_insurance_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 15:00+0000\n"
+"PO-Revision-Date: 2026-02-26 15:00+0000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+msgid "Life insurance?"
+msgstr "¿Seguro de vida?"
+
+msgid "Indicates if the employee has a life insurance policy."
+msgstr "Indica si el empleado tiene una póliza de seguro de vida."
+
+msgid "Life insurance policy"
+msgstr "Póliza de seguro de vida"
+
+msgid "Select the life insurance policy associated with the employee."
+msgstr "Seleccione la póliza de seguro de vida asociada con el empleado."
+
+msgid "Save employee in the policy"
+msgstr "Guardar empleado en la póliza"
+
+msgid "Click to save and associate the employee to the selected life insurance policy."
+msgstr "Haga clic para guardar y asociar el empleado a la póliza de seguro de vida."
+
+msgid "Life insurance"
+msgstr "Vida ley"
+
+msgid "Life Insurance"
+msgstr "Vida ley"
+
+msgid "Policy Name"
+msgstr "Nombre de póliza"
+
+msgid "Name or reference of the life insurance policy."
+msgstr "Nombre o referencia de la póliza de seguro de vida."
+
+msgid "Entities"
+msgstr "Entidades"
+
+msgid "Contact or entity providing the life insurance."
+msgstr "Contacto o entidad que proporciona el seguro de vida."
+
+msgid "Policy Number"
+msgstr "N° Póliza"
+
+msgid "Unique number of the life insurance policy."
+msgstr "Número único de la póliza de seguro de vida."
+
+msgid "Validity Start Date"
+msgstr "Fecha inicio vigencia"
+
+msgid "Start date of the insurance policy validity."
+msgstr "Fecha de inicio de la vigencia de la póliza de seguro."
+
+msgid "Validity End Date"
+msgstr "Fecha fin vigencia"
+
+msgid "End date of the insurance policy validity."
+msgstr "Fecha de fin de la vigencia de la póliza de seguro."
+
+msgid "Hiring Term"
+msgstr "Plazo de contratación"
+
+msgid "Term or duration of the life insurance hiring."
+msgstr "Plazo o duración de la contratación del seguro de vida."
+
+msgid "Rate"
+msgstr "Tasa"
+
+msgid "Rate applied to the life insurance policy."
+msgstr "Tasa aplicada a la póliza de seguro de vida."
+
+msgid "Amount"
+msgstr "Importe"
+
+msgid "Amount covered by the life insurance."
+msgstr "Importe cubierto por el seguro de vida."
+
+msgid "Employees"
+msgstr "Empleados"
+
+msgid "List of employees covered by this life insurance policy."
+msgstr "Lista de empleados cubiertos por esta póliza de seguro de vida."
+
+msgid "Employee %s has date conflicts with other insurances."
+msgstr "El empleado %s tiene conflictos de fechas con otros seguros."
+
+msgid "Pending life insurance"
+msgstr "Seguro de vida pendiente"

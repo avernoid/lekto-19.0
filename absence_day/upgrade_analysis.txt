@@ -1,0 +1,152 @@
+===================================================================
+ UPGRADE ANALYSIS — absence_day (19.0.1.0.0 → 19.0.2.0.0)
+===================================================================
+
+---Models in module 'absence_day'---
+DEL model hr_contract        (removed in prior migration, no longer relevant)
+DEL model hr.work.entry.type (removed: only added translate=True to 'name' field, which is NATIVE in Odoo 19)
+
+---Fields in module 'absence_day'---
+(no custom fields remain — module is now data-only)
+
+---XML records in module 'absence_day'---
+DEL view  hr_contract_update_wizard_form_view  (removed in prior migration)
+KEEP view  resource_calendar_views.xml          (kept: adds "Global Time Off" inline tab to resource.calendar form — uses native models, provides convenient UX alongside native "Public Holidays" button)
+KEEP data hr_work_entry_type_data.xml          (3 records: WORKD, WORKG, WORKN — essential for Peruvian payroll)
+
+---Dependency changes---
+KEEP depends hr_payroll   (required: provides round_days/round_days_type fields on hr.work.entry.type used by WORKG record)
+ADD depends hr_work_entry (provides hr.work.entry.type base model)
+
+---Data records preserved (hr_work_entry_type_data.xml)---
+KEEP absence_day.hr_work_entry_type_ddo   code=WORKD  "Days off"     (weekly rest day / DSO for Peruvian payroll)
+KEEP absence_day.hr_work_entry_type_glo   code=WORKG  "Global Leave" (public holidays)
+KEEP absence_day.hr_work_entry_type_nig   code=WORKN  "Night shift"  (night shift entries)
+
+---Rationale---
+1. The model override (hr.work.entry.type with translate=True on 'name') is native in Odoo 19.
+   ACTION: Removed models/ directory entirely. No migration needed — field already exists natively.
+
+2. The resource_calendar_views.xml adds a "Global Time Off" tab via XPath inheritance.
+   Odoo 19 provides similar native access via the "Public Holidays" button on resource.calendar.
+   ACTION: Kept view. It writes to native models (resource.calendar.leaves) and offers a
+   convenient inline UX for managing global leaves directly from the calendar form.
+
+3. The hr_payroll dependency is required because the WORKG work entry type record
+   uses round_days and round_days_type fields that are added by hr_payroll.
+   Without it, the data XML fails to load.
+
+---Impact on downstream modules---
+IMPORTANT: absence_manager depends on absence_day solely for the XML ID
+  'absence_day.hr_work_entry_type_ddo' (WORKD record).
+  This XML ID is PRESERVED — no changes needed in absence_manager.
+
+---Files summary---
+REMOVED  models/__init__.py
+REMOVED  models/hr_work_entry_type.py
+KEPT     views/resource_calendar_views.xml
+KEPT     data/hr_work_entry_type_data.xml
+MODIFIED __init__.py           (removed 'from . import models')
+MODIFIED __manifest__.py       (version, depends, data list, summary, description, price)
+
+
+===================================================================
+ UPGRADE ANALYSIS — absence_day (19.0.2.0.0 → 19.0.3.0.0)
+===================================================================
+
+---Purpose---
+Migrate the 'code' field on hr.leave.type and the PPD leave type record
+from absence_manager to absence_day. This reduces coupling so that
+filter_payroll can depend on absence_day instead of absence_manager.
+
+---Models in module 'absence_day'---
+ADD model hr.leave.type (inherit)  — adds 'code' Char field
+
+---Fields in module 'absence_day'---
+ADD hr.leave.type.code  Char  "Code"
+    Short internal identifier for leave types (e.g., 'PPD', '20').
+    Used by payroll rules and filters for programmatic classification.
+    Migrated from: absence_manager.models.hr_leave_type
+
+---XML records in module 'absence_day'---
+ADD data  hr_leave_type_data.xml
+    absence_day.hr_leave_type_ppd  "Pendiente por determinar"  code=PPD
+    Default placeholder leave type for unclassified absences.
+    requires_allocation=no, leave_validation_type=both, company_id=False (global).
+    Migrated from: absence_manager.data.hr_leave_type_data.xml
+
+ADD view  hr_leave_type_views.xml
+    absence_day.hr_leave_type_view_form_inherit_absence_day
+    Inherits hr_holidays.edit_holiday_status_form, adds 'code' field
+    before 'leave_validation_type'.
+    Migrated from: absence_manager.views.hr_leave_type_views.xml
+
+---Dependency changes---
+ADD depends hr_holidays  (provides hr.leave.type model)
+
+---Files summary---
+ADDED    models/__init__.py             (imports hr_leave_type)
+ADDED    __init__.py                    (imports models package)
+ADDED    models/hr_leave_type.py        (code field on hr.leave.type)
+ADDED    data/hr_leave_type_data.xml    (PPD leave type record)
+ADDED    views/hr_leave_type_views.xml  (code field on leave type form)
+MODIFIED __manifest__.py                (version, depends, data list)
+
+---Impact on downstream modules---
+absence_manager:
+  - REMOVED  models/hr_leave_type.py          (field now in absence_day)
+  - REMOVED  data/hr_leave_type_data.xml      (PPD now in absence_day)
+  - MODIFIED models/__init__.py               (removed hr_leave_type import)
+  - MODIFIED models/hr_leave.py               (env.ref → 'absence_day.hr_leave_type_ppd')
+  - MODIFIED __manifest__.py                  (removed data file)
+  - MODIFIED views/hr_leave_type_views.xml    (inherits from absence_day view, no-op)
+
+filter_payroll:
+  - MODIFIED __manifest__.py                  (depends: absence_manager → absence_day)
+  - MODIFIED views/hr_leave_type_views.xml    (inherit_id → absence_day view)
+
+
+===================================================================
+ UPGRADE ANALYSIS — absence_day (19.0.3.0.0 → 19.0.4.0.0)
+===================================================================
+
+---Purpose---
+Migrate the 'is_calc_own_rule' Boolean field on hr.work.entry.type
+from automatic_leave_type to absence_day. This allows filter_payroll
+to drop the automatic_leave_type dependency entirely.
+
+---Models in module 'absence_day'---
+ADD model hr.work.entry.type (inherit)  — adds 'is_calc_own_rule' Boolean field
+
+---Fields in module 'absence_day'---
+ADD hr.work.entry.type.is_calc_own_rule  Boolean  "¿Es calculado por su propia regla?"
+    Flags work entry types that are computed by their own dedicated
+    payroll salary rule instead of the standard attendance rule.
+    Migrated from: automatic_leave_type.models.hr_work_entry_type
+
+---XML records in module 'absence_day'---
+ADD view  hr_work_entry_type_views.xml
+    absence_day.hr_work_entry_type_view_form_inherit_absence_day
+    Inherits hr_work_entry.hr_work_entry_type_view_form, adds
+    'is_calc_own_rule' after 'sequence'.
+    Migrated from: automatic_leave_type.views.hr_work_entry_type_views.xml
+
+---Dependency changes---
+(none — hr_work_entry already in depends)
+
+---Files summary---
+ADDED    models/hr_work_entry_type.py          (is_calc_own_rule on hr.work.entry.type)
+ADDED    views/hr_work_entry_type_views.xml    (field on work entry type form)
+MODIFIED models/__init__.py                    (added hr_work_entry_type import)
+MODIFIED __manifest__.py                       (version, added view file)
+
+---Impact on downstream modules---
+automatic_leave_type:
+  - EMPTIED  models/hr_work_entry_type.py      (field now in absence_day)
+  - EMPTIED  models/__init__.py                (no models to import)
+  - MODIFIED views/hr_work_entry_type_views.xml (inherits from absence_day view, no-op)
+  - MODIFIED __manifest__.py                   (added absence_day to depends)
+
+filter_payroll:
+  - MODIFIED __manifest__.py                   (removed automatic_leave_type from depends)
+  - Final depends: ['absence_day', 'payroll_field']

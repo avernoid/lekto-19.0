@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="work_occupation_view_form" model="ir.ui.view">
+        <field name="name">work.occupation.view.form</field>
+        <field name="model">work.occupation</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="[10-30] Ocupación">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="executive"/>
+                        <field name="employee"/>
+                        <field name="worker"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="work_occupation_view_tree" model="ir.ui.view">
+        <field name="name">work.occupation.view.list</field>
+        <field name="model">work.occupation</field>
+        <field name="arch" type="xml">
+            <list string="[10-30] Ocupación">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="executive"/>
+                <field name="employee"/>
+                <field name="worker"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="holiday_update_wizard_view_form" model="ir.ui.view">
+        <field name="name">holiday_update_wizard</field>
+        <field name="model">holiday.update.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <div class="alert alert-warning mb-0" role="alert">
+                    <p class="mb-1">
+                        <strong>⚠️ ¿Qué hace este wizard?</strong>
+                    </p>
+                    <ul class="mb-1 ps-3">
+                        <li>
+                            Recalcula el <strong>intervalo mensual de acumulación</strong> de todas
+                            las asignaciones de vacaciones activas, usando el valor actual de
+                            <em>Vacation Days per Year</em> de cada empleado.
+                            Úsalo cuando hayas modificado los días de vacaciones anuales de uno o
+                            más empleados y necesites que las acumulaciones ya generadas reflejen
+                            el nuevo valor.
+                        </li>
+                        <li>
+                            <strong>Fecha:</strong> solo se actualizarán las acumulaciones cuya
+                            fecha sea <strong>mayor o igual</strong> a la fecha ingresada.
+                            Las acumulaciones anteriores a esa fecha <strong>no se modificarán</strong>,
+                            preservando el historial ya generado.
+                        </li>
+                    </ul>
+                    <p class="mb-0 text-muted">
+                        <small>El recalculo afecta a todos los empleados activos de la empresa con fecha de inicio de servicio registrada.</small>
+                    </p>
+                </div>
+                <group>
+                    <group>
+                        <field name="date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Generar" name="action_generate_holidays" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_holiday_update_wizard" model="ir.actions.act_window">
+        <field name="name">Actualizar días de vacaciones</field>
+        <field name="res_model">holiday.update.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem 
+        id="hr_holidays_menu_update_holidays"
+        name="Actualizar días de vacaciones"
+        parent="hr_holidays.menu_hr_holidays_configuration"
+        action="action_holiday_update_wizard"
+        sequence="50"
+    />
+
+</odoo>

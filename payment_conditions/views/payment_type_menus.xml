@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <record id="action_payment_type" model="ir.actions.act_window">
+        <field name="name">[16] Tipo de pago</field>
+        <field name="res_model">payment.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_localization_payment_type"
+              name="[16] Tipo de pago"
+              parent="l10n_pe_localization_menu.menu_hr_information_plame"
+              action="action_payment_type"
+              sequence="16"
+    />
+
+</odoo>

@@ -1,5 +1,6 @@
 # Spanish translation for personal_information
 #
+#. module: personal_information
 msgid ""
 msgstr ""
 "Project-Id-Version: personal_information 19.0\n"
@@ -16,121 +17,211 @@ msgstr ""
 
 #. module: personal_information
 #: model:ir.model.fields,field_description:personal_information.field_hr_employee__firstname
-#: model:ir.model.fields,field_description:personal_information.field_hr_employee__lastname
-#: model:ir.model.fields,field_description:personal_information.field_hr_employee__secondname
 msgid "First Name"
 msgstr "Nombres"
 
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee__lastname
 msgid "Paternal Lastname"
 msgstr "Apellido Paterno"
 
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee__secondname
 msgid "Maternal Lastname"
 msgstr "Apellido Materno"
-
-msgid "Full Name"
-msgstr "Nombre Completo"
-
-msgid "Relatives"
-msgstr "Parientes"
-
-msgid "Relative Name"
-msgstr "Nombre de Pariente"
-
-msgid "This field is updated from the \"Relatives\" tab."
-msgstr "Este campo se actualiza desde la pestaña 'Parientes'."
 
 #. module: personal_information
 #: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__name
 msgid "Name"
 msgstr "Nombre"
 
-msgid "Full name of the relative."
-msgstr "Nombre completo del pariente."
-
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__job
 msgid "Job"
 msgstr "Profesión"
 
-msgid "Job title or occupation of the relative."
-msgstr "Puesto de trabajo u ocupación del pariente."
-
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__phone_number
 msgid "Phone"
 msgstr "Teléfono"
 
-msgid "Contact phone number."
-msgstr "Número de teléfono de contacto."
-
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__date_of_birth
 msgid "Date of Birth"
-msgstr "F. Nac"
+msgstr "Fecha de nacimiento"
 
-msgid "Birthdate of the relative."
-msgstr "Fecha de nacimiento del pariente."
-
-msgid "Gender"
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__sex
+msgid "Sex"
 msgstr "Género"
 
-msgid "Gender of the relative."
-msgstr "Género del pariente."
-
-msgid "Male"
-msgstr "Masculino"
-
-msgid "Female"
-msgstr "Femenino"
-
-msgid "Other"
-msgstr "Otro"
-
-msgid "Notes"
-msgstr "Notas"
-
-msgid "Additional information or comments."
-msgstr "Información adicional o comentarios."
-
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__age
 msgid "Age"
 msgstr "Edad"
 
-msgid "Age calculated based on Date of Birth."
-msgstr "Edad calculada en base a la fecha de nacimiento."
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__notes
+msgid "Notes"
+msgstr "Notas"
 
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__employee_id
 msgid "Employee"
 msgstr "Empleado"
 
-msgid "Employee related to this person."
-msgstr "Empleado relacionado con esta persona."
-
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__relation_id
 msgid "Relation"
 msgstr "Parentesco"
 
-msgid "Type of relationship (e.g. Spouse, Child)."
-msgstr "Tipo de relación (ej. Cónyuge, Hijo)."
-
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_hr_employee_relative__partner_id
 msgid "Contact"
 msgstr "Contacto"
 
+#. module: personal_information
+msgid "Full name of the relative."
+msgstr "Nombre completo del pariente."
+
+#. module: personal_information
+msgid "Job title or occupation of the relative."
+msgstr "Puesto de trabajo u ocupación del pariente."
+
+#. module: personal_information
+msgid "Contact phone number."
+msgstr "Número de teléfono de contacto."
+
+#. module: personal_information
+msgid "Birthdate of the relative."
+msgstr "Fecha de nacimiento del pariente."
+
+#. module: personal_information
+msgid "Sex of the relative."
+msgstr "Género del pariente."
+
+#. module: personal_information
+msgid "Age calculated based on Date of Birth."
+msgstr "Edad calculada en base a la fecha de nacimiento."
+
+#. module: personal_information
+msgid "Employee related to this person."
+msgstr "Empleado relacionado con esta persona."
+
+#. module: personal_information
+msgid "Type of relationship (e.g. Spouse, Child)."
+msgstr "Tipo de relación (ej. Cónyuge, Hijo)."
+
+#. module: personal_information
 msgid "Linked contact in the system."
 msgstr "Contacto vinculado en el sistema."
+
+#. module: personal_information
+msgid "Additional information or comments."
+msgstr "Información adicional o comentarios."
+
+#. module: personal_information
+msgid "Male"
+msgstr "Masculino"
+
+#. module: personal_information
+msgid "Female"
+msgstr "Femenino"
+
+#. module: personal_information
+msgid "Other"
+msgstr "Otro"
+
+#. module: personal_information
+msgid "Gender"
+msgstr "Género"
+
+#. module: personal_information
+#: model:ir.model.fields.selection,name:personal_information.selection__hr_employee_relative__sex__male
+msgid "Male"
+msgstr "Masculino"
+
+#. module: personal_information
+#: model:ir.model.fields.selection,name:personal_information.selection__hr_employee_relative__sex__female
+msgid "Female"
+msgstr "Femenino"
+
+#. module: personal_information
+#: model:ir.model.fields.selection,name:personal_information.selection__hr_employee_relative__sex__other
+msgid "Other"
+msgstr "Otro"
+
+#. module: personal_information
+msgid "Sex of the relative."
+msgstr "Género del pariente."
 
 #. module: personal_information
 #: model:ir.model.fields,field_description:personal_information.field_res_company__generate_legal_name
 msgid "Auto-generate Legal Name"
 msgstr "Autogenerar Nombre Legal"
 
-msgid "If checked, the Legal Name will be automatically generated from the Firstname and Lastnames."
-msgstr "Si está marcado, el Nombre Legal se generará automáticamente a partir de los Nombres y Apellidos."
+
+#. module: personal_information
+msgid "If enabled, the \"Legal Name\" field of the employee will be automatically updated whenever \"First Name\", \"Paternal Lastname\" or \"Maternal Lastname\" are modified. The result is the concatenation: First Name + Paternal Lastname + Maternal Lastname."
+msgstr "Si está activado, el campo \"Nombre Legal\" del empleado se actualizará automáticamente cada vez que se modifiquen \"Nombres\", \"Apellido Paterno\" o \"Apellido Materno\". El resultado es la concatenación: Nombres + Apellido Paterno + Apellido Materno."
+
+#. module: personal_information
+msgid "If enabled, the Legal Name field is auto-filled using First Name + Paternal Lastname + Maternal Lastname."
+msgstr "Si está activado, el campo Nombre Legal se completa automáticamente con: Nombres + Apellido Paterno + Apellido Materno."
+
+#. module: personal_information
+#: model:ir.model.fields,field_description:personal_information.field_res_company__generate_employee_name
+msgid "Auto-generate Employee Name"
+msgstr "Autogenerar Nombre de Empleado"
+
+#. module: personal_information
+msgid "If enabled, the \"Name\" field of the employee will be automatically updated whenever \"First Name\", \"Paternal Lastname\" or \"Maternal Lastname\" are modified. The result is the concatenation: First Name + Paternal Lastname + Maternal Lastname."
+msgstr "Si está activado, el campo \"Nombre\" del empleado se actualizará automáticamente cada vez que se modifiquen \"Nombres\", \"Apellido Paterno\" o \"Apellido Materno\". El resultado es la concatenación: Nombres + Apellido Paterno + Apellido Materno."
+
+#. module: personal_information
+msgid "If enabled, the Employee Name field is auto-filled using First Name + Paternal Lastname + Maternal Lastname."
+msgstr "Si está activado, el campo Nombre del empleado se completa automáticamente con: Nombres + Apellido Paterno + Apellido Materno."
+
+#. module: personal_information
+msgid "This field is updated from the \"Relatives\" tab."
+msgstr "Este campo se actualiza desde la pestaña \"Parientes\"."
+
+#. module: personal_information
+#: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_view_form_inherit_personal_information
+msgid "Full Name"
+msgstr "Nombre Completo"
+
+#. module: personal_information
+#: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_view_form_inherit_personal_information
+msgid "Relatives"
+msgstr "Parientes"
+
+#. module: personal_information
+#: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_view_search_inherit_personal_information
+msgid "Relative Name"
+msgstr "Nombre de Pariente"
 
 #. module: personal_information
 #: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_relative_view_form
 msgid "e.g. Maria Perez"
 msgstr "Ej. María Pérez"
 
+#. module: personal_information
+#: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_relative_view_form
 msgid "e.g. 999 999 999"
 msgstr "Ej. 999 999 999"
 
+#. module: personal_information
+#: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_relative_view_form
 msgid "e.g. Student"
 msgstr "Ej. Estudiante"
 
+#. module: personal_information
+#: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_relative_view_form
 msgid "Additional information..."
 msgstr "Información adicional..."
 
+#. module: personal_information
+#: model_terms:ir.ui.view,arch_db:personal_information.hr_employee_relative_view_tree
 msgid "View Details"
 msgstr "Ver Detalles"

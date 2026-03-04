@@ -13,7 +13,18 @@
                     <div class="o_setting_right_pane">
                         <label for="generate_legal_name"/>
                         <div class="text-muted">
-                            Si se activa, el campo "Legal Name" del empleado se generará automáticamente usando: Nombres + Ap. Paterno + Ap. Materno.
+                            If enabled, the Legal Name field is auto-filled using First Name + Paternal Lastname + Maternal Lastname.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 o_setting_box" id="generate_employee_name_setting">
+                    <div class="o_setting_left_pane">
+                        <field name="generate_employee_name"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="generate_employee_name"/>
+                        <div class="text-muted">
+                            If enabled, the Employee Name field is auto-filled using First Name + Paternal Lastname + Maternal Lastname.
                         </div>
                     </div>
                 </div>

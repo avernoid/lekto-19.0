@@ -1,0 +1,6 @@
+---Models in module 'type_bank_accounts'---
+---Fields in module 'type_bank_accounts'---
+type_bank_accounts      /res.partner.bank   /partner_id.name -> partner_id.street
+type_bank_accounts      /hr.employee        /address_home_id -> private_street
+---XML records in module 'type_bank_accounts'---
+-----------------------------------------------------------------------------

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="various_data_uit_tree" model="ir.ui.view">
+        <field name="name">various.data.uit.tree</field>
+        <field name="model">various.data.uit</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="register_date"/>
+                <field name="due_date"/>
+                <field name="uit_amount"/>
+                <field name="is_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_uit" model="ir.actions.act_window">
+        <field name="name">Tax Unit (UIT)</field>
+        <field name="res_model">various.data.uit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_UIT"
+              name="Tax Unit (UIT)"
+              parent="various_data.menu_hr_datos_tributarios"
+              action="action_uit"
+    />
+
+</odoo>

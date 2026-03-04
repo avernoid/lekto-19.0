@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="holiday_generator_wizard_view_form" model="ir.ui.view">
+        <field name="name">holiday.generator.wizard.view.form</field>
+        <field name="model">holiday.generator.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="alert alert-info mb-0" role="alert" invisible="is_generated == True">
+                        <p class="mb-1">
+                            <strong>ℹ️ ¿Cómo funciona este wizard?</strong>
+                        </p>
+                        <ul class="mb-1 ps-3">
+                            <li>
+                                <strong>Sin empleados seleccionados:</strong> al hacer clic en
+                                <em>Generar Vacaciones</em>, el sistema procesará
+                                <strong>automáticamente</strong> a todos los empleados que tengan
+                                activado <em>Has Vacations</em> y con <em>Start Vacation Date</em> registrada.
+                            </li>
+                            <li>
+                                <strong>Al hacer clic en "Add a line"</strong> solo se mostrarán
+                                empleados activos que cumplan <strong>ambas</strong> condiciones:
+                                <em>Has Vacations</em> ✔ y <em>Start Vacation Date</em> definida.
+                            </li>
+                            <li>
+                                <strong>Definir periodo:</strong> si activas esta opción y estableces
+                                un rango de fechas (<em>Desde – Hasta</em>), la generación se
+                                limitará únicamente a los periodos anuales comprendidos en esos años.
+                                Si no activas esta opción, se generarán todos los periodos desde la
+                                fecha de inicio del empleado hasta el año actual.
+                            </li>
+                        </ul>
+                        <p class="mb-0 text-muted">
+                            <small>El sistema omite asignaciones que ya existan para el mismo empleado y periodo.</small>
+                        </p>
+                    </div>
+                        <separator string="Empleados" colspan="4"/>
+                        <newline/>
+                        <field name="employees_ids" nolabel="1"
+                               domain="[('has_holidays','=', True),('active','=', True),('vacation_start_date','!=', False)]"
+                               readonly="is_generated == True"/>
+                    <group invisible="is_generated == True">
+                        <field name="set_period"/>
+                        <span class="o_form_label" style="font-weight: bold"
+                              invisible="set_period != True">Periodo
+                        </span>
+                        <span invisible="set_period != True">
+                            <field name="date_from" style="width: 40%;" placeholder="Desde"
+                                   required="set_period == True"/>
+                            -
+                            <field name="date_to" style="width: 40%;" placeholder="Hasta"
+                                   required="set_period == True"/>
+                        </span>
+                    </group>
+                    <field name="is_generated" invisible="1"/>
+                </sheet>
+                <footer>
+                    <button string="Generar Vacaciones" name="action_generate_holidays" type="object"
+                            default_focus="1"
+                            class="oe_highlight" invisible="is_generated == True"/>
+                    <button string="Cerrar" name="action_close_and_reload_employee" type="object"
+                            class="oe_highlight" invisible="is_generated == False"/>
+                    <button string="Cancelar" class="oe_link" special="cancel"
+                            invisible="is_generated == True"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_holiday_generator_wizard" model="ir.actions.act_window">
+        <field name="name">Generador de vacaciones</field>
+        <field name="res_model">holiday.generator.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,337 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* eps_process
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 12:00+0000\n"
+"PO-Revision-Date: 2026-02-26 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__since
+msgid "Since"
+msgstr "Desde"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__since
+msgid "Start date of the EPS credit period."
+msgstr "Fecha de inicio del período del crédito de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__until
+msgid "Until"
+msgstr "Hasta"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__until
+msgid "End date of the EPS credit period."
+msgstr "Fecha de fin del período del crédito de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__affiliated_workers
+msgid "Number of EPS Affiliated Workers"
+msgstr "Número de Trabajadores Afiliados a la EPS"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__affiliated_workers
+msgid "Total number of workers affiliated to the EPS during this period."
+msgstr "Número total de trabajadores afiliados a la EPS durante este período."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__computable_remuneration_health_input
+msgid "Computable Remuneration Health Input (All EPS Affiliates)"
+msgstr "Remuneración Computable Aporte EsSalud (Todos Afiliados EPS)"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__computable_remuneration_health_input
+msgid "Total computable remuneration for health contributions of all EPS affiliated workers."
+msgstr "Remuneración computable total para aportes de salud de todos los trabajadores afiliados a la EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__eps_credit
+msgid "EPS Credit"
+msgstr "Crédito EPS"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__eps_credit
+msgid "Calculated EPS credit amount based on health contributions."
+msgstr "Monto de crédito EPS calculado en base a las contribuciones de salud."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__eps_service_cost
+msgid "EPS Service Cost of Affiliated Workers (Includes Tax)"
+msgstr "Costo del Servicio EPS de los Trabajadores Afiliados (Incluye IGV)"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__eps_service_cost
+msgid "Cost of the EPS service billed for the workers during the period, including applicable taxes."
+msgstr "Costo del servicio de EPS facturado a los trabajadores durante el período, incluyendo impuestos."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__uit
+msgid "Tax Unit (UIT)"
+msgstr "Unidad Impositiva Tributaria (UIT)"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__uit
+msgid "Tax Unit (UIT) value applicable for the period's calculations."
+msgstr "Valor de la UIT aplicable para los cálculos del período."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__uit_limit_affiliated_workers
+msgid "10% Tax Unit Limit x Number of EPS Affiliated Workers"
+msgstr "Límite del 10% de la UIT x N° Trabajadores Afiliados"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__uit_limit_affiliated_workers
+msgid "Calculated limit based on 10% of the Tax Unit per affiliated worker."
+msgstr "Límite calculado en base al 10% de la UIT por trabajador afiliado."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__adjustment
+msgid "Adjustment"
+msgstr "Ajuste"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__adjustment
+msgid "Manual adjustment for the final EPS credit if necessary."
+msgstr "Ajuste manual para el crédito final de EPS si es necesario."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_credit__final_eps_credit
+msgid "Final EPS Credit"
+msgstr "Crédito EPS Final"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_credit__final_eps_credit
+msgid "Final EPS credit applicable after considering limits and adjustments."
+msgstr "Crédito final de EPS a aplicar tras considerar límites y ajustes."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__star_date
+msgid "Start Date"
+msgstr "Fecha de Inicio"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__star_date
+msgid "Start date of the EPS policy."
+msgstr "Fecha de inicio de la póliza de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__finish_date
+msgid "End Date"
+msgstr "Fecha de Finalización"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__finish_date
+msgid "End date of the EPS policy."
+msgstr "Fecha de finalización de la póliza de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__entity
+msgid "Entity Name"
+msgstr "Nombre de Entidad"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__entity
+msgid "Name of the EPS entity or provider."
+msgstr "Nombre de la entidad proveedora de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__partner_id
+msgid "Entity"
+msgstr "Entidad"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__partner_id
+msgid "Contact related to the EPS provider."
+msgstr "Contacto relacionado a la entidad proveedora de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__insurance
+msgid "Policy Number"
+msgstr "N° de Póliza"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__insurance
+msgid "Number of the insurance policy."
+msgstr "Número de la póliza de seguro."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__rate_employer
+msgid "Employer Rate (%)"
+msgstr "Tasa Empleador (%)"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__rate_employer
+msgid "Percentage of the policy cost covered by the employer."
+msgstr "Porcentaje del costo de la póliza asumido por el empleador."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__amount_employer
+msgid "Employer Amount"
+msgstr "Importe Empleador"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__amount_employer
+msgid "Fixed amount of the policy cost covered by the employer."
+msgstr "Monto fijo del costo de la póliza asumido por el empleador."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__rate_worker
+msgid "Worker Rate (%)"
+msgstr "Tasa Trabajador (%)"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__rate_worker
+msgid "Percentage of the policy cost covered by the worker."
+msgstr "Porcentaje del costo de la póliza asumido por el trabajador."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__amount_worker
+msgid "Worker Amount"
+msgstr "Importe Trabajador"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__amount_worker
+msgid "Fixed amount of the policy cost covered by the worker."
+msgstr "Monto fijo del costo de la póliza asumido por el trabajador."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_eps_management__employeer_ids
+msgid "Employees"
+msgstr "Empleados"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_eps_management__employeer_ids
+msgid "Employees affiliated to this EPS policy."
+msgstr "Empleados afiliados a esta póliza de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_hr_employee__exists_eps
+msgid "Exists EPS"
+msgstr "EPS"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_hr_employee__exists_eps
+msgid "Check this box if the employee is enrolled in an EPS plan."
+msgstr "Marque esta casilla si el empleado está afiliado a un plan de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_hr_employee__management_eps
+msgid "EPS Policy"
+msgstr "Póliza EPS"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_hr_employee__management_eps
+msgid "Select the active EPS policy for this employee."
+msgstr "Seleccione la póliza activa de EPS para este empleado."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_hr_employee_relative__percentage_eps
+msgid "EPS (%)"
+msgstr "% EPS"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_hr_employee_relative__percentage_eps
+msgid "Percentage of EPS coverage for the relative."
+msgstr "Porcentaje de cobertura de EPS para el familiar."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_hr_employee_relative__tax_eps
+msgid "EPS Tax"
+msgstr "Imp. EPS"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_hr_employee_relative__tax_eps
+msgid "Tax amount for EPS."
+msgstr "Monto de impuesto para EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_hr_employee_relative__payer_eps
+msgid "EPS Payer"
+msgstr "Pagador EPS"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_hr_employee_relative__payer_eps
+msgid "Indicates if this relative is the payer of the EPS."
+msgstr "Indica si este familiar es el pagador titular de la EPS."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_hr_employee_relative__disability
+msgid "Disability"
+msgstr "Discapacidad"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_hr_employee_relative__disability
+msgid "Indicates if the relative has a disability."
+msgstr "Indica si el familiar tiene alguna discapacidad."
+
+#. module: eps_process
+#: model:ir.model.fields,field_description:eps_process.field_hr_employee_relative__max_age
+msgid "Max Age"
+msgstr "Edad Max"
+
+#. module: eps_process
+#: model:ir.model.fields,help:eps_process.field_hr_employee_relative__max_age
+msgid "Maximum age for EPS coverage."
+msgstr "Edad máxima para cobertura de EPS."
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "Created"
+msgstr "Creado"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "Compute"
+msgstr "Calcular"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "EPS CALCULATION"
+msgstr "CÁLCULO DE LA EPS"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "EPS AFFILIATED WORKERS"
+msgstr "TRABAJADORES AFILIADOS A LA EPS"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "EPS LIMITS"
+msgstr "LÍMITES EPS"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "EPS MANAGEMENT"
+msgstr "GESTIÓN DE LA EPS"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "Employer"
+msgstr "Empleador"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "Worker"
+msgstr "Trabajador"
+
+#. module: eps_process
+#: model:ir.model.fields
+msgid "EPS Management"
+msgstr "Gestión EPS"
+
+#. module: eps_process
+#: code:addons/eps_process/models/eps_management.py:0
+#, python-format
+msgid "El empleado %s tiene conflictos de fechas con otros seguros."
+msgstr "El empleado %s tiene conflictos de fechas con otros seguros."

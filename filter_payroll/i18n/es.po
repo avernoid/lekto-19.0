@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* filter_payroll
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-25 00:00+0000\n"
+"PO-Revision-Date: 2026-02-25 00:00+0000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: filter_payroll
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_attendance__is_social_benefits_license
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave__is_social_benefits_license
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave_type__is_social_benefits_license
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_payslip_worked_days__is_social_benefits_license
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_work_entry_type__is_social_benefits_license
+msgid "Is License for Social Benefits?"
+msgstr "¿Es Licencia para Benef. Sociales?"
+
+#. module: filter_payroll
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_attendance__is_benefits_license_absence
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave__is_benefits_license_absence
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave_type__is_benefits_license_absence
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_payslip_worked_days__is_benefits_license_absence
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_work_entry_type__is_benefits_license_absence
+msgid "Is Absence for Social Benefits?"
+msgstr "¿Es Inasistencia para Benef. Sociales?"
+
+#. module: filter_payroll
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_attendance__is_calc_own_rule
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave__is_calc_own_rule
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave_type__is_calc_own_rule
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_payslip_worked_days__is_calc_own_rule
+msgid "Is calculated by its own rule?"
+msgstr "¿Es calculado por su propia regla?"
+
+#. module: filter_payroll
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_attendance__unpaid
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave__unpaid
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave_type__unpaid
+msgid "Is Unpaid"
+msgstr "Es no Pagada"
+
+#. module: filter_payroll
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_payslip_worked_days__unpaid
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_work_entry_type__unpaid
+msgid "Is Unpaid?"
+msgstr "Es no Pagada?"
+
+#. module: filter_payroll
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_attendance__code_holiday
+#: model:ir.model.fields,field_description:filter_payroll.field_hr_leave__code_holiday
+msgid "Absence Code"
+msgstr "Código ausencia"
+
+#. module: filter_payroll
+#: model:ir.ui.view,arch_db:filter_payroll.hr_attendance_view_search_inherit_filter_payroll
+#: model:ir.ui.view,arch_db:filter_payroll.hr_leave_view_search_inherit_filter_payroll
+msgid "Gratification"
+msgstr "Gratificación"
+
+#. module: filter_payroll
+#: model:ir.ui.view,arch_db:filter_payroll.hr_attendance_view_search_inherit_filter_payroll
+#: model:ir.ui.view,arch_db:filter_payroll.hr_leave_view_search_inherit_filter_payroll
+msgid "CTS"
+msgstr "CTS"

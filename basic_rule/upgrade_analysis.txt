@@ -1,0 +1,11 @@
+---Models in module 'basic_rule'---
+---Fields in module 'basic_rule'---
+- hr.employee -> l10n_pe_microenterprise_manager (Moved from additional_fields_voucher)
+- hr.employee -> advance_percent (Moved to payroll_field)
+- hr.version -> advance_percent (Moved to payroll_field)
+- res.config.settings -> min_payment (Removed, field was defined but never consumed by any salary rule or module)
+- hr.employee -> holidays_per_year (Moved to holiday_process, semantic owner; basic_rule now depends on holiday_process)
+- hr.salary.rule -> apply_advance_payroll (Moved to payroll_field, semantic owner; basic_rule already depended on payroll_field)
+- hr.employee -> age (Moved to payroll_field with safe birthday guard; basic_rule retains AFP logic that consumes it)
+---XML records in module 'basic_rule'---
+- hr_payslip_input_type_nqa_001 (Removed, input no longer injected)

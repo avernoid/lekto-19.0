@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+
+        <record id="variable_payment_1" model="variable.payment">
+            <field name="name">Destajo</field>
+            <field name="code">1</field>
+        </record>
+
+        <record id="variable_payment_2" model="variable.payment">
+            <field name="name">Comisiones</field>
+            <field name="code">2</field>
+        </record>
+
+        <record id="variable_payment_3" model="variable.payment">
+            <field name="name">Ninguno</field>
+            <field name="code">3</field>
+        </record>
+    
+    </data>
+</odoo>

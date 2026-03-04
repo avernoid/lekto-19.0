@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_employee_view_form_inherit_holiday_process" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.holiday_process</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Vacaciones y Asignaciones" name="holiday_page" groups="hr.group_hr_user">
+                    <group string="Parámetros Vacaciones" name="holiday_fields" col="10">
+                        <field name="has_holidays"/>
+                        <field name="vacation_start_date"/>
+                        <field name="holidays_per_year"/>
+                        <field name="additional_days"/>
+                        <button name="action_open_holiday_generator"
+                                string="Generar"
+                                type="object"
+                                class="oe_highlight"
+                                icon="fa-magic"
+                                invisible="not has_holidays"
+                                colspan="2"/>
+                    </group>
+
+                    <field name="hr_allocation_ids"
+                           domain="[('employee_id', '=', context.get('active_id')),('is_holiday', '=', True)]">
+                        <list delete="false">
+                            <field name="from_date"/>
+                            <field name="to_date"/>
+                            <field name="holiday_status_id"/>
+                            <field name="computed_holiday"/>
+                            <field name="used_holiday"/>
+                            <field name="pending_holiday"/>
+                            <field name="state"/>
+                            <field name="employee_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

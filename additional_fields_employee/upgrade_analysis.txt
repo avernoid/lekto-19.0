@@ -1,0 +1,83 @@
+---Models in module 'additional_fields_employee'---
+---Fields in module 'additional_fields_employee'---
+---XML records in module 'additional_fields_employee'---
+----------------------------------------------------------------
+DEPENDS [ hr_payroll ]
+model:  hr_version
+field:  academic_degree_id,
+        health_regime_id,
+        labor_regime_id,
+        labor_condition_id,
+        maximum_working_day,
+        atypical_cumulative_day,
+        nocturnal_schedule,
+        unionized,
+        is_practitioner,
+        work_occupation_id
+
+DEPENDS [ hr ]
+model:  hr_employee
+field:  (all above as related/inherited from hr.version)
+xml_id: 
+        hr.view_employee_form
+
+DEPENDS [ l10n_pe_localization_menu ]
+model:  account_spot_detraction
+field:  name
+xml_id: 
+
+model:  account_spot_retention
+field:  name
+xml_id: 
+
+model:  code_aduana
+field:  name,
+        code
+xml_id: 
+
+================================================================
+MIGRATION LOG
+================================================================
+
+## 19.0.1.0.2 → 19.0.1.0.3
+
+### Disability field migrated to payroll_field
+- REMOVED field `disability` from hr.version and hr.employee (models/hr_employee.py)
+- ADDED dependency on `payroll_field` (now provides the `disability` field)
+- REMOVED `disability` reference from tests/test_hr_employee.py setUp
+
+### Rationale
+payroll_field is a generic payroll module that uses the `disability` field in its
+salary rule calculations. It should not depend on additional_fields_employee
+(a Peruvian localization module). The dependency was inverted: additional_fields_employee
+now depends on payroll_field, and the `disability` field remains visible in the
+employee form view via the transitive dependency.
+
+## 19.0.1.0.3 → 19.0.1.0.4
+
+### Removed obsolete hr_contract test dependency
+- DELETED tests/test_hr_contract.py (imported from odoo.addons.hr_contract which no longer exists in Odoo 19)
+- REMOVED hr_contract dependency from upgrade_analysis (fields migrated to hr.version)
+- REWRITTEN tests/test_hr_employee.py as TransactionCase with 12 tests covering:
+  master data CRUD, hr.version fields, employee→version inherited propagation, custom fields
+
+### Rationale
+In Odoo 19, hr_contract was absorbed into hr_payroll. The module's contract-related
+fields had already been migrated to hr.version, but the test file still imported
+TestContractCommon from the non-existent hr_contract module, causing ModuleNotFoundError
+on Odoo.sh deployment.
+
+## 19.0.1.0.4 → 19.0.1.0.5
+
+### Removed 12 custom fields (Custom Field 1-4)
+- REMOVED fields from hr.version: fields_1_str, fields_2_str, fields_3_str, fields_4_str,
+  fields_1_value, fields_2_value, fields_3_value, fields_4_value,
+  fields_1_active, fields_2_active, fields_3_active, fields_4_active
+- REMOVED same 12 related/inherited fields from hr.employee
+- REMOVED "Other" section xpath from hr_employee_views.xml
+- REMOVED 3 test methods: test_custom_char_fields, test_custom_float_fields, test_custom_boolean_fields
+
+### Rationale
+Odoo 19 introduces a new rule inclusion mechanism within the employee model,
+making these 4 generic custom field groups unnecessary. Salary rules can now
+reference employee data directly without helper fields.

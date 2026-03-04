@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payslip_worked_days_view_search_inherit_filter_payroll" model="ir.ui.view">
+        <field name="name">hr.payslip.worked_days.view.search.inherit.filter_payroll</field>
+        <field name="model">hr.payslip.worked_days</field>
+        <field name="inherit_id" ref="payroll_field.hr_payslip_worked_days_view_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='current_month']" position="before">
+                <separator/>
+                <filter string="CTS" name="cts_filter" domain="['|','|',('code', 'in', ['20']), ('is_social_benefits_license','=', True), ('is_benefits_license_absence','=', True)]"/>
+                <separator/>
+                <filter string="Gratificación" name="grati_filter" domain="['|', ('is_social_benefits_license','=', True), ('is_benefits_license_absence','=', True)]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

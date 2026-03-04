@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_work_entry_type_view_form_inherit_automatic_leave_type" model="ir.ui.view">
+        <field name="name">hr.work.entry.type.view.form.inherit.automatic_leave_type</field>
+        <field name="model">hr.work.entry.type</field>
+        <field name="inherit_id" ref="absence_day.hr_work_entry_type_view_form_inherit_absence_day"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_calc_own_rule']" position="after">
+                <field name="is_calc_own_rule" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

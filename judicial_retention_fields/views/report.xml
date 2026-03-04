@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_get_judicial_format_hr_payslip" model="ir.actions.server">
+        <field name="name">Judicial R. Format</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_get_judicial_format()</field>
+    </record>
+
+    <record id="paperformat_payslip_judicial_report" model="report.paperformat">
+        <field name="name">Judicial Format - Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="report_judicial_format_hr_payslip" model="ir.actions.report">
+        <field name="name">Judicial R. Format</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">judicial_retention_fields.template_judicial_report</field>
+        <field name="report_file">judicial_retention_fields.template_judicial_report</field>
+        <field name="paperformat_id" ref="judicial_retention_fields.paperformat_payslip_judicial_report"/>
+    </record>
+
+    <template id="judicial_format_payslip_utilities">
+        <t t-if="not o" t-set="o" t-value="doc"/>
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id"
+             t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-raw="0"/>
+        </div>
+    </template>
+
+    <template id="judicial_body">
+        <div class="page">
+            <t t-if="not company">
+                <!-- Multicompany -->
+                <t t-if="company_id">
+                    <t t-set="company" t-value="company_id"/>
+                </t>
+                <t t-elif="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id.sudo()"/>
+                </t>
+                <t t-else="else">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+            </t>
+
+            <div style="width: 100% !important;">
+                <div style="float:left;width: 100%">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 80px;"
+                         alt="Logo"/>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="template_judicial_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="judicial_retention_fields.judicial_format_payslip_utilities">
+                    <div style="font-size:20px!important; width: 100%;;float:center">
+                        <div>
+                            <t t-call="judicial_retention_fields.judicial_body"/>
+                        </div>
+                        <div align="center">
+                            <strong style="font-size:32px">JUDICIAL RETENTION</strong>
+                        </div>
+                        <br/>
+                        <div align="right">
+                            <span>Lima,</span>
+                            <span t-esc="o.date_to.strftime('%d')"/>
+                            <span>of</span>
+                            <span t-esc="o.date_to.strftime('%B')"/>
+                            <span>of</span>
+                            <span t-esc="o.date_to.strftime('%Y')"/>
+                        </div>
+                        <br/>
+                        <div>
+                            <table class="new_table" style="width:100%">
+                                <tr>
+                                    <td>
+                                        <span>Beneficiary:</span>
+                                    </td>
+                                    <td>
+                                        <t t-esc="o._uppercase_beneficiary_name()"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Document Number:</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_id.card_id"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Bank:</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_id.account_number.bank_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Bank Account:</span>
+                                    </td>
+                                    <td>
+                                        <span t-field="o.employee_id.account_number.acc_number"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Currency:</span>
+                                    </td>
+                                    <td>
+                                        <span>SOL</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Paid Amount:</span>
+                                    </td>
+                                    <td>
+                                        <t t-esc="o._get_paid_amount_judicial()"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table class="new_table" style="width:100%">
+                                <tr>
+                                    <td align="center">
+                                        <t t-esc="o._uppercase_beneficiary_name()"/>
+                                    </td>
+                                    <td align="center">
+                                        <t t-esc="o._uppercase_employee_id_name()"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <span>Beneficiary</span>
+                                    </td>
+                                    <td align="center">
+                                        <span>Notified</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_leave_type_view_form_inherit_filter_payroll" model="ir.ui.view">
+        <field name="name">hr.leave.type.view.form.inherit.filter_payroll</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="absence_day.hr_leave_type_view_form_inherit_absence_day"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='code']" position="after">
+                <field name="is_calc_own_rule" invisible="1"/>
+                <field name="is_social_benefits_license" invisible="1"/>
+                <field name="is_benefits_license_absence" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

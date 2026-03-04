@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_holiday_petition_wizard_all,access_holiday_petition_wizard,model_holiday_petition_wizard,base.group_user,1,1,1,1
+access_holiday_generator_wizard_all,access_holiday_generator_wizard,model_holiday_generator_wizard,base.group_user,1,1,1,1
+access_holiday_update_wizard_all,access_holiday_update_wizard,model_holiday_update_wizard,base.group_user,1,1,1,1
+access_hr_leave_payment_all,access_hr_leave_payment,model_hr_leave_payment,base.group_user,1,1,1,1

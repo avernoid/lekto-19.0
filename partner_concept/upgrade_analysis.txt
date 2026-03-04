@@ -1,0 +1,16 @@
+---Models in module 'partner_concept'---
+---Fields in module 'partner_concept'---
+partner_concept      / hr.partner.concept     / salary_rule_id (many2one)          : UPD name field salary_rule -> salary_rule_id
+partner_concept      / hr.partner.concept     / is_debit (float)                   : UPD name field debit       -> is_debit
+partner_concept      / hr.partner.concept     / is_credit (float)                  : UPD name field credit      -> is_credit
+---XML records in module 'partner_concept'---
+DEL ir.model.access:        partner_concept.access_hr_partner_concept_group_all
+UPD ir.ui.view:             partner_concept.hr_partner_concept_form                 -> partner_concept.hr_partner_concept_view_form
+UPD ir.ui.view:             partner_concept.hr_partner_concept_tree                 -> partner_concept.hr_partner_concept_view_tree
+UPD ir.ui.view:             partner_concept.view_employee_form_inherit_partner_con  -> partner_concept.hr_employee_view_form_inherit_partner_concept
+UPD ir.actions.act_window:  partner_concept.hr_partner_concept                      -> partner_concept.hr_partner_concept_action
+----------------------------------------------------------------
+DEPENDS 
+model:HR
+field:
+xml_id: hr.view_employee_form

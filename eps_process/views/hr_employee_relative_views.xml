@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="hr_employee_relative_view_tree_inherit_eps_process" model="ir.ui.view">
+        <field name="name">hr.employee.relative.view.tree.inherit.eps_process</field>
+        <field name="model">hr.employee.relative</field>
+        <field name="inherit_id" ref="personal_information.hr_employee_relative_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='notes']" position="after">
+                    <field name="percentage_eps" />
+                    <field name="tax_eps" />
+                    <field name="payer_eps" />
+                    <field name="disability" />
+                    <field name="max_age" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

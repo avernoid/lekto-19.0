@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judicial Retention Fields | Odoo Payroll App by Ganemo</title>
+    <meta name="description"
+        content="Manage withholdings by judicial process for employees in Odoo Payroll. Efficiently allocate judicial retentions such as child support with custom beneficiaries and payment conditions.">
+    <meta name="keywords"
+        content="Odoo, Payroll, Judicial Retention, Withholdings, Child Support, Alimony, Employees, Ganemo, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'judicial_retention_fields' adds the ability to manage judicial retentions and withholdings
+            directly from the employee record in standard Odoo Payroll. It provides specific fields for judicial
+            retentions,
+            allows configuration of beneficiaries, bank accounts, and payment conditions.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). NOT supported on Odoo Online due to custom
+            code restrictions.
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Judicial Retentions</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Payroll Withholdings Management</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Simplify compliance by configuring judicial withholdings, alimony, and child support seamlessly on
+                    employee profiles. Keep track of beneficiaries and banking details directly in Odoo Payroll.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-gavel mr-2"></i> Easy Compliance</h4>
+                            <p style="text-align: justify;">Manage legal payroll mandates natively. Enter judicial
+                                <strong>Retention Flags</strong>, track beneficiaries, and map directly to specific
+                                payment accounts effortlessly from the employee form.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-university mr-2"></i> Structured Financial Logic
+                            </h4>
+                            <p style="text-align: justify;">Integrates <strong>Bank Accounts</strong> and
+                                <strong>Payment Conditions</strong> dynamically to the retention profile, ensuring
+                                financial traceability when dealing with multiple legal recipients.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup &amp; User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+
+                <!-- ─── CONFIGURATION GUIDE ─── -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide – Per Employee Setup</h3>
+                            <p>Every judicial retention is configured directly on the employee record. Navigate to
+                                <strong>Employees ▸ Employees</strong>, open the target employee, and go to the
+                                <strong>Personal Information</strong> tab. Scroll to the <strong>Judicial
+                                    Processes</strong> group. The fields are organized as follows:
+                            </p>
+
+                            <!-- Step 1 -->
+                            <div class="bg-white p-3 mb-3 shadow-sm"
+                                style="border-radius: 12px; border-left: 4px solid #791d97;">
+                                <h5 style="color:#791d97;"><i class="fa fa-dollar mr-2"></i> Step 1 · Set the Retention
+                                    Amount or Percentage</h5>
+                                <p>Two mutually complementary fields allow you to define the retention economic base.
+                                    Use one or both depending on your salary rule logic:</p>
+                                <ul>
+                                    <li><strong>Judicial Discount</strong> — Fixed monetary amount to be deducted each
+                                        payroll period (e.g., 500.00 S/). Your salary rule references
+                                        <code>employee.judicial_discount</code>.
+                                    </li>
+                                    <li><strong>Judicial Discount Percentage</strong> — Percentage of the calculation
+                                        base (e.g., 33.00 %). Your salary rule references
+                                        <code>employee.judicial_discount_percent</code>. The base is determined by
+                                        <em>Retention Based On</em> (see Step 4).
+                                    </li>
+                                </ul>
+                                <p class="text-muted small"><strong>⚠ Important:</strong> These fields alone do not
+                                    deduct anything automatically. Your company's payroll structure must include a
+                                    dedicated salary rule that reads these values. Contact your implementation team to
+                                    configure the rule if it is not yet present.</p>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div class="bg-white p-3 mb-3 shadow-sm"
+                                style="border-radius: 12px; border-left: 4px solid #3c6dac;">
+                                <h5 style="color:#3c6dac;"><i class="fa fa-user mr-2"></i> Step 2 · Enable and Identify
+                                    the Beneficiary</h5>
+                                <ol>
+                                    <li>Check <strong>Exists Beneficiary?</strong> — This toggle reveals all
+                                        beneficiary-related fields. If the box is unchecked, the beneficiary section
+                                        remains hidden and no beneficiary data will be printed on the judicial report.
+                                    </li>
+                                    <li><strong>Beneficiary</strong> — Select or create the contact (res.partner) who
+                                        will receive the funds (e.g., the child's mother, a court-ordered trust, etc.).
+                                        Use the search bar to find existing contacts. If the beneficiary does not exist,
+                                        create them with the <em>Quick Create</em> button.</li>
+                                    <li><strong>Bond</strong> — Free text field (max 10 characters) specifying the
+                                        relationship: e.g., <em>Child</em>, <em>Spouse</em>, <em>Sibling</em>. This
+                                        appears on the official PDF report.</li>
+                                    <li><strong>Beneficiary Document Type</strong> — Select the ID type from latin
+                                        american document catalog (e.g., DNI, Passport, RUC). This field requires the
+                                        l10n_latam identification module.</li>
+                                    <li><strong>Document Number</strong> — Enter the beneficiary's identification
+                                        number. This value also appears verbatim on the Judicial Retention PDF report.
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div class="bg-white p-3 mb-3 shadow-sm"
+                                style="border-radius: 12px; border-left: 4px solid #9451a5;">
+                                <h5 style="color:#9451a5;"><i class="fa fa-university mr-2"></i> Step 3 · Configure
+                                    Payment Method and Bank Account</h5>
+                                <ol>
+                                    <li><strong>Judicial Payment Type</strong> — Select the payment method. This catalog
+                                        is shared with the <em>payment_conditions</em> module. The value determines
+                                        which payment channel will be used when disbursing the retained funds (e.g.,
+                                        Bank Transfer, Check, Cash).</li>
+                                    <li>When the payment type corresponds to a <strong>bank transfer</strong> (internal
+                                        ID = 2), three additional fields become visible automatically:
+                                        <ul>
+                                            <li><strong>Account Number</strong> — Select the beneficiary's bank account.
+                                                The selector is automatically <strong>filtered to show only accounts
+                                                    belonging to the selected beneficiary</strong>. If no account exists
+                                                yet, click <em>"Create and Edit"</em> — the form will open with the
+                                                beneficiary pre-filled as account owner. Complete the Bank and CCI
+                                                fields and save.</li>
+                                            <li><strong>Bank</strong> — Read-only. Auto-filled from the selected
+                                                account's bank (<code>res.bank</code>). No manual entry needed.</li>
+                                            <li><strong>Interbank Code (CCI)</strong> — Read-only. Auto-filled from the
+                                                CCI field of the selected bank account. This is the standardized
+                                                interbank transfer code used in Peru and other Latin American countries.
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                                <p class="text-muted small"><strong>💡 Tip:</strong> The <strong>PDF report (Judicial R.
+                                        Format)</strong> reads Bank and Bank Account directly from the <em>Account
+                                        Number</em> field selected here — ensuring the report matches exactly what you
+                                    see in the form. If Bank or CCI appear empty, open that account record and verify
+                                    both <strong>Bank</strong> and <strong>CCI</strong> fields are filled in.</p>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div class="bg-white p-3 mb-3 shadow-sm"
+                                style="border-radius: 12px; border-left: 4px solid #3c6dac;">
+                                <h5 style="color:#3c6dac;"><i class="fa fa-calendar mr-2"></i> Step 4 · Set Validity
+                                    Period and Calculation Base</h5>
+                                <ul>
+                                    <li><strong>Valid From / Valid To</strong> — Optional date range. Define the start
+                                        and end dates during which the judicial retention should be applied. If your
+                                        salary rule checks these dates, retentions will only be applied within this
+                                        window. Leaving them empty means the retention is indefinite (managed by your
+                                        salary rule logic).</li>
+                                    <li><strong>Maximum Retention Amount</strong> — Cap to prevent over-withholding.
+                                        When set (e.g., 10,000.00), the salary rule can check this value to ensure the
+                                        cumulative retained amount does not exceed it.</li>
+                                    <li><strong>Retention Based On</strong> — Defines the salary base to apply the
+                                        percentage against. Options:
+                                        <ul>
+                                            <li><em>Total Income</em> — Gross income before any deductions.</li>
+                                            <li><em>Taxable Income (Affection Income)</em> — Income subject to taxes.
+                                            </li>
+                                            <li><em>Non-Taxable Income (Unaffected Income)</em> — Income exempt from
+                                                taxes.</li>
+                                            <li><em>Net Income</em> — Income after all standard deductions are applied.
+                                            </li>
+                                            <li><em>Net Payable Amount</em> — The final amount the employee receives.
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <p class="text-muted small"><strong>⚠ Note:</strong> The <em>Retention Based On</em>
+                                    selection only serves as a reference for your salary rule. The actual calculation
+                                    must be implemented in the payroll salary rule code using
+                                    <code>employee.retention_on</code>.
+                                </p>
+                            </div>
+
+                            <!-- Step 5 -->
+                            <div class="bg-white p-3 mb-3 shadow-sm"
+                                style="border-radius: 12px; border-left: 4px solid #791d97;">
+                                <h5 style="color:#791d97;"><i class="fa fa-file-text mr-2"></i> Step 5 · Settlement
+                                    Retention (Optional)</h5>
+                                <p>Check <strong>Retain from Settlement?</strong> if the judicial retention must also be
+                                    applied when the employee is terminated and receives a final settlement
+                                    (liquidation) payment. When checked, your liquidation salary rule can read
+                                    <code>employee.settlement_retention</code> to decide whether to include this
+                                    deduction in the settlement payslip.
+                                </p>
+                                <p class="text-muted small">Leaving this unchecked is the default behavior and the most
+                                    common scenario — the judicial retention is only applied to regular payroll, not to
+                                    termination settlements.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── OPERATING MANUAL / WORKFLOW ─── -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual — Payroll Workflow</h3>
+
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-play-circle text-primary mr-2"></i> Monthly Payroll Run</h5>
+                                        <ol class="text-muted" style="font-size:14px;">
+                                            <li>Go to <strong>Payroll ▸ Payslips</strong> and generate or open the batch
+                                                for the payroll period.</li>
+                                            <li>For each employee with a judicial retention configured, the relevant
+                                                salary rule will read <code>employee.judicial_discount</code> or
+                                                <code>employee.judicial_discount_percent</code> and deduct the
+                                                appropriate amount.
+                                            </li>
+                                            <li>Validate the payslip as normal. The deduction appears as a salary rule
+                                                line on the payslip.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #9451a5;">
+                                        <h5><i class="fa fa-file-pdf-o mr-2" style="color:#9451a5;"></i> Generating the
+                                            Judicial Retention PDF Report</h5>
+                                        <ol class="text-muted" style="font-size:14px;">
+                                            <li>Go to <strong>Payroll ▸ Payslips</strong>.</li>
+                                            <li>Select one or more payslips (list view) for employees with judicial
+                                                retention.</li>
+                                            <li>Click the <strong>Action</strong> menu (⚙) and select <em>"Judicial R.
+                                                    Format"</em>.</li>
+                                            <li>An official A4 PDF document will be generated containing: Beneficiary
+                                                name, Document number, Bank, Bank account, Currency, Paid amount, and
+                                                signature slots for both Beneficiary and Employee ("Notified").</li>
+                                            <li>Print and file the document as required by the court order. Both the
+                                                beneficiary and the notified employee should sign.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #791d97;">
+                                        <h5><i class="fa fa-users text-primary mr-2"></i> Managing Multiple Retentions
+                                        </h5>
+                                        <p class="text-muted" style="font-size:14px;">Each employee record supports
+                                            <strong>one active judicial retention profile</strong> (one beneficiary). If
+                                            an employee has multiple court orders, consult your implementation partner
+                                            to implement multiple retention salary rules or a custom field strategy,
+                                            since the base module manages one beneficiary per employee.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-balance-scale mr-2" style="color:#3c6dac;"></i> Settlement /
+                                            Liquidation Payroll</h5>
+                                        <p class="text-muted" style="font-size:14px;">When processing an employee
+                                            termination, check whether <strong>Retain from Settlement?</strong> is
+                                            enabled on the employee. If yes, the liquidation salary rule should include
+                                            the judicial retention deduction. If no, the deduction is excluded from the
+                                            final settlement by design.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── QA / USER TESTING SCENARIOS ─── -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Validation cases for Enterprise clients</p>
+                </div>
+                <div class="row mt-4">
+
+                    <!-- Scenario 1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #791d97;">
+                            <h5 style="color:#791d97;"><i class="fa fa-check-square-o mr-2"></i> QA-01 · Basic Field
+                                Visibility Toggle</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify that beneficiary fields are
+                                hidden when "Exists Beneficiary?" is unchecked.</p>
+                            <ol class="small">
+                                <li>Open any employee record → Personal Information → Judicial Processes.</li>
+                                <li>Ensure <em>Exists Beneficiary?</em> is <strong>unchecked</strong>.</li>
+                                <li><strong>Expected:</strong> Fields Beneficiary, Bond, Document Type, Document Number,
+                                    Payment Type, Valid From, Valid To, and Maximum Retention Amount are all
+                                    <strong>hidden</strong>.
+                                </li>
+                                <li>Check <em>Exists Beneficiary?</em>.</li>
+                                <li><strong>Expected:</strong> All the beneficiary-related fields become visible
+                                    immediately without page reload.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #3c6dac;">
+                            <h5 style="color:#3c6dac;"><i class="fa fa-check-square-o mr-2"></i> QA-02 · Bank Account
+                                Selector &amp; Auto-fill</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify that the Account Number
+                                selector is filtered by beneficiary, Bank and CCI auto-fill, and the PDF uses the same
+                                value.</p>
+                            <ol class="small">
+                                <li>Enable <em>Exists Beneficiary?</em>, select a Beneficiary, set Payment Type = bank
+                                    transfer (ID=2).</li>
+                                <li>Click <em>Account Number</em> dropdown. <strong>Expected:</strong> Only bank
+                                    accounts belonging to the selected beneficiary are shown (not the entire system
+                                    catalog).</li>
+                                <li>Select an account that has Bank and CCI registered. <strong>Expected:</strong>
+                                    <em>Bank</em> and <em>Interbank Code (CCI)</em> auto-populate instantly.
+                                </li>
+                                <li>Click <em>Account Number</em> → type a new value → <strong>Expected:</strong> Only
+                                    <em>"Create and Edit"</em> appears (no quick "Create" option).
+                                </li>
+                                <li>Click <em>"Create and Edit"</em>. <strong>Expected:</strong> The bank account form
+                                    opens with <em>Partner</em> pre-filled with the selected beneficiary.</li>
+                                <li>Validate payslip and run <em>Judicial R. Format</em>. <strong>Expected:</strong> PDF
+                                    shows the same Bank and Account Number selected in the employee form.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #9451a5;">
+                            <h5 style="color:#9451a5;"><i class="fa fa-check-square-o mr-2"></i> QA-03 · Judicial
+                                Retention PDF Generation</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify the PDF report generates
+                                correctly from a validated payslip.</p>
+                            <ol class="small">
+                                <li>Configure a full judicial retention on a test employee (beneficiary, document
+                                    number, bank account).</li>
+                                <li>Create and validate a payslip for that employee.</li>
+                                <li>Go to <strong>Payroll ▸ Payslips</strong>, select the validated payslip.</li>
+                                <li>Click Action → <em>Judicial R. Format</em>.</li>
+                                <li><strong>Expected:</strong> A downloadable PDF is generated in A4 Portrait format
+                                    containing: company logo, today's date (from payslip date_to), Beneficiary name (in
+                                    uppercase), Document Number, Bank, Bank Account, Amount (from salary rules DJF_001 /
+                                    DJP_002), and two signature slots: Beneficiary and Notified.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #791d97;">
+                            <h5 style="color:#791d97;"><i class="fa fa-check-square-o mr-2"></i> QA-04 · Fixed Amount
+                                Retention via Salary Rule</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify the fixed-amount judicial
+                                retention is correctly deducted in the payslip.</p>
+                            <ol class="small">
+                                <li>Set <em>Judicial Discount</em> = 800.00 on a test employee.</li>
+                                <li>Ensure the salary rule that reads <code>employee.judicial_discount</code> is active
+                                    in the payroll structure.</li>
+                                <li>Generate and compute the payslip.</li>
+                                <li><strong>Expected:</strong> A line with value −800.00 (or as defined by the rule)
+                                    appears in the payslip lines.</li>
+                                <li>Validate the payslip and regenerate the Judicial PDF — verify amount shown is
+                                    correct.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #3c6dac;">
+                            <h5 style="color:#3c6dac;"><i class="fa fa-check-square-o mr-2"></i> QA-05 · Percentage
+                                Retention with Taxable Income Base</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify percentage-based retention
+                                calculated on taxable income.</p>
+                            <ol class="small">
+                                <li>Set <em>Judicial Discount Percentage</em> = 20.00 and <em>Retention Based On</em> =
+                                    "Taxable Income".</li>
+                                <li>Ensure the salary rule uses
+                                    <code>employee.judicial_discount_percent / 100 * taxable_income_base</code>.
+                                </li>
+                                <li>Compute payslip with a known salary and verify the deducted amount = 20% of the
+                                    taxable income.</li>
+                                <li><strong>Expected:</strong> The result matches the mathematical calculation.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #9451a5;">
+                            <h5 style="color:#9451a5;"><i class="fa fa-check-square-o mr-2"></i> QA-06 · Settlement
+                                Retention Flag</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify the settlement flag correctly
+                                enables/disables judicial retention in liquidation payslips.</p>
+                            <ol class="small">
+                                <li>Set up an employee with a judicial retention and <em>Retain from Settlement?</em> =
+                                    <strong>checked</strong>.
+                                </li>
+                                <li>Process a termination/settlement payslip. <strong>Expected:</strong> Judicial
+                                    deduction line appears.</li>
+                                <li>Uncheck <em>Retain from Settlement?</em>, recompute. <strong>Expected:</strong>
+                                    Judicial deduction line is absent from settlement payslip.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #791d97;">
+                            <h5 style="color:#791d97;"><i class="fa fa-check-square-o mr-2"></i> QA-07 · Validity Period
+                                Enforcement</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Confirm the salary rule correctly
+                                respects the Valid From / Valid To dates.</p>
+                            <ol class="small">
+                                <li>Set <em>Valid From</em> = current month start, <em>Valid To</em> = current month
+                                    end.</li>
+                                <li>Compute payslip for current period → <strong>Expected:</strong> Retention is
+                                    applied.</li>
+                                <li>Change <em>Valid To</em> to a past date (before the payslip period).</li>
+                                <li>Recompute → <strong>Expected:</strong> Retention is NOT applied (if the salary rule
+                                    checks the dates).</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #3c6dac;">
+                            <h5 style="color:#3c6dac;"><i class="fa fa-check-square-o mr-2"></i> QA-08 · Batch PDF
+                                Report for Multiple Employees</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify PDF report generation works
+                                for a batch of payslips.</p>
+                            <ol class="small">
+                                <li>Select 3+ validated payslips (from different employees with judicial retentions) in
+                                    list view.</li>
+                                <li>Action → <em>Judicial R. Format</em>.</li>
+                                <li><strong>Expected:</strong> A single PDF is generated with one page per
+                                    payslip/employee, each containing the correct beneficiary data.</li>
+                                <li>If only payslips without retentions are selected, the PDF should still generate
+                                    (showing blank beneficiary fields or empty amounts).</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 9 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #9451a5;">
+                            <h5 style="color:#9451a5;"><i class="fa fa-check-square-o mr-2"></i> QA-09 · Access Control
+                                – HR Officer Only</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify non-HR users cannot see
+                                judicial retention fields.</p>
+                            <ol class="small">
+                                <li>Log in as a user with only Employee (non-HR Officer) access.</li>
+                                <li>Open an employee record → Personal Information tab.</li>
+                                <li><strong>Expected:</strong> The <em>Judicial Processes</em> group is NOT visible. All
+                                    judicial fields are restricted to <code>hr.group_hr_user</code> and above.</li>
+                                <li>Log in as HR Officer → <strong>Expected:</strong> All fields visible and editable.
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 10 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee; border-top: 4px solid #791d97;">
+                            <h5 style="color:#791d97;"><i class="fa fa-check-square-o mr-2"></i> QA-10 · Maximum
+                                Retention Cap</h5>
+                            <p class="text-muted small"><strong>Objective:</strong> Verify the Maximum Retention Amount
+                                cap works correctly.</p>
+                            <ol class="small">
+                                <li>Set <em>Maximum Retention Amount</em> = 5,000.00 and cumulative retained amount
+                                    exceeds this cap in the salary rule.</li>
+                                <li><strong>Expected:</strong> The salary rule respects the cap and rounds down the
+                                    deduction to not exceed the maximum.</li>
+                                <li>The cap resets or not depending on your salary rule logic — document the expected
+                                    behavior in this test.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── FAQ & TROUBLESHOOTING ─── -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ &amp; Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common questions and solutions</p>
+                </div>
+
+                <div class="row mt-4">
+
+                    <!-- FAQ 1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                "Judicial Processes" group is not visible on the employee form. Why?</h6>
+                            <p class="small text-muted">All judicial retention fields are protected by the
+                                <code>hr.group_hr_user</code> group. Only users with the <strong>HR Officer</strong>
+                                role (or higher) can see and edit these fields. Ask your administrator to assign the
+                                correct role to your user.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> I
+                                configured "Judicial Discount" but nothing is deducted from the payslip. What is
+                                missing?</h6>
+                            <p class="small text-muted">This module provides the <strong>data fields</strong> on the
+                                employee. The actual deduction requires a <strong>salary rule</strong> in your payroll
+                                structure that reads <code>employee.judicial_discount</code>. If no such rule exists,
+                                contact your implementation partner to add it to your salary structure.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> An
+                                employee has two different court orders (two beneficiaries). How do I manage both?</h6>
+                            <p class="small text-muted">The base module manages <strong>one beneficiary per
+                                    employee</strong>. For multiple court orders, you will need a customization: either
+                                duplicate the field set for a second beneficiary or use a One2many relationship. Contact
+                                Ganemo support at <a href="mailto:support@ganemo.com">support@ganemo.com</a> to discuss
+                                the implementation.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                Bank and CCI fields appear empty after selecting an Account Number. How do I fix this?
+                            </h6>
+                            <p class="small text-muted">These fields are computed from the selected bank account record.
+                                Open that account record (via <em>Accounting ▸ Bank Accounts</em> or directly from the
+                                <em>Account Number</em> field using "Create and Edit") and verify: (1) a
+                                <strong>Bank</strong> is linked to the account, and (2) the <strong>CCI</strong>
+                                (Interbank Code) field is filled in. Once both are set, returning to the employee form
+                                and re-selecting the account will auto-populate Bank and CCI. These same values will
+                                also appear correctly on the Judicial Retention PDF.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                "Account Number", "Bank", and "CCI" fields are not visible even with Exists Beneficiary
+                                enabled. Why?</h6>
+                            <p class="small text-muted">These fields only appear when the <em>Judicial Payment Type</em>
+                                selected corresponds to a <strong>bank transfer</strong> (internal ID = 2). For cash or
+                                check payment types the bank fields are intentionally hidden. Switch to a bank transfer
+                                payment type to reveal them. Additionally, the <em>Account Number</em> dropdown will
+                                only list accounts belonging to the currently selected <strong>Beneficiary</strong> — if
+                                the beneficiary has no registered bank accounts yet, the selector will appear empty. Use
+                                <em>"Create and Edit"</em> to add the first account directly from there.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                "Judicial R. Format" action does not appear in the Action menu. Where is it?</h6>
+                            <p class="small text-muted">The server action is bound to the <strong>hr.payslip</strong>
+                                model. It only appears in the <em>Action</em> (⚙) menu when you are on the
+                                <strong>Payroll ▸ Payslips</strong> list view and have at least one payslip selected. It
+                                will not appear on an open single-payslip form view or from other menus.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                Paid Amount in the Judicial PDF shows 0.00. What causes this?</h6>
+                            <p class="small text-muted">The PDF reads the amount from payslip salary rule lines with
+                                codes <strong>DJF_001</strong> or <strong>DJP_002</strong>. If neither of these codes
+                                exists in your payroll structure, the result will be 0.00. Ensure your salary rules for
+                                fixed and percentage judicial retentions use these specific codes. Consult your payroll
+                                configuration team to align the rule codes.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                retention should stop after a specific date, but it keeps being calculated. Why?</h6>
+                            <p class="small text-muted">The "Valid To" date on the employee record is a
+                                <strong>reference field</strong> only. It does not automatically stop the deduction
+                                unless your salary rule code explicitly checks:
+                                <code>employee.end_date and employee.end_date &lt; payslip.date_to</code>. If the rule
+                                does not check this date, the retention will continue indefinitely. Ensure the salary
+                                rule is configured to respect the validity period.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 9 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> Can
+                                this module be used on Odoo Community or Odoo Online (SaaS)?</h6>
+                            <p class="small text-muted">No. This module requires <strong>Odoo Enterprise</strong>
+                                because it extends <em>hr.payslip</em> and <em>hr.employee</em> from the Enterprise
+                                Payroll module (hr_payroll), which is not available on Community. It also requires
+                                custom server-side Python code, which is restricted on Odoo Online (SaaS). It is fully
+                                compatible with <strong>Odoo.SH</strong>, <strong>Ganemo Online</strong>, and
+                                <strong>Ganemo.SH</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 10 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                module installs fine but the "Judicial Processes" group doesn't appear in the employee
+                                form. What could happen?</h6>
+                            <p class="small text-muted">This can happen if the module installed but the view was not
+                                applied correctly. Try: (1) Go to <strong>Settings ▸ Technical ▸ User Interface ▸
+                                    Views</strong> and search for
+                                <code>hr.employee.view.form.inherit.judicial_retention_fields</code>. (2) Verify it is
+                                active and inherits from <code>hr.view_employee_form</code>. (3) If the view appears
+                                broken or inactive, update the module: go to Apps, find <em>Judicial Retention
+                                    Fields</em>, and click <em>Update</em>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 11 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> How
+                                do I remove a judicial retention that has expired from an employee?</h6>
+                            <p class="small text-muted">There is no automatic removal. To deactivate the retention: (1)
+                                Set <em>Valid To</em> to the expiration date (the salary rule should then skip the
+                                deduction). (2) Alternatively, set <em>Judicial Discount</em> and <em>Judicial Discount
+                                    Percentage</em> to 0.00. (3) Or uncheck <em>Exists Beneficiary?</em> to clear all
+                                beneficiary data if the court order has fully concluded. This preserves the historical
+                                record on the employee profile but prevents future deductions.</p>
+                        </div>
+                    </div>
+
+                    <!-- FAQ 12 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100"
+                            style="border-radius: 15px; background: #f7f9fc; border: 1px solid #dee2e6;">
+                            <h6 style="color:#791d97; font-weight:700;"><i class="fa fa-question-circle mr-2"></i> The
+                                "Beneficiary Document Type" field shows no options. Is the module missing something?
+                            </h6>
+                            <p class="small text-muted">The <em>Beneficiary Document Type</em> field uses the
+                                <strong>l10n_latam.identification.type</strong> model, which is populated by Latin
+                                American localization modules (e.g., <code>l10n_pe</code>, <code>l10n_co</code>, etc.).
+                                If no options appear, install the country-specific localization module for your country.
+                                Go to <strong>Apps</strong>, search for your country's localization (e.g., "Peru"), and
+                                install it.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:support@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        support@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_payroll.menu_hr_payslip_line_action_report" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="hr_payroll.menu_hr_payslip_work_days_action_report" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+        <record id="hr_payroll.menu_hr_payslip_input_action_report" model="ir.ui.menu">
+            <field name="active" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

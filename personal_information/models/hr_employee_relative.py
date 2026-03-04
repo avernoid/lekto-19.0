@@ -1,5 +1,5 @@
 from dateutil.relativedelta import relativedelta
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
@@ -24,14 +24,15 @@ class HrEmployeeRelative(models.Model):
         string='Date of Birth',
         help='Birthdate of the relative.'
     )
-    gender = fields.Selection(
-        string='Gender',
+
+    sex = fields.Selection(
+        string='Sex',
         selection=[
-            ('masculino', 'Male'),
-            ('femenino', 'Female'),
-            ('otro', 'Other')
+            ('male', 'Male'),
+            ('female', 'Female'),
+            ('other', 'Other')
         ],
-        help='Gender of the relative.'
+        help='Sex of the relative.'
     )
     notes = fields.Text(
         string='Notes',

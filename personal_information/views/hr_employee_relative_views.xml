@@ -15,7 +15,7 @@
                             <field name="age"/>
                         </group>
                         <group>
-                            <field name="gender"/>
+                            <field name="sex"/>
                             <field name="partner_id" context="{'default_is_company': False, 'default_type': 'contact'}"/>
                             <field name="phone_number" placeholder="e.g. 999 999 999"/>
                             <field name="job" placeholder="e.g. Student"/>
@@ -37,7 +37,7 @@
                 <field name="relation_id"/>
                 <field name="partner_id" optional="hide"/>
                 <field name="name"/>
-                <field name="gender" optional="hide"/>
+                <field name="sex" optional="hide"/>
                 <field name="date_of_birth" optional="show"/>
                 <field name="age" optional="show"/>
                 <field name="phone_number" optional="show"/>

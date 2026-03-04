@@ -1,0 +1,45 @@
+---Models in module 'payment_conditions'---
+---Fields in module 'payment_conditions'---
+---XML records in module 'payment_conditions'---
+----------------------------------------------------------------
+DEPENDS [ hr_payroll ]
+model:  hr_contract
+field:  special_situation_id,
+        payment_type_id,
+        variable_payment_id,
+        schedule_pay_conditions
+xml_id: 
+    hr_payroll.hr_contract_form_inherit
+    hr_payroll.hr_payroll_structure_type_view_tree
+    hr_payroll.hr_payroll_structure_type_view_form
+    hr_payroll.view_hr_employee_grade_form
+
+model: hr_payroll_structure_type
+field:  default_schedule_pay_conditions
+xml_id: 
+    hr_payroll.hr_contract_form_inherit
+    hr_payroll.hr_payroll_structure_type_view_tree
+    hr_payroll.hr_payroll_structure_type_view_form
+    hr_payroll.view_hr_employee_grade_form
+
+model:  hr_payroll_structure
+field:  schedule_pay_conditions
+xml_id: 
+    hr_payroll.hr_contract_form_inherit
+    hr_payroll.hr_payroll_structure_type_view_tree
+    hr_payroll.hr_payroll_structure_type_view_form
+    hr_payroll.view_hr_employee_grade_form
+
+DEPENDS [ localization_menu ]
+model:  account_spot_detraction
+field:  name
+xml_id: 
+    
+model:  account_spot_retention
+field:  name
+xml_id: 
+    
+model:  code_aduana
+field:  name,
+        code
+xml_id: 

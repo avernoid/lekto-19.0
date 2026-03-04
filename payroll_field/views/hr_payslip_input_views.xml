@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_payslip_input_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.input.view.tree</field>
+        <field name="model">hr.payslip.input</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" multi_edit="1">
+                <field name="struct_id" column_invisible="1"/>
+                <field name="date_from" readonly="state not in [False, 'draft','verify']"/>
+                <field name="date_to" readonly="state not in [False, 'draft','verify']"/>
+                <field name="date_start_dt"/>
+                <field name="date_start" column_invisible="1"/>
+                <field name="employee_id" readonly="state not in [False, 'draft','verify']"/>
+                <field name="name" readonly="state not in [False, 'draft','verify']"/>
+                <field name="input_type_id" optional="hidden"/>
+                <field name="_allowed_input_type_ids" column_invisible="1"/>
+                <field name="code" readonly="state not in [False, 'draft','verify']" />
+                <field name="amount" readonly="state not in [False, 'draft','verify']"/>
+                <field name="payslip_id" readonly="state not in [False, 'draft','verify']"/>
+                <field name="state"/>
+                <field name="struct_id" column_invisible="1"/>
+                <field name="department_id" column_invisible="1"/>
+                <field name="disability" column_invisible="1"/>
+                <field name="payslip_run_id" optional="show" readonly="1"/>
+                <button name="get_formview_action" type="object" string="Open Record" icon="fa-external-link" title="Open Form View"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_payslip_input_view_pivot" model="ir.ui.view">
+        <field name="name">hr.payslip.input.view.pivot</field>
+        <field name="model">hr.payslip.input</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="false"/>
+        </field>
+    </record>
+
+    <record id="hr_payslip_input_view_filter" model="ir.ui.view">
+        <field name="name">hr.payslip.input.view.filter</field>
+        <field name="model">hr.payslip.input</field>
+        <field name="arch" type="xml">
+            <search string="Search Payslips Input">
+                <field name="name" string="Nombre"/>
+                <field name="code" string="Código"/>
+                <field name="employee_id" string="Empleado"/>
+                <field name="department_id" string="Departamento"/>
+                <field name="struct_id" string="Estructura"/>
+                <field name="payslip_run_id" string="Lote"/>
+                <filter string="Seis meses anteriores" name="six_month_before" domain="[('id','!=','-1')]"/>
+                <separator/>
+                <filter string="Fecha (Mes Actual)" name="current_month" date="date_to" default_period="month"/>
+                <separator/>
+                <filter string="Borrador" name="draft" domain="[('state','=','draft')]" help="Draft Input"/>
+                <filter string="Hecho" name="done" domain="[('state','=','done')]" help="Done Input"/>
+                <separator/>
+                <filter string="Discapacidad" name="disability" domain="[('disability','=',True)]"/>
+                <group>
+                    <filter string="Lote" name="group_run_id" context="{'group_by':'payslip_run_id'}"/>
+                    <filter string="Tipo de Entrada" name="group_input_type_id" context="{'group_by':'input_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

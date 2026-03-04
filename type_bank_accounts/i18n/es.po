@@ -1,0 +1,176 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following module:
+#   * type_bank_accounts
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-27 07:00+0000\n"
+"PO-Revision-Date: 2026-02-27 07:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: type_bank_accounts
+#: model_terms:ir.ui.view,arch_db:type_bank_accounts.view_employee_form_inherit_bank_view
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,field_description:type_bank_accounts.field_hr_employee__account_salary_bank
+msgid "Salary Account"
+msgstr "Cuenta Sueldo"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,help:type_bank_accounts.field_hr_employee__account_salary_bank
+msgid ""
+"Auto-computed field. Displays the account number of the bank account "
+"classified as \"Salary\" (acc_type = wage) linked to this employee's work contact. "
+"This field updates automatically when the employee's bank accounts are saved. "
+"To change this value, update the corresponding bank account record and set its "
+"Account Type to \"Salary\"."
+msgstr ""
+"Campo calculado automáticamente. Muestra el número de cuenta bancaria "
+"clasificada como \"Sueldo\" (acc_type = wage) vinculada al contacto laboral de este empleado. "
+"Este campo se actualiza automáticamente cuando se guardan las cuentas bancarias del empleado. "
+"Para cambiar este valor, actualice el registro de cuenta bancaria correspondiente y configure su "
+"Tipo de Cuenta como \"Sueldo\"."
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,field_description:type_bank_accounts.field_hr_employee__type_salary_bank
+msgid "Salary Bank"
+msgstr "Banco Sueldo"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,help:type_bank_accounts.field_hr_employee__type_salary_bank
+msgid ""
+"Auto-computed field. Displays the name of the bank associated with the account "
+"classified as \"Salary\" (acc_type = wage) for this employee. "
+"This field updates automatically when the employee's bank accounts are saved. "
+"The bank name is pulled from the bank record linked to the salary bank account."
+msgstr ""
+"Campo calculado automáticamente. Muestra el nombre del banco asociado con la cuenta "
+"clasificada como \"Sueldo\" (acc_type = wage) para este empleado. "
+"Este campo se actualiza automáticamente cuando se guardan las cuentas bancarias del empleado. "
+"El nombre del banco se obtiene del registro bancario vinculado a la cuenta de sueldo."
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,field_description:type_bank_accounts.field_hr_employee__account_cts_bank
+msgid "CTS Account"
+msgstr "Cuenta CTS"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,help:type_bank_accounts.field_hr_employee__account_cts_bank
+msgid ""
+"Auto-computed field. Displays the account number of the bank account "
+"classified as \"CTS\" (acc_type = cts) linked to this employee's work contact. "
+"CTS stands for Compensación por Tiempo de Servicios — a mandatory severance benefit "
+"in Peru. This field updates automatically when bank accounts are saved."
+msgstr ""
+"Campo calculado automáticamente. Muestra el número de cuenta bancaria "
+"clasificada como \"CTS\" (acc_type = cts) vinculada al contacto laboral de este empleado. "
+"CTS significa Compensación por Tiempo de Servicios, un beneficio obligatorio de liquidación. "
+"Este campo se actualiza automáticamente cuando se guardan las cuentas bancarias."
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,field_description:type_bank_accounts.field_hr_employee__type_cts_bank
+msgid "CTS Bank"
+msgstr "Banco CTS"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,help:type_bank_accounts.field_hr_employee__type_cts_bank
+msgid ""
+"Auto-computed field. Displays the name of the bank associated with the account "
+"classified as \"CTS\" (acc_type = cts) for this employee. "
+"This field updates automatically when the employee's bank accounts are saved. "
+"The bank name is pulled from the bank record linked to the CTS bank account."
+msgstr ""
+"Campo calculado automáticamente. Muestra el nombre del banco asociado con la cuenta "
+"clasificada como \"CTS\" (acc_type = cts) para este empleado. "
+"Este campo se actualiza automáticamente cuando se guardan las cuentas bancarias del empleado. "
+"El nombre del banco se obtiene del registro bancario vinculado a la cuenta CTS."
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,field_description:type_bank_accounts.field_res_partner_bank__acc_type
+msgid "Account Type"
+msgstr "Tipo de Cuenta"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,help:type_bank_accounts.field_res_partner_bank__acc_type
+msgid ""
+"Classifies the purpose of this bank account for payroll processing:\n"
+"- Normal: General-purpose bank account (default). Does not affect computed payroll fields.\n"
+"- Salary: Used for monthly wage disbursements. When set, this account number and bank name "
+"will be automatically reflected on the employee form under the Payments section.\n"
+"- CTS: Designated for CTS (Compensación por Tiempo de Servicios) deposits. When set, "
+"this account number and bank name will be automatically reflected on the employee form.\n"
+"- Others: Catch-all for special-purpose accounts not covered by the above types."
+msgstr ""
+"Clasifica el propósito de esta cuenta bancaria para el procesamiento de nómina:\n"
+"- Normal: Cuenta bancaria de propósito general (predeterminada). No afecta los campos calculados de nómina.\n"
+"- Sueldo: Utilizada para desembolsos de salario mensual. Al configurarla, el número de cuenta y el banco "
+"se reflejarán automáticamente en el formulario del empleado bajo la sección de Pagos.\n"
+"- CTS: Destinada para depósitos de CTS (Compensación por Tiempo de Servicios). Al configurarla, "
+"el número de cuenta y el banco se reflejarán automáticamente en el formulario del empleado.\n"
+"- Otros: Comodín para cuentas de propósito especial no cubiertas por los tipos anteriores."
+
+#. module: type_bank_accounts
+#: selection:res.partner.bank,acc_type:0
+msgid "Normal"
+msgstr "Normal"
+
+#. module: type_bank_accounts
+#: selection:res.partner.bank,acc_type:0
+msgid "Salary"
+msgstr "Sueldo"
+
+#. module: type_bank_accounts
+#: selection:res.partner.bank,acc_type:0
+msgid "CTS"
+msgstr "CTS"
+
+#. module: type_bank_accounts
+#: selection:res.partner.bank,acc_type:0
+msgid "Others"
+msgstr "Otros"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,field_description:type_bank_accounts.field_res_partner_bank__type_bank_code
+msgid "Type Code"
+msgstr "Código de Tipo"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,help:type_bank_accounts.field_res_partner_bank__type_bank_code
+msgid ""
+"Internal classification or branch code assigned by the bank to this account. "
+"Commonly used in LatAm banking systems to identify the account type or the branch. "
+"Fill this field if your payroll or banking integration requires a bank-specific code "
+"alongside the account number."
+msgstr ""
+"Código de clasificación interna o de sucursal asignado por el banco a esta cuenta. "
+"Comúnmente utilizado en sistemas bancarios de Latinoamérica para identificar el tipo de cuenta o la sucursal. "
+"Complete este campo si su integración de nómina o bancaria requiere un código específico del banco "
+"junto al número de cuenta."
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,field_description:type_bank_accounts.field_res_partner_bank__cci
+msgid "CCI"
+msgstr "CCI"
+
+#. module: type_bank_accounts
+#: model:ir.model.fields,help:type_bank_accounts.field_res_partner_bank__cci
+msgid ""
+"Código de Cuenta Interbancaria (Inter-bank Account Code). "
+"A standardized 20-digit code used in Peru and other LatAm countries to uniquely "
+"identify a bank account across different financial institutions. "
+"Required for inter-bank transfers. Leave blank if not applicable."
+msgstr ""
+"Código de Cuenta Interbancaria. "
+"Código estandarizado de 20 dígitos utilizado en Perú y otros países de Latinoamérica para identificar "
+"de forma única una cuenta bancaria entre diferentes instituciones financieras. "
+"Requerido para transferencias interbancarias. Dejar en blanco si no aplica."

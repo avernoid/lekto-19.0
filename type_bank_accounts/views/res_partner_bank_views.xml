@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_partner_bank_form_view_inherit_type_bank_accounts" model="ir.ui.view">
+        <field name="name">res.partner.bank.form.view.type_bank_accounts</field>
+        <field name="model">res.partner.bank</field>
+        <field name="inherit_id" ref="base.view_partner_bank_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='acc_number']" position="before">
+                <field name="acc_type"/>
+            </xpath>
+            <xpath expr="//field[@name='acc_number']" position="after">
+                <field name="company_id" readonly="0"/>
+            </xpath>
+            <xpath expr="//field[@name='bank_id']" position="after">
+                <field name="type_bank_code"/>
+                <field name="cci"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

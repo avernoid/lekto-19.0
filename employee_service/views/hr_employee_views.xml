@@ -1,4 +1,4 @@
-<?xml version = "1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <record id="hr_employee_view_form_inherit_employee_service" model="ir.ui.view">
@@ -7,21 +7,22 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='hr_settings']/group" position="inside">
-                <group name="service_information" groups="hr.group_hr_user" string="Service Information">
+                <group name="service_information" groups="hr.group_hr_user" string="Información de Servicio">
                     <field name="service_hire_date"/>
                     <field name="service_start_date"/>
+                    <field name="service_termination_date"/>
 
                     <field name="service_duration" invisible="1"/>
-                    <label for="service_duration" string="Service Duration"/>
-                    <div style="display: inline-flex;"> 
-                        <field name="service_duration_years" nolabel="1"/>
-                        <span class="ml8 mr8" >year(s)</span>
+                    <label for="service_duration" string="Tiempo de Servicio"/>
+                    <div style="display: inline-flex;">
+                        <field name="service_duration_years" nolabel="1" readonly="1"/>
+                        <span class="ml8 mr8">año(s)</span>
 
-                        <field name="service_duration_months" nolabel="1"/>
-                        <span class="ml8 mr8" >month(s)</span>
+                        <field name="service_duration_months" nolabel="1" readonly="1"/>
+                        <span class="ml8 mr8">mes(es)</span>
 
-                        <field name="service_duration_days" nolabel="1"/>
-                        <span class="ml8" >day(s)</span>
+                        <field name="service_duration_days" nolabel="1" readonly="1"/>
+                        <span class="ml8">día(s)</span>
                     </div>
                 </group>
             </xpath>

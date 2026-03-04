@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voucher Sending | Odoo Payslip Automation App by Ganemo</title>
+    <meta name="description"
+        content="Automatically send payslips to employees via email in Odoo. Includes secure portal access, digital employee signature, and bulk dispatch for HR Payroll.">
+    <meta name="keywords"
+        content="Odoo, Payroll, Payslip, Voucher, Email, Automation, Signature, Portal, Ganemo, HR, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI &amp; LLM</h2>
+        <p>This Odoo module 'voucher_sending' automates payslip dispatch for hr.payslip records.
+            It extends hr.payslip with portal.mixin to generate secure access tokens, allowing employees to view and
+            digitally sign their payslips via a web portal.
+            The module adds fields: employee_mail (related to private_email), status (to_sign/signed), and signature
+            (Image field). Includes action_send_mail_employees() for bulk email dispatch and generate_report_manually()
+            for PDF generation. Compatible with Odoo 19 Enterprise and Odoo.SH. Multi-language support for English and
+            Spanish.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English &amp; Spanish Included</span>
+        </div>
+    </div>
+    <!-- BANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#714B67;">Voucher Sending</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Payslip Automation &amp; Digital Signature</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Automatically send payslips to your employees' emails with a single click. Includes secure portal
+                    access, PDF generation, and digital employee signature.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-envelope mr-2"></i> Manual Payslip Distribution
+                            </h4>
+                            <p style="text-align: justify;">Sending payslips manually one by one is
+                                <strong>time-consuming and error-prone</strong>. HR teams waste hours downloading PDFs
+                                and emailing them individually. This module automates the entire process with bulk
+                                dispatch for all confirmed payslips.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-pencil mr-2"></i> No Digital Signature Trail
+                            </h4>
+                            <p style="text-align: justify;">Proving that an employee has received and acknowledged
+                                their payslip is critical for compliance. Our portal allows employees to
+                                <strong>digitally sign</strong> their payslip, creating an auditable record of receipt.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-lock mr-2"></i> Insecure Document Sharing</h4>
+                            <p style="text-align: justify;">Sharing PDFs via generic email lacks access control. Our
+                                module generates a <strong>unique, secure access token</strong> per payslip, ensuring
+                                only the intended employee can view their document through the portal.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #714B67;"><i class="fa fa-file-pdf-o mr-2"></i> Missing PDF Generation
+                            </h4>
+                            <p style="text-align: justify;">If a payslip PDF has not been generated yet, the module
+                                <strong>automatically generates it</strong> on-the-fly using the payslip structure's
+                                configured report, ensuring the email always carries the correct document.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">Setup &amp; User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #714B67; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #714B67; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Ensure employees have their work emails configured before using this
+                                module:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Employees
+                                                &gt; Employees</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Open each employee record
+                                            and verify their <strong>Work Email</strong> is set.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Also verify the
+                                            <strong>Private Email</strong> (Private Information tab) for portal access.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Ensure
+                                            <strong>outgoing mail server</strong> is configured in Settings.
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #714B67;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Smart Explainer:</strong> The
+                                    module validates that all selected employees have a <strong>Work Email</strong>
+                                    before sending. Any employee without one will trigger a validation warning
+                                    listing the affected names.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #00A09D; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #00A09D; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How to send payslips to your employees:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-list-alt text-info mr-2"></i> Step 1: Confirm Payslips</h5>
+                                        <p class="text-muted">Go to <strong>Payroll &gt; Payslips</strong>. Select one
+                                            or more payslips in <strong>Done</strong> or <strong>Paid</strong> state.
+                                            Only confirmed payslips will be processed.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-paper-plane text-info mr-2"></i> Step 2: Send Emails</h5>
+                                        <p class="text-muted">Click the <strong>"Send Payslip Email"</strong> action
+                                            button. The module will automatically generate PDFs for any missing
+                                            attachments and dispatch the emails individually to each employee.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-globe text-info mr-2"></i> Step 3: Employee Views Portal
+                                        </h5>
+                                        <p class="text-muted">The employee receives an email with a
+                                            <strong>secure tokenized link</strong>. They click it to access their
+                                            personal payslip portal page without needing to log in to Odoo.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #00A09D;">
+                                        <h5><i class="fa fa-pencil-square text-info mr-2"></i> Step 4: Digital Sign</h5>
+                                        <p class="text-muted">On the portal page, the employee can
+                                            <strong>digitally sign</strong> their payslip. The status changes from
+                                            <em>To Sign</em> to <em>Signed</em>, recording the employee's
+                                            acknowledgment.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #714B67;">
+                <h3 style="color: #714B67; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote &amp; Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #714B67; border-left: 5px solid #714B67;">
+                            <h4 style="color: #714B67; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev
+                                &amp;
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #714B67;">
+                            <h4 style="color: #714B67; font-weight: 700;"><i class="fa fa-paper-plane mr-2"></i>
+                                Scenario 1: Bulk Email Send</h4>
+                            <ol class="mt-3">
+                                <li>Go to <strong>Payroll &gt; Payslips</strong> and select multiple payslips in
+                                    <strong>Done</strong> state.</li>
+                                <li>Click <strong>Action &gt; Send Payslip Email</strong>.</li>
+                                <li><strong>Test:</strong> Each employee should receive an individual email with their
+                                    payslip PDF attached.</li>
+                                <li><strong>Test:</strong> Employees without a Work Email should appear in a validation
+                                    error list.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #00A09D;">
+                            <h4 style="color: #00A09D; font-weight: 700;"><i class="fa fa-globe mr-2"></i> Scenario 2:
+                                Portal Access</h4>
+                            <ol class="mt-3">
+                                <li>Send an email to an employee with a payslip.</li>
+                                <li>Open the email and click the portal link.</li>
+                                <li><strong>Test:</strong> The portal page should open without requiring login.</li>
+                                <li><strong>Test:</strong> The payslip details (name, period, amounts) should be
+                                    correctly displayed.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-pencil-square mr-2"></i>
+                                Scenario 3:
+                                Digital Signature</h4>
+                            <ol class="mt-3">
+                                <li>Open a payslip portal page as an employee.</li>
+                                <li>Sign the payslip using the signature field.</li>
+                                <li><strong>Test:</strong> The payslip status should change from <em>To Sign</em> to
+                                    <em>Signed</em>.</li>
+                                <li><strong>Test:</strong> The signature image should be stored on the payslip record in
+                                    the backend.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #856404; font-weight: 700;"><i class="fa fa-file-pdf-o mr-2"></i> Scenario
+                                4:
+                                Auto PDF Generation</h4>
+                            <ol class="mt-3">
+                                <li>Send an email for a payslip that does NOT yet have an attached PDF.</li>
+                                <li><strong>Test:</strong> The module should auto-generate the PDF and attach it to the
+                                    email.</li>
+                                <li><strong>Test:</strong> The PDF attachment should also appear on the payslip record
+                                    under Attachments.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#714B67">FAQ &amp; Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Employee did not receive the email?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The employee's Work Email may not be
+                                configured.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to
+                                the employee record and add a valid <em>Work Email</em>. Also check the outgoing mail
+                                server configuration in Settings.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Only "Done" or "Paid" payslips are sent?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The module intentionally filters to
+                                only process confirmed payslips for data integrity.
+                            </p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Confirm the payslip first (change state to Done). Draft payslips are skipped
+                                automatically.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Portal link returns "Access Denied"?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The access token may have expired or
+                                been invalidated.
+                            </p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Fix:</strong> Resend the email from the payslip to generate a fresh token link.
+                                Each send generates a new secure token.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Each payslip is processed individually. The portal token is unique per payslip
+                                record, so multi-company environments are fully supported without cross-company
+                                data leaks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial &amp; Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                            <p class="text-muted small mb-2">Fastest response time.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://wa.me/18286726150" target="_blank"
+                                    style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    https://wa.me/18286726150
+                                </a>
+                            </div>
+                            <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                            <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:leads@ganemo.com" target="_blank"
+                                    style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    leads@ganemo.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                            <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                    style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    ganemo.co/appointment/5
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Technical Support Section -->
+        <div class="row mt-5">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                <p style="color:#777783">Existing customers regarding module functionality.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                    <div class="row align-items-center">
+                        <div class="col-5 text-center">
+                            <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                alt="QR Technical Support">
+                        </div>
+                        <div class="col-7 pl-4">
+                            <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                            <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                reports.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:help@ganemo.com" target="_blank"
+                                    style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    help@ganemo.com
+                                </a>
+                            </div>
+                            <p class="small text-muted mb-0">help@ganemo.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

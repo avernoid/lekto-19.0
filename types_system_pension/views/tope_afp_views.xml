@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="tope_afp_view_tree" model="ir.ui.view">
+        <field name="name">tope.afp.view.list</field>
+        <field name="model">tope.afp</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="top"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="tope_afp_view_form" model="ir.ui.view">
+        <field name="name">tope.afp.view.form</field>
+        <field name="model">tope.afp</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="top"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+</odoo>

@@ -1,6 +1,6 @@
 {
     'name': 'Employee Service',
-    'version': '19.0.2.0.0',
+    'version': '19.0.2.0.2',
     'category': 'Human Resources',
     'summary': 'Manage employee service duration, hire date and tenure automatically.',
     'description': """

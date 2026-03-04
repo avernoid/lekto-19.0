@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="health_regime_00" model="health.regime">
+            <field name="code">00</field>
+            <field name="health_description">Essalud Regular (Exclusivamente)</field>
+            <field name="name">Essalud Regular</field>
+        </record>
+
+        <record id="health_regime_01" model="health.regime">
+            <field name="code">01</field>
+            <field name="health_description">Essalud Regular Y Eps/Serv. Propios</field>
+            <field name="name">Essalud Regular Y Eps/Serv. Prop.</field>
+        </record>
+
+        <record id="health_regime_02" model="health.regime">
+            <field name="code">02</field>
+            <field name="health_description">Essalud Trabajadores Pesqueros</field>
+            <field name="name">Essalud Trab Pesqueros</field>
+        </record>
+
+        <record id="health_regime_03" model="health.regime">
+            <field name="code">03</field>
+            <field name="health_description">Essalud Trabajadores Pesqueros Y Eps(Serv.Propios)</field>
+            <field name="name">Essalud Trab Pesq Y Eps(Serv.Prop)</field>
+        </record>
+
+        <record id="health_regime_04" model="health.regime">
+            <field name="code">04</field>
+            <field name="health_description">Essalud Agrario/Acuícola</field>
+            <field name="name">Essalud Agrario/Acuícola</field>
+        </record>
+
+        <record id="health_regime_05" model="health.regime">
+            <field name="code">05</field>
+            <field name="health_description">Essalud Pensionistas</field>
+            <field name="name">Essalud Pensionistas</field>
+        </record>
+
+        <record id="health_regime_20" model="health.regime">
+            <field name="code">20</field>
+            <field name="health_description">Sanidad De Ffaa Y Policiales (1)</field>
+            <field name="name">Sanidad Ffaa Y Policiales (1)</field>
+        </record>
+
+        <record id="health_regime_21" model="health.regime">
+            <field name="code">21</field>
+            <field name="health_description">Sis – Microempresa(2)</field>
+            <field name="name">Sis – Microempresa (2)</field>
+        </record>
+
+        <!--"employee.regime"-->
+
+        <record id="employee_regime_01" model="employee.regime">
+            <field name="name">D Leg N.° 728</field>
+            <field name="code">01</field>
+            <field name="regime_description">Privado General -Decreto Legislativo N.° 728</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_02" model="employee.regime">
+            <field name="name">D.Leg N.° 276</field>
+            <field name="code">02</field>
+            <field name="regime_description">Público General - Decreto Legislativo N.° 276</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_03" model="employee.regime">
+            <field name="name">Profesorado Ley 24029</field>
+            <field name="code">03</field>
+            <field name="regime_description">Profesorado - Ley N.° 24029</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_04" model="employee.regime">
+            <field name="name">Magisterio Ley 29062</field>
+            <field name="code">04</field>
+            <field name="regime_description">Magisterio - Ley N.° 29062</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_05" model="employee.regime">
+            <field name="name">Doc Univers Ley 23733</field>
+            <field name="code">05</field>
+            <field name="regime_description">Docentes Universitarios - Ley N.° 23733</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_06" model="employee.regime">
+            <field name="name">Profes Salud Ley 23536</field>
+            <field name="code">06</field>
+            <field name="regime_description">Profesionales De La Salud Ley N.° 23536</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_07" model="employee.regime">
+            <field name="name">Tecn Y Aux Asist Salud Ley 28561</field>
+            <field name="code">07</field>
+            <field name="regime_description">Tecnicos Y Auxiliares Asist. De La Salud - Ley N.° 28561</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_08" model="employee.regime">
+            <field name="name">Serum Ley 23330</field>
+            <field name="code">08</field>
+            <field name="regime_description">Serum - Ley N.° 23330</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_09" model="employee.regime">
+            <field name="name">Jueces Ley 29277</field>
+            <field name="code">09</field>
+            <field name="regime_description">Jueces - Carrera Judicial - Ley N.° 29277</field>
+            <field name="other_entities">0</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_10" model="employee.regime">
+            <field name="name">Fiscales D.Leg 052</field>
+            <field name="code">10</field>
+            <field name="regime_description">Fiscales - D. Leg. N.° 052</field>
+            <field name="other_entities">0</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_11" model="employee.regime">
+            <field name="name">Servicio Diplom. República Ley 28091</field>
+            <field name="code">11</field>
+            <field name="regime_description">Servicio Diplomático De La República - Ley N.° 28091</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_12" model="employee.regime">
+            <field name="name">Militares</field>
+            <field name="code">12</field>
+            <field name="regime_description">Militares</field>
+            <field name="other_entities">0</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_13" model="employee.regime">
+            <field name="name">Policias Ley 27238</field>
+            <field name="code">13</field>
+            <field name="regime_description">Policia Nacional Del Perú - Ley N.° 27238</field>
+            <field name="other_entities">0</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_14" model="employee.regime">
+            <field name="name">Especial Ger. Públ D Leg 1024</field>
+            <field name="code">14</field>
+            <field name="regime_description">Especial Ger. Públicos Decreto Legislativo N.° 1024 (2)</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_15" model="employee.regime">
+            <field name="name">Cas D.Leg 1057</field>
+            <field name="code">15</field>
+            <field name="regime_description">Contrato Administrativo De Servicios - D.Leg. N.° 1057</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_16" model="employee.regime">
+            <field name="name">Microempresa</field>
+            <field name="code">16</field>
+            <field name="regime_description">Microempresa D. Leg. 1086 (1)</field>
+            <field name="other_entities">0</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">0</field>
+            <field name="is_mype">1</field>
+        </record>
+
+        <record id="employee_regime_17" model="employee.regime">
+            <field name="name">Pequeña Empresa</field>
+            <field name="code">17</field>
+            <field name="regime_description">Pequeña Empresa D. Leg. 1086 (1)</field>
+            <field name="other_entities">0</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">0</field>
+            <field name="is_mype">1</field>
+        </record>
+
+        <record id="employee_regime_18" model="employee.regime">
+            <field name="name">Agrario</field>
+            <field name="code">18</field>
+            <field name="regime_description">Agrario Ley 27360</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_19" model="employee.regime">
+            <field name="name">Exportacion No Tradicional</field>
+            <field name="code">19</field>
+            <field name="regime_description">Exportacion No Tradicional D. Ley 22342</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_20" model="employee.regime">
+            <field name="name">Mineros</field>
+            <field name="code">20</field>
+            <field name="regime_description">Mineros</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_21" model="employee.regime">
+            <field name="name">Construccion Civil</field>
+            <field name="code">21</field>
+            <field name="regime_description">Construccion Civil</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_22" model="employee.regime">
+            <field name="name"></field>
+            <field name="code">22</field>
+            <field name="regime_description">Público General Servicio Civil - Ley 30057</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+        <record id="employee_regime_23" model="employee.regime">
+            <field name="name"></field>
+            <field name="code">23</field>
+            <field name="regime_description">Magisterio - Ley 29944</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+        <record id="employee_regime_24" model="employee.regime">
+            <field name="name"></field>
+            <field name="code">24</field>
+            <field name="regime_description">Policía Nacional Del Perú - D.Leg.1149</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_25" model="employee.regime">
+            <field name="name"></field>
+            <field name="code">25</field>
+            <field name="regime_description">Servidores Penitenciarios - Ley 29709</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">0</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+        <record id="employee_regime_99" model="employee.regime">
+            <field name="name">Otros</field>
+            <field name="code">99</field>
+            <field name="regime_description">Otros No Previstos</field>
+            <field name="other_entities">1</field>
+            <field name="private_sector">1</field>
+            <field name="public_sector">1</field>
+            <field name="is_mype">0</field>
+        </record>
+
+    </data>
+</odoo>

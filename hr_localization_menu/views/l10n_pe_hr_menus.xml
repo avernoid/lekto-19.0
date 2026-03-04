@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem 
+        id="hr_operations_menu_root"
+        name="Operations"
+        parent="hr_work_entry_enterprise.menu_hr_payroll_root"
+        sequence="75"
+        groups="hr_payroll.group_hr_payroll_manager"
+    />
+
+</odoo>

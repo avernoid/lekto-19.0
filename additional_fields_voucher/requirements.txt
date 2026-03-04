@@ -1,0 +1,4 @@
+---Models in module 'additional_fields_voucher'---
+---Fields in module 'additional_fields_voucher'---
+---XML records in module 'additional_fields_voucher'---
+-------------------------------------------------------------------------------------------------------

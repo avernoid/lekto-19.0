@@ -1,0 +1,97 @@
+===================================================================
+ UPGRADE ANALYSIS — automatic_leave_type (19.0.1.0.0)
+===================================================================
+
+---Models in module 'automatic_leave_type'---
+hr.work.entry.type (_inherit)  — added is_calc_own_rule Boolean
+
+---Fields in module 'automatic_leave_type'---
+hr.work.entry.type.is_calc_own_rule  Boolean  "¿Es calculado por su propia regla?"
+
+---XML records in module 'automatic_leave_type'---
+data  hr_work_entry_type_data.xml  (25 Peruvian leave-related work entry types)
+data  hr_leave_type_data.xml       (Peruvian leave type records)
+view  hr_work_entry_type_view_form_inherit_automatic_leave_type
+
+---Dependencies---
+DEPENDS [ hr_payroll ]
+DEL [ project_timesheet_holidays ]  — removed: fields timesheet_project_id/timesheet_task_id not used by module
+DEPENDS [ hr_work_entry_holidays ]      — uses work_entry_type_id on hr.leave.type
+DEPENDS [ absence_manager ]             — uses hr_work_entry_type.name (translation support)
+
+---Dependency analysis: hr_work_entry---
+xml_id: hr_work_entry.hr_work_entry_type_view_form  (view inheritance target)
+
+
+===================================================================
+ UPGRADE ANALYSIS — automatic_leave_type (is_calc_own_rule migration)
+===================================================================
+
+---Purpose---
+Migrate the 'is_calc_own_rule' Boolean field on hr.work.entry.type
+from automatic_leave_type to absence_day. This allows filter_payroll
+to depend on absence_day directly instead of automatic_leave_type.
+
+---Fields in module 'automatic_leave_type'---
+DEL hr.work.entry.type.is_calc_own_rule  Boolean
+    Moved to: absence_day.models.hr_work_entry_type
+    The field definition was removed from this module.
+    It is now provided by the absence_day dependency.
+
+---Model file cleanup---
+EMPTIED models/hr_work_entry_type.py  (class kept as empty _inherit, field removed)
+EMPTIED models/__init__.py            (no models to import)
+
+---View changes---
+CHG views/hr_work_entry_type_views.xml
+    Previously inherited from hr_work_entry.hr_work_entry_type_view_form
+    and added is_calc_own_rule. Now inherits from
+    absence_day.hr_work_entry_type_view_form_inherit_absence_day
+    as a no-op (XML ID preserved for backward compatibility).
+
+---Manifest changes---
+CHG __manifest__.py
+    Added 'absence_day' to depends list.
+
+---Impact on downstream modules---
+filter_payroll:
+    DEL 'automatic_leave_type' from depends
+    filter_payroll now gets is_calc_own_rule from absence_day directly.
+    No other modules in this project depend on automatic_leave_type.
+
+---Impact on existing databases---
+IMPORTANT: No data migration needed.
+- The is_calc_own_rule field continues to exist on hr.work.entry.type
+  (now provided by absence_day).
+- All 25 work entry type data records in this module's
+  hr_work_entry_type_data.xml still set is_calc_own_rule values.
+  These work because absence_day is a transitive dependency
+  (automatic_leave_type → absence_manager → absence_day).
+- With the explicit addition of absence_day to depends, the field
+  is guaranteed to exist before this module's data is loaded.
+
+
+===================================================================
+ DOWNSTREAM CHANGE — holiday_process decoupled (19.0.1.0.2)
+===================================================================
+
+---Purpose---
+holiday_process v19.0.1.0.2 removed its dependency on automatic_leave_type.
+The hardcoded env.ref('automatic_leave_type.hr_leave_type_27') calls in
+hr_leave.py were replaced by a configurable Boolean field
+show_in_time_off_request on hr.leave.type (added by holiday_process).
+
+---Impact on automatic_leave_type---
+NO code changes required in this module.
+automatic_leave_type continues to operate independently.
+
+---Impact on hr_leave_type_27 behavior---
+UPGRADE: holiday_process post-migrate.py (v19.0.1.0.2) automatically sets
+  show_in_time_off_request = True on hr_leave_type_27 if both modules
+  are installed. No manual action required on upgrade.
+
+FRESH INSTALL: show_in_time_off_request defaults to False for hr_leave_type_27.
+  If the Allocation field should appear for this leave type on time off
+  request forms, activate the checkbox manually:
+  Absences > Configuration > Leave Types > S.I. Días Compens Por Horas De
+  Sobretiempo > Show Allocation in Time Off Request.

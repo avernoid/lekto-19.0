@@ -1,0 +1,77 @@
+---Models in module 'eps_process'---
+eps_employee_relative              / hr.employee.relative            : DEL
+hr_employee_relative               / hr.employee.relative            : NEW
+eps_management                     / hr.employee                     : DEL
+hr_employee                        / hr.employee                     : NEW
+---Fields in module 'eps_process'---
+eps_credit              / eps.credit                    / since(Date)                       : UPD required
+eps_credit              / eps.credit                    / until(Date)                       : UPD required
+eps_management          / eps.management                / employeer_ids (One2many)          : DEL
+eps_management          / eps.management                / employeer_ids (Many2many)         : NEW
+eps_management          / eps.management                / partner_id (Many2one)             : NEW required
+---XML records in module 'eps_process'---
+UPD ir.ui.view: eps_process.eps_credit_tree_view -> eps_process.eps_credit_view_tree
+UPD ir.ui.view: eps_process.eps_credit_form_view -> eps_process.eps_credit_view_form
+UPD ir.ui.view: eps_process.eps_management_tree_view -> eps_process.eps_management_view_tree
+UPD ir.ui.view: eps_process.eps_management_form_view -> eps_process.eps_management_view_form
+UPD ir.ui.view: eps_process.eps_employee_relative_inherit_hr_employee_relative_view_tree -> eps_process.hr_employee_relative_view_tree_inherit_eps_process
+UPD ir.ui.view: eps_process.hr_employee_view_form_eps_process -> eps_process.hr_employee_view_form_inherit_eps_process
+DEL ir.ui.menu: eps_process.eps_credit_menus
+DEL ir.ui.menu: eps_process.eps_management_menus
+ADD ir.ui.menu: eps_process.eps_process_menuitem
+----------------------------------------------------------------
+DEPENDS [ hr_payroll ]
+model:  
+field:  
+xml_id: 
+
+DEPENDS [ localization_menu ]
+model:  eps_credit
+field:  since,
+        until,
+        affiliated_workers,
+        computable_remuneration_health_input,
+        eps_credit,
+        eps_service_cost,
+        uit,
+        uit_limit_affiliated_workers,
+        adjustment,
+        final_eps_credit
+xml_id: 
+
+model:  eps_management
+field:  display_name,
+        star_date,
+        finish_date,
+        entity,
+        partner_id,
+        insurance,
+        rate_employer,
+        rate_worker,
+        amount_worker,
+        employeer_ids,
+        _writing_employees
+xml_id: 
+
+DEPENDS [ additional_fields_employee ]
+model:  
+field:  
+xml_id: 
+
+DEPENDS [ personal_information ]
+model:  hr_employee_relative
+field:  percentage_eps,
+        tax_eps,
+        payer_eps,
+        disability,
+        max_age
+xml_id: personal_information.hr_employee_relative_view_tree
+
+DEPENDS [ hr ]
+model:  hr_employee
+field:  exists_eps,
+        management_eps
+xml_id: 
+        hr.view_employee_form
+
+

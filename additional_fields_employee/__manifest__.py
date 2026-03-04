@@ -1,0 +1,42 @@
+{
+    'name': 'Additional Fields Employee',
+    'version': '19.0.1.0.4',
+    'category': 'Human Resources/Payroll',
+    'summary': """Field Management in Employee Records and Contracts""",
+    'description': """Extends employee records with academic degrees, health regimes, labor regimes, contract types, work occupations, and work condition flags for Peruvian payroll compliance.""",
+    'author': 'Ganemo',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': 'https://www.ganemo.co',
+    'depends': [
+        'l10n_pe_localization_menu',
+        'payroll_field'
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'data/academic_degree_data.xml',
+        'data/health_regime_data.xml',
+        'data/type_contract_data.xml',
+        'data/work.occupation.csv',
+        'views/academic_degree_menus.xml',
+        'views/academic_degree_views.xml',
+        'views/employee_regime_menus.xml',
+        'views/employee_regime_views.xml',
+        'views/health_regime_menus.xml',
+        'views/health_regime_views.xml',
+        'views/hr_employee_views.xml',
+        'views/type_contract_menus.xml',
+        'views/type_contract_views.xml',
+        'views/work_occupation_menus.xml',
+        'views/work_occupation_views.xml'
+    ],
+    'icon': '/additional_fields_employee/static/description/icon.png',
+    'images': ['static/description/banner.png'],
+    'license': 'OPL-1',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    'currency': 'USD',
+    'price': 20.00,
+    'module_type': 'official'
+}

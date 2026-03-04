@@ -1,0 +1,305 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* various_data
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 06:26+0000\n"
+"PO-Revision-Date: 2026-02-26 06:26+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: various_data
+#: model:ir.model,name:various_data.model_various_data_rmv
+msgid "Minimum Vital Remuneration"
+msgstr "Remuneración Mínima Vital"
+
+#. module: various_data
+#: model:ir.model,name:various_data.model_various_data_uit
+msgid "Tax Unit"
+msgstr "Unidad Impositiva Tributaria"
+
+#. module: various_data
+#: model:ir.model,name:various_data.model_various_data_sis
+msgid "Comprehensive Health Insurance (SIS)"
+msgstr "Seguro Integral de Salud (SIS)"
+
+#. module: various_data
+#: model:ir.model,name:various_data.model_various_data_sctr
+msgid "High Risk Work Complementary Insurance (SCTR)"
+msgstr "Seguro Complementario de Trabajo de Riesgo (SCTR)"
+
+#. module: various_data
+#: model_terms:ir.ui.view,arch_db:various_data.various_data_rmv_views
+msgid "Minimum Vital Remuneration (RMV)"
+msgstr "Remuneración Mínima Vital (RMV)"
+
+#. module: various_data
+#: model_terms:ir.ui.view,arch_db:various_data.various_data_uit_views
+msgid "Tax Unit (UIT)"
+msgstr "Unidad Impositiva Tributaria (UIT)"
+
+#. module: various_data
+#: model_terms:ir.ui.view,arch_db:various_data.various_data_sctr_views
+msgid "Complementary High Risk Work Insurance (SCTR)"
+msgstr "Seguro Complementario de Trabajo de Riesgo (SCTR)"
+
+#. module: various_data
+#: model_terms:ir.ui.view,arch_db:various_data.various_data_sis_views
+msgid "Comprehensive Health Insurance (SIS)"
+msgstr "Seguro Integral de Salud (SIS)"
+
+#. module: various_data
+#: model:ir.ui.menu,name:various_data.menu_hr_datos_tributarios
+msgid "Tax Data"
+msgstr "Datos Tributarios"
+
+#. module: various_data
+#: model:ir.actions.act_window,name:various_data.action_rmv
+msgid "Minimum Vital Remuneration (RMV)"
+msgstr "Remuneración Mínima Vital (RMV)"
+
+#. module: various_data
+#: model:ir.actions.act_window,name:various_data.action_uit
+msgid "Tax Unit (UIT)"
+msgstr "Unidad Impositiva Tributaria (UIT)"
+
+#. module: various_data
+#: model:ir.actions.act_window,name:various_data.action_sctr
+msgid "Complementary High Risk Work Insurance (SCTR)"
+msgstr "Seguro Complementario de trabajo de riesgo - SCTR"
+
+#. module: various_data
+#: model:ir.actions.act_window,name:various_data.action_sis
+msgid "Comprehensive Health Insurance (SIS)"
+msgstr "SIS"
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_rmv__register_date
+#: model:ir.model.fields,field_description:various_data.field_various_data_uit__register_date
+#: model:ir.model.fields,field_description:various_data.field_various_data_sis__register_date
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__register_date
+msgid "Registration Date"
+msgstr "Fecha de Registro"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_rmv__register_date
+msgid "Starting date from which this RMV value becomes valid for payroll calculations."
+msgstr "Fecha de inicio a partir de la cual este valor de la RMV es válido para los cálculos de nómina."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_uit__register_date
+msgid "Starting date from which this UIT value becomes valid."
+msgstr "Fecha de inicio a partir de la cual este valor de la UIT se vuelve válido."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sis__register_date
+msgid "Starting date from which this SIS contribution value becomes valid."
+msgstr "Fecha de inicio a partir de la cual este valor de cotización SIS pasa a ser válido."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__register_date
+msgid "Starting date from which this SCTR policy becomes valid."
+msgstr "Fecha de inicio a partir de la cual esta póliza SCTR entra en vigencia."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_rmv__due_date
+#: model:ir.model.fields,field_description:various_data.field_various_data_uit__due_date
+#: model:ir.model.fields,field_description:various_data.field_various_data_sis__due_date
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__due_date
+msgid "Expiration Date"
+msgstr "Fecha de Vencimiento"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_rmv__due_date
+msgid "End date until which this RMV value remains valid. Leave empty if it is infinitely valid."
+msgstr "Fecha de finalización hasta la cual este valor de la RMV sigue siendo válido. Déjelo vacío si tiene validez infinita."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_uit__due_date
+msgid "End date until which this UIT value remains valid, usually the end of the fiscal year."
+msgstr "Fecha de finalización hasta la cual este valor de la UIT sigue siendo válido, generalmente el final del año fiscal."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sis__due_date
+msgid "End date until which this SIS contribution value remains valid."
+msgstr "Fecha de fin hasta la cual este valor de la contribución SIS sigue siendo válido."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__due_date
+msgid "End date until which this SCTR policy remains valid. After this date, a new policy should be registered."
+msgstr "Fecha de fin hasta la cual esta póliza SCTR sigue siendo válida. Después de esta fecha, se debe registrar una nueva póliza."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_rmv__rmv_amount
+msgid "RMV Amount"
+msgstr "Importe RMV"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_rmv__rmv_amount
+msgid "The official amount of the Minimum Vital Remuneration (RMV) established by the government for this period."
+msgstr "El importe oficial de la Remuneración Mínima Vital (RMV) establecido por el gobierno para este periodo."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_rmv__af_amount
+msgid "Family Allowance Amount"
+msgstr "Importe Asignación Familiar"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_rmv__af_amount
+msgid "The calculated or official amount corresponding to the Family Allowance (Asignación Familiar) for this period, generally 10% of RMV."
+msgstr "El importe calculado u oficial correspondiente a la Asignación Familiar para este periodo, generalmente el 10% de la RMV."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_uit__uit_amount
+#: model:ir.model.fields,field_description:various_data.field_various_data_sis__sis_amount
+msgid "Amount"
+msgstr "Importe"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_uit__uit_amount
+msgid "The official amount of the Unidad Impositiva Tributaria (UIT) for this period, used in 5th category income tax calculations."
+msgstr "El importe oficial de la Unidad Impositiva Tributaria (UIT) para este periodo, utilizado en los cálculos del impuesto a la renta de 5ta categoría."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sis__sis_amount
+msgid "The official contribution amount for the Comprehensive Health Insurance (SIS) applicable to microenterprises."
+msgstr "El monto del aporte oficial del Seguro Integral de Salud (SIS) aplicable a las microempresas."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_rmv__is_active
+#: model:ir.model.fields,field_description:various_data.field_various_data_uit__is_active
+#: model:ir.model.fields,field_description:various_data.field_various_data_sis__is_active
+msgid "Active"
+msgstr "Activo"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_rmv__is_active
+msgid "If checked, this parameter is currently active and can be used in payroll rules."
+msgstr "Si está marcado, este parámetro está actualmente activo y puede usarse en reglas salariales."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_uit__is_active
+msgid "If checked, this UIT value is currently active."
+msgstr "Si está marcado, este valor de la UIT está actualmente activo."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sis__is_active
+msgid "If checked, this SIS value is currently active."
+msgstr "Si está marcado, este valor de SIS está actualmente activo."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__pension_percent
+msgid "Pension %"
+msgstr "Pensión %"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__pension_percent
+msgid "Percentage of the contribution going towards the pension fund under this SCTR policy."
+msgstr "Porcentaje del aporte destinado al fondo de pensiones bajo esta póliza SCTR."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__health_percent
+msgid "Health %"
+msgstr "Salud %"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__health_percent
+msgid "Percentage of the contribution going towards the health fund under this SCTR policy."
+msgstr "Porcentaje del aporte destinado al fondo de salud bajo esta póliza SCTR."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__pension_amount
+msgid "Pension Amount"
+msgstr "Importe Pensión"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__pension_amount
+msgid "Fixed amount for the pension contribution, if applicable instead of a percentage."
+msgstr "Monto fijo para el aporte de pensiones, si corresponde en lugar de un porcentaje."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__health_amount
+msgid "Health Amount"
+msgstr "Importe Salud"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__health_amount
+msgid "Fixed amount for the health contribution, if applicable instead of a percentage."
+msgstr "Monto fijo para el aporte de salud, si corresponde en lugar de un porcentaje."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__name_id
+msgid "Entity Name"
+msgstr "Nombre de la Entidad"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__name_id
+msgid "The insurance company or entity providing this SCTR policy."
+msgstr "La compañía de seguros o entidad que proporciona esta póliza SCTR."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__employee_ids
+msgid "Employees"
+msgstr "Empleados"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__employee_ids
+msgid "List of employees currently covered by this specific SCTR policy."
+msgstr "Lista de empleados actualmente cubiertos por esta póliza SCTR específica."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_various_data_sctr__sctr_name
+msgid "Policy Name"
+msgstr "Nombre de la Póliza"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__sctr_name
+msgid "Internal reference or official name for this SCTR policy."
+msgstr "Referencia interna o nombre oficial de esta póliza SCTR."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_hr_employee__pension_sctr
+msgid "SCTR"
+msgstr "SCTR"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_hr_employee__pension_sctr
+msgid "Check this box if the employee is subject to SCTR (Complementary High Risk Work Insurance)."
+msgstr "Marque esta casilla si el empleado está sujeto al SCTR (Seguro Complementario de Trabajo de Riesgo)."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_hr_employee__sctr_id
+msgid "SCTR Policy"
+msgstr "Póliza SCTR"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_hr_employee__sctr_id
+msgid "Select the specific SCTR policy applicable to this employee for the correct calculation of risk insurance contributions."
+msgstr "Seleccione la póliza SCTR específica aplicable a este empleado para el cálculo correcto de las contribuciones del seguro de riesgo."
+
+#. module: various_data
+#: model:ir.model.fields,field_description:various_data.field_hr_employee__sctr_name
+msgid "Policy Name"
+msgstr "Nombre de la Póliza"
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_hr_employee__sctr_name
+msgid "Displays the name of the assigned SCTR policy."
+msgstr "Muestra el nombre de la póliza SCTR asignada."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_various_data_sctr__check_employee_overlap
+msgid "Las fechas de esta póliza se superponen con otra póliza para uno o más empleados."
+msgstr "Las fechas de esta póliza se superponen con otra póliza para uno o más empleados."
+
+#. module: various_data
+#: model:ir.model.fields,help:various_data.field_hr_employee__check_single_sctr
+msgid "Solo se permite seleccionar una póliza SCTR por empleado."
+msgstr "Solo se permite seleccionar una póliza SCTR por empleado."

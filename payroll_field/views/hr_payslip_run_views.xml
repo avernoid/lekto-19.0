@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_view_payslip_lines_report" model="ir.actions.act_window">
+        <field name="name">Report by Rules</field>
+        <field name="res_model">hr.payslip.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="view_id" ref="payroll_field.hr_payslip_line_view_pivot"/>
+        <field name="search_view_id" ref="payroll_field.hr_payslip_line_view_filter"/>
+    </record>
+
+    <record id="action_view_payslip_lines_report_by_category" model="ir.actions.act_window">
+        <field name="name">Report by Categories</field>
+        <field name="res_model">hr.payslip.line</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="view_id" ref="payroll_field.hr_payslip_line_view_pivot"/>
+        <field name="search_view_id" ref="payroll_field.hr_payslip_line_view_filter"/>
+    </record>
+
+    <record id="hr_payslip_run_view_kanban_inherit_payroll_field" model="ir.ui.view">
+        <field name="name">hr.payslip.run.kanban.inherit.payroll_field</field>
+        <field name="model">hr.payslip.run</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payslip_run_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-name='menu']/button[@name='action_draft']" position="after">
+                <button name="action_edit_inputs" type="object" class="btn btn-secondary" string="Edit Inputs"/>
+                <button name="action_edit_worked_days" type="object" class="btn btn-secondary" string="Edit Worked Days"/>
+                <button name="action_view_payslip_lines_report" type="object" class="btn btn-secondary" string="Report by Rules"/>
+                <button name="action_view_payslip_lines_report_by_category" type="object" class="btn btn-secondary" string="Report by Categories"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_form_view_inherit_advance_percent" model="ir.ui.view">
+        <field name="name">hr.employee.form.view.inherit.advance.percent</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='variable_payment_id']" position="after">
+                <field name="advance_percent"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_form_view_inherit_disability" model="ir.ui.view">
+        <field name="name">hr.employee.form.view.inherit.disability</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='personal_information']/group" position="inside">
+                <group string="Health" name="health" groups="hr.group_hr_user">
+                    <field name="disability"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_version_template_form_inherit_extra_info" model="ir.ui.view">
+        <field name="name">hr.version.template.form.inherit.extra.info</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='variable_payment_id']" position="after">
+                <field name="advance_percent"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

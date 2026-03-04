@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="external_layout_voucher_payroll">
+        <t t-if="not o" t-set="o" t-value="doc" />
+
+        <div class="article o_report_layout_standard" t-att-data-oe-model="o and o._name"
+            t-att-data-oe-id="o and o.id"
+            t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-call="web.address_layout" />
+            <t t-raw="0" />
+        </div>
+    </template>
+
+    <template id="body_voucher_payslip">
+        <div class="page">
+            <style type="text/css">                               
+                .resize_image > img {
+                width: 88.44px;
+                height: 88.44px;
+                }
+                .new_table_cell {
+                display: flex;
+                display: -webkit-box;
+                -webkit-box-pack: space-around;
+                }
+                .row_cell{
+                flex: 1 1 0;
+                width: 0;                
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                }            
+            </style>
+
+            <t t-set="new_data" t-value="calc_data[o.id]" />
+            <div>
+                <strong>Periodo de planilla:</strong>
+                <span style="padding-left:10px" t-esc="new_data['period']" />
+            </div>
+            <div class="new_table" style="width: 100%">                
+                    <div class="new_table_cell">
+                        <div class="row_cell" >
+                            <strong>Semana(s):</strong>
+                        <span style="padding-left: 10px" t-esc="new_data['weeks']" />
+                        </div>
+                        <div class="row_cell">
+                            <strong>Referencia:</strong>
+                        <span style="padding-left: 10px" t-esc="o.name" />
+                        </div>
+                        <div class="row_cell">
+                            <strong>Estado:</strong>
+                            <t t-if="o.employee_id">
+                                <span style="padding-left: 10px">ACTIVO</span>
+                            </t>
+                            <t t-if="not o.employee_id">
+                                <span style="padding-left: 10px"></span>
+                            </t>
+                        </div>                  
+                </div>
+            </div>
+            <div class="new_table" >               
+                    <div class="new_table_cell">
+                        <div class="row_cell">                           
+                            <strong style="padding-right: 10px">Nombre:</strong>
+                        <span t-field="o.employee_id" />
+                        </div>
+                        <div class="row_cell">
+                            <strong style="padding-right: 10px">Cargo:</strong>
+                        <span t-field="o.employee_id.job_id" />
+                        </div>                    
+                    </div>
+                    <div class="new_table_cell">
+                        <div class="row_cell">
+                            <strong style="padding-right: 10px">Tipo de documento:</strong>
+                        <span t-field="o.employee_id.type_identification_id" />
+                        </div>
+                        <div class="row_cell">
+                            <strong style="padding-right: 10px">Departamento:</strong>
+                        <span t-field="o.employee_id.department_id" />
+                        </div>
+                    </div>                
+            </div>
+            <div class="new_table">
+                <div class="new_table_cell">
+                    <div class="row_cell" style="width:2%">
+                        <strong >Doc. Id.:</strong>                        
+                    </div>
+                    <div class="row_cell" style="width:4%">
+                        <span t-field="o.employee_id.identification_id" />
+                    </div>
+                    <div class="row_cell" style="width:3%">
+                        <strong>Fecha Ingreso:</strong>
+                    </div>
+                    <div class="row_cell" style="width:3%">
+                        <span t-field="o.employee_id.service_start_date" />
+                    </div>
+                    <div class="row_cell" style="width:3%">
+                        <strong>Días. Sanc. Disc.:</strong>
+                    </div>
+                    <div class="row_cell" style="width:1%">
+                        <span t-esc="new_data['days_01']" />
+                    </div>
+                    <t t-if="not o.employee_id.hiden_overtime">
+                        <div class="row_cell">
+                            <strong>Hrs. Noct:</strong>
+                        </div>
+                        <div class="row_cell">
+                            <span t-esc="new_data['noct_hours']" />
+                        </div>                       
+                    </t>
+                    <t t-else="">
+                        <div class="row_cell">
+                            <strong></strong>
+                        </div>
+                        <div class="row_cell">
+                            <span />
+                        </div>                       
+                    </t>
+                </div>
+            <div class="new_table">
+                <div class="new_table_cell">
+                        <div class="row_cell" style="width:2%">
+                            <strong>Básico:</strong>
+                        </div>
+                        <div class="row_cell" style="width:4%">
+                            <span t-field="o.employee_id.wage" />
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong>Fecha Cese:</strong>
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <span t-if="new_data['service_start_date']"
+                                t-esc="new_data['service_start_date'].strftime('%d/%m/%Y')" />
+                            <span t-if="not new_data['service_start_date']"
+                                t-esc="new_data['service_start_date']" />
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong>D. no lab/sub :</strong>
+                        </div>
+                        <div class="row_cell" style="width:1%">
+                            <span t-esc="new_data['no_lab_sub_days']" />
+                        </div>
+                        <t t-if="not o.employee_id.hiden_overtime">
+                            <div class="row_cell">
+                                <strong>Hrs. Comp:</strong>
+                            </div>
+                            <div class="row_cell">
+                                <span t-esc="new_data['comp_hours']" />
+                            </div>                         
+                        </t>
+                        <t t-else="">
+                            <div class="row_cell">
+                                <strong></strong>
+                            </div>
+                            <div class="row_cell">
+                                <span />
+                            </div>       
+                        </t>
+                </div>
+            </div>
+            <div class="new_table">
+                    <div class="new_table_cell">
+                        <div class="row_cell" style="width:2%">
+                            <strong>R. Pensión:</strong>
+                        </div>
+                        <div class="row_cell" style="width:4%">
+                            <span t-field="o.employee_id.pension_system_id" />
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong>Días Trabajados:</strong>
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <span t-esc="new_data['work_days']" />                          
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong>Dias Subsidios:</strong>
+                        </div>
+                        <div class="row_cell" style="width:1%">
+                            <span t-esc="new_data['sub_days']" />
+                        </div>
+                        <t t-if="not o.employee_id.hiden_overtime">
+                            <div class="row_cell">
+                                <strong>Hrs. Frdo:</strong>
+                            </div>
+                            <div class="row_cell">
+                                <span t-esc="new_data['hours_frdo']" />
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row_cell">
+                                <strong></strong>
+                            </div>
+                            <div class="row_cell">
+                                <span />
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="new_table">
+                    <div class="new_table_cell">
+                        <div class="row_cell" style="width:2%">
+                            <strong>CUSSP:</strong>
+                        </div>
+                        <div class="row_cell" style="width:4%">
+                            <span t-field="o.employee_id.cuspp" />
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong>Días Vacaciones:</strong>
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <span t-esc="new_data['vac_days']" />
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong>Dias D.Médicos:</strong>
+                        </div>
+                        <div class="row_cell" style="width:1%">
+                            <span t-esc="new_data['desc_days']" />
+                        </div>
+                        <t t-if="not o.employee_id.hiden_overtime">
+                            <div class="row_cell">
+                                <strong>Hrs. 25%:</strong>
+                            </div>
+                            <div class="row_cell">
+                                <span t-esc="new_data['hours_25']" />
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row_cell">
+                                <strong></strong>
+                            </div>
+                            <div class="row_cell">
+                                <span />
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="new_table">
+                    <div class="new_table_cell">
+                        <div class="row_cell" style="width:2%">
+                            <strong></strong>
+                        </div>
+                        <div class="row_cell" style="width:4%">
+                            <span />
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong>Días Descanso:</strong>
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <span t-esc="new_data['dsc_days']" />
+                        </div>
+                        <div class="row_cell" style="width:3%">
+                            <strong></strong>
+                        </div>
+                        <div class="row_cell" style="width:1%">
+                            <span />
+                        </div>                      
+                        <t t-if="not o.employee_id.hiden_overtime">
+                            <div class="row_cell">
+                                <strong>Hrs. 35%:</strong>
+                            </div>
+                            <div class="row_cell">
+                                <span t-esc="new_data['hours_35']" />
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row_cell">
+                                <strong></strong>
+                            </div>
+                            <div class="row_cell">
+                                <span />
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                <div class="new_table">
+                    <div class="new_table_cell">
+                        <div class="row_cell" style="width:68.5%">
+                            <strong>Periodo de Asignación:</strong>
+                            <t t-foreach="o.leave_ids" t-as="leave">
+                                <span t-esc="leave.date_from.strftime('%d/%m/%Y')" />
+                            <span
+                                    style="padding-right:10px,padding-left:10px">-</span>
+                            <span
+                                    t-esc="leave.date_to.strftime('%d/%m/%Y')" /> | </t>
+                        </div>
+                        <div class="row_cell">
+                            <strong>Hrs. Trab.:</strong>
+                        </div>
+                        <div class="row_cell">
+                            <span t-esc="new_data['work_hours']" />
+                        </div>                       
+                    </div>
+                </div>
+                <div class="new_table">
+                    <div class="new_table_cell">
+                        <div class="row_cell">
+                            <strong>Situación especial:</strong>
+                            <span style="padding-left: 10px"
+                                t-field="o.employee_id.special_situation_id" />                           
+                        </div>                                            
+                    </div>
+                </div> 
+            </div>
+
+            <t t-set="line_id" t-value="cat_lines[o.id]" />
+
+            <div class="new_table" >
+                <div class="new_table_cell">
+                    <div class="row_cell" style="border: 1.5px solid black!important;width:28%;">
+                        <center><strong>INGRESOS:</strong></center>                                               
+                    </div>
+                    <div class="row_cell" style="border: 1.5px solid black!important;width:27%;">
+                        <center><strong>DESCUENTOS:</strong></center>
+                    </div>
+                    <div class="row_cell" style="border: 1.5px solid black!important;width:20%;">
+                        <center><strong>APORTES:</strong></center>
+                    </div>                   
+                </div>
+            </div>
+            <div class="new_table">
+                <t t-foreach="range(line_id['length_lines'])" t-as="line">
+                <div class="new_table_cell">
+                    <!--<p>categoria
+                        1</p>-->
+                    <div class="row_cell" style="padding: 0px 0px 0px 8px; width:28%">
+                            <span t-esc="line_id['cat_1'][line]['name']" />                      
+                    </div>
+                    <div class="row_cell" style="text-align:right; padding: 0px 3px 0px 0px; width:9%">
+                        <t t-if="line_id['cat_1'][line]['amount']">
+                                <span t-esc="line_id['cat_1'][line]['amount']"
+                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}' />
+                        </t>
+                        <t t-if="not line_id['cat_1'][line]['amount']">
+                                <span />
+                        </t>                      
+                    </div>
+                        <!--<p>categoria
+                            2</p>-->
+                    <div class="row_cell" style="padding: 0px 0px 0px 8px; width:27%">
+                            <span t-esc="line_id['cat_2'][line]['name']" />
+                    </div>
+                    <div class="row_cell" style="text-align:right; padding: 0px 3px 0px 0px; width:9%">
+                        <t t-if="line_id['cat_2'][line]['amount']">
+                                <span t-esc="line_id['cat_2'][line]['amount']"
+                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}' />
+                        </t>
+                        <t t-if="not line_id['cat_2'][line]['amount']">
+                                <span />
+                        </t>
+                    </div>
+                        <!--<p>categoria
+                            3</p>-->
+                    <div class="row_cell" style="padding: 0px 0px 0px 8px; width:20%">
+                            <span t-esc="line_id['cat_3'][line]['name']" />
+                    </div>
+                    <div class="row_cell" style="text-align:right; padding: 0px 3px 0px 0px; width:9%">
+                        <t t-if="line_id['cat_3'][line]['amount']">
+                                <span t-esc="line_id['cat_3'][line]['amount']"
+                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}' />
+                        </t>
+                        <t t-if="not line_id['cat_3'][line]['amount']">
+                                <span />
+                        </t>
+                    </div>
+                </div>
+                    <t t-if="line == line_id['length_lines'] - 1">
+                        <div class="new_table_cell">
+                            <div class="row_cell" style="padding: 0px 0px 0px 0px; width:28%">
+                                <span style="font-weight: bold">TOTALES:</span>
+                            </div>
+                            <div class="row_cell" style="text-align:right; padding: 0px 3px 0px 0px; width:9%">
+                                <span style="font-weight: bold"
+                                    t-esc="line_id['total_cat1']"
+                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}' />
+                            </div>
+                            <div class="row_cell" style="padding: 0px 0px 0px 8px; width:27%">
+                                <span />
+                            </div>
+                            <div class="row_cell" style="text-align:right; padding: 0px 3px 0px 0px; width:9%">
+                                <span style="font-weight: bold"
+                                    t-esc="line_id['total_cat2']"
+                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}' />
+                            </div>
+                            <div class="row_cell" style="padding: 0px 0px 0px 8px; width:20%">
+                                <span />
+                            </div>
+                            <div class="row_cell" style="text-align:right; padding: 0px 3px 0px 0px; width:9%">
+                                <span style="font-weight: bold"
+                                    t-esc="line_id['total_cat3']"
+                                    t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}' />
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </div>
+            
+            <div style="width:100%;">
+                <br />
+                <strong>
+                    <span>Neto recibido:</span>
+                    <span t-esc="line_id['total_net']"
+                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}' />
+                </strong>
+            </div>
+
+            <div style="width:100%">
+                <div style="width: 50%;height: 100px;float: right;">
+                    <t t-if="employer_sign">
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <br />
+                            <span t-esc="employer_sign['sign']" class="resize_image"
+                                t-options="{'widget': 'image'}" />
+                            <br />
+                            ______________________________
+                            <br />
+                            <span t-esc="employer_sign['name']"/>
+                            <br />
+                            <span t-esc="employer_sign['job_title']"/>
+                        </div>
+                    </t>
+                    <t t-if="not employer_sign">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div style="text-align: center;word-spacing: 1px;">
+                            <div style="width: 50% !important;height: 10px!important" />
+                            _____________________________
+                        </div>
+                    </t>
+                </div>
+                
+                <div name="employee_sign" style="width: 50%;height: 100px;float: left;">
+                    <div style="text-align: center;word-spacing: 1px;">
+                        <t t-if="o.status == 'signed' and o.signature">
+                            <br/>
+                            <span t-esc="o.signature" class="resize_image" t-options="{'widget': 'image'}"/>
+                            <br/>______________________________
+                            <br/>
+                            <span t-field="o.employee_id"/>
+                            <br/>
+                            <t t-if="o.employee_id.type_identification_id and o.employee_id.identification_id">
+                                <t t-esc="o.employee_id.type_identification_id.name"/>
+                                (<t t-esc="o.employee_id.type_identification_id.country_id.code"/>) :
+                                <t t-esc="o.employee_id.identification_id"/>
+                            </t>
+                        </t>
+                        <t t-if="not o.signature">
+                            <t t-if="not employer_sign">
+                                <div style="width: 50% !important;height: 70px!important" />
+                            </t>
+                            <t t-if="employer_sign">
+                                <div style="width: 50% !important;height: 105px!important" />
+                            </t>
+                            _____________________________ <br />
+                            <span t-field="o.employee_id"/>
+                            <br />
+                            <t t-if="o.employee_id.type_identification_id and o.employee_id.identification_id">
+                                <t t-esc="o.employee_id.type_identification_id.name"/>
+                                (<t t-esc="o.employee_id.type_identification_id.country_id.code"/>) :
+                                <t t-esc="o.employee_id.identification_id"/>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </template>
+
+    <template id="report_payslip_voucher_payroll_l10n_pe">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="voucher_payroll.external_layout_voucher_payroll">
+                    <t t-if="not company">
+                        <!-- Multicompany -->
+                        <t t-if="company_id">
+                            <t t-set="company" t-value="company_id" />
+                        </t>
+                        <t t-elif="o and 'company_id' in o">
+                            <t t-set="company" t-value="o.company_id.sudo()" />
+                        </t>
+                        <t t-else="else">
+                            <t t-set="company" t-value="res_company" />
+                        </t>
+                    </t>
+                    <div style="font-size:10px!important; width: 100%; height:590px">
+                        <br />
+                        <div class="new_table">
+                            <div class="new_table_cell">
+                                <div class="row_cell" style="width:40%">
+                                    <span />
+                                </div>
+                                <div class="row_cell" style="width:33%">
+                                    <span />
+                                </div>
+                                <div class="row_cell" style="width:27%">
+                                    <img class="float-right" t-if="company.logo"
+                                        t-att-src="image_data_uri(company.logo)"
+                                        style="max-height: 45px;" alt="Logo" />
+                                </div>
+                            </div>
+                            <div class="new_table_cell">
+                                <div class="row_cell" style="width:40%">
+                                    <span>ORIGINAL</span>
+                                </div>
+                                <div class="row_cell" style="width:33%">
+                                    <span style="font-weight: bold">PLANILLA DE PAGO:</span>
+                                    <span style="font-weight: bold" class="text-uppercase"
+                                        t-field="o.struct_id.name" />
+                                </div>
+                                <div class="row_cell" style="width:27%">
+                                    <span t-esc="o.struct_id.law" />
+                                </div>
+                            </div>
+                            <div class="new_table_cell" style="border-bottom:2px solid black;">
+                                <div class="row_cell" style="width:40%">
+                                    <span t-field="company.partner_id.name" />
+                                </div>
+                                <div class="row_cell" style="width:33%">
+                                    <span t-field="company.partner_id.vat" />
+                                </div>
+                                <div class="row_cell" style="width:27%">
+                                    <span t-field="company.partner_id.street" />
+                                </div>                              
+                            </div>
+                        </div>                 
+                        <t t-call="voucher_payroll.body_voucher_payslip" />
+                    </div>                    
+                    <div style="font-size:10px!important; width: 100%; height:590px">
+                        <br />
+                        <div class="new_table">
+                            <div class="new_table_cell">
+                                <div class="row_cell" style="width:40%">
+                                    <span />
+                                </div>
+                                <div class="row_cell" style="width:33%">
+                                    <span />
+                                </div>
+                                <div class="row_cell" style="width:27%">
+                                    <img class="float-right" t-if="company.logo"
+                                        t-att-src="image_data_uri(company.logo)"
+                                        style="max-height: 45px;" alt="Logo" />
+                                </div>
+                            </div>
+                            <div class="new_table_cell">
+                                <div class="row_cell" style="width:40%">
+                                    <span>COPIA</span>
+                                </div>
+                                <div class="row_cell" style="width:33%">
+                                    <span style="font-weight: bold">PLANILLA DE PAGO:</span>
+                                    <span style="font-weight: bold" class="text-uppercase"
+                                        t-field="o.struct_id.name" />
+                                </div>
+                                <div class="row_cell" style="width:27%">
+                                    <span t-esc="o.struct_id.law" />
+                                </div>
+                            </div>
+                            <div class="new_table_cell" style="border-bottom:2px solid black;">
+                                <div class="row_cell" style="width:40%">
+                                    <span t-field="company.partner_id.name" />
+                                </div>
+                                <div class="row_cell" style="width:33%">
+                                    <span t-field="company.partner_id.vat" />
+                                </div>
+                                <div class="row_cell" style="width:27%">
+                                    <span t-field="company.partner_id.street" />
+                                </div>
+                            </div>
+                        </div>
+                        <t t-call="voucher_payroll.body_voucher_payslip" />
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_voucher_payroll" model="report.paperformat">
+        <field name="name">Voucher Payroll Paperformat</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">15</field>
+        <field name="margin_right">15</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+
+    <record id="action_report_payslip_voucher_payroll" model="ir.actions.report">
+        <field name="name">Formato Boleta</field>
+        <field name="model">hr.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">voucher_payroll.report_payslip_voucher_payroll_l10n_pe</field>
+        <field name="report_file">voucher_payroll.report_payslip_voucher_payroll_l10n_pe</field>
+        <field name="print_report_name">'Payslip - %s' % (object.employee_id.name)</field>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="voucher_payroll.paperformat_voucher_payroll"/>
+    </record>
+
+</odoo>

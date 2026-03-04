@@ -1,0 +1,157 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * holiday_process
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-02 00:00+0000\n"
+"PO-Revision-Date: 2026-03-02 00:00+0000\n"
+"Last-Translator: Ganemo <info@ganemo.co>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. ── Models ──────────────────────────────────────────────────────────────────
+
+msgid "Vacation Generator"
+msgstr "Generador de Vacaciones"
+
+msgid "Vacation Request and Compensation"
+msgstr "Solicitud y Compensación de Vacaciones"
+
+msgid "Vacation Days Updater"
+msgstr "Actualizador de Días de Vacaciones"
+
+#. ── hr.employee fields ──────────────────────────────────────────────────────
+
+msgid "Has Vacations"
+msgstr "Tiene Vacaciones"
+
+msgid "Vacation Days per Year"
+msgstr "Días de Vacaciones por Año"
+
+msgid "Additional Days"
+msgstr "Días Adicionales"
+
+msgid "Vacation Lines"
+msgstr "Líneas de Vacaciones"
+
+msgid "Start Vacation"
+msgstr "Inicio Vac."
+
+#. ── hr.leave fields ─────────────────────────────────────────────────────────
+
+msgid "Allocation"
+msgstr "Asignación"
+
+msgid "From Date"
+msgstr "Desde"
+
+msgid "To Date"
+msgstr "Hasta"
+
+#. ── hr.leave.type fields ────────────────────────────────────────────────────
+
+msgid "Show Allocation in Time Off Request"
+msgstr "Mostrar Asignación en Solicitud de Ausencia"
+
+#. ── hr.leave.allocation fields ──────────────────────────────────────────────
+
+msgid "Absences"
+msgstr "Ausencias"
+
+msgid "Paid Without Leave"
+msgstr "Pagos Sin Goce"
+
+msgid "Computed Vacations"
+msgstr "Vacaciones Calculadas"
+
+msgid "Vacations Taken or Paid"
+msgstr "Vacaciones Gozadas o Pagadas"
+
+msgid "Pending Vacations"
+msgstr "Vacaciones Pendientes"
+
+msgid "Is Vacation?"
+msgstr "¿Es Vacación?"
+
+#. ── hr.leave.payment fields ─────────────────────────────────────────────────
+
+msgid "Paid Days"
+msgstr "Días Pagados"
+
+msgid "Concept"
+msgstr "Concepto"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Employee"
+msgstr "Empleado"
+
+#. ── holiday.generator.wizard fields ─────────────────────────────────────────
+
+msgid "Employees"
+msgstr "Empleados"
+
+msgid "Was Generated?"
+msgstr "¿Fue Generado?"
+
+msgid "Define Period"
+msgstr "Definir Periodo"
+
+msgid "From"
+msgstr "Desde"
+
+msgid "To"
+msgstr "Hasta"
+
+#. ── holiday.petition.wizard fields ──────────────────────────────────────────
+
+msgid "Number of Vacation Days"
+msgstr "N° de Días de Vacaciones"
+
+msgid "Time Off Type"
+msgstr "Tipo de Ausencia"
+
+msgid "Allocations"
+msgstr "Asignaciones"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Is Settlement?"
+msgstr "¿Es Liquidación?"
+
+msgid "Date From (Native)"
+msgstr "Fecha Desde (Nativo)"
+
+msgid "Date To (Native)"
+msgstr "Fecha Hasta (Nativo)"
+
+#. ── Menus, Actions & View strings ───────────────────────────────────────────
+
+msgid "Actualizar días de vacaciones"
+msgstr "Actualizar Días de Vacaciones"
+
+msgid "Vacation Request"
+msgstr "Solicitud de Vacaciones"
+
+msgid "Vacation Compensation"
+msgstr "Compensación de Vacaciones"
+
+msgid "Employees with generated vacations"
+msgstr "Empleados con Vacaciones Generadas"
+
+msgid "Generate Vacations"
+msgstr "Generar Vacaciones"
+
+msgid "Vacation Parameters"
+msgstr "Parámetros Vacaciones"
+
+msgid "Vacation and Allocations"
+msgstr "Vacaciones y Asignaciones"

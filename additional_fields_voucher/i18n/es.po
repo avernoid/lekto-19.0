@@ -1,0 +1,50 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* additional_fields_voucher
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 00:00+0000\n"
+"PO-Revision-Date: 2026-02-26 00:00+0000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: additional_fields_voucher
+#: model:ir.model,name:additional_fields_voucher.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: additional_fields_voucher
+#: model:ir.model.fields,field_description:additional_fields_voucher.field_hr_employee__employer_sign
+msgid "Employer Signature"
+msgstr "Firma del Empleador"
+
+#. module: additional_fields_voucher
+#: model:ir.model.fields,field_description:additional_fields_voucher.field_hr_employee__is_employer
+msgid "Is Employer"
+msgstr "Es Empleador"
+
+#. module: additional_fields_voucher
+#: model:ir.model.fields,field_description:additional_fields_voucher.field_hr_payroll_structure__law
+msgid "Law/Decrees"
+msgstr "Ley/Decretos"
+
+#. module: additional_fields_voucher
+#: model:ir.model.fields,help:additional_fields_voucher.field_hr_employee__is_employer
+msgid "Check this box if this employee acts as an employer or legal representative. This allows the system to use their signature on official documents such as payroll vouchers."
+msgstr "Marque esta casilla si este empleado actúa como empleador o representante legal. Esto permite que el sistema utilice su firma en documentos oficiales, como boletas de pago."
+
+#. module: additional_fields_voucher
+#: model:ir.model.fields,help:additional_fields_voucher.field_hr_employee__employer_sign
+msgid "Upload the digital signature of the employer. This image will be printed on the automated payroll vouchers and other HR documents to validate them."
+msgstr "Cargue la firma digital del empleador. Esta imagen se imprimirá en las boletas de nómina automáticas y otros documentos de recursos humanos para validarlos."
+
+#. module: additional_fields_voucher
+#: model:ir.model.fields,help:additional_fields_voucher.field_hr_payroll_structure__law
+msgid "Specify the legal basis, laws, or decrees that regulate this payroll structure. This information may appear on related reports or vouchers."
+msgstr "Especifique el marco legal, leyes o decretos que regulan esta estructura salarial. Esta información puede aparecer en reportes o boletas de pago."

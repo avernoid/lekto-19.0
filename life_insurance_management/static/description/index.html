@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Insurance Management | Odoo HR App by Ganemo</title>
+    <meta name="description"
+        content="Manage life insurance policies for your employees directly in Odoo. A centralized HR dashboard for policy tracking.">
+    <meta name="keywords" content="Odoo, HR, Payroll, Life Insurance, Ganemo, Employee Benefits, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'life_insurance_management' implements management of life insurance policies for employees.
+            It allows attaching policies to employee profiles within the HR subsystem.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Life Insurance</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Employee Policy Management</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Securely store, track, and manage life insurance policies for all your employees in a centralized HR
+                    dashboard.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-users mr-2"></i> Centralized Policy Tracking
+                            </h4>
+                            <p style="text-align: justify;">Keep all employee life insurance information in one secure
+                                location. No more scattered spreadsheets or lost documents. Easily track providers and
+                                coverage.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-link mr-2"></i> True HR Integration</h4>
+                            <p style="text-align: justify;">Seamlessly linked to the <strong>Employee Profile</strong>,
+                                allowing HR managers to quickly access policy records, start dates, and coverage amounts
+                                right where they need them.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup &amp; User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+
+                <!-- ========== SECTION 1: PREREQUISITES ========== -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #6f42c1; background-color: #faf8ff; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #6f42c1; font-weight: 700;"><i class="fa fa-check-square-o mr-2"></i> 0.
+                                &nbsp;Prerequisites</h3>
+                            <p>Before using this module, make sure the following conditions are met:</p>
+                            <ul style="line-height: 2.2;">
+                                <li><i class="fa fa-check text-success mr-2"></i>The module <strong>Life Insurance
+                                        Management</strong> is installed and active (visible in <em>Settings &gt;
+                                        Apps</em>).</li>
+                                <li><i class="fa fa-check text-success mr-2"></i>The user performing configuration
+                                    belongs to the <strong>HR / Officer</strong> group or higher (required to see the
+                                    insurance fields on the employee form).</li>
+                                <li><i class="fa fa-check text-success mr-2"></i>Insurance provider contacts must exist
+                                    in Odoo as <strong>res.partner</strong> records (Contacts app). Create them before
+                                    creating policies if they do not exist yet.</li>
+                                <li><i class="fa fa-check text-success mr-2"></i>Employee records must be created in the
+                                    <strong>Employees</strong> app before assigning them to any policy.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== SECTION 2: CREATING A POLICY ========== -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                &nbsp;Creating a Life Insurance Policy</h3>
+                            <p class="lead mb-3">This is the master record that concentrates the policy data. Follow
+                                these steps exactly:</p>
+                            <ol style="line-height: 2.4; font-size: 15px;">
+                                <li>Go to the <strong>Payroll</strong> app (top menu bar).</li>
+                                <li>In the application menu, navigate to <strong>Employees &gt; Life Insurance</strong>.
+                                    &nbsp;<span class="badge"
+                                        style="background:#791d97; color:white; font-size:11px;">Menu path: Payroll &gt;
+                                        Employees &gt; Life Insurance</span></li>
+                                <li>Click <strong>"New"</strong> (top-left button) to open a blank policy form.</li>
+                                <li>Fill in the following fields:
+                                    <table class="table table-bordered table-sm mt-2" style="font-size:14px;">
+                                        <thead style="background-color:#791d97; color:white;">
+                                            <tr>
+                                                <th>Field</th>
+                                                <th>Description</th>
+                                                <th>Required?</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>Policy Name</strong></td>
+                                                <td>A descriptive name or code for the policy (e.g. <em>"Vida Ley 2024 –
+                                                        Rimac"</em>).</td>
+                                                <td><span class="text-danger">Yes</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Entities</strong></td>
+                                                <td>The insurance company or broker — select from existing Contacts.
+                                                </td>
+                                                <td>Optional</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Policy Number</strong></td>
+                                                <td>Official number assigned by the insurer (e.g.
+                                                    <em>"POL-00123-2024"</em>).
+                                                </td>
+                                                <td>Optional</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Validity Start Date</strong></td>
+                                                <td>The date the policy coverage begins.</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Validity End Date</strong></td>
+                                                <td>The date the policy expires. <strong>Important:</strong> the system
+                                                    uses this date to detect date conflicts between policies for the
+                                                    same employee.</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Hiring Term</strong></td>
+                                                <td>Free text — e.g. <em>"Annual"</em>, <em>"Biennial"</em>.
+                                                    Informational only.</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Rate</strong></td>
+                                                <td>The premium rate (up to 4 decimal places), e.g. <em>0.0068</em> for
+                                                    0.68%.</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Amount</strong></td>
+                                                <td>The total coverage amount in monetary units.</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </li>
+                                <li>Go to the <strong>"Employees"</strong> tab (notebook at the bottom of the form).
+                                </li>
+                                <li>Click <strong>"Add a line"</strong> to add one or more employees covered by this
+                                    policy. You can add multiple employees at once.</li>
+                                <li>Click <strong>"Save"</strong> (or use the breadcrumb to navigate away — Odoo will
+                                    auto-save).</li>
+                            </ol>
+                            <div class="alert alert-warning mt-3" role="alert" style="border-radius: 10px;">
+                                <i class="fa fa-exclamation-triangle mr-2"></i><strong>Date Conflict
+                                    Validation:</strong> If you assign an employee to a policy whose date range overlaps
+                                with another policy for the same employee, the system will show a
+                                <strong>ValidationError</strong> and prevent saving. Adjust the dates on one of the
+                                policies before proceeding.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== SECTION 3: ASSIGNING FROM EMPLOYEE FORM ========== -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-user-plus mr-2"></i> 2.
+                                &nbsp;Assigning a Policy from the Employee Profile</h3>
+                            <p class="lead mb-3">Alternatively, you can flag an employee and link them to an existing
+                                policy directly from their profile:</p>
+                            <ol style="line-height: 2.4; font-size: 15px;">
+                                <li>Go to <strong>Employees</strong> app &gt; Open the employee's profile.</li>
+                                <li>Scroll down to the <strong>"Private Information"</strong> tab (or look for the
+                                    insurance fields positioned after the <em>Disability</em> field).</li>
+                                <li>Enable the checkbox <strong>"Life insurance?"</strong>. &nbsp;<em>This reveals two
+                                        additional fields below it.</em></li>
+                                <li>In the <strong>"Life insurance policy"</strong> field that appeared, select the
+                                    desired policy from the dropdown. Only already-created policies appear here.</li>
+                                <li>Click the <strong>"Save employee in the policy"</strong> checkbox (toggle it to
+                                    <code>True</code>) and then save the record. &nbsp;<em>This action calls the backend
+                                        to formally associate this employee with the selected policy's Many2many
+                                        list.</em>
+                                </li>
+                                <li>Save the employee record. After saving, the <strong>"Save employee in the
+                                        policy"</strong> checkbox resets to <code>False</code> automatically.</li>
+                            </ol>
+                            <div class="alert alert-info mt-3" role="alert" style="border-radius: 10px;">
+                                <i class="fa fa-info-circle mr-2"></i><strong>Tip:</strong> If the employee already
+                                appears in the <em>Employees</em> tab of a policy record, the <strong>"Life insurance
+                                    policy"</strong> field on the employee will be auto-populated with the most recent
+                                (by end date) policy when the <em>"Life insurance?"</em> checkbox is toggled on. No need
+                                to re-select it manually.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== SECTION 4: MONITORING ========== -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #28a745; background-color: #f8fff9; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #28a745; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 3.
+                                &nbsp;Operating Manual — Day-to-Day Monitoring</h3>
+                            <p class="lead mb-3">Once policies are set up, use these views and filters daily:</p>
+                            <div class="row mt-3">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #28a745;">
+                                        <h5><i class="fa fa-list-alt text-success mr-2"></i> Global Policy List</h5>
+                                        <p class="text-muted">Go to <strong>Payroll &gt; Employees &gt; Life
+                                                Insurance</strong> to see
+                                            all policies in the company. The list view shows: Policy Name, Policy
+                                            Number, Start Date, End Date, Hiring Term, Rate, and Amount at a glance.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #28a745;">
+                                        <h5><i class="fa fa-filter text-success mr-2"></i> "Pending Life Insurance"
+                                            Filter</h5>
+                                        <p class="text-muted">In the <strong>Employees</strong> list view, use the
+                                            filter <em>"Pending life insurance"</em> (under Filters menu) to quickly
+                                            identify employees who have been flagged with <em>"Life insurance? =
+                                                Yes"</em> but have <strong>no policy assigned yet</strong>. Act on these
+                                            records immediately to avoid gaps in coverage.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #28a745;">
+                                        <h5><i class="fa fa-lock text-success mr-2"></i> Secure Data Access</h5>
+                                        <p class="text-muted">The insurance fields (<em>Life insurance?</em>, <em>Life
+                                                insurance policy</em>, <em>Save employee in the policy</em>) are
+                                            restricted to the <strong>HR / Officer</strong> group. Regular employees and
+                                            portal users cannot see or modify this data.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #28a745;">
+                                        <h5><i class="fa fa-trash text-danger mr-2"></i> Deleting a Policy</h5>
+                                        <p class="text-muted">If you delete a policy, the system automatically reassigns
+                                            the affected employees to the next most-recent policy (by end date) if one
+                                            exists. Employees with no remaining policy will have their <em>Life
+                                                insurance policy</em> field cleared but the <em>Life insurance?</em>
+                                            flag remains.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-user-secret mr-2"></i>
+                                Scenario 1: Create a Policy and Assign it from the Policy Form</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Path:</strong> Payroll &gt; Employees &gt; Life Insurance &gt; New
+                            </p>
+                            <ol class="mt-3">
+                                <li>Navigate to <strong>Payroll &gt; Employees &gt; Life Insurance</strong> and click
+                                    <strong>New</strong>.
+                                </li>
+                                <li>Fill in: Policy Name = <em>"Vida Ley 2025 – Pacifico"</em>, Validity Start Date =
+                                    <em>01/01/2025</em>, Validity End Date = <em>31/12/2025</em>, Rate =
+                                    <em>0.0053</em>, Amount = <em>50000</em>.
+                                </li>
+                                <li>In the <strong>Employees</strong> tab, add 3 employees.</li>
+                                <li>Save the record.</li>
+                                <li><strong>Expected:</strong> Policy is saved. All 3 employee profiles now show this
+                                    policy in the <em>Life insurance policy</em> field. The <em>Life insurance?</em>
+                                    flag is visible on each employee.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-user mr-2"></i> Scenario 2:
+                                Assign a Policy from the Employee Profile</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Path:</strong> Employees &gt; [Employee] &gt; Private Information
+                            </p>
+                            <ol class="mt-3">
+                                <li>Open any employee profile.</li>
+                                <li>Enable the <strong>"Life insurance?"</strong> checkbox — verify that <em>"Life
+                                        insurance policy"</em> and <em>"Save employee in the policy"</em> fields appear
+                                    below.</li>
+                                <li>Select an existing policy in the <strong>"Life insurance policy"</strong> field.
+                                </li>
+                                <li>Enable the <strong>"Save employee in the policy"</strong> toggle and save the form.
+                                </li>
+                                <li><strong>Expected:</strong> The employee appears in the <em>Employees</em> tab of the
+                                    selected policy. The toggle resets to <code>False</code> after saving.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-users mr-2"></i> Scenario 3:
+                                Multi-Employee Global Tracking</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Path:</strong> Payroll &gt; Employees &gt; Life Insurance (list view)
+                            </p>
+                            <ol class="mt-3">
+                                <li>Create at least 3 different policies, each covering different employees.</li>
+                                <li>Go to <strong>Payroll &gt; Employees &gt; Life Insurance</strong> (list view).</li>
+                                <li>Verify that all policies appear with their correct Policy Name, Number, Dates, Rate,
+                                    and Amount.</li>
+                                <li>Open each policy and confirm the <strong>Employees</strong> tab lists the correct
+                                    employees for each.</li>
+                                <li><strong>Expected:</strong> Each policy shows only its assigned employees; no
+                                    cross-contamination between policies.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #fd7e14;">
+                            <h4 style="color: #fd7e14; font-weight: 700;"><i
+                                    class="fa fa-exclamation-triangle mr-2"></i> Scenario 4: Date Conflict Validation
+                            </h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Goal:</strong> Verify the system prevents overlapping policies for the same
+                                employee
+                            </p>
+                            <ol class="mt-3">
+                                <li>Create <strong>Policy A</strong> with dates 01/01/2025 – 31/12/2025, assigned to
+                                    <em>Employee X</em>.
+                                </li>
+                                <li>Create <strong>Policy B</strong> with dates 01/06/2025 – 31/05/2026, and try to add
+                                    <em>Employee X</em> to it.
+                                </li>
+                                <li>Attempt to save Policy B.</li>
+                                <li><strong>Expected:</strong> A <em>ValidationError</em> appears:
+                                    <code>"Employee X has date conflicts with other insurances."</code> The record is
+                                    NOT saved. Adjust the dates so they don't overlap and verify saving succeeds.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6f42c1;">
+                            <h4 style="color: #6f42c1; font-weight: 700;"><i class="fa fa-filter mr-2"></i> Scenario 5:
+                                "Pending Life Insurance" Filter</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Path:</strong> Employees app &gt; List View &gt; Filters
+                            </p>
+                            <ol class="mt-3">
+                                <li>Open an employee profile and enable the <strong>"Life insurance?"</strong> checkbox,
+                                    but do <strong>NOT</strong> select a policy. Save.</li>
+                                <li>Go to the <strong>Employees</strong> list view.</li>
+                                <li>Open the <strong>Filters</strong> dropdown and select <em>"Pending life
+                                        insurance"</em>.</li>
+                                <li><strong>Expected:</strong> Only the employee from step 1 appears — employees with
+                                    <em>Life insurance? = True</em> but no policy linked.
+                                </li>
+                                <li>Assign a policy to this employee, save, and re-apply the filter.
+                                    <strong>Expected:</strong> The employee no longer appears in the filtered list.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 6 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                            <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-trash mr-2"></i> Scenario 6:
+                                Deleting a Policy — Auto-Reassignment</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Goal:</strong> Verify employees are correctly reassigned when a policy is
+                                deleted
+                            </p>
+                            <ol class="mt-3">
+                                <li>Create two sequential policies for the same employee (e.g. <em>Policy 2024</em>:
+                                    Jan–Dec 2024, <em>Policy 2025</em>: Jan–Dec 2025).</li>
+                                <li>Verify both policies show the employee in their <strong>Employees</strong> tab.</li>
+                                <li>Delete <strong>Policy 2025</strong> (the more recent one).</li>
+                                <li>Open the employee profile. <strong>Expected:</strong> the <em>Life insurance
+                                        policy</em> field now points to <em>Policy 2024</em> (auto-reassigned to the
+                                    next most-recent policy).</li>
+                                <li>Now delete <strong>Policy 2024</strong>. <strong>Expected:</strong> The <em>Life
+                                        insurance policy</em> field on the employee is empty, but the <em>"Life
+                                        insurance?"</em> flag remains enabled.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 7 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-lock mr-2"></i> Scenario 7:
+                                Access Control Verification</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR User (non-officer) &nbsp;|&nbsp;
+                                <strong>Goal:</strong> Confirm restricted fields are hidden for non-HR-Officer users
+                            </p>
+                            <ol class="mt-3">
+                                <li>Log in as a user who belongs only to the <strong>Employee / User</strong> group (not
+                                    HR / Officer).</li>
+                                <li>Open any employee profile.</li>
+                                <li><strong>Expected:</strong> The fields <em>"Life insurance?"</em>, <em>"Life
+                                        insurance policy"</em>, and <em>"Save employee in the policy"</em> are
+                                    <strong>NOT visible</strong>.
+                                </li>
+                                <li>Log in as an <strong>HR / Officer</strong> and open the same employee.
+                                    <strong>Expected:</strong> All three fields appear correctly.
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 8 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #856404; font-weight: 700;"><i class="fa fa-edit mr-2"></i> Scenario 8:
+                                Editing Policy Data</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Goal:</strong> Verify edits to a policy propagate correctly
+                            </p>
+                            <ol class="mt-3">
+                                <li>Open an existing policy assigned to at least one employee.</li>
+                                <li>Update the <strong>Rate</strong> from <em>0.0053</em> to <em>0.0068</em> and the
+                                    <strong>Amount</strong> from <em>50,000</em> to <em>75,000</em>. Save.
+                                </li>
+                                <li><strong>Expected:</strong> Changes are saved. Open the policy again and verify the
+                                    updated values appear. The employee association is unaffected.</li>
+                                <li>Now change the <strong>Validity End Date</strong> to a valid future date. Save.</li>
+                                <li><strong>Expected:</strong> No errors. The system re-runs the date conflict check on
+                                    save. If no overlaps exist, it saves successfully.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 9 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #20c997;">
+                            <h4 style="color: #20c997; font-weight: 700;"><i class="fa fa-building mr-2"></i> Scenario
+                                9: Multi-Company Isolation</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer with multi-company access
+                                &nbsp;|&nbsp; <strong>Goal:</strong> Verify company-level data isolation</p>
+                            <ol class="mt-3">
+                                <li>Configure Odoo with at least 2 companies (e.g. Company A and Company B).</li>
+                                <li>Create a policy and assign employees from <strong>Company A</strong> only.</li>
+                                <li>Switch to <strong>Company B</strong> context in Odoo.</li>
+                                <li><strong>Expected:</strong> The policy created under Company A is not visible in
+                                    Company B's list (Odoo's standard multi-company rules apply via the employee's
+                                    company field).</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 10 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6c757d;">
+                            <h4 style="color: #6c757d; font-weight: 700;"><i class="fa fa-globe mr-2"></i> Scenario 10:
+                                Multi-Language Interface</h4>
+                            <p class="text-muted small"><strong>Role:</strong> HR Officer &nbsp;|&nbsp;
+                                <strong>Goal:</strong> Verify Spanish translation is complete
+                            </p>
+                            <ol class="mt-3">
+                                <li>In <strong>Settings &gt; Users</strong>, change the interface language to
+                                    <strong>Spanish (es_PE, es_ES or es_MX)</strong>.
+                                </li>
+                                <li>Navigate to <strong>Payroll &gt; Employees &gt; Life Insurance</strong>.</li>
+                                <li><strong>Expected:</strong> All field labels, menu items, and field strings appear
+                                    correctly in Spanish. No visible English strings remain in the module's interface
+                                    elements.</li>
+                                <li>Open an employee form and verify the insurance fields have their correct Spanish
+                                    translations.</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ &amp; Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">How do I attach a policy to an employee?</h5>
+                            <p class="text-muted mt-2"><strong>Two methods available:</strong></p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Method A (from
+                                    Employee):</strong> Open the employee profile &gt; Enable <em>"Life insurance?"</em>
+                                &gt; Select the policy &gt; Enable <em>"Save employee in the policy"</em> &gt;
+                                Save.<br><strong>Method B (from Policy):</strong> Go to Payroll &gt; Employees &gt; Life
+                                Insurance &gt;
+                                Open the policy &gt; Add employee in the Employees tab &gt; Save.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                Since policies relate to employees, and employees belong to individual companies, life
+                                insurance access follows standard multi-company access rules in Odoo automatically.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #fd7e14;">
+                            <h5 style="font-weight: 700; color: #333;">I get a "date conflict" error when saving a
+                                policy. What does it mean?</h5>
+                            <p class="text-muted mt-2"><strong>Cause:</strong> One or more employees assigned to this
+                                policy are already covered by another policy whose date range overlaps.</p>
+                            <p class="small" style="color: #fd7e14;"><i class="fa fa-wrench mr-1"></i>
+                                <strong>Fix:</strong> Open the conflicting policy and adjust its <em>Validity Start
+                                    Date</em> or <em>Validity End Date</em> so the date ranges do not overlap. Then
+                                retry saving.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6f42c1;">
+                            <h5 style="font-weight: 700; color: #333;">The "Life insurance?" checkbox is not visible on
+                                the employee form. Why?</h5>
+                            <p class="text-muted mt-2"><strong>Cause:</strong> The insurance fields are restricted to
+                                the <strong>HR / Officer</strong> group.</p>
+                            <p class="small" style="color: #6f42c1;"><i class="fa fa-wrench mr-1"></i>
+                                <strong>Fix:</strong> Ensure the logged-in user has the <em>Employees / Officer</em> (or
+                                Administrator) access level in <strong>Settings &gt; Users &amp; Companies &gt;
+                                    Users</strong>. Basic HR users will not see these fields by design.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;">I enabled "Life insurance?" but no policy shows
+                                in the dropdown. Why?</h5>
+                            <p class="text-muted mt-2"><strong>Cause:</strong> No life insurance policies have been
+                                created in the system yet.</p>
+                            <p class="small" style="color: #17a2b8;"><i class="fa fa-wrench mr-1"></i>
+                                <strong>Fix:</strong> First create at least one policy via <strong>Payroll &gt;
+                                    Employees &gt; Life
+                                    Insurance &gt; New</strong>. Once saved, it will be selectable in the employee form
+                                dropdown.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #20c997;">
+                            <h5 style="font-weight: 700; color: #333;">After toggling "Life insurance?" on the employee,
+                                the policy field was auto-filled. Is this normal?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, this is by design.</p>
+                            <p class="small" style="color: #20c997;"><i class="fa fa-check mr-1"></i>
+                                <strong>Detail:</strong> When <em>"Life insurance?"</em> is enabled, the system
+                                automatically searches for the most recent policy (by end date) associated with this
+                                employee and pre-fills the field. If incorrect, simply change it manually before saving.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">I deleted a policy and now an employee shows no
+                                policy. What happened?</h5>
+                            <p class="text-muted mt-2"><strong>Cause:</strong> The deleted policy was the only one
+                                assigned to that employee.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> If a
+                                second (older) policy existed, the system auto-reassigns the employee to it. If no other
+                                policy exists, the <em>Life insurance policy</em> field is cleared. Use the <em>"Pending
+                                    life insurance"</em> filter in the Employees list to find affected employees and
+                                assign them a new policy.</p>
+                        </div>
+                    </div>
+                    <!-- Q8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Can one employee be covered by multiple policies
+                                simultaneously?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No &mdash; not if their date ranges
+                                overlap.</p>
+                            <p class="small" style="color: #856404;"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Detail:</strong> The system enforces non-overlapping date ranges per employee.
+                                However, an employee <strong>can</strong> appear in multiple sequential policies
+                                (non-overlapping periods), e.g. one policy for 2024 and another for 2025.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q9 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is the "Rate" field a percentage or a decimal?
+                            </h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> It is stored as a decimal.</p>
+                            <p class="small text-success"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Detail:</strong> Enter the rate as a decimal value with up to 4 decimal places.
+                                For example, a rate of 0.68% should be entered as <code>0.0068</code>. This field is
+                                informational and does not automatically calculate payroll deductions &mdash; it serves
+                                as a reference value for HR and payroll analysts.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Q10 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6c757d;">
+                            <h5 style="font-weight: 700; color: #333;">Where is the "Life Insurance" menu located? I
+                                can't find it.</h5>
+                            <p class="text-muted mt-2"><strong>Cause:</strong> The menu is under the
+                                <strong>Payroll</strong> app, inside the <strong>Employees</strong> section.
+                            </p>
+                            <p class="small text-secondary"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Open
+                                the <strong>Payroll</strong> app (top menu bar) &gt; Click on <strong>Employees</strong>
+                                &gt;
+                                Select <strong>Life Insurance</strong>. If the <em>Payroll</em> app or the
+                                <em>Employees</em> menu
+                                is not visible, verify that the module is installed and that you have <em>HR /
+                                    Officer</em> access or higher.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ayuda@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>

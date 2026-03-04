@@ -1,0 +1,37 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* automatic_functions_rule
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-22 00:00+0000\n"
+"PO-Revision-Date: 2026-02-22 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: automatic_functions_rule
+#: model_terms:ir.ui.view,arch_db:automatic_functions_rule.hr_payslip_view_form_inherit_automatic_functions_rule
+msgid "Eliminate Zeros"
+msgstr "Eliminar Ceros"
+
+#. module: automatic_functions_rule
+#: model_terms:ir.ui.view,arch_db:automatic_functions_rule.hr_payslip_view_form_inherit_automatic_functions_rule
+msgid "Removes all zero-value salary lines, worked days, and input entries from this payslip. Safe to press multiple times."
+msgstr "Elimina todas las líneas salariales, días trabajados y entradas con valor cero de esta nómina. Es seguro presionar múltiples veces."
+
+#. module: automatic_functions_rule
+#: model:ir.model,name:automatic_functions_rule.model_hr_payslip
+msgid "Pay Slip"
+msgstr "Recibo de Nómina"
+
+#. module: automatic_functions_rule
+#: model:ir.model,name:automatic_functions_rule.model_hr_payslip_run
+msgid "Pay Run"
+msgstr "Lote de Nómina"

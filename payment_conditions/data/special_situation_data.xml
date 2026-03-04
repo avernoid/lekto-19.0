@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+    
+        <record id="special_situation_0" model="special.situation">
+            <field name="name">Ninguna</field>
+            <field name="situation_description">Ninguna</field>
+            <field name="code">0</field>
+        </record>
+
+        <record id="special_situation_1" model="special.situation">
+            <field name="name">Dirección - Presencial</field>
+            <field name="situation_description">Trabajador De Dirección - Presencial</field>
+            <field name="code">1</field>
+        </record>
+
+        <record id="special_situation_2" model="special.situation">
+            <field name="name">Confianza - Presencial</field>
+            <field name="situation_description">Trabajador De Confianza - Presencial</field>
+            <field name="code">2</field>
+        </record>
+
+        <record id="special_situation_3" model="special.situation">
+            <field name="name">Dirección - Teletrabajo Mixto</field>
+            <field name="situation_description">Trabajador De Dirección - Teletrabajo Mixto</field>
+            <field name="code">3</field>
+        </record>
+
+        <record id="special_situation_4" model="special.situation">
+            <field name="code">4</field>
+            <field name="name">Confianza - Teletrabajo Mixto</field>
+            <field name="situation_description">Trabajador De Confianza - Teletrabajo Mixto</field>
+        </record>
+
+        <record id="special_situation_5" model="special.situation">
+            <field name="code">5</field>
+            <field name="name">Dirección - Teletrabajo Completo</field>
+            <field name="situation_description">Trabajador De Dirección - Teletrabajo Completo</field>
+        </record>
+
+        <record id="special_situation_6" model="special.situation">
+            <field name="code">6</field>
+            <field name="name">Confianza - Teletrabajo Completo</field>
+            <field name="situation_description">Trabajador De Confianza - Teletrabajo Completo</field>
+        </record>
+
+        <record id="special_situation_7" model="special.situation">
+            <field name="code">7</field>
+            <field name="name">Teletrabajo Mixto</field>
+            <field name="situation_description">Teletrabajo Mixto</field>
+        </record>
+        
+        <record id="special_situation_8" model="special.situation">
+            <field name="code">8</field>
+            <field name="name">Teletrabajo Completo</field>
+            <field name="situation_description">Teletrabajo Completo</field>
+        </record>
+    
+    </data>
+</odoo>

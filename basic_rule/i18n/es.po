@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* basic_rule
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 12:00+0000\n"
+"PO-Revision-Date: 2026-02-26 12:00+0000\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language: es\n"
+
+
+#. module: basic_rule
+#: model:ir.model.fields,field_description:basic_rule.field_hr_employee__no_provide_pension
+msgid "Does not contribute pension"
+msgstr "No aporta pensión"
+
+#. module: basic_rule
+#: model:ir.model.fields,help:basic_rule.field_hr_employee__no_provide_pension
+msgid "If checked, indicates that the employee does not contribute to a pension fund."
+msgstr "Si está marcado, indica que el empleado no contribuye a un fondo de pensión."
+
+#. module: basic_rule
+#: model:ir.model.fields,field_description:basic_rule.field_hr_employee__no_apply_afp_premium
+msgid "Does not apply AFP premium"
+msgstr "No aplica prima AFP"
+
+#. module: basic_rule
+#: model:ir.model.fields,help:basic_rule.field_hr_employee__no_apply_afp_premium
+msgid "Automatically checked if the employee is over 65 years old, avoiding AFP premium deduction."
+msgstr "Marcado automáticamente si el empleado tiene más de 65 años, evitando la deducción de la prima de AFP."
+
+#. module: basic_rule
+#: model:ir.model.fields,field_description:basic_rule.field_hr_employee__age
+msgid "Age"
+msgstr "Edad"
+
+#. module: basic_rule
+#: model:ir.model.fields,help:basic_rule.field_hr_employee__age
+msgid "Age of the employee computed from their birthday."
+msgstr "Edad del empleado calculada a partir de su cumpleaños."
+
+#. module: basic_rule
+#: model:ir.model.fields,help:basic_rule.field_hr_employee__indicator
+msgid "Technical field used to indicate if the AFP premium exemption condition has been met."
+msgstr "Campo técnico utilizado para indicar si se ha cumplido la condición de exención de la prima de AFP."
+
+#. module: basic_rule
+#: model_terms:ir.ui.view,arch_db:basic_rule.hr_payroll_structure_search_view_inherit_basic_rule
+msgid "Archived Structures"
+msgstr "Estructuras Archivadas"

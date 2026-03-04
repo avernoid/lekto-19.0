@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payslip_line_menu_action" model="ir.actions.act_window">
+        <field name="name">Payslip Analysis</field>
+        <field name="res_model">hr.payslip.line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="view_id" ref="hr_payslip_line_view_pivot"/>
+        <field name="search_view_id" ref="hr_payslip_line_view_filter"/>
+        <field name="context">{
+            'search_default_current_month_dynamic': 1,
+            'search_default_appears_on_payslip': 1,
+            'pivot_measures': ['total'],
+            'pivot_column_groupby': ['salary_rule_id'],
+            'pivot_row_groupby': ['employee_id']
+        }</field>
+    </record>
+
+    <menuitem id="menu_hr_payslip_line"
+              name="Payslip Analysis"
+              parent="hr_payroll.menu_hr_payroll_report"
+              action="hr_payslip_line_menu_action"
+    />
+</odoo>
+

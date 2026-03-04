@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_payslip_form_view_inherit_holiday_field_payroll" model="ir.ui.view">
+        <field name="name">hr.payslip.form.view.inherit.holiday_field_payroll</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Allocations / Leaves" name="allocations_leaves">
+                    <group string="Allocations" name="allocation">
+                        <field name="hr_allocation_ids" string="" />
+                    </group>
+                    <group string="Leaves" name="leaves">
+                        <field name="leave_ids" string="" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

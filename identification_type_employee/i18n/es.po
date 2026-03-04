@@ -1,0 +1,79 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* identification_type_employee
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 16:21+0000\n"
+"PO-Revision-Date: 2026-02-26 16:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: identification_type_employee
+#: model:ir.model.fields.selection,name:identification_type_employee.selection__hr_employee__doc_nationality__both
+msgid "Both"
+msgstr "Ambos"
+
+#. module: identification_type_employee
+#: model:ir.model.fields,field_description:identification_type_employee.field_hr_employee__doc_nationality
+msgid "Document Nationality"
+msgstr "Nacionalidad del doc."
+
+#. module: identification_type_employee
+#: model:ir.model.fields,field_description:identification_type_employee.field_hr_employee__type_identification_id
+msgid "Employee Document Type"
+msgstr "Tipo de doc. del empleado"
+
+#. module: identification_type_employee
+#: model:ir.model,name:identification_type_employee.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+#. module: identification_type_employee
+#: model:ir.model.fields.selection,name:identification_type_employee.selection__hr_employee__doc_nationality__foreign
+msgid "Foreign"
+msgstr "Extranjero"
+
+#. module: identification_type_employee
+#: model:ir.model.fields,field_description:identification_type_employee.field_hr_employee__document_country_id
+msgid "Issuing Country"
+msgstr "País emisor del documento"
+
+#. module: identification_type_employee
+#: model:ir.model.fields.selection,name:identification_type_employee.selection__hr_employee__doc_nationality__national
+msgid "National"
+msgstr "Nacional"
+
+#. module: identification_type_employee
+#: model:ir.model.fields,help:identification_type_employee.field_hr_employee__type_identification_id
+msgid ""
+"Select the specific type of identification document for this employee (e.g., National ID, Passport, Driver's License). This field categorizes the identification number properly according to localization standards."
+msgstr ""
+"Seleccione el tipo específico de documento de identificación para este empleado (por ejemplo, DNI, Pasaporte, Licencia de Conducir). Este campo categoriza el número de identificación correctamente según los estándares de localización."
+
+#. module: identification_type_employee
+#: model:ir.model.fields,help:identification_type_employee.field_hr_employee__document_country_id
+msgid ""
+"Specifies the country that issued the document. This field dynamicly appears only when an international or foreign document type is selected."
+msgstr ""
+"Especifica el país que emitió el documento. Este campo aparece dinámicamente solo cuando se selecciona un tipo de documento internacional o extranjero."
+
+#. module: identification_type_employee
+#: model:ir.model.fields,help:identification_type_employee.field_hr_employee__error_dialog
+msgid ""
+"Technical field used to display real-time validation error alerts on the form view when the document number does not match the rules of the selected document type."
+msgstr ""
+"Campo técnico utilizado para mostrar alertas de error de validación en tiempo real en la vista de formulario cuando el número de documento no coincide con las reglas del tipo de documento seleccionado."
+
+#. module: identification_type_employee
+#: model:ir.model.fields,help:identification_type_employee.field_hr_employee__doc_nationality
+msgid ""
+"Technical field that auto-computes the target nationality (National, Foreign, Both) based on the selected document type. Used to dynamically show or hide the Issuing Country field."
+msgstr ""
+"Campo técnico que auto-calcula la nacionalidad objetivo (Nacional, Extranjero, Ambos) basándose en el tipo de documento seleccionado. Se utiliza para mostrar u ocultar dinámicamente el campo del País Emisor."

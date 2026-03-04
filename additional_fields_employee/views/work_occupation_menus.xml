@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <record id="work_occupation_action" model="ir.actions.act_window">
+        <field name="name">[10-30] Ocupación</field>
+        <field name="res_model">work.occupation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_localization_work_occupation"
+              name="[10-30] Ocupación"
+              parent="l10n_pe_localization_menu.menu_hr_information_plame"
+              action="work_occupation_action"
+              sequence="10"
+    />
+
+</odoo>

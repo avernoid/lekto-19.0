@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo><data noupdate="1">
+    <template id="mail_notification_voucher_sending" inherit_id="mail.mail_notification_light" name="Payslip: Payment voucher email notification">
+        <xpath expr="//tbody//tr//td//table//tr//td//span" position="inside">
+            <t t-if="record and record._name == 'hr.payslip'">
+                <span style="font-size: 20px; font-weight: bold;">
+                    <t t-esc="record.display_name or 'Boleta de pago'"/> 
+                </span>
+            </t>
+        </xpath>
+    </template>
+</data></odoo>

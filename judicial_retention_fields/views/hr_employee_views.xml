@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_view_form_inherit_judicial_retention_fields" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.judicial_retention_fields</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='personal_information']/group" position="inside">
+                <group string="Judicial Processes" name="judicial_process">
+                    <field name="judicial_discount"/>
+                    <field name="judicial_discount_percent"/>
+                    <field name="exists_beneficiary"/>
+                    <field name="beneficiary"
+                           context="{
+                           'show_address': 1,
+                           'default_type': 'private',
+                           'form_view_ref': 'base.res_partner_view_form_private'}"
+                           options='{"always_reload": True, "highlight_first_line": True}'
+                           invisible="exists_beneficiary != True"/>
+                    <field name="bond" invisible="exists_beneficiary != True"/>
+                    <field name="card_type_id" invisible="exists_beneficiary != True"/>
+                    <field name="card_id" invisible="exists_beneficiary != True"/>
+                    <field name="payment_type" invisible="exists_beneficiary != True"/>
+                    <field name="pay_code" invisible='1'/>
+                     <field name="account_number"
+                            invisible="payment_type != 2"
+                            domain="[('partner_id', '=', beneficiary)]"
+                            context="{'default_partner_id': beneficiary}"
+                            options="{'no_quick_create': True}"/>
+                    <field name="bank" invisible="payment_type != 2"/>
+                    <field name="cci" invisible="payment_type != 2"/>
+                    <field name="start_date" invisible="exists_beneficiary != True"/>
+                    <field name="end_date" invisible="exists_beneficiary != True"/>
+                    <field name="retention_amount" invisible="exists_beneficiary != True"/>
+                    <field name="settlement_retention"/>
+                    <field name="retention_on"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,237 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* additional_fields_employee
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 16:21+0000\n"
+"PO-Revision-Date: 2026-02-26 16:21+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+# ===== Models =====
+
+#. module: additional_fields_employee
+#: model:ir.model,name:additional_fields_employee.model_academic_degree
+msgid "Academic Degree"
+msgstr "Grado Académico"
+
+#. module: additional_fields_employee
+#: model:ir.model,name:additional_fields_employee.model_employee_regime
+msgid "Labor Regime"
+msgstr "Régimen Laboral"
+
+#. module: additional_fields_employee
+#: model:ir.model,name:additional_fields_employee.model_health_regime
+msgid "Health Regime"
+msgstr "Régimen de Salud"
+
+#. module: additional_fields_employee
+#: model:ir.model,name:additional_fields_employee.model_type_contract
+msgid "Contract Type"
+msgstr "Tipo de Contrato"
+
+#. module: additional_fields_employee
+#: model:ir.model,name:additional_fields_employee.model_work_occupation
+msgid "Work Occupation"
+msgstr "Ocupación de Trabajo"
+
+#. module: additional_fields_employee
+#: model:ir.model,name:additional_fields_employee.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"
+
+
+# ===== Fields =====
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__academic_degree_id
+msgid "Academic Degree"
+msgstr "Grado Académico"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__health_regime_id
+msgid "Health Regime"
+msgstr "Régimen de Salud"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__labor_regime_id
+msgid "Labor Regime"
+msgstr "Régimen Laboral"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__labor_condition_id
+msgid "Labor Condition"
+msgstr "Condición Laboral"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__maximum_working_day
+msgid "Maximum Working Day"
+msgstr "Jornada Máxima Legal"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__atypical_cumulative_day
+msgid "Atypical Cumulative Day"
+msgstr "Jornada Atípica Acumulativa"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__nocturnal_schedule
+msgid "Nocturnal Schedule"
+msgstr "Horario Nocturno"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__unionized
+msgid "Unionized"
+msgstr "Sindicalizado"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__is_practitioner
+msgid "Is Practitioner"
+msgstr "Es Practicante"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_hr_employee__work_occupation_id
+msgid "Work Occupation"
+msgstr "Ocupación"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_academic_degree__code
+#: model:ir.model.fields,field_description:additional_fields_employee.field_employee_regime__code
+#: model:ir.model.fields,field_description:additional_fields_employee.field_health_regime__code
+#: model:ir.model.fields,field_description:additional_fields_employee.field_type_contract__code
+#: model:ir.model.fields,field_description:additional_fields_employee.field_work_occupation__code
+msgid "Code"
+msgstr "Código"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_academic_degree__academic_description
+#: model:ir.model.fields,field_description:additional_fields_employee.field_employee_regime__regime_description
+#: model:ir.model.fields,field_description:additional_fields_employee.field_health_regime__health_description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_academic_degree__name
+#: model:ir.model.fields,field_description:additional_fields_employee.field_employee_regime__name
+#: model:ir.model.fields,field_description:additional_fields_employee.field_health_regime__name
+#: model:ir.model.fields,field_description:additional_fields_employee.field_type_contract__name
+msgid "Abbreviation"
+msgstr "Abreviatura"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_work_occupation__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_type_contract__contract_type
+msgid "Contract Type"
+msgstr "Tipo de Contrato"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_employee_regime__private_sector
+msgid "Private Sector"
+msgstr "Sector Privado"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_employee_regime__public_sector
+msgid "Public Sector"
+msgstr "Sector Público"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_employee_regime__other_entities
+msgid "Other Entities"
+msgstr "Otras Entidades"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_employee_regime__is_mype
+msgid "Is MYPE?"
+msgstr "¿Es MYPE?"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_work_occupation__executive
+msgid "Executive"
+msgstr "Ejecutivo"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_work_occupation__employee
+msgid "Employee"
+msgstr "Empleado (Mensual)"
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,field_description:additional_fields_employee.field_work_occupation__worker
+msgid "Worker"
+msgstr "Obrero"
+
+
+# ===== Helps =====
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__academic_degree_id
+msgid "Educational level of the employee according to SUNAT classification. Used in official payroll reports (T-Registro, PLAME)."
+msgstr "Nivel educativo del empleado acorde a la clasificación de SUNAT. Usado en reportes oficiales de nómina (T-Registro, PLAME)."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__health_regime_id
+msgid "Health coverage type assigned to the employee (e.g., EsSalud, EPS). Determines health contribution calculations in payroll."
+msgstr "Cobertura de salud asignada al empleado (ej., EsSalud, EPS). Determina el cálculo de aportaciones a salud en nómina."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__labor_regime_id
+msgid "Employment regime under which the employee works (e.g., General Private Regime, MYPE, Public Sector). Required for SUNAT T-Registro declarations."
+msgstr "Régimen laboral bajo el cual labora el empleado (ej., Régimen General Privado, MYPE, Sector Público). Requerido para T-Registro."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__labor_condition_id
+msgid "Type of employment contract (e.g., Indefinite, Fixed-term, Part-time). Used in payroll calculations and SUNAT reporting."
+msgstr "Tipo de contrato laboral (ej., Indefinido, Plazo fijo, Tiempo parcial). Usado en cálculos de planillas y reportes a SUNAT."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__maximum_working_day
+msgid "Enable if the employee works the maximum legal working hours (48 hours/week in Peru). Affects overtime calculation rules."
+msgstr "Activar si el empleado labora la jornada máxima legal (48 horas semanales). Afecta al cálculo de horas extras."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__atypical_cumulative_day
+msgid "Enable if the employee has an atypical or cumulative work schedule (e.g., mining shifts, 14x7 rotations). Affects rest day calculations."
+msgstr "Habilitar si el trabajador tiene jornada atípica o acumulativa (rotativas, mineras). Afecta a cálculos de días de descanso."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__nocturnal_schedule
+msgid "Enable if the employee works night shifts (between 10:00 PM and 6:00 AM). Triggers the 35% nocturnal surcharge in payroll calculations."
+msgstr "Habilitar si trabajador tiene horario nocturno (22:00 a 06:00). Activa la sobretasa del 35%."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__unionized
+msgid "Enable if the employee is a member of a labor union. May affect specific payroll deductions and benefits."
+msgstr "Habilitar si el empleado pertenece a un sindicato laboral. Genera cálculos de deducciones especiales."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__is_practitioner
+msgid "Enable if the employee is an intern or trainee (practicante). Practitioners have different contribution rules and minimum wage thresholds."
+msgstr "Indicar si es practicante. El esquema varía respecto a contribución y RMV (Remuneración Mínima Vital)."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_hr_employee__work_occupation_id
+msgid "Job category classification (Executive, Employee, Worker). Used for SUNAT reporting and CTS calculation rules."
+msgstr "Categoría ocupacional (Ejecutivo, Empleado, Obrero). Se utiliza en T-Registro y en cálculos como la CTS."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_academic_degree__code
+#: model:ir.model.fields,help:additional_fields_employee.field_employee_regime__code
+#: model:ir.model.fields,help:additional_fields_employee.field_health_regime__code
+#: model:ir.model.fields,help:additional_fields_employee.field_type_contract__code
+#: model:ir.model.fields,help:additional_fields_employee.field_work_occupation__code
+msgid "Official SUNAT code for this record. Used in electronic declarations (T-Registro, PLAME)."
+msgstr "Código oficial SUNAT para este registro. Usado en declaraciones de planilla electrónica (T-Registro, PLAME)."
+
+#. module: additional_fields_employee
+#: model:ir.model.fields,help:additional_fields_employee.field_employee_regime__is_mype
+msgid "Enable if this regime corresponds to a Micro or Small Enterprise (MYPE). MYPE regimes have reduced labor benefits and contribution rates."
+msgstr "Activar si el régimen es para Micro o Pequeña Empresa (MYPE), aplicando beneficios reducidos."

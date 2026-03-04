@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    
+    <record id="tope_afp_action" model="ir.actions.act_window">
+        <field name="name">Tope AFP</field>
+        <field name="res_model">tope.afp</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_localization_nomina_tope_afp"
+              parent="l10n_pe_localization_menu.menu_hr_localization_datos_nomina"
+              action="tope_afp_action"
+    />
+
+</odoo>

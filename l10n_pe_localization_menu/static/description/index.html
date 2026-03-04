@@ -5,667 +5,823 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Localization Menu - Master Peruvian Compliance in Odoo</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&display=swap"
+    <title>Peruvian Localization Menu | Odoo Peru Compliance App by Ganemo</title>
+    <meta name="description"
+        content="Create the main menu structure for Peruvian localization in Odoo. Manage SPOT detractions, retentions, customs codes, PLE, and invoicing menus from a central hub.">
+    <meta name="keywords"
+        content="Odoo, Peru, Localization, SPOT, Detraction, Retention, Customs, Aduana, PLE, Plame, Ganemo, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
-            color: #3D3D4E;
-            background-color: #f9f9fc;
+            color: #333;
         }
 
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            font-family: 'Montserrat', sans-serif;
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
         }
 
-        /* Modern Gradient Badge */
-        .header-badge {
-            color: #ffffff;
-            font-size: 14px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #714B67 0%, #a26ea1 100%);
-            padding: 8px 20px;
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
             border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(113, 75, 103, 0.3);
-            letter-spacing: 0.5px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
 
-        .main-title {
-            font-size: 3.5rem !important;
-            color: #2E2E38;
-            font-weight: 900 !important;
-            letter-spacing: -1px;
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
         }
 
-        .highlight-text {
-            color: #714B67;
-            /* Ganemo Purple */
-        }
-
-        .section-title {
-            font-size: 2.2rem !important;
-            color: #2E2E38;
-            font-weight: 800 !important;
-        }
-
-        .section-subtitle {
-            color: #714B67;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .separator-line {
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(to right, #714B67, #a26ea1);
-            margin: 20px auto;
-            border-radius: 2px;
-        }
-
-        .feature-box {
-            background-color: #ffffff;
-            padding: 3rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-            border-bottom: 4px solid transparent;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .feature-box:hover {
-            transform: translateY(-5px);
-            border-bottom-color: #714B67;
-        }
-
-        .text-justify {
-            text-align: justify;
-        }
-
-        .contact-card {
-            background: #ffffff;
-            padding: 40px 30px;
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
             border-radius: 20px;
-            height: 100%;
-            transition: all 0.3s ease;
-            border: 1px solid #f0f0f0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
-            position: relative;
-            overflow: hidden;
+            font-size: 14px;
+            font-weight: 600;
         }
 
-        .contact-card::before {
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+
+        .copy-link-label::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: #e0e0e0;
-            transition: background 0.3s ease;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
         }
 
-        .contact-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .contact-card:hover::before {
-            background: #714B67;
-        }
-
-        /* Button Enhancements */
-        .btn-custom {
-            border-radius: 50px;
-            padding: 12px 35px;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            margin-top: 15px;
-        }
-
-        .btn-whatsapp {
-            background: linear-gradient(45deg, #25D366, #128C7E);
+        .copy-link-url {
             color: white;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-email {
-            background: linear-gradient(45deg, #3c6dac, #2b4f80);
-            color: white;
-            box-shadow: 0 4px 15px rgba(60, 109, 172, 0.3);
-        }
-
-        .btn-schedule {
-            background: linear-gradient(45deg, #714B67, #53354d);
-            color: white;
-            box-shadow: 0 4px 15px rgba(113, 75, 103, 0.3);
-        }
-
-        .btn-custom:hover {
-            transform: scale(1.05);
-            color: white;
-            text-decoration: none;
-            filter: brightness(1.1);
-        }
-
-        /* Icon box style */
-        .icon-container {
-            width: 80px;
-            height: 80px;
-            background: #f4f4f4;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
-            color: #714B67;
-        }
-
-        /* Documentation Styles */
-        .doc-step {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-
-        .step-number {
-            background-color: #714B67;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            font-weight: bold;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .qa-card {
-            background-color: #f8f9fa;
-            border-left: 4px solid #25D366;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-        }
-
-        .accordion .card-header {
-            background-color: transparent;
-            border: none;
-            padding: 0;
-        }
-
-        .accordion .btn-link {
-            color: #333;
+            padding: 12px 20px 12px 20px;
             font-weight: 600;
-            text-decoration: none;
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 15px;
-            background: #fff;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
         }
 
-        .accordion .btn-link:hover {
-            background: #f1f1f1;
-        }
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
 
-        /* SEO Keywords (Hidden for humans, visible to bots/search if inspected) */
-        .seo-keywords {
-            display: none;
-            visibility: hidden;
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- HEADER BADGE -->
-    <div class="d-flex align-items-center justify-content-between p-3" style="background-color: #f9f9fc;">
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'l10n_pe_localization_menu' creates the main menu structure for the Peruvian fiscal
+            localization in Odoo.
+            It defines a top-level 'Localización' menu item and sub-menus for SPOT, PLE, Invoicing (Facturación),
+            Payroll Data (Datos nómina), Plame Information, Mintra Information, and Parametric Tables.
+            It also creates three reference data models: account.spot.detraction (SPOT Detractions),
+            account.spot.retention (SPOT Retentions), and code.aduana (Customs Unit Codes).
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). NOT supported on Odoo Online due to custom
+            code restrictions.
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
         <div>
-            <div class="header-badge">
-                <i class="fa fa-server mr-2"></i>Enterprise Ready (Odoo.sh / On-Premise)
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
             </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
         </div>
     </div>
-
-    <!-- HERO SECTION -->
-    <div class="container mt-4 mb-5">
-        <div class="row feature-box text-center">
-            <div class="col-lg-12">
-                <h1 class="main-title mb-3">
-                    <span class="highlight-text">LOCALIZATION</span> MENU
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Peruvian</span> Localization
                 </h1>
-                <div class="separator-line"></div>
-                <div class="col-lg-10 mx-auto">
-                    <h2 class="h4 mb-4 font-weight-bold">
-                        The Central Command Center for Peruvian Accounting Compliance
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Menu Hub for SPOT, PLE & Compliance</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Create a centralized menu structure for all Peruvian fiscal and payroll localization modules.
+                    Manage SPOT detractions, retentions, customs codes, PLE reports, and invoicing from one place.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
                     </h2>
-                    <p class="lead" style="color: #666;">
-                        Tired of navigating endless menus? Centralize all your key Peruvian tables—Spot Detractions,
-                        Retentions, and Customs Codes—into one intuitive, compliant-ready workspace.
-                    </p>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-sitemap mr-2"></i> Centralized Menu Structure
+                            </h4>
+                            <p style="text-align: justify;">Without a unified menu, Peruvian localization modules
+                                scatter their entries across different Odoo menus, making navigation confusing. This
+                                module creates a dedicated <strong>Localización</strong> top-level menu that organizes
+                                all Peruvian compliance features — SPOT, PLE, invoicing, payroll data — into a clean,
+                                professional hierarchy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-database mr-2"></i> Reference Data Management
+                            </h4>
+                            <p style="text-align: justify;">Peruvian fiscal compliance requires managing
+                                <strong>SPOT Detractions</strong>, <strong>SPOT Retentions</strong>, and
+                                <strong>Customs Unit Codes (Aduana)</strong>. This module provides the base models,
+                                views, and menus to create, edit, and maintain these reference catalogs, ready for use
+                                by downstream localization modules.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- PROBLEM SECTION -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">THE CHALLENGE</span>
-                    <h2 class="section-title">End the Menu Chaos</h2>
-                    <div class="separator-line"></div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
                 </div>
-                <div class="col-sm-12 feature-box">
-                    <div class="row align-items-center">
-                        <div class="col-md-2 text-center">
-                            <div class="icon-container">
-                                <i class="fa fa-random"></i>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Installation & Menu Setup</h3>
+                            <p class="lead">Get your Peruvian localization hub running in minutes:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Install the module from
+                                            <strong>Apps</strong>. Search for
+                                            <strong>"l10n_pe_localization_menu"</strong>.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> A new top-level menu
+                                            <strong>"Localización"</strong> appears in your main navigation bar.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Sub-menus for
+                                            <strong>SPOT</strong>, <strong>PLE</strong>,
+                                            <strong>Facturación</strong>, and <strong>Datos nómina</strong>
+                                            are created automatically.
+                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Install additional
+                                            Peruvian localization modules and their entries will appear
+                                            under these menus.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #791d97;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Foundation Module:</strong> This
+                                    module acts as the menu backbone. Other Peruvian localization modules depend on it
+                                    to register their actions under the correct menus.</small>
                             </div>
                         </div>
-                        <div class="col-md-10">
-                            <h5 class="text-justify" style="line-height: 1.8;">
-                                Managing Peruvian localization in standard Odoo can feel like a treasure hunt. With
-                                configuration tables scattered across disparate modules, accountants waste valuable time
-                                seeking out <strong>Details for Spot Detractions</strong>, <strong>Retention
-                                    Agents</strong>, or <strong>Customs Dependencies</strong>. This fragmentation leads
-                                to compliance errors and lengthy onboarding for new staff.
-                            </h5>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- SOLUTION SECTION -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">THE SOLUTION</span>
-                    <h2 class="section-title">Structured for Efficiency</h2>
-                    <div class="separator-line"></div>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <div class="row">
-                        <div class="col-md-2 text-center">
-                            <div class="icon-container">
-                                <i class="fa fa-sitemap"></i>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How the system organizes your localization workspace:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-th-large text-primary mr-2"></i> Unified Dashboard</h5>
+                                        <p class="text-muted">All Peruvian fiscal modules are grouped under a single
+                                            <strong>Localización</strong> menu. Navigate easily between SPOT, PLE,
+                                            invoicing, payroll data, and compliance catalogs without searching through
+                                            unrelated Odoo menus.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-money text-primary mr-2"></i> SPOT Detractions & Retentions
+                                        </h5>
+                                        <p class="text-muted">Manage your catalog of SPOT Detraction and Retention
+                                            types with dedicated list and form views. These records serve as reference
+                                            data for invoices and compliance reports.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-ship text-primary mr-2"></i> Customs Codes (Aduana)</h5>
+                                        <p class="text-muted">Maintain the official catalog of Customs Unit Codes
+                                            (<em>Códigos de Aduana</em>) with their code and description. Essential
+                                            for import/export operations and PLE electronic book reporting.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-puzzle-piece text-primary mr-2"></i> Modular Architecture
+                                        </h5>
+                                        <p class="text-muted">Designed as a lightweight foundation. Install only
+                                            the specific Peruvian modules you need (PLE reports, payroll, SPOT
+                                            calculations) and they will automatically register under the correct
+                                            sub-menu.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-file-text-o text-primary mr-2"></i> Plame & Mintra Ready
+                                        </h5>
+                                        <p class="text-muted">Pre-built sub-menus for <strong>Información Plame</strong>
+                                            and <strong>Información Mintra</strong> are included, ready for payroll
+                                            localization modules that generate the official government reports.</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-10">
-                            <h5 style="line-height: 1.8;">
-                                <strong>Localization Menu</strong> acts as the central nervous system for your
-                                accounting workflow. Upon installation, it intelligently restructures your Accounting
-                                app to include a dedicated legal compliance hub:
-                            </h5>
-                            <ul class="list-unstyled mt-4 pl-3" style="font-size: 1.1rem;">
-                                <li class="mb-3 d-flex align-items-center">
-                                    <i class="fa fa-check-circle mr-3" style="color: #25D366; font-size: 1.2rem;"></i>
-                                    <span><strong>Spot Detractions (Detracciones):</strong> Manage types, percentages,
-                                        and accounts in one place.</span>
-                                </li>
-                                <li class="mb-3 d-flex align-items-center">
-                                    <i class="fa fa-check-circle mr-3" style="color: #25D366; font-size: 1.2rem;"></i>
-                                    <span><strong>Spot Retentions:</strong> Control your retention agents relative to
-                                        SUNAT standards.</span>
-                                </li>
-                                <li class="mb-3 d-flex align-items-center">
-                                    <i class="fa fa-check-circle mr-3" style="color: #25D366; font-size: 1.2rem;"></i>
-                                    <span><strong>Customs Codes (Aduanas):</strong> Instant access to all standard
-                                        DUA/SAD dependency codes.</span>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- PLUG & PLAY SECTION -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">INSTALLATION</span>
-                    <h2 class="section-title">Zero-Friction Setup</h2>
-                    <div class="separator-line"></div>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
                 </div>
-                <div class="col-sm-12 feature-box text-center">
-                    <i class="fa fa-rocket fa-4x mb-4" style="color: #714B67;"></i>
-                    <h4 class="font-weight-bold">Install & Go</h4>
-                    <p class="lead mt-3 mx-auto" style="max-width: 700px;">
-                        No complex configurations required. Simply install the module, and it automatically lays the
-                        foundation for all other Ganemo Localization modules. It is the bedrock of a compliant Odoo
-                        instance.
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
                     </p>
                 </div>
             </div>
         </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
 
-        <!-- LANGUAGES SECTION -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">GLOBAL READY</span>
-                    <h2 class="section-title">Supported Languages</h2>
-                    <div class="separator-line"></div>
-                </div>
-                <div class="col-sm-12 feature-box text-center">
-                    <p class="mb-4">Our module is fully translated and maintained in both languages to support diverse
-                        teams.</p>
-                    <div class="d-flex justify-content-center flex-wrap">
-                        <span class="badge badge-pill badge-light p-3 mx-3 shadow-sm border"
-                            style="font-size: 1.1rem; color: #555;">
-                            <img src="https://flagcdn.com/w40/us.png" width="30" class="mr-2 rounded" alt="Data">
-                            English (EN)
-                        </span>
-                        <span class="badge badge-pill badge-light p-3 mx-3 shadow-sm border"
-                            style="font-size: 1.1rem; color: #555;">
-                            <img src="https://flagcdn.com/w40/pe.png" width="30" class="mr-2 rounded" alt="Data">
-                            Español (ES) - Native
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
 
-        <!-- USER MANUAL & GUIDE -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">DOCUMENTATION</span>
-                    <h2 class="section-title">User Manual & Guide</h2>
-                    <div class="separator-line"></div>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <h5 class="mb-4 font-weight-bold">Module Configuration</h5>
-                    <p>
-                        The <strong>Localization Menu</strong> module is designed for simplicity. It does not require a
-                        dedicated settings page. Instead, it relies on the user (Auditor, Accountant, or Manager) to
-                        populate the master tables required for peruvian fiscal operations.
-                    </p>
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <h6 class="font-weight-bold text-primary">Prerequisites</h6>
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-angle-right mr-2 my-1"></i> Odoo "Accounting" app installed.</li>
-                                <li><i class="fa fa-angle-right mr-2 my-1"></i> User must have "Accountant" or "Advisor"
-                                    permissions to view configuration menus.</li>
-                            </ul>
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- WORKFLOW GUIDE -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">OPERATIONS</span>
-                    <h2 class="section-title">Workflow Guide</h2>
-                    <div class="separator-line"></div>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
                 </div>
-                <div class="col-sm-12 feature-box">
-                    <p class="mb-4">Integrate the localization menu into your daily accounting routine effortlessly.</p>
-
-                    <div class="doc-step">
-                        <div class="step-number">1</div>
-                        <div>
-                            <h6 class="font-weight-bold">Accessing the Hub</h6>
-                            <p>Navigate to <strong>Accounting > Configuration > Localization</strong>. You will see the
-                                new centralized menu structure.</p>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
                         </div>
                     </div>
-
-                    <div class="doc-step">
-                        <div class="step-number">2</div>
-                        <div>
-                            <h6 class="font-weight-bold">Managing Spot Detractions</h6>
-                            <p>Go to <strong>Localization > Spot Detractions</strong> to create or update detraction
-                                types (e.g., "027 - Hormigón"). Ensure the correct percentage and account codes are set
-                                according to current SUNAT regulations.</p>
-                        </div>
-                    </div>
-
-                    <div class="doc-step">
-                        <div class="step-number">3</div>
-                        <div>
-                            <h6 class="font-weight-bold">Updating Customs Codes</h6>
-                            <p>For importers, navigate to <strong>Localization > Customs Codes</strong>. Verify that the
-                                dependency codes (e.g., "118 - Marítima del Callao") match your Import Declarations
-                                (DUA).</p>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
         <!-- QA / USER TESTING SCENARIOS -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">QUALITY ASSURANCE</span>
-                    <h2 class="section-title">QA / User Testing Scenarios</h2>
-                    <div class="separator-line"></div>
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
                 </div>
-                <div class="col-sm-12 feature-box">
-                    <p class="mb-4">Use these scenarios to validate the module implementation in your staging
-                        environment.</p>
-
-                    <div class="qa-card">
-                        <h6 class="font-weight-bold"><i class="fa fa-flask mr-2"></i> Scenario A: Menu Visibility</h6>
-                        <p class="mb-0">
-                            <strong>Step 1:</strong> Log in as an "Accountant" user.<br>
-                            <strong>Step 2:</strong> Go to Accounting > Configuration.<br>
-                            <strong>Expected Result:</strong> The "Localization" menu section is visible and contains
-                            submenus for Spot Detractions, Retentions, and Customs.
-                        </p>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-sitemap mr-2"></i>
+                                Scenario 1: Menu Structure Verification</h4>
+                            <ol class="mt-3">
+                                <li>Install the module from <strong>Apps</strong>.</li>
+                                <li>Verify that a top-level menu <strong>"Localización"</strong> appears in the
+                                    main navigation bar with its own icon.</li>
+                                <li>Click on <strong>Localización</strong> and verify the following sub-menus exist:
+                                    <strong>Localización</strong>, <strong>SPOT</strong>, <strong>PLE</strong>,
+                                    <strong>Facturación</strong>, and <strong>Datos nómina</strong>.
+                                </li>
+                                <li><strong>Result:</strong> All 5 sub-menus are visible and accessible.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-money mr-2"></i> Scenario 2:
+                                SPOT Detraction Management</h4>
+                            <ol class="mt-3">
+                                <li>Navigate to <strong>Localización > SPOT > Detracciones</strong>.</li>
+                                <li>Create a new record with name "Detraction Type A".</li>
+                                <li>Save the record and verify it appears in the list view.</li>
+                                <li><strong>Test:</strong> Edit the record and change its name. Confirm changes are
+                                    persisted.</li>
+                                <li><strong>Result:</strong> CRUD operations work correctly on SPOT Detractions.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-shield mr-2"></i> Scenario 3:
+                                SPOT Retention Management</h4>
+                            <ol class="mt-3">
+                                <li>Navigate to <strong>Localización > SPOT > Retenciones</strong>.</li>
+                                <li>Create a new record with name "Retention Type B".</li>
+                                <li>Verify the record appears in the list and form views.</li>
+                                <li><strong>Test:</strong> Delete the record. Confirm it is removed.</li>
+                                <li><strong>Result:</strong> CRUD operations work correctly on SPOT Retentions.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-ship mr-2"></i> Scenario 4:
+                                Customs Code (Aduana) Catalog</h4>
+                            <ol class="mt-3">
+                                <li>Navigate to <strong>Localización > PLE > Tablas Paramétrica Anexo N°3 >
+                                        Aduanas</strong>.</li>
+                                <li>Create a record with Code "001" and Description "Customs Unit Lima".</li>
+                                <li>Create another record with Code "118" and Description "Customs Unit Callao".</li>
+                                <li><strong>Test:</strong> Both records appear in the list with Code and Description
+                                    columns.</li>
+                                <li><strong>Result:</strong> Customs codes are manageable and display correctly.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-plug mr-2"></i> Scenario
+                                5: Downstream Module Integration</h4>
+                            <ol class="mt-3">
+                                <li>Install this module first.</li>
+                                <li>Then install a dependent Peruvian localization module (e.g., PLE reports).</li>
+                                <li>Navigate to the <strong>Localización</strong> menu.</li>
+                                <li><strong>Result:</strong> The dependent module's menu items appear under the
+                                    correct sub-menus (PLE, SPOT, etc.) without conflicts or errors.</li>
+                            </ol>
+                        </div>
                     </div>
+                </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
 
-                    <div class="qa-card">
-                        <h6 class="font-weight-bold"><i class="fa fa-flask mr-2"></i> Scenario B: Data Entry
-                            (Detractions)</h6>
-                        <p class="mb-0">
-                            <strong>Step 1:</strong> Navigate to Localization > Spot Detraction.<br>
-                            <strong>Step 2:</strong> Click "New". Enter a Code (e.g., "999") and Name (e.g., "Test
-                            Detraction").<br>
-                            <strong>Step 3:</strong> Save.<br>
-                            <strong>Expected Result:</strong> The record is saved without errors and appears in the list
-                            view.
-                        </p>
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">I don't see the "Localización" menu?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> The module may not be installed, or
+                                your user may lack the required Accounting access rights.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Verify
+                                the module is installed from <strong>Apps</strong>. Ensure your user has at least
+                                <em>Accounting > Invoicing</em> permissions.
+                            </p>
+                        </div>
                     </div>
-
-                    <div class="qa-card">
-                        <h6 class="font-weight-bold"><i class="fa fa-flask mr-2"></i> Scenario C: Access Control</h6>
-                        <p class="mb-0">
-                            <strong>Step 1:</strong> Log in as a standard "User" (not Accountant/Advisor).<br>
-                            <strong>Step 2:</strong> Attempt to access Accounting > Configuration.<br>
-                            <strong>Expected Result:</strong> The user should NOT see the configuration menus or modify
-                            localization tables, ensuring data integrity.
-                        </p>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">Sub-menus appear empty?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> This module creates the menu
+                                <strong>structure</strong> only. The actual window actions are provided by downstream
+                                localization modules.
+                            </p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
+                                Install the specific Peruvian localization modules you need (e.g., PLE reports,
+                                SPOT calculations). Their menus will appear automatically under the correct
+                                category.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Can I uninstall this module?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Only if no other localization module
+                                depends on it.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i>
+                                <strong>Detail:</strong>
+                                This module is the menu backbone. Uninstalling it will remove all Peruvian localization
+                                menus. Uninstall dependent modules first, then this one if needed.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
+                                The menu structure is shared across companies. SPOT and Aduana records are global
+                                reference data accessible from any company context.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- FAQ TABLE -->
-        <section class="mb-5">
-            <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">SUPPORT</span>
-                    <h2 class="section-title">FAQ & Troubleshooting</h2>
-                    <div class="separator-line"></div>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <div class="accordion" id="faqAccordion">
-
-                        <div class="card bg-transparent border-0">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse"
-                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <i class="fa fa-question-circle mr-2 text-primary"></i> I installed the module,
-                                        but I don't see the menus.
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                data-parent="#faqAccordion">
-                                <div class="card-body">
-                                    Check your user permissions. The Localization menus are restricted to users with
-                                    "Accountant" or "Advisor" roles in Odoo Accounting. If you are an Administrator,
-                                    ensure you have these technical rights enabled.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card bg-transparent border-0">
-                            <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                        data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        <i class="fa fa-question-circle mr-2 text-primary"></i> Can I delete the
-                                        standard codes provided?
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                data-parent="#faqAccordion">
-                                <div class="card-body">
-                                    While the system allows deletion if the record is not referenced, we strongly
-                                    recommend <strong>archiving</strong> instead of deleting. Deleting a code that is
-                                    used in historical invoices or declarations will cause data inconsistencies.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card bg-transparent border-0">
-                            <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                        data-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        <i class="fa fa-question-circle mr-2 text-primary"></i> Does this module
-                                        calculate taxes automatically?
-                                    </button>
-                                </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                data-parent="#faqAccordion">
-                                <div class="card-body">
-                                    No. The <strong>Localization Menu</strong> module only provides the <em>structure
-                                        and tables</em> (menus and master data). The logic for calculating taxes,
-                                    generating TXT files for PLE, or specific report generation is handled by other
-                                    specialized Ganemo modules that depend on this one.
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
                 </div>
             </div>
-        </section>
-
-        <!-- TRUST SECTION -->
-        <section class="mb-5">
             <div class="row">
-                <div class="col-lg-12 text-center mb-4">
-                    <span class="section-subtitle">PARTNER OF CHOICE</span>
-                    <h2 class="section-title">Why Ganemo?</h2>
-                    <div class="separator-line"></div>
-                </div>
-                <div class="col-sm-12 feature-box">
-                    <div class="row align-items-center">
-                        <div class="col-md-3 text-center mb-3 mb-md-0">
-                            <img src="https://www.ganemo.co/logo.png" alt="Ganemo Logo"
-                                style="max-height: 80px; opacity: 0.8;">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <h5 class="text-justify" style="line-height: 1.8;">
-                                We are the <strong>#1 Odoo Partner for Localization</strong> in Latin America. With a
-                                track record of excellence in Peru, USA, Mexico, and beyond, we build apps that are
-                                strictly compliant, secure, and future-proof. When you choose Ganemo, you choose
-                                stability and expert support.
-                            </h5>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- CONTACT FOOTER -->
-        <div class="container pb-5">
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
             <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h2 class="section-title">We're Here to Help</h2>
-                    <p class="lead text-muted">Get fast, professional support from our dedicated team.</p>
-                </div>
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
 
-                <div class="col-md-4 mb-4">
-                    <div class="contact-card text-center">
-                        <i class="fab fa-whatsapp fa-3x mb-3" style="color: #25D366;"></i>
-                        <h4>WhatsApp</h4>
-                        <p class="text-muted">Instant Chat Support</p>
-                        <a href="https://api.whatsapp.com/send?phone=18286726150" target="_blank"
-                            class="btn-custom btn-whatsapp">
-                            Chat Now
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="contact-card text-center">
-                        <i class="fa fa-envelope fa-3x mb-3" style="color: #3c6dac;"></i>
-                        <h4>Email</h4>
-                        <p class="text-muted">Technical & Sales Inquiries</p>
-                        <a href="mailto:leads@ganemo.co" target="_blank" class="btn-custom btn-email">
-                            Send Email
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="contact-card text-center">
-                        <i class="fa fa-calendar-alt fa-3x mb-3" style="color: #714B67;"></i>
-                        <h4>Meeting</h4>
-                        <p class="text-muted">Live Demo & Consultation</p>
-                        <a href="https://www.ganemo.co/appointment/5" target="_blank" class="btn-custom btn-schedule">
-                            Book Slot
-                        </a>
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ayuda@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- LLM / SEO Optimization Data -->
-        <div class="seo-keywords">
-            Keywords: Odoo 19 Peru Localization, Peruvian Accounting, SUNAT Compliance, Spot Detractions, Retenciones,
-            Customs Codes, Codigos Aduana, Ple, Ganemo, Localization Menu, Latin America ERP, Contabilidad Perú.
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Scripts for Bootstrap capabilities -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

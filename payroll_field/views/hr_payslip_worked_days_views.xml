@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_payslip_worked_days_view_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.worked_days.view.tree</field>
+        <field name="model">hr.payslip.worked_days</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" multi_edit="1">
+                <field name="date_from" readonly="state not in [False, 'draft']"/>
+                <field name="date_to" readonly="state not in [False, 'draft']"/>
+                <field name="date_start_dt"/>
+                <field name="date_start" column_invisible="1"/>
+                <field name="employee_id" readonly="state not in [False, 'draft']" domain="[]"/>
+                <field name="name" readonly="state not in [False, 'draft']"/>
+                <field name="code" readonly="state not in [False, 'draft']"/>
+                <field name="number_of_days" readonly="state not in [False, 'draft']"/>
+                <field name="number_of_hours" readonly="state not in [False, 'draft']"/>
+                <field name="payslip_id" readonly="state not in [False, 'draft','verify']"/>
+                <field name="work_entry_type_id" optional="hidden" readonly="state not in [False, 'draft','verify']"/>
+                <field name="state" readonly="1"/>
+                <field name="department_id" column_invisible="1"/>
+                <field name="struct_id" column_invisible="1"/>
+                <field name="disability" column_invisible="1"/>
+                <field name="payslip_run_id" optional="show" readonly="1"/>
+                <button name="get_formview_action" type="object" string="Open Record" icon="fa-external-link" title="Open Form View"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_payslip_worked_days_view_pivot" model="ir.ui.view">
+        <field name="name">hr.payslip.worked_days.view.pivot</field>
+        <field name="model">hr.payslip.worked_days</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="false"/>
+        </field>
+    </record>
+
+    <record id="hr_payslip_worked_days_view_filter" model="ir.ui.view">
+        <field name="name">hr.payslip.worked_days.view.filter</field>
+        <field name="model">hr.payslip.worked_days</field>
+        <field name="arch" type="xml">
+            <search string="Search Payslips worked days">
+                <field name="payslip_run_id" string="Lote"/>
+                <field name="employee_id" string="Empleado"/>
+                <field name="work_entry_type_id" string="Tipo"/>
+                <field name="name" string="Description"/>
+                <field name="code" string="Code"/>
+                <field name="department_id" string="Departamento"/>
+                <field name="struct_id" string="Estructura"/>
+                <filter string="Seis meses anteriores" name="six_month_before" domain="[('id','!=','-1')]"/>
+                <separator/>
+                <filter string="Fecha (Mes Actual)" name="current_month" date="date_to" default_period="month"/>
+                <separator/>
+                <filter string="Borrador" name="draft" domain="[('state','=','draft')]" help="Draft worked days"/>
+                <filter string="Hecho" name="done" domain="[('state','=','done')]" help="Done worked days"/>
+                <separator/>
+                <filter string="Discapacidad" name="disability" domain="[('disability','=',True)]"/>
+                <group>
+                    <filter string="Lote" name="group_run_id" context="{'group_by':'payslip_run_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

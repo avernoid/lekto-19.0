@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="type_contract_view_tree" model="ir.ui.view">
+        <field name="name">type.contract.view.list</field>
+        <field name="model">type.contract</field>
+        <field name="arch" type="xml">
+            <list string="[12] Tipos de Contratos">
+                <field name="code"/>
+                <field name="contract_type"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="type_contract_view_form" model="ir.ui.view">
+        <field name="name">type.contract.view.form</field>
+        <field name="model">type.contract</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="[12] Tipos de Contratos">
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="contract_type"/>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

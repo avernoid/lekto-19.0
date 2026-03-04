@@ -52,14 +52,15 @@ class HrEmployee(models.Model):
             self.lastname = self.lastname.title()
         if self.secondname:
             self.secondname = self.secondname.title()
-        
+
+        parts = [self.firstname or '', self.lastname or '', self.secondname or '']
+        full_name = ' '.join(p for p in parts if p).strip()
+
+        if self.env.company.generate_employee_name:
+            self.name = full_name
+
         if self.env.company.generate_legal_name:
-            parts = [
-                self.firstname or '',
-                self.lastname or '',
-                self.secondname or ''
-            ]
-            self.legal_name = ' '.join(p for p in parts if p).strip()
+            self.legal_name = full_name
 
     @api.depends('relative_ids', 'relative_ids.relation_id', 'relative_ids.name', 'relative_ids.date_of_birth')
     def _compute_relatives_info(self):
@@ -86,4 +87,3 @@ class HrEmployee(models.Model):
                 employee.spouse_complete_name = spouse_name
             if spouse_birthdate:
                 employee.spouse_birthdate = spouse_birthdate
-

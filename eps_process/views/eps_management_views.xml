@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="eps_management_view_tree" model="ir.ui.view">
+        <field name="name">eps.management.view.tree</field>
+        <field name="model">eps.management</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="entity"/>
+                <field name="insurance"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="eps_management_view_form" model="ir.ui.view">
+        <field name="name">eps.management.view.form</field>
+        <field name="model">eps.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="EPS MANAGEMENT">
+                        <group>
+                            <field name="star_date"/>
+                            <field name="entity" invisible="1"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="finish_date"/>
+                            <field name="insurance"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Employer">
+                            <field name="rate_employer"/>
+                            <field name="amount_employer"/>
+                        </group>
+                        <group string="Worker">
+                            <field name="rate_worker"/>
+                            <field name="amount_worker"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Employee_eps" string="Employees">
+                            <field name="employeer_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_eps_management" model="ir.actions.act_window">
+        <field name="name">EPS Management</field>
+        <field name="res_model">eps.management</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

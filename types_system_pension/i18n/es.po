@@ -1,0 +1,159 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following module:
+#   * types_system_pension
+#
+# Translators:
+# Ganemo <leads@ganemo.com>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Language-Team: Spanish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__code
+msgid "Code"
+msgstr "Código"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__pension_system
+msgid "Pension Regime"
+msgstr "Régimen Pensionario"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__name
+msgid "Abbreviation"
+msgstr "Abreviatura"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__private_sector
+msgid "Private Sector"
+msgstr "Sector Privado"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__public_sector
+msgid "Public Sector"
+msgstr "Sector Público"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__other_entities
+msgid "Other Entities"
+msgstr "Otras Entidades"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__cuspp
+msgid "Requires CUSPP"
+msgstr "Requiere CUSPP"
+
+#. model: pension.system
+#: model:ir.model.fields,field_description:types_system_pension.field_pension_system__comis_pension_ids
+msgid "Commission Rates"
+msgstr "Tasas de Comisión"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__date_from
+msgid "From"
+msgstr "Desde"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__date_to
+msgid "To"
+msgstr "Hasta"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__fund
+msgid "Fund"
+msgstr "Fondo"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__bonus
+msgid "Bonus"
+msgstr "Prima de Seguro"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__mixed_flow
+msgid "Mixed / Flow"
+msgstr "Flujo / Mixta"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__flow
+msgid "Flow"
+msgstr "Flujo"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__balance
+msgid "Balance"
+msgstr "Saldo"
+
+#. model: comis.system.pension
+#: model:ir.model.fields,field_description:types_system_pension.field_comis_system_pension__pension_id
+msgid "Pension System"
+msgstr "Sistema de Pensiones"
+
+#. model: tope.afp
+#: model:ir.model.fields,field_description:types_system_pension.field_tope_afp__date_from
+msgid "From"
+msgstr "Desde"
+
+#. model: tope.afp
+#: model:ir.model.fields,field_description:types_system_pension.field_tope_afp__date_to
+msgid "To"
+msgstr "Hasta"
+
+#. model: tope.afp
+#: model:ir.model.fields,field_description:types_system_pension.field_tope_afp__top
+msgid "Monthly Cap (PEN)"
+msgstr "Tope Mensual (PEN)"
+
+#. model: hr.employee
+#: model:ir.model.fields,field_description:types_system_pension.field_hr_employee__cuspp
+msgid "CUSPP Code"
+msgstr "Código CUSPP"
+
+#. model: hr.employee
+#: model:ir.model.fields,field_description:types_system_pension.field_hr_employee__is_cuspp
+msgid "CUSPP Active"
+msgstr "CUSPP Activo"
+
+#. model: hr.employee
+#: model:ir.model.fields,field_description:types_system_pension.field_hr_employee__pension_system_id
+msgid "Pension System"
+msgstr "Sistema de Pensiones"
+
+#. model: hr.employee
+#: model:ir.model.fields,field_description:types_system_pension.field_hr_employee__commission_type
+msgid "AFP Commission Type"
+msgstr "Tipo de Comisión AFP"
+
+#. model: hr.employee
+#: model:ir.model.fields.selection,name:types_system_pension.selection__hr_employee__commission_type__amount
+msgid "Balance"
+msgstr "Saldo"
+
+#. model: hr.employee
+#: model:ir.model.fields.selection,name:types_system_pension.selection__hr_employee__commission_type__flow
+msgid "Flow"
+msgstr "Flujo"
+
+#. model: pension.system
+#: model:ir.model,name:types_system_pension.model_pension_system
+msgid "Pension System"
+msgstr "Sistema Pensionario"
+
+#. model: comis.system.pension
+#: model:ir.model,name:types_system_pension.model_comis_system_pension
+msgid "AFP Commission Rate"
+msgstr "Comisión de Sistema de Pensión"
+
+#. model: tope.afp
+#: model:ir.model,name:types_system_pension.model_tope_afp
+msgid "AFP Monthly Cap"
+msgstr "Tope AFP"

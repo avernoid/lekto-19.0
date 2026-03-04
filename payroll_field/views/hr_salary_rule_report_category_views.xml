@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_salary_rule_report_category_view_tree" model="ir.ui.view">
+        <field name="name">hr.salary.rule.report.category.view.tree</field>
+        <field name="model">hr.salary.rule.report.category</field>
+        <field name="arch" type="xml">
+            <list string="Report Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="parent_id"/>
+                <field name="appears_on_payslip"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_report_category_view_form" model="ir.ui.view">
+        <field name="name">hr.salary.rule.report.category.view.form</field>
+        <field name="model">hr.salary.rule.report.category</field>
+        <field name="arch" type="xml">
+            <form string="Report Category">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Basic Salary"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="parent_id"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="appears_on_payslip"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_salary_rule_report_category" model="ir.actions.act_window">
+        <field name="name">Report Categories</field>
+        <field name="res_model">hr.salary.rule.report.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Create a new Report Category
+          </p><p>
+            Report Categories are used to group different salary rules that share the same conceptual meaning (e.g. Basic Salary for Workers and Basic Salary for Admins) into a single column or row in Payslip Analysis pivot reports.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_hr_salary_rule_report_category"
+              name="Report Categories"
+              parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
+              action="action_hr_salary_rule_report_category"
+              sequence="25"/>
+</odoo>

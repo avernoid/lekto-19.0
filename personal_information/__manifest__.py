@@ -1,6 +1,6 @@
 {
     'name': 'Employee Personal Information',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
     'author': 'Ganemo',
     'maintainer': 'Ganemo',
     'website': 'https://www.ganemo.co',
@@ -34,10 +34,11 @@ Compatible: Enterprise & Community.
     'application': False,
     'installable': True,
     'auto_install': False,
+    'post_init_hook': 'post_init_hook',
     'icon': '/personal_information/static/description/icon.png',
     'images': ['static/description/banner.png'],
     'license': 'OPL-1',
     'currency': 'USD',
-    'price': 40.00,
+    'price': 71.00,
     'module_type': 'official',
 }

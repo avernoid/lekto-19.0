@@ -1,0 +1,5 @@
+---Models in module 'hr_localization_menu'---
+---Fields in module 'hr_localization_menu'---
+---XML records in module 'hr_localization_menu'---
+----------------------------------------------------------------
+DEPENDS

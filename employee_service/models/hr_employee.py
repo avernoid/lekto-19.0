@@ -8,43 +8,54 @@ class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
     service_hire_date = fields.Date(
-        string='Hire Date',
+        string='Fecha de Contratación',
         groups='hr.group_hr_user',
-        compute='_compute_service_hire_date',
+        compute='_compute_service_hire_date', 
+        inverse='_inverse_service_hire_date',
+        store=True,
+        readonly=False,  # Permite editar el campo aunque sea computed
         help=(
-            'The date the employee was originally hired. This field is automatically '
-            'calculated based on the oldest active contract version found in the system.'
+            'Fecha de contratación es normalmente la fecha en que un empleado completa'
+            ' la documentación de nueva contratación'
         ),
     )
     service_start_date = fields.Date(
-        string='Start Date',
+        string='Fecha de Inicio',
         groups='hr.group_hr_user',
         help=(
-            'The actual first day the employee started working. This date is critical '
-            'for calculating accrual leave allocations and benefits.'
+            'Fecha de inicio es el primer día que el empleado trabaja y'
+            ' esta fecha se usa para el cálculo de asignaciones de vacaciones'
+        ),
+    )
+    service_termination_date = fields.Date(
+        string='Fecha de Cese',
+        groups='hr.group_hr_user',
+        help=(
+            'Fecha de cese es el último día que el empleado trabaja y'
+            ' esta fecha se usa para el cálculo de asignaciones de vacaciones'
         ),
     )
     service_duration = fields.Integer(
-        string='Service Duration',
+        string='Duración del Servicio',
         groups='hr.group_hr_user',
         compute='_compute_service_duration',
-        help='Service duration in days',
+        help='Duración del servicio en días',
         store=True
     )
     service_duration_years = fields.Integer(
-        string='Service Duration (years)',
+        string='Duración del Servicio (años)',
         groups='hr.group_hr_user',
         compute='_compute_service_duration',
         store=True
     )
     service_duration_months = fields.Integer(
-        string='Service Duration (months)',
+        string='Duración del Servicio (meses)',
         groups='hr.group_hr_user',
         compute='_compute_service_duration',
         store=True
     )
     service_duration_days = fields.Integer(
-        string='Service Duration (days)',
+        string='Duración del Servicio (días)',
         groups='hr.group_hr_user',
         compute='_compute_service_duration',
         store=True
@@ -75,10 +86,6 @@ class HrEmployee(models.Model):
                 record.service_duration_months = 0
                 record.service_duration_days = 0
 
-    @api.onchange('service_hire_date')
-    def _onchange_service_hire_date(self):
-        if not self.service_start_date:
-            self.service_start_date = self.service_hire_date
 
     @api.depends('version_ids', 'version_ids.active', 'version_ids.date_start')
     def _compute_service_hire_date(self):
@@ -105,7 +112,18 @@ class HrEmployee(models.Model):
             else:
                 record.service_hire_date = False
     
+    def _inverse_service_hire_date(self):
+        """
+        Permite que el campo sea editable manualmente
+        """
+        # No hacemos nada aquí, solo permitimos que el valor se guarde
+        pass
 
-    
-    def _get_date_start_work(self):
-        return self.service_start_date or super()._get_date_start_work()
+    @api.onchange('service_hire_date')
+    def _onchange_service_hire_date(self):
+        """
+        Si service_start_date está vacío, copia automáticamente service_hire_date.
+        """
+        for record in self:
+            if record.service_hire_date and not record.service_start_date:
+                record.service_start_date = record.service_hire_date

@@ -1,0 +1,76 @@
+---Models in module 'payroll_fields'---
+---Fields in module 'payroll_fields'---
+payroll_fields      / hr.payslip.worked_days    / state (selection)              : DEL default
+---XML records in module 'payroll_fields'---
+UPD ir.ui.view:             payroll_fields.hr_payslip_input_view_tree_payroll_fields                  -> payroll_fields.hr_payslip_input_view_tree
+UPD ir.ui.view:             payroll_fields.hr_payslip_input_view_pivot_payroll_fields                 -> payroll_fields.hr_payslip_input_view_pivot
+UPD ir.ui.view:             payroll_fields.hr_payslip_input_view_filter_payroll_fields                -> payroll_fields.hr_payslip_input_view_filter
+
+UPD ir.ui.view:             payroll_fields.hr_payslip_line_view_tree_payroll_fields                  -> payroll_fields.hr_payslip_line_view_tree
+UPD ir.ui.view:             payroll_fields.hr_payslip_line_view_pivot_payroll_fields                 -> payroll_fields.hr_payslip_line_view_pivot
+UPD ir.ui.view:             payroll_fields.hr_payslip_line_view_filter_payroll_fields                -> payroll_fields.hr_payslip_line_view_filter
+
+UPD ir.ui.view:             payroll_fields.hr_payslip_worked_days_view_tree_payroll_fields            -> payroll_fields.hr_payslip_worked_days_view_tree
+UPD ir.ui.view:             payroll_fields.hr_payslip_worked_days_view_pivot_payroll_fields           -> payroll_fields.hr_payslip_worked_days_view_pivot
+UPD ir.ui.view:             payroll_fields.hr_payslip_worked_days_view_filter_payroll_fields          -> payroll_fields.hr_payslip_worked_days_view_filter
+
+UPD ir.actions.act_window:  payroll_fields.action_hr_payslip_input_menu                               -> payroll_fields.hr_payslip_input_menu_action
+UPD ir.actions.act_window:  payroll_fields.action_hr_payslip_line_menu                                -> payroll_fields.hr_payslip_line_menu_action
+UPD ir.actions.act_window:  payroll_fields.action_hr_payslip_worked_days_menu                         -> payroll_fields.hr_payslip_worked_days_menu_action
+----------------------------------------------------------------
+DEPENDS [ hr ]
+model:  hr_employee
+field:  disability
+xml_id: 
+
+DEPENDS [ hr_payroll ]
+
+model:  hr_payslip_run
+field:  date_st_dt
+xml_id: 
+       hr_payroll.hr_payslip_run_form
+
+model:  hr_payslip
+field:  employee_category_ids,
+        date_start,
+        date_start_dt,
+        month,
+        year
+xml_id: 
+       hr_payroll.view_hr_payslip_form
+
+model:  hr_payslip_line
+field:  date_start,
+        date_start_dt,
+        state,
+        department_id,
+        disability,
+        struct_id
+xml_id: 
+
+model:  hr_payslip_worked_days
+field:  date_from,
+        date_to,
+        date_start,
+        date_start_dt,
+        employee_id,
+        state,
+        department_id,
+        company_id,
+        disability,
+        struct_id
+xml_id: 
+
+model:  hr_payslip_input
+field:  date_from,
+        date_to,
+        date_start,
+        date_start_dt,
+        employee_id,
+        state,
+        department_id,
+        company_id,
+        disability,
+        struct_id
+xml_id: 
+

@@ -1,0 +1,4 @@
+---Models in module 'additional_fields_voucher'---
+---Fields in module 'additional_fields_voucher'---
+- hr.employee -> l10n_pe_microenterprise_manager (Moved to basic_rule)
+---XML records in module 'additional_fields_voucher'---

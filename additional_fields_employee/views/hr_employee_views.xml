@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+
+    <record id="hr_employee_view_form_inherit_additional_fields_employee" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.additional_fields_employee</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='payroll_information']/group/group[@name='contract']/label[@for='contract_date_start']" position="before">
+                <field name="labor_regime_id" />
+
+                <field name="labor_condition_id" />
+            </xpath>
+
+            <xpath expr="//field[@name='certificate']" position="before">
+                <field name="academic_degree_id"/>
+            </xpath>
+            <xpath expr="//group[@name='health']" position="inside">
+                <field name="health_regime_id"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='payroll_information']/group/group[@name='contract']" position="after">
+                <group string="Additional Information" name="additional_information">
+                    <field name="maximum_working_day"/>
+                    <field name="atypical_cumulative_day"/>
+                    <field name="nocturnal_schedule"/>
+                    <field name="unionized"/>
+                    <field name="is_practitioner"/>
+                    <field name="work_occupation_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="employee_contract_additional_fields_employee" model="ir.ui.view">
+        <field name="name">employee.contract.additional.fields.employee</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='salary_info']" position="inside">
+                <group string="Additional Information" name="additional_information">
+                    <field name="maximum_working_day"/>
+                    <field name="atypical_cumulative_day"/>
+                    <field name="nocturnal_schedule"/>
+                    <field name="unionized"/>
+                    <field name="is_practitioner"/>
+                    <field name="work_occupation_id"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//label[@for='wage']" position="before">
+                <field name="labor_regime_id"/>
+                <field name="labor_condition_id" />
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

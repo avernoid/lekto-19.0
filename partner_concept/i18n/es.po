@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_concept
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-26 00:00+0000\n"
+"PO-Revision-Date: 2026-02-26 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_concept
+#: model_terms:ir.ui.view,arch_db:partner_concept.hr_employee_view_form_inherit_partner_concept
+#: model_terms:ir.ui.view,arch_db:partner_concept.hr_partner_concept_action
+msgid "Salary Concepts"
+msgstr "Conceptos Salariales"
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__salary_rule_id
+msgid "Salary Rule"
+msgstr "Regla salarial"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__salary_rule_id
+msgid "Select the specific salary rule this concept applies to. This links the custom amount directly to the chosen rule in the payslip computation."
+msgstr "Selecciona la regla salarial específica a la que aplica este concepto. Esto vincula el importe personalizado directamente a la regla elegida en el cálculo de la nómina."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__partner_id
+msgid "Contact"
+msgstr "Contacto"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__partner_id
+msgid "Employee or external contact linked to this salary concept. This determines who receives this specific rule."
+msgstr "Empleado o contacto externo vinculado a este concepto salarial. Esto determina quién recibe esta regla en específico."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__amount
+msgid "Amount"
+msgstr "Importe"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__amount
+msgid "Fixed monetary amount to be applied by the salary rule for this specific employee."
+msgstr "Importe fijo a ser aplicado por la regla salarial exclusivamente para este empleado o contacto."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__percentage
+msgid "Percentage %"
+msgstr "Porcentaje %"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__percentage
+msgid "Percentage value to be computed by the salary rule. Useful for dynamic calculations based on the base salary."
+msgstr "Valor porcentual a ser calculado por la regla salarial. Útil para cálculos dinámicos basados en el salario base."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__is_debit
+msgid "Debit"
+msgstr "Debito"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__is_debit
+msgid "Indicates if this concept acts as a debit (deduction) from the employee's net salary."
+msgstr "Indica si este concepto actúa como débito (deducción) del salario neto del empleado."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__is_credit
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__is_credit
+msgid "Indicates if this concept acts as a credit (allowance/bonus) added to the employee's net salary."
+msgstr "Indica si este concepto actúa como crédito (asignación / bono) sumado al salario neto del empleado."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__is_active
+msgid "Active"
+msgstr "Activo"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__is_active
+msgid "Uncheck this box to disable the concept without deleting it, preventing it from being applied in future payslips."
+msgstr "Desmarca esta casilla para deshabilitar el concepto sin eliminarlo, evitando que se aplique en futuras nóminas."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__start_date
+msgid "Start Date"
+msgstr "Fecha Inicio"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__start_date
+msgid "First day this concept is valid and will begin to be applied in payslips."
+msgstr "Primer día que este concepto es válido y comenzará a ser aplicado en las nóminas."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_partner_concept__end_date
+msgid "End Date"
+msgstr "Fecha Fin"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_partner_concept__end_date
+msgid "Last day this concept is valid. Leave empty for ongoing rules that have no expiration."
+msgstr "Último día que este concepto es válido. Déjalo vacío para reglas continuas que no tienen expiración."
+
+#. module: partner_concept
+#: model:ir.model.fields,field_description:partner_concept.field_hr_employee__partner_concept_ids
+msgid "Salary Rules"
+msgstr "Reglas Salariales"
+
+#. module: partner_concept
+#: model:ir.model.fields,help:partner_concept.field_hr_employee__partner_concept_ids
+msgid "Specific salary concepts and conditions applied to this employee. Use this to assign individualized values for deductions or allowances that are uniquely applicable here."
+msgstr "Conceptos salariales y condiciones específicas aplicadas a este empleado. Usa esto para asignar valores individualizados para deducciones o asignaciones que aplican de forma única aquí."
+
+#. module: partner_concept
+#: model_terms:ir.ui.view,arch_db:partner_concept.hr_partner_concept_action
+msgid "Create a new salary concept"
+msgstr "Crea un nuevo concepto salarial"
+
+#. module: partner_concept
+#: model:ir.model,name:partner_concept.model_hr_partner_concept
+msgid "Partner Concept"
+msgstr "Concepto del Contacto"
+
+#. module: partner_concept
+#: model:ir.model,name:partner_concept.model_hr_employee
+msgid "Employee"
+msgstr "Empleado"

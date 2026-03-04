@@ -1,0 +1,17 @@
+---Models in module 'holidays_accrual_advanced'---
+---Fields in module 'holidays_accrual_advanced'---
+---XML records in module 'holidays_accrual_advanced'---
+DEL ir.ui.view: holidays_accrual_advanced.hr_leave_allocation_view_form_manager
+UPD ir.ui.view: holidays_accrual_advanced.hr_leave_allocation_view_form -> holidays_accrual_advanced.hr_leave_allocation_view_form_inherit_holidays_accrual_advanced
+UPD ir.actions.server: holidays_accrual_advanced.hr_holidays_accrual_recalculate -> holidays_accrual_advanced.action_hr_leave_allocation
+UPD ir.actions.server: holidays_accrual_advanced.hr_holidays_accrual_recalculate_all -> holidays_accrual_advanced.action_hr_leave_allocation_accrual_all
+UPD ir.ui.view: holidays_accrual_advanced.hr_leave_allocation_accrual_calculator -> holidays_accrual_advanced.hr_leave_allocation_accrual_calculator_view_form
+----------------------------------------------------------------
+DEPENDS [ hr_holidays ]
+model:  hr_leave_allocation
+field:  date_from,
+        date_to,
+        number_of_days_display
+xml_id: 
+        hr_holidays.hr_leave_allocation_view_form
+        hr_holidays.model_hr_leave_allocation

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="hr_leave_allocation_view_form_inherit_holidays_accrual_advanced" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.view.form.inherit.holidays_accrual_advanced</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="%(action_hr_leave_allocation_as_of_date)d" type="action" invisible="allocation_type != 'accrual' or state not in ('validate')" string="Calculate as of Date" class="oe_highlight" />
+            </header>
+            <field name="notes" position="before">
+                <field name="accruement_ids" string="Accruements" invisible="allocation_type != 'accrual' or state not in ('validate')" />
+            </field>
+
+            <xpath expr="//group/group[@name='alloc_right_col']" position="after">
+                <group invisible="allocation_type != 'accrual'">
+                    <label for="limit_accrued_days"/>
+                    <div class="o_row">
+                        <field 
+                            name="limit_accrued_days" 
+                            readonly="state not in ('draft','confirm')"/>
+                        <field 
+                            name="max_accrued_days" 
+                            invisible="limit_accrued_days == False" 
+                            readonly="state not in ('draft','confirm')"/>
+                    </div>
+
+                    <label for="limit_carryover_days"/>
+                    <div class="o_row">
+                        <field 
+                            name="limit_carryover_days" 
+                            readonly="state not in ('draft','confirm')" />
+                        <field 
+                            name="max_carryover_days" 
+                            invisible="limit_carryover_days == False" 
+                            readonly="state not in ('draft','confirm')" />
+                    </div>
+
+                    <label for="limit_accumulated_days"/>
+                    <div class="o_row">
+                        <field 
+                            name="limit_accumulated_days" 
+                            readonly="state not in ('draft','confirm')"/>
+                        <field 
+                            name="max_accumulated_days" 
+                            invisible="limit_accumulated_days == False" 
+                            readonly="state not in ('draft','confirm')"/>
+                    </div>
+
+                    <field 
+                        name="accrual_method" 
+                        readonly="state not in ('draft','confirm')"/>
+
+                    <label for="number_per_interval"/>
+                    <div class="o_row">
+                        <field name="number_per_interval" class="ml8"/>
+                        <field 
+                            name="unit_per_interval" 
+                            readonly="state in ('cancel','refuse','validate1','validate')"/>
+                    </div>
+
+                    <label for="interval_number"/>
+                    <div class="o_row">
+                        <field name="interval_number" class="ml8"/>
+                        <field 
+                            name="interval_unit" 
+                            readonly="state in ('cancel','refuse','validate1','validate')"/>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

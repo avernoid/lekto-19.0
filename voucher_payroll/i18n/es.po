@@ -1,0 +1,67 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* voucher_payroll
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <leads@ganemo.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. model: hr.salary.rule.category field: invoice_position
+#: model:ir.model.fields,field_description:voucher_payroll.field_hr_salary_rule_category__invoice_position
+msgid "Voucher Position"
+msgstr "Posición en Boleta"
+
+#. Selection value: pos_1
+msgid "Position 1 (Earnings)"
+msgstr "Posición 1 (Ingresos)"
+
+#. Selection value: pos_2
+msgid "Position 2 (Deductions)"
+msgstr "Posición 2 (Descuentos)"
+
+#. Selection value: pos_3
+msgid "Position 3 (Others)"
+msgstr "Posición 3 (Otros)"
+
+#. model: hr.employee field: hiden_overtime
+#: model:ir.model.fields,field_description:voucher_payroll.field_hr_employee__hiden_overtime
+msgid "Hide Overtime on Voucher"
+msgstr "Ocultar horas extras en boleta"
+
+#. model: type.inputs field: name
+#: model:ir.model.fields,field_description:voucher_payroll.field_type_inputs__name
+msgid "Name"
+msgstr "Nombre"
+
+#. model: type.inputs field: code
+#: model:ir.model.fields,field_description:voucher_payroll.field_type_inputs__code
+msgid "Code"
+msgstr "Código"
+
+#. model: type.inputs field: description
+#: model:ir.model.fields,field_description:voucher_payroll.field_type_inputs__description
+msgid "Description"
+msgstr "Descripción"
+
+#. model: hr.work.entry.type field: type_inputs_ids
+#: model:ir.model.fields,field_description:voucher_payroll.field_hr_work_entry_type__type_inputs_ids
+msgid "Day Type Inputs"
+msgstr "Tipos de Entrada de Día"
+
+#. model: hr.payroll.structure field: report_id
+#: model:ir.model.fields,field_description:voucher_payroll.field_hr_payroll_structure__report_id
+msgid "Pay Slip Report"
+msgstr "Informe de Boleta de Pago"
+
+#. model: type.inputs _description
+msgid "Work Day Type Inputs for Pay Slip Vouchers"
+msgstr "Tipos de Entrada de Día de Trabajo para Boletas de Pago"

@@ -1,0 +1,25 @@
+{
+    'name': 'Type Bank Accounts',
+    'version': '19.0.1.0.1',
+    'category': 'Payroll',
+    'summary': """Adds 4 bank account types (Salary, CTS, Normal, Others) for payroll-ready employee payment classification.""",
+    'description': """This module extends the bank account form to support 4 employee bank account types: Salary, CTS (Compensación por Tiempo de Servicios), Normal, and Others. Computed fields on hr.employee automatically surface the resolved salary and CTS account numbers and bank names in the employee's private information tab.""",
+    'author': 'Ganemo',
+    'maintainer': 'Ganemo',
+    'company': 'Ganemo',
+    'website': 'https://www.ganemo.co',
+    'depends': ['hr'],
+    'data': [
+        'views/hr_employee_views.xml',
+        'views/res_partner_bank_views.xml',
+    ],
+    'icon': '/type_bank_accounts/static/description/icon.png',
+    'images': ['static/description/banner.png'],
+    'license': 'OPL-1',
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    'currency': 'USD',
+    'price': 30.00,
+    'module_type': 'official'
+}

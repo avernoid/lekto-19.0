@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<odoo>
+    <!--"hr.work.entry.type"-->
+
+        <record id="hr_work_entry_type_worked" model="type.inputs">
+            <field name="name">Días Trabajados</field>
+            <field name="description"/>
+            <field name="code">work</field>
+        </record>
+
+        <record id="hr_work_entry_type_holidays" model="type.inputs">
+            <field name="name">Días Vacaciones</field>
+            <field name="description"/>
+            <field name="code">holidays</field>
+        </record>
+
+        <record id="hr_work_entry_type_break" model="type.inputs">
+            <field name="name">Días descanso</field>
+            <field name="description"/>
+            <field name="code">break</field>
+        </record>
+
+        <record id="hr_work_entry_type_sanctioned" model="type.inputs">
+            <field name="name">Días Sanc.Disc</field>
+            <field name="description"/>
+            <field name="code">sanctioned</field>
+        </record>
+
+        <record id="hr_work_entry_type_not_working" model="type.inputs">
+            <field name="name">D.no lab / sub</field>
+            <field name="description"/>
+            <field name="code">not_working</field>
+        </record>
+
+        <record id="hr_work_entry_type_subsidies" model="type.inputs">
+            <field name="name">Días subsidios</field>
+            <field name="description"/>
+            <field name="code">subsidies</field>
+        </record>
+
+        <record id="hr_work_entry_type_middle_rest" model="type.inputs">
+            <field name="name">Días D.Médicos</field>
+            <field name="description"/>
+            <field name="code">medical_rest</field>
+        </record>
+
+</odoo>

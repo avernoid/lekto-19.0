@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_holidays.hr_leave_allocation_rule_employee" model="ir.rule">
+        <field name="name">Allocations: employee: read own</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4,ref('base.group_user'))]"/>
+    </record>
+
+    <record id="action_create_absence_holiday_hr_leave_allocation" model="ir.actions.server">
+        <field name="name">Petición de vacaciones</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_create_absence_holiday()</field>
+    </record>
+
+    <record id="action_refuse_massive_hr_leave_allocation" model="ir.actions.server">
+        <field name="name">Rechazar</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave_allocation"/>
+        <field name="state">code</field>
+        <field name="code">records.action_refuse()</field>
+    </record>
+
+    <record id="action_refuse_absence_holiday_hr_leave" model="ir.actions.server">
+        <field name="name">Rechazar</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">records.action_refuse()</field>
+    </record>
+
+    <record id="action_draft_absence_holiday_hr_leave" model="ir.actions.server">
+        <field name="name">Cambiar a Aprobar</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="state">code</field>
+        <field name="code">records.action_reset_confirm()</field>
+    </record>
+
+</odoo>

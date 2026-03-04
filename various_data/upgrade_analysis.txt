@@ -1,0 +1,29 @@
+# Upgrade Analysis: various_data
+
+## 19.0.1.0.2 → 19.0.1.0.3
+
+### Dependency Inversion (eps_process ↔ various_data)
+- REMOVED dependency on `eps_process`
+- ADDED dependency on `additional_fields_employee`
+- MOVED `compute_fields()` method from `various_data/models/eps_credit.py` → `eps_process/models/eps_credit.py`
+- MOVED "Calcular" button view from `various_data/views/eps_credit_views.xml` → integrated into `eps_process/views/eps_credit_views.xml`
+- DELETED `models/eps_credit.py` (no longer needed; logic lives in eps_process)
+- DELETED `views/eps_credit_views.xml` (no longer needed; button lives in eps_process)
+- CHANGED `views/hr_employee_views.xml` inherit_id from `eps_process.hr_employee_view_form_inherit_eps_process` to `additional_fields_employee.hr_employee_view_form_inherit_additional_fields_employee`
+
+### Rationale
+eps_process is the module responsible for all EPS logic; it should depend on various_data (data provider)
+and not the other way around. This keeps various_data lightweight (RMV, UIT, SIS, SCTR data tables only).
+
+## 19.0.1.0.3 → 19.0.1.0.4
+
+### Decoupling from additional_fields_employee
+- REMOVED dependency on `additional_fields_employee`
+- CHANGED `views/hr_employee_views.xml` inherit_id from `additional_fields_employee.hr_employee_view_form_inherit_additional_fields_employee` to `hr.view_employee_form`
+- CHANGED xpath from `//field[@name='disability']` (field from another module) to `//notebook/page[@name='personal_information']/group` (base HR view)
+- ADDED own `<group name="sctr_info">` wrapper for SCTR fields instead of injecting after a foreign field
+
+### Rationale
+The dependency on additional_fields_employee was purely for XML view positioning (anchoring SCTR fields
+after the `disability` field). Both modules serve different functional domains (employee personal/labor data
+vs. national fiscal/tax reference data) and should remain independently installable.

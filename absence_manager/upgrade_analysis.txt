@@ -1,0 +1,100 @@
+===================================================================
+ UPGRADE ANALYSIS — absence_manager (19.0.1.0.0)
+===================================================================
+
+---Models in module 'absence_manager'---
+(no models added or removed — all are _inherit extensions)
+
+---Fields in module 'absence_manager'---
+(no field additions or removals in this version)
+
+---Code changes in module 'absence_manager'---
+
+1. DEL override _compute_last_attendance_id  (hr.employee)
+   REASON: The override prioritized open attendance records (without check_out)
+   over the most recent one. However:
+   - The module NEVER reads last_attendance_id in any of its own logic.
+   - The CRON (_action_absence_monitor) searches hr.attendance directly by
+     employee and date range — it does not use last_attendance_id.
+   - action_approve, action_refuse, write, create_attendance_period — none
+     of these methods reference last_attendance_id.
+   - Odoo 19 native implementation uses order="check_in desc" which already
+     handles the edge case correctly.
+   - The override could cause subtle bugs in the native attendance kiosk
+     because it lacked explicit ordering in its search.
+   ACTION: Removed the override entirely. Native Odoo behavior restored.
+   RISK: None — the field was never consumed by the module's own logic.
+
+2. CHG default attendance=True → attendance=False  (hr.employee)
+   REASON: With default=True, installing the module would immediately flag
+   ALL existing employees for daily monitoring, generating false PPD absences
+   for employees who are not expected to clock in (freelancers, managers, etc.).
+   ACTION: Changed to default=False so monitoring is opt-in per employee.
+   RISK: None for existing records — the default only affects NEW employees
+   created after the update. Existing employees retain their current value.
+
+3. CHG unused imports removed  (hr_employee.py, hr_attendance.py, hr_leave_type.py)
+   REASON: datetime, relativedelta, and api were imported but never used.
+   ACTION: Cleaned up to only import fields, models (and api where needed).
+
+---Impact on existing databases---
+IMPORTANT: No data migration needed.
+- The _compute_last_attendance_id removal restores native Odoo behavior.
+  Existing attendance records are unaffected.
+- The default=False change only applies to NEW employee records.
+  Employees already marked with attendance=True will KEEP their value.
+
+---Files changed---
+MODIFIED models/hr_employee.py       (removed override, changed default, cleaned imports)
+MODIFIED models/hr_attendance.py     (cleaned unused imports)
+MODIFIED models/hr_leave_type.py     (cleaned unused imports)
+
+
+===================================================================
+ UPGRADE ANALYSIS — absence_manager (code/PPD migration to absence_day)
+===================================================================
+
+---Purpose---
+Migrate the 'code' Char field on hr.leave.type and the PPD leave type
+record from absence_manager to absence_day. This allows filter_payroll
+to depend on absence_day directly instead of absence_manager.
+
+---Fields in module 'absence_manager'---
+DEL hr.leave.type.code  Char  "Code"
+    Moved to: absence_day.models.hr_leave_type
+    The field definition was removed from this module.
+    It is now provided by the absence_day dependency.
+
+---XML records in module 'absence_manager'---
+DEL data  hr_leave_type_data.xml
+    absence_manager.hr_leave_type_ppd → moved to absence_day.hr_leave_type_ppd
+    The PPD leave type record is now created by absence_day.
+
+---Code changes---
+CHG models/hr_leave.py
+    env.ref('absence_manager.hr_leave_type_ppd') → env.ref('absence_day.hr_leave_type_ppd')
+    The CRON method _action_absence_monitor now references the PPD record
+    from absence_day instead of from this module.
+
+---View changes---
+CHG views/hr_leave_type_views.xml
+    The view previously inherited from hr_holidays.edit_holiday_status_form
+    and added the 'code' field. It now inherits from
+    absence_day.hr_leave_type_view_form_inherit_absence_day as a no-op
+    (XML ID preserved for backward compatibility).
+
+---Model file cleanup---
+DEL models/hr_leave_type.py  (field definition removed — field now in absence_day)
+CHG models/__init__.py       (removed 'from . import hr_leave_type')
+
+---Manifest changes---
+CHG __manifest__.py
+    Removed 'data/hr_leave_type_data.xml' from data list.
+
+---Impact on existing databases---
+IMPORTANT: No data migration needed.
+- The 'code' field continues to exist on hr.leave.type (now provided by absence_day).
+- Existing leave type records with code values are unaffected.
+- The PPD record XML ID changes from absence_manager.hr_leave_type_ppd
+  to absence_day.hr_leave_type_ppd. The env.ref() call in _action_absence_monitor
+  has been updated accordingly.

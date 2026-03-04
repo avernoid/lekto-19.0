@@ -9,3 +9,8 @@ class ResConfigSettings(models.TransientModel):
         readonly=False,
         string='Auto-generate Legal Name',
     )
+    generate_employee_name = fields.Boolean(
+        related='company_id.generate_employee_name',
+        readonly=False,
+        string='Auto-generate Employee Name',
+    )

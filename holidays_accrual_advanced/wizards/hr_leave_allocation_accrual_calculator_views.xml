@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_leave_allocation_accrual_calculator_view_form" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.accrual.calculator.view.form</field>
+        <field name="model">hr.leave.allocation.accrual.calculator</field>
+        <field name="arch" type="xml">
+            <form string="Accrual Leave Allocation Balance Calculator" >
+                <span nolabel="1">
+                    This wizard will calculate leave allocation balance as of date selected.
+                </span>
+                <group>
+                    <group>
+                        <field name="date"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <label for="accrued"/>
+                        <div>
+                            <field name="accrued" nolabel="1" class="oe_inline"/>
+                            <span class="ml8">day(s)</span>
+                        </div>
+                    </group>
+                    <group>
+                        <label for="balance"/>
+                        <div>
+                            <field name="balance" nolabel="1" class="oe_inline"/>
+                            <span class="ml8">day(s)</span>
+                        </div>
+                    </group>
+                </group>
+                <field name="accruement_ids" />             
+                <footer>
+                    <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_leave_allocation_as_of_date" model="ir.actions.act_window">
+        <field name="name">Accrual Balance Calculator</field>
+        <field name="res_model">hr.leave.allocation.accrual.calculator</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_leave_allocation_accrual_calculator_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

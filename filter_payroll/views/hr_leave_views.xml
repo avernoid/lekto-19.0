@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_leave_view_search_inherit_filter_payroll" model="ir.ui.view">
+        <field name="model">hr.leave.view.search.inherit.filter_payroll</field>
+        <field name="model">hr.leave</field>
+        <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='approve']" position="before">
+                <filter string="CTS" name="cts_filter" domain="['|','|',('code_holiday', 'in', ['20']), ('is_social_benefits_license','=', True), ('is_benefits_license_absence','=', True)]"/>
+                <separator/>
+                <filter string="Gratification" name="grati_filter" domain="['|', ('is_social_benefits_license','=', True), ('is_benefits_license_absence','=', True)]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

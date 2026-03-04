@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_view_form_inherit_additional_fields_voucher" model="ir.ui.view">
+        <field name="name">hr.employee.view.form.inherit.additional_fields_voucher</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']/group/group[1]" position="inside">
+                <label for="is_employer"/>
+                <div class="o_row">
+                    <field name="is_employer" nolabel="1" class="oe_inline"/>
+                    <field name="employer_sign" widget="image"
+                           nolabel="1"
+                           required="is_employer != False"
+                           invisible="is_employer == False"
+                           class="oe_avatar oe_inline"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="payment_period_1" model="payment.period">
+            <field name="name">Mensual</field>
+            <field name="payment_description">Mensual</field>
+            <field name="code">1</field>
+        </record>
+
+        <record id="payment_period_2" model="payment.period">
+            <field name="name">Quincenal</field>
+            <field name="payment_description">Quincenal</field>
+            <field name="code">2</field>
+        </record>
+
+        <record id="payment_period_3" model="payment.period">
+            <field name="name">Semanal</field>
+            <field name="payment_description">Semanal</field>
+            <field name="code">3</field>
+        </record>
+
+        <record id="payment_period_4" model="payment.period">
+            <field name="name">Diaria</field>
+            <field name="payment_description">Diaria</field>
+            <field name="code">4</field>
+        </record>
+
+        <record id="payment_period_5" model="payment.period">
+            <field name="name">Otros</field>
+            <field name="payment_description">Otros</field>
+            <field name="code">5</field>
+        </record>
+
+    </data>
+</odoo>

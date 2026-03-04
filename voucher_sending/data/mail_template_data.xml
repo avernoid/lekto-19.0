@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mail_template_hr_payslip_by_employee" model="mail.template">
+        <field name="name">Payslip mail by employee</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="email_to">{{object.employee_id.private_email}}</field>
+        <field name="subject">{{object.company_id.name}} - Boleta de Pago</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+<p>Hola Estimado(a) <t t-out="object.employee_id.name or ''"/>:</p>
+<br/>
+<p>A través del presente correo le hacemos llegar su boleta de pago.</p>
+<br/>          
+<p>Saludos cordiales.</p>
+<br/>
+<p><b>*No responda este correo. Si tiene alguna consulta sobre su boleta, favor acercarse a la oficina de Recursos humanos</b></p>
+<br/>
+<div style="margin: 32px 0px 32px 0px; text-align: center;">
+    <a t-att-href="object.get_portal_url()"
+                        style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+        <t t-if="object.status == 'to_sign'">
+            Revisar, Aceptar y Firmar
+        </t>
+        <t t-else="">
+            Ver Boleta de Pago
+        </t>   
+    </a>
+</div>
+        </field>
+    </record>
+</odoo>

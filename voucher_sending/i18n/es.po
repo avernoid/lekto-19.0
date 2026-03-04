@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * voucher_sending
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-02-27 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Model: hr.payslip
+#. Field: employee_mail (string)
+msgid "Employee Email"
+msgstr "Correo del empleado"
+
+#. Model: hr.payslip
+#. Field: employee_mail (help)
+msgid "The private email address of the employee, used as the portal access email. This field is automatically populated from the employee record (Private Information tab). If empty, the employee will not receive secure portal notifications."
+msgstr "La dirección de correo electrónico privada del empleado, utilizada para el acceso al portal. Este campo se completa automáticamente desde el registro del empleado (pestaña Información Privada). Si está vacío, el empleado no recibirá notificaciones seguras del portal."
+
+#. Model: hr.payslip
+#. Field: status (string)
+msgid "Signature Status"
+msgstr "Estado de firma"
+
+#. Model: hr.payslip
+#. Field: status (help)
+msgid "Indicates whether the employee has digitally signed this payslip via the portal. \"To Sign\" means the payslip has been sent but the employee has not yet signed it. \"Signed\" means the employee has submitted their digital signature through the portal link."
+msgstr "Indica si el empleado ha firmado digitalmente esta boleta a través del portal. \"Por Firmar\" significa que la boleta fue enviada pero el empleado aún no la ha firmado. \"Firmado\" significa que el empleado envió su firma digital a través del enlace del portal."
+
+#. Model: hr.payslip
+#. Field: status (selection) - to_sign
+msgid "To Sign"
+msgstr "Por Firmar"
+
+#. Model: hr.payslip
+#. Field: status (selection) - signed
+msgid "Signed"
+msgstr "Firmado"
+
+#. Model: hr.payslip
+#. Field: signature (string)
+msgid "Employee Signature"
+msgstr "Firma del empleado"
+
+#. Model: hr.payslip
+#. Field: signature (help)
+msgid "The digital signature image submitted by the employee through the secure payslip portal. Once the employee signs via the portal link, this image is stored here as proof of acknowledgment. The signature is stored as a 128x128 pixel image attachment."
+msgstr "La imagen de firma digital enviada por el empleado a través del portal seguro de boletas. Una vez que el empleado firma mediante el enlace del portal, esta imagen se almacena aquí como prueba de reconocimiento. La firma se guarda como un archivo adjunto de imagen de 128x128 píxeles."
+
+#. Method: action_send_mail_employees
+msgid "Send Payslip Email"
+msgstr "Enviar correo de boleta"
+
+#. Method: _get_report_base_filename
+msgid "Payslip"
+msgstr "Boleta de pago"
+
+#. Validation error messages
+msgid "The following employees do not have a Work Email configured:"
+msgstr "Los siguientes empleados no tienen configurado un Correo de Trabajo:"
+
+#. Portal/Display
+msgid "Boleta de pago - %(dates)s"
+msgstr "Boleta de pago - %(dates)s"

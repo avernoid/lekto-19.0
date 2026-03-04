@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="hr_leave_accrual_plan_vacacional" model="hr.leave.accrual.plan">
+            <field name="name">Generador</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

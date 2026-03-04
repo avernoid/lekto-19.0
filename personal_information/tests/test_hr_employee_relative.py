@@ -23,7 +23,7 @@ class TestHrEmployeeRelatives(common.TransactionCase):
                 'relation_id': self.relation_sibling.id,
                 'partner_id': self.partner_1.id,
                 'name': 'Marco Vasquez',
-                'gender': 'masculino',
+                'sex': 'male',
                 'phone_number': '+51 982367182',
                 'job': 'Ingeniero de Software',
                 'notes': 'Esta es una nota :D',

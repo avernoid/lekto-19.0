@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_payslip_form_view_inherit_voucher_sending" model="ir.ui.view">
+        <field name="name">hr.payslip.form.view.inherit.voucher_sending</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Envío de boleta" name="voucher_sending_page" invisible="state not in ('validated','paid')">
+                    <group>
+                        <field name="employee_mail"/>
+                    </group>
+                    <group>
+                        <button name="action_send_mail_employees" string="Enviar" type="object" class="btn-primary"/>
+                    </group>
+                    <group>
+                        <field name="status"/>
+                        <field name="signature" widget="image" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_send_mail_employees_by_employees" model="ir.actions.server">
+        <field name="name">Enviar boletas</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="binding_model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_send_mail_employees()</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="payroll_field.PayRunCard" t-inherit="hr_payroll.PayRunCard" t-inherit-mode="extension">
+        <PayRunButtonBox position="inside">
+            <t t-set-slot="edit_inputs" isVisible="true">
+                <ViewButton className="'btn btn-secondary'"
+                            clickParams="{type: 'object', name: 'action_edit_inputs'}"
+                            record="props.record"
+                            string.translate="Edit Inputs"/>
+            </t>
+            <t t-set-slot="edit_worked_days" isVisible="true">
+                <ViewButton className="'btn btn-secondary'"
+                            clickParams="{type: 'object', name: 'action_edit_worked_days'}"
+                            record="props.record"
+                            string.translate="Edit Worked Days"/>
+            </t>
+            <t t-set-slot="view_report_rules" isVisible="true">
+                <ViewButton className="'btn btn-secondary'"
+                            clickParams="{type: 'object', name: 'action_view_payslip_lines_report'}"
+                            record="props.record"
+                            string.translate="Report by Rules"/>
+            </t>
+            <t t-set-slot="view_report_categories" isVisible="true">
+                <ViewButton className="'btn btn-secondary'"
+                            clickParams="{type: 'object', name: 'action_view_payslip_lines_report_by_category'}"
+                            record="props.record"
+                            string.translate="Report by Categories"/>
+            </t>
+        </PayRunButtonBox>
+    </t>
+</templates>
