@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ================================================================
+         1. SEARCH VIEW
+         Hereda la vista de búsqueda FSM y añade el filtro de tareas activas
+         (removible por el usuario con la X en la barra de búsqueda)
+    ================================================================ -->
+    <record id="project_task_view_search_fsm_today" model="ir.ui.view">
+        <field name="name">project.task.search.fsm.today</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="industry_fsm.project_task_view_search_fsm"/>
+        <field name="mode">primary</field>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <!-- Añadimos el filtro de estados activos justo antes de la sección de filtros de fecha -->
+            <filter name="my_tasks" position="before">
+                <filter name="active_tasks"
+                    string="Active Tasks"
+                    domain="[('state', 'not in', ['1_done', '1_canceled'])]"/>
+                <separator/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         2. MAP VIEW
+         Hereda la vista mapa FSM "My Task" y garantiza:
+         - default_order por sequence (asc) luego planned_date_begin
+         - allow_resequence="true" para permitir drag-and-drop de reordenamiento
+    ================================================================ -->
+    <record id="project_task_view_map_fsm_today" model="ir.ui.view">
+        <field name="name">project.task.view.map.fsm.today</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="industry_fsm.project_task_map_view_fsm_my_task"/>
+        <field name="mode">primary</field>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <map position="attributes">
+                <attribute name="default_order">sequence, planned_date_begin</attribute>
+                <attribute name="allow_resequence">true</attribute>
+                <attribute name="js_class">fsm_my_task_map</attribute>
+            </map>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         3. ACTION ir.actions.act_window
+         Domain fijo (irremovible por el usuario):
+           - is_fsm = True
+           - project_id != False
+           - has_template_ancestor = False
+           - user_ids contiene al usuario logueado [uid]
+           - planned_date_begin < hoy+1d  (inicio dentro de hoy)
+           - date_deadline >= hoy          (fin no anterior a hoy)
+         Context:
+           - search_default_active_tasks = True (removible con X)
+    ================================================================ -->
+    <record id="project_task_action_fsm_today" model="ir.actions.act_window">
+        <field name="name">My Tasks Today</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">kanban,list,map,calendar,gantt,form,graph,pivot,activity</field>
+        <field name="search_view_id" ref="project_task_view_search_fsm_today"/>
+        <field name="domain">[
+            ('has_template_ancestor', '=', False),
+            ('is_fsm', '=', True),
+            ('project_id', '!=', False),
+            ('user_ids', 'in', [uid]),
+            ('planned_date_begin', '&lt;', 'today +1d'),
+            ('date_deadline', '&gt;=', 'today'),
+        ]</field>
+        <field name="context">{
+            'fsm_mode': True,
+            'search_default_active_tasks': True,
+            'default_scale': 'day',
+        }</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No tasks found for today!</p>
+            <p>This view shows only your tasks scheduled for today.</p>
+        </field>
+    </record>
+
+    <!-- ================================================================
+         4. VIEW ASSIGNMENTS (ir.actions.act_window.view)
+         Reutilizamos las vistas nativas FSM para mantener coherencia UX.
+         Solo el mapa usa la vista nueva (con resequencia).
+    ================================================================ -->
+
+    <!-- Kanban: usa la vista sin quick-create (igual que el menú nativo My Tasks) -->
+    <record id="project_task_action_fsm_today_view_kanban" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="industry_fsm.project_task_action_fsm_no_quick_create"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- List -->
+    <record id="project_task_action_fsm_today_view_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="7"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="industry_fsm.project_task_view_list_fsm_my_task"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- Map: usa nuestra nueva vista con sequence + allow_resequence -->
+    <record id="project_task_action_fsm_today_view_map" model="ir.actions.act_window.view">
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">map</field>
+        <field name="view_id" ref="project_task_view_map_fsm_today"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- Calendar -->
+    <record id="project_task_action_fsm_today_view_calendar" model="ir.actions.act_window.view">
+        <field name="sequence" eval="20"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="industry_fsm.fsm_project_task_view_calendar"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- Gantt -->
+    <record id="project_task_action_fsm_today_view_gantt" model="ir.actions.act_window.view">
+        <field name="sequence" eval="25"/>
+        <field name="view_mode">gantt</field>
+        <field name="view_id" ref="industry_fsm.fsm_project_task_view_gantt"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- Form -->
+    <record id="project_task_action_fsm_today_view_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="30"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="project.view_task_form2"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- Activity -->
+    <record id="project_task_action_fsm_today_view_activity" model="ir.actions.act_window.view">
+        <field name="sequence" eval="31"/>
+        <field name="view_mode">activity</field>
+        <field name="view_id" ref="industry_fsm.project_task_view_activity"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- Pivot -->
+    <record id="project_task_action_fsm_today_view_pivot" model="ir.actions.act_window.view">
+        <field name="sequence" eval="33"/>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="industry_fsm.project_task_view_pivot_group_by_planned_date_begin_fsm"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- Graph -->
+    <record id="project_task_action_fsm_today_view_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="34"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="industry_fsm.project_task_view_graph_group_by_planned_date_begin_fsm"/>
+        <field name="act_window_id" ref="project_task_action_fsm_today"/>
+    </record>
+
+    <!-- ================================================================
+         5. MENU ROOT (App entry en el home de Odoo)
+         Aparece como app standalone "My Visits" en la pantalla de inicio.
+         sequence=85: justo después de Field Service (sequence=80).
+         web_icon: reutiliza el ícono del módulo.
+         Solo visible para técnicos FSM (group_fsm_user).
+    ================================================================ -->
+    <menuitem id="fsm_visits_menu_root"
+        name="My Visits"
+        web_icon="fsm_my_tasks_today,static/description/icon.png"
+        sequence="85"
+        groups="industry_fsm.group_fsm_user"/>
+
+    <!-- ================================================================
+         6. SUBMENU: My Tasks Today
+         Primer (y único) ítem bajo la app "My Visits".
+         Hereda la acción filtrada por usuario y fecha.
+    ================================================================ -->
+    <menuitem id="fsm_menu_tasks_today"
+        name="My Tasks Today"
+        action="project_task_action_fsm_today"
+        sequence="5"
+        parent="fsm_visits_menu_root"
+        groups="industry_fsm.group_fsm_user"/>
+
+</odoo>
