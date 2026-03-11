@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- =====================================================================
+         sale.goal - Form View
+         ===================================================================== -->
+    <record id="view_sale_goal_form" model="ir.ui.view">
+        <field name="name">sale.goal.form</field>
+        <field name="model">sale.goal</field>
+        <field name="arch" type="xml">
+            <form string="Sales Goal">
+                <header>
+                    <button name="action_recompute"
+                            string="Update Results"
+                            type="object"
+                            icon="fa-refresh"
+                            class="btn-secondary"
+                            help="Recompute qty and amount achieved from source data."/>
+                    <button name="action_copy_previous_month"
+                            string="Copy Previous Month"
+                            type="object"
+                            icon="fa-copy"
+                            class="btn-secondary"
+                            help="Import goal lines from the previous month as a starting point."/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,achieved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <!-- Left column: Salesperson + Company + Data Source -->
+                        <group>
+                            <field name="user_id"
+                                   options="{'no_create': True}"
+                                   widget="many2one_avatar_user"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                            <field name="source_type" widget="radio"/>
+                        </group>
+                        <!-- Right column: Period + Global Target -->
+                        <group>
+                            <label for="month" string="Period"/>
+                            <div class="o_row">
+                                <field name="month" nolabel="1"
+                                       class="mx-2" placeholder="MM"/>
+                                <span class="mx-2">/</span>
+                                <field name="year" nolabel="1"
+                                       placeholder="YYYY"/>
+                            </div>
+                            <label for="date_start" string="Range"/>
+                            <div class="o_row">
+                                <field name="date_start" nolabel="1"
+                                       class="mx-2" readonly="1"
+                                       placeholder="Start date"/>
+                                <span class="mx-2">&#8594;</span>
+                                <field name="date_end" nolabel="1"
+                                       readonly="1"
+                                       placeholder="End date"/>
+                            </div>
+                            <field name="global_amount_goal" widget="monetary"
+                                   string="Sales Target"
+                                   options="{'currency_field': 'currency_id'}"/>
+                            <field name="global_amount_done" widget="monetary"
+                                   string="Sales Achievement"
+                                   options="{'currency_field': 'currency_id'}"
+                                   readonly="1"/>
+                            <field name="global_pct_amount"
+                                   string="% Achievement"
+                                   widget="progressbar"
+                                   options="{'max_value': 100.0}"
+                                   readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Goal Lines" name="goal_lines">
+                            <field name="line_ids"
+                                   widget="one2many"
+                                   context="{'default_goal_type': 'product'}">
+                                <list string="Goal Lines" editable="bottom">
+                                    <field name="goal_type" widget="select"/>
+                                    <field name="product_id"
+                                           invisible="goal_type != 'product'"
+                                           optional="show"/>
+                                    <field name="categ_id"
+                                           invisible="goal_type != 'categ'"
+                                           optional="show"/>
+                                    <field name="qty_goal"/>
+                                    <field name="qty_done" readonly="1"/>
+                                    <field name="pct_qty"
+                                           readonly="1"
+                                           widget="progressbar"
+                                           options="{'max_value': 100.0}"/>
+                                    <field name="amount_goal"/>
+                                    <field name="amount_done" readonly="1"/>
+                                    <field name="pct_amount"
+                                           readonly="1"
+                                           widget="progressbar"
+                                           options="{'max_value': 100.0}"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- =====================================================================
+         sale.goal - List View
+         ===================================================================== -->
+    <record id="view_sale_goal_list" model="ir.ui.view">
+        <field name="name">sale.goal.list</field>
+        <field name="model">sale.goal</field>
+        <field name="arch" type="xml">
+            <list string="Sales Goals" decoration-muted="state == 'draft'"
+                  decoration-success="state == 'achieved'"
+                  decoration-info="state == 'active'">
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="year"/>
+                <field name="month"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="source_type"/>
+                <field name="global_amount_goal" widget="monetary"
+                       string="Sales Target"
+                       options="{'currency_field': 'currency_id'}"
+                       optional="show"/>
+                <field name="global_amount_done" widget="monetary"
+                       string="Sales Achievement"
+                       options="{'currency_field': 'currency_id'}"
+                       optional="show"/>
+                <field name="global_pct_amount"
+                       string="% Achievement"
+                       widget="progressbar"
+                       options="{'max_value': 100.0}"
+                       optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-muted="state == 'draft'"
+                       decoration-success="state == 'achieved'"
+                       decoration-info="state == 'active'"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         sale.goal â€” Search View
+         ===================================================================== -->
+    <record id="view_sale_goal_search" model="ir.ui.view">
+        <field name="name">sale.goal.search</field>
+        <field name="model">sale.goal</field>
+        <field name="arch" type="xml">
+            <search string="Sales Goals">
+                <field name="user_id" string="Salesperson"/>
+                <field name="year"/>
+                <field name="month"/>
+                <filter string="My Goals" name="my_goals"
+                        domain="[('user_id', '=', uid)]"/>
+                <filter string="Draft" name="draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter string="Active" name="active"
+                        domain="[('state', '=', 'active')]"/>
+                <filter string="Achieved" name="achieved"
+                        domain="[('state', '=', 'achieved')]"/>
+                <separator/>
+                <filter string="This Month" name="this_month"
+                        domain="[
+                            ('month', '=', context_today().month),
+                            ('year', '=', context_today().year)
+                        ]"/>
+                <separator/>
+                <filter string="Salesperson" name="group_user"
+                        context="{'group_by': 'user_id'}"/>
+                <filter string="Year" name="group_year"
+                        context="{'group_by': 'year'}"/>
+                <filter string="Month" name="group_month"
+                        context="{'group_by': 'month'}"/>
+                <filter string="Status" name="group_state"
+                        context="{'group_by': 'state'}"/>
+                <filter string="Source" name="group_source"
+                        context="{'group_by': 'source_type'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         sale.goal â€” Pivot View
+         ===================================================================== -->
+    <record id="view_sale_goal_line_pivot" model="ir.ui.view">
+        <field name="name">sale.goal.line.pivot</field>
+        <field name="model">sale.goal.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Goals Analysis" disable_linking="1">
+                <field name="goal_id" type="row"/>
+                <field name="goal_type" type="row"/>
+                <field name="qty_goal" type="measure"/>
+                <field name="qty_done" type="measure"/>
+                <field name="amount_goal" type="measure"/>
+                <field name="amount_done" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- =====================================================================
+         sale.goal.line â€” Graph View
+         ===================================================================== -->
+    <record id="view_sale_goal_line_graph" model="ir.ui.view">
+        <field name="name">sale.goal.line.graph</field>
+        <field name="model">sale.goal.line</field>
+        <field name="arch" type="xml">
+            <graph string="Goals Achievement" type="bar">
+                <field name="goal_id" type="row"/>
+                <field name="amount_done" type="measure"/>
+                <field name="amount_goal" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+
+
+    <!-- =====================================================================
+         sale.goal - Pivot View
+         ===================================================================== -->
+    <record id="view_sale_goal_pivot" model="ir.ui.view">
+        <field name="name">sale.goal.pivot</field>
+        <field name="model">sale.goal</field>
+        <field name="arch" type="xml">
+            <pivot string="Sales Goals" disable_linking="0">
+                <field name="user_id" type="row"/>
+                <field name="year" type="col"/>
+                <field name="month" type="col"/>
+                <field name="global_amount_goal" type="measure" string="Sales Target"/>
+                <field name="global_amount_done" type="measure" string="Sales Achievement"/>
+            </pivot>
+        </field>
+    </record>
+    <!-- =====================================================================
+         sale.goal.line - List View
+         ===================================================================== -->
+    <record id="view_sale_goal_line_list" model="ir.ui.view">
+        <field name="name">sale.goal.line.list</field>
+        <field name="model">sale.goal.line</field>
+        <field name="arch" type="xml">
+            <list string="Goal Lines" decoration-danger="pct_qty &lt; 50 and pct_amount &lt; 50"
+                  decoration-warning="pct_qty &lt; 100 or pct_amount &lt; 100"
+                  decoration-success="pct_qty &gt;= 100 and pct_amount &gt;= 100">
+                <field name="goal_id"/>
+                <field name="goal_type"/>
+                <field name="product_id" optional="show"/>
+                <field name="categ_id" optional="show"/>
+                <field name="qty_goal"/>
+                <field name="qty_done"/>
+                <field name="pct_qty" widget="progressbar" options="{'max_value': 100.0}"/>
+                <field name="amount_goal" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="amount_done" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="pct_amount" widget="progressbar" options="{'max_value': 100.0}"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <!-- =====================================================================
+         Actions
+         ===================================================================== -->
+    <record id="action_sale_goal" model="ir.actions.act_window">
+        <field name="name">Sales Goals</field>
+        <field name="res_model">sale.goal</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_sale_goal_search"/>
+        <field name="context">{'search_default_this_month': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No sales goals found!
+            </p>
+            <p>
+                Create monthly goals for your salespeople to track
+                performance by product and product category.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_sale_goal_line_analysis" model="ir.actions.act_window">
+        <field name="name">Goals Analysis</field>
+        <field name="res_model">sale.goal.line</field>
+        <field name="view_mode">pivot,graph,list</field>
+    </record>
+
+</odoo>
+

@@ -21,6 +21,7 @@
     'images': ['static/description/banner.png'],
     'icon': '/fsm_sale_lost_reason/static/description/icon.png',
     'license': 'OPL-1',
+    'tests': ['tests/test_fsm_lost_reason.py'],
     'installable': True,
     'auto_install': False,
     'application': False,

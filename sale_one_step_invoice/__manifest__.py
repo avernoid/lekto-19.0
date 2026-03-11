@@ -24,6 +24,6 @@
     'auto_install': False,
     'application': False,
     'currency': 'USD',
-    'price': 93.0,
+    'price': 79.0,
     'module_type': 'official',
 }

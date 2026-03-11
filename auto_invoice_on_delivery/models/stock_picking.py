@@ -70,42 +70,20 @@ class Picking(models.Model):
     def action_create_invoice(self):
         """
         Triggers the invoice creation flow from the associated Sale Order.
+
+        Delegates to sale_id.action_create_invoice() so that any override
+        applied to that method (e.g. skip_invoice_wizard logic from
+        sale_one_step_invoice) is automatically respected, without creating
+        a hard dependency between modules.
+
+        sudo() is used so that warehouse users without the Sales group can
+        still trigger this action. The button visibility is already gated
+        by the show_invoice_button compute field.
         """
         self.ensure_one()
-        if not self.sale_id:
+        if not self.sudo().sale_id:
             return
-        
-        # Call the action directly since sale.order.action_create_invoice method might not exist in this version
-        # This opens the "Create Invoice" (Down Payment) wizard
-        res = self.env['ir.actions.actions']._for_xml_id('sale.action_view_sale_advance_payment_inv')
-        
-        # We need to ensure the context points to the Sale Order, not the Picking
-        if isinstance(res, dict):
-            # Get existing context
-            context = res.get('context', {})
-            # If context is a string, eval it (though _for_xml_id usually returns evaluated dicts in modern odoo, strict safety)
-            # Actually _for_xml_id returns a clean dict with 'context' as a dict usually.
-            # But avoiding safe_eval complexity if simple is enough.
-            
-            if not isinstance(context, dict):
-                 # Fallback if it is somehow a string representation
-                 from odoo.tools.safe_eval import safe_eval
-                 try:
-                     context = safe_eval(context) or {}
-                 except Exception:
-                     context = {}
-
-            # Update context with correct active_ids
-            context.update({
-                'active_ids': [self.sale_id.id],
-                'active_model': 'sale.order',
-                'active_id': self.sale_id.id,
-                'default_journal_id': False, # Let wizard decide
-            })
-            
-            res['context'] = context
-            
-        return res
+        return self.sudo().sale_id.action_create_invoice()
 
     def button_validate(self):
         """

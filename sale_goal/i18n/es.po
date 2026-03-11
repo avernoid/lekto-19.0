@@ -1,0 +1,229 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#   * sale_goal
+#
+# Translators:
+# Ganemo, 2026
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-03-06 00:00+0000\n"
+"Last-Translator: Ganemo <ayuda@ganemo.com>\n"
+"Language-Team: Spanish <https://www.ganemo.co>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# ── Model names ─────────────────────────────────────────────────────────
+msgid "Sales Goal"
+msgstr "Meta de Ventas"
+
+msgid "Sales Goals"
+msgstr "Metas de Ventas"
+
+msgid "Sales Goal Line"
+msgstr "Línea de Meta de Ventas"
+
+msgid "Sales Goal Lines"
+msgstr "Líneas de Meta de Ventas"
+
+# ── sale.goal fields ─────────────────────────────────────────────────────
+msgid "Reference"
+msgstr "Referencia"
+
+msgid "Auto-generated: Salesperson – Month Year"
+msgstr "Generado automáticamente: Vendedor – Mes Año"
+
+msgid "Salesperson"
+msgstr "Vendedor"
+
+msgid "The salesperson this goal belongs to."
+msgstr "El vendedor al que pertenece esta meta."
+
+msgid "Month"
+msgstr "Mes"
+
+msgid "Month number (1–12)."
+msgstr "Número de mes (1–12)."
+
+msgid "Year"
+msgstr "Año"
+
+msgid "Four-digit year."
+msgstr "Año de cuatro dígitos."
+
+msgid "From"
+msgstr "Desde"
+
+msgid "First day of the goal period."
+msgstr "Primer día del período de la meta."
+
+msgid "To"
+msgstr "Hasta"
+
+msgid "Last day of the goal period."
+msgstr "Último día del período de la meta."
+
+msgid "Data Source"
+msgstr "Fuente de Datos"
+
+msgid "Confirmed Sale Orders"
+msgstr "Pedidos de Venta Confirmados"
+
+msgid "Validated Customer Invoices"
+msgstr "Facturas de Cliente Validadas"
+
+msgid ""
+"Determines where actual qty/amount are read from:\n"
+"- Confirmed Sale Orders: uses sale.order.line\n"
+"- Validated Customer Invoices: uses account.move.line "
+"(Credit Notes are subtracted automatically)"
+msgstr ""
+"Determina de dónde se leen las cantidades/importes reales:\n"
+"- Pedidos de Venta Confirmados: usa sale.order.line\n"
+"- Facturas de Cliente Validadas: usa account.move.line "
+"(las Notas de Crédito se restan automáticamente)"
+
+msgid "Goal Lines"
+msgstr "Líneas de Meta"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid ""
+"Draft: no lines defined.\n"
+"Active: at least one line exists.\n"
+"Achieved: all lines ≥ 100% on both qty and amount."
+msgstr ""
+"Borrador: sin líneas definidas.\n"
+"Activo: al menos una línea existe.\n"
+"Alcanzada: todas las líneas ≥ 100% en cantidad e importe."
+
+msgid "Company"
+msgstr "Empresa"
+
+# ── sale.goal states ─────────────────────────────────────────────────────
+msgid "Draft"
+msgstr "Borrador"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Achieved"
+msgstr "Alcanzada"
+
+# ── sale.goal.line fields ────────────────────────────────────────────────
+msgid "Goal"
+msgstr "Meta"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Whether the goal targets a specific product or a whole product category."
+msgstr "Si la meta apunta a un producto específico o a toda una categoría de productos."
+
+msgid "Product"
+msgstr "Producto"
+
+msgid "Target product (required when Type = Product)."
+msgstr "Producto objetivo (requerido cuando Tipo = Producto)."
+
+msgid "Product Category"
+msgstr "Categoría de Producto"
+
+msgid "Category"
+msgstr "Categoría"
+
+msgid "Target product category (required when Type = Category)."
+msgstr "Categoría de producto objetivo (requerida cuando Tipo = Categoría)."
+
+msgid "Qty Target"
+msgstr "Meta de Cantidad"
+
+msgid "Quantity target for this period."
+msgstr "Objetivo de cantidad para este período."
+
+msgid "Amount Target"
+msgstr "Meta de Importe"
+
+msgid "Revenue target for this period."
+msgstr "Objetivo de ingresos para este período."
+
+msgid "Qty Achieved"
+msgstr "Cantidad Lograda"
+
+msgid "Actual quantity sold/invoiced in the period (auto-computed)."
+msgstr "Cantidad real vendida/facturada en el período (calculada automáticamente)."
+
+msgid "Amount Achieved"
+msgstr "Importe Logrado"
+
+msgid "Actual revenue in the period (auto-computed)."
+msgstr "Ingresos reales en el período (calculados automáticamente)."
+
+msgid "% Qty"
+msgstr "% Cantidad"
+
+msgid "Percentage of quantity target achieved."
+msgstr "Porcentaje del objetivo de cantidad alcanzado."
+
+msgid "% Amount"
+msgstr "% Importe"
+
+msgid "Percentage of amount target achieved."
+msgstr "Porcentaje del objetivo de importe alcanzado."
+
+# ── Buttons / Actions ────────────────────────────────────────────────────
+msgid "Update Results"
+msgstr "Actualizar Resultados"
+
+msgid "Copy Previous Month"
+msgstr "Copiar Mes Anterior"
+
+# ── Validation messages ──────────────────────────────────────────────────
+msgid "Month must be between 1 and 12."
+msgstr "El mes debe ser un número entre 1 y 12."
+
+msgid "Year must be between 2000 and 2100."
+msgstr "El año debe estar entre 2000 y 2100."
+
+msgid "You must select a Product when Goal Type is \"Product\"."
+msgstr "Debe seleccionar un Producto cuando el Tipo de Meta es \"Producto\"."
+
+msgid "You must select a Category when Goal Type is \"Product Category\"."
+msgstr "Debe seleccionar una Categoría cuando el Tipo de Meta es \"Categoría de Producto\"."
+
+msgid "A salesperson can only have one goal record per month and company."
+msgstr "Un vendedor solo puede tener un registro de meta por mes y empresa."
+
+msgid "No goal found for %(name)s in %(month)s %(year)s."
+msgstr "No se encontró una meta para %(name)s en %(month)s %(year)s."
+
+# ── View strings ─────────────────────────────────────────────────────────
+msgid "Sales Goals"
+msgstr "Metas de Ventas"
+
+msgid "My Goals"
+msgstr "Mis Metas"
+
+msgid "This Month"
+msgstr "Este Mes"
+
+msgid "Sale Orders"
+msgstr "Pedidos de Venta"
+
+msgid "Invoices"
+msgstr "Facturas"
+
+msgid "Goals Analysis"
+msgstr "Análisis de Metas"
+
+msgid "Goal Lines"
+msgstr "Líneas de Meta"
+
+msgid "Sales Goals Analysis"
+msgstr "Análisis de Metas de Ventas"

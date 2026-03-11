@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ====================================================================
+         REPORT 1: Efectividad de Visitas
+         Goal: Executed vs. not-executed visits by salesperson and month.
+    ==================================================================== -->
+
+    <!-- LIST VIEW -->
+    <record id="view_fsm_report_effectiveness_list" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.effectiveness.list</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <list string="Efectividad de Visitas" create="false" edit="false" delete="false">
+                <field name="planned_date" string="Fecha"/>
+                <field name="user_id" string="Vendedor"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="project_id" string="Proyecto" optional="hide"/>
+                <field name="state" string="Estado" optional="show"/>
+                <field name="planned" string="Planificada"/>
+                <field name="executed" string="Ejecutadas"/>
+                <field name="not_executed" string="No Ejecutadas"/>
+                <field name="has_sale" string="Con Venta"/>
+                <field name="lost_reason_id" string="Motivo No Venta" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="sale_amount_total" string="Total Venta" widget="monetary" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- PIVOT VIEW -->
+    <record id="view_fsm_report_effectiveness_pivot" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.effectiveness.pivot</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Efectividad de Visitas" display_quantity="true">
+                <field name="planned_month" type="col" string="Mes"/>
+                <field name="user_id" type="row" string="Vendedor"/>
+                <field name="planned" type="measure" string="Planificadas"/>
+                <field name="executed" type="measure" string="Ejecutadas"/>
+                <field name="execution_rate" type="measure" string="% Ejecución"/>
+                <field name="not_executed" type="measure" string="No Ejecutadas"/>
+                <field name="not_execution_rate" type="measure" string="% No Ejecución"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- GRAPH VIEW -->
+    <record id="view_fsm_report_effectiveness_graph" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.effectiveness.graph</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <graph string="Efectividad de Visitas" type="bar" stacked="true">
+                <field name="user_id" type="row" string="Vendedor"/>
+                <field name="execution_rate" type="measure" string="% Ejecución"/>
+                <field name="not_execution_rate" type="measure" string="% No Ejecución"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- WINDOW ACTION -->
+    <record id="action_fsm_report_effectiveness" model="ir.actions.act_window">
+        <field name="name">Efectividad de Visitas</field>
+        <field name="res_model">report.fsm.task.visit</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="domain">[]</field>
+        <field name="context">{
+            'search_default_group_user': 1,
+            'search_default_group_month': 1
+        }</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('view_fsm_report_effectiveness_pivot')}),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('view_fsm_report_effectiveness_graph')}),
+            (0, 0, {'view_mode': 'list',  'view_id': ref('view_fsm_report_effectiveness_list')}),
+        ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay visitas completadas que mostrar.
+            </p>
+            <p>
+                Este reporte muestra la efectividad de visitas de campo:
+                cuántas fueron ejecutadas y cuántas no, agrupadas por vendedor y mes.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- ====================================================================
+         REPORT 2: Conversión Visita → Venta
+         Goal: Of executed visits, how many generated a confirmed sale order.
+               Includes lost reasons for visits without a sale.
+    ==================================================================== -->
+
+    <!-- LIST VIEW -->
+    <record id="view_fsm_report_conversion_list" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.conversion.list</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <list string="Conversión → Venta" create="false" edit="false" delete="false">
+                <field name="planned_date" string="Fecha"/>
+                <field name="user_id" string="Vendedor"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="executed" string="Ejecutadas"/>
+                <field name="has_sale" string="Con Venta"/>
+                <field name="lost_reason_id" string="Motivo No Venta"/>
+                <field name="sale_order_count" string="# Órdenes"/>
+                <field name="conversion_rate" string="Tasa Conversión (%)"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="sale_amount_untaxed" string="Importe Neto" widget="monetary" optional="show"/>
+                <field name="sale_amount_total" string="Total Venta" widget="monetary"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- PIVOT VIEW -->
+    <record id="view_fsm_report_conversion_pivot" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.conversion.pivot</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Conversión → Venta" display_quantity="true">
+                <field name="planned_month" type="col" string="Mes"/>
+                <field name="user_id" type="row" string="Vendedor"/>
+                <field name="planned" type="measure" string="Planificadas"/>
+                <field name="executed" type="measure" string="Ejecutadas"/>
+                <field name="has_sale" type="measure" string="Con Venta"/>
+                <field name="conversion_rate" type="measure" string="Tasa Conversión (%)"/>
+                <field name="sale_amount_total" type="measure" string="Total Ventas"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- GRAPH VIEW -->
+    <record id="view_fsm_report_conversion_graph" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.conversion.graph</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <graph string="Conversión → Venta" type="bar">
+                <field name="user_id" type="row" string="Vendedor"/>
+                <field name="conversion_rate" type="measure" string="Tasa Conversión (%)"/>
+                <field name="has_sale" type="measure" string="Con Venta"/>
+                <field name="executed" type="measure" string="Ejecutadas"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- WINDOW ACTION -->
+    <record id="action_fsm_report_conversion" model="ir.actions.act_window">
+        <field name="name">Conversión → Venta</field>
+        <field name="res_model">report.fsm.task.visit</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="domain">[('executed', '=', 1)]</field>
+        <field name="context">{
+            'search_default_group_user': 1,
+            'search_default_group_month': 1
+        }</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('view_fsm_report_conversion_pivot')}),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('view_fsm_report_conversion_graph')}),
+            (0, 0, {'view_mode': 'list',  'view_id': ref('view_fsm_report_conversion_list')}),
+        ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay visitas ejecutadas que mostrar.
+            </p>
+            <p>
+                Este reporte muestra la tasa de conversión de visitas en ventas.
+                Filtra automáticamente solo las visitas ejecutadas e indica si
+                se generó una orden de venta confirmada.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- ====================================================================
+         REPORT 3: Análisis de Ventas FSM
+         Goal: Sales amounts, order count, and avg ticket by customer/salesperson.
+               Only accessible to FSM Managers (configured in menus.xml).
+    ==================================================================== -->
+
+    <!-- LIST VIEW -->
+    <record id="view_fsm_report_sales_list" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.sales.list</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <list string="Análisis de Ventas" create="false" edit="false" delete="false">
+                <field name="planned_date" string="Fecha"/>
+                <field name="user_id" string="Vendedor"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="project_id" string="Proyecto" optional="show"/>
+                <field name="sale_order_count" string="# Órdenes"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="sale_amount_untaxed" string="Importe Neto" widget="monetary"/>
+                <field name="sale_amount_total" string="Total Venta" widget="monetary"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- PIVOT VIEW -->
+    <record id="view_fsm_report_sales_pivot" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.sales.pivot</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Análisis de Ventas" display_quantity="true">
+                <field name="planned_month" type="col" string="Mes"/>
+                <field name="partner_id" type="row" string="Cliente"/>
+                <field name="user_id" type="row" string="Vendedor"/>
+                <field name="sale_order_count" type="measure" string="# Órdenes"/>
+                <field name="sale_amount_untaxed" type="measure" string="Importe Neto"/>
+                <field name="sale_amount_total" type="measure" string="Total Ventas"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- GRAPH VIEW -->
+    <record id="view_fsm_report_sales_graph" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.sales.graph</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <graph string="Análisis de Ventas" type="bar">
+                <field name="user_id" type="row" string="Vendedor"/>
+                <field name="sale_amount_total" type="measure" string="Total Ventas"/>
+                <field name="sale_order_count" type="measure" string="# Órdenes"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- WINDOW ACTION -->
+    <record id="action_fsm_report_sales" model="ir.actions.act_window">
+        <field name="name">Análisis de Ventas</field>
+        <field name="res_model">report.fsm.task.visit</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="domain">[('has_sale', '=', 1)]</field>
+        <field name="context">{
+            'search_default_group_user': 1,
+            'search_default_group_month': 1
+        }</field>
+        <field name="view_ids" eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('view_fsm_report_sales_pivot')}),
+            (0, 0, {'view_mode': 'graph', 'view_id': ref('view_fsm_report_sales_graph')}),
+            (0, 0, {'view_mode': 'list',  'view_id': ref('view_fsm_report_sales_list')}),
+        ]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No hay ventas FSM que mostrar.
+            </p>
+            <p>
+                Este reporte muestra las ventas generadas desde visitas de campo:
+                totales, cantidad de órdenes y ticket promedio por cliente y vendedor.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- ====================================================================
+         SEARCH VIEW (shared across all 3 reports)
+    ==================================================================== -->
+    <record id="view_fsm_report_visit_search" model="ir.ui.view">
+        <field name="name">report.fsm.task.visit.search</field>
+        <field name="model">report.fsm.task.visit</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Visitas">
+                <field name="user_id" string="Vendedor"/>
+                <field name="partner_id" string="Cliente"/>
+                <field name="project_id" string="Proyecto"/>
+                <field name="lost_reason_id" string="Motivo No Venta"/>
+                <!-- Filters -->
+                <filter name="filter_executed"
+                        string="Ejecutadas"
+                        domain="[('executed', '=', 1)]"/>
+                <filter name="filter_not_executed"
+                        string="No Ejecutadas"
+                        domain="[('not_executed', '=', 1)]"/>
+                <filter name="filter_with_sale"
+                        string="Con Venta"
+                        domain="[('has_sale', '=', 1)]"/>
+                <filter name="filter_without_sale"
+                        string="Sin Venta"
+                        domain="[('executed', '=', 1), ('has_sale', '=', 0)]"/>
+                <separator/>
+                <filter name="filter_this_month"
+                        string="Este Mes"
+                        domain="[
+                            ('planned_date_begin', '&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
+                            ('planned_date_begin', '&lt;',  (context_today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d'))
+                        ]"/>
+                <filter name="filter_last_month"
+                        string="Mes Anterior"
+                        domain="[
+                            ('planned_date_begin', '&gt;=', (context_today() + relativedelta(months=-1, day=1)).strftime('%Y-%m-%d')),
+                            ('planned_date_begin', '&lt;',  (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))
+                        ]"/>
+                <!-- Group by -->
+                <separator/>
+                <filter name="group_user"
+                        string="Vendedor"
+                        context="{'group_by': 'user_id'}"/>
+                <filter name="group_partner"
+                        string="Cliente"
+                        context="{'group_by': 'partner_id'}"/>
+                <filter name="group_project"
+                        string="Proyecto"
+                        context="{'group_by': 'project_id'}"/>
+                <filter name="group_lost_reason"
+                        string="Motivo No Venta"
+                        context="{'group_by': 'lost_reason_id'}"/>
+                <separator/>
+                <filter name="group_month"
+                        string="Mes"
+                        context="{'group_by': 'planned_month'}"/>
+                <filter name="group_week"
+                        string="Semana"
+                        context="{'group_by': 'planned_week'}"/>
+                <filter name="group_date"
+                        string="Fecha"
+                        context="{'group_by': 'planned_date'}"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

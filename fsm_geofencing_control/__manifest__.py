@@ -1,20 +1,20 @@
 {
     'name': 'FSM Geofencing Control',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'category': 'Services/Field Service',
     'summary': 'Control technician location when starting/stopping FSM timers',
     'description': """
-        FSM Geofencing Control
-        ======================
-        This module extends Field Service Management with geofencing capabilities:
-        
-        - Validate technician distance from customer when starting timer
-        - Validate technician distance from customer when stopping timer
-        - Require lost reason when stopping without confirmed sale order
-        - Auto-mark tasks as done when logging time
-        - Track last known technician location on tasks
-        
-        Integrates seamlessly with Odoo's native geolocation features.
+FSM Geofencing Control
+======================
+This module extends Field Service Management with geofencing capabilities:
+
+- Validate technician distance from customer when starting timer
+- Validate technician distance from customer when stopping timer
+- Require lost reason when stopping without confirmed sale order
+- Auto-mark tasks as done when logging time
+- Track last known technician location on tasks
+
+Integrates seamlessly with Odoo's native geolocation features.
     """,
     'author': 'Ganemo',
     'maintainer': 'Ganemo',

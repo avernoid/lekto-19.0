@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fsm_report_visit_user,fsm.report.visit.user,fsm_reports.model_report_fsm_task_visit,industry_fsm.group_fsm_user,1,0,0,0
+access_fsm_report_visit_manager,fsm.report.visit.manager,fsm_reports.model_report_fsm_task_visit,industry_fsm.group_fsm_manager,1,0,0,0

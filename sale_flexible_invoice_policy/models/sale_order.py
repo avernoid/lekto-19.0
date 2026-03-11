@@ -7,6 +7,7 @@ class SaleOrder(models.Model):
     allow_invoice_without_delivery = fields.Boolean(
         string="Allow Invoice Without Delivery",
         default=False,
+        copy=False,
         groups='sale_flexible_invoice_policy.group_allow_invoice_without_delivery',
         tracking=True,
         help="When enabled, allows invoicing this order as if all products had "
