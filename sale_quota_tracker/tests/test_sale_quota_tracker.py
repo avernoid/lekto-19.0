@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+﻿# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date
 import calendar
@@ -74,13 +74,13 @@ class TestSaleGoalCompute(TransactionCase):
         cls.current_month = today.month
         cls.current_year = today.year
 
-        # â”€â”€ Accounting setup for invoice tests â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-        # Odoo 19 test databases have no demo data, so there is no pre-installed
-        # chart of accounts or sale journal. We create the minimum required:
-        # - receivable_account: balance line for the invoice MUST use an
-        #   asset_receivable account (Odoo 19 constraint: display_type='payment_term'
-        #   XOR account_type='asset_receivable' must be False)
-        # - income_account + sale_journal: for invoice product lines
+        # -- Accounting setup for invoice tests ----------------------------
+        # Odoo 19 test databases have no demo data: create minimum accounts.
+        # receivable_account: MUST be asset_receivable for Odoo 19 XOR constraint
+        # (display_type='payment_term' lines must use asset_receivable accounts).
+        # income_account + sale_journal: for invoice product lines.
+        # property_account_receivable_id on partner ensures _sync_dynamic_lines
+        # uses our receivable account (not the journal default) for balance line.
         rec_code = 100000
         while cls.env['account.account'].search(
             [('code', '=', str(rec_code)), ('company_ids', 'in', cls.company.id)], limit=1
@@ -113,11 +113,12 @@ class TestSaleGoalCompute(TransactionCase):
             'company_id': cls.company.id,
         })
 
-        # Assign the receivable account to the partner so _sync_dynamic_lines
-        # uses it for the payment_term balance line (satisfies the constraint:
-        # display_type='payment_term' requires account_type='asset_receivable').
-        cls.partner.property_account_receivable_id = cls.receivable_account
-
+        # Assign receivable account to the partner so _sync_dynamic_lines puts the
+        # payment_term balance line on asset_receivable (satisfies XOR constraint).
+        # Must write via the env to ensure ir.property is set correctly.
+        cls.partner.write({
+            'property_account_receivable_id': cls.receivable_account.id,
+        })
     # â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def _make_goal(self, source_type='sale_order', user=None):
@@ -447,8 +448,7 @@ class TestSaleGoalTriggers(TransactionCase):
         cls.current_month = today.month
         cls.current_year = today.year
 
-        # Odoo 19 test databases have no demo data: no pre-installed chart or journals.
-        # Create the minimum accounts required for invoice tests.
+        # Odoo 19 test databases: create minimum accounting fixtures.
         rec_code = 110000
         while cls.env['account.account'].search(
             [('code', '=', str(rec_code)), ('company_ids', 'in', cls.company.id)], limit=1
@@ -479,7 +479,9 @@ class TestSaleGoalTriggers(TransactionCase):
             'default_account_id': cls.income_account.id,
             'company_id': cls.company.id,
         })
-        cls.partner.property_account_receivable_id = cls.receivable_account
+        cls.partner.write({
+            'property_account_receivable_id': cls.receivable_account.id,
+        })
 
     def _make_goal_with_line(self, source_type='sale_order'):
         goal = self.env['sale.goal'].create({
