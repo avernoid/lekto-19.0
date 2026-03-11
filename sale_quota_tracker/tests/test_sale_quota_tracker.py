@@ -6,7 +6,6 @@ import calendar
 from odoo.tests.common import TransactionCase, tagged
 
 
-@tagged('post_install', '-at_install')
 class TestSaleGoalCompute(TransactionCase):
     """Tests for the _compute_done logic on sale.goal.line.
 
@@ -20,7 +19,7 @@ class TestSaleGoalCompute(TransactionCase):
 
         cls.company = cls.env.company
 
-        # ── Category hierarchy ───────────────────────────────────────────
+        # â”€â”€ Category hierarchy â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         cls.categ_parent = cls.env['product.category'].create({
             'name': 'Test Electronics',
         })
@@ -29,7 +28,7 @@ class TestSaleGoalCompute(TransactionCase):
             'parent_id': cls.categ_parent.id,
         })
 
-        # ── Products ─────────────────────────────────────────────────────
+        # â”€â”€ Products â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         cls.product_a = cls.env['product.product'].create({
             'name': 'Laptop Pro',
             'type': 'consu',
@@ -43,7 +42,7 @@ class TestSaleGoalCompute(TransactionCase):
             'list_price': 50.0,
         })
 
-        # ── Salesperson users ─────────────────────────────────────────────
+        # â”€â”€ Salesperson users â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         group_sales = cls.env.ref('sales_team.group_sale_salesman')
         cls.salesperson = cls.env['res.users'].create({
             'name': 'Test Vendor',
@@ -56,23 +55,50 @@ class TestSaleGoalCompute(TransactionCase):
             'group_ids': [(6, 0, [group_sales.id])],
         })
 
-        # ── Partners ──────────────────────────────────────────────────────
-        cls.partner = cls.env['res.partner'].create({'name': 'Test Customer'})
+        # â”€â”€ Partners â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        # Immediate payment term is required so Odoo 19 can compute invoice_date_due
+        # from the payment term lines, which in turn sets date_maturity on the
+        # receivable balance line (required by _check_payable_receivable).
+        # Stored as cls attribute so it can be passed to invoice creates in test methods.
+        cls.immediate_payment_term = cls.env['account.payment.term'].search(
+            [('name', 'ilike', 'Immediate')], limit=1
+        )
+        cls.partner = cls.env['res.partner'].create({
+            'name': 'Test Customer',
+            'property_payment_term_id': cls.immediate_payment_term.id
+                                        if cls.immediate_payment_term else False,
+        })
 
-        # ── Current period (this month) ───────────────────────────────────
+        # â”€â”€ Current period (this month) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         today = date.today()
         cls.current_month = today.month
         cls.current_year = today.year
 
-        # ── Accounting setup for invoice tests ────────────────────────────
-        # Find a free account code to avoid Unique Violation on dirty DBs
+        # â”€â”€ Accounting setup for invoice tests â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        # Odoo 19 test databases have no demo data, so there is no pre-installed
+        # chart of accounts or sale journal. We create the minimum required:
+        # - receivable_account: balance line for the invoice MUST use an
+        #   asset_receivable account (Odoo 19 constraint: display_type='payment_term'
+        #   XOR account_type='asset_receivable' must be False)
+        # - income_account + sale_journal: for invoice product lines
+        rec_code = 100000
+        while cls.env['account.account'].search(
+            [('code', '=', str(rec_code)), ('company_ids', 'in', cls.company.id)], limit=1
+        ):
+            rec_code += 1
+        cls.receivable_account = cls.env['account.account'].create({
+            'name': 'Test Receivable Goal',
+            'code': str(rec_code),
+            'account_type': 'asset_receivable',
+            'reconcile': True,
+            'company_ids': [(4, cls.company.id)],
+        })
+
         income_code = 700000
         while cls.env['account.account'].search(
-            [('code', '=', str(income_code)),
-             ('company_ids', 'in', cls.company.id)], limit=1
+            [('code', '=', str(income_code)), ('company_ids', 'in', cls.company.id)], limit=1
         ):
             income_code += 1
-
         cls.income_account = cls.env['account.account'].create({
             'name': 'Test Income Goal',
             'code': str(income_code),
@@ -87,7 +113,12 @@ class TestSaleGoalCompute(TransactionCase):
             'company_id': cls.company.id,
         })
 
-    # ── Helpers ─────────────────────────────────────────────────────────────
+        # Assign the receivable account to the partner so _sync_dynamic_lines
+        # uses it for the payment_term balance line (satisfies the constraint:
+        # display_type='payment_term' requires account_type='asset_receivable').
+        cls.partner.property_account_receivable_id = cls.receivable_account
+
+    # â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def _make_goal(self, source_type='sale_order', user=None):
         """Create a sale.goal for the current month."""
@@ -141,6 +172,12 @@ class TestSaleGoalCompute(TransactionCase):
             'partner_id': self.partner.id,
             'invoice_user_id': user.id,
             'invoice_date': inv_date,
+            # invoice_payment_term_id is required by Odoo 19: _check_payable_receivable
+            # fires during create() and requires date_maturity on receivable lines.
+            # Odoo computes date_maturity FROM the payment term; setting invoice_date_due
+            # directly in create() is ignored because _compute_invoice_date_due overrides it.
+            'invoice_payment_term_id': self.immediate_payment_term.id
+                                       if self.immediate_payment_term else False,
             'journal_id': self.sale_journal.id,
             'invoice_line_ids': [(0, 0, {
                 'product_id': product.id,
@@ -155,7 +192,7 @@ class TestSaleGoalCompute(TransactionCase):
         return move
 
 
-    # ── Tests: Sale Order source ──────────────────────────────────────────
+    # â”€â”€ Tests: Sale Order source â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def test_compute_from_sale_order_product(self):
         """A confirmed SO with the exact product increments qty_done and amount_done."""
@@ -240,7 +277,7 @@ class TestSaleGoalCompute(TransactionCase):
         self.assertAlmostEqual(line.qty_done, 0.0, places=2,
                                msg='SOs outside the month period must not count')
 
-    # ── Tests: Invoice source ─────────────────────────────────────────────
+    # â”€â”€ Tests: Invoice source â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def test_compute_from_invoice_product(self):
         """A posted invoice increments qty_done and amount_done correctly."""
@@ -285,6 +322,8 @@ class TestSaleGoalCompute(TransactionCase):
             'partner_id': self.partner.id,
             'invoice_user_id': self.salesperson.id,
             'invoice_date': date(self.current_year, self.current_month, 15),
+            'invoice_payment_term_id': self.immediate_payment_term.id
+                                       if self.immediate_payment_term else False,
             'journal_id': self.sale_journal.id,
             'invoice_line_ids': [(0, 0, {
                 'product_id': self.product_a.id,
@@ -298,7 +337,7 @@ class TestSaleGoalCompute(TransactionCase):
         self.assertAlmostEqual(line.qty_done, 0.0, places=2,
                                msg='Draft invoices must not count')
 
-    # ── Tests: Percentage computation ─────────────────────────────────────
+    # â”€â”€ Tests: Percentage computation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def test_pct_amount_full_achievement(self):
         """pct_amount must be 100% when amount_done equals amount_goal."""
@@ -321,7 +360,7 @@ class TestSaleGoalCompute(TransactionCase):
         self.assertAlmostEqual(line.pct_qty, 0.0, places=2)
         self.assertAlmostEqual(line.pct_amount, 0.0, places=2)
 
-    # ── Tests: Constraints ────────────────────────────────────────────────
+    # â”€â”€ Tests: Constraints â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
     def test_unique_constraint_same_user_month_year(self):
         """Creating two goals for the same user/month/year must raise an error."""
@@ -372,7 +411,6 @@ class TestSaleGoalCompute(TransactionCase):
             })
 
 
-@tagged('post_install', '-at_install')
 class TestSaleGoalTriggers(TransactionCase):
     """Tests for automatic recompute triggers on sale.order and account.move."""
 
@@ -389,7 +427,14 @@ class TestSaleGoalTriggers(TransactionCase):
             'categ_id': cls.categ.id,
             'list_price': 500.0,
         })
-        cls.partner = cls.env['res.partner'].create({'name': 'Trigger Partner'})
+        cls.immediate_payment_term = cls.env['account.payment.term'].search(
+            [('name', 'ilike', 'Immediate')], limit=1
+        )
+        cls.partner = cls.env['res.partner'].create({
+            'name': 'Trigger Partner',
+            'property_payment_term_id': cls.immediate_payment_term.id
+                                        if cls.immediate_payment_term else False,
+        })
 
         group_sales = cls.env.ref('sales_team.group_sale_salesman')
         cls.salesperson = cls.env['res.users'].create({
@@ -402,14 +447,26 @@ class TestSaleGoalTriggers(TransactionCase):
         cls.current_month = today.month
         cls.current_year = today.year
 
-        # Accounting setup
+        # Odoo 19 test databases have no demo data: no pre-installed chart or journals.
+        # Create the minimum accounts required for invoice tests.
+        rec_code = 110000
+        while cls.env['account.account'].search(
+            [('code', '=', str(rec_code)), ('company_ids', 'in', cls.company.id)], limit=1
+        ):
+            rec_code += 1
+        cls.receivable_account = cls.env['account.account'].create({
+            'name': 'Trigger Receivable',
+            'code': str(rec_code),
+            'account_type': 'asset_receivable',
+            'reconcile': True,
+            'company_ids': [(4, cls.company.id)],
+        })
+
         income_code = 710000
         while cls.env['account.account'].search(
-            [('code', '=', str(income_code)),
-             ('company_ids', 'in', cls.company.id)], limit=1
+            [('code', '=', str(income_code)), ('company_ids', 'in', cls.company.id)], limit=1
         ):
             income_code += 1
-
         cls.income_account = cls.env['account.account'].create({
             'name': 'Trigger Income',
             'code': str(income_code),
@@ -422,6 +479,7 @@ class TestSaleGoalTriggers(TransactionCase):
             'default_account_id': cls.income_account.id,
             'company_id': cls.company.id,
         })
+        cls.partner.property_account_receivable_id = cls.receivable_account
 
     def _make_goal_with_line(self, source_type='sale_order'):
         goal = self.env['sale.goal'].create({
@@ -491,6 +549,8 @@ class TestSaleGoalTriggers(TransactionCase):
             'partner_id': self.partner.id,
             'invoice_user_id': self.salesperson.id,
             'invoice_date': date.today(),
+            'invoice_payment_term_id': self.immediate_payment_term.id
+                                       if self.immediate_payment_term else False,
             'journal_id': self.sale_journal.id,
             'invoice_line_ids': [(0, 0, {
                 'product_id': self.product.id,
@@ -533,7 +593,7 @@ class TestSaleGoalTriggers(TransactionCase):
             'amount_goal': 10000.0,
         })
 
-        # Confirm SO for salesperson → only affects sale_order goals for salesperson
+        # Confirm SO for salesperson â†’ only affects sale_order goals for salesperson
         so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'user_id': self.salesperson.id,
@@ -552,7 +612,6 @@ class TestSaleGoalTriggers(TransactionCase):
                                msg='Invoice-source goal must NOT be triggered by SO confirm')
 
 
-@tagged('post_install', '-at_install')
 class TestSaleGoalSecurity(TransactionCase):
     """Tests for Record Rules: salesperson can only read own goals."""
 
