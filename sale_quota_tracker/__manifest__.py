@@ -1,10 +1,10 @@
-{
-    'name': 'Sale Goal',
+﻿{
+    'name': 'Sales Quota Tracker',
     'version': '19.0.1.0.0',
     'category': 'Sales/Sales',
     'summary': 'Manage monthly sales goals per salesperson by product and category',
     'description': """
-        Sale Goal
+        Sales Quota Tracker
         =========
         Allows Sales Managers to define monthly sales goals per salesperson,
         broken down by product and/or product category. Tracks both quantity
@@ -26,12 +26,12 @@
     'website': 'https://www.ganemo.co',
     'depends': ['sale_management', 'account'],
     'data': [
-        'security/sale_goal_security.xml',
+        'security/sale_quota_tracker_security.xml',
         'security/ir.model.access.csv',
-        'views/sale_goal_views.xml',
-        'views/sale_goal_menus.xml',
+        'views/sale_quota_tracker_views.xml',
+        'views/sale_quota_tracker_menus.xml',
     ],
-    'icon': '/sale_goal/static/description/icon.png',
+    'icon': '/sale_quota_tracker/static/description/icon.png',
     'images': ['static/description/banner.png'],
     'license': 'OPL-1',
     'installable': True,

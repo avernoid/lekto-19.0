@@ -1,10 +1,10 @@
-# **Sale Goal — Monthly Sales Targets by Salesperson**
+﻿# **Sales Quota Tracker — Monthly Sales Targets by Salesperson**
 
 <img src="static/description/banner.png" width="100%" alt="Banner">
 
 ## Overview
 
-**Sale Goal** is an Odoo 19 module that allows **Sales Managers** to define and track
+**Sales Quota Tracker** is an Odoo 19 module that allows **Sales Managers** to define and track
 monthly sales targets for each salesperson, broken down by specific **products** or
 **product categories**. Progress is tracked in both **quantity** and **monetary amount**,
 and is automatically updated whenever sales orders are confirmed or invoices are validated.
@@ -78,9 +78,9 @@ sale.goal (Header)
 
 ## Installation
 
-1. Copy the `sale_goal` folder to your Odoo `addons/` directory (or custom addons path).
+1. Copy the `sale_quota_tracker` folder to your Odoo `addons/` directory (or custom addons path).
 2. Restart Odoo service.
-3. Go to **Settings → Apps** and search for `Sale Goal`.
+3. Go to **Settings → Apps** and search for `Sales Quota Tracker`.
 4. Click **Install**.
 
 > **Dependencies**: `sale_management`, `account`

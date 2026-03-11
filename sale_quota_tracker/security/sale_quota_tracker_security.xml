@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <!-- =====================================================================
@@ -7,9 +7,9 @@
 
     <!-- Sales Manager: full access to all goals (no domain restriction needed,
          but we define an explicit rule so it overrides the salesman rule) -->
-    <record id="rule_sale_goal_manager_all" model="ir.rule">
-        <field name="name">Sale Goal: Manager sees all</field>
-        <field name="model_id" ref="model_sale_goal"/>
+    <record id="rule_sale_quota_tracker_manager_all" model="ir.rule">
+        <field name="name">Sales Quota Tracker: Manager sees all</field>
+        <field name="model_id" ref="model_sale_quota_tracker"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
         <field name="perm_read">1</field>
@@ -19,9 +19,9 @@
     </record>
 
     <!-- Sales User (Salesperson): read-only, own goals only -->
-    <record id="rule_sale_goal_salesman_own" model="ir.rule">
-        <field name="name">Sale Goal: Salesperson sees own goals</field>
-        <field name="model_id" ref="model_sale_goal"/>
+    <record id="rule_sale_quota_tracker_salesman_own" model="ir.rule">
+        <field name="name">Sales Quota Tracker: Salesperson sees own goals</field>
+        <field name="model_id" ref="model_sale_quota_tracker"/>
         <field name="domain_force">[('user_id', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
         <field name="perm_read">1</field>
@@ -34,9 +34,9 @@
          Record Rules — sale.goal.line
          ===================================================================== -->
 
-    <record id="rule_sale_goal_line_manager_all" model="ir.rule">
-        <field name="name">Sale Goal Line: Manager sees all</field>
-        <field name="model_id" ref="model_sale_goal_line"/>
+    <record id="rule_sale_quota_tracker_line_manager_all" model="ir.rule">
+        <field name="name">Sales Quota Tracker Line: Manager sees all</field>
+        <field name="model_id" ref="model_sale_quota_tracker_line"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[(4, ref('sales_team.group_sale_manager'))]"/>
         <field name="perm_read">1</field>
@@ -45,9 +45,9 @@
         <field name="perm_unlink">1</field>
     </record>
 
-    <record id="rule_sale_goal_line_salesman_own" model="ir.rule">
-        <field name="name">Sale Goal Line: Salesperson sees own goal lines</field>
-        <field name="model_id" ref="model_sale_goal_line"/>
+    <record id="rule_sale_quota_tracker_line_salesman_own" model="ir.rule">
+        <field name="name">Sales Quota Tracker Line: Salesperson sees own goal lines</field>
+        <field name="model_id" ref="model_sale_quota_tracker_line"/>
         <field name="domain_force">[('goal_id.user_id', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
         <field name="perm_read">1</field>
@@ -60,10 +60,10 @@
          Server Action — bulk recompute from list view
          ===================================================================== -->
 
-    <record id="action_recompute_sale_goals" model="ir.actions.server">
+    <record id="action_recompute_sale_quota_trackers" model="ir.actions.server">
         <field name="name">Update Results</field>
-        <field name="model_id" ref="model_sale_goal"/>
-        <field name="binding_model_id" ref="model_sale_goal"/>
+        <field name="model_id" ref="model_sale_quota_tracker"/>
+        <field name="binding_model_id" ref="model_sale_quota_tracker"/>
         <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">records.action_recompute()</field>

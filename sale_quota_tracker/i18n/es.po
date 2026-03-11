@@ -1,6 +1,6 @@
-# Translation of Odoo Server.
+﻿# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * sale_goal
+#   * sale_quota_tracker
 #
 # Translators:
 # Ganemo, 2026

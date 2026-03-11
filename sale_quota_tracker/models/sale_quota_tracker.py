@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+﻿# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import calendar
 from datetime import date, timedelta
@@ -253,7 +253,7 @@ class SaleGoal(models.Model):
 
             pct = (amount / goal.global_amount_goal * 100.0) if goal.global_amount_goal else 0.0
             self.env.cr.execute(
-                """UPDATE sale_goal
+                """UPDATE sale_quota_tracker
                       SET global_amount_done = %s, global_pct_amount = %s
                     WHERE id = %s""",
                 (amount, pct, goal.id)

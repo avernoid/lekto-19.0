@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+﻿# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date, timedelta
 
@@ -145,7 +145,7 @@ class SaleGoalLine(models.Model):
             pct_amount = (amount / line.amount_goal * 100.0) if line.amount_goal else 0.0
 
             self.env.cr.execute(
-                """UPDATE sale_goal_line
+                """UPDATE sale_quota_tracker_line
                       SET qty_done = %s, amount_done = %s,
                           pct_qty  = %s, pct_amount  = %s
                     WHERE id = %s""",

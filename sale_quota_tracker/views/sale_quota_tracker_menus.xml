@@ -1,24 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
     <!-- Root menu entry under Sales -->
-    <menuitem id="menu_sale_goal_root"
+    <menuitem id="menu_sale_quota_tracker_root"
               name="Sales Goals"
               parent="sale.sale_menu_root"
               sequence="25"/>
 
     <!-- Goals list -->
-    <menuitem id="menu_sale_goal_list"
+    <menuitem id="menu_sale_quota_tracker_list"
               name="Goals"
-              parent="menu_sale_goal_root"
-              action="action_sale_goal"
+              parent="menu_sale_quota_tracker_root"
+              action="action_sale_quota_tracker"
               sequence="10"/>
 
     <!-- Goals analysis pivot/graph -->
-    <menuitem id="menu_sale_goal_analysis"
+    <menuitem id="menu_sale_quota_tracker_analysis"
               name="Goals Analysis"
-              parent="menu_sale_goal_root"
-              action="action_sale_goal_line_analysis"
+              parent="menu_sale_quota_tracker_root"
+              action="action_sale_quota_tracker_line_analysis"
               sequence="20"
               groups="sales_team.group_sale_manager"/>
 

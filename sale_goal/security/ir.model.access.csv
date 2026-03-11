@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sale_goal_manager,sale.goal manager,model_sale_goal,sales_team.group_sale_manager,1,1,1,1
-access_sale_goal_salesman,sale.goal salesman,model_sale_goal,sales_team.group_sale_salesman,1,0,0,0
-access_sale_goal_line_manager,sale.goal.line manager,model_sale_goal_line,sales_team.group_sale_manager,1,1,1,1
-access_sale_goal_line_salesman,sale.goal.line salesman,model_sale_goal_line,sales_team.group_sale_salesman,1,0,0,0
