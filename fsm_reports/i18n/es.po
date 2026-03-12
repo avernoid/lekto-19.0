@@ -1,6 +1,3 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-#   * fsm_reports
 #
 msgid ""
 msgstr ""
@@ -81,18 +78,6 @@ msgid "State"
 msgstr "Estado"
 
 #. module: fsm_reports
-msgid "In Progress"
-msgstr "En Progreso"
-
-#. module: fsm_reports
-msgid "Done"
-msgstr "Finalizada"
-
-#. module: fsm_reports
-msgid "Cancelled"
-msgstr "Cancelada"
-
-#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__not_executed
 msgid "Not Executed"
 msgstr "No Ejecutada"
@@ -134,74 +119,18 @@ msgstr "Reporte FSM: Ver todos los registros"
 
 #. module: fsm_reports
 #: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_effectiveness
-msgid "Visit Effectiveness"
-msgstr "Efectividad de Visitas"
-
-#. module: fsm_reports
-#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_conversion
-msgid "Conversion Sale"
-msgstr "Conversion Venta"
-
-#. module: fsm_reports
-#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_sales
-msgid "Sales Analysis"
-msgstr "Analisis de Ventas"
-
-#. module: fsm_reports
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_effectiveness
 msgid "Visit Effectiveness"
 msgstr "Efectividad de Visitas"
 
 #. module: fsm_reports
+#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_conversion
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_conversion
 msgid "Conversion Sale"
 msgstr "Conversion Venta"
 
 #. module: fsm_reports
+#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_sales
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_sales
 msgid "Sales Analysis"
 msgstr "Analisis de Ventas"
-
-#. module: fsm_reports
-msgid "Search Visits"
-msgstr "Buscar Visitas"
-
-#. module: fsm_reports
-msgid "Group by"
-msgstr "Agrupar por"
-
-#. module: fsm_reports
-msgid "Executed Visits (filter)"
-msgstr "Visitas Ejecutadas"
-
-#. module: fsm_reports
-msgid "Not Executed Visits (filter)"
-msgstr "Visitas No Ejecutadas"
-
-#. module: fsm_reports
-msgid "With Sale (filter)"
-msgstr "Con Venta"
-
-#. module: fsm_reports
-msgid "Without Sale (filter)"
-msgstr "Sin Venta"
-
-#. module: fsm_reports
-msgid "This Month"
-msgstr "Este Mes"
-
-#. module: fsm_reports
-msgid "Last Month"
-msgstr "Mes Anterior"
-
-#. module: fsm_reports
-msgid "Month"
-msgstr "Mes"
-
-#. module: fsm_reports
-msgid "Week"
-msgstr "Semana"
-
-#. module: fsm_reports
-msgid "Date"
-msgstr "Fecha"
