@@ -15,161 +15,193 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. Model: report.fsm.task.visit
+#. module: fsm_reports
 #: model:ir.model,name:fsm_reports.model_report_fsm_task_visit
 msgid "FSM Task Visit Report"
 msgstr "Reporte de Visitas FSM"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__task_id
 msgid "Task"
 msgstr "Tarea"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__user_id
 msgid "Salesperson"
 msgstr "Vendedor"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__partner_id
 msgid "Customer"
 msgstr "Cliente"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__project_id
 msgid "Project"
 msgstr "Proyecto"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__company_id
 msgid "Company"
-msgstr "Compañía"
+msgstr "Compania"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__currency_id
 msgid "Currency"
 msgstr "Moneda"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__lost_reason_id
 msgid "Lost Sale Reason"
 msgstr "Motivo de No Venta"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__planned_date_begin
 msgid "Planned Date/Time"
 msgstr "Fecha/Hora Planificada"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__planned_date
 msgid "Visit Date"
 msgstr "Fecha de Visita"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__planned_week
 msgid "Planned Week"
 msgstr "Semana Planificada"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__planned_month
 msgid "Planned Month"
 msgstr "Mes Planificado"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__state
 msgid "State"
 msgstr "Estado"
 
-#. State selection values
+#. module: fsm_reports
 msgid "In Progress"
 msgstr "En Progreso"
 
+#. module: fsm_reports
 msgid "Done"
 msgstr "Finalizada"
 
+#. module: fsm_reports
 msgid "Cancelled"
 msgstr "Cancelada"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__not_executed
 msgid "Not Executed"
 msgstr "No Ejecutada"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__executed
 msgid "Executed"
 msgstr "Ejecutada"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__has_sale
 msgid "With Sale"
 msgstr "Con Venta"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__sale_order_count
 msgid "# Sale Orders"
-msgstr "# Órdenes de Venta"
+msgstr "# Ordenes de Venta"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__sale_amount_untaxed
 msgid "Net Sales Amount"
 msgstr "Importe Neto de Ventas"
 
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__sale_amount_total
 msgid "Total Sales"
 msgstr "Total Ventas"
 
-#. Record rules
+#. module: fsm_reports
 #: model:ir.rule,name:fsm_reports.rule_fsm_report_visit_user
 msgid "FSM Report Visit: Solo mis visitas"
 msgstr "Reporte FSM: Solo mis visitas"
 
+#. module: fsm_reports
 #: model:ir.rule,name:fsm_reports.rule_fsm_report_visit_manager
 msgid "FSM Report Visit: Ver todos los registros"
 msgstr "Reporte FSM: Ver todos los registros"
 
-#. Menu items
+#. module: fsm_reports
 #: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_effectiveness
 msgid "Visit Effectiveness"
 msgstr "Efectividad de Visitas"
 
+#. module: fsm_reports
 #: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_conversion
-msgid "Conversion → Sale"
-msgstr "Conversión → Venta"
+msgid "Conversion Sale"
+msgstr "Conversion Venta"
 
+#. module: fsm_reports
 #: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_sales
 msgid "Sales Analysis"
-msgstr "Análisis de Ventas"
+msgstr "Analisis de Ventas"
 
-#. Window actions
+#. module: fsm_reports
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_effectiveness
 msgid "Visit Effectiveness"
 msgstr "Efectividad de Visitas"
 
+#. module: fsm_reports
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_conversion
-msgid "Conversion → Sale"
-msgstr "Conversión → Venta"
+msgid "Conversion Sale"
+msgstr "Conversion Venta"
 
+#. module: fsm_reports
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_sales
 msgid "Sales Analysis"
-msgstr "Análisis de Ventas"
+msgstr "Analisis de Ventas"
 
-#. View strings
-msgid "Visit Effectiveness"
-msgstr "Efectividad de Visitas"
-
+#. module: fsm_reports
 msgid "Search Visits"
 msgstr "Buscar Visitas"
 
+#. module: fsm_reports
 msgid "Group by"
 msgstr "Agrupar por"
 
+#. module: fsm_reports
 msgid "Executed Visits (filter)"
 msgstr "Visitas Ejecutadas"
 
+#. module: fsm_reports
 msgid "Not Executed Visits (filter)"
 msgstr "Visitas No Ejecutadas"
 
+#. module: fsm_reports
 msgid "With Sale (filter)"
 msgstr "Con Venta"
 
+#. module: fsm_reports
 msgid "Without Sale (filter)"
 msgstr "Sin Venta"
 
+#. module: fsm_reports
 msgid "This Month"
 msgstr "Este Mes"
 
+#. module: fsm_reports
 msgid "Last Month"
 msgstr "Mes Anterior"
 
+#. module: fsm_reports
 msgid "Month"
 msgstr "Mes"
 
+#. module: fsm_reports
 msgid "Week"
 msgstr "Semana"
 
+#. module: fsm_reports
 msgid "Date"
 msgstr "Fecha"
