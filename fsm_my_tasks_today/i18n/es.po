@@ -46,6 +46,7 @@ msgstr "Tareas Activas"
 msgid "No tasks found for today!"
 msgstr "¡No se encontraron tareas para hoy!"
 
+#. module: fsm_my_tasks_today
 #: model:ir.actions.act_window,help:fsm_my_tasks_today.project_task_action_fsm_today
 msgid "This view shows only your tasks scheduled for today."
 msgstr "Esta vista muestra únicamente tus tareas programadas para hoy."
