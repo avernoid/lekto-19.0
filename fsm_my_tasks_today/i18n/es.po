@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * fsm_my_tasks_today
+#	* fsm_my_tasks_today
 #
 msgid ""
 msgstr ""
@@ -17,36 +17,26 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: fsm_my_tasks_today
-#. --- ir.ui.menu (root app) ---
 #: model:ir.ui.menu,name:fsm_my_tasks_today.fsm_visits_menu_root
 msgid "My Visits"
 msgstr "Mis Visitas"
 
 #. module: fsm_my_tasks_today
-#. --- ir.actions.act_window ---
-#: model:ir.actions.act_window,name:fsm_my_tasks_today.project_task_action_fsm_today
+#: model:ir.actions.act_window,name:fsm_my_tasks_today.project_task_action_fsm_today model:ir.ui.menu,name:fsm_my_tasks_today.fsm_menu_tasks_today
 msgid "My Tasks Today"
 msgstr "Mis Tareas Hoy"
 
 #. module: fsm_my_tasks_today
-#. --- ir.ui.menu (submenu) ---
-#: model:ir.ui.menu,name:fsm_my_tasks_today.fsm_menu_tasks_today
-msgid "My Tasks Today"
-msgstr "Mis Tareas Hoy"
-
-#. module: fsm_my_tasks_today
-#. --- ir.ui.view (search filter label) ---
 #: model:ir.ui.view,arch_db:fsm_my_tasks_today.project_task_view_search_fsm_today
 msgid "Active Tasks"
 msgstr "Tareas Activas"
 
 #. module: fsm_my_tasks_today
-#. --- ir.actions.act_window help text ---
 #: model:ir.actions.act_window,help:fsm_my_tasks_today.project_task_action_fsm_today
 msgid "No tasks found for today!"
-msgstr "¡No se encontraron tareas para hoy!"
+msgstr "No se encontraron tareas para hoy."
 
 #. module: fsm_my_tasks_today
 #: model:ir.actions.act_window,help:fsm_my_tasks_today.project_task_action_fsm_today
 msgid "This view shows only your tasks scheduled for today."
-msgstr "Esta vista muestra únicamente tus tareas programadas para hoy."
+msgstr "Esta vista muestra unicamente tus tareas programadas para hoy."
