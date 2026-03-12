@@ -1,9 +1,111 @@
+# Translation of fsm_skip_wizard_on_sale to Spanish
+# . module: fsm_skip_wizard_on_sale
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the fsm_skip_wizard_on_sale package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo 19.0\n"
-"PO-Revision-Date: 2026-03-05 00:00+0000\n"
+"Project-Id-Version: Odoo Module fsm_skip_wizard_on_sale 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-03-12 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: fsm_skip_wizard_on_sale
+#: model:ir.model.fields,field_description:fsm_skip_wizard_on_sale.field_project_project__skip_wizard_on_sale
+msgid "Skip Wizard If Sale Exists"
+msgstr "Omitir asistente si existe venta"
+
+#. module: fsm_skip_wizard_on_sale
+#: model:ir.model.fields,help:fsm_skip_wizard_on_sale.field_project_project__skip_wizard_on_sale
+msgid ""
+"Controls whether the stop-timer confirmation wizard is bypassed when the "
+"task already has a confirmed Sale Order.\n"
+"\n"
+"When enabled and a confirmed SO exists, time is logged automatically with "
+"the description 'Automated register'. The wizard never opens.\n"
+"\n"
+"When disabled or no SO exists, the native wizard opens normally."
+msgstr ""
+"Controla si se omite el asistente de confirmación de detención del "
+"temporizador cuando la tarea ya tiene una Orden de Venta confirmada.\n"
+"\n"
+"Cuando está habilitado y existe una OV confirmada, el tiempo se registra "
+"automáticamente con la descripción 'Registro automático'. El asistente nunca "
+"se abre.\n"
+"\n"
+"Cuando está deshabilitado o no existe una OV, el asistente nativo se abre "
+"normalmente."
+
+#. module: fsm_skip_wizard_on_sale
+#: model:ir.model.fields,field_description:fsm_skip_wizard_on_sale.field_project_project__auto_return_to_previous_view
+msgid "Auto return to task list after stopping timer"
+msgstr "Retorno automático a la lista de tareas al detener el temporizador"
+
+#. module: fsm_skip_wizard_on_sale
+#: model:ir.model.fields,help:fsm_skip_wizard_on_sale.field_project_project__auto_return_to_previous_view
+msgid ""
+"When enabled, after stopping the timer the user is automatically navigated "
+"to the configured Return Action (or the FSM task list as fallback) instead "
+"of remaining on the task form.\n"
+"\n"
+"Works in both flows: bypass (no wizard) and wizard (Log Time).\n"
+"Navigation is a clean reload — no breadcrumbs are accumulated."
+msgstr ""
+"Cuando está habilitado, tras detener el temporizador el usuario es "
+"redirigido automáticamente a la Acción de Retorno configurada (o a la lista "
+"de tareas FSM como alternativa) en lugar de permanecer en el formulario de "
+"la tarea.\n"
+"\n"
+"Funciona en ambos flujos: con omisión (sin asistente) y con asistente "
+"(Registrar tiempo).\n"
+"La navegación es una recarga limpia — no se acumulan migas de pan."
+
+#. module: fsm_skip_wizard_on_sale
+#: model:ir.model.fields,field_description:fsm_skip_wizard_on_sale.field_project_project__return_action_id
+msgid "Return Action"
+msgstr "Acción de retorno"
+
+#. module: fsm_skip_wizard_on_sale
+#: model:ir.model.fields,help:fsm_skip_wizard_on_sale.field_project_project__return_action_id
+msgid ""
+"Action to execute after stopping the timer (when 'Auto return' is enabled). "
+"Leave empty to use the FSM task list of this project as fallback.\n"
+"\n"
+"Example: select 'My Tasks Today' to return the technician to their daily "
+"task view."
+msgstr ""
+"Acción a ejecutar tras detener el temporizador (cuando 'Retorno automático' "
+"está habilitado). Dejar vacío para usar la lista de tareas FSM de este "
+"proyecto como alternativa.\n"
+"\n"
+"Ejemplo: seleccione 'Mis tareas de hoy' para llevar al técnico de vuelta a "
+"su vista de tareas diarias."
+
+#. odoo-python
+#: code:addons/fsm_skip_wizard_on_sale/models/project_project.py:62
+msgid "Tasks"
+msgstr "Tareas"
+
+#. odoo-python
+#: code:addons/fsm_skip_wizard_on_sale/models/project_task.py:67
+msgid "Automated register"
+msgstr "Registro automático"
+
+
+
+#. module: fsm_skip_wizard_on_sale
+#: model_terms:ir.ui.view,arch_db:fsm_skip_wizard_on_sale.project_project_view_form_inherit_fsm_skip_wizard
+msgid "<span class=\"text-muted\">Skip wizard if sale exists</span>"
+msgstr "<span class=\"text-muted\">Omitir asistente si existe venta</span>"
+
+#. module: fsm_skip_wizard_on_sale
+#: model_terms:ir.ui.view,arch_db:fsm_skip_wizard_on_sale.project_project_view_form_inherit_fsm_skip_wizard
+msgid "<span class=\"text-muted\">Auto return to task list after stopping timer</span>"
+msgstr "<span class=\"text-muted\">Retorno automático a la lista de tareas al detener el temporizador</span>"
+

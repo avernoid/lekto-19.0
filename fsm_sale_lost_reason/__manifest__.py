@@ -1,6 +1,6 @@
 {
     'name': 'FSM Sale Lost Reason',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.2',
     'category': 'Services/Field Service',
     'summary': 'Require lost reason for FSM tasks when no sale is made',
     'description': """
@@ -18,6 +18,7 @@
         'views/project_task_views.xml',
         'wizard/project_task_lost_reason_wizard_views.xml',
     ],
+    'i18n': ['i18n/es.po'],
     'images': ['static/description/banner.png'],
     'icon': '/fsm_sale_lost_reason/static/description/icon.png',
     'license': 'OPL-1',

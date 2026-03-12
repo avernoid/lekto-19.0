@@ -31,9 +31,6 @@ class ProjectTask(models.Model):
                 ('timer_pause', '=', False),
             ], limit=1)
             if not active_timer and not self.sudo().timesheet_ids:
-                raise UserError(_(
-                    "You must start the task timer (Start button) before "
-                    "adding products or materials to this task."
-                ))
+                raise UserError(_("You must start the task timer (Start button) before adding products or materials to this task."))
 
         return super().action_fsm_view_material()

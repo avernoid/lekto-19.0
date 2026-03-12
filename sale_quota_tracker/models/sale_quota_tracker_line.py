@@ -17,6 +17,7 @@ class SaleGoalLine(models.Model):
         required=True,
         ondelete='cascade',
         index=True,
+        help='Parent Sales Goal this line belongs to. Determines the salesperson, period, and data source for the achievement calculation.',
     )
     goal_type = fields.Selection(
         selection=[
@@ -43,44 +44,68 @@ class SaleGoalLine(models.Model):
         related='goal_id.company_id.currency_id',
         store=True,
         readonly=True,
+        help='Currency used for monetary targets and achievements on this line. Inherited from the parent goal\'s company and cannot be changed directly.',
     )
     qty_goal = fields.Float(
         string='Qty Target',
         digits='Product Unit of Measure',
-        help='Quantity target for this period.',
+        help=(
+            'Quantity target for this product or category in the goal period. '
+            'Leave at 0 if you only want to set a revenue (amount) target. '
+            'Achievement is tracked in the "Qty Achieved" field.'
+        ),
     )
     amount_goal = fields.Monetary(
         string='Amount Target',
         currency_field='currency_id',
-        help='Revenue target for this period.',
+        help=(
+            'Revenue target (in the company currency) for this product or category in the goal period. '
+            'Leave at 0 if you only want to set a quantity target. '
+            'Achievement is tracked in the "Amount Achieved" field.'
+        ),
     )
     qty_done = fields.Float(
         string='Qty Achieved',
         digits='Product Unit of Measure',
         store=True,
         default=0.0,
-        help='Actual quantity sold/invoiced in the period (auto-computed).',
+        help=(
+            'Actual quantity sold or invoiced for this product/category in the period. '
+            'Updated automatically when a sale order is confirmed/cancelled or an invoice is posted/cancelled. '
+            'Click "Update Results" to force a manual recalculation.'
+        ),
     )
     amount_done = fields.Monetary(
         string='Amount Achieved',
         currency_field='currency_id',
         store=True,
         default=0.0,
-        help='Actual revenue in the period (auto-computed).',
+        help=(
+            'Actual revenue generated for this product/category in the period. '
+            'Updated automatically when a sale order is confirmed/cancelled or an invoice is posted/cancelled. '
+            'Credit notes are subtracted automatically. '
+            'Click "Update Results" to force a manual recalculation.'
+        ),
     )
     pct_qty = fields.Float(
         string='% Qty',
         compute='_compute_pct',
         store=True,
         digits=(6, 1),
-        help='Percentage of quantity target achieved.',
+        help=(
+            'Percentage of the quantity target achieved (Qty Achieved / Qty Target × 100). '
+            'Reaches 100% or more when the salesperson meets or exceeds the quantity goal for this line.'
+        ),
     )
     pct_amount = fields.Float(
         string='% Amount',
         compute='_compute_pct',
         store=True,
         digits=(6, 1),
-        help='Percentage of amount target achieved.',
+        help=(
+            'Percentage of the revenue target achieved (Amount Achieved / Amount Target × 100). '
+            'Reaches 100% or more when the salesperson meets or exceeds the revenue goal for this line.'
+        ),
     )
 
     # ------------------------------------------------------------------

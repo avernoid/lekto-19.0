@@ -1,0 +1,85 @@
+# Translation of fsm_sale_lost_reason to Spanish
+# . module: fsm_sale_lost_reason
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the fsm_sale_lost_reason package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module fsm_sale_lost_reason 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-03-12 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model.fields,field_description:fsm_sale_lost_reason.field_project_project__use_lost_reason
+msgid "Use Lost Reason"
+msgstr "Usar razón de pérdida"
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model.fields,help:fsm_sale_lost_reason.field_project_project__use_lost_reason
+msgid "If enabled, tasks in this project will require a lost reason when marked as done without a sale."
+msgstr "Si está habilitado, las tareas de este proyecto requerirán una razón de pérdida al marcarse como realizadas sin una venta."
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model.fields,field_description:fsm_sale_lost_reason.field_project_task__lost_reason_id
+msgid "Lost Reason"
+msgstr "Razón de pérdida"
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model.fields,help:fsm_sale_lost_reason.field_project_task__lost_reason_id
+msgid "Reason why the sale was lost."
+msgstr "Razón por la que se perdió la venta."
+
+#. odoo-python
+#: code:models/project_task.py:0
+msgid "Lost Reason Required"
+msgstr "Razón de pérdida requerida"
+
+
+#. module: fsm_sale_lost_reason
+#: model_terms:ir.ui.view,arch_db:fsm_sale_lost_reason.project_project_view_form_inherit_fsm_sale_lost_reason
+msgid "<span class=\"text-muted\">Force lost reason when no sale is confirmed</span>"
+msgstr "<span class=\"text-muted\">Forzar razón de pérdida cuando no hay venta confirmada</span>"
+
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model,name:fsm_sale_lost_reason.model_project_task_lost_reason_wizard
+msgid "Task Lost Reason Wizard"
+msgstr "Asistente de razón de pérdida de tarea"
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model.fields,field_description:fsm_sale_lost_reason.field_project_task_lost_reason_wizard__task_id
+msgid "Task"
+msgstr "Tarea"
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model.fields,field_description:fsm_sale_lost_reason.field_project_task_lost_reason_wizard__lost_reason_id
+msgid "Lost Reason"
+msgstr "Razón de pérdida"
+
+#. module: fsm_sale_lost_reason
+#: model:ir.model.fields,field_description:fsm_sale_lost_reason.field_project_task_lost_reason_wizard__from_geo_visit
+msgid "From Geo Visit"
+msgstr "Desde visita geolocalizada"
+
+#. module: fsm_sale_lost_reason
+#: model_terms:ir.ui.view,arch_db:fsm_sale_lost_reason.project_task_lost_reason_wizard_view_form
+msgid "Lost Reason"
+msgstr "Razón de pérdida"
+
+#. module: fsm_sale_lost_reason
+#: model_terms:ir.ui.view,arch_db:fsm_sale_lost_reason.project_task_lost_reason_wizard_view_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: fsm_sale_lost_reason
+#: model_terms:ir.ui.view,arch_db:fsm_sale_lost_reason.project_task_lost_reason_wizard_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+

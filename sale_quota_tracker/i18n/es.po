@@ -1,13 +1,497 @@
+# Translation of sale_quota_tracker to Spanish
+# . module: sale_quota_tracker
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the sale_quota_tracker package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-03-06 00:00+0000\n"
-"Last-Translator: Ganemo <ayuda@ganemo.com>\n"
-"Language-Team: Spanish <https://www.ganemo.co>\n"
+"Project-Id-Version: Odoo Module sale_quota_tracker 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-03-12 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# ---------------------------------------------------------------------------
+# sale.goal — Model description
+# ---------------------------------------------------------------------------
+
+#. module: sale_quota_tracker
+#: model:ir.model,name:sale_quota_tracker.model_sale_goal
+msgid "Sales Goal"
+msgstr "Meta de ventas"
+
+#. module: sale_quota_tracker
+#: model:ir.model,name:sale_quota_tracker.model_sale_goal_line
+msgid "Sales Goal Line"
+msgstr "Línea de meta de ventas"
+
+# ---------------------------------------------------------------------------
+# sale.goal — Fields
+# ---------------------------------------------------------------------------
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__name
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__name
+msgid "Auto-generated: Salesperson – Month Year"
+msgstr "Generado automáticamente: Vendedor – Mes Año"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__user_id
+msgid "Salesperson"
+msgstr "Vendedor"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__user_id
+msgid "The salesperson this goal belongs to."
+msgstr "El vendedor al que pertenece esta meta."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__month
+msgid "Month"
+msgstr "Mes"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__month
+msgid ""
+"Calendar month number (1 = January, 12 = December). "
+"Together with Year it determines the exact goal period. "
+"Must be between 1 and 12."
+msgstr ""
+"Número de mes del calendario (1 = Enero, 12 = Diciembre). "
+"Junto con el Año determina el período exacto de la meta. "
+"Debe ser un valor entre 1 y 12."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__year
+msgid "Year"
+msgstr "Año"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__year
+msgid ""
+"Four-digit calendar year (e.g. 2025). "
+"Together with Month it determines the exact goal period. "
+"Accepted range: 2000–2100."
+msgstr ""
+"Año del calendario de cuatro dígitos (p. ej. 2025). "
+"Junto con el Mes determina el período exacto de la meta. "
+"Rango aceptado: 2000–2100."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__date_start
+msgid "From"
+msgstr "Desde"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__date_start
+msgid ""
+"First day of the goal period. "
+"Computed automatically from Month and Year. "
+"Used to filter sale orders and invoices included in the achievement calculation."
+msgstr ""
+"Primer día del período de la meta. "
+"Calculado automáticamente a partir del Mes y el Año. "
+"Se usa para filtrar las órdenes de venta y facturas incluidas en el cálculo del logro."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__date_end
+msgid "To"
+msgstr "Hasta"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__date_end
+msgid ""
+"Last day of the goal period. "
+"Computed automatically from Month and Year. "
+"Documents dated after this day are excluded from the achievement calculation."
+msgstr ""
+"Último día del período de la meta. "
+"Calculado automáticamente a partir del Mes y el Año. "
+"Los documentos con fecha posterior a este día quedan excluidos del cálculo del logro."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__source_type
+msgid "Data Source"
+msgstr "Fuente de datos"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,selection:sale_quota_tracker.field_sale_goal__source_type:sale_order
+msgid "Confirmed Sale Orders"
+msgstr "Órdenes de venta confirmadas"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,selection:sale_quota_tracker.field_sale_goal__source_type:invoice
+msgid "Validated Customer Invoices"
+msgstr "Facturas de cliente validadas"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__source_type
+msgid ""
+"Determines where actual qty/amount are read from:\n"
+"- Confirmed Sale Orders: uses sale.order.line\n"
+"- Validated Customer Invoices: uses account.move.line (Credit Notes are "
+"subtracted automatically)"
+msgstr ""
+"Determina de dónde se leen la cantidad/monto real:\n"
+"- Órdenes de venta confirmadas: usa sale.order.line\n"
+"- Facturas de cliente validadas: usa account.move.line (las Notas de crédito "
+"se restan automáticamente)"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__line_ids
+msgid "Goal Lines"
+msgstr "Líneas de meta"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__line_ids
+msgid ""
+"Detail lines breaking down the goal by product or product category. "
+"Each line defines an individual target (quantity and/or amount) and tracks its achievement. "
+"Add multiple lines to set goals for different products or categories within the same period."
+msgstr ""
+"Líneas de detalle que desglosan la meta por producto o categoría de producto. "
+"Cada línea define un objetivo individual (cantidad y/o monto) y realiza el seguimiento de su logro. "
+"Agregue múltiples líneas para establecer metas para diferentes productos o categorías dentro del mismo período."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,selection:sale_quota_tracker.field_sale_goal__state:draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,selection:sale_quota_tracker.field_sale_goal__state:active
+msgid "Active"
+msgstr "Activo"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,selection:sale_quota_tracker.field_sale_goal__state:achieved
+msgid "Achieved"
+msgstr "Logrado"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__state
+msgid ""
+"Draft: no lines defined.\n"
+"Active: at least one line exists.\n"
+"Achieved: all lines >= 100% on both qty and amount."
+msgstr ""
+"Borrador: sin líneas definidas.\n"
+"Activo: existe al menos una línea.\n"
+"Logrado: todas las líneas >= 100% tanto en cantidad como en monto."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__company_id
+msgid ""
+"Company this goal belongs to. "
+"Determines the currency used for monetary targets and achievement figures. "
+"In multi-company environments each salesperson can have one goal per company per month."
+msgstr ""
+"Empresa a la que pertenece esta meta. "
+"Determina la moneda utilizada para los objetivos monetarios y las cifras de logro. "
+"En entornos multiempresa, cada vendedor puede tener una meta por empresa y mes."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__currency_id
+msgid ""
+"Currency used for all monetary fields on this goal (targets and achievements). "
+"Inherited automatically from the selected Company and cannot be changed directly."
+msgstr ""
+"Moneda utilizada para todos los campos monetarios de esta meta (objetivos y logros). "
+"Se hereda automáticamente de la Empresa seleccionada y no puede modificarse directamente."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__global_amount_goal
+msgid "Sales Target"
+msgstr "Objetivo de ventas"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__global_amount_goal
+msgid ""
+"Global revenue target for this period (optional). "
+"Covers ALL products sold by this salesperson in the selected month. "
+"Use this when you only need a single total goal without a per-product breakdown. "
+"Leave at 0 if you only use the Goal Lines tab for product-level targets."
+msgstr ""
+"Objetivo global de ingresos para este período (opcional). "
+"Abarca TODOS los productos vendidos por este vendedor en el mes seleccionado. "
+"Úselo cuando solo necesite una meta total sin desglose por producto. "
+"Déjelo en 0 si solo usa la pestaña Líneas de meta para objetivos a nivel de producto."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__global_amount_done
+msgid "Sales Achievement"
+msgstr "Logro de ventas"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__global_amount_done
+msgid ""
+"Actual total revenue generated by this salesperson during the goal period. "
+"Calculated automatically from the selected Data Source: "
+"sums all confirmed sale order lines or all posted customer invoice lines (credit notes subtracted). "
+"Updated whenever a sale order is confirmed/cancelled or an invoice is posted/cancelled."
+msgstr ""
+"Ingresos totales reales generados por este vendedor durante el período de la meta. "
+"Calculado automáticamente desde la Fuente de datos seleccionada: "
+"suma todas las líneas de órdenes de venta confirmadas o todas las líneas de facturas de cliente publicadas (se restan las notas de crédito). "
+"Se actualiza cuando se confirma/cancela una orden de venta o se publica/cancela una factura."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal__global_pct_amount
+msgid "% Achievement"
+msgstr "% Logro"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal__global_pct_amount
+msgid ""
+"Percentage of the global Sales Target achieved so far this period. "
+"Calculated as (Sales Achievement / Sales Target) x 100. "
+"Reaches 100% or more when the salesperson meets or exceeds the global target."
+msgstr ""
+"Porcentaje del objetivo global de ventas alcanzado hasta ahora en este período. "
+"Calculado como (Logro de ventas / Objetivo de ventas) x 100. "
+"Alcanza el 100% o más cuando el vendedor iguala o supera el objetivo global."
+
+# ---------------------------------------------------------------------------
+# sale.goal — Constraints / Validation messages
+# ---------------------------------------------------------------------------
+
+#. odoo-python
+#: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
+msgid "A salesperson can only have one goal record per month and company."
+msgstr "Un vendedor solo puede tener un registro de meta por mes y empresa."
+
+#. odoo-python
+#: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
+msgid "Month must be between 1 and 12."
+msgstr "El mes debe estar entre 1 y 12."
+
+#. odoo-python
+#: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
+msgid "Year must be between 2000 and 2100."
+msgstr "El año debe estar entre 2000 y 2100."
+
+#. odoo-python
+#: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
+#, python-format
+msgid "No goal found for %(name)s in %(month)s %(year)s."
+msgstr "No se encontró ninguna meta para %(name)s en %(month)s %(year)s."
+
+# ---------------------------------------------------------------------------
+# sale.goal.line — Fields
+# ---------------------------------------------------------------------------
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__goal_id
+msgid "Goal"
+msgstr "Meta"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__goal_id
+msgid "Parent Sales Goal this line belongs to. Determines the salesperson, period, and data source for the achievement calculation."
+msgstr "Meta de ventas padre a la que pertenece esta línea. Determina el vendedor, el período y la fuente de datos para el cálculo del logro."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__goal_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,selection:sale_quota_tracker.field_sale_goal_line__goal_type:product
+msgid "Product"
+msgstr "Producto"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,selection:sale_quota_tracker.field_sale_goal_line__goal_type:categ
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__goal_type
+msgid "Whether the goal targets a specific product or a whole product category."
+msgstr "Si la meta apunta a un producto específico o a toda una categoría de producto."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__product_id
+msgid "Target product (required when Type = Product)."
+msgstr "Producto objetivo (requerido cuando Tipo = Producto)."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__categ_id
+msgid "Category"
+msgstr "Categoría"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__categ_id
+msgid "Target product category (required when Type = Category)."
+msgstr "Categoría de producto objetivo (requerida cuando Tipo = Categoría)."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__currency_id
+msgid "Currency used for monetary targets and achievements on this line. Inherited from the parent goal's company and cannot be changed directly."
+msgstr "Moneda utilizada para los objetivos y logros monetarios de esta línea. Se hereda de la empresa de la meta padre y no puede modificarse directamente."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__qty_goal
+msgid "Qty Target"
+msgstr "Cantidad objetivo"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__qty_goal
+msgid ""
+"Quantity target for this product or category in the goal period. "
+"Leave at 0 if you only want to set a revenue (amount) target. "
+"Achievement is tracked in the \"Qty Achieved\" field."
+msgstr ""
+"Objetivo de cantidad para este producto o categoría en el período de la meta. "
+"Déjelo en 0 si solo desea establecer un objetivo de ingresos (monto). "
+"El logro se registra en el campo \"Cantidad lograda\"."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__amount_goal
+msgid "Amount Target"
+msgstr "Monto objetivo"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__amount_goal
+msgid ""
+"Revenue target (in the company currency) for this product or category in the goal period. "
+"Leave at 0 if you only want to set a quantity target. "
+"Achievement is tracked in the \"Amount Achieved\" field."
+msgstr ""
+"Objetivo de ingresos (en la moneda de la empresa) para este producto o categoría en el período de la meta. "
+"Déjelo en 0 si solo desea establecer un objetivo de cantidad. "
+"El logro se registra en el campo \"Monto logrado\"."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__qty_done
+msgid "Qty Achieved"
+msgstr "Cantidad lograda"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__qty_done
+msgid ""
+"Actual quantity sold or invoiced for this product/category in the period. "
+"Updated automatically when a sale order is confirmed/cancelled or an invoice is posted/cancelled. "
+"Click \"Update Results\" to force a manual recalculation."
+msgstr ""
+"Cantidad real vendida o facturada para este producto/categoría en el período. "
+"Se actualiza automáticamente cuando se confirma/cancela una orden de venta o se publica/cancela una factura. "
+"Haga clic en \"Actualizar resultados\" para forzar un recálculo manual."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__amount_done
+msgid "Amount Achieved"
+msgstr "Monto logrado"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__amount_done
+msgid ""
+"Actual revenue generated for this product/category in the period. "
+"Updated automatically when a sale order is confirmed/cancelled or an invoice is posted/cancelled. "
+"Credit notes are subtracted automatically. "
+"Click \"Update Results\" to force a manual recalculation."
+msgstr ""
+"Ingresos reales generados para este producto/categoría en el período. "
+"Se actualiza automáticamente cuando se confirma/cancela una orden de venta o se publica/cancela una factura. "
+"Las notas de crédito se restan automáticamente. "
+"Haga clic en \"Actualizar resultados\" para forzar un recálculo manual."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__pct_qty
+msgid "% Qty"
+msgstr "% Cantidad"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__pct_qty
+msgid ""
+"Percentage of the quantity target achieved (Qty Achieved / Qty Target x 100). "
+"Reaches 100% or more when the salesperson meets or exceeds the quantity goal for this line."
+msgstr ""
+"Porcentaje del objetivo de cantidad alcanzado (Cantidad lograda / Cantidad objetivo x 100). "
+"Alcanza el 100% o más cuando el vendedor iguala o supera el objetivo de cantidad de esta línea."
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,field_description:sale_quota_tracker.field_sale_goal_line__pct_amount
+msgid "% Amount"
+msgstr "% Monto"
+
+#. module: sale_quota_tracker
+#: model:ir.model.fields,help:sale_quota_tracker.field_sale_goal_line__pct_amount
+msgid ""
+"Percentage of the revenue target achieved (Amount Achieved / Amount Target x 100). "
+"Reaches 100% or more when the salesperson meets or exceeds the revenue goal for this line."
+msgstr ""
+"Porcentaje del objetivo de ingresos alcanzado (Monto logrado / Monto objetivo x 100). "
+"Alcanza el 100% o más cuando el vendedor iguala o supera el objetivo de ingresos de esta línea."
+
+# ---------------------------------------------------------------------------
+# sale.goal.line — Validation messages
+# ---------------------------------------------------------------------------
+
+#. odoo-python
+#: code:addons/sale_quota_tracker/models/sale_quota_tracker_line.py:0
+msgid "You must select a Product when Goal Type is \"Product\"."
+msgstr "Debe seleccionar un Producto cuando el Tipo de meta es \"Producto\"."
+
+#. odoo-python
+#: code:addons/sale_quota_tracker/models/sale_quota_tracker_line.py:0
+msgid "You must select a Category when Goal Type is \"Product Category\"."
+msgstr "Debe seleccionar una Categoría cuando el Tipo de meta es \"Categoría de producto\"."
+
+# ---------------------------------------------------------------------------
+# Actions / Menus
+# ---------------------------------------------------------------------------
+
+#. module: sale_quota_tracker
+#: model:ir.actions.act_window,name:sale_quota_tracker.action_sale_quota_tracker
+msgid "Sales Goals"
+msgstr "Metas de ventas"
+
+#. module: sale_quota_tracker
+#: model:ir.actions.act_window,help:sale_quota_tracker.action_sale_quota_tracker
+msgid "No sales goals found!"
+msgstr "¡No se encontraron metas de ventas!"
+
+#. module: sale_quota_tracker
+#: model:ir.actions.act_window,name:sale_quota_tracker.action_sale_quota_tracker_line_analysis
+msgid "Goals Analysis"
+msgstr "Análisis de metas"
+
+#. module: sale_quota_tracker
+#: model:ir.ui.menu,name:sale_quota_tracker.menu_sale_quota_tracker_root
+msgid "Sales Goals"
+msgstr "Metas de ventas"
+
+#. module: sale_quota_tracker
+#: model:ir.ui.menu,name:sale_quota_tracker.menu_sale_quota_tracker_list
+msgid "Goals"
+msgstr "Metas"
+
+#. module: sale_quota_tracker
+#: model:ir.ui.menu,name:sale_quota_tracker.menu_sale_quota_tracker_analysis
+msgid "Goals Analysis"
+msgstr "Análisis de metas"

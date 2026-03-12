@@ -6,17 +6,13 @@
         <field name="inherit_id" ref="industry_fsm_sale.project_view_form_inherit"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='allow_material']/.." position="inside">
-                <div class="col-lg-12 mt8">
-                    <field name="skip_wizard_on_sale" invisible="not allow_material"/>
-                    <span invisible="not allow_material" class="text-muted">
-                        Skip confirmation wizard when a sale is confirmed
-                    </span>
+                <div class="col-lg-12" invisible="not allow_material">
+                    <field name="skip_wizard_on_sale"/>
+                    <span class="text-muted">Skip wizard if sale exists</span>
                 </div>
-                <div class="col-lg-12 mt8">
-                    <field name="auto_return_to_previous_view" invisible="not allow_material"/>
-                    <span invisible="not allow_material" class="text-muted">
-                        Auto return after stopping timer
-                    </span>
+                <div class="col-lg-12" invisible="not allow_material">
+                    <field name="auto_return_to_previous_view"/>
+                    <span class="text-muted">Auto return to task list after stopping timer</span>
                 </div>
                 <div class="col-lg-12 mt8 ms-4"
                      invisible="not allow_material or not auto_return_to_previous_view">
