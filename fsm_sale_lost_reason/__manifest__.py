@@ -1,6 +1,6 @@
 {
     'name': 'FSM Sale Lost Reason',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.3',
     'category': 'Services/Field Service',
     'summary': 'Require lost reason for FSM tasks when no sale is made',
     'description': """

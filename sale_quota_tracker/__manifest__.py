@@ -1,6 +1,6 @@
 {
     'name': 'Sales Quota Tracker',
-    'version': '19.0.1.0.3',
+    'version': '19.0.1.0.4',
     'category': 'Sales/Sales',
     'summary': 'Manage monthly sales goals per salesperson by product and category',
     'description': """

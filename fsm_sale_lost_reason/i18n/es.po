@@ -36,8 +36,9 @@ msgstr "Razón de pérdida"
 msgid "Reason why the sale was lost."
 msgstr "Razón por la que se perdió la venta."
 
+#. module: fsm_sale_lost_reason
 #. odoo-python
-#: code:models/project_task.py:0
+#: code:addons/fsm_sale_lost_reason/models/project_task.py:0
 msgid "Lost Reason Required"
 msgstr "Razón de pérdida requerida"
 

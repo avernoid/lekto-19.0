@@ -1,6 +1,6 @@
 {
     'name': 'FSM Geofencing Control',
-    'version': '19.0.1.0.2',
+    'version': '19.0.1.0.3',
     'category': 'Services/Field Service',
     'summary': 'Control technician location when starting/stopping FSM timers',
     'description': """

@@ -274,21 +274,25 @@ msgstr ""
 # sale.goal — Constraints / Validation messages
 # ---------------------------------------------------------------------------
 
+#. module: sale_quota_tracker
 #. odoo-python
 #: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
 msgid "A salesperson can only have one goal record per month and company."
 msgstr "Un vendedor solo puede tener un registro de meta por mes y empresa."
 
+#. module: sale_quota_tracker
 #. odoo-python
 #: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
 msgid "Month must be between 1 and 12."
 msgstr "El mes debe estar entre 1 y 12."
 
+#. module: sale_quota_tracker
 #. odoo-python
 #: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
 msgid "Year must be between 2000 and 2100."
 msgstr "El año debe estar entre 2000 y 2100."
 
+#. module: sale_quota_tracker
 #. odoo-python
 #: code:addons/sale_quota_tracker/models/sale_quota_tracker.py:0
 #, python-format
@@ -452,11 +456,13 @@ msgstr ""
 # sale.goal.line — Validation messages
 # ---------------------------------------------------------------------------
 
+#. module: sale_quota_tracker
 #. odoo-python
 #: code:addons/sale_quota_tracker/models/sale_quota_tracker_line.py:0
 msgid "You must select a Product when Goal Type is \"Product\"."
 msgstr "Debe seleccionar un Producto cuando el Tipo de meta es \"Producto\"."
 
+#. module: sale_quota_tracker
 #. odoo-python
 #: code:addons/sale_quota_tracker/models/sale_quota_tracker_line.py:0
 msgid "You must select a Category when Goal Type is \"Product Category\"."

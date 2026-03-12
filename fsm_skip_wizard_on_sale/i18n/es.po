@@ -87,11 +87,13 @@ msgstr ""
 "Ejemplo: seleccione 'Mis tareas de hoy' para llevar al técnico de vuelta a "
 "su vista de tareas diarias."
 
+#. module: fsm_skip_wizard_on_sale
 #. odoo-python
 #: code:addons/fsm_skip_wizard_on_sale/models/project_project.py:62
 msgid "Tasks"
 msgstr "Tareas"
 
+#. module: fsm_skip_wizard_on_sale
 #. odoo-python
 #: code:addons/fsm_skip_wizard_on_sale/models/project_task.py:67
 msgid "Automated register"

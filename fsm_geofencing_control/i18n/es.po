@@ -87,17 +87,20 @@ msgstr "Razón por la cual la venta no fue confirmada para esta tarea."
 msgid "Select a reason why the sale was not confirmed..."
 msgstr "Seleccione una razón por la cual la venta no fue confirmada..."
 
+#. module: fsm_geofencing_control
 #. odoo-python
 #: code:addons/fsm_geofencing_control/models/project_task.py:0
 msgid "Cannot start timer: Unable to get your current location. Please enable location services and try again."
 msgstr "No se puede iniciar el temporizador: No se puede obtener su ubicación actual. Por favor, habilite los servicios de ubicación e intente nuevamente."
 
+#. module: fsm_geofencing_control
 #. odoo-python
 #: code:addons/fsm_geofencing_control/models/project_task.py:0
 #, python-format
 msgid "Cannot start timer: Customer '%(customer)s' does not have a valid geolocation. Please set the customer's address and geolocate it before starting the timer."
 msgstr "No se puede iniciar el temporizador: El cliente '%(customer)s' no tiene una geolocalización válida. Por favor, establezca la dirección del cliente y geolocalícela antes de iniciar el temporizador."
 
+#. module: fsm_geofencing_control
 #. odoo-python
 #: code:addons/fsm_geofencing_control/models/project_task.py:0
 #, python-format
@@ -112,17 +115,20 @@ msgstr ""
 "Máximo permitido: %(allowed)s m\\n\\n"
 "Por favor, acérquese a la ubicación del cliente e intente nuevamente."
 
+#. module: fsm_geofencing_control
 #. odoo-python
 #: code:addons/fsm_geofencing_control/models/project_task.py:0
 msgid "Cannot stop timer: Unable to get your current location. Please enable location services and try again."
 msgstr "No se puede detener el temporizador: No se puede obtener su ubicación actual. Por favor, habilite los servicios de ubicación e intente nuevamente."
 
+#. module: fsm_geofencing_control
 #. odoo-python
 #: code:addons/fsm_geofencing_control/models/project_task.py:0
 #, python-format
 msgid "Cannot stop timer: Customer '%(customer)s' does not have a valid geolocation. Please set the customer's address and geolocate it before stopping the timer."
 msgstr "No se puede detener el temporizador: El cliente '%(customer)s' no tiene una geolocalización válida. Por favor, establezca la dirección del cliente y geolocalícela antes de detener el temporizador."
 
+#. module: fsm_geofencing_control
 #. odoo-python
 #: code:addons/fsm_geofencing_control/models/project_task.py:0
 #, python-format
@@ -137,6 +143,7 @@ msgstr ""
 "Máximo permitido: %(allowed)s m\\n\\n"
 "Por favor, acérquese a la ubicación del cliente e intente nuevamente."
 
+#. module: fsm_geofencing_control
 #. odoo-python
 #: code:addons/fsm_geofencing_control/wizard/hr_timesheet_stop_timer_confirmation_wizard.py:0
 msgid "Lost Reason is required when stopping timer without a confirmed sale order. Please select a reason why the sale was not confirmed."

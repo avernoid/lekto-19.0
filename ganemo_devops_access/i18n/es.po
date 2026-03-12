@@ -1,0 +1,50 @@
+# Translation of Ganemo DevOps Access to Spanish
+# Copyright (C) 2025 Ganemo
+# License OPL-1
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-10 00:00+0000\n"
+"PO-Revision-Date: 2026-03-10 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: ganemo_devops_access
+#: model:ir.module.module,shortdesc:ganemo_devops_access.module_ganemo_devops_access
+msgid "Ganemo DevOps Access"
+msgstr "Ganemo DevOps Access"
+
+#. module: ganemo_devops_access
+#: model:ir.module.module,summary:ganemo_devops_access.module_ganemo_devops_access
+msgid "Creates an agent bot user with a generated API key for autonomous log inspection."
+msgstr "Crea un usuario bot para el agente con una clave API generada automaticamente, para inspeccion autonoma de logs."
+
+#. module: ganemo_devops_access
+#: model:ir.module.module,description:ganemo_devops_access.module_ganemo_devops_access
+msgid ""
+"Ganemo DevOps Access\n"
+"====================\n"
+"This module is part of the Ganemo DevOps infrastructure.\n"
+"\n"
+"It creates a dedicated bot user (agent@ganemo.co) during installation and\n"
+"generates an Odoo API key for that user.\n"
+"\n"
+"FOR STAGING/TESTING ENVIRONMENTS ONLY.\n"
+"Do NOT install on production databases."
+msgstr ""
+"Ganemo DevOps Access\n"
+"====================\n"
+"Este modulo es parte de la infraestructura DevOps de Ganemo.\n"
+"\n"
+"Crea un usuario bot dedicado (agent@ganemo.co) durante la instalacion y\n"
+"genera una clave API de Odoo para dicho usuario.\n"
+"\n"
+"SOLO PARA ENTORNOS DE STAGING/PRUEBAS.\n"
+"NO instalar en bases de datos de produccion."

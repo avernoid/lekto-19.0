@@ -1,6 +1,6 @@
 {
     'name': 'FSM Sale Start Required',
-    'version': '19.0.1.0.11',
+    'version': '19.0.1.0.12',
     'category': 'Services/Field Service',
     'summary': 'Require timer start before adding products to FSM tasks',
     'description': """

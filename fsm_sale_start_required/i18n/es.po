@@ -30,6 +30,7 @@ msgstr ""
 "Si está habilitado, los técnicos deben iniciar el temporizador de la tarea "
 "(botón Iniciar) antes de poder agregar productos o materiales a esta tarea."
 
+#. module: fsm_sale_start_required
 #. odoo-python
 #: code:addons/fsm_sale_start_required/models/project_task.py:34
 msgid "You must start the task timer (Start button) before adding products or materials to this task."
