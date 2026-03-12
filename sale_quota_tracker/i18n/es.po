@@ -1,4 +1,4 @@
-﻿# Translation of Odoo Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #   * sale_quota_tracker
 #
@@ -18,212 +18,260 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# ── Model names ─────────────────────────────────────────────────────────
+#. module: sale_quota_tracker
 msgid "Sales Goal"
 msgstr "Meta de Ventas"
 
+#. module: sale_quota_tracker
 msgid "Sales Goals"
 msgstr "Metas de Ventas"
 
+#. module: sale_quota_tracker
 msgid "Sales Goal Line"
-msgstr "Línea de Meta de Ventas"
+msgstr "Linea de Meta de Ventas"
 
+#. module: sale_quota_tracker
 msgid "Sales Goal Lines"
-msgstr "Líneas de Meta de Ventas"
+msgstr "Lineas de Meta de Ventas"
 
-# ── sale.goal fields ─────────────────────────────────────────────────────
+#. module: sale_quota_tracker
 msgid "Reference"
 msgstr "Referencia"
 
-msgid "Auto-generated: Salesperson – Month Year"
-msgstr "Generado automáticamente: Vendedor – Mes Año"
+#. module: sale_quota_tracker
+msgid "Auto-generated: Salesperson - Month Year"
+msgstr "Generado automaticamente: Vendedor - Mes Ano"
 
+#. module: sale_quota_tracker
 msgid "Salesperson"
 msgstr "Vendedor"
 
+#. module: sale_quota_tracker
 msgid "The salesperson this goal belongs to."
 msgstr "El vendedor al que pertenece esta meta."
 
+#. module: sale_quota_tracker
 msgid "Month"
 msgstr "Mes"
 
-msgid "Month number (1–12)."
-msgstr "Número de mes (1–12)."
+#. module: sale_quota_tracker
+msgid "Month number (1-12)."
+msgstr "Numero de mes (1-12)."
 
+#. module: sale_quota_tracker
 msgid "Year"
-msgstr "Año"
+msgstr "Ano"
 
+#. module: sale_quota_tracker
 msgid "Four-digit year."
-msgstr "Año de cuatro dígitos."
+msgstr "Ano de cuatro digitos."
 
+#. module: sale_quota_tracker
 msgid "From"
 msgstr "Desde"
 
+#. module: sale_quota_tracker
 msgid "First day of the goal period."
-msgstr "Primer día del período de la meta."
+msgstr "Primer dia del periodo de la meta."
 
+#. module: sale_quota_tracker
 msgid "To"
 msgstr "Hasta"
 
+#. module: sale_quota_tracker
 msgid "Last day of the goal period."
-msgstr "Último día del período de la meta."
+msgstr "Ultimo dia del periodo de la meta."
 
+#. module: sale_quota_tracker
 msgid "Data Source"
 msgstr "Fuente de Datos"
 
+#. module: sale_quota_tracker
 msgid "Confirmed Sale Orders"
 msgstr "Pedidos de Venta Confirmados"
 
+#. module: sale_quota_tracker
 msgid "Validated Customer Invoices"
 msgstr "Facturas de Cliente Validadas"
 
+#. module: sale_quota_tracker
 msgid ""
 "Determines where actual qty/amount are read from:\n"
 "- Confirmed Sale Orders: uses sale.order.line\n"
 "- Validated Customer Invoices: uses account.move.line "
 "(Credit Notes are subtracted automatically)"
 msgstr ""
-"Determina de dónde se leen las cantidades/importes reales:\n"
+"Determina de donde se leen las cantidades/importes reales:\n"
 "- Pedidos de Venta Confirmados: usa sale.order.line\n"
 "- Facturas de Cliente Validadas: usa account.move.line "
-"(las Notas de Crédito se restan automáticamente)"
+"(las Notas de Credito se restan automaticamente)"
 
+#. module: sale_quota_tracker
 msgid "Goal Lines"
-msgstr "Líneas de Meta"
+msgstr "Lineas de Meta"
 
+#. module: sale_quota_tracker
 msgid "Status"
 msgstr "Estado"
 
+#. module: sale_quota_tracker
 msgid ""
 "Draft: no lines defined.\n"
 "Active: at least one line exists.\n"
-"Achieved: all lines ≥ 100% on both qty and amount."
+"Achieved: all lines >= 100% on both qty and amount."
 msgstr ""
-"Borrador: sin líneas definidas.\n"
-"Activo: al menos una línea existe.\n"
-"Alcanzada: todas las líneas ≥ 100% en cantidad e importe."
+"Borrador: sin lineas definidas.\n"
+"Activo: al menos una linea existe.\n"
+"Alcanzada: todas las lineas >= 100% en cantidad e importe."
 
+#. module: sale_quota_tracker
 msgid "Company"
 msgstr "Empresa"
 
-# ── sale.goal states ─────────────────────────────────────────────────────
+#. module: sale_quota_tracker
 msgid "Draft"
 msgstr "Borrador"
 
+#. module: sale_quota_tracker
 msgid "Active"
 msgstr "Activo"
 
+#. module: sale_quota_tracker
 msgid "Achieved"
 msgstr "Alcanzada"
 
-# ── sale.goal.line fields ────────────────────────────────────────────────
+#. module: sale_quota_tracker
 msgid "Goal"
 msgstr "Meta"
 
+#. module: sale_quota_tracker
 msgid "Type"
 msgstr "Tipo"
 
+#. module: sale_quota_tracker
 msgid "Whether the goal targets a specific product or a whole product category."
-msgstr "Si la meta apunta a un producto específico o a toda una categoría de productos."
+msgstr "Si la meta apunta a un producto especifico o a toda una categoria de productos."
 
+#. module: sale_quota_tracker
 msgid "Product"
 msgstr "Producto"
 
+#. module: sale_quota_tracker
 msgid "Target product (required when Type = Product)."
 msgstr "Producto objetivo (requerido cuando Tipo = Producto)."
 
+#. module: sale_quota_tracker
 msgid "Product Category"
-msgstr "Categoría de Producto"
+msgstr "Categoria de Producto"
 
+#. module: sale_quota_tracker
 msgid "Category"
-msgstr "Categoría"
+msgstr "Categoria"
 
+#. module: sale_quota_tracker
 msgid "Target product category (required when Type = Category)."
-msgstr "Categoría de producto objetivo (requerida cuando Tipo = Categoría)."
+msgstr "Categoria de producto objetivo (requerida cuando Tipo = Categoria)."
 
+#. module: sale_quota_tracker
 msgid "Qty Target"
 msgstr "Meta de Cantidad"
 
+#. module: sale_quota_tracker
 msgid "Quantity target for this period."
-msgstr "Objetivo de cantidad para este período."
+msgstr "Objetivo de cantidad para este periodo."
 
+#. module: sale_quota_tracker
 msgid "Amount Target"
 msgstr "Meta de Importe"
 
+#. module: sale_quota_tracker
 msgid "Revenue target for this period."
-msgstr "Objetivo de ingresos para este período."
+msgstr "Objetivo de ingresos para este periodo."
 
+#. module: sale_quota_tracker
 msgid "Qty Achieved"
 msgstr "Cantidad Lograda"
 
+#. module: sale_quota_tracker
 msgid "Actual quantity sold/invoiced in the period (auto-computed)."
-msgstr "Cantidad real vendida/facturada en el período (calculada automáticamente)."
+msgstr "Cantidad real vendida/facturada en el periodo (calculada automaticamente)."
 
+#. module: sale_quota_tracker
 msgid "Amount Achieved"
 msgstr "Importe Logrado"
 
+#. module: sale_quota_tracker
 msgid "Actual revenue in the period (auto-computed)."
-msgstr "Ingresos reales en el período (calculados automáticamente)."
+msgstr "Ingresos reales en el periodo (calculados automaticamente)."
 
+#. module: sale_quota_tracker
 msgid "% Qty"
 msgstr "% Cantidad"
 
+#. module: sale_quota_tracker
 msgid "Percentage of quantity target achieved."
 msgstr "Porcentaje del objetivo de cantidad alcanzado."
 
+#. module: sale_quota_tracker
 msgid "% Amount"
 msgstr "% Importe"
 
+#. module: sale_quota_tracker
 msgid "Percentage of amount target achieved."
 msgstr "Porcentaje del objetivo de importe alcanzado."
 
-# ── Buttons / Actions ────────────────────────────────────────────────────
+#. module: sale_quota_tracker
 msgid "Update Results"
 msgstr "Actualizar Resultados"
 
+#. module: sale_quota_tracker
 msgid "Copy Previous Month"
 msgstr "Copiar Mes Anterior"
 
-# ── Validation messages ──────────────────────────────────────────────────
+#. module: sale_quota_tracker
 msgid "Month must be between 1 and 12."
-msgstr "El mes debe ser un número entre 1 y 12."
+msgstr "El mes debe ser un numero entre 1 y 12."
 
+#. module: sale_quota_tracker
 msgid "Year must be between 2000 and 2100."
-msgstr "El año debe estar entre 2000 y 2100."
+msgstr "El ano debe estar entre 2000 y 2100."
 
+#. module: sale_quota_tracker
 msgid "You must select a Product when Goal Type is \"Product\"."
 msgstr "Debe seleccionar un Producto cuando el Tipo de Meta es \"Producto\"."
 
+#. module: sale_quota_tracker
 msgid "You must select a Category when Goal Type is \"Product Category\"."
-msgstr "Debe seleccionar una Categoría cuando el Tipo de Meta es \"Categoría de Producto\"."
+msgstr "Debe seleccionar una Categoria cuando el Tipo de Meta es \"Categoria de Producto\"."
 
+#. module: sale_quota_tracker
 msgid "A salesperson can only have one goal record per month and company."
 msgstr "Un vendedor solo puede tener un registro de meta por mes y empresa."
 
+#. module: sale_quota_tracker
 msgid "No goal found for %(name)s in %(month)s %(year)s."
-msgstr "No se encontró una meta para %(name)s en %(month)s %(year)s."
+msgstr "No se encontro una meta para %(name)s en %(month)s %(year)s."
 
-# ── View strings ─────────────────────────────────────────────────────────
-msgid "Sales Goals"
-msgstr "Metas de Ventas"
-
+#. module: sale_quota_tracker
 msgid "My Goals"
 msgstr "Mis Metas"
 
+#. module: sale_quota_tracker
 msgid "This Month"
 msgstr "Este Mes"
 
+#. module: sale_quota_tracker
 msgid "Sale Orders"
 msgstr "Pedidos de Venta"
 
+#. module: sale_quota_tracker
 msgid "Invoices"
 msgstr "Facturas"
 
+#. module: sale_quota_tracker
 msgid "Goals Analysis"
-msgstr "Análisis de Metas"
+msgstr "Analisis de Metas"
 
-msgid "Goal Lines"
-msgstr "Líneas de Meta"
-
+#. module: sale_quota_tracker
 msgid "Sales Goals Analysis"
-msgstr "Análisis de Metas de Ventas"
+msgstr "Analisis de Metas de Ventas"
