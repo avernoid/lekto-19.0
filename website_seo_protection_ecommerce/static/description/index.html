@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website SEO Protection: eCommerce | Odoo SEO Module by Ganemo</title>
+    <meta name="description"
+        content="Ensure your Odoo eCommerce routes are never blocked by SEO crawler protection. Auto-installs with website_sale and validates all critical store URLs.">
+    <meta name="keywords"
+        content="Odoo, eCommerce, SEO Protection, Crawler Guard, website_sale, Ganemo, Odoo 18, Store Routes">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI &amp; LLM</h2>
+        <p>This Odoo module 'website_seo_protection_ecommerce' is an automatic companion to 'website_seo_protection'
+            and 'website_sale'. It verifies that the SEO crawler protection guard correctly allows all standard
+            eCommerce routes (products, categories, shop, cart, checkout, payment confirmation) while still blocking
+            excessive bot-generated URLs. Auto-installs when both website_seo_protection and website_sale are present.
+            Contains only automated test cases — no UI, no new models. Compatible with Odoo 18 (Enterprise, Odoo.SH,
+            Ganemo Online). Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English &amp; Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#5D38A4;">SEO Protection</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    eCommerce Route Safety Validator</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Automatically validates that your SEO crawler guard never blocks eCommerce product pages, categories,
+                    the shopping cart, checkout or payment routes. Installs silently alongside <strong>website_sale</strong>.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5D38A4;"><i class="fa fa-shield mr-2"></i> Over-Aggressive Bot Guards</h4>
+                            <p style="text-align: justify;">SEO protection rules that are too strict can accidentally
+                                block <strong>legitimate eCommerce URLs</strong> such as product detail pages, category
+                                listings, cart operations, or the checkout flow — hurting conversions and user experience.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5D38A4;"><i class="fa fa-check-circle mr-2"></i> Automated Safety Net</h4>
+                            <p style="text-align: justify;">This companion module adds a dedicated test suite that runs
+                                automatically, confirming that all critical <strong>website_sale routes are always
+                                accessible</strong> even when the SEO protection layer is active.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & USER MANUAL -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup &amp; User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step Configuration &amp; Operational Guide</p>
+                </div>
+
+                <!-- Section 1: Prerequisites -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4" style="border-left: 5px solid #5D38A4; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #5D38A4; font-weight: 700;"><i class="fa fa-list-ol mr-2"></i> Step 1 — Prerequisites</h3>
+                            <p>Before installing this module, ensure the following Odoo applications are already active in your environment. Missing any of them will prevent the auto-install from triggering.</p>
+                            <div class="row mt-3">
+                                <div class="col-md-6 mb-3">
+                                    <div class="p-3 bg-white shadow-sm" style="border-radius:10px; border-top: 3px solid #5D38A4;">
+                                        <h6 class="font-weight-bold"><i class="fa fa-shield mr-1 text-primary"></i> website_seo_protection</h6>
+                                        <p class="text-muted small mb-0">The core SEO crawler guard module from Ganemo. This is the module that actually intercepts and blocks malicious bot patterns. It must be installed first.</p>
+                                        <p class="mt-1 small"><strong>Where to find it:</strong> Apps → Search "Website SEO Protection" → Install.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="p-3 bg-white shadow-sm" style="border-radius:10px; border-top: 3px solid #3c6dac;">
+                                        <h6 class="font-weight-bold"><i class="fa fa-shopping-cart mr-1 text-primary"></i> website_sale</h6>
+                                        <p class="text-muted small mb-0">The standard Odoo eCommerce module. It enables the <code>/shop</code> storefront and all product/checkout routes that this companion validates.</p>
+                                        <p class="mt-1 small"><strong>Where to find it:</strong> Apps → Search "eCommerce" → Install (or confirm it is already installed).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-info mt-3" role="alert">
+                                <i class="fa fa-info-circle mr-1"></i> <strong>Odoo.SH / Ganemo Online:</strong> Both modules are typically pre-installed. Check Settings → Installed Apps to confirm.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Installation -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4" style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-download mr-2"></i> Step 2 — Installation</h3>
+                            <p>This module installs itself automatically (zero manual effort in most cases). Below are both paths:</p>
+
+                            <h5 class="mt-4" style="color:#5D38A4;"><i class="fa fa-magic mr-1"></i> Path A: Automatic Installation (Recommended)</h5>
+                            <ol>
+                                <li>Install <code><strong>website_seo_protection</strong></code> from the Odoo App Store.</li>
+                                <li>Install or confirm <code><strong>website_sale</strong></code> (eCommerce) is already active.</li>
+                                <li>Odoo detects both dependencies are met and <strong>automatically installs</strong> <code>website_seo_protection_ecommerce</code> in the background.</li>
+                                <li>Go to <strong>Settings → Installed Apps</strong> and search <em>"eCommerce Protection"</em> to confirm the green checkmark appears.</li>
+                            </ol>
+                            <div class="alert alert-success" role="alert">
+                                <i class="fa fa-check-circle mr-1"></i> <strong>Expected result:</strong> The module appears with status <em>Installed</em> and no configuration is required. Your store is already being validated.
+                            </div>
+
+                            <h5 class="mt-4" style="color:#5D38A4;"><i class="fa fa-hand-o-right mr-1"></i> Path B: Manual Installation</h5>
+                            <p>Use this if the automatic trigger did not fire (e.g., dependency was updated after installation):</p>
+                            <ol>
+                                <li>Activate <strong>Developer Mode</strong>: Settings → General Settings → Activate the developer mode (bottom of the page).</li>
+                                <li>Go to <strong>Apps</strong> and click <strong>Update App List</strong> (this refreshes the app registry).</li>
+                                <li>Search for <em>"Website SEO Protection: eCommerce"</em>.</li>
+                                <li>Click <strong>Install</strong>.</li>
+                                <li>Odoo will install the module and run any pending migrations.</li>
+                            </ol>
+                            <div class="alert alert-warning" role="alert">
+                                <i class="fa fa-exclamation-triangle mr-1"></i> <strong>Note:</strong> If the module doesn't appear in the app list even after updating, ensure <code>website_seo_protection</code> is already installed — the companion depends on it.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: What happens after installation -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4" style="border-left: 5px solid #28a745; background-color: #f0fff4; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #28a745; font-weight: 700;"><i class="fa fa-info-circle mr-2"></i> Step 3 — What Happens After Installation</h3>
+                            <p>This module is a <strong>pure test companion</strong>. It has <em>no visible UI, no settings screens, no new menus, and no new models</em>. Here is exactly what it does:</p>
+                            <ul style="line-height: 2;">
+                                <li><i class="fa fa-check text-success mr-2"></i> Registers a set of automated HTTP integration tests under the <code>post_install</code> tag.</li>
+                                <li><i class="fa fa-check text-success mr-2"></i> Each test simulates a public-user HTTP GET request to a critical eCommerce route.</li>
+                                <li><i class="fa fa-check text-success mr-2"></i> The tests assert that routes like <code>/shop</code>, <code>/shop/cart</code>, and <code>/shop/checkout</code> return accessible responses (HTTP 200), never a 403 or 404 produced by the SEO guard.</li>
+                                <li><i class="fa fa-check text-success mr-2"></i> At least one regression test confirms the SEO guard <em>still blocks</em> malicious appointment crawler trap URLs — ensuring the guard wasn't disabled or weakened.</li>
+                            </ul>
+                            <div class="alert alert-info mt-3" role="alert">
+                                <i class="fa fa-terminal mr-1"></i> <strong>For developers:</strong> Tests run via <code>--test-tags /website_seo_protection_ecommerce</code> in the Odoo test runner. They are <code>HttpCase</code> tests and require a running HTTP server, making them suitable for Odoo.SH or CI pipelines.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Routes Reference -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4" style="border-left: 5px solid #ffc107; background-color: #fffdf0; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #856404; font-weight: 700;"><i class="fa fa-map-signs mr-2"></i> Step 4 — Routes Validated by Tests</h3>
+                            <p>The following table lists every eCommerce route covered by this companion module's automated test suite:</p>
+                            <div class="table-responsive mt-3">
+                                <table class="table table-bordered table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Route</th>
+                                            <th>Description</th>
+                                            <th>Expected HTTP Status</th>
+                                            <th>Guard Behavior</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><code>/shop</code></td>
+                                            <td>Main product catalog listing</td>
+                                            <td><span class="badge badge-success">200</span></td>
+                                            <td>Must NOT be blocked</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>/shop?page=N</code></td>
+                                            <td>Paginated shop (e.g., page 2+)</td>
+                                            <td><span class="badge badge-success">200</span> or <span class="badge badge-warning">404</span> (no products)</td>
+                                            <td>Must NOT receive <code>X-Robots-Tag: noindex</code> from our guard</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>/shop?domain=...</code></td>
+                                            <td>Shop with datetime-like query parameter</td>
+                                            <td>Any response except <span class="badge badge-danger">404 by guard</span></td>
+                                            <td>Guard must not trigger on non-appointment paths</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>/shop/cart</code></td>
+                                            <td>Shopping cart</td>
+                                            <td><span class="badge badge-success">200</span></td>
+                                            <td>Must NOT be blocked or redirected</td>
+                                        </tr>
+                                        <tr>
+                                            <td><code>/shop/checkout</code></td>
+                                            <td>Checkout flow</td>
+                                            <td><span class="badge badge-success">200</span> or redirect</td>
+                                            <td>Must NOT be blocked (conversion-critical)</td>
+                                        </tr>
+                                        <tr style="background-color:#fff3cd;">
+                                            <td><code>/appointment/page/2?domain=...</code></td>
+                                            <td>Crawler trap (regression test)</td>
+                                            <td><span class="badge badge-danger">404</span></td>
+                                            <td>Guard MUST still block — regression validation</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="alert alert-secondary mt-2" role="alert">
+                                <i class="fa fa-lightbulb-o mr-1"></i> <strong>Why the regression test matters:</strong> Installing <code>website_sale</code> could potentially alter route handling. This test ensures our guard's blocking logic remained intact even after eCommerce routes were added to the server.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 5: Running Tests Manually -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4" style="border-left: 5px solid #6f42c1; background-color: #faf7ff; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #6f42c1; font-weight: 700;"><i class="fa fa-terminal mr-2"></i> Step 5 — Running Tests Manually (For Developers)</h3>
+                            <p>If you want to validate the test suite explicitly in your environment (e.g., after a version update or a config change in <code>website_seo_protection</code>), follow these steps:</p>
+                            <h6 class="font-weight-bold mt-3">On Odoo.SH or a local Odoo server:</h6>
+                            <div class="bg-dark text-light p-3 rounded" style="font-family: monospace; font-size: 13px;">
+                                <span style="color:#a6e22e;">$</span> odoo-bin \
+                                <span style="color:#e6db74;">--test-enable</span> \
+                                <span style="color:#e6db74;">--test-tags</span> /website_seo_protection_ecommerce \
+                                <span style="color:#e6db74;">--stop-after-init</span> \
+                                <span style="color:#e6db74;">-d</span> your_database
+                            </div>
+                            <p class="mt-3">All 5 test methods should pass. If any fail:</p>
+                            <ul>
+                                <li><strong>test_shop_not_blocked fails:</strong> The SEO guard is intercepting <code>/shop</code> — check the guard's URL pattern configuration.</li>
+                                <li><strong>test_shop_with_domain_not_blocked fails:</strong> The guard is matching on query parameters beyond the path — review the regex in <code>website_seo_protection</code>.</li>
+                                <li><strong>test_layer1_still_blocks... fails:</strong> The SEO guard was weakened or misconfigured — the appointment trap is no longer being blocked.</li>
+                            </ul>
+                            <div class="alert alert-warning mt-2" role="alert">
+                                <i class="fa fa-exclamation-triangle mr-1"></i> These tests are <code>HttpCase</code> tests (they make real HTTP requests). They require the Odoo HTTP server to be running. They will not run in pure unit-test mode without <code>--test-enable</code>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote &amp; Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &amp;
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 18 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #5D38A4;">
+                            <h4 style="color: #5D38A4; font-weight: 700;"><i class="fa fa-shopping-bag mr-2"></i> Scenario 1: Auto-Installation Verification</h4>
+                            <p class="text-muted small">Validates that the companion auto-installs when dependencies are present.</p>
+                            <ol class="mt-3">
+                                <li>In a fresh database, install <strong>website_seo_protection</strong> and <strong>website_sale</strong>.</li>
+                                <li>Go to <strong>Settings → Installed Apps</strong> and search for <em>"SEO Protection: eCommerce"</em>.</li>
+                                <li><strong>Expected:</strong> Module appears with status <em>Installed</em> — without any manual installation step.</li>
+                                <li>Remove <code>website_sale</code> temporarily and re-check: the companion should also be uninstalled or marked as not applicable.</li>
+                                <li>Re-install <code>website_sale</code> → companion reappears automatically.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-shopping-bag mr-2"></i> Scenario 2: Main Shop Page Accessible to Public Users</h4>
+                            <p class="text-muted small">Tests that the primary catalog route is fully accessible.</p>
+                            <ol class="mt-3">
+                                <li>Open a browser in incognito mode (simulating a public/anonymous user).</li>
+                                <li>Navigate to <code>/shop</code>.</li>
+                                <li><strong>Expected:</strong> Product listing page loads with HTTP 200 — no redirect to <code>/web</code>, no 403, no 404.</li>
+                                <li>Open browser DevTools → Network tab → confirm there is no <strong>X-Robots-Tag</strong> response header from the server.</li>
+                                <li>Navigate to <code>/shop?page=2</code> → page loads (or returns 404 if only one page of products exists — either is acceptable as long as it is <em>not</em> our guard's 404).</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-product-hunt mr-2"></i> Scenario 3: Individual Product Pages Load Correctly</h4>
+                            <p class="text-muted small">Validates product detail pages are never accidentally blocked.</p>
+                            <ol class="mt-3">
+                                <li>From the <code>/shop</code> listing, click on any product to open its detail page (URL pattern: <code>/shop/product-slug</code>).</li>
+                                <li><strong>Expected:</strong> Product detail page renders completely with images, description, price, and an "Add to Cart" button.</li>
+                                <li>Repeat for 3 different products to rule out edge cases.</li>
+                                <li>Check browser DevTools → Headers: no <code>X-Robots-Tag: noindex</code> should appear (that header is only for confirmed bot trap URLs).</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #fd7e14;">
+                            <h4 style="color: #fd7e14; font-weight: 700;"><i class="fa fa-tags mr-2"></i> Scenario 4: Category Filter Pages Accessible</h4>
+                            <p class="text-muted small">Ensures product category landing pages (primary SEO targets) are never blocked.</p>
+                            <ol class="mt-3">
+                                <li>Create a product category in <strong>eCommerce → Configuration → Product Categories</strong>.</li>
+                                <li>Navigate to <code>/shop?category=1</code> (replace <code>1</code> with the actual category ID).</li>
+                                <li><strong>Expected:</strong> Filtered product listing loads — only products from the selected category appear.</li>
+                                <li>Now test with a datetime-like query parameter appended: <code>/shop?domain=('create_date','&gt;=',datetime.datetime(2026,3,12,0,0,0))</code></li>
+                                <li><strong>Expected:</strong> The server does NOT return 404 from the guard — the URL contains <code>/shop</code> (not <code>/appointment</code>), so the guard ignores it entirely.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-shopping-cart mr-2"></i> Scenario 5: Cart &amp; Checkout Flow Unaffected</h4>
+                            <p class="text-muted small">Validates the full purchase funnel is accessible after SEO protection is active.</p>
+                            <ol class="mt-3">
+                                <li>Add at least one product to the cart from <code>/shop</code>.</li>
+                                <li>Navigate directly to <code>/shop/cart</code>.</li>
+                                <li><strong>Expected:</strong> Cart page loads with item(s) listed. HTTP 200. No guard interference.</li>
+                                <li>Click <strong>Proceed to Checkout</strong>. Confirm URL changes to <code>/shop/checkout</code>.</li>
+                                <li><strong>Expected:</strong> Checkout page renders completely with address form and payment options.</li>
+                                <li>Verify no <code>X-Robots-Tag</code> or unusual redirect appears at any step of the checkout flow.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 6 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6610f2;">
+                            <h4 style="color: #6610f2; font-weight: 700;"><i class="fa fa-credit-card mr-2"></i> Scenario 6: Payment Confirmation Page Accessible</h4>
+                            <p class="text-muted small">Ensures post-purchase confirmation is never blocked — critical for payment provider callbacks.</p>
+                            <ol class="mt-3">
+                                <li>Complete a test purchase using the "Wire Transfer" payment method (no real transaction needed).</li>
+                                <li>After confirming the order, note the URL — typically <code>/shop/payment/confirmation?tx_id=N</code> or similar.</li>
+                                <li><strong>Expected:</strong> Confirmation page loads with order summary. No guard-triggered 404 or redirect.</li>
+                                <li>Using a different session (incognito), simulate a payment provider callback by directly accessing the confirmation URL with a token.</li>
+                                <li><strong>Expected:</strong> URL is accessible — payment provider integrations are never interrupted by the SEO guard.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 7 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #20c997;">
+                            <h4 style="color: #20c997; font-weight: 700;"><i class="fa fa-ban mr-2"></i> Scenario 7: Appointment Crawler Trap Still Blocked (Regression)</h4>
+                            <p class="text-muted small">Ensures that installing website_sale did not weaken the SEO guard's bot blocking capability.</p>
+                            <ol class="mt-3">
+                                <li>Using <code>curl</code> or a browser, access the following simulated bot trap URL:<br>
+                                    <code>/appointment/page/2?domain=('end_datetime','&gt;=',datetime.datetime(2026,3,12,14,12,29,664830))</code></li>
+                                <li><strong>Expected:</strong> Server returns HTTP <strong>404</strong>.</li>
+                                <li>Check the response headers: <code>X-Robots-Tag: noindex</code> must be present.</li>
+                                <li>Confirm <code>/shop</code> is still accessible in the same browser session — the guard is targeted, not global.</li>
+                                <li><strong>Pass criteria:</strong> 404 on the trap URL + 200 on <code>/shop</code> simultaneously.</li>
+                            </ol>
+                        </div>
+
+                        <!-- Scenario 8 -->
+                        <div class="mb-4 p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #343a40;">
+                            <h4 style="color: #343a40; font-weight: 700;"><i class="fa fa-google mr-2"></i> Scenario 8: Google Search Console Validation</h4>
+                            <p class="text-muted small">Enterprise-grade validation — ensures search engine crawlers can properly index the eCommerce store after SEO protection is active.</p>
+                            <ol class="mt-3">
+                                <li>In Google Search Console, use the <strong>URL Inspection</strong> tool.</li>
+                                <li>Enter your store's <code>/shop</code> URL and click <strong>Test Live URL</strong>.</li>
+                                <li><strong>Expected:</strong> Google reports the page is indexable — no blocked resources, no crawl errors caused by the SEO guard.</li>
+                                <li>Repeat for a product detail page (e.g., <code>/shop/my-product</code>) and a category filter URL.</li>
+                                <li><strong>Expected:</strong> No "Blocked by robots.txt", no "Redirect error", no HTTP error codes — all pages are marked as <em>Discovered and indexable</em>.</li>
+                                <li>Review the Crawl Stats report: confirm the guard is not causing a spike in 404 errors for <code>/shop</code> paths.</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ &amp; Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> This module didn't auto-install — why?</h5>
+                            <p class="text-muted mt-2"><strong>Cause:</strong> Auto-install only triggers when <em>both</em> <code>website_seo_protection</code> and <code>website_sale</code> are installed and detected simultaneously by Odoo's dependency engine.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go to Settings → Activate Developer Mode → Apps → <strong>Update App List</strong>, then search for "Website SEO Protection: eCommerce" and install manually.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> My product page returns 403 or redirects to /web?</h5>
+                            <p class="text-muted mt-2"><strong>Cause:</strong> The SEO guard's URL pattern may be matching <code>/shop/product-slug</code> paths in addition to <code>/appointment</code> paths — this indicates a misconfiguration in <code>website_seo_protection</code>.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Open the <code>website_seo_protection</code> controller configuration and verify the regex pattern is anchored to <code>/appointment</code> — not a global path matcher. Contact Ganemo support if unsure.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> Does this module add any settings, menus, or UI?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No — absolutely none. This is a <em>pure test companion</em>. It has zero visible impact on the Odoo UI.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Detail:</strong> It registers automated HTTP integration tests that run during Odoo's test pipeline. No new models, no new views, no configuration screens, no new security groups.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> Is this compatible with multi-website setups?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes. The SEO guard and this companion fully support Odoo's multi-website architecture.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> The HTTP tests run against the active website's routes (using Odoo's URL dispatch), meaning they validate whichever website is primary. For multi-website setups where each site has its own domain, test each site independently using Odoo's test runner with the appropriate domain configuration.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6610f2;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> Will this module affect website performance or load time?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No. The module contains only test code, which is never executed in production — only when explicitly running the Odoo test runner.</p>
+                            <p class="small text-muted"><i class="fa fa-info-circle mr-1"></i> Odoo loads test classes only in test mode (<code>--test-enable</code>). In a running production server, this module has zero runtime overhead.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #fd7e14;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> My checkout page redirects to the login page — is the guard causing this?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Almost certainly not. The SEO guard only blocks specific <code>/appointment</code> crawler trap patterns. Checkout redirects to login are standard Odoo behavior requiring authentication.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Verify:</strong> Check if you are logged out. Add a product to cart and try checkout as a signed-in user. If still redirecting, check your <code>website_sale</code> configuration for required login settings.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> I uninstalled website_sale — what happens to this module?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Odoo will automatically uninstall <code>website_seo_protection_ecommerce</code> when <code>website_sale</code> is removed, because it is a dependency. This is correct and expected behavior.</p>
+                            <p class="small text-info"><i class="fa fa-info-circle mr-1"></i> If you re-install <code>website_sale</code>, the companion will auto-install again alongside it — no data is lost since this module contains no stored data.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #343a40;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> Can I use this module on Odoo Community Edition?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The module was designed and tested for <strong>Odoo 18 Enterprise</strong> (including Odoo.SH and Ganemo Online). Community edition compatibility is not guaranteed.</p>
+                            <p class="small text-muted"><i class="fa fa-exclamation-triangle mr-1"></i> <code>website_sale</code> is available in Community, but certain route behaviors and test infrastructure may differ. Contact Ganemo support for a compatibility assessment.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #e83e8c;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> My Google Search Console shows 404 errors for /shop URLs — is this module the cause?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> This module itself cannot produce 404s — it has no controllers. However, if <code>website_seo_protection</code> has a misconfigured regex that matches <code>/shop</code>, it could produce this symptom.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Diagnose:</strong> Run the Odoo tests for this module (<code>--test-tags /website_seo_protection_ecommerce</code>). If <code>test_shop_not_blocked</code> fails, the guard is misconfigured. Contact Ganemo support with the test output.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q10 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6f42c1;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> How do I know the tests are actually running in my CI/CD pipeline?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The tests are tagged <code>post_install</code>, meaning they run after all modules in the init list are installed. They appear in the Odoo test log under the class name <code>TestEcommerceSeoProtection</code>.</p>
+                            <p class="small text-muted"><i class="fa fa-terminal mr-1"></i> Look for log lines like: <code>TestEcommerceSeoProtection.test_shop_not_blocked ... OK</code>. If you see "0 tests ran", confirm <code>--test-enable</code> is set and <code>--test-tags /website_seo_protection_ecommerce</code> is included.</p>
+                        </div>
+                    </div>
+
+                    <!-- Q11 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm" style="background-color: #fff; border-radius: 10px; border-top: 5px solid #20c997;">
+                            <h5 style="font-weight: 700; color: #333;"><i class="fa fa-question-circle mr-1"></i> Is the price correct? The module shows as free — why?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, this is intentional. <code>website_seo_protection_ecommerce</code> is a free companion module. Its value comes as part of the <code>website_seo_protection</code> ecosystem.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> It is automatically included when you purchase <code>website_seo_protection</code> — no additional license is required for this companion.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial &amp; Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                            <p class="text-muted small mb-2">Fastest response time.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://wa.me/18286726150" target="_blank"
+                                    style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    https://wa.me/18286726150
+                                </a>
+                            </div>
+                            <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                            <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:leads@ganemo.com" target="_blank"
+                                    style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    leads@ganemo.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                            <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                    style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    ganemo.co/appointment/5
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Technical Support Section -->
+        <div class="row mt-5">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                <p style="color:#777783">Existing customers regarding module functionality.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                    <div class="row align-items-center">
+                        <div class="col-5 text-center">
+                            <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                alt="QR Technical Support">
+                        </div>
+                        <div class="col-7 pl-4">
+                            <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                            <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                reports.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:help@ganemo.com" target="_blank"
+                                    style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    help@ganemo.com
+                                </a>
+                            </div>
+                            <p class="small text-muted mb-0">help@ganemo.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

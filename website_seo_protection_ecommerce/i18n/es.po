@@ -1,0 +1,43 @@
+# Translation of website_seo_protection_ecommerce to Spanish
+# . module: website_seo_protection_ecommerce
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the website_seo_protection_ecommerce package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module website_seo_protection_ecommerce 18.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: website_seo_protection_ecommerce
+#: model:ir.module.module,shortdesc:website_seo_protection_ecommerce.module_website_seo_protection_ecommerce
+msgid "Website SEO Protection: eCommerce"
+msgstr "Protección SEO del Sitio Web: eCommerce"
+
+#. module: website_seo_protection_ecommerce
+#: model:ir.module.module,summary:website_seo_protection_ecommerce.module_website_seo_protection_ecommerce
+msgid "Verifies SEO crawler guard does not block eCommerce routes. Auto-installs with website_sale."
+msgstr "Verifica que el guardián contra rastreadores SEO no bloquee las rutas de eCommerce. Se instala automáticamente con website_sale."
+
+#. module: website_seo_protection_ecommerce
+#: model:ir.module.module,description:website_seo_protection_ecommerce.module_website_seo_protection_ecommerce
+msgid ""
+"        Companion module for website_seo_protection that validates all critical eCommerce routes\n"
+"        (shop, products, categories, cart, checkout, payment confirmation) are never inadvertently\n"
+"        blocked by the SEO crawler protection guard. Auto-installs when both website_seo_protection\n"
+"        and website_sale are present. Contains only automated test cases — no UI or new models.\n"
+"    "
+msgstr ""
+"        Módulo complementario de website_seo_protection que valida que todas las rutas críticas de eCommerce\n"
+"        (tienda, productos, categorías, carrito, pago, confirmación de pago) nunca sean bloqueadas\n"
+"        inadvertidamente por el guardián de protección contra rastreadores SEO. Se instala automáticamente cuando\n"
+"        tanto website_seo_protection como website_sale están presentes. Contiene únicamente casos de prueba\n"
+"        automatizados — sin interfaz de usuario ni nuevos modelos.\n"
+"    "

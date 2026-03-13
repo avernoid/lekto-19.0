@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website SEO Protection: Appointment | Odoo Bot Guard by Ganemo</title>
+    <meta name="description"
+        content="Stop Odoo appointment URL crawler traps. Auto-installs with website_appointment and adds multi-layer HTTP protection against malicious bots.">
+    <meta name="keywords"
+        content="Odoo, SEO, Appointment, Crawler Trap, Bot Protection, website_appointment, Ganemo, Odoo 18">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI &amp; LLM</h2>
+        <p>This Odoo module 'website_seo_protection_appointment' is a companion module to 'website_seo_protection'.
+            It auto-installs alongside 'website_appointment' and provides multi-layer HTTP protection against
+            Odoo appointment URL crawler traps. Layer 1: returns HTTP 404 for ?domain= trap URLs (prevents
+            infinite crawl loops). Layer 2: adds X-Robots-Tag: noindex, nofollow to ?date= / ?datetime=
+            calendar navigation URLs. Fully supports Odoo multilingual URL prefixes (/en/, /es/, /pt_BR/, etc.).
+            Compatible with Odoo 18 (Enterprise, Odoo.SH, Ganemo Online). Zero configuration required.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English &amp; Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 60px !important; color: #5D38A4; font-weight: 900 !important;">
+                    <span style="color:#F72585;">Appointment</span> Guard
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 20px;font-weight: bold;">
+                    SEO Crawler Trap Protection for Appointments</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    Automatically stops Odoo appointment URLs from creating infinite crawler loops that exhaust your server.
+                    Install and forget — it activates the moment <strong>website_appointment</strong> is enabled.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5D38A4;"><i class="fa fa-bug mr-2"></i> Appointment Crawler Trap</h4>
+                            <p style="text-align: justify;">Odoo appointment pages contain a <strong>?domain=</strong>
+                                URL parameter that generates infinite combinations. Search engine bots read these as
+                                unique pages, creating thousands of fetches that slow down or crash your server.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5D38A4;"><i class="fa fa-calendar-times-o mr-2"></i> Calendar Navigation Indexed</h4>
+                            <p style="text-align: justify;">The <strong>?date=</strong> and <strong>?datetime=</strong>
+                                parameters in the appointment calendar are functionally equivalent pages. Without
+                                protection, Google indexes hundreds of identical calendar views, hurting your SEO score.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">How It Works</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Multi-Layer Protection</p>
+                </div>
+                <!-- Layer 1 -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #F72585; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #F72585; font-weight: 700;"><i class="fa fa-ban mr-2"></i> Layer 1: HTTP 404 — Kill the Loop Instantly</h3>
+                            <p class="lead">Any request to an appointment URL containing the <strong>?domain=</strong> parameter instantly receives an HTTP 404 response.</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Triggers at the WSGI middleware level — before Odoo ORM processes the request.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Stops the crawler immediately — no database queries, no rendering.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Fully supports all Odoo multilingual URL prefixes (/en/, /es/, /pt_BR/, etc.).</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Legitimate users with ?domain= in bookmarks are gracefully redirected.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Layer 2 -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-eye-slash mr-2"></i> Layer 2: X-Robots-Tag — Noindex Calendar Navigation</h3>
+                            <p class="lead">Appointment calendar pages with <strong>?date=</strong> or <strong>?datetime=</strong> parameters receive the HTTP header <code>X-Robots-Tag: noindex, nofollow</code>.</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-search text-primary mr-2"></i> SEO-Friendly Signal</h5>
+                                        <p class="text-muted">Google and other bots see the noindex directive via HTTP header, not HTML — so it works even if Odoo's page rendering is delayed.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-users text-primary mr-2"></i> Transparent to Real Users</h5>
+                                        <p class="text-muted">Human visitors navigating the appointment calendar experience no change — only bots are told not to index those calendar navigation pages.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Zero Config -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3ABF8F; background-color: #f0fdf8; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3ABF8F; font-weight: 700;"><i class="fa fa-magic mr-2"></i> Auto-Install &amp; Zero Configuration</h3>
+                            <p class="lead">This module has <strong>auto_install: True</strong>. If both <strong>website_seo_protection</strong> and <strong>website_appointment</strong> are installed, this module activates automatically — no manual install needed.</p>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #3ABF8F;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Smart Explainer:</strong> This design follows Odoo's official auto-install convention for bridge/companion modules. It guarantees protection is always active when the appointment module is present, without any admin intervention.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote &amp; Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &amp;
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 18/19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & USER MANUAL -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup &amp; User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step Configuration Guide</p>
+                </div>
+
+                <!-- Overview Box -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4" style="background: linear-gradient(135deg, #f0f4ff 0%, #f7f0ff 100%); border-radius: 15px; border: 1px dashed #5D38A4;">
+                            <h4 style="color: #5D38A4; font-weight: 700;"><i class="fa fa-magic mr-2"></i> This Module Is Zero-Configuration</h4>
+                            <p style="text-align: justify; margin-bottom: 0;">This companion module is designed to work <strong>automatically</strong> with no settings to configure. Its only requirement is that both <strong>website_seo_protection</strong> and <strong>website_appointment</strong> are installed. Once those are present, this module activates on its own and immediately starts protecting your appointment URLs. There is no admin panel, no toggle, no cron job to set up.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Prerequisites -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #5D38A4;">
+                            <h4 style="color: #5D38A4; font-weight: 700;"><i class="fa fa-list-ol mr-2"></i> Step 1 — Verify Prerequisites</h4>
+                            <p class="text-muted">Before installing, confirm both of the following modules are already installed in your Odoo database:</p>
+                            <div class="row mt-3">
+                                <div class="col-md-6 mb-3">
+                                    <div class="p-3 h-100" style="background:#f8f4ff; border-radius:10px; border:1px solid #d8c8f8;">
+                                        <h6 style="color:#5D38A4; font-weight:700;"><i class="fa fa-shield mr-2"></i>website_seo_protection</h6>
+                                        <p class="small text-muted mb-1">The core SEO protection engine by Ganemo. Provides the WSGI middleware that intercepts malicious crawler requests at the HTTP layer.</p>
+                                        <p class="small mb-0"><strong>Where to check:</strong> Apps → Search <code>website_seo_protection</code> → verify it shows as Installed (not "Install" button).</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="p-3 h-100" style="background:#f0f8ff; border-radius:10px; border:1px solid #c8e0f8;">
+                                        <h6 style="color:#3c6dac; font-weight:700;"><i class="fa fa-calendar mr-2"></i>website_appointment</h6>
+                                        <p class="small text-muted mb-1">Odoo's native Appointments module. This module provides the frontend appointment booking pages that are vulnerable to crawler traps.</p>
+                                        <p class="small mb-0"><strong>Where to check:</strong> Apps → Search <code>website_appointment</code> → verify it shows as Installed.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3" style="background-color:#fff3cd; border-radius:8px; border:1px solid #ffc107;">
+                                <p class="small mb-0"><i class="fa fa-exclamation-triangle text-warning mr-2"></i><strong>Important:</strong> If either module is not installed, install it first. Without both present, the companion module will not auto-install and appointment URLs will remain unprotected.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Installation -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-download mr-2"></i> Step 2 — Install the Parent Module</h4>
+                            <p class="text-muted">Install <strong>website_seo_protection</strong> from the Ganemo App Store page or from your Odoo Apps menu.</p>
+                            <ol class="mt-3" style="line-height: 2.2;">
+                                <li>Go to <strong>Apps</strong> in the top menu bar.</li>
+                                <li>Remove the default <em>"Apps"</em> filter from the search bar so you can search all modules.</li>
+                                <li>Search for <strong>website_seo_protection</strong>.</li>
+                                <li>Click <strong>Install</strong>. Odoo will download and activate the module.</li>
+                                <li>After installation completes, search again for <strong>website_seo_protection_appointment</strong>.</li>
+                                <li><strong>Expected result:</strong> It should already show as <em>Installed</em> automatically — because <code>website_appointment</code> was already present.</li>
+                            </ol>
+                            <div class="mt-3 p-3" style="background-color:#d4edda; border-radius:8px; border:1px solid #28a745;">
+                                <p class="small mb-0"><i class="fa fa-check-circle text-success mr-2"></i><strong>Auto-Install Confirmation:</strong> If you see this module listed as "Installed" immediately after installing the parent, everything is working perfectly. No further action is required.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Verify Active -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3ABF8F;">
+                            <h4 style="color: #3ABF8F; font-weight: 700;"><i class="fa fa-check-square-o mr-2"></i> Step 3 — Verify Protection Is Active</h4>
+                            <p class="text-muted">Confirm the protection is running correctly with this simple browser test. No developer tools required.</p>
+                            <ol class="mt-3" style="line-height: 2.2;">
+                                <li>Open a new browser tab (no need to be logged in — test as a public user).</li>
+                                <li>Navigate to your Odoo URL followed by: <code>/web/appointment/1?domain=[('user_id','=',1)]</code></li>
+                                <li>Example: <code>https://yourcompany.odoo.com/web/appointment/1?domain=[('user_id','=',1)]</code></li>
+                                <li><strong>Expected result:</strong> The server returns an HTTP 404 error page. The dangerous URL is blocked.</li>
+                                <li>Now navigate to the clean URL: <code>/web/appointment/1</code> (no parameters).</li>
+                                <li><strong>Expected result:</strong> The appointment booking page loads normally for your customers.</li>
+                            </ol>
+                            <div class="mt-3 p-3" style="background-color:#cce5ff; border-radius:8px; border:1px solid #3c6dac;">
+                                <p class="small mb-0"><i class="fa fa-info-circle mr-2" style="color:#3c6dac;"></i><strong>Why 404 and not a redirect?</strong> HTTP 404 is the strongest signal you can send to a crawler: "this URL does not exist and never will." Search engines remove 404 URLs from their index immediately. A redirect would still consume server resources. The 404 response is deliberately chosen as the most effective and efficient SEO/performance fix.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Multilingual sites -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #F72585;">
+                            <h4 style="color: #F72585; font-weight: 700;"><i class="fa fa-globe mr-2"></i> Step 4 — Multilingual Sites: No Extra Action Needed</h4>
+                            <p class="text-muted">If your Odoo instance runs in multiple languages (e.g., English, Spanish, Portuguese), the protection works automatically for all language prefixes.</p>
+                            <div class="row mt-3">
+                                <div class="col-md-4 mb-3">
+                                    <div class="p-3 text-center" style="background:#fff0f5; border-radius:10px; border:1px solid #F72585;">
+                                        <code style="font-size:13px;">/en/web/appointment/1?domain=...</code>
+                                        <p class="small text-danger mt-2 mb-0"><i class="fa fa-ban mr-1"></i> Blocked (HTTP 404)</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="p-3 text-center" style="background:#fff0f5; border-radius:10px; border:1px solid #F72585;">
+                                        <code style="font-size:13px;">/es/web/appointment/1?domain=...</code>
+                                        <p class="small text-danger mt-2 mb-0"><i class="fa fa-ban mr-1"></i> Blocked (HTTP 404)</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="p-3 text-center" style="background:#fff0f5; border-radius:10px; border:1px solid #F72585;">
+                                        <code style="font-size:13px;">/pt_BR/web/appointment/1?domain=...</code>
+                                        <p class="small text-danger mt-2 mb-0"><i class="fa fa-ban mr-1"></i> Blocked (HTTP 404)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="small text-muted mt-2 mb-0">The protection uses a regular-expression pattern that matches any language prefix automatically — including regional variants like <code>pt_BR</code>, <code>es_MX</code>, and <code>fr_BE</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Uninstall / Rollback -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-4 shadow-sm" style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6c757d;">
+                            <h4 style="color: #6c757d; font-weight: 700;"><i class="fa fa-undo mr-2"></i> Step 5 — Uninstall / Rollback (If Needed)</h4>
+                            <p class="text-muted">Removing this protection is as simple as uninstalling the module. There are no database migrations, no stored data, and no residual configuration.</p>
+                            <ol class="mt-3" style="line-height: 2.2;">
+                                <li>Go to <strong>Apps</strong> → search <code>website_seo_protection_appointment</code>.</li>
+                                <li>Click the three-dot menu (<strong>⋮</strong>) → <strong>Uninstall</strong>.</li>
+                                <li>Confirm the uninstall. The WSGI middleware is removed immediately on server restart.</li>
+                                <li>Appointment URLs with <code>?domain=</code> will again be accessible (and vulnerable) after uninstall.</li>
+                            </ol>
+                            <div class="mt-3 p-3" style="background-color:#f8d7da; border-radius:8px; border:1px solid #dc3545;">
+                                <p class="small mb-0"><i class="fa fa-exclamation-triangle text-danger mr-2"></i><strong>Warning:</strong> If you uninstall <strong>website_seo_protection</strong> (the parent module), this companion module will also be uninstalled automatically. All protection layers for appointments will be removed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No ongoing maintenance -->
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="p-3 text-center" style="background: #f0fff8; border-radius: 12px; border: 1px dashed #3ABF8F;">
+                            <p class="mb-0" style="color: #1a7a5e; font-weight: 600;"><i class="fa fa-check-circle mr-2"></i> No ongoing maintenance required. The module updates itself when you upgrade your Odoo instance. Your appointment pages are always protected.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #F72585;">
+                            <h4 style="color: #F72585; font-weight: 700;"><i class="fa fa-ban mr-2"></i>
+                                Scenario 1: Crawler Trap Blocked (Layer 1)</h4>
+                            <ol class="mt-3">
+                                <li>Install both <strong>website_seo_protection</strong> and <strong>website_appointment</strong>.</li>
+                                <li>Verify this module (<strong>website_seo_protection_appointment</strong>) auto-installed.</li>
+                                <li>Open a browser and navigate to: <code>/web/appointment/1?domain=[('user_id','=',1)]</code></li>
+                                <li><strong>Expected:</strong> HTTP 404 response — the page is blocked immediately.</li>
+                                <li><strong>Verify:</strong> Normal appointment URL <code>/web/appointment/1</code> still loads correctly.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-eye-slash mr-2"></i> Scenario 2:
+                                Calendar Noindex Header (Layer 2)</h4>
+                            <ol class="mt-3">
+                                <li>Navigate to an appointment calendar URL like: <code>/web/appointment/1?date=2024-03-15</code></li>
+                                <li>Open browser Developer Tools → Network → click the request.</li>
+                                <li>Check Response Headers.</li>
+                                <li><strong>Expected:</strong> <code>X-Robots-Tag: noindex, nofollow</code> header is present.</li>
+                                <li><strong>Verify:</strong> The same URL without ?date= does NOT have this header.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-language mr-2"></i> Scenario 3:
+                                Multilingual URL Support</h4>
+                            <ol class="mt-3">
+                                <li>Enable Spanish language in Odoo (Settings → Languages).</li>
+                                <li>Navigate to: <code>/es/web/appointment/1?domain=[('user_id','=',1)]</code></li>
+                                <li><strong>Expected:</strong> HTTP 404 — language-prefixed URLs are also protected.</li>
+                                <li>Also test <code>/en/web/appointment/1?date=2024-01-01</code> → must return X-Robots-Tag noindex.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #fd7e14;">
+                            <h4 style="color: #fd7e14; font-weight: 700;"><i class="fa fa-clock-o mr-2"></i> Scenario 4:
+                                DateTime Parameter Blocked (Layer 2 variant)</h4>
+                            <p class="text-muted mt-2">Validates that <code>?datetime=</code> (timestamp variant) is also handled.</p>
+                            <ol class="mt-3">
+                                <li>Navigate to: <code>/web/appointment/1?datetime=2024-03-15+09:00:00</code></li>
+                                <li>Open browser Developer Tools → Network → select the request.</li>
+                                <li>Check Response Headers for <code>X-Robots-Tag</code>.</li>
+                                <li><strong>Expected:</strong> <code>X-Robots-Tag: noindex, nofollow</code> is present.</li>
+                                <li><strong>Verify:</strong> The page itself still renders normally for real users — they are not blocked, only bots are told not to index it.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #6f42c1;">
+                            <h4 style="color: #6f42c1; font-weight: 700;"><i class="fa fa-rocket mr-2"></i> Scenario 5:
+                                Auto-Install Behavior Verification</h4>
+                            <p class="text-muted mt-2">Enterprise QA: confirm the auto-install mechanic works correctly in a fresh database.</p>
+                            <ol class="mt-3">
+                                <li>On a test database, uninstall <strong>website_seo_protection_appointment</strong> if present.</li>
+                                <li>Confirm <strong>website_appointment</strong> is installed and <strong>website_seo_protection</strong> is NOT installed.</li>
+                                <li>Install <strong>website_seo_protection</strong>.</li>
+                                <li>Go to Apps → refresh → search for <strong>website_seo_protection_appointment</strong>.</li>
+                                <li><strong>Expected:</strong> Module shows as Installed automatically (triggered by auto_install logic since both dependencies are now present).</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 6 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #20c997;">
+                            <h4 style="color: #20c997; font-weight: 700;"><i class="fa fa-user mr-2"></i> Scenario 6:
+                                Real User Booking is Unaffected</h4>
+                            <p class="text-muted mt-2">Validates that legitimate customers can still book appointments normally.</p>
+                            <ol class="mt-3">
+                                <li>Open the website as a public (logged-out) visitor.</li>
+                                <li>Navigate to a real appointment type page: <code>/web/appointment/&lt;id&gt;</code></li>
+                                <li>Select a date from the calendar widget and proceed through the booking flow.</li>
+                                <li><strong>Expected:</strong> The booking completes successfully — no blocks, no errors.</li>
+                                <li>Also navigate back/forward through calendar months using the native UI arrows.</li>
+                                <li><strong>Expected:</strong> Calendar navigation works correctly. The <code>?date=</code> parameter in navigation links does not interrupt the user experience.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 7 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-server mr-2"></i> Scenario 7:
+                                Performance Under Bot Flood (Load Test)</h4>
+                            <p class="text-muted mt-2">Enterprise QA: simulate a bot flood and confirm server resources are not exhausted.</p>
+                            <ol class="mt-3">
+                                <li>Using a load testing tool (e.g., Apache JMeter, k6, or cURL loop), send 100 concurrent requests to: <code>/web/appointment/1?domain=[('user_id','=',1)]</code></li>
+                                <li>Monitor the Odoo server CPU and memory usage during the test.</li>
+                                <li><strong>Expected:</strong> All 100 requests receive HTTP 404 immediately with near-zero CPU impact.</li>
+                                <li><strong>Expected:</strong> No database queries are executed — the middleware intercepts before ORM layer.</li>
+                                <li>Compare with a control run WITHOUT the module installed: CPU and DB queries spike significantly.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 8 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #343a40;">
+                            <h4 style="color: #343a40; font-weight: 700;"><i class="fa fa-sitemap mr-2"></i> Scenario 8:
+                                Multi-Website Odoo Setup</h4>
+                            <p class="text-muted mt-2">Enterprise QA for Odoo instances running multiple websites with different domains.</p>
+                            <ol class="mt-3">
+                                <li>Configure at least 2 websites in Odoo (Website → Configuration → Websites).</li>
+                                <li>Enable <strong>website_appointment</strong> on both websites.</li>
+                                <li>Test the <code>?domain=</code> trap URL from Website 1's domain.</li>
+                                <li><strong>Expected:</strong> HTTP 404 on Website 1.</li>
+                                <li>Test the same pattern from Website 2's domain.</li>
+                                <li><strong>Expected:</strong> HTTP 404 on Website 2 as well — protection applies globally.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 9 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #17a2b8;">
+                            <h4 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-google mr-2"></i> Scenario 9:
+                                Google Search Console — Index Coverage Improvement</h4>
+                            <p class="text-muted mt-2">Long-term enterprise QA: verify Google deindexes the trap URLs after protection is active.</p>
+                            <ol class="mt-3">
+                                <li>Before installation: fetch the crawl report for your domain from Google Search Console. Note how many appointment-related URLs are indexed.</li>
+                                <li>Install the module and wait 2–4 weeks for Google's recrawl cycle.</li>
+                                <li>Check Google Search Console → Index Coverage → review the "Not found (404)" count for appointment URLs.</li>
+                                <li><strong>Expected:</strong> Appointment trap URLs move from the "Indexed" bucket to "Not found (404)" or "Excluded" — confirming Google has deindexed them.</li>
+                                <li>Optional: use the <em>URL Inspection tool</em> in Search Console to fetch a specific trap URL and confirm Google sees the 404 response.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ &amp; Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">Module did not auto-install?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Auto-install only triggers when both <code>website_seo_protection</code> AND <code>website_appointment</code> are installed.
+                            </p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Install both dependencies first, then refresh the modules list or upgrade the database.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">My real appointment URLs return 404?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Only URLs with the <code>?domain=</code> or deeply nested query trap patterns are blocked.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Normal appointment URLs without <code>?domain=</code> are never affected. Test with a clean URL first.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">Does this affect Odoo's native sitemap?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No. The sitemap XML (sitemap.xml) is not affected. Only dynamic frontend appointment URLs with the trap parameters are filtered.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Detail:</strong> The middleware only acts on HTTP request paths matching the appointment pattern.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is this compatible with multi-website?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes! The middleware operates at the HTTP level, before website context is resolved, so it protects all websites in a multi-website Odoo setup.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> Language prefixes for all configured websites are covered automatically.</p>
+                        </div>
+                    </div>
+                    <!-- Q5 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6f42c1;">
+                            <h5 style="font-weight: 700; color: #333;">Does this slow down my Odoo instance?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No — it actually improves performance. The protection triggers at the WSGI middleware level, which is the earliest possible point, before Odoo's ORM, database, or rendering pipeline is involved.</p>
+                            <p class="small" style="color:#6f42c1;"><i class="fa fa-bolt mr-1"></i> <strong>Detail:</strong> A blocked crawler request costs approximately the same as a static file 404, with zero database queries. Legitimate user traffic is completely unaffected.</p>
+                        </div>
+                    </div>
+                    <!-- Q6 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #fd7e14;">
+                            <h5 style="font-weight: 700; color: #333;">My Google Search Console shows appointment URLs still indexed. Has the module fixed this?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The module starts protecting immediately after installation, but Google's deindexing cycle takes time. Googlebot needs to recrawl those URLs, receive the 404 response, and then update its index.</p>
+                            <p class="small text-warning"><i class="fa fa-clock-o mr-1"></i> <strong>Expectation:</strong> Allow 2 to 6 weeks for Google Search Console to reflect the change. You can accelerate this by submitting the affected URL prefix for removal via the <em>URL Removal Tool</em> in Search Console.</p>
+                        </div>
+                    </div>
+                    <!-- Q7 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
+                            <h5 style="font-weight: 700; color: #333;">Is the module compatible with Odoo.SH and custom domains?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes, fully compatible. The middleware operates at the Python/WSGI layer and is agnostic to the hosting platform, domain configuration, or SSL setup.</p>
+                            <p class="small" style="color:#17a2b8;"><i class="fa fa-cloud mr-1"></i> <strong>Detail:</strong> Tested and validated on Odoo.SH, Ganemo Online, and self-hosted Odoo Enterprise (Ubuntu + Nginx).</p>
+                        </div>
+                    </div>
+                    <!-- Q8 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #343a40;">
+                            <h5 style="font-weight: 700; color: #333;">Does this module require any robots.txt configuration?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> No. The HTTP 404 response (Layer 1) and the <code>X-Robots-Tag</code> HTTP header (Layer 2) are server-level signals that work independently of <code>robots.txt</code>. You do not need to edit any file.</p>
+                            <p class="small text-muted"><i class="fa fa-file-text-o mr-1"></i> <strong>Tip:</strong> You may still add appointment disallow rules to <code>robots.txt</code> as an optional extra layer, but it is not required for the protection to work.</p>
+                        </div>
+                    </div>
+                    <!-- Q9 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #20c997;">
+                            <h5 style="font-weight: 700; color: #333;">What happens if I have a custom appointment URL route (not /web/appointment)?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> The module uses a regular expression that matches Odoo's standard appointment URL pattern. If you have completely custom routes with different path segments (e.g., <code>/agenda/</code>), those are not currently covered.</p>
+                            <p class="small text-success"><i class="fa fa-phone mr-1"></i> <strong>Solution:</strong> Contact Ganemo support at <a href="mailto:help@ganemo.co">help@ganemo.co</a> for a custom pattern configuration tailored to your URL structure.</p>
+                        </div>
+                    </div>
+                    <!-- Q10 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #e83e8c;">
+                            <h5 style="font-weight: 700; color: #333;">Can I whitelist specific bots or user agents to bypass the protection?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> By design, Layer 1 (HTTP 404) blocks all requests with <code>?domain=</code> regardless of user agent — including human visitors who may have bookmarked such a URL. This is intentional: the parameter itself is the trap, not the requester.</p>
+                            <p class="small" style="color:#e83e8c;"><i class="fa fa-info-circle mr-1"></i> <strong>Note:</strong> Layer 2 (X-Robots-Tag) does not block anyone — it only adds a header. Real users see the calendar page normally. Only crawl bots read the header.</p>
+                        </div>
+                    </div>
+                    <!-- Q11 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #6610f2;">
+                            <h5 style="font-weight: 700; color: #333;">We are upgrading from Odoo 17 to Odoo 18. Is this module safe to upgrade?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes. This module adds only a WSGI middleware layer and contains no data models, no stored records, and no database migrations. Upgrading Odoo does not affect its configuration.</p>
+                            <p class="small" style="color:#6610f2;"><i class="fa fa-arrow-up mr-1"></i> <strong>Process:</strong> After upgrading to Odoo 18, simply reinstall the module from the Ganemo App Store and it will resume protection immediately.</p>
+                        </div>
+                    </div>
+                    <!-- Q12 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">After installing, Odoo shows an error on the appointments page. What do I do?</h5>
+                            <p class="text-muted mt-2"><strong>Likely Cause:</strong> A conflict with another custom module that also overrides appointment routes or WSGI middleware.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Check the Odoo server log for the specific traceback. Common causes: another module already returns a response for <code>?domain=</code> URLs. Contact Ganemo support with the log output at <a href="mailto:help@ganemo.co">help@ganemo.co</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial &amp; Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                            <p class="text-muted small mb-2">Fastest response time.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://wa.me/18286726150" target="_blank"
+                                    style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    https://wa.me/18286726150
+                                </a>
+                            </div>
+                            <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                            <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:leads@ganemo.com" target="_blank"
+                                    style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    leads@ganemo.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 mb-4">
+                <div class="h-100 p-4 border rounded bg-light">
+                    <div class="row align-items-center">
+                        <div class="col-4 text-center">
+                            <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                        </div>
+                        <div class="col-8">
+                            <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                            <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>LINK
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                    style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    ganemo.co/appointment/5
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Technical Support Section -->
+        <div class="row mt-5">
+            <div class="col-12 mb-4">
+                <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                <p style="color:#777783">Existing customers regarding module functionality.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                    <div class="row align-items-center">
+                        <div class="col-5 text-center">
+                            <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                alt="QR Technical Support">
+                        </div>
+                        <div class="col-7 pl-4">
+                            <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                            <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                reports.</p>
+
+                            <div class="d-inline-flex align-items-center mb-2 w-100"
+                                style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <div
+                                    style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                    COPY<br>ADDR
+                                </div>
+                                <div
+                                    style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                </div>
+                                <a href="mailto:help@ganemo.co" target="_blank"
+                                    style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                    help@ganemo.co
+                                </a>
+                            </div>
+                            <p class="small text-muted mb-0">help@ganemo.co</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
