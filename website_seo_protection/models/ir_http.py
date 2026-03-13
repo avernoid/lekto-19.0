@@ -82,8 +82,10 @@ class IrHttp(models.AbstractModel):
         # These URLs are valid (not traps) but should not be indexed.
         # Appointment ?date= links are generated dynamically by JS; we
         # cannot remove them server-side, so we tell bots to ignore them.
+        # Only process actual HTTP responses — JSON-RPC endpoints return a plain
+        # dict which has no .headers attribute and needs no robot directives.
         path = request.httprequest.path
-        if cls._is_appointment_path(path):
+        if isinstance(response, werkzeug.wrappers.Response) and cls._is_appointment_path(path):
             qs = request.httprequest.query_string.decode('utf-8', errors='ignore').lower()
             content_type = response.headers.get('Content-Type', '')
             if 'text/html' in content_type and ('date=' in qs or 'datetime=' in qs):

@@ -1,3 +1,4 @@
+import json
 from odoo.tests.common import HttpCase
 from odoo.tests import tagged
 
@@ -95,3 +96,41 @@ class TestSeoProtection(HttpCase):
             "Non-appointment routes must not get the crawler-trap noindex header"
         )
 
+    def test_rpc_endpoint_does_not_crash_with_attributeerror(self):
+        """Regression: _dispatch must not crash when endpoint returns a dict.
+
+        JSON-RPC calls (e.g. the Calendar module's /web/dataset/call_kw)
+        return a plain dict, not a werkzeug Response. Before the fix, Layer 2
+        of _dispatch tried response.headers.get(...) on that dict, raising:
+
+            AttributeError: 'dict' object has no attribute 'headers'
+
+        This caused all Calendar (and similar RPC) requests to return HTTP 500.
+
+        Fix: isinstance(response, werkzeug.wrappers.Response) guard in ir_http.py.
+        """
+        self.authenticate(None, None)
+        # /web/dataset/call_kw always returns a dict ({"jsonrpc": "2.0", "result": [...]}).
+        # res.lang.get_installed() is a public read-only method — no auth needed.
+        payload = json.dumps({
+            "jsonrpc": "2.0",
+            "method": "call",
+            "id": 1,
+            "params": {
+                "model": "res.lang",
+                "method": "get_installed",
+                "args": [],
+                "kwargs": {},
+            },
+        }).encode()
+        response = self.url_open(
+            '/web/dataset/call_kw',
+            data=payload,
+            headers={'Content-Type': 'application/json'},
+        )
+        self.assertNotEqual(
+            response.status_code, 500,
+            "JSON-RPC call must not return HTTP 500 due to AttributeError on dict response. "
+            "This would indicate the isinstance(response, werkzeug.wrappers.Response) guard "
+            "is missing in ir_http._dispatch()."
+        )
