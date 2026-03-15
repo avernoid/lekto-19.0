@@ -1,4 +1,4 @@
-﻿# Translation of Odoo Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * github_sales_access
 #
@@ -280,7 +280,6 @@ msgstr "Orphan detected: '%s' has GitHub access but no active subscription in Od
 #. ---------- Smart button ----------
 
 #. module: github_sales_access
-#: code:addons/github_sales_access/views/sale_order_views.xml:0
 #: model:ir.ui.view,arch_db:github_sales_access.view_sale_order_form_github_button
 msgid "Accesos GitHub"
 msgstr "GitHub Accesses"
