@@ -1,4 +1,5 @@
 # Translation of website_seo_protection to Spanish
+# . module: website_seo_protection
 # Copyright (C) 2025 Ganemo
 # This file is distributed under the same license as the website_seo_protection package.
 #
