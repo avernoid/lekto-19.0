@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MENU — Ventas > Pedidos > Accesos GitHub                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+    <!-- Entrada bajo el menú principal de Pedidos de sale (siempre disponible) -->
+    <menuitem id="menu_github_sales_access"
+              name="Accesos GitHub"
+              parent="sale.sale_order_menu"
+              action="action_github_sales_access_all"
+              sequence="30"/>
+</odoo>

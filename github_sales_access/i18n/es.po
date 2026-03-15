@@ -1,0 +1,442 @@
+﻿# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * github_sales_access
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <leads@ganemo.com>\n"
+"Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: github_sales_access
+#: model:ir.model,name:github_sales_access.model_github_sales_access
+msgid "GitHub Sales Access"
+msgstr "Acceso GitHub por Venta"
+
+#. module: github_sales_access
+#: model:ir.model,name:github_sales_access.model_github_sales_access_repo
+msgid "GitHub Sales Access — Repositorio"
+msgstr "Acceso GitHub — Repositorio"
+
+#. ---------- github.sales.access fields ----------
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__order_line_id
+msgid "Línea de Pedido (Conector)"
+msgstr "Order Line (Connector)"
+
+#. module: github_sales_access
+#: model:ir.model.fields,help:github_sales_access.field_github_sales_access__order_line_id
+msgid ""
+"Línea del producto GitHub Connector que genera este acceso. "
+"Vacío en registros tipo Huérfano detectados por el cron."
+msgstr ""
+"The GitHub Connector product line that generates this access record. "
+"Empty for Orphan records detected by the weekly cron."
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__order_id
+msgid "Pedido"
+msgstr "Sale Order"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__partner_id
+msgid "Cliente"
+msgstr "Customer"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__order_state
+msgid "Estado del Pedido"
+msgstr "Order Status"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__github_partner_id
+msgid "Usuario GitHub (Partner)"
+msgstr "GitHub User (Partner)"
+
+#. module: github_sales_access
+#: model:ir.model.fields,help:github_sales_access.field_github_sales_access__github_partner_id
+msgid ""
+"Odoo partner linked to the customer's GitHub account. "
+"The partner must have the \"GitHub Login\" (github_name) field filled in."
+msgstr ""
+"Partner de Odoo vinculado a la cuenta GitHub del cliente. "
+"El partner debe tener el campo \"GitHub Login\" (github_name) completado."
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__github_username
+msgid "GitHub Login"
+msgstr "GitHub Login"
+
+#. module: github_sales_access
+#: model:ir.model.fields,help:github_sales_access.field_github_sales_access__github_username
+msgid ""
+"GitHub technical username. "
+"Auto-filled from the partner's GitHub Login field, "
+"but can be edited manually for orphan records."
+msgstr ""
+"Nombre de usuario técnico en GitHub. "
+"Se rellena automáticamente desde el campo GitHub Login del partner, "
+"pero puede editarse manualmente en registros tipo Huérfano."
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__repo_ids
+msgid "Repositorios"
+msgstr "Repositories"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__repo_count
+msgid "Repos"
+msgstr "Repos"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__github_status
+msgid "Estado Global"
+msgstr "Overall Status"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__last_sync_date
+msgid "Último Sync"
+msgstr "Last Sync"
+
+#. ---------- github.sales.access.repo fields ----------
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access_repo__access_id
+msgid "Acceso"
+msgstr "Access"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access_repo__repository_id
+msgid "Repositorio"
+msgstr "Repository"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access_repo__github_status
+msgid "Estado"
+msgstr "Status"
+
+#. module: github_sales_access
+#: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access_repo__sync_message
+msgid "Resultado del Sync"
+msgstr "Sync Result"
+
+#. ---------- Selection values ----------
+
+#. module: github_sales_access
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access__github_status__draft
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access_repo__github_status__draft
+msgid "Borrador"
+msgstr "Draft"
+
+#. module: github_sales_access
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access__github_status__pending
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access_repo__github_status__pending
+msgid "Pendiente"
+msgstr "Pending"
+
+#. module: github_sales_access
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access__github_status__active
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access_repo__github_status__active
+msgid "Activo"
+msgstr "Active"
+
+#. module: github_sales_access
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access__github_status__inactive
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access_repo__github_status__inactive
+msgid "Revocado"
+msgstr "Revoked"
+
+#. module: github_sales_access
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access__github_status__error
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access_repo__github_status__error
+msgid "Error"
+msgstr "Error"
+
+#. module: github_sales_access
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access__github_status__orphan
+#: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access_repo__github_status__orphan
+msgid "Huérfano ⚠️"
+msgstr "Orphan ⚠️"
+
+#. ---------- View strings ----------
+
+#. module: github_sales_access
+#: model:ir.actions.act_window,name:github_sales_access.action_github_sales_access_all
+msgid "Accesos GitHub"
+msgstr "GitHub Accesses"
+
+#. module: github_sales_access
+#: model:ir.actions.act_window,help:github_sales_access.action_github_sales_access_all
+msgid "No hay accesos GitHub registrados."
+msgstr "No GitHub access records found."
+
+#. module: github_sales_access
+#: model:ir.actions.server,name:github_sales_access.action_server_sync_selected_accesses
+msgid "🔄 Sincronizar todos los repos"
+msgstr "🔄 Sync All Repos"
+
+#. module: github_sales_access
+#: model:ir.actions.server,name:github_sales_access.action_server_revoke_selected_accesses
+msgid "❌ Revocar todos los repos"
+msgstr "❌ Revoke All Repos"
+
+#. module: github_sales_access
+#: model:ir.actions.server,name:github_sales_access.action_server_check_discrepancies
+msgid "🔍 Detectar Huérfanos en GitHub"
+msgstr "🔍 Detect GitHub Orphans"
+
+#. ---------- Cron names ----------
+
+#. module: github_sales_access
+#: model:ir.cron,name:github_sales_access.cron_github_sync_active_accesses
+msgid "GitHub Access — Sync Active Accesses"
+msgstr "Acceso GitHub — Sincronizar Accesos Activos"
+
+#. module: github_sales_access
+#: model:ir.cron,name:github_sales_access.cron_github_check_discrepancies
+msgid "GitHub Access — Check Discrepancies"
+msgstr "Acceso GitHub — Detectar Discrepancias"
+
+#. ---------- Code strings (_()) ----------
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access.py:0
+#, python-format
+msgid "Sin usuario"
+msgstr "No user"
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access.py:0
+#, python-format
+msgid "Sin pedido"
+msgstr "No order"
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access.py:0
+#, python-format
+msgid ""
+"El partner '%s' ya tiene acceso activo para la línea de pedido '%s'. "
+"Elimina el acceso existente antes de crear uno nuevo."
+msgstr ""
+"Partner '%s' already has active access for order line '%s'. "
+"Delete the existing access record before creating a new one."
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access.py:0
+#, python-format
+msgid "No se puede revocar: no hay línea de pedido asociada."
+msgstr "Cannot revoke: no associated order line."
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access_repo.py:0
+#, python-format
+msgid "El acceso ya tiene una fila para el repositorio \"%s\"."
+msgstr "This access already has a row for repository \"%s\"."
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access_repo.py:0
+#, python-format
+msgid "Sync exitoso: usuario '%s' añadido como colaborador en '%s'."
+msgstr "Sync successful: user '%s' added as collaborator on '%s'."
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access_repo.py:0
+#, python-format
+msgid "Error al sincronizar: %s"
+msgstr "Error during sync: %s"
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access_repo.py:0
+#, python-format
+msgid "Acceso revocado: usuario '%s' eliminado de '%s'."
+msgstr "Access revoked: user '%s' removed from '%s'."
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access_repo.py:0
+#, python-format
+msgid "Error al revocar: %s"
+msgstr "Error during revoke: %s"
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access_repo.py:0
+#, python-format
+msgid "GitHub Sync Error — %s"
+msgstr "GitHub Sync Error — %s"
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/models/github_sales_access_repo.py:0
+#, python-format
+msgid "Huérfano detectado: '%s' tiene acceso GitHub pero no tiene suscripción activa en Odoo."
+msgstr "Orphan detected: '%s' has GitHub access but no active subscription in Odoo."
+
+#. ---------- Smart button ----------
+
+#. module: github_sales_access
+#: code:addons/github_sales_access/views/sale_order_views.xml:0
+#: model:ir.ui.view,arch_db:github_sales_access.view_sale_order_form_github_button
+msgid "Accesos GitHub"
+msgstr "GitHub Accesses"
+
+#. ---------- arch_db: view strings ----------
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
+msgid "🔄 Sincronizar Todos los Repos"
+msgstr "🔄 Sync All Repos"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
+msgid "❌ Revocar Todos los Repos"
+msgstr "❌ Revoke All Repos"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
+msgid "¿Estás seguro? Se revocarán TODOS los repositorios de este usuario."
+msgstr "Are you sure? ALL repositories for this user will be revoked."
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
+msgid "Usuario GitHub"
+msgstr "GitHub User"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
+msgid "Suscripción"
+msgstr "Subscription"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
+msgid "Repositorios"
+msgstr "Repositories"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
+msgid "¿Revocar el acceso a este repositorio?"
+msgstr "Revoke access to this repository?"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_list
+msgid "Accesos GitHub"
+msgstr "GitHub Accesses"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_list
+msgid "Usuario GitHub"
+msgstr "GitHub User"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_list
+msgid "Sincronizar todos los repos de este acceso"
+msgstr "Sync all repos for this access"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Buscar Accesos GitHub"
+msgstr "Search GitHub Accesses"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Activos"
+msgstr "Active"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Pendientes"
+msgstr "Pending"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Con Error"
+msgstr "With Error"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Revocados"
+msgstr "Revoked"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "⚠️ Huérfanos (sin suscripción)"
+msgstr "⚠️ Orphans (no subscription)"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "⚠️ Sin usuario GitHub asignado"
+msgstr "⚠️ No GitHub User Assigned"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Agrupar por"
+msgstr "Group By"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Estado GitHub"
+msgstr "GitHub Status"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_search
+msgid "Estado Pedido"
+msgstr "Order Status"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_action_helper
+msgid ""
+"Los accesos se crean automáticamente al confirmar un pedido\n"
+"que contenga el producto \"GitHub Connector\". También puedes\n"
+"crearlos manualmente desde aquí."
+msgstr ""
+"Accesses are created automatically when a sale order containing the\n"
+"\"GitHub Connector\" product is confirmed. You can also create them\n"
+"manually from here."
+
+#. ---------- product.template view strings ----------
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_product_template_github_access
+msgid "Repository Assignment Mode"
+msgstr "Modo de asignación de repositorios"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_product_template_github_access
+msgid "Fixed Repository List"
+msgstr "Lista fija de repositorios"
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_product_template_github_access
+msgid ""
+"When a GitHub access is created from a sale order, the repositories "
+"listed above are pre-loaded by default into the access record. "
+"You can review and edit them before syncing with GitHub. "
+"The sync will grant collaborator access to whichever repositories "
+"remain in the list at that moment. "
+"If the list is empty, no repositories will be pre-loaded "
+"(you can still add them manually on the access record)."
+msgstr ""
+"Al crear un acceso GitHub desde un pedido de venta, los repositorios "
+"indicados arriba se pre-cargan por defecto en el registro de acceso. "
+"Puedes revisarlos y editarlos antes de sincronizar con GitHub. "
+"La sincronización otorgará acceso de colaborador a los repositorios "
+"que permanezcan en la lista en ese momento. "
+"Si la lista está vacía, no se pre-cargará ningún repositorio "
+"(aún puedes añadirlos manualmente en el registro de acceso)."
+
+#. module: github_sales_access
+#: model:ir.ui.view,arch_db:github_sales_access.view_product_template_github_access
+msgid ""
+"When creating GitHub accesses, all products with a linked GitHub "
+"branch in the customer's confirmed orders (including the current "
+"order) will be searched automatically. No fixed list will be used."
+msgstr ""
+"Al crear accesos GitHub, se buscarán automáticamente todos los "
+"productos con rama GitHub vinculada en los pedidos confirmados "
+"del cliente (incluyendo el pedido actual). No se usará ninguna "
+"lista fija."

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Pestaña GitHub Connector en product.template -->
+    <record id="view_product_template_github_access" model="ir.ui.view">
+        <field name="name">product.template.github.access</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <!-- Checkbox en la fila superior (junto a Sales / Purchase) -->
+            <xpath expr="//div[@name='options']" position="inside">
+                <span class="d-inline-flex">
+                    <field name="is_github_connector"/>
+                    <label for="is_github_connector"/>
+                </span>
+            </xpath>
+
+            <!-- Pestaña completa de configuración GitHub (visible solo si es_connector) -->
+            <xpath expr="//page[@name='sales']" position="after">
+                <page string="GitHub Connector" name="github_connector"
+                      invisible="not is_github_connector">
+                    <group>
+                        <group string="Repository Assignment Mode">
+                            <field name="repos_default_mode" widget="radio"/>
+                        </group>
+                    </group>
+                    <group invisible="repos_default_mode != 'list'">
+                        <group string="Fixed Repository List">
+                            <field name="github_repository_ids"
+                                   widget="many2many_tags"
+                                   nolabel="1"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert"
+                         invisible="repos_default_mode != 'list'">
+                        <i class="fa fa-info-circle"/>
+                        When a GitHub access is created from a sale order, the repositories
+                        listed above are pre-loaded by default into the access record.
+                        You can review and edit them before syncing with GitHub.
+                        The sync will grant collaborator access to whichever repositories
+                        remain in the list at that moment.
+                        If the list is empty, no repositories will be pre-loaded
+                        (you can still add them manually on the access record).
+                    </div>
+                    <div class="alert alert-info" role="alert"
+                         invisible="repos_default_mode != 'order_lines'">
+                        <i class="fa fa-info-circle"/>
+                        When creating GitHub accesses, all products with a linked GitHub
+                        branch in the customer's confirmed orders (including the current
+                        order) will be searched automatically. No fixed list will be used.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

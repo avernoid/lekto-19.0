@@ -1,6 +1,6 @@
 {
     'name': 'Website Sale Module Dependency',
-    'version': '18.0.1.3.0',
+    'version': '18.0.1.3.2',
     'category': 'Website/Website',
     'summary': """Auto-add Odoo module dependencies to the eCommerce cart and display total price with dependencies.""",
     'description': """When a customer adds an Odoo module to their cart, this module automatically

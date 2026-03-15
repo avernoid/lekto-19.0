@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- SERVER ACTION: regularizar pedidos históricos en lote              -->
+    <!-- Visible en la vista lista de sale.order (Acción ▾)                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <record id="action_server_generate_github_accesses_orders" model="ir.actions.server">
+        <field name="name">🔑 Generar accesos GitHub</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_generate_github_accesses()</field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- BOTÓN en el formulario del pedido                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_sale_order_github_access" model="ir.ui.view">
+        <field name="name">sale.order.github.access</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Campo auxiliar: necesario para usar has_github_connector_lines en invisible -->
+            <xpath expr="//div[@name='button_box']" position="before">
+                <field name="has_github_connector_lines" invisible="1"/>
+                <field name="github_access_count" invisible="1"/>
+            </xpath>
+
+            <!-- Smart Button: ver accesos existentes -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_github_accesses"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-github"
+                        invisible="not has_github_connector_lines">
+                    <field name="github_access_count" widget="statinfo"
+                           string="Accesos GitHub"/>
+                </button>
+            </xpath>
+
+            <!-- Botón de acción: generar/regularizar accesos -->
+            <!-- Visible solo en pedidos confirmados con conector y sin accesos creados -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_generate_github_accesses"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-refresh"
+                        invisible="not has_github_connector_lines or state != 'sale'"
+                        title="Crear o regularizar registros de acceso GitHub para este pedido">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_text">Generar</span>
+                        <span class="o_stat_text">Accesos GitHub</span>
+                    </div>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

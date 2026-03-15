@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_github_sales_access_user,github.sales.access user,model_github_sales_access,sales_team.group_sale_salesman,1,1,1,0
+access_github_sales_access_manager,github.sales.access manager,model_github_sales_access,sales_team.group_sale_salesman_all_leads,1,1,1,1
+access_github_sales_access_repo_user,github.sales.access.repo user,model_github_sales_access_repo,sales_team.group_sale_salesman,1,1,1,0
+access_github_sales_access_repo_manager,github.sales.access.repo manager,model_github_sales_access_repo,sales_team.group_sale_salesman_all_leads,1,1,1,1
