@@ -1,6 +1,6 @@
 {
     'name': 'Github Connector',
-    'version': '18.0.1.0.5',
+    'version': '18.0.1.0.7',
     'category': 'Developer Tools',
     'summary': 'Synchronize GitHub Organizations, Repositories, and Teams with Odoo.',
     'description': """
@@ -17,11 +17,11 @@ Features:
     'company': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'depends': ['base_setup', 'web'],
+    'post_init_hook': 'post_init_hook',
     'data': [
         "security/ir_model_category.xml",
         "security/res_groups.xml",
         "security/ir.model.access.csv",
-        "data/ir_config_parameter.xml",
         "data/ir_cron.xml",
         "wizards/view_wizard_load_github_model.xml",
         "wizards/view_wizard_create_team.xml",

@@ -47,7 +47,7 @@
                         type="object"
                         class="oe_stat_button"
                         icon="fa-refresh"
-                        invisible="not has_github_connector_lines or state != 'sale'"
+                        invisible="not has_github_connector_lines or subscription_state not in ('2_renewal', '3_progress', '7_upsell')"
                         title="Crear o regularizar registros de acceso GitHub para este pedido">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_text">Generar</span>

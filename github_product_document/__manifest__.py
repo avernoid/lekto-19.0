@@ -1,6 +1,6 @@
 {
     'name': 'GitHub Product Document',
-    'version': '18.0.1.1.1',
+    'version': '18.0.1.1.2',
     'category': 'Developer Tools',
     'summary': """Deliver Odoo module source code as downloadable ZIP files via product.document.""",
     'description': """Link product variants to GitHub repository branches and automatically generate

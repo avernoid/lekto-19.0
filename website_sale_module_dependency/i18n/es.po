@@ -1,16 +1,16 @@
-﻿# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-#   * website_sale_module_dependency
+# Translation of website_sale_module_dependency to Spanish
+# . module: website_sale_module_dependency
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the website_sale_module_dependency package.
 #
 # Translators:
 # Ganemo <ayuda@ganemo.com>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: Odoo Module website_sale_module_dependency 18.0\n"
 "POT-Creation-Date: 2026-02-20 00:00+0000\n"
-"PO-Revision-Date: 2026-02-20 00:00+0000\n"
+"PO-Revision-Date: 2026-03-15 00:00+0000\n"
 "Last-Translator: Ganemo <ayuda@ganemo.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -100,32 +100,32 @@ msgid "Number of published recursive dependencies."
 msgstr "Número de dependencias recursivas publicadas."
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_template_form_view_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_template_form_view_dependency
 msgid "Module Info"
 msgstr "Información del Módulo"
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_template_form_view_dependency
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_template_form_view_dependency
 msgid "Dependencies"
 msgstr "Dependencias"
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.products_item_dependency_price
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.products_item_dependency_price
 msgid "Includes dependencies"
 msgstr "Incluye dependencias"
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
 msgid "Required Dependencies"
 msgstr "Dependencias Requeridas"
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
 msgid "This module requires all listed dependencies to work correctly. When you add it to your cart, dependencies are included automatically. If you already own any of these modules for the same version, you can remove them from your cart before checkout."
 msgstr "Este módulo requiere todas las dependencias listadas para funcionar correctamente. Al añadirlo a su carrito, las dependencias se incluyen automáticamente. Si ya posee alguno de estos módulos para la misma versión, puede retirarlos de su carrito antes de finalizar la compra."
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.cart_line_dependency_badge
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.cart_line_dependency_badge
 msgid "Required by "
 msgstr "Requerido por "
 
@@ -150,12 +150,6 @@ msgid " dependencies: "
 msgstr " dependencias: "
 
 #. module: website_sale_module_dependency
-#: code:addons/website_sale_module_dependency/models/product_template.py:0
-#, python-format
-msgid "Circular dependency detected: '%(name)s' appears in its own dependency chain. Please review the dependency configuration."
-msgstr "Dependencia circular detectada: '%(name)s' aparece en su propia cadena de dependencias. Por favor revise la configuración de dependencias."
-
-#. module: website_sale_module_dependency
 #: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.product_dependency_detail
 msgid "Not available"
 msgstr "No disponible"
@@ -166,34 +160,42 @@ msgid "Not published on website"
 msgstr "No publicado en el sitio web"
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.sale_order_form_add_dependencies
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.sale_order_form_add_dependencies
 msgid "🧩 Add Dependencies"
 msgstr "🧩 Agregar Dependencias"
 
 #. module: website_sale_module_dependency
-#: model:ir.ui.view,arch_db:website_sale_module_dependency.sale_order_form_add_dependencies
+#: model_terms:ir.ui.view,arch_db:website_sale_module_dependency.sale_order_form_add_dependencies
 msgid "Auto-add missing module dependencies to this order"
 msgstr "Agregar las dependencias faltantes de módulos a este pedido"
 
 #. module: website_sale_module_dependency
-#: code:addons/website_sale_module_dependency/models/sale_order.py:0
+#. odoo-python
+#: code:addons/website_sale_module_dependency/models/product_template.py:0
 #, python-format
+msgid "Circular dependency detected: '%(name)s' appears in its own dependency chain. Please review the dependency configuration."
+msgstr "Dependencia circular detectada: '%(name)s' aparece en su propia cadena de dependencias. Por favor revise la configuración de dependencias."
+
+#. module: website_sale_module_dependency
+#. odoo-python
+#: code:addons/website_sale_module_dependency/models/sale_order.py:0
 msgid "Module Dependencies"
 msgstr "Dependencias de Módulos"
 
 #. module: website_sale_module_dependency
+#. odoo-python
 #: code:addons/website_sale_module_dependency/models/sale_order.py:0
-#, python-format
 msgid "No Odoo modules with dependencies found in this order."
 msgstr "No se encontraron módulos Odoo con dependencias en este pedido."
 
 #. module: website_sale_module_dependency
+#. odoo-python
 #: code:addons/website_sale_module_dependency/models/sale_order.py:0
-#, python-format
 msgid "All dependencies are already satisfied. ✓"
 msgstr "Todas las dependencias ya están satisfechas. ✓"
 
 #. module: website_sale_module_dependency
+#. odoo-python
 #: code:addons/website_sale_module_dependency/models/sale_order.py:0
 #, python-format
 msgid "Added %(count)d dependency(ies): %(names)s"

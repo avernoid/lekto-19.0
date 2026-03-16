@@ -1,19 +1,20 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* github_project_portal
+# Translation of github_project_portal to Spanish
+# . module: github_project_portal
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the github_project_portal package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: Odoo Module github_project_portal 18.0\n"
 "POT-Creation-Date: 2026-02-18 00:00+0000\n"
-"PO-Revision-Date: 2026-02-18 00:00+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2026-03-15 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: github_project_portal
 #: model:ir.model.fields,field_description:github_project_portal.field_project_task_type__by_steps
@@ -151,91 +152,97 @@ msgid "If set, this repository can be selected in Odoo Projects."
 msgstr "Si está activado, este repositorio puede ser seleccionado en Proyectos Odoo."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
 #, python-format
 msgid "Revert PR Error: Could not process the ID of the pull request to revert:\n %s %s."
 msgstr "Error Revert PR: No se pudo procesar el ID del pull request a revertir:\n %s %s."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
 #, python-format
 msgid "Revert PR Error: Could not find the ID of the pull request to revert:  %s. %s."
 msgstr "Error Revert PR: No se pudo encontrar el ID del pull request a revertir:  %s. %s."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
 #, python-format
 msgid "Revert PR Error: Could not revert the pull request:  %s. %s."
 msgstr "Error Revert PR: No se pudo revertir el pull request:  %s. %s."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "Revert PR Error: PR DEV field is empty"
 msgstr "Error Revert PR: El campo PR DEV está vacío"
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "Revert PR Error: Created Branch field is empty"
 msgstr "Error Revert PR: El campo Rama Creada está vacío"
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "GitFlow Error: Could not find the pull request to revert. Contact system administrator."
 msgstr "Error GitFlow: No se encontró el pull request para revertir. Contacte al administrador del sistema."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "GitFlow Error: After closing or cancelling a task, you cannot go back to an initial state. Create a new task."
 msgstr "Error GitFlow: Después de cerrar o cancelar una tarea no puede volver a un estado inicial. Cree una nueva tarea."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "GitFlow Error: After deploying to production, you cannot go back to a previous state. Create a new task with necessary documentation."
 msgstr "Error GitFlow: Después de desplegar a producción no puede volver a un estado anterior. Cree una nueva tarea con la documentación necesaria."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "GitFlow Error: After deploying to the development branch, you must return to Backlog or Doing."
 msgstr "Error GitFlow: Después de desplegar a la rama de desarrollo debe volver a Backlog o Doing."
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
 #, python-format
 msgid "GitFlow Error: You must follow the established order, you cannot skip to state %s. The next state should be %s"
 msgstr "Error GitFlow: Debe seguir el orden establecido, no puede saltar al estado %s. El siguiente estado debe ser %s"
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "GitFlow Error: You must select a repository and a base branch"
 msgstr "Error GitFlow: Debe seleccionar un repositorio y una rama base"
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
 #, python-format
 msgid "Error: The branch %s does not exist in the repository: %s"
 msgstr "Error: La rama %s no existe en el repositorio: %s"
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
 #, python-format
 msgid "GITHUB ERROR - PR file validation: Changes found in more than one module, manually check the changes attempting to merge: \n - %s\n - %s"
 msgstr "ERROR GITHUB - validación archivo PR: cambios encontrados en más de un módulo, revise manualmente los cambios que intenta mezclar: \n - %s\n - %s"
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "GITHUB ERROR - PR file validation: Attribute module_type with value 'official' not found in __manifest__.py"
 msgstr "ERROR GITHUB - validación archivo PR: Atributo module_type con valor 'official' no encontrado en __manifest__.py"
 
 #. module: github_project_portal
+#. odoo-python
 #: code:addons/github_project_portal/models/project_github_portal.py:0
-#, python-format
 msgid "GITHUB ERROR - PR file validation: __manifest__.py file modification not found"
 msgstr "ERROR GITHUB - validación archivo PR: modificación de archivo __manifest__.py no encontrada"

@@ -10,4 +10,16 @@
               parent="sale.sale_order_menu"
               action="action_github_sales_access_all"
               sequence="30"/>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- MENU — Suscripciones > Accesos GitHub                              -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+    <!-- Entrada bajo el menú de Suscripciones (requiere sale_subscription) -->
+    <menuitem id="menu_github_sales_access_subscription"
+              name="Accesos GitHub"
+              parent="sale_subscription.menu_sale_subscription"
+              action="action_github_sales_access_all"
+              sequence="30"
+              groups="sales_team.group_sale_salesman"/>
 </odoo>

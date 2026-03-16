@@ -12,7 +12,7 @@ msgstr ""
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: github_sales_access
@@ -24,8 +24,6 @@ msgstr "Acceso GitHub por Venta"
 #: model:ir.model,name:github_sales_access.model_github_sales_access_repo
 msgid "GitHub Sales Access — Repositorio"
 msgstr "Acceso GitHub — Repositorio"
-
-#. ---------- github.sales.access fields ----------
 
 #. module: github_sales_access
 #: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access__order_line_id
@@ -106,8 +104,6 @@ msgstr "Overall Status"
 msgid "Último Sync"
 msgstr "Last Sync"
 
-#. ---------- github.sales.access.repo fields ----------
-
 #. module: github_sales_access
 #: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access_repo__access_id
 msgid "Acceso"
@@ -127,8 +123,6 @@ msgstr "Status"
 #: model:ir.model.fields,field_description:github_sales_access.field_github_sales_access_repo__sync_message
 msgid "Resultado del Sync"
 msgstr "Sync Result"
-
-#. ---------- Selection values ----------
 
 #. module: github_sales_access
 #: model:ir.model.fields.selection,name:github_sales_access.selection__github_sales_access__github_status__draft
@@ -166,8 +160,6 @@ msgstr "Error"
 msgid "Huérfano ⚠️"
 msgstr "Orphan ⚠️"
 
-#. ---------- View strings ----------
-
 #. module: github_sales_access
 #: model:ir.actions.act_window,name:github_sales_access.action_github_sales_access_all
 msgid "Accesos GitHub"
@@ -193,8 +185,6 @@ msgstr "❌ Revoke All Repos"
 msgid "🔍 Detectar Huérfanos en GitHub"
 msgstr "🔍 Detect GitHub Orphans"
 
-#. ---------- Cron names ----------
-
 #. module: github_sales_access
 #: model:ir.cron,name:github_sales_access.cron_github_sync_active_accesses
 msgid "GitHub Access — Sync Active Accesses"
@@ -205,21 +195,20 @@ msgstr "Acceso GitHub — Sincronizar Accesos Activos"
 msgid "GitHub Access — Check Discrepancies"
 msgstr "Acceso GitHub — Detectar Discrepancias"
 
-#. ---------- Code strings (_()) ----------
-
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access.py:0
-#, python-format
 msgid "Sin usuario"
 msgstr "No user"
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access.py:0
-#, python-format
 msgid "Sin pedido"
 msgstr "No order"
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access.py:0
 #, python-format
 msgid ""
@@ -230,61 +219,64 @@ msgstr ""
 "Delete the existing access record before creating a new one."
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access.py:0
-#, python-format
 msgid "No se puede revocar: no hay línea de pedido asociada."
 msgstr "Cannot revoke: no associated order line."
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access_repo.py:0
 #, python-format
 msgid "El acceso ya tiene una fila para el repositorio \"%s\"."
 msgstr "This access already has a row for repository \"%s\"."
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access_repo.py:0
 #, python-format
 msgid "Sync exitoso: usuario '%s' añadido como colaborador en '%s'."
 msgstr "Sync successful: user '%s' added as collaborator on '%s'."
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access_repo.py:0
 #, python-format
 msgid "Error al sincronizar: %s"
 msgstr "Error during sync: %s"
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access_repo.py:0
 #, python-format
 msgid "Acceso revocado: usuario '%s' eliminado de '%s'."
 msgstr "Access revoked: user '%s' removed from '%s'."
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access_repo.py:0
 #, python-format
 msgid "Error al revocar: %s"
 msgstr "Error during revoke: %s"
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access_repo.py:0
 #, python-format
 msgid "GitHub Sync Error — %s"
 msgstr "GitHub Sync Error — %s"
 
 #. module: github_sales_access
+#. odoo-python
 #: code:addons/github_sales_access/models/github_sales_access_repo.py:0
 #, python-format
 msgid "Huérfano detectado: '%s' tiene acceso GitHub pero no tiene suscripción activa en Odoo."
 msgstr "Orphan detected: '%s' has GitHub access but no active subscription in Odoo."
 
-#. ---------- Smart button ----------
-
 #. module: github_sales_access
 #: model:ir.ui.view,arch_db:github_sales_access.view_sale_order_form_github_button
 msgid "Accesos GitHub"
 msgstr "GitHub Accesses"
-
-#. ---------- arch_db: view strings ----------
 
 #. module: github_sales_access
 #: model:ir.ui.view,arch_db:github_sales_access.view_github_sales_access_form
@@ -396,8 +388,6 @@ msgstr ""
 "Accesses are created automatically when a sale order containing the\n"
 "\"GitHub Connector\" product is confirmed. You can also create them\n"
 "manually from here."
-
-#. ---------- product.template view strings ----------
 
 #. module: github_sales_access
 #: model:ir.ui.view,arch_db:github_sales_access.view_product_template_github_access

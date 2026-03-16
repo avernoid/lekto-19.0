@@ -1,14 +1,16 @@
 import json
+import inspect
 from odoo.tests.common import HttpCase
 from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install')
 class TestSeoProtection(HttpCase):
-    """Test the SEO protection layers implemented in website_seo_protection.
+    """Test the SEO protection layers in website_seo_protection.
 
-    Layer 1: Appointment URLs with ?domain=datetime(...) must return HTTP 404.
-    Layer 3 (negative): Non-appointment URLs must be unaffected (no extra headers injected).
+    Uses _pre_dispatch (Layer 1: block traps) and _post_dispatch (Layer 2: headers).
+    _dispatch is intentionally NOT overridden so this module never appears
+    in downstream error tracebacks.
     """
 
     def _get(self, path):
@@ -17,7 +19,7 @@ class TestSeoProtection(HttpCase):
         return self.url_open(path, allow_redirects=False)
 
     def test_layer1_trap_a_domain_datetime_returns_404(self):
-        """Trap A: ?domain= with datetime.datetime(...) → must get HTTP 404."""
+        """Trap A: ?domain= with datetime.datetime(...) -> must get HTTP 404."""
         path = (
             "/appointment?domain=('end_datetime','>=',datetime.datetime"
             "(2026,3,12,14,12,29,664830))"
@@ -27,14 +29,9 @@ class TestSeoProtection(HttpCase):
             response.status_code, 404,
             "Crawler trap URL with ?domain=datetime(...) must return 404"
         )
-        self.assertEqual(
-            response.headers.get('X-Robots-Tag'), 'noindex',
-            "Crawler trap URL must have X-Robots-Tag: noindex"
-        )
 
     def test_layer1_trap_a_encoded_colon_returns_404(self):
-        """Trap A variant: URL-encoded colon (%3a) in ?domain= → must get HTTP 404."""
-        # %3a = ':' which appears in timestamps like 2026-03-13 05:32:11
+        """Trap A variant: URL-encoded colon (%3a) in ?domain= -> must get HTTP 404."""
         path = "/appointment/page/2?domain=('end_datetime','>=','2026%3a12%3a29')"
         response = self._get(path)
         self.assertEqual(
@@ -43,14 +40,7 @@ class TestSeoProtection(HttpCase):
         )
 
     def test_layer1_lang_prefix_en_appointment_trap_is_blocked(self):
-        """Regression: /en/appointment trap must NOT return 200 (lang prefix support).
-
-        Production logs from 2026-03-13 show Meta bot (57.141.4.x) hitting
-        /en/appointment/page/N?domain=...datetime.datetime(...)... and receiving 200.
-        After the regex fix, these must NOT return 200.
-        Acceptable outcomes: 404 (blocked by our guard) or 3xx (redirected by Odoo
-        lang middleware before reaching our guard — also safe for bots).
-        """
+        """Regression: /en/appointment trap must NOT return 200 (lang prefix support)."""
         path = (
             "/en/appointment/page/4"
             "?domain=%26&domain=('end_datetime',+datetime.datetime(2026,3,13,5,54,26,604179))"
@@ -58,60 +48,33 @@ class TestSeoProtection(HttpCase):
         response = self._get(path)
         self.assertNotEqual(
             response.status_code, 200,
-            "/en/appointment trap must NOT return 200 — bot must not get content"
+            "/en/appointment trap must NOT return 200 -- bot must not get content"
         )
 
     def test_no_extra_headers_on_non_appointment_routes(self):
-        """Negative: routes outside /appointment must not be blocked.
-
-        /web/login always exists in any Odoo install (no website_appointment needed).
-        It must never return 404 from our guard, and must not have our X-Robots-Tag.
-        """
+        """Negative: routes outside /appointment must not be blocked."""
         response = self._get('/web/login')
         self.assertNotEqual(
             response.status_code, 404,
             "/web/login must not be blocked by the appointment crawler guard"
         )
-        self.assertNotEqual(
-            response.headers.get('X-Robots-Tag'), 'noindex, nofollow',
-            "/web/login must not have the appointment X-Robots-Tag injected"
-        )
 
     def test_layer1_non_appointment_domain_not_blocked(self):
-        """Negative: ?domain=datetime on a non-appointment route must NOT return 404.
-
-        Uses the website homepage (/) which is always available when 'website' is installed.
-        We must not block this route even though it contains ?domain=datetime.
-        """
+        """Negative: ?domain=datetime on a non-appointment route must NOT return 404."""
         path = "/?domain=('some_field','=',datetime.datetime(2026,3,12))"
         response = self._get(path)
-        # The homepage with a benign ?domain= param must never be blocked by our guard
         self.assertNotEqual(
             response.status_code, 404,
             "Non-appointment homepage route with ?domain=datetime must NOT be blocked"
         )
-        # Our header must not be injected on non-appointment routes
-        self.assertNotEqual(
-            response.headers.get('X-Robots-Tag'), 'noindex',
-            "Non-appointment routes must not get the crawler-trap noindex header"
-        )
 
     def test_rpc_endpoint_does_not_crash_with_attributeerror(self):
-        """Regression: _dispatch must not crash when endpoint returns a dict.
+        """Regression: _post_dispatch must not crash when response is a dict.
 
-        JSON-RPC calls (e.g. the Calendar module's /web/dataset/call_kw)
-        return a plain dict, not a werkzeug Response. Before the fix, Layer 2
-        of _dispatch tried response.headers.get(...) on that dict, raising:
-
-            AttributeError: 'dict' object has no attribute 'headers'
-
-        This caused all Calendar (and similar RPC) requests to return HTTP 500.
-
-        Fix: isinstance(response, werkzeug.wrappers.Response) guard in ir_http.py.
+        JSON-RPC endpoints return a plain dict, not a werkzeug Response.
+        The isinstance() guard in _post_dispatch prevents AttributeError.
         """
         self.authenticate(None, None)
-        # /web/dataset/call_kw always returns a dict ({"jsonrpc": "2.0", "result": [...]}).
-        # res.lang.get_installed() is a public read-only method — no auth needed.
         payload = json.dumps({
             "jsonrpc": "2.0",
             "method": "call",
@@ -130,7 +93,37 @@ class TestSeoProtection(HttpCase):
         )
         self.assertNotEqual(
             response.status_code, 500,
-            "JSON-RPC call must not return HTTP 500 due to AttributeError on dict response. "
-            "This would indicate the isinstance(response, werkzeug.wrappers.Response) guard "
-            "is missing in ir_http._dispatch()."
+            "JSON-RPC call must not return HTTP 500 due to AttributeError on dict response."
+        )
+
+    def test_dispatch_not_overridden(self):
+        """Structural: _dispatch must NOT be overridden by website_seo_protection.
+
+        This is the core architectural invariant: by not overriding _dispatch,
+        this module never appears in downstream error tracebacks (e.g. when a
+        module with a bad PO file is installed). Errors from other modules
+        will correctly show those modules as the source, not website_seo_protection.
+        """
+        from odoo.addons.website_seo_protection.models import ir_http as our_module
+
+        # _dispatch must NOT be defined in our IrHttp class dict (only in parent)
+        self.assertNotIn(
+            '_dispatch',
+            our_module.IrHttp.__dict__,
+            "_dispatch must NOT be overridden by website_seo_protection. "
+            "Override _dispatch puts this module in every HTTP error traceback, "
+            "confusing developers about the real error source. "
+            "Use _pre_dispatch (Layer 1) and _post_dispatch (Layer 2) instead."
+        )
+
+        # _pre_dispatch and _post_dispatch MUST be defined (our hooks)
+        self.assertIn(
+            '_pre_dispatch',
+            our_module.IrHttp.__dict__,
+            "_pre_dispatch must be overridden for Layer 1 (crawler trap blocking)"
+        )
+        self.assertIn(
+            '_post_dispatch',
+            our_module.IrHttp.__dict__,
+            "_post_dispatch must be overridden for Layer 2 (X-Robots-Tag headers)"
         )

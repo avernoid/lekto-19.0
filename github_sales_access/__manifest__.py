@@ -1,6 +1,6 @@
 {
     'name': 'GitHub Sales Access',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.15',
     'category': 'Sales/Sales',
     'summary': 'Manage GitHub repository access for active subscriptions from Odoo.',
     'description': """
@@ -26,6 +26,7 @@ Features:
         'github_product_document',
         'sale',
         'sale_management',
+        'sale_subscription',
     ],
     'data': [
         'security/ir.model.access.csv',
@@ -42,6 +43,6 @@ Features:
     'auto_install': False,
     'application': False,
     'currency': 'USD',
-    'price': 118.0,
+    'price': 279.0,
     'module_type': 'official',
 }

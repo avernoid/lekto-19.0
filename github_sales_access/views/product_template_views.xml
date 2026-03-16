@@ -1,53 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Pestaña GitHub Connector en product.template -->
+    <!-- Pestaña GitHub Sync en product.template -->
     <record id="view_product_template_github_access" model="ir.ui.view">
         <field name="name">product.template.github.access</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="sale.product_template_form_view"/>
         <field name="arch" type="xml">
-            <!-- Checkbox en la fila superior (junto a Sales / Purchase) -->
+
+            <!-- Checkbox "GitHub Sync" en la fila superior (junto a Sales / Purchase) -->
             <xpath expr="//div[@name='options']" position="inside">
                 <span class="d-inline-flex">
-                    <field name="is_github_connector"/>
-                    <label for="is_github_connector"/>
+                    <field name="is_github_sync"/>
+                    <label for="is_github_sync"/>
                 </span>
             </xpath>
 
-            <!-- Pestaña completa de configuración GitHub (visible solo si es_connector) -->
+            <!-- Pestaña GitHub Sync (visible solo si is_github_sync) -->
             <xpath expr="//page[@name='sales']" position="after">
-                <page string="GitHub Connector" name="github_connector"
-                      invisible="not is_github_connector">
+                <page string="GitHub Sync" name="github_sync"
+                      invisible="not is_github_sync">
+
+                    <!-- Selector de tipo de producto GitHub -->
                     <group>
-                        <group string="Repository Assignment Mode">
+                        <group string="Tipo de Producto GitHub">
+                            <field name="github_product_type" widget="radio"/>
+                        </group>
+                    </group>
+
+                    <!-- ── Sección: GitHub Connector ───────────────────── -->
+                    <group invisible="github_product_type != 'connector'">
+                        <group string="Modo de Asignación de Repositorios">
                             <field name="repos_default_mode" widget="radio"/>
                         </group>
                     </group>
-                    <group invisible="repos_default_mode != 'list'">
-                        <group string="Fixed Repository List">
+
+                    <!-- Lista de repositorios (connector, modo list) -->
+                    <group invisible="github_product_type != 'connector' or repos_default_mode != 'list'">
+                        <group string="Repositorios Otorgados por este Conector">
                             <field name="github_repository_ids"
                                    widget="many2many_tags"
                                    nolabel="1"/>
                         </group>
                     </group>
+
+                    <!-- Help connector — modo list -->
                     <div class="alert alert-info" role="alert"
-                         invisible="repos_default_mode != 'list'">
-                        <i class="fa fa-info-circle"/>
-                        When a GitHub access is created from a sale order, the repositories
-                        listed above are pre-loaded by default into the access record.
-                        You can review and edit them before syncing with GitHub.
-                        The sync will grant collaborator access to whichever repositories
-                        remain in the list at that moment.
-                        If the list is empty, no repositories will be pre-loaded
-                        (you can still add them manually on the access record).
+                         invisible="github_product_type != 'connector' or repos_default_mode != 'list'">
+                        <i class="fa fa-info-circle" title="Información"/> <strong>Lista fija de repositorios (Connector)</strong><br/>
+                        Los repositorios indicados arriba son los <em>candidatos</em> que se asignarán
+                        al acceso GitHub del cliente al confirmar el pedido. Para que un repositorio
+                        se añada efectivamente al acceso, deben cumplirse las <strong>tres condiciones</strong>:<br/>
+                        <ol style="margin-top:4px">
+                            <li>El cliente tiene contratado el <strong>módulo</strong> correspondiente.</li>
+                            <li>El cliente tiene contratado el <strong>fee de mantenimiento</strong>
+                                de ese repositorio en una suscripción en progreso (o en este mismo pedido).</li>
+                            <li>El cliente tiene contratado este <strong>GitHub Connector</strong> activo.</li>
+                        </ol>
+                        Los repositorios candidatos que no cumplan la condición 2 no se añadirán automáticamente
+                        (puedes añadirlos manualmente en el registro de acceso si corresponde).
                     </div>
+
+                    <!-- Help connector — modo order_lines -->
                     <div class="alert alert-info" role="alert"
-                         invisible="repos_default_mode != 'order_lines'">
-                        <i class="fa fa-info-circle"/>
-                        When creating GitHub accesses, all products with a linked GitHub
-                        branch in the customer's confirmed orders (including the current
-                        order) will be searched automatically. No fixed list will be used.
+                         invisible="github_product_type != 'connector' or repos_default_mode != 'order_lines'">
+                        <i class="fa fa-info-circle" title="Información"/> <strong>Basado en módulos comprados (Connector)</strong><br/>
+                        Al crear accesos GitHub, se buscarán automáticamente todos los productos con
+                        rama GitHub vinculada en los pedidos confirmados del cliente (incluyendo el
+                        pedido actual). Esos repos forman el conjunto <em>candidato</em>.<br/><br/>
+                        Para que cada repositorio candidato se añada efectivamente al acceso, deben
+                        cumplirse las <strong>tres condiciones</strong>:<br/>
+                        <ol style="margin-top:4px">
+                            <li>El cliente tiene contratado el <strong>módulo</strong> correspondiente.</li>
+                            <li>El cliente tiene contratado el <strong>fee de mantenimiento</strong>
+                                de ese repositorio en una suscripción en progreso (o en este mismo pedido).</li>
+                            <li>El cliente tiene contratado este <strong>GitHub Connector</strong> activo.</li>
+                        </ol>
+                        Los repositorios que no cumplan la condición 2 no se añadirán automáticamente.
                     </div>
+
+                    <!-- ── Sección: Fee de Mantenimiento ──────────────── -->
+                    <group invisible="github_product_type != 'maintenance_fee'">
+                        <group string="Repositorios Cubiertos por este Fee de Mantenimiento">
+                            <field name="github_repository_ids"
+                                   widget="many2many_tags"
+                                   nolabel="1"/>
+                        </group>
+                    </group>
+
+                    <!-- Help maintenance_fee -->
+                    <div class="alert alert-info" role="alert"
+                         invisible="github_product_type != 'maintenance_fee'">
+                        <i class="fa fa-info-circle" title="Información"/> <strong>Fee de Mantenimiento de Repositorios</strong><br/>
+                        Los repositorios listados arriba son los que quedan bajo mantenimiento cuando
+                        el cliente contrata este producto en una suscripción activa.<br/><br/>
+                        <strong>Cómo afecta al acceso GitHub:</strong> cuando el sistema crea o regenera
+                        los accesos GitHub de un cliente, únicamente añade al registro de acceso los
+                        repositorios que <em>simultáneamente</em> cumplen estas condiciones:<br/>
+                        <ol style="margin-top:4px">
+                            <li>Están en la lista de repositorios candidatos del <strong>GitHub Connector</strong>
+                                contratado por el cliente.</li>
+                            <li>Están cubiertos por un <strong>fee de mantenimiento activo</strong> del cliente,
+                                es decir, aparecen en este campo en algún pedido del cliente cuyo
+                                <em>subscription_state</em> sea "En progreso" (incluido el pedido actual al
+                                momento de la confirmación).</li>
+                            <li>El cliente tiene contratado un <strong>GitHub Connector</strong> activo
+                                (slot de usuario GitHub).</li>
+                        </ol>
+                        Si un repositorio no aparece en ningún fee de mantenimiento activo del cliente,
+                        no se añadirá automáticamente aunque esté en la lista del conector.
+                        El administrador puede añadirlo manualmente en el registro de acceso si lo considera
+                        apropiado.
+                    </div>
+
                 </page>
             </xpath>
         </field>

@@ -34,6 +34,16 @@
         <field name="code">model.cron_check_discrepancies()</field>
     </record>
 
+    <!-- Rellenar repos de huérfanos (sobre registros seleccionados) -->
+    <record id="action_server_fill_orphan_repos" model="ir.actions.server">
+        <field name="name">📦 Rellenar repos de huérfanos</field>
+        <field name="model_id" ref="model_github_sales_access"/>
+        <field name="binding_model_id" ref="model_github_sales_access"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_fill_orphan_repos()</field>
+    </record>
+
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- ACTION principal                                                    -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -123,8 +133,7 @@
                 <field name="partner_id" readonly="1" optional="show"/>
                 <field name="github_partner_id"
                        string="Usuario GitHub"
-                       domain="[('github_name', '!=', False)]"
-                       options="{'no_create': True}"/>
+                       placeholder="ej. octocat"/>
                 <field name="github_username" string="GitHub Login" optional="show"/>
                 <field name="order_id" string="Pedido" readonly="1" optional="show"/>
                 <field name="repo_count" string="Repos" widget="integer" readonly="1"/>
@@ -134,7 +143,19 @@
                        decoration-danger="github_status in ('error', 'inactive', 'orphan')"
                        decoration-muted="github_status == 'draft'"
                        readonly="1"/>
-                <field name="order_state" string="Estado Pedido" readonly="1" optional="show"/>
+                <field name="order_sale_state" string="Estado Pedido"
+                       widget="badge"
+                       decoration-success="order_sale_state == 'sale'"
+                       decoration-info="order_sale_state == 'sent'"
+                       decoration-danger="order_sale_state == 'cancel'"
+                       decoration-muted="order_sale_state == 'draft'"
+                       readonly="1" optional="show"/>
+                <field name="order_state" string="Estado Suscripción"
+                       widget="badge"
+                       decoration-success="order_state in ('2_renewal', '3_progress', '7_upsell')"
+                       decoration-warning="order_state == '4_paused'"
+                       decoration-danger="order_state == '6_churn'"
+                       readonly="1" optional="show"/>
                 <field name="last_sync_date" readonly="1" optional="show"/>
                 <button name="action_sync_all_repos"
                         string=""
@@ -170,6 +191,12 @@
                             type="object"
                             class="btn-danger"
                             confirm="¿Estás seguro? Se revocarán TODOS los repositorios de este usuario."/>
+                    <button name="action_fill_orphan_repos"
+                            string="🔍 Detectar repos en GitHub"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="github_status != 'orphan'"
+                            title="Busca en qué repositorios de GitHub tiene acceso este usuario y los añade como filas hijo."/>
                     <field name="github_status" widget="statusbar"
                            statusbar_visible="draft,pending,active,inactive"/>
                 </header>
@@ -177,18 +204,29 @@
                     <group string="Usuario GitHub">
                         <group>
                             <field name="github_partner_id"
-                                   domain="[('github_name', '!=', False)]"
-                                   options="{'no_create': True}"/>
+                                   placeholder="ej. octocat"/>
                             <field name="github_username"/>
                         </group>
                     </group>
                     <group string="Suscripción">
                         <group>
                             <field name="order_line_id"
-                                   domain="[('product_id.is_github_connector', '=', True)]"/>
+                                   domain="[('product_id.product_tmpl_id.github_product_type', '=', 'connector')]"/>
                             <field name="order_id" readonly="1"/>
                             <field name="partner_id" readonly="1"/>
-                            <field name="order_state" readonly="1"/>
+                            <field name="order_sale_state" string="Estado Pedido"
+                                   widget="badge"
+                                   decoration-success="order_sale_state == 'sale'"
+                                   decoration-info="order_sale_state == 'sent'"
+                                   decoration-danger="order_sale_state == 'cancel'"
+                                   decoration-muted="order_sale_state == 'draft'"
+                                   readonly="1"/>
+                            <field name="order_state" string="Estado Suscripción"
+                                   widget="badge"
+                                   decoration-success="order_state in ('2_renewal', '3_progress', '7_upsell')"
+                                   decoration-warning="order_state == '4_paused'"
+                                   decoration-danger="order_state == '6_churn'"
+                                   readonly="1"/>
                         </group>
                         <group>
                             <field name="last_sync_date" readonly="1"/>
@@ -244,8 +282,8 @@
         <field name="arch" type="xml">
             <search string="Buscar Accesos GitHub">
                 <field name="github_partner_id" string="Usuario GitHub"/>
+                <field name="github_username" string="GitHub Login"/>
                 <field name="partner_id" string="Cliente"/>
-                <field name="github_username"/>
                 <separator/>
                 <filter string="Activos"
                         name="active_in_github"
@@ -265,13 +303,13 @@
                 <separator/>
                 <filter string="⚠️ Sin usuario GitHub asignado"
                         name="missing_github_user"
-                        domain="[('github_partner_id', '=', False), ('github_username', '=', False), ('order_state', '=', 'sale')]"/>
+                        domain="[('github_partner_id', '=', False), ('github_username', '=', False), ('order_state', 'in', ['2_renewal', '3_progress', '7_upsell'])]"/>
                 <separator/>
                 <group expand="0" string="Agrupar por">
                     <filter string="Cliente" name="group_partner" context="{'group_by': 'partner_id'}"/>
                     <filter string="Usuario GitHub" name="group_github_user" context="{'group_by': 'github_partner_id'}"/>
                     <filter string="Estado GitHub" name="group_status" context="{'group_by': 'github_status'}"/>
-                    <filter string="Estado Pedido" name="group_order_state" context="{'group_by': 'order_state'}"/>
+                    <filter string="Estado Suscripción" name="group_order_state" context="{'group_by': 'order_state'}"/>
                 </group>
             </search>
         </field>
