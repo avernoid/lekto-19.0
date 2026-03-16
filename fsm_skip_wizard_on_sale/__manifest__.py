@@ -1,6 +1,6 @@
 {
     'name': 'FSM Skip Wizard On Sale',
-    'version': '19.0.1.0.19',
+    'version': '19.0.1.0.20',
     'category': 'Services/Field Service',
     'summary': 'Automatically log time without wizard when a confirmed sale exists',
     'description': """

@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from odoo import fields
+from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase
 
 
@@ -236,3 +237,64 @@ class TestFsmSkipWizardOnSale(TransactionCase):
                 timesheet.name, 'Automated register',
                 "Non-FSM tasks should never get 'Automated register' name"
             )
+
+    def test_auto_return_action_non_admin_no_access_error(self):
+        """
+        Regression test for AccessError on ir.actions.act_window.
+
+        When auto_return_to_previous_view is enabled and return_action_id is set,
+        a non-admin FSM user must NOT receive an AccessError.
+
+        Root cause was: self.return_action_id.read()[0] — ir.actions.act_window
+        is restricted to Administrators by default in Odoo.
+        Fix: self.return_action_id.sudo().read()[0]
+        """
+        # Get an action record to use as return_action_id.
+        # industry_fsm.action_fsm_task is always available when industry_fsm is installed.
+        return_action = self.env.ref('industry_fsm.action_fsm_task', raise_if_not_found=False)
+        if not return_action:
+            self.skipTest("industry_fsm.action_fsm_task not found — skipping regression test")
+
+        self.fsm_project.write({
+            'auto_return_to_previous_view': True,
+            'return_action_id': return_action.id,
+        })
+
+        # Create a non-admin FSM user
+        fsm_group = self.env.ref('industry_fsm.fsm_group_user')
+        project_user_group = self.env.ref('project.group_project_user')
+        timesheet_group = self.env.ref('hr_timesheet.group_hr_timesheet_user')
+
+        fsm_user = self.env['res.users'].create({
+            'name': 'FSM Non-Admin Test User',
+            'login': 'fsm_nonadmin_regression@test.com',
+            'email': 'fsm_nonadmin_regression@test.com',
+            'groups_id': [(6, 0, [
+                fsm_group.id,
+                project_user_group.id,
+                timesheet_group.id,
+            ])],
+        })
+
+        # Confirm this user CANNOT read ir.actions.act_window directly
+        with self.assertRaises(AccessError):
+            return_action.with_user(fsm_user).read(['name'])
+
+        # But _get_auto_return_action() must work WITHOUT raising AccessError
+        project_as_fsm = self.fsm_project.with_user(fsm_user)
+        try:
+            result = project_as_fsm._get_auto_return_action()
+        except AccessError as e:
+            self.fail(
+                f"_get_auto_return_action() raised AccessError for FSM user: {e}\n"
+                "Fix: use self.return_action_id.sudo().read()[0]"
+            )
+
+        self.assertEqual(
+            result.get('type'), 'ir.actions.act_window',
+            "Returned action must be of type ir.actions.act_window"
+        )
+        self.assertEqual(
+            result.get('target'), 'main',
+            "Returned action must have target='main' for clean navigation"
+        )

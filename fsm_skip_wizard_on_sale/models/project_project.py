@@ -51,7 +51,11 @@ class ProjectProject(models.Model):
         """
         self.ensure_one()
         if self.return_action_id:
-            action = self.return_action_id.read()[0]
+            # sudo() is safe here: we only read the record to build a
+            # navigation dict — no sensitive data is returned to the user.
+            # Without sudo(), non-admin FSM/Project users get AccessError
+            # because ir.actions.act_window is restricted to Administrators.
+            action = self.return_action_id.sudo().read()[0]
             # 'main' replaces the entire view stack — clean navigation, no breadcrumbs
             action['target'] = 'main'
             return action
