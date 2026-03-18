@@ -224,7 +224,7 @@ class TestPoFileStructure(TransactionCase):
 # ─── Helpers ────────────────────────────────────────────────────────────────────
 
 def _make_org(env):
-    return env['github.organization'].create({'name': 'TestOrg'})
+    return env['github.organization'].create({'name': 'TestOrg', 'github_name': 'TestOrg'})
 
 
 def _make_repo(env, org, name='test-repo'):
@@ -1456,7 +1456,7 @@ class TestFillOrphanRepos(TransactionCase):
     """Tests for action_fill_orphan_repos — fills in the specific repo lines
     for orphan parents that were detected without repo_ids.
 
-    GitHub API calls are mocked in memory.
+    The GitHub GraphQL API is mocked in memory via patch on graphql_query.
     """
 
     @classmethod
@@ -1476,32 +1476,64 @@ class TestFillOrphanRepos(TransactionCase):
         rec.write({'github_status': 'orphan'})
         return rec
 
+    def _build_graphql_response(self, repo_to_collaborators):
+        """Build the GraphQL response dict that graphql_query would return.
+
+        repo_to_collaborators: {repo_rec: [login, ...], ...}
+        """
+        nodes = []
+        for repo_rec, logins in repo_to_collaborators.items():
+            nodes.append({
+                'name': repo_rec.github_name,
+                'nameWithOwner': repo_rec.complete_name,
+                'collaborators': {
+                    'nodes': [{'login': ln} for ln in logins],
+                },
+            })
+        return {
+            'organization': {
+                'repositories': {
+                    'pageInfo': {'hasNextPage': False, 'endCursor': None},
+                    'nodes': nodes,
+                }
+            }
+        }
+
     def _run_fill(self, orphan_rec, repo_to_collaborators):
-        """Patch get_github_connector so each repo mock returns given collaborators."""
+        """Mock the GitHub token and requests.post so graphql_query returns expected data.
+
+        graphql_query() first calls get_github_token(). If there is no token in
+        ir.config_parameter the method raises UserError, which is silently caught
+        in action_fill_orphan_repos and no repo_lines are ever created.
+
+        Solution: set the token in ir.config_parameter for the test duration AND
+        patch requests.post so no real HTTP call is made.
+        """
         from unittest.mock import MagicMock, patch
 
-        def make_gh_repo_mock(outside_logins, invite_logins=None):
-            out = [MagicMock(login=ln) for ln in outside_logins]
-            inv = [MagicMock() for ln in (invite_logins or [])]
-            for i, ln in enumerate(invite_logins or []):
-                inv[i].invitee = MagicMock(login=ln)
-            gh_repo = MagicMock()
-            gh_repo.get_collaborators.return_value = out
-            gh_repo.get_pending_invitations.return_value = inv
-            return gh_repo
+        graphql_data = self._build_graphql_response(repo_to_collaborators)
 
-        # Build a mapping complete_name -> gh_repo_mock
-        mocks = {}
-        for repo_rec, logins in repo_to_collaborators.items():
-            mocks[repo_rec.complete_name] = make_gh_repo_mock(logins)
+        mock_resp = MagicMock()
+        mock_resp.raise_for_status.return_value = None
+        mock_resp.json.return_value = {'data': graphql_data}
 
-        gh_api_mock = MagicMock()
-        gh_api_mock.get_repo.side_effect = lambda cname: mocks.get(cname, make_gh_repo_mock([]))
+        # Ensure the GitHub token parameter exists in the test DB.
+        ICP = self.env['ir.config_parameter'].sudo()
+        original_token = ICP.get_param('github.access_token', default=False)
+        ICP.set_param('github.access_token', 'fake-test-token-for-graphql')
 
-        with patch.object(
-            type(self.repo1), 'get_github_connector', return_value=gh_api_mock
-        ):
-            orphan_rec.action_fill_orphan_repos()
+        try:
+            with patch(
+                'requests.post',
+                return_value=mock_resp,
+            ):
+                orphan_rec.action_fill_orphan_repos()
+        finally:
+            # Restore original token value (None/False → delete, else restore)
+            if original_token:
+                ICP.set_param('github.access_token', original_token)
+            else:
+                ICP.search([('key', '=', 'github.access_token')]).unlink()
 
     # ── Tests ────────────────────────────────────────────────────────────────
 
@@ -1551,9 +1583,9 @@ class TestFillOrphanRepos(TransactionCase):
             "Second call must not create duplicate repo lines.",
         )
 
-    def test_non_orphan_records_skipped(self):
-        """action_fill_orphan_repos must skip records that are NOT in 'orphan' status."""
-        login = 'fill-non-orphan-user'
+    def test_processes_all_selected_users(self):
+        """action_fill_orphan_repos must process all selected users, even if not 'orphan'."""
+        login = 'fill-active-user'
         # Create an active access (not orphan)
         rec = self.env['github.sales.access'].create({
             'github_username': login,
@@ -1564,35 +1596,55 @@ class TestFillOrphanRepos(TransactionCase):
         self._run_fill(rec, {self.repo1: [login]})
 
         rec.repo_ids.invalidate_recordset()
-        self.assertFalse(
+        self.assertTrue(
             rec.repo_ids,
-            "Non-orphan records must be skipped by action_fill_orphan_repos.",
+            "Active and draft records must be processed by action_fill_orphan_repos.",
         )
 
-    def test_fills_repo_for_pending_invite(self):
-        """action_fill_orphan_repos also detects users via pending invitations."""
-        login = 'fill-orphan-invite-user'
+    def test_repo_not_in_odoo_is_ignored(self):
+        """Repos returned by GraphQL that are not registered in Odoo must be silently ignored."""
+        login = 'fill-orphan-unknown-repo-user'
         parent = self._make_orphan_parent(login)
 
         from unittest.mock import MagicMock, patch
 
-        inv_mock = MagicMock()
-        inv_mock.invitee = MagicMock(login=login)
+        # Return a repo that doesn't exist in Odoo
+        graphql_data = {
+            'organization': {
+                'repositories': {
+                    'pageInfo': {'hasNextPage': False, 'endCursor': None},
+                    'nodes': [{
+                        'name': 'nonexistent-repo',
+                        'nameWithOwner': 'someorg/nonexistent-repo',
+                        'collaborators': {'nodes': [{'login': login}]},
+                    }],
+                }
+            }
+        }
 
-        gh_repo_mock = MagicMock()
-        gh_repo_mock.get_collaborators.return_value = []
-        gh_repo_mock.get_pending_invitations.return_value = [inv_mock]
+        mock_resp = MagicMock()
+        mock_resp.raise_for_status.return_value = None
+        mock_resp.json.return_value = {'data': graphql_data}
 
-        gh_api_mock = MagicMock()
-        gh_api_mock.get_repo.return_value = gh_repo_mock
+        ICP = self.env['ir.config_parameter'].sudo()
+        original_token = ICP.get_param('github.access_token', default=False)
+        ICP.set_param('github.access_token', 'fake-test-token-for-graphql')
 
-        with patch.object(
-            type(self.repo1), 'get_github_connector', return_value=gh_api_mock
-        ):
-            parent.action_fill_orphan_repos()
+        try:
+            with patch(
+                'requests.post',
+                return_value=mock_resp,
+            ):
+                parent.action_fill_orphan_repos()
+        finally:
+            if original_token:
+                ICP.set_param('github.access_token', original_token)
+            else:
+                ICP.search([('key', '=', 'github.access_token')]).unlink()
 
         parent.repo_ids.invalidate_recordset()
-        self.assertEqual(
-            len(parent.repo_ids), 2,
-            "Repo lines must be created for repos where user has a pending invitation.",
+        self.assertFalse(
+            parent.repo_ids,
+            "Repos not registered in Odoo must not create repo lines.",
         )
+

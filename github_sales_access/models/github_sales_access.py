@@ -578,32 +578,50 @@ class GithubSalesAccess(models.Model):
                 orphan_repo_line.id, login, repo.complete_name,
             )
 
+    _FILL_ORPHAN_GRAPHQL = """
+        query OrphanRepos($org: String!, $login: String!, $cursor: String) {
+          organization(login: $org) {
+            repositories(
+              first: 100
+              after: $cursor
+              affiliations: [OWNER]
+              orderBy: {field: NAME, direction: ASC}
+            ) {
+              pageInfo { hasNextPage endCursor }
+              nodes {
+                name
+                nameWithOwner
+                collaborators(affiliation: OUTSIDE, query: $login) {
+                  nodes { login }
+                }
+              }
+            }
+          }
+        }
+    """
+
     def action_fill_orphan_repos(self):
-        """Detecta en qué repositorios de GitHub está cada usuario huérfano.
+        """Detecta en qué repositorios de GitHub está cada usuario seleccionado.
 
-        Para cada acceso con github_status='orphan', hace 2 HTTP calls por repo
-        de la organización (get_collaborators + get_pending_invitations) para
-        determinar exactamente en qué repos tiene acceso el usuario y crea las
-        filas hijo `github.sales.access.repo` correspondientes con
-        `github_status='orphan'`.
-
-        Diseñado para ejecutarse sobre pocos registros (los huérfanos recién
-        detectados), no sobre la totalidad de accesos.
+        Consulta en GitHub todos los repos de la organización donde ese usuario es
+        colaborador externo. Si encuentra repositorios a los que el usuario tiene
+        acceso pero no están registrados en sus líneas, los añade como huérfanos.
+        
         Puede invocarse:
-          - Como server action masivo desde la lista (sobre registros seleccionados)
-          - Desde el botón '🔍 Detectar repos en GitHub' en el formulario del acceso
+          - Como server action masivo desde la lista.
+          - Desde el botón '🔍 Detectar repos en GitHub' en el formulario.
         """
-        orphans = self.filtered(lambda r: r.github_status == 'orphan')
-        if not orphans:
+        targets_with_login = self.filtered(lambda r: r.github_username)
+        if not targets_with_login:
             return
 
-        orphan_logins = set(orphans.mapped('github_username'))
-        parent_by_login = {rec.github_username: rec for rec in orphans if rec.github_username}
+        orgs = self.env['github.organization'].search([])
+        if not orgs:
+            return
 
-
+        # Mapa complete_name → repo Odoo (para lookup sin búsqueda BD por repo)
         all_repos = self.env['github.repository'].search([])
-        if not all_repos:
-            return
+        repo_by_name = {r.complete_name: r for r in all_repos}
 
         now = fields.Datetime.now()
         sync_msg = _(
@@ -612,72 +630,72 @@ class GithubSalesAccess(models.Model):
         )
         RepoLine = self.env['github.sales.access.repo']
 
-        # Reutilizar la misma conexión para todos los repos de la org
-        # (1 autenticación total, no 1 por repo)
-        gh_api_cache = {}  # org_id → gh_api
+        for parent in targets_with_login:
+            login = parent.github_username
 
-        for repo in all_repos:
-            try:
-                if repo.organization_id.id not in gh_api_cache:
-                    gh_api_cache[repo.organization_id.id] = repo.get_github_connector()
-                gh_api = gh_api_cache[repo.organization_id.id]
-                gh_repo = gh_api.get_repo(repo.complete_name)
-            except Exception as e:
-                _logger.warning(
-                    'GITHUB ACCESS fill_orphan: Could not connect to repo "%s": %s',
-                    repo.complete_name, str(e),
-                )
-                continue
-
-            try:
-                repo_outside = {
-                    c.login
-                    for c in gh_repo.get_collaborators(affiliation='outside')
-                }
-            except Exception as e:
-                _logger.warning(
-                    'GITHUB ACCESS fill_orphan: Could not fetch collaborators for "%s": %s',
-                    repo.complete_name, str(e),
-                )
-                continue
-
-            repo_pending = set()
-            try:
-                repo_pending = {
-                    inv.invitee.login
-                    for inv in gh_repo.get_pending_invitations()
-                    if inv.invitee
-                }
-            except Exception:
-                pass  # invitaciones opcionales según plan de GitHub
-
-            repo_collaborators = repo_outside | repo_pending
-            orphan_logins_in_repo = orphan_logins & repo_collaborators
-
-            for login in orphan_logins_in_repo:
-                parent = parent_by_login.get(login)
-                if not parent:
+            for org in orgs:
+                org_name = org.github_name
+                if not org_name:
                     continue
 
-                already_exists = RepoLine.search([
-                    ('access_id', '=', parent.id),
-                    ('repository_id', '=', repo.id),
-                ], limit=1)
-                if already_exists:
-                    already_exists.write({'last_sync_date': now})
-                    continue
+                # Paginar: recorrer todos los repos de la org (máx 100 por página)
+                cursor = None
+                has_next = True
+                while has_next:
+                    variables = {"org": org_name, "login": login, "cursor": cursor}
+                    try:
+                        data = parent.env['abstract.github.model'].graphql_query(
+                            self._FILL_ORPHAN_GRAPHQL, variables
+                        )
+                    except Exception as e:
+                        _logger.warning(
+                            'GITHUB ACCESS fill_orphan: GraphQL error for orphan "%s" '
+                            'in org "%s": %s',
+                            login, org_name, str(e),
+                        )
+                        break
 
-                RepoLine.create({
-                    'access_id': parent.id,
-                    'repository_id': repo.id,
-                    'github_status': 'orphan',
-                    'last_sync_date': now,
-                    'sync_message': sync_msg,
-                })
-                _logger.info(
-                    'GITHUB ACCESS fill_orphan: Added repo "%s" to orphan "%s" (parent id=%d).',
-                    repo.complete_name, login, parent.id,
-                )
+                    org_data = (data or {}).get('organization') or {}
+                    repos_page = org_data.get('repositories') or {}
+                    page_info = repos_page.get('pageInfo', {})
+                    has_next = page_info.get('hasNextPage', False)
+                    cursor = page_info.get('endCursor')
+
+                    for repo_node in repos_page.get('nodes', []):
+                        # collaborators devuelve solo los que coinciden con el query login
+                        collab_logins = {
+                            c['login']
+                            for c in (repo_node.get('collaborators') or {}).get('nodes', [])
+                        }
+                        if login not in collab_logins:
+                            continue
+
+                        full_name = repo_node.get('nameWithOwner', '')
+                        repo = repo_by_name.get(full_name)
+                        if not repo:
+                            # Repo existe en GitHub pero no registrado en Odoo — omitir
+                            continue
+
+                        already_exists = RepoLine.search([
+                            ('access_id', '=', parent.id),
+                            ('repository_id', '=', repo.id),
+                        ], limit=1)
+                        if already_exists:
+                            already_exists.write({'last_sync_date': now})
+                            continue
+
+                        RepoLine.create({
+                            'access_id': parent.id,
+                            'repository_id': repo.id,
+                            'github_status': 'orphan',
+                            'last_sync_date': now,
+                            'sync_message': sync_msg,
+                        })
+                        _logger.info(
+                            'GITHUB ACCESS fill_orphan: Added repo "%s" to orphan "%s" '
+                            '(parent id=%d).',
+                            full_name, login, parent.id,
+                        )
 
 
     def _find_or_create_orphan_parent(self, login, github_partner, github_display_name=None):

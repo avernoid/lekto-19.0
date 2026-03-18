@@ -3,6 +3,8 @@ import logging
 from datetime import datetime
 from urllib.request import urlopen
 
+import requests
+
 from github import Auth
 from github import Github
 from github.GithubException import UnknownObjectException
@@ -332,6 +334,55 @@ class AbstractGithubModel(models.AbstractModel):
                     "Por favor dirigirse a Ajustes / Opciones Generales / Github, configúrelo para poder autenticarse con GitHub."
                 )
             )
+
+    _GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
+
+    def graphql_query(self, query, variables=None):
+        """Executes a GraphQL query against the GitHub API.
+
+        Uses the same token as get_github_connector() so no extra
+        configuration is needed.
+
+        :param query: str — GraphQL query string
+        :param variables: dict — optional variables for the query
+        :return: dict — the 'data' key from the GraphQL response
+        :raises: UserError on HTTP errors or GraphQL errors in the response
+        """
+        token = self.get_github_token()
+        if not token:
+            raise UserError(
+                _(
+                    "El parámetro token de Github no está configurado."
+                    " Por favor dirigirse a Ajustes / Opciones Generales / Github,"
+                    " configúrelo para poder autenticarse con GitHub."
+                )
+            )
+        payload = {"query": query}
+        if variables:
+            payload["variables"] = variables
+        try:
+            response = requests.post(
+                self._GITHUB_GRAPHQL_URL,
+                json=payload,
+                headers={
+                    "Authorization": "Bearer %s" % token,
+                    "Content-Type": "application/json",
+                },
+                timeout=30,
+            )
+            response.raise_for_status()
+        except requests.exceptions.RequestException as e:
+            raise UserError(
+                _("GitHub GraphQL API error: %s") % str(e)
+            ) from e
+
+        result = response.json()
+        if "errors" in result:
+            messages = "; ".join(
+                err.get("message", str(err)) for err in result["errors"]
+            )
+            raise UserError(_("GitHub GraphQL returned errors: %s") % messages)
+        return result.get("data", {})
 
     def create_in_github(self):
         """Create an object in Github through the API

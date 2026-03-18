@@ -195,7 +195,6 @@
                             string="🔍 Detectar repos en GitHub"
                             type="object"
                             class="btn-secondary"
-                            invisible="github_status != 'orphan'"
                             title="Busca en qué repositorios de GitHub tiene acceso este usuario y los añade como filas hijo."/>
                     <field name="github_status" widget="statusbar"
                            statusbar_visible="draft,pending,active,inactive"/>
