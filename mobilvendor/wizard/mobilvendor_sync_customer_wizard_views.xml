@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Wizard View -->
+    <record id="view_mobilvendor_sync_customer_wizard_form" model="ir.ui.view">
+        <field name="name">mobilvendor.sync.customer.wizard.form</field>
+        <field name="model">mobilvendor.sync.customer.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Descargar desde Mobilvendor">
+                <group>
+                    <p class="text-muted" colspan="2">
+                        Ingrese el RUC, Cédula o Identificación exacta del cliente tal cual está registrado en Mobilvendor. 
+                        Odoo irá a consultarlo de forma individual para descargarlo inmediatamente.
+                    </p>
+                    <field name="vat"/>
+                </group>
+                <footer>
+                    <button name="action_sync_customer" type="object" string="Descargar Cliente" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action to open wizard -->
+    <record id="action_mobilvendor_sync_customer_wizard" model="ir.actions.act_window">
+        <field name="name">Descargar desde Mobilvendor</field>
+        <field name="res_model">mobilvendor.sync.customer.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menú Item para cuando el cliente ni siquiera existe en Odoo -->
+    <menuitem id="menu_mobilvendor_sync_customer"
+              name="Descargar Cliente de Mobilvendor"
+              parent="contacts.menu_contacts"
+              action="action_mobilvendor_sync_customer_wizard"
+              sequence="90"/>
+
+    <!-- Server Action para cuando seleccionan a "Actualizar" desde un cliente existente en la lista -->
+    <record id="action_server_mobilvendor_sync_customer" model="ir.actions.server">
+        <field name="name">Actualizar desde Mobilvendor</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code"><![CDATA[
+action = env.ref('mobilvendor.action_mobilvendor_sync_customer_wizard').read()[0]
+# Si se seleccionó uno, pre-llenar con el VAT
+if records and records[0].vat:
+    action['context'] = {'default_vat': records[0].vat}
+        ]]></field>
+    </record>
+</odoo>

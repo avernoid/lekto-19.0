@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mobilvendor_route,mobilvendor.route,model_mobilvendor_route,base.group_user,1,1,1,1
+access_mobilvendor_route_line,mobilvendor.route.line,model_mobilvendor_route_line,base.group_user,1,1,1,1
+access_mobilvendor_route_operation_type,mobilvendor.route.operation.type,model_mobilvendor_route_operation_type,base.group_user,1,1,1,1
+access_mobilvendor_route_segment,mobilvendor.route.segment,model_mobilvendor_route_segment,base.group_user,1,1,1,1
+access_mobilvendor_route_territory,mobilvendor.route.territory,model_mobilvendor_route_territory,base.group_user,1,1,1,1
+access_mobilvendor_route_agency,mobilvendor.route.agency,model_mobilvendor_route_agency,base.group_user,1,1,1,1
+access_mobilvendor_route_employee,mobilvendor.route.employee,model_mobilvendor_route_employee,base.group_user,1,1,1,1
+access_mobilvendor_sync_customer_wizard,mobilvendor.sync.customer.wizard,model_mobilvendor_sync_customer_wizard,base.group_user,1,1,1,1

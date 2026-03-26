@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form view inheritance -->
+    <record id="view_account_payment_form_mobilvendor" model="ir.ui.view">
+        <field name="name">account.payment.form.mobilvendor</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="mobilvendor_id" readonly="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Search view inheritance -->
+    <record id="view_account_payment_search_mobilvendor" model="ir.ui.view">
+        <field name="name">account.payment.search.mobilvendor</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_search"/>
+        <field name="arch" type="xml">
+
+            <!-- Add mobilvendor_id to search fields -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="mobilvendor_id" string="Mobilvendor ID"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

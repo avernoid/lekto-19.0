@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_mobilvendor_route_operation_type_tree" model="ir.ui.view">
+        <field name="name">mobilvendor.route.operation.type.list</field>
+        <field name="model">mobilvendor.route.operation.type</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mobilvendor_route_segment_tree" model="ir.ui.view">
+        <field name="name">mobilvendor.route.segment.list</field>
+        <field name="model">mobilvendor.route.segment</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mobilvendor_route_territory_tree" model="ir.ui.view">
+        <field name="name">mobilvendor.route.territory.list</field>
+        <field name="model">mobilvendor.route.territory</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mobilvendor_route_agency_tree" model="ir.ui.view">
+        <field name="name">mobilvendor.route.agency.list</field>
+        <field name="model">mobilvendor.route.agency</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mobilvendor_route_tree" model="ir.ui.view">
+        <field name="name">mobilvendor.route.list</field>
+        <field name="model">mobilvendor.route</field>
+        <field name="arch" type="xml">
+            <list string="Sales Routes">
+                <field name="mobilvendor_id" optional="show"/>
+                <field name="name"/>
+                <field name="shortname" optional="hide"/>
+                <field name="operation_type_id"/>
+                <field name="agency_id"/>
+                <field name="territory_id" optional="hide"/>
+                <field name="employee_assignment_ids" widget="many2many_tags" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mobilvendor_route_form" model="ir.ui.view">
+        <field name="name">mobilvendor.route.form</field>
+        <field name="model">mobilvendor.route</field>
+        <field name="arch" type="xml">
+            <form string="Route Configuration">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_customers"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users">
+                            <field name="partner_count" widget="statinfo" string="Customers"/>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="e.g. Ruta Norte - Wholesalers"/></h1>
+                        <h3>
+                            <span class="o_form_label">MV Code: </span>
+                            <field name="mobilvendor_id" class="oe_inline"/>
+                        </h3>
+                    </div>
+
+                    <group>
+                        <group string="Identification">
+                            <field name="shortname"/>
+                            <field name="pcg_code"/>
+                            <field name="storage_location_id" options="{'no_create': True}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+
+                        <group string="Classification">
+                            <field name="operation_type_id" options="{'no_create': True}"/>
+                            <field name="segment_id" options="{'no_create': True}"/>
+                            <field name="territory_id" options="{'no_create': True}"/>
+                            <field name="agency_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Itinerary" name="itinerary">
+                            <field name="line_ids">
+                                <list editable="bottom" limit="500">
+                                    <field name="partner_address_id" string="Customer"/>
+                                    <field name="partner_address_txt" string="Address Detail" optional="show"/>
+
+                                    <field name="week" optional="show"/>
+                                    <field name="day"/>
+                                    <field name="sequence" string="Seq."/>
+
+                                    <field name="mobilvendor_id" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Accounting" name="accounting">
+                            <group>
+                                <group string="Journals">
+                                    <field name="invoice_journal_id" options="{'no_create': True}"/>
+                                    <field name="payment_journal_id" options="{'no_create': True}"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Assigned Sellers" name="employees">
+                            <field name="employee_assignment_ids" readonly="1">
+                                <list>
+                                    <field name="employee_id"/>
+                                    <field name="active" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mobilvendor_route_search" model="ir.ui.view">
+        <field name="name">mobilvendor.route.search</field>
+        <field name="model">mobilvendor.route</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="mobilvendor_id"/>
+                <field name="shortname"/>
+                <field name="agency_id"/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Agency" name="group_agency" context="{'group_by': 'agency_id'}"/>
+                    <filter string="Operation Type" name="group_type" context="{'group_by': 'operation_type_id'}"/>
+                    <filter string="Territory" name="group_territory" context="{'group_by': 'territory_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mobilvendor_route" model="ir.actions.act_window">
+        <field name="name">Sales Routes</field>
+        <field name="res_model">mobilvendor.route</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_mobilvendor_route_operation_type" model="ir.actions.act_window">
+        <field name="name">Operation Types</field>
+        <field name="res_model">mobilvendor.route.operation.type</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="action_mobilvendor_route_segment" model="ir.actions.act_window">
+        <field name="name">Segments</field>
+        <field name="res_model">mobilvendor.route.segment</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="action_mobilvendor_route_territory" model="ir.actions.act_window">
+        <field name="name">Territories</field>
+        <field name="res_model">mobilvendor.route.territory</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="action_mobilvendor_route_agency" model="ir.actions.act_window">
+        <field name="name">Agencies</field>
+        <field name="res_model">mobilvendor.route.agency</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_mobilvendor_route_root"
+              name="Route Management"
+              parent="sale.menu_sale_config"
+              sequence="10"/>
+
+    <menuitem id="menu_mobilvendor_route_main"
+              name="Routes"
+              parent="menu_mobilvendor_route_root"
+              action="action_mobilvendor_route"
+              sequence="1"/>
+
+    <menuitem id="menu_mobilvendor_route_config"
+              name="Parameters"
+              parent="menu_mobilvendor_route_root"
+              sequence="10"/>
+
+    <menuitem id="menu_mobilvendor_route_op_type"
+              name="Operation Types"
+              parent="menu_mobilvendor_route_config"
+              action="action_mobilvendor_route_operation_type"/>
+
+    <menuitem id="menu_mobilvendor_route_segment"
+              name="Segments"
+              parent="menu_mobilvendor_route_config"
+              action="action_mobilvendor_route_segment"/>
+
+    <menuitem id="menu_mobilvendor_route_territory"
+              name="Territories"
+              parent="menu_mobilvendor_route_config"
+              action="action_mobilvendor_route_territory"/>
+
+    <menuitem id="menu_mobilvendor_route_agency"
+              name="Agencies"
+              parent="menu_mobilvendor_route_config"
+              action="action_mobilvendor_route_agency"/>
+
+</odoo>

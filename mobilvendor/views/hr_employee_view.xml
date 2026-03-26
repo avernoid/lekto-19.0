@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit_mobilvendor_route" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.mobilvendor.route</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Mobilvendor Settings" name="mobilvendor_settings">
+                    <group>
+                        <field name="mobilvendor_code" readonly="1" force_save="1"/>
+                    </group>
+
+                    <field name="mobilvendor_assignment_ids" readonly="1">
+                        <list>
+                            <field name="route_id"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

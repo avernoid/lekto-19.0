@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_inherit_mobilvendor_route" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.mobilvendor.route</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Logistics / Routes" name="logistics_routes">
+                    <group>
+                         <field name="mobilvendor_route_ids" widget="many2many_tags" readonly="1"/>
+                    </group>
+                    <field name="route_line_ids" readonly="1">
+                        <list>
+                            <field name="route_id"/>
+                            <field name="day"/>
+                            <field name="sequence"/>
+                            <field name="week"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="view_partner_simple_form_inherit_mobilvendor_route" model="ir.ui.view">
+        <field name="name">res.partner.simple.form.inherit.mobilvendor.route</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_simple_form"/>
+        <field name="arch" type="xml">
+            <field name="mobile" position="after">
+                <field name="mobilvendor_route_ids" widget="many2many_tags" readonly="1" placeholder="Routes..."/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_partner_address_form_inherit_mobilvendor_route" model="ir.ui.view">
+        <field name="name">res.partner.address.form.inherit.mobilvendor.route</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_address_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <group string="Logistics / Routes" name="logistics_routes" colspan="4">
+                    <field name="mobilvendor_route_ids" widget="many2many_tags" readonly="1" placeholder="Assigned Routes..."/>
+                    <field name="route_line_ids" readonly="1" nolabel="1">
+                        <list>
+                            <field name="route_id"/>
+                            <field name="day"/>
+                            <field name="sequence"/>
+                        </list>
+                    </field>
+                </group>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_list_mobilvendor_route" model="ir.ui.view">
+        <field name="name">res.partner.list.mobilvendor.route</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Customers in Route" create="false" delete="false" decoration-muted="not active">
+                <field name="parent_id" string="Main Customer" widget="many2one"/>
+                <field name="display_name" string="Branch/Address"/>
+                <field name="city" optional="show"/>
+                <field name="mobile" optional="show"/>
+                <field name="phone" optional="show"/>
+                <field name="email" optional="show"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

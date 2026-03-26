@@ -1,0 +1,640 @@
+# Translation of mobilvendor to Spanish
+# . module: mobilvendor
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the mobilvendor package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module mobilvendor 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_account_move__mobilvendor_id
+msgid "Mobilvendor ID"
+msgstr "ID Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_account_move__mobilvendor_route_definition
+msgid "Mobilvendor Route"
+msgstr "Ruta Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_account_move__mobilvendor_vendor_id
+msgid "Mobilvendor Vendor"
+msgstr "Vendedor Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_account_move__mobilvendor_route_id
+msgid "Sales Route"
+msgstr "Ruta de Ventas"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_account_move__mobilvendor_id
+msgid "ID of the invoice from the external system"
+msgstr "ID de la factura del sistema externo"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_account_move__mobilvendor_route_definition
+msgid "Route name assigned in Mobilvendor"
+msgstr "Nombre de ruta asignada en Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_account_move__mobilvendor_vendor_id
+msgid "Employee assigned directly via ID from Mobilvendor"
+msgstr "Empleado asignado directamente vía ID desde Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_account_payment__mobilvendor_id
+msgid "Mobilvendor ID"
+msgstr "ID Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_account_payment__mobilvendor_invoice_ids
+msgid "Mobilvendor Invoices"
+msgstr "Facturas Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_account_payment__mobilvendor_route_id
+msgid "Collection Route"
+msgstr "Ruta de Cobro"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_account_payment__mobilvendor_id
+msgid "Invoices related to this payment from Mobilvendor"
+msgstr "Facturas relacionadas a este pago de Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_hr_employee__mobilvendor_code
+msgid "Mobilvendor Code"
+msgstr "Código Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_hr_employee__mobilvendor_assignment_ids
+msgid "Route Assignments"
+msgstr "Asignaciones de Ruta"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_hr_employee__mobilvendor_code
+msgid "Route Assignments"
+msgstr "Asignaciones de Ruta"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__employee_id
+msgid "Seller"
+msgstr "Vendedor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__route_id
+msgid "Route"
+msgstr "Ruta"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__active
+msgid "Active Assignment"
+msgstr "Asignación Activa"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__name
+msgid "Route Name"
+msgstr "Nombre de Ruta"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__shortname
+msgid "Short Name / Internal Code"
+msgstr "Nombre Corto / Código Interno"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__pcg_code
+msgid "PCG Code"
+msgstr "Código PCG"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__mobilvendor_id
+msgid "MV Route Code"
+msgstr "Código de Ruta MV"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__storage_location_id
+msgid "Resupply Warehouse (MV)"
+msgstr "Almacén de Reabastecimiento (MV)"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__operation_type_id
+msgid "Operation Type"
+msgstr "Tipo de Operación"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__segment_id
+msgid "Functional Segment"
+msgstr "Segmento Funcional"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__territory_id
+msgid "Territory"
+msgstr "Territorio"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__agency_id
+msgid "Agency"
+msgstr "Agencia"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__invoice_journal_id
+msgid "Invoice Journal"
+msgstr "Diario de Facturas"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__payment_journal_id
+msgid "Payment Journal"
+msgstr "Diario de Pagos"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__line_ids
+msgid "Visit Itinerary"
+msgstr "Itinerario de Visitas"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__employee_assignment_ids
+msgid "Assigned Sellers"
+msgstr "Vendedores Asignados"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__partner_count
+msgid "Customer Count"
+msgstr "Cantidad de Clientes"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__partner_address_id
+msgid "Branch/Address"
+msgstr "Sucursal/Dirección"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__partner_address_txt
+msgid "Full Address"
+msgstr "Dirección Completa"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__day
+msgid "Day"
+msgstr "Día"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__week
+msgid "Week"
+msgstr "Semana"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_route_employee__mobilvendor_id
+msgid "API Detail ID"
+msgstr "ID Detalle API"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_mobilvendor_route_employee__employee_id
+msgid "Legacy code from the previous system"
+msgstr "Código legado del sistema anterior"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_mobilvendor_route_employee__mobilvendor_id
+msgid "Main synchronization key"
+msgstr "Clave principal de sincronización"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_mobilvendor_route_employee__storage_location_id
+msgid "Physical Odoo location where goods are deducted for this route."
+msgstr "Ubicación física en Odoo donde se descuentan los bienes para esta ruta."
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_api_username
+msgid "Usuario"
+msgstr "Usuario"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_api_password
+msgid "Clave"
+msgstr "Clave"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_api_url
+msgid "API URL"
+msgstr "API URL"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_api_context
+msgid "Contexto"
+msgstr "Contexto"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_api_session_id
+msgid "API Session ID"
+msgstr "API Session ID"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_api_days_sync
+msgid "Días de sincronización"
+msgstr "Días de sincronización"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_api_conciliate_credit_notes
+msgid "Activar Conciliación autom. (NC)"
+msgstr "Activar Conciliación autom. (NC)"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_invoice_journal_id
+msgid "Invoice Journal ID"
+msgstr "ID Diario de Facturas"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__mobilvendor_payment_journal_id
+msgid "Payment Journal ID"
+msgstr "ID Diario de Pagos"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_company__show_password
+msgid "Mostrar contraseña"
+msgstr "Mostrar contraseña"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_company__mobilvendor_api_username
+msgid "Username for mobilvendor API"
+msgstr "Nombre de usuario para la API de Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_company__mobilvendor_api_password
+msgid "Password for mobilvendor API"
+msgstr "Contraseña para la API de Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_company__mobilvendor_api_url
+msgid "URL for mobilvendor API"
+msgstr "URL para la API de Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_company__mobilvendor_api_context
+msgid "Context for mobilvendor API"
+msgstr "Contexto para la API de Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_company__mobilvendor_api_session_id
+msgid "Session ID for mobilvendor API"
+msgstr "ID de Sesión para la API de Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_company__mobilvendor_api_days_sync
+msgid "Number of days for sync with Mobilvendor"
+msgstr "Número de días para sincronizar con Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_company__mobilvendor_api_conciliate_credit_notes
+msgid "Controla el cruce contable cuando Mobilvendor envía una Nota de Crédito (NC).\n"
+msgstr "Controla el cruce contable cuando Mobilvendor envía una Nota de Crédito (NC).\n"
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/res_company.py:0
+msgid "Company not found."
+msgstr "Compañía no encontrada."
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/res_company.py:0
+msgid "API Credentials"
+msgstr "Credenciales API"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_partner__mobilvendor_id
+msgid "Mobilvendor ID"
+msgstr "ID Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_partner__address_mobilvendor_id
+msgid "Mobilvendor Address ID"
+msgstr "ID Dirección Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_partner__route_line_ids
+msgid "Visit Schedule"
+msgstr "Cronograma de Visitas"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_res_partner__mobilvendor_route_ids
+msgid "Assigned Routes (MV)"
+msgstr "Rutas Asignadas (MV)"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_partner__mobilvendor_id
+msgid "Shows visits assigned to this contact OR any of its addresses/branches."
+msgstr "Muestra las visitas asignadas a este contacto O a cualquiera de sus direcciones/sucursales."
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_res_partner__mobilvendor_route_ids
+msgid "Routes where this client has scheduled visits."
+msgstr "Rutas donde este cliente tiene visitas programadas."
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_stock_location__mobilvendor_sync
+msgid "Mobilvendor SYNC"
+msgstr "SINC Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_stock_location__mobilvendor_sync
+msgid "Sync stock locations to Mobilvendor"
+msgstr "Sincronizar ubicaciones de stock a Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_stock_move__mobilvendor_id
+msgid "Mobilvendor ID"
+msgstr "ID Mobilvendor"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_stock_move__mobilvendor_route_id
+msgid "Route"
+msgstr "Ruta"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_stock_move__mobilvendor_id
+msgid "ID of the transfer from the external system"
+msgstr "ID del traslado del sistema externo"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_stock_picking__mobilvendor_route_id
+msgid "Logistics Route"
+msgstr "Ruta Logística"
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/product_template.py:0
+msgid "La compañía no tiene configurada la integración con Mobilvendor."
+msgstr "La compañía no tiene configurada la integración con Mobilvendor."
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/product_template.py:0
+msgid "Ninguno de los productos seleccionados cumple los criterios para ser sincronizado a Mobilvendor (Debe ser tipo Consumible, estar Activo y Disponible para la venta)."
+msgstr "Ninguno de los productos seleccionados cumple los criterios para ser sincronizado a Mobilvendor (Debe ser tipo Consumible, estar Activo y Disponible para la venta)."
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/product_template.py:0
+msgid "Sincronización Exitosa"
+msgstr "Sincronización Exitosa"
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/product_pricelist.py:0
+msgid "La compañía no tiene configurada la integración con Mobilvendor."
+msgstr "La compañía no tiene configurada la integración con Mobilvendor."
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/product_pricelist.py:0
+msgid "Ninguna de las tarifas seleccionadas está activa."
+msgstr "Ninguna de las tarifas seleccionadas está activa."
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/models/product_pricelist.py:0
+msgid "Sincronización Exitosa"
+msgstr "Sincronización Exitosa"
+
+#. module: mobilvendor
+#: model:ir.model.fields,field_description:mobilvendor.field_mobilvendor_sync_customer_wizard__vat
+msgid "Identificación (RUC/Cédula)"
+msgstr "Identificación (RUC/Cédula)"
+
+#. module: mobilvendor
+#: model:ir.model.fields,help:mobilvendor.field_mobilvendor_sync_customer_wizard__vat
+msgid "Ingrese la identificación exacta del cliente a buscar en Mobilvendor."
+msgstr "Ingrese la identificación exacta del cliente a buscar en Mobilvendor."
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/wizard/mobilvendor_sync_customer_wizard.py:0
+msgid "La compañía no tiene configurada la integración con Mobilvendor."
+msgstr "La compañía no tiene configurada la integración con Mobilvendor."
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/wizard/mobilvendor_sync_customer_wizard.py:0
+msgid "Búsqueda Solicitada"
+msgstr "Búsqueda Solicitada"
+
+#. module: mobilvendor
+#. odoo-python
+#: code:addons/mobilvendor/wizard/mobilvendor_sync_customer_wizard.py:0
+#, python-format
+msgid "La consulta para el cliente con identificación %s ha sido procesada mediante la API de Mobilvendor."
+msgstr "La consulta para el cliente con identificación %s ha sido procesada mediante la API de Mobilvendor."
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_move_form_inherit_mobilvendor
+msgid "Consultar Estado Mobilvendor"
+msgstr "Consultar Estado Mobilvendor"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_account_payment_form_mobilvendor
+msgid "Mobilvendor ID"
+msgstr "ID Mobilvendor"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_employee_form_inherit_mobilvendor_route
+msgid "Mobilvendor Settings"
+msgstr "Mobilvendor Settings"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Sales Routes"
+msgstr "Rutas de Venta"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Route Configuration"
+msgstr "Configuración de Ruta"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Customers"
+msgstr "Clientes"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Identification"
+msgstr "Identificación"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Classification"
+msgstr "Clasificación"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Itinerary"
+msgstr "Itinerario"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Address Detail"
+msgstr "Detalle de Dirección"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Seq."
+msgstr "Sec."
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Accounting"
+msgstr "Contabilidad"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Journals"
+msgstr "Diarios"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Assigned Sellers"
+msgstr "Vendedores Asignados"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Group By"
+msgstr "Agrupar Por"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Agency"
+msgstr "Agencia"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Operation Type"
+msgstr "Tipo de Operación"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_mobilvendor_route_operation_type_tree
+msgid "Territory"
+msgstr "Territorio"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Mobilvendor - Credenciales"
+msgstr "Mobilvendor - Credenciales"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Credenciales de API"
+msgstr "Credenciales de API"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Acciones"
+msgstr "Acciones"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Editar Credenciales"
+msgstr "Editar Credenciales"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Guardar Credenciales"
+msgstr "Guardar Credenciales"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Mobilvendor - Sincronizar"
+msgstr "Mobilvendor - Sincronizar"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Acciones de Sincronización"
+msgstr "Acciones de Sincronización"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Sincronizar Clientes y Rutas"
+msgstr "Sincronizar Clientes y Rutas"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Sincronizar Productos y Listas de precios"
+msgstr "Sincronizar Productos y Listas de precios"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Sincronizar Cobros, Facturas e Inventario"
+msgstr "Sincronizar Cobros, Facturas e Inventario"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.server_action_open_mobilvendor
+msgid "Configuración de Sincronización"
+msgstr "Configuración de Sincronización"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_partner_form_inherit_mobilvendor_route
+msgid "Logistics / Routes"
+msgstr "Logística / Rutas"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_partner_form_inherit_mobilvendor_route
+msgid "Customers in Route"
+msgstr "Clientes en la Ruta"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_partner_form_inherit_mobilvendor_route
+msgid "Main Customer"
+msgstr "Cliente Principal"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_partner_form_inherit_mobilvendor_route
+msgid "Branch/Address"
+msgstr "Sucursal/Dirección"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_product_template_form_mobilvendor
+msgid "Sincronizar a Mobilvendor"
+msgstr "Sincronizar a Mobilvendor"
+
+#. module: mobilvendor
+#: model_terms:ir.ui.view,arch_db:mobilvendor.view_product_pricelist_form_mobilvendor
+msgid "Enviar Tarifa a Mobilvendor"
+msgstr "Enviar Tarifa a Mobilvendor"
+

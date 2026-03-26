@@ -1,0 +1,72 @@
+<odoo>
+    <record id="server_action_open_mobilvendor" model="ir.actions.server">
+        <field name="name">Open Mobilvendor Company</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="binding_model_id" ref="base.model_res_company"/>
+        <field name="state">code</field>
+        <field name="code">action = env['res.company'].action_open_mobilvendor()</field>
+    </record>
+
+    <record id="menu_mobilvendor" model="ir.ui.menu">
+        <field name="name">Mobilvendor</field>
+        <field name="action" ref="server_action_open_mobilvendor"/>
+        <field name="sequence">10</field>
+        <field name="web_icon">mobilvendor,static/description/mobilvendor64x64.png</field>
+    </record>
+
+    <record id="view_res_company_form_inherit" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+
+                <page name="mobilvendor_integration" string="Mobilvendor - Credenciales">
+                    <group colspan="4" col="4" name="mobilvendor_credentials_group">
+                        <group name="environment_information" string="Credenciales de API" colspan="2" col="2">
+                            <field name="mobilvendor_api_username" readonly="not show_save_button"/>
+                            <field name="mobilvendor_api_context" readonly="not show_save_button"/>
+                            <field name="mobilvendor_api_url" readonly="not show_save_button"/>
+                            <field name="mobilvendor_api_password" password="True" invisible="not show_save_button"/>
+                            <field name="show_password" invisible="1" />
+                        </group>
+
+                        <group name="credential_actions" string="Acciones" colspan="2" col="1">
+                            <button name="show_password_hide"
+                                type="object"
+                                string="Editar Credenciales"
+                                class="btn btn-primary"
+                                invisible = "not show_edit_button"/>
+
+                            <button name="show_password_show"
+                                type="object"
+                                string="Guardar Credenciales"
+                                class="btn btn-primary"
+                                invisible="not show_save_button"/>
+                        </group>
+                    </group>
+                </page>
+
+                <page name="mobilvendor_integration_data" string="Mobilvendor - Sincronizar">
+                    <group colspan="4" col="4" name="mobilvendor_sync_group">
+                        <group name="sync_actions" string="Acciones de Sincronización" colspan="2" col="1">
+                            <p class="text-muted">
+                                Ejecuta las sincronizaciones manualmente desde aquí.
+                            </p>
+                            <button name="sync_customers_users" type="object" string="Sincronizar Clientes y Rutas" class="btn btn-primary"/>
+                            <button name="sync_price_list_products" type="object" string="Sincronizar Productos y Listas de precios" class="btn btn-primary"/>
+                            <button name="sync_all" type="object" string="Sincronizar Cobros, Facturas e Inventario" class="btn btn-primary" />
+                        </group>
+
+                        <group name="sync_settings" string="Configuración de Sincronización" colspan="2" col="2">
+                            <field name="mobilvendor_api_days_sync" />
+                            <field name="mobilvendor_api_conciliate_credit_notes" widget="boolean_toggle"/>
+                            <field name="mobilvendor_invoice_journal_id" />
+                            <field name="mobilvendor_payment_journal_id" />
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
