@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_expense_view_form_expense_invoice" model="ir.ui.view">
+        <field name="name">hr.expense.view.form.inherit.expense.invoice</field>
+        <field name="model">hr.expense</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_open_vendor_bills" type="object" class="oe_stat_button" icon="fa-file-text-o" invisible="vendor_bill_count == 0">
+                    <field name="vendor_bill_count" widget="statinfo" string="Vendor Bills"/>
+                </button>
+            </div>
+            <xpath expr="//field[@name='vendor_id']" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </xpath>
+            <xpath expr="//field[@name='vendor_id']" position="after">
+                <field name="reference"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- List view for Expense Reimbursement Entries -->
+    <record id="view_expense_report_move_tree" model="ir.ui.view">
+        <field name="name">account.move.expense.report.tree</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <list string="Expense Reports" create="0" edit="0">
+                <field name="name" decoration-bf="1"/>
+                <field name="date"/>
+                <field name="partner_id" string="Employee / Contact"/>
+                <field name="ref"/>
+                <field name="journal_id"/>
+                <field name="amount_total_in_currency_signed" string="Total"/>
+                <field name="payment_state" widget="badge" 
+                       decoration-danger="payment_state == 'not_paid'" 
+                       decoration-warning="payment_state in ('partial', 'in_payment')" 
+                       decoration-success="payment_state in ('paid', 'reversed')"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'posted'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action to open Expense Reimbursement Entries -->
+    <record id="action_expense_reimbursement_entries" model="ir.actions.act_window">
+        <field name="name">Expense Reports</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('move_type', '=', 'entry'), ('line_ids.expense_id', '!=', False)]</field>
+        <field name="context">{'default_move_type': 'entry'}</field>
+        <field name="view_id" ref="view_expense_report_move_tree"/>
+    </record>
+
+    <!-- Inject the menu item under Accounting > Vendors -->
+    <menuitem id="menu_expense_reimbursement_entries" 
+              name="Expense Report" 
+              action="action_expense_reimbursement_entries" 
+              parent="account.menu_finance_payables" 
+              sequence="23"/>
+</odoo>

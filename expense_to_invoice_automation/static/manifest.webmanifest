@@ -1,0 +1,22 @@
+{
+  "name": "Expense to Invoice Automation",
+  "short_name": "Expense2Inv",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#017E84",
+  "icons": [
+    {
+      "src": "/expense_to_invoice_automation/static/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/expense_to_invoice_automation/static/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

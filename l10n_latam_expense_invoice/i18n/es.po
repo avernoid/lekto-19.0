@@ -1,0 +1,118 @@
+# Translation of l10n_latam_expense_invoice to Spanish
+# . module: l10n_latam_expense_invoice
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the l10n_latam_expense_invoice package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module l10n_latam_expense_invoice 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,field_description:l10n_latam_expense_invoice.field_hr_expense__l10n_latam_document_number
+msgid "Document Number"
+msgstr "Número de Documento"
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,field_description:l10n_latam_expense_invoice.field_hr_expense__l10n_latam_document_type_id
+msgid "Document Type"
+msgstr "Tipo de Documento"
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,field_description:l10n_latam_expense_invoice.field_res_company__l10n_latam_expense_allowed_document_type_ids
+msgid "Allowed Document Types for Expenses"
+msgstr "Tipos de Documentos Permitidos para Gastos"
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,field_description:l10n_latam_expense_invoice.field_res_company__l10n_latam_expense_default_document_type_id
+msgid "Default Document Type"
+msgstr "Tipo de Documento por Defecto"
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,field_description:l10n_latam_expense_invoice.field_res_company__l10n_latam_expense_force_document_type
+msgid "Force Document Type on Expenses"
+msgstr "Forzar Tipo de Documento en Gastos"
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_hr_expense__l10n_latam_document_number
+msgid "Enter the physical or legal document number for this expense receipt. This number will be transferred to the vendor bill for tax reporting purposes."
+msgstr "Ingrese el número de documento físico o legal de este recibo de gastos. Este número se transferirá a la factura de proveedor para fines de declaración de impuestos."
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_hr_expense__l10n_latam_document_type_id
+msgid "Select the Latin American document type for this expense. If configured, this document type will be automatically propagated to the generated vendor bill."
+msgstr "Seleccione el tipo de documento latinoamericano para este gasto. Si está configurado, este tipo de documento se propagará automáticamente a la factura de proveedor generada."
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_res_company__l10n_latam_expense_allowed_document_type_ids
+msgid "Select the document types that employees can choose when submitting expenses."
+msgstr "Seleccione los tipos de documentos que los empleados pueden elegir al presentar gastos."
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_res_company__l10n_latam_expense_default_document_type_id
+msgid "Default document type to be used in expenses."
+msgstr "Tipo de documento por defecto a utilizar en los gastos."
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_res_company__l10n_latam_expense_force_document_type
+msgid "If enabled, the Document Type and Document Number become mandatory on all expenses, ensuring valid bills."
+msgstr "Si está habilitado, el Tipo de Documento y el Número de Documento se vuelven obligatorios en todos los gastos, asegurando facturas válidas."
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_res_config_settings__l10n_latam_expense_allowed_document_type_ids
+msgid "Select the document types that employees are allowed to use when submitting expenses in this company. Only these types will be available in the expense form."
+msgstr "Seleccione los tipos de documento que los empleados tienen permitido usar al enviar gastos en esta compañía. Solo estos tipos estarán disponibles en el formulario de gastos."
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_res_config_settings__l10n_latam_expense_default_document_type_id
+msgid "Select the document type that will be automatically assigned to new expenses by default, saving time for employees during data entry."
+msgstr "Seleccione el tipo de documento que se asignará automáticamente a los nuevos gastos por defecto, ahorrando tiempo a los empleados durante la entrada de datos."
+
+#. module: l10n_latam_expense_invoice
+#: model:ir.model.fields,help:l10n_latam_expense_invoice.field_res_config_settings__l10n_latam_expense_force_document_type
+msgid "If enabled, it will be strictly required for employees to provide both a Document Type and a Document Number when creating an expense. Use this to enforce tax compliance."
+msgstr "Si está habilitado, será estrictamente obligatorio que los empleados proporcionen tanto un Tipo de Documento como un Número de Documento al registrar un gasto. Úselo para asegurar el cumplimiento tributario."
+
+#. module: l10n_latam_expense_invoice
+#. odoo-python
+#: code:addons/l10n_latam_expense_invoice/models/hr_expense.py:0
+msgid "The Document Type and Document Number fields are mandatory when LatAm invoice automation is configured to force their use."
+msgstr "Los campos Tipo de Documento y Número de Documento son obligatorios cuando la automatización de facturas LatAm está configurada para forzar su uso."
+
+#. module: l10n_latam_expense_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_latam_expense_invoice.res_config_settings_view_form_latam_expense
+msgid "All document types allowed..."
+msgstr "Todos los tipos de documento permitidos..."
+
+#. module: l10n_latam_expense_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_latam_expense_invoice.res_config_settings_view_form_latam_expense
+msgid "Allowed Document Types"
+msgstr "Tipos de Documento Permitidos"
+
+#. module: l10n_latam_expense_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_latam_expense_invoice.res_config_settings_view_form_latam_expense
+msgid "Default Document Type"
+msgstr "Tipo de Documento por Defecto"
+
+#. module: l10n_latam_expense_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_latam_expense_invoice.res_config_settings_view_form_latam_expense
+msgid "Force Document Type"
+msgstr "Forzar Tipo de Documento"
+
+#. module: l10n_latam_expense_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_latam_expense_invoice.res_config_settings_view_form_latam_expense
+msgid "Select default document type..."
+msgstr "Seleccione el tipo de documento por defecto..."
+
+#. module: l10n_latam_expense_invoice
+#: model_terms:ir.ui.view,arch_db:l10n_latam_expense_invoice.res_config_settings_view_form_latam_expense
+msgid "<div class=\"text-muted\">Select the Latin American document types allowed for expenses.</div>"
+msgstr "<div class=\"text-muted\">Seleccione los tipos de documentos latinoamericanos permitidos para gastos.</div>"

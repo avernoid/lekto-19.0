@@ -1,0 +1,139 @@
+# Translation of expense_to_invoice_automation to Spanish
+# . module: expense_to_invoice_automation
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the expense_to_invoice_automation package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module expense_to_invoice_automation 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,field_description:expense_to_invoice_automation.field_res_company__autocreate_invoice_from_expense
+msgid "Autocreate Invoices from Expenses"
+msgstr "Crear Facturas Automáticamente desde Gastos"
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,field_description:expense_to_invoice_automation.field_res_company__force_vendor_on_expense
+msgid "Force Vendor on Expenses"
+msgstr "Forzar Proveedor en Gastos"
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,field_description:expense_to_invoice_automation.field_res_company__expense_vendor_bill_journal_id
+msgid "Vendor Bill Journal"
+msgstr "Diario de Facturas de Proveedor"
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,help:expense_to_invoice_automation.field_res_company__autocreate_invoice_from_expense
+msgid "If enabled, posting HR Expenses will automatically create Vendor Bills (in_invoice) instead of generic journal entries or receipts. This ensures proper Accounts Payable reconciliation."
+msgstr "Si se habilita, contabilizar Gastos de RRHH creará automáticamente Facturas de Proveedor en lugar de asientos contables o recibos genéricos. Esto asegura la correcta conciliación de Cuentas por Pagar."
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,help:expense_to_invoice_automation.field_res_company__force_vendor_on_expense
+msgid "If enabled, the Vendor (Partner) field becomes strictly required on all expenses regardless of the payment mode, ensuring that every expense can generate a valid Accounts Payable Vendor Bill."
+msgstr "Si se habilita, el campo Proveedor será estrictamente obligatorio en todos los gastos independientemente del modo de pago, asegurando que cada gasto pueda generar una Factura de Proveedor válida en Cuentas por Pagar."
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,help:expense_to_invoice_automation.field_res_company__expense_vendor_bill_journal_id
+msgid "Optional. Select a dedicated Purchase journal for the Vendor Bills created automatically from expenses. If left empty, Odoo's default Purchase journal will be used (which might require Document Types if LatAm is installed)."
+msgstr "Opcional. Seleccione un diario de Compras dedicado para las Facturas de Proveedor creadas automáticamente desde los gastos. Si se deja vacío, se usará el diario de Compras principal de Odoo (el cual podría requerir Tipo de Documento si LatAm está instalado)."
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,field_description:expense_to_invoice_automation.field_hr_expense__reference
+msgid "Reference"
+msgstr "Referencia"
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,help:expense_to_invoice_automation.field_hr_expense__reference
+msgid "Reference of the Vendor Bill. This value will be mapped directly to the 'Bill Reference' field on the generated Vendor Bill."
+msgstr "Referencia de la Factura del Proveedor. Este valor se copiará directamente al campo 'Referencia de Factura' en la Factura generada."
+
+#. module: expense_to_invoice_automation
+#: model:ir.model.fields,field_description:expense_to_invoice_automation.field_hr_expense__vendor_bill_count
+msgid "Vendor Bills Count"
+msgstr "Conteo de Facturas"
+
+#. module: expense_to_invoice_automation
+#. odoo-python
+#: code:addons/expense_to_invoice_automation/models/hr_expense.py:0
+msgid "The Vendor field is mandatory when invoice automation is enabled and configured to force its use."
+msgstr "El campo Proveedor es obligatorio cuando la automatización de facturas está habilitada y configurada para forzar su uso."
+
+#. module: expense_to_invoice_automation
+#. odoo-python
+#: code:addons/expense_to_invoice_automation/models/hr_expense.py:0
+msgid "The Vendor field is mandatory to automate invoice creation."
+msgstr "El campo Proveedor es obligatorio para automatizar la creación de facturas."
+
+#. module: expense_to_invoice_automation
+#. odoo-python
+#: code:addons/expense_to_invoice_automation/models/hr_expense.py:0
+#, python-format
+msgid "You need to add a manual payment method on the journal (%s)"
+msgstr "Necesitas agregar un método de pago manual en el diario (%s)"
+
+#. module: expense_to_invoice_automation
+#. odoo-python
+#: code:addons/expense_to_invoice_automation/models/hr_expense.py:0
+#, python-format
+msgid "No account payable found for vendor %s"
+msgstr "No se encontró cuenta a pagar para el proveedor %s"
+
+#. module: expense_to_invoice_automation
+#: model_terms:ir.ui.view,arch_db:expense_to_invoice_automation.res_config_settings_view_form_expense_invoice
+msgid "Expense to Invoice Automation"
+msgstr "Automatización de Gastos a Facturas"
+
+#. module: expense_to_invoice_automation
+#: model_terms:ir.ui.view,arch_db:expense_to_invoice_automation.res_config_settings_view_form_expense_invoice
+msgid "Automatically create Vendor Bills from Expenses"
+msgstr "Crear Facturas de Proveedor desde Gastos automáticamente"
+
+#. module: expense_to_invoice_automation
+#: model_terms:ir.ui.view,arch_db:expense_to_invoice_automation.res_config_settings_view_form_expense_invoice
+msgid "Force Vendor on Expenses"
+msgstr "Forzar Proveedor en Gastos"
+
+#. module: expense_to_invoice_automation
+#: model_terms:ir.ui.view,arch_db:expense_to_invoice_automation.res_config_settings_view_form_expense_invoice
+msgid ""
+"<div class=\"text-muted\">\n"
+"                                Select a dedicated Purchase journal for the Vendor Bills created automatically.\n"
+"                            </div>"
+msgstr ""
+"<div class=\"text-muted\">\n"
+"                                Seleccione un diario de Compras dedicado para las Facturas de Proveedor creadas automáticamente.\n"
+"                            </div>"
+
+#. module: expense_to_invoice_automation
+#: model:ir.actions.act_window,name:expense_to_invoice_automation.action_expense_reimbursement_entries
+msgid "Expense Reports"
+msgstr "Rendición de Gastos"
+
+#. module: expense_to_invoice_automation
+#: model:ir.ui.menu,name:expense_to_invoice_automation.menu_expense_reimbursement_entries
+msgid "Expense Report"
+msgstr "Rendición de Gastos"
+
+#. module: expense_to_invoice_automation
+#: model_terms:ir.ui.view,arch_db:expense_to_invoice_automation.hr_expense_view_form_expense_invoice
+msgid "Vendor Bills"
+msgstr "Facturas de Proveedor"
+
+#. module: expense_to_invoice_automation
+#: model_terms:ir.ui.view,arch_db:expense_to_invoice_automation.view_expense_report_move_tree
+msgid "Employee / Contact"
+msgstr "Empleado / Contacto"
+
+#. module: expense_to_invoice_automation
+#: model_terms:ir.ui.view,arch_db:expense_to_invoice_automation.view_expense_report_move_tree
+msgid "Total"
+msgstr "Total"

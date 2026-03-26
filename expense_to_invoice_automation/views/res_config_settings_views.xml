@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_expense_invoice" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.expense.invoice</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_expense.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='expenses_setting_container']" position="inside">
+                <setting id="autocreate_invoice_from_expense_setting" string="Expense to Invoice Automation" help="Automatically create Vendor Bills from Expenses">
+                    <field name="autocreate_invoice_from_expense"/>
+                    <div class="content-group" invisible="not autocreate_invoice_from_expense">
+                        <div class="mt8">
+                            <field name="force_vendor_on_expense" class="oe_inline"/>
+                            <label for="force_vendor_on_expense" string="Force Vendor on Expenses" class="o_light_label"/>
+                        </div>
+                        <div class="mt16">
+                            <label for="expense_vendor_bill_journal_id" class="o_form_label"/>
+                            <div class="text-muted">
+                                Select a dedicated Purchase journal for the Vendor Bills created automatically.
+                            </div>
+                            <field name="expense_vendor_bill_journal_id" class="w-100" placeholder="Default Purchase Journal..." options="{'no_create': True, 'no_open': True}"/>
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

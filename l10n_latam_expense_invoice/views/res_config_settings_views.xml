@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_latam_expense" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.latam.expense</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_expense.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='autocreate_invoice_from_expense_setting']/div[hasclass('content-group')]" position="inside">
+                <div class="mt16">
+                    <label for="l10n_latam_expense_allowed_document_type_ids" string="Allowed Document Types" class="o_form_label"/>
+                    <div class="text-muted">Select the Latin American document types allowed for expenses.</div>
+                    <field name="l10n_latam_expense_allowed_document_type_ids" widget="many2many_tags" placeholder="All document types allowed..." options="{'no_create': True}" class="w-100"/>
+                </div>
+                <div class="mt8">
+                    <field name="l10n_latam_expense_force_document_type" class="oe_inline"/>
+                    <label for="l10n_latam_expense_force_document_type" string="Force Document Type" class="o_light_label"/>
+                </div>
+                <div class="mt8" invisible="not l10n_latam_expense_force_document_type">
+                    <label for="l10n_latam_expense_default_document_type_id" string="Default Document Type" class="o_form_label"/>
+                    <field name="l10n_latam_expense_default_document_type_id" placeholder="Select default document type..." class="w-100"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
