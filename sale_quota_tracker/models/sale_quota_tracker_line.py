@@ -19,6 +19,49 @@ class SaleGoalLine(models.Model):
         index=True,
         help='Parent Sales Goal this line belongs to. Determines the salesperson, period, and data source for the achievement calculation.',
     )
+    user_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Salesperson',
+        related='goal_id.user_id',
+        store=True,
+        readonly=True,
+        help='Salesperson from the parent goal. Inherited automatically.',
+    )
+    date_start = fields.Date(
+        string='From',
+        related='goal_id.date_start',
+        store=True,
+        readonly=True,
+        help='Start date of the goal period. Inherited from parent goal.',
+    )
+    date_end = fields.Date(
+        string='To',
+        related='goal_id.date_end',
+        store=True,
+        readonly=True,
+        help='End date of the goal period. Inherited from parent goal.',
+    )
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        string='Company',
+        related='goal_id.company_id',
+        store=True,
+        readonly=True,
+        help='Company from the parent goal. Inherited automatically.',
+    )
+    source_type = fields.Selection(
+        string='Data Source',
+        related='goal_id.source_type',
+        store=True,
+        readonly=True,
+        help='Data source for achievement calculation. Inherited from parent goal.',
+    )
+    period_name = fields.Char(
+        string='Period',
+        compute='_compute_period_name',
+        store=True,
+        help='Display name of the goal period (e.g., "January 2025").',
+    )
     goal_type = fields.Selection(
         selection=[
             ('product', 'Product'),
@@ -92,6 +135,7 @@ class SaleGoalLine(models.Model):
         compute='_compute_pct',
         store=True,
         digits=(6, 1),
+        aggregator='avg',
         help=(
             'Percentage of the quantity target achieved (Qty Achieved / Qty Target × 100). '
             'Reaches 100% or more when the salesperson meets or exceeds the quantity goal for this line.'
@@ -102,6 +146,7 @@ class SaleGoalLine(models.Model):
         compute='_compute_pct',
         store=True,
         digits=(6, 1),
+        aggregator='avg',
         help=(
             'Percentage of the revenue target achieved (Amount Achieved / Amount Target × 100). '
             'Reaches 100% or more when the salesperson meets or exceeds the revenue goal for this line.'
@@ -127,6 +172,15 @@ class SaleGoalLine(models.Model):
     # ------------------------------------------------------------------
     # Computed fields
     # ------------------------------------------------------------------
+
+    @api.depends('date_start')
+    def _compute_period_name(self):
+        for line in self:
+            if line.date_start:
+                month_name = _(line.date_start.strftime('%B'))
+                line.period_name = f"{month_name} {line.date_start.year}"
+            else:
+                line.period_name = False
 
     @api.depends('qty_done', 'qty_goal', 'amount_done', 'amount_goal')
     def _compute_pct(self):

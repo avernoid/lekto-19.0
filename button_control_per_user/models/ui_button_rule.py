@@ -89,13 +89,10 @@ class UiButtonRule(models.Model):
         store=True
     )
     
-    _sql_constraints = [
-        (
-            'unique_rule',
-            'UNIQUE(user_id, res_model, view_type, button_name, context_key)',
-            'A rule with the same configuration already exists for this user!'
-        )
-    ]
+    _unique_rule = models.Constraint(
+        'UNIQUE(user_id, res_model, view_type, button_name, context_key)',
+        'A rule with the same configuration already exists for this user!',
+    )
     
     @api.depends('user_id', 'res_model', 'view_type', 'button_name', 'context_key', 'hide')
     def _compute_display_name(self):

@@ -1,6 +1,6 @@
 {
     'name': 'FSM Reports',
-    'version': '19.0.1.0.6',
+    'version': '19.0.1.1.0',
     'category': 'Field Service',
     'summary': 'Advanced analytical reports for Field Service visit effectiveness and sales conversion',
     'description': """
@@ -23,6 +23,7 @@
     'data': [
         'security/ir.model.access.csv',
         'security/record_rules.xml',
+        'views/project_project_views.xml',
         'views/report_fsm_task_visit_views.xml',
         'views/menus.xml',
     ],

@@ -1,11 +1,15 @@
+# Translation of fsm_reports to Spanish
+# . module: fsm_reports
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the fsm_reports package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-03-05 00:00+0000\n"
-"Last-Translator: Ganemo <translations@ganemo.co>\n"
-"Language-Team: Spanish\n"
+"Project-Id-Version: Odoo Module fsm_reports 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-04-03 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,6 +20,11 @@ msgstr ""
 #: model:ir.model,name:fsm_reports.model_report_fsm_task_visit
 msgid "FSM Task Visit Report"
 msgstr "Reporte de Visitas FSM"
+
+#. module: fsm_reports
+#: model:ir.model,name:fsm_reports.model_project_project
+msgid "Project"
+msgstr "Proyecto"
 
 #. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__task_id
@@ -40,7 +49,7 @@ msgstr "Proyecto"
 #. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__company_id
 msgid "Company"
-msgstr "Compania"
+msgstr "Compañía"
 
 #. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__currency_id
@@ -49,7 +58,7 @@ msgstr "Moneda"
 
 #. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__lost_reason_id
-msgid "Lost Sale Reason"
+msgid "Lost Reason"
 msgstr "Motivo de No Venta"
 
 #. module: fsm_reports
@@ -78,6 +87,21 @@ msgid "State"
 msgstr "Estado"
 
 #. module: fsm_reports
+#: model:ir.model.fields.selection,name:fsm_reports.selection__report_fsm_task_visit__state__01_in_progress
+msgid "In Progress"
+msgstr "En Progreso"
+
+#. module: fsm_reports
+#: model:ir.model.fields.selection,name:fsm_reports.selection__report_fsm_task_visit__state__1_done
+msgid "Done"
+msgstr "Finalizada"
+
+#. module: fsm_reports
+#: model:ir.model.fields.selection,name:fsm_reports.selection__report_fsm_task_visit__state__1_canceled
+msgid "Cancelled"
+msgstr "Cancelada"
+
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__not_executed
 msgid "Not Executed"
 msgstr "No Ejecutada"
@@ -88,6 +112,21 @@ msgid "Executed"
 msgstr "Ejecutada"
 
 #. module: fsm_reports
+#: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__planned
+msgid "Planned"
+msgstr "Planificada"
+
+#. module: fsm_reports
+#: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__execution_rate
+msgid "Execution Rate (%)"
+msgstr "% Ejecución"
+
+#. module: fsm_reports
+#: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__not_execution_rate
+msgid "Not Executed Rate (%)"
+msgstr "% No Ejecución"
+
+#. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__has_sale
 msgid "With Sale"
 msgstr "Con Venta"
@@ -95,12 +134,12 @@ msgstr "Con Venta"
 #. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__sale_order_count
 msgid "# Sale Orders"
-msgstr "# Ordenes de Venta"
+msgstr "# Órdenes de Venta"
 
 #. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__sale_amount_untaxed
-msgid "Net Sales Amount"
-msgstr "Importe Neto de Ventas"
+msgid "Untaxed Amount"
+msgstr "Importe Neto"
 
 #. module: fsm_reports
 #: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__sale_amount_total
@@ -108,29 +147,274 @@ msgid "Total Sales"
 msgstr "Total Ventas"
 
 #. module: fsm_reports
+#: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__conversion_rate
+msgid "Conversion Rate (%)"
+msgstr "Tasa Conversión (%)"
+
+#. module: fsm_reports
+#: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__avg_ticket_untaxed
+msgid "Avg Ticket Untaxed"
+msgstr "Ticket Promedio Neto"
+
+#. module: fsm_reports
+#: model:ir.model.fields,field_description:fsm_reports.field_report_fsm_task_visit__avg_ticket_total
+msgid "Avg Ticket Total"
+msgstr "Ticket Promedio Total"
+
+#. module: fsm_reports
+#: model:ir.model.fields,field_description:fsm_reports.field_project_project__include_in_visit_report
+msgid "Include in Visit Reports"
+msgstr "Incluir en reportes de visitas"
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__not_executed
+msgid "1 if the visit was marked as not executed by the auto_cancel_fsm_task module, else 0."
+msgstr "1 si la visita fue marcada como no ejecutada por el módulo auto_cancel_fsm_task, de lo contrario 0."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__executed
+msgid "1 if the visit was actually carried out (not_executed = False), else 0."
+msgstr "1 si la visita fue realmente realizada (not_executed = False), de lo contrario 0."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__has_sale
+msgid "1 if a confirmed Sale Order is linked to this visit, else 0."
+msgstr "1 si una orden de venta confirmada está vinculada a esta visita, de lo contrario 0."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__planned
+msgid ""
+"Always 1 per row. When summed in pivot/graph, gives the total number "
+"of planned visits regardless of execution status or sales outcome."
+msgstr ""
+"Siempre 1 por fila. Al sumar en pivot/gráfico, da el número total "
+"de visitas planificadas sin importar el estado de ejecución o resultado de ventas."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__execution_rate
+msgid ""
+"Percentage of planned visits that were executed. "
+"Executed visit = 100.0, Not executed = 0.0. "
+"When grouped in pivot, the average equals the execution rate of the group."
+msgstr ""
+"Porcentaje de visitas planificadas que fueron ejecutadas. "
+"Visita ejecutada = 100.0, No ejecutada = 0.0. "
+"Al agrupar en pivot, el promedio equivale a la tasa de ejecución del grupo."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__not_execution_rate
+msgid ""
+"Percentage of planned visits that were NOT executed (auto-cancelled). "
+"Not executed = 100.0, Executed = 0.0. "
+"Complementary to Execution Rate: execution_rate + not_execution_rate = 100."
+msgstr ""
+"Porcentaje de visitas planificadas que NO fueron ejecutadas (auto-canceladas). "
+"No ejecutada = 100.0, Ejecutada = 0.0. "
+"Complementario a la Tasa de Ejecución: execution_rate + not_execution_rate = 100."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__conversion_rate
+msgid ""
+"Percentage of executed visits that generated a confirmed Sale Order. "
+"Executed + sale = 100.0, Executed + no sale = 0.0, Not executed = NULL (excluded from average). "
+"When grouped in pivot, the average of these row values equals the conversion rate of the group."
+msgstr ""
+"Porcentaje de visitas ejecutadas que generaron una orden de venta confirmada. "
+"Ejecutada + venta = 100.0, Ejecutada + sin venta = 0.0, No ejecutada = NULL (excluida del promedio). "
+"Al agrupar en pivot, el promedio de estos valores por fila equivale a la tasa de conversión del grupo."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__avg_ticket_untaxed
+msgid ""
+"Average net sale amount per visit with sale. "
+"Equal to sale_amount_untaxed when has_sale = 1, NULL otherwise. "
+"NULL rows are excluded from AVG, so the grouped average equals "
+"the average net ticket over visits with sale only."
+msgstr ""
+"Importe neto promedio de venta por visita con venta. "
+"Igual a sale_amount_untaxed cuando has_sale = 1, NULL en caso contrario. "
+"Las filas NULL se excluyen del AVG, por lo que el promedio agrupado equivale "
+"al ticket promedio neto solo sobre visitas con venta."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_report_fsm_task_visit__avg_ticket_total
+msgid ""
+"Average total sale amount per visit with sale. "
+"Equal to sale_amount_total when has_sale = 1, NULL otherwise. "
+"NULL rows are excluded from AVG, so the grouped average equals "
+"the average total ticket over visits with sale only."
+msgstr ""
+"Importe total promedio de venta por visita con venta. "
+"Igual a sale_amount_total cuando has_sale = 1, NULL en caso contrario. "
+"Las filas NULL se excluyen del AVG, por lo que el promedio agrupado equivale "
+"al ticket promedio total solo sobre visitas con venta."
+
+#. module: fsm_reports
+#: model:ir.model.fields,help:fsm_reports.field_project_project__include_in_visit_report
+msgid ""
+"Controls whether tasks from this project are included in FSM visit reports.\n"
+"When enabled, this project's visits are considered in Visit Compliance, "
+"Conversion, and Sales Analysis report menus.\n"
+"When disabled, tasks from this project are excluded globally from "
+"report.fsm.task.visit analytics.\n"
+"Default is enabled for new projects."
+msgstr ""
+"Controla si las tareas de este proyecto se incluyen en los reportes de "
+"visitas FSM.\n"
+"Cuando está habilitado, las visitas de este proyecto se consideran en los "
+"menús de reportes Cumplimiento de Visitas, Conversión y Análisis de Ventas.\n"
+"Cuando está deshabilitado, las tareas de este proyecto se excluyen de forma "
+"global de la analítica report.fsm.task.visit.\n"
+"Para nuevos proyectos, se habilita por defecto."
+
+#. module: fsm_reports
 #: model:ir.rule,name:fsm_reports.rule_fsm_report_visit_user
-msgid "FSM Report Visit: Solo mis visitas"
+msgid "FSM Report Visit: Own visits only"
 msgstr "Reporte FSM: Solo mis visitas"
 
 #. module: fsm_reports
 #: model:ir.rule,name:fsm_reports.rule_fsm_report_visit_manager
-msgid "FSM Report Visit: Ver todos los registros"
+msgid "FSM Report Visit: See all records"
 msgstr "Reporte FSM: Ver todos los registros"
 
 #. module: fsm_reports
-#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_effectiveness
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_effectiveness
-msgid "Visit Effectiveness"
-msgstr "Efectividad de Visitas"
+#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_effectiveness
+msgid "Visit Compliance"
+msgstr "Cumplimiento de Visitas"
 
 #. module: fsm_reports
-#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_conversion
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_conversion
-msgid "Conversion Sale"
-msgstr "Conversion Venta"
+#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_conversion
+msgid "Visit → Sale Conversion"
+msgstr "Conversión → Venta"
 
 #. module: fsm_reports
-#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_sales
 #: model:ir.actions.act_window,name:fsm_reports.action_fsm_report_sales
+#: model:ir.ui.menu,name:fsm_reports.menu_fsm_report_sales
 msgid "Sales Analysis"
-msgstr "Analisis de Ventas"
+msgstr "Análisis de Ventas"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.project_project_view_form_inherit_fsm_reports
+msgid "<span class=\"text-muted\">Include this project in FSM visit analytics reports</span>"
+msgstr "<span class=\"text-muted\">Incluir este proyecto en los reportes analíticos de visitas FSM</span>"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Search Visits"
+msgstr "Buscar Visitas"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Executed"
+msgstr "Ejecutadas"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Not Executed"
+msgstr "No Ejecutadas"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "With Sale"
+msgstr "Con Venta"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Without Sale"
+msgstr "Sin Venta"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "This Quarter"
+msgstr "Este Trimestre"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "This Month"
+msgstr "Este Mes"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Last Month"
+msgstr "Mes Anterior"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Salesperson"
+msgstr "Vendedor"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Project"
+msgstr "Proyecto"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Lost Reason"
+msgstr "Motivo No Venta"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Month"
+msgstr "Mes"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Week"
+msgstr "Semana"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.view_fsm_report_visit_search
+msgid "Date"
+msgstr "Fecha"
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.action_fsm_report_effectiveness
+msgid "No completed visits to display."
+msgstr "No hay visitas completadas que mostrar."
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.action_fsm_report_effectiveness
+msgid ""
+"This report shows field-visit compliance:\n"
+"                how many visits were executed vs not executed, grouped by salesperson and month."
+msgstr ""
+"Este reporte muestra el cumplimiento de visitas de campo:\n"
+"                cuántas visitas fueron ejecutadas vs no ejecutadas, agrupadas por vendedor y mes."
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.action_fsm_report_conversion
+msgid "No executed visits to display."
+msgstr "No hay visitas ejecutadas que mostrar."
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.action_fsm_report_conversion
+msgid ""
+"This report shows the visit-to-sale conversion rate.\n"
+"                It automatically filters only executed visits and indicates whether\n"
+"                a confirmed sale order was generated."
+msgstr ""
+"Este reporte muestra la tasa de conversión de visitas en ventas.\n"
+"                Filtra automáticamente solo las visitas ejecutadas e indica si\n"
+"                se generó una orden de venta confirmada."
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.action_fsm_report_sales
+msgid "No FSM sales to display."
+msgstr "No hay ventas FSM que mostrar."
+
+#. module: fsm_reports
+#: model_terms:ir.ui.view,arch_db:fsm_reports.action_fsm_report_sales
+msgid ""
+"This report shows sales generated from field visits:\n"
+"                totals, order count, and average ticket by customer and salesperson."
+msgstr ""
+"Este reporte muestra las ventas generadas desde visitas de campo:\n"
+"                totales, cantidad de órdenes y ticket promedio por cliente y vendedor."

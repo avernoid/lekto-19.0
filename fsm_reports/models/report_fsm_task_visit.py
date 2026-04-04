@@ -4,9 +4,43 @@ from odoo import api, fields, models, tools
 class ReportFsmTaskVisit(models.Model):
     """
     SQL View: One row per (task, assigned_user).
+
     This one-to-many expansion (via project_task_user_rel) is intentional:
     it allows Odoo Record Rules to filter rows by `user_id = uid` transparently.
     FSM managers see all rows; FSM users see only rows where user_id = their uid.
+
+    IMPORTANT: The JOIN with project_task_user_rel means that tasks without an
+    assigned user are completely excluded from the report. This is by design —
+    a visit without an assigned user cannot be attributed to anyone and would
+    break the per-user record rules.
+
+    Additional filters applied by the SQL view:
+    - Only active tasks (active = True)
+    - Only root tasks (parent_id IS NULL), subtasks are excluded
+    - Only tasks from FSM projects (project.is_fsm = True)
+    - Only projects included in visit report (include_in_visit_report != False)
+
+    Measures:
+    - planned: Always 1 per row. Summed, gives the total number of planned
+      visits. Includes all statuses (in progress, done, cancelled).
+    - executed: 1 if the task is done (state = '1_done') AND was not
+      auto-cancelled (not_executed = False). 0 otherwise.
+    - not_executed: 1 if the task was auto-cancelled by the
+      auto_cancel_fsm_task module. 0 otherwise.
+    - execution_rate: 100.0 if executed, 0.0 otherwise. Using AVG aggregator,
+      the grouped average equals the execution percentage of the group.
+    - not_execution_rate: Complement of execution_rate (100 - execution_rate).
+    - has_sale: 1 if a confirmed/done Sale Order is linked to the visit.
+    - sale_order_count: Same as has_sale (1 or 0 per row).
+    - sale_amount_untaxed / sale_amount_total: Monetary amounts from the
+      linked Sale Order, or 0 if no sale.
+    - conversion_rate: 100.0 if executed AND has sale, 0.0 if executed
+      without sale, NULL if not executed. NULL rows are excluded from AVG,
+      so the grouped average equals the conversion rate over executed visits only.
+    - avg_ticket_untaxed: sale_amount_untaxed when has_sale = 1, NULL otherwise.
+      AVG gives the average net ticket over visits with sale only.
+    - avg_ticket_total: sale_amount_total when has_sale = 1, NULL otherwise.
+      AVG gives the average total ticket over visits with sale only.
     """
     _name = 'report.fsm.task.visit'
     _description = 'FSM Task Visit Report'
@@ -19,37 +53,37 @@ class ReportFsmTaskVisit(models.Model):
     # -------------------------------------------------------------------------
     task_id = fields.Many2one(
         'project.task',
-        string='Tarea',
+        string='Task',
         readonly=True,
     )
     user_id = fields.Many2one(
         'res.users',
-        string='Vendedor',
+        string='Salesperson',
         readonly=True,
     )
     partner_id = fields.Many2one(
         'res.partner',
-        string='Cliente',
+        string='Customer',
         readonly=True,
     )
     project_id = fields.Many2one(
         'project.project',
-        string='Proyecto',
+        string='Project',
         readonly=True,
     )
     company_id = fields.Many2one(
         'res.company',
-        string='Compañía',
+        string='Company',
         readonly=True,
     )
     currency_id = fields.Many2one(
         'res.currency',
-        string='Moneda',
+        string='Currency',
         readonly=True,
     )
     lost_reason_id = fields.Many2one(
         'sale.lost.reason',
-        string='Motivo de No Venta',
+        string='Lost Reason',
         readonly=True,
     )
 
@@ -57,19 +91,19 @@ class ReportFsmTaskVisit(models.Model):
     # Date grouping columns (pre-truncated for fast GROUP BY)
     # -------------------------------------------------------------------------
     planned_date_begin = fields.Datetime(
-        string='Fecha/Hora Planificada',
+        string='Planned Date/Time',
         readonly=True,
     )
     planned_date = fields.Date(
-        string='Fecha de Visita',
+        string='Visit Date',
         readonly=True,
     )
     planned_week = fields.Date(
-        string='Semana Planificada',
+        string='Planned Week',
         readonly=True,
     )
     planned_month = fields.Date(
-        string='Mes Planificado',
+        string='Planned Month',
         readonly=True,
     )
 
@@ -78,11 +112,11 @@ class ReportFsmTaskVisit(models.Model):
     # -------------------------------------------------------------------------
     state = fields.Selection(
         selection=[
-            ('01_in_progress', 'En Progreso'),
-            ('1_done', 'Finalizada'),
-            ('1_canceled', 'Cancelada'),
+            ('01_in_progress', 'In Progress'),
+            ('1_done', 'Done'),
+            ('1_canceled', 'Cancelled'),
         ],
-        string='Estado',
+        string='State',
         readonly=True,
     )
     not_executed = fields.Integer(
@@ -131,22 +165,22 @@ class ReportFsmTaskVisit(models.Model):
     # Sale metrics
     # -------------------------------------------------------------------------
     has_sale = fields.Integer(
-        string='Con Venta',
+        string='With Sale',
         aggregator='sum',
         readonly=True,
         help="1 if a confirmed Sale Order is linked to this visit, else 0.",
     )
     sale_order_count = fields.Integer(
-        string='# Órdenes de Venta',
+        string='# Sale Orders',
         readonly=True,
     )
     sale_amount_untaxed = fields.Monetary(
-        string='Importe Neto (Ventas)',
+        string='Untaxed Amount',
         currency_field='currency_id',
         readonly=True,
     )
     sale_amount_total = fields.Monetary(
-        string='Total Ventas',
+        string='Total Sales',
         currency_field='currency_id',
         readonly=True,
     )
@@ -159,6 +193,30 @@ class ReportFsmTaskVisit(models.Model):
             "Percentage of executed visits that generated a confirmed Sale Order. "
             "Executed + sale = 100.0, Executed + no sale = 0.0, Not executed = NULL (excluded from average). "
             "When grouped in pivot, the average of these row values equals the conversion rate of the group."
+        ),
+    )
+    avg_ticket_untaxed = fields.Monetary(
+        string='Avg Ticket Untaxed',
+        currency_field='currency_id',
+        aggregator='avg',
+        readonly=True,
+        help=(
+            "Average net sale amount per visit with sale. "
+            "Equal to sale_amount_untaxed when has_sale = 1, NULL otherwise. "
+            "NULL rows are excluded from AVG, so the grouped average equals "
+            "the average net ticket over visits with sale only."
+        ),
+    )
+    avg_ticket_total = fields.Monetary(
+        string='Avg Ticket Total',
+        currency_field='currency_id',
+        aggregator='avg',
+        readonly=True,
+        help=(
+            "Average total sale amount per visit with sale. "
+            "Equal to sale_amount_total when has_sale = 1, NULL otherwise. "
+            "NULL rows are excluded from AVG, so the grouped average equals "
+            "the average total ticket over visits with sale only."
         ),
     )
 
@@ -217,7 +275,10 @@ class ReportFsmTaskVisit(models.Model):
                         WHEN NOT COALESCE(t.not_executed, FALSE) AND t.state = '1_done'
                         THEN CASE WHEN so.id IS NOT NULL THEN 100.0 ELSE 0.0 END
                         ELSE NULL
-                    END                                         AS conversion_rate
+                    END                                         AS conversion_rate,
+                    -- Avg ticket: sale total when has_sale, NULL otherwise → AVG = avg ticket
+                    CASE WHEN so.id IS NOT NULL THEN so.amount_untaxed ELSE NULL END AS avg_ticket_untaxed,
+                    CASE WHEN so.id IS NOT NULL THEN so.amount_total ELSE NULL END AS avg_ticket_total
                 FROM project_task t
                 -- Expand per assigned user via user_ids M2M (project_task_user_rel)
                 -- In Odoo 19, user_id has no SQL column; only user_ids is stored in the DB
@@ -226,7 +287,9 @@ class ReportFsmTaskVisit(models.Model):
 
                 -- FSM filter: is_fsm lives on project_project, not on project_task in Odoo 19
                 JOIN project_project p
-                    ON p.id = t.project_id AND p.is_fsm = TRUE
+                    ON p.id = t.project_id
+                   AND p.is_fsm = TRUE
+                   AND COALESCE(p.include_in_visit_report, TRUE) = TRUE
                 -- Company currency
                 JOIN res_company c
                     ON c.id = t.company_id

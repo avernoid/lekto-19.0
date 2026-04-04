@@ -161,6 +161,7 @@ class SaleGoal(models.Model):
         compute='_compute_global_pct',
         store=True,
         digits=(6, 1),
+        aggregator='avg',
         help=(
             'Percentage of the global Sales Target achieved so far this period. '
             'Calculated as (Sales Achievement / Sales Target) × 100. '

@@ -11,7 +11,7 @@
 
     <!-- Rule: FSM User — only own visits -->
     <record id="rule_fsm_report_visit_user" model="ir.rule">
-        <field name="name">FSM Report Visit: Solo mis visitas</field>
+        <field name="name">FSM Report Visit: Own visits only</field>
         <field name="model_id" ref="fsm_reports.model_report_fsm_task_visit"/>
         <field name="groups" eval="[(4, ref('industry_fsm.group_fsm_user'))]"/>
         <field name="domain_force">[('user_id', '=', user.id)]</field>
@@ -23,7 +23,7 @@
 
     <!-- Rule: FSM Manager — unrestricted access -->
     <record id="rule_fsm_report_visit_manager" model="ir.rule">
-        <field name="name">FSM Report Visit: Ver todos los registros</field>
+        <field name="name">FSM Report Visit: See all records</field>
         <field name="model_id" ref="fsm_reports.model_report_fsm_task_visit"/>
         <field name="groups" eval="[(4, ref('industry_fsm.group_fsm_manager'))]"/>
         <field name="domain_force">[(1, '=', 1)]</field>

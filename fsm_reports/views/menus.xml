@@ -8,30 +8,30 @@
         Sales Analysis: restricted to Manager only (sensitive monetary data).
     -->
 
-    <!-- Report 1: Efectividad de Visitas -->
+    <!-- Report 1: Visit Compliance -->
     <menuitem
         id="menu_fsm_report_effectiveness"
-        name="Efectividad de Visitas"
+        name="Visit Compliance"
         parent="industry_fsm.fsm_menu_reporting"
         action="fsm_reports.action_fsm_report_effectiveness"
         sequence="50"
         groups="industry_fsm.group_fsm_user,industry_fsm.group_fsm_manager"
     />
 
-    <!-- Report 2: Conversión → Venta -->
+    <!-- Report 2: Visit → Sale Conversion -->
     <menuitem
         id="menu_fsm_report_conversion"
-        name="Conversión → Venta"
+        name="Visit → Sale Conversion"
         parent="industry_fsm.fsm_menu_reporting"
         action="fsm_reports.action_fsm_report_conversion"
         sequence="60"
         groups="industry_fsm.group_fsm_user,industry_fsm.group_fsm_manager"
     />
 
-    <!-- Report 3: Análisis de Ventas (Manager only) -->
+    <!-- Report 3: Sales Analysis (Manager only) -->
     <menuitem
         id="menu_fsm_report_sales"
-        name="Análisis de Ventas"
+        name="Sales Analysis"
         parent="industry_fsm.fsm_menu_reporting"
         action="fsm_reports.action_fsm_report_sales"
         sequence="70"

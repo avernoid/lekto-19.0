@@ -1,34 +1,75 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* auto_cancel_fsm_task
+# Translation of auto_cancel_fsm_task to Spanish
+# . module: auto_cancel_fsm_task
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the auto_cancel_fsm_task package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-25 00:00+0000\n"
-"PO-Revision-Date: 2024-11-25 00:00+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: Odoo Module auto_cancel_fsm_task 19.0\n"
+"POT-Creation-Date: 2026-04-02 00:00+0000\n"
+"PO-Revision-Date: 2026-04-02 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: auto_cancel_fsm_task
 #: model:ir.model.fields,field_description:auto_cancel_fsm_task.field_project_project__antiquity_in_hours
 msgid "Antiguedad en Horas"
-msgstr "Antiguedad en Horas"
+msgstr "Antigüedad en Horas"
 
 #. module: auto_cancel_fsm_task
 #: model:ir.model.fields,help:auto_cancel_fsm_task.field_project_project__antiquity_in_hours
-msgid "Hours to consider a task old relative to its end date."
-msgstr "Horas para considerar una tarea antigua en relación con su fecha de finalización."
+msgid ""
+"Project-level threshold in hours used by the daily Auto Cancel FSM cron.\n"
+"A task is auto-completed and marked as Not Executed only when all conditions "
+"are met:\n"
+"- The task is active and not in Done/Canceled\n"
+"- The task has an End Date\n"
+"- End Date is older than (current datetime - Antiquity in Hours)\n"
+"Set 0 to disable this automation for the project.\n"
+"The same logic can also be triggered manually with the Run Manually button."
+msgstr ""
+"Umbral por proyecto en horas usado por el cron diario de Auto Cancel FSM.\n"
+"Una tarea se autocompleta y se marca como No Ejecutada solo cuando se "
+"cumplen todas las condiciones:\n"
+"- La tarea está activa y no está en Finalizada/Cancelada\n"
+"- La tarea tiene Fecha de fin\n"
+"- La Fecha de fin es anterior a (fecha-hora actual - Antigüedad en Horas)\n"
+"Establece 0 para desactivar esta automatización en el proyecto.\n"
+"La misma lógica también puede ejecutarse manualmente con el botón Ejecutar "
+"Manualmente."
 
 #. module: auto_cancel_fsm_task
 #: model:ir.model.fields,field_description:auto_cancel_fsm_task.field_project_task__not_executed
 msgid "No Ejecutada"
 msgstr "No Ejecutada"
+
+#. module: auto_cancel_fsm_task
+#: model:ir.model.fields,help:auto_cancel_fsm_task.field_project_task__not_executed
+msgid ""
+"Indicates the visit was not carried out.\n"
+"Automatic behavior: set to True only by the Auto Cancel FSM cron when the "
+"project antiquity rule auto-completes the task.\n"
+"Manual behavior: users can set or unset it directly on Done tasks.\n"
+"Auto-reset behavior: when the task leaves Done, it is reset to False; when "
+"the task is completed by non-cron flows (for example, stopping timer), it "
+"remains False unless explicitly set by the user.\n"
+"This value is not copied when duplicating tasks."
+msgstr ""
+"Indica que la visita no fue ejecutada.\n"
+"Comportamiento automático: se marca en True solo por el cron de Auto Cancel "
+"FSM cuando la regla de antigüedad del proyecto autocompleta la tarea.\n"
+"Comportamiento manual: los usuarios pueden marcarla o desmarcarla "
+"directamente en tareas Finalizadas.\n"
+"Comportamiento de autoreseteo: cuando la tarea sale de Finalizada, se "
+"restablece a False; cuando la tarea se finaliza por flujos que no son cron "
+"(por ejemplo, al detener el temporizador), permanece en False salvo que el "
+"usuario la marque explícitamente.\n"
+"Este valor no se copia al duplicar tareas."
 
 #. module: auto_cancel_fsm_task
 #: model_terms:ir.ui.view,arch_db:auto_cancel_fsm_task.edit_project_inherit_auto_cancel

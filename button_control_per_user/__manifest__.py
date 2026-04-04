@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Button Control Per User',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'icon': '/button_control_per_user/static/description/icon.png',
     'category': 'Extra Tools',
     'summary': 'Hide standard interface buttons per user without affecting permissions',

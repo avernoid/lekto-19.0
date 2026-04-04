@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- ====================================================================
-         REPORT 1: Efectividad de Visitas
+         REPORT 1: Visit Compliance
          Goal: Executed vs. not-executed visits by salesperson and month.
     ==================================================================== -->
 
@@ -11,19 +11,19 @@
         <field name="name">report.fsm.task.visit.effectiveness.list</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <list string="Efectividad de Visitas" create="false" edit="false" delete="false">
-                <field name="planned_date" string="Fecha"/>
-                <field name="user_id" string="Vendedor"/>
-                <field name="partner_id" string="Cliente"/>
-                <field name="project_id" string="Proyecto" optional="hide"/>
-                <field name="state" string="Estado" optional="show"/>
-                <field name="planned" string="Planificada"/>
-                <field name="executed" string="Ejecutadas"/>
-                <field name="not_executed" string="No Ejecutadas"/>
-                <field name="has_sale" string="Con Venta"/>
-                <field name="lost_reason_id" string="Motivo No Venta" optional="show"/>
+            <list string="Visit Compliance" create="false" edit="false" delete="false">
+                <field name="planned_date" string="Date"/>
+                <field name="user_id" string="Salesperson"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="project_id" string="Project" optional="hide"/>
+                <field name="state" string="State" optional="show"/>
+                <field name="planned" string="Planned"/>
+                <field name="executed" string="Executed"/>
+                <field name="not_executed" string="Not Executed"/>
+                <field name="has_sale" string="With Sale"/>
+                <field name="lost_reason_id" string="Lost Reason" optional="show"/>
                 <field name="currency_id" column_invisible="1"/>
-                <field name="sale_amount_total" string="Total Venta" widget="monetary" optional="show"/>
+                <field name="sale_amount_total" string="Total Sales" widget="monetary" optional="show"/>
             </list>
         </field>
     </record>
@@ -33,14 +33,14 @@
         <field name="name">report.fsm.task.visit.effectiveness.pivot</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <pivot string="Efectividad de Visitas" display_quantity="true">
-                <field name="planned_month" type="col" string="Mes"/>
-                <field name="user_id" type="row" string="Vendedor"/>
-                <field name="planned" type="measure" string="Planificadas"/>
-                <field name="executed" type="measure" string="Ejecutadas"/>
-                <field name="execution_rate" type="measure" string="% Ejecución"/>
-                <field name="not_executed" type="measure" string="No Ejecutadas"/>
-                <field name="not_execution_rate" type="measure" string="% No Ejecución"/>
+            <pivot string="Visit Compliance" display_quantity="true">
+                <field name="planned_month" type="col" string="Month"/>
+                <field name="user_id" type="row" string="Salesperson"/>
+                <field name="planned" type="measure" string="Planned"/>
+                <field name="executed" type="measure" string="Executed"/>
+                <field name="execution_rate" type="measure" string="Execution Rate (%)"/>
+                <field name="not_executed" type="measure" string="Not Executed"/>
+                <field name="not_execution_rate" type="measure" string="Not Executed Rate (%)"/>
             </pivot>
         </field>
     </record>
@@ -50,23 +50,23 @@
         <field name="name">report.fsm.task.visit.effectiveness.graph</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <graph string="Efectividad de Visitas" type="bar" stacked="true">
-                <field name="user_id" type="row" string="Vendedor"/>
-                <field name="execution_rate" type="measure" string="% Ejecución"/>
-                <field name="not_execution_rate" type="measure" string="% No Ejecución"/>
+            <graph string="Visit Compliance" type="bar" stacked="true">
+                <field name="user_id" type="row" string="Salesperson"/>
+                <field name="execution_rate" type="measure" string="Execution Rate (%)"/>
+                <field name="not_execution_rate" type="measure" string="Not Executed Rate (%)"/>
             </graph>
         </field>
     </record>
 
     <!-- WINDOW ACTION -->
     <record id="action_fsm_report_effectiveness" model="ir.actions.act_window">
-        <field name="name">Efectividad de Visitas</field>
+        <field name="name">Visit Compliance</field>
         <field name="res_model">report.fsm.task.visit</field>
         <field name="view_mode">pivot,graph,list</field>
         <field name="domain">[]</field>
         <field name="context">{
             'search_default_group_user': 1,
-            'search_default_group_month': 1
+            'search_default_filter_this_quarter': 1
         }</field>
         <field name="view_ids" eval="[
             (5, 0, 0),
@@ -76,18 +76,18 @@
         ]"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                No hay visitas completadas que mostrar.
+                No completed visits to display.
             </p>
             <p>
-                Este reporte muestra la efectividad de visitas de campo:
-                cuántas fueron ejecutadas y cuántas no, agrupadas por vendedor y mes.
+                This report shows field-visit compliance:
+                how many visits were executed vs not executed, grouped by salesperson and month.
             </p>
         </field>
     </record>
 
 
     <!-- ====================================================================
-         REPORT 2: Conversión Visita → Venta
+         REPORT 2: Visit → Sale Conversion
          Goal: Of executed visits, how many generated a confirmed sale order.
                Includes lost reasons for visits without a sale.
     ==================================================================== -->
@@ -97,18 +97,18 @@
         <field name="name">report.fsm.task.visit.conversion.list</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <list string="Conversión → Venta" create="false" edit="false" delete="false">
-                <field name="planned_date" string="Fecha"/>
-                <field name="user_id" string="Vendedor"/>
-                <field name="partner_id" string="Cliente"/>
-                <field name="executed" string="Ejecutadas"/>
-                <field name="has_sale" string="Con Venta"/>
-                <field name="lost_reason_id" string="Motivo No Venta"/>
-                <field name="sale_order_count" string="# Órdenes"/>
-                <field name="conversion_rate" string="Tasa Conversión (%)"/>
+            <list string="Visit → Sale Conversion" create="false" edit="false" delete="false">
+                <field name="planned_date" string="Date"/>
+                <field name="user_id" string="Salesperson"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="executed" string="Executed"/>
+                <field name="has_sale" string="With Sale"/>
+                <field name="lost_reason_id" string="Lost Reason"/>
+                <field name="sale_order_count" string="# Orders"/>
+                <field name="conversion_rate" string="Conversion Rate (%)"/>
                 <field name="currency_id" column_invisible="1"/>
-                <field name="sale_amount_untaxed" string="Importe Neto" widget="monetary" optional="show"/>
-                <field name="sale_amount_total" string="Total Venta" widget="monetary"/>
+                <field name="sale_amount_untaxed" string="Untaxed Amount" widget="monetary" optional="show"/>
+                <field name="sale_amount_total" string="Total Sales" widget="monetary"/>
             </list>
         </field>
     </record>
@@ -118,14 +118,14 @@
         <field name="name">report.fsm.task.visit.conversion.pivot</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <pivot string="Conversión → Venta" display_quantity="true">
-                <field name="planned_month" type="col" string="Mes"/>
-                <field name="user_id" type="row" string="Vendedor"/>
-                <field name="planned" type="measure" string="Planificadas"/>
-                <field name="executed" type="measure" string="Ejecutadas"/>
-                <field name="has_sale" type="measure" string="Con Venta"/>
-                <field name="conversion_rate" type="measure" string="Tasa Conversión (%)"/>
-                <field name="sale_amount_total" type="measure" string="Total Ventas"/>
+            <pivot string="Visit → Sale Conversion" display_quantity="true">
+                <field name="planned_month" type="col" string="Month"/>
+                <field name="user_id" type="row" string="Salesperson"/>
+                <field name="planned" type="measure" string="Planned"/>
+                <field name="executed" type="measure" string="Executed"/>
+                <field name="has_sale" type="measure" string="With Sale"/>
+                <field name="conversion_rate" type="measure" string="Conversion Rate (%)"/>
+                <field name="sale_amount_total" type="measure" string="Total Sales"/>
             </pivot>
         </field>
     </record>
@@ -135,24 +135,24 @@
         <field name="name">report.fsm.task.visit.conversion.graph</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <graph string="Conversión → Venta" type="bar">
-                <field name="user_id" type="row" string="Vendedor"/>
-                <field name="conversion_rate" type="measure" string="Tasa Conversión (%)"/>
-                <field name="has_sale" type="measure" string="Con Venta"/>
-                <field name="executed" type="measure" string="Ejecutadas"/>
+            <graph string="Visit → Sale Conversion" type="bar">
+                <field name="user_id" type="row" string="Salesperson"/>
+                <field name="conversion_rate" type="measure" string="Conversion Rate (%)"/>
+                <field name="has_sale" type="measure" string="With Sale"/>
+                <field name="executed" type="measure" string="Executed"/>
             </graph>
         </field>
     </record>
 
     <!-- WINDOW ACTION -->
     <record id="action_fsm_report_conversion" model="ir.actions.act_window">
-        <field name="name">Conversión → Venta</field>
+        <field name="name">Visit → Sale Conversion</field>
         <field name="res_model">report.fsm.task.visit</field>
         <field name="view_mode">pivot,graph,list</field>
-        <field name="domain">[('executed', '=', 1)]</field>
+        <field name="domain">[]</field>
         <field name="context">{
             'search_default_group_user': 1,
-            'search_default_group_month': 1
+            'search_default_filter_this_quarter': 1
         }</field>
         <field name="view_ids" eval="[
             (5, 0, 0),
@@ -162,19 +162,19 @@
         ]"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                No hay visitas ejecutadas que mostrar.
+                No executed visits to display.
             </p>
             <p>
-                Este reporte muestra la tasa de conversión de visitas en ventas.
-                Filtra automáticamente solo las visitas ejecutadas e indica si
-                se generó una orden de venta confirmada.
+                This report shows the visit-to-sale conversion rate.
+                It automatically filters only executed visits and indicates whether
+                a confirmed sale order was generated.
             </p>
         </field>
     </record>
 
 
     <!-- ====================================================================
-         REPORT 3: Análisis de Ventas FSM
+         REPORT 3: FSM Sales Analysis
          Goal: Sales amounts, order count, and avg ticket by customer/salesperson.
                Only accessible to FSM Managers (configured in menus.xml).
     ==================================================================== -->
@@ -184,15 +184,15 @@
         <field name="name">report.fsm.task.visit.sales.list</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <list string="Análisis de Ventas" create="false" edit="false" delete="false">
-                <field name="planned_date" string="Fecha"/>
-                <field name="user_id" string="Vendedor"/>
-                <field name="partner_id" string="Cliente"/>
-                <field name="project_id" string="Proyecto" optional="show"/>
-                <field name="sale_order_count" string="# Órdenes"/>
+            <list string="Sales Analysis" create="false" edit="false" delete="false">
+                <field name="planned_date" string="Date"/>
+                <field name="user_id" string="Salesperson"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="project_id" string="Project" optional="show"/>
+                <field name="sale_order_count" string="# Orders"/>
                 <field name="currency_id" column_invisible="1"/>
-                <field name="sale_amount_untaxed" string="Importe Neto" widget="monetary"/>
-                <field name="sale_amount_total" string="Total Venta" widget="monetary"/>
+                <field name="sale_amount_untaxed" string="Untaxed Amount" widget="monetary"/>
+                <field name="sale_amount_total" string="Total Sales" widget="monetary"/>
             </list>
         </field>
     </record>
@@ -202,13 +202,15 @@
         <field name="name">report.fsm.task.visit.sales.pivot</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <pivot string="Análisis de Ventas" display_quantity="true">
-                <field name="planned_month" type="col" string="Mes"/>
-                <field name="partner_id" type="row" string="Cliente"/>
-                <field name="user_id" type="row" string="Vendedor"/>
-                <field name="sale_order_count" type="measure" string="# Órdenes"/>
-                <field name="sale_amount_untaxed" type="measure" string="Importe Neto"/>
-                <field name="sale_amount_total" type="measure" string="Total Ventas"/>
+            <pivot string="Sales Analysis" display_quantity="true">
+                <field name="planned_month" type="col" string="Month"/>
+                <field name="partner_id" type="row" string="Customer"/>
+                <field name="user_id" type="row" string="Salesperson"/>
+                <field name="sale_order_count" type="measure" string="# Orders"/>
+                <field name="sale_amount_untaxed" type="measure" string="Untaxed Amount"/>
+                <field name="sale_amount_total" type="measure" string="Total Sales"/>
+                <field name="avg_ticket_untaxed" type="measure" string="Avg Ticket Untaxed"/>
+                <field name="avg_ticket_total" type="measure" string="Avg Ticket Total"/>
             </pivot>
         </field>
     </record>
@@ -218,23 +220,23 @@
         <field name="name">report.fsm.task.visit.sales.graph</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <graph string="Análisis de Ventas" type="bar">
-                <field name="user_id" type="row" string="Vendedor"/>
-                <field name="sale_amount_total" type="measure" string="Total Ventas"/>
-                <field name="sale_order_count" type="measure" string="# Órdenes"/>
+            <graph string="Sales Analysis" type="bar">
+                <field name="user_id" type="row" string="Salesperson"/>
+                <field name="sale_amount_total" type="measure" string="Total Sales"/>
+                <field name="sale_order_count" type="measure" string="# Orders"/>
             </graph>
         </field>
     </record>
 
     <!-- WINDOW ACTION -->
     <record id="action_fsm_report_sales" model="ir.actions.act_window">
-        <field name="name">Análisis de Ventas</field>
+        <field name="name">Sales Analysis</field>
         <field name="res_model">report.fsm.task.visit</field>
         <field name="view_mode">pivot,graph,list</field>
-        <field name="domain">[('has_sale', '=', 1)]</field>
+        <field name="domain">[]</field>
         <field name="context">{
             'search_default_group_user': 1,
-            'search_default_group_month': 1
+            'search_default_filter_this_quarter': 1
         }</field>
         <field name="view_ids" eval="[
             (5, 0, 0),
@@ -244,11 +246,11 @@
         ]"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                No hay ventas FSM que mostrar.
+                No FSM sales to display.
             </p>
             <p>
-                Este reporte muestra las ventas generadas desde visitas de campo:
-                totales, cantidad de órdenes y ticket promedio por cliente y vendedor.
+                This report shows sales generated from field visits:
+                totals, order count, and average ticket by customer and salesperson.
             </p>
         </field>
     </record>
@@ -261,33 +263,39 @@
         <field name="name">report.fsm.task.visit.search</field>
         <field name="model">report.fsm.task.visit</field>
         <field name="arch" type="xml">
-            <search string="Buscar Visitas">
-                <field name="user_id" string="Vendedor"/>
-                <field name="partner_id" string="Cliente"/>
-                <field name="project_id" string="Proyecto"/>
-                <field name="lost_reason_id" string="Motivo No Venta"/>
+            <search string="Search Visits">
+                <field name="user_id" string="Salesperson"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="project_id" string="Project"/>
+                <field name="lost_reason_id" string="Lost Reason"/>
                 <!-- Filters -->
                 <filter name="filter_executed"
-                        string="Ejecutadas"
+                        string="Executed"
                         domain="[('executed', '=', 1)]"/>
                 <filter name="filter_not_executed"
-                        string="No Ejecutadas"
+                        string="Not Executed"
                         domain="[('not_executed', '=', 1)]"/>
                 <filter name="filter_with_sale"
-                        string="Con Venta"
+                        string="With Sale"
                         domain="[('has_sale', '=', 1)]"/>
                 <filter name="filter_without_sale"
-                        string="Sin Venta"
+                        string="Without Sale"
                         domain="[('executed', '=', 1), ('has_sale', '=', 0)]"/>
                 <separator/>
+                <filter name="filter_this_quarter"
+                        string="This Quarter"
+                        domain="[
+                            ('planned_date_begin', '&gt;=', (context_today() + relativedelta(months=-2, day=1)).strftime('%Y-%m-%d')),
+                            ('planned_date_begin', '&lt;',  (context_today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d'))
+                        ]"/>
                 <filter name="filter_this_month"
-                        string="Este Mes"
+                        string="This Month"
                         domain="[
                             ('planned_date_begin', '&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')),
                             ('planned_date_begin', '&lt;',  (context_today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d'))
                         ]"/>
                 <filter name="filter_last_month"
-                        string="Mes Anterior"
+                        string="Last Month"
                         domain="[
                             ('planned_date_begin', '&gt;=', (context_today() + relativedelta(months=-1, day=1)).strftime('%Y-%m-%d')),
                             ('planned_date_begin', '&lt;',  (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))
@@ -295,26 +303,26 @@
                 <!-- Group by -->
                 <separator/>
                 <filter name="group_user"
-                        string="Vendedor"
+                        string="Salesperson"
                         context="{'group_by': 'user_id'}"/>
                 <filter name="group_partner"
-                        string="Cliente"
+                        string="Customer"
                         context="{'group_by': 'partner_id'}"/>
                 <filter name="group_project"
-                        string="Proyecto"
+                        string="Project"
                         context="{'group_by': 'project_id'}"/>
                 <filter name="group_lost_reason"
-                        string="Motivo No Venta"
+                        string="Lost Reason"
                         context="{'group_by': 'lost_reason_id'}"/>
                 <separator/>
                 <filter name="group_month"
-                        string="Mes"
+                        string="Month"
                         context="{'group_by': 'planned_month'}"/>
                 <filter name="group_week"
-                        string="Semana"
+                        string="Week"
                         context="{'group_by': 'planned_week'}"/>
                 <filter name="group_date"
-                        string="Fecha"
+                        string="Date"
                         context="{'group_by': 'planned_date'}"/>
             </search>
         </field>

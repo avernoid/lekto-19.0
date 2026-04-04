@@ -1,6 +1,6 @@
 {
     'name': 'Auto Cancel FSM Task',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.2',
     'category': 'Project',
     'summary': 'Automatically cancel/finish tasks based on antiquity',
     'description': """
