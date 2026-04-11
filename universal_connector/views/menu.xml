@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Root app entry: shows "Connectors" on the home screen (/web#action=menu).
+        web_icon will be populated once an icon is added to static/description/.
+    -->
+    <menuitem
+        id="menu_universal_connector_root"
+        name="Connectors"
+        groups="base.group_system"
+        sequence="100"/>
+
+    <!-- Configuration group -->
+    <menuitem
+        id="menu_universal_connector_configuration"
+        name="Configuration"
+        parent="menu_universal_connector_root"
+        sequence="10"/>
+
+    <!-- Settings terminal item -->
+    <menuitem
+        id="menu_universal_connector_settings"
+        name="Settings"
+        parent="menu_universal_connector_configuration"
+        action="action_universal_connector_config_settings"
+        sequence="10"/>
+
+</odoo>

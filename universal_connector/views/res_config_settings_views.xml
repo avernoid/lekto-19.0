@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Settings view: inserts a "Connectors" section in the base settings form.
+        Connector modules (e.g. openclaw_connector) extend this view via XPath.
+    -->
+    <record id="res_config_settings_view_form_connector" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.universal.connector</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Connectors" name="universal_connector" groups="base.group_system">
+                    <block title="Connector Integrations" name="universal_connector_block">
+                        <p class="text-muted">
+                            Install connector modules to configure their credentials here.
+                        </p>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action: opens res.config.settings scoped to the Connectors app -->
+    <record id="action_universal_connector_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'universal_connector'}</field>
+    </record>
+
+</odoo>
