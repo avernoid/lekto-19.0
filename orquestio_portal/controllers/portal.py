@@ -35,7 +35,7 @@ class SaasPortal(CustomerPortal):
             ('tenant_id.partner_id', '=', partner.id),
             ('state', '!=', 'destroyed'),
         ])
-        return request.render('saas_portal.portal_my_instances', {
+        return request.render('orquestio_portal.portal_my_instances', {
             'instances': instances,
             'page_name': 'instances',
         })
@@ -54,7 +54,7 @@ class SaasPortal(CustomerPortal):
                 )
             except Exception as e:
                 _logger.warning("Failed to fetch version info for %s: %s", instance.name, e)
-        return request.render('saas_portal.portal_instance_detail', {
+        return request.render('orquestio_portal.portal_instance_detail', {
             'instance': instance,
             'version_info': version_info,
             'page_name': 'instance_detail',

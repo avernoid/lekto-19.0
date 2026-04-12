@@ -1,5 +1,5 @@
 {
-    'name': 'SaaS Portal',
+    'name': 'Orquestio Portal',
     'version': '19.0.1.0.1',
     'category': 'Services',
     'summary': """Customer portal for SaaS instance management.""",
@@ -22,7 +22,7 @@
         'security/saas_security.xml',
         'views/portal_templates.xml',
     ],
-    'icon': '/saas_portal/static/description/icon.png',
+    'icon': '/orquestio_portal/static/description/icon.png',
     'images': ['static/description/banner.png'],
     'license': 'OPL-1',
     'installable': True,

@@ -1,10 +1,10 @@
-**SaaS Portal**
+**Orquestio Portal**
 
 <img src="static/description/banner.png" width="100%" alt="Banner">
 
 ## Overview
 
-**SaaS Portal** is an Odoo 19 module that provides a self-service customer portal for managing SaaS instances. It extends the standard Odoo portal (`/my`) so that authenticated customers can view, monitor, and control their SaaS instances without needing to contact support.
+**Orquestio Portal** is an Odoo 19 module that provides a self-service customer portal for managing SaaS instances. It extends the standard Odoo portal (`/my`) so that authenticated customers can view, monitor, and control their SaaS instances without needing to contact support.
 
 This module depends on **saas_orchestrator**, **portal**, and **website**.
 
@@ -32,7 +32,7 @@ This module depends on **saas_orchestrator**, **portal**, and **website**.
 
 1. Ensure the **saas_orchestrator** module is installed and configured.
 2. Ensure the **Portal** and **Website** modules are active.
-3. Install **saas_portal** from the Apps menu.
+3. Install **orquestio_portal** from the Apps menu.
 4. Grant portal access to your customers (via the partner form > Action > Grant Portal Access).
 5. Link each customer's tenant record to their partner.
 

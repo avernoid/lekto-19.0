@@ -4,7 +4,7 @@
     <template id="portal_my_home_instances" name="Show Instances" inherit_id="portal.portal_my_home" priority="40">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <t t-call="portal.portal_docs_entry">
-                <t t-set="icon" t-value="'/saas_portal/static/description/icon.png'"/>
+                <t t-set="icon" t-value="'/orquestio_portal/static/description/icon.png'"/>
                 <t t-set="title">Instances</t>
                 <t t-set="url" t-value="'/my/instances'"/>
                 <t t-set="text">View your SaaS instances</t>
