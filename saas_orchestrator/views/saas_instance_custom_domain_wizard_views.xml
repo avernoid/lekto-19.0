@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="saas_instance_custom_domain_wizard_view_form" model="ir.ui.view">
+        <field name="name">saas.instance.custom_domain.wizard.form</field>
+        <field name="model">saas.instance.custom_domain.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Custom Domain">
+                <sheet>
+                    <field name="state" invisible="1"/>
+                    <div class="oe_title">
+                        <h2>BYO Custom Domain</h2>
+                    </div>
+
+                    <!-- Step 1: input -->
+                    <group invisible="state != 'input'">
+                        <field name="instance_id" readonly="1"/>
+                        <field name="domain" placeholder="ai.acme.com"/>
+                    </group>
+                    <div class="alert alert-info" role="status" invisible="state != 'input'">
+                        Connect your own hostname to this instance. Let's Encrypt will
+                        issue a free TLS certificate via HTTP-01 challenge once your
+                        DNS points at this instance. After clicking Register you'll get
+                        the exact DNS instructions to follow.
+                    </div>
+
+                    <!-- Step 2: instructions -->
+                    <group invisible="state != 'instructions'">
+                        <field name="domain" readonly="1"/>
+                        <field name="cname_target" readonly="1" string="Point your CNAME to"/>
+                    </group>
+                    <div class="alert alert-success" role="status" invisible="state != 'instructions'">
+                        <h4>Almost there — finish the setup in your DNS provider:</h4>
+                        <ol>
+                            <li>Open your DNS provider (Cloudflare, Route 53, GoDaddy, etc.)</li>
+                            <li>Create a <strong>CNAME</strong> record:
+                                <ul>
+                                    <li><strong>Name / Source:</strong> <field name="domain" readonly="1" nolabel="1"/></li>
+                                    <li><strong>Target:</strong> <field name="cname_target" readonly="1" nolabel="1"/></li>
+                                </ul>
+                            </li>
+                            <li>Save and wait 1-2 minutes for DNS propagation. Once your domain resolves to this instance, the orchestrator will obtain a Let's Encrypt cert (HTTP-01 challenge) and bring up the new TLS endpoint.</li>
+                            <li>Click <strong>Refresh Custom Domain</strong> on the instance form to check status. It transitions to <em>Active</em> when the cert is installed and nginx is live.</li>
+                        </ol>
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_register" type="object"
+                            string="Register" class="btn-primary"
+                            invisible="state != 'input'"/>
+                    <button name="action_close" type="object"
+                            string="Done" class="btn-primary"
+                            invisible="state != 'instructions'"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="saas_instance_custom_domain_wizard_action" model="ir.actions.act_window">
+        <field name="name">Custom Domain</field>
+        <field name="res_model">saas.instance.custom_domain.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="saas_instance_view_tree" model="ir.ui.view">
+        <field name="name">saas.instance.tree</field>
+        <field name="model">saas.instance</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'running' and state_freshness == 'fresh'"
+                  decoration-warning="state in ('stopped', 'degraded') or state_freshness == 'stale'"
+                  decoration-danger="state in ('provisioning_failed', 'destroyed') or state_freshness == 'missing'">
+                <field name="name"/>
+                <field name="tenant_id"/>
+                <field name="plan_id"/>
+                <field name="state" widget="badge"/>
+                <field name="access_url" widget="url"/>
+                <field name="cpu_usage"/>
+                <field name="ram_usage"/>
+                <field name="disk_usage"/>
+                <field name="last_health_check"/>
+                <field name="last_state_fetch_at" optional="show"/>
+                <field name="state_freshness" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="saas_instance_view_form" model="ir.ui.view">
+        <field name="name">saas.instance.form</field>
+        <field name="model">saas.instance</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_provision" type="object" string="Provision" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_stop" type="object" string="Stop" invisible="state != 'running'" confirm="Stop this instance?"/>
+                    <button name="action_start" type="object" string="Start" class="btn-primary" invisible="state != 'stopped'"/>
+                    <button name="action_restart" type="object" string="Restart Host" invisible="state != 'running'" confirm="Stop and start the EC2 host (~3 min downtime). Continue?"/>
+                    <button name="action_destroy" type="object" string="Destroy" class="btn-danger" invisible="state in ('destroyed', 'destroying', 'draft')" confirm="This will permanently destroy the instance. Are you sure?"/>
+                    <button name="action_refresh" type="object" string="Refresh" icon="fa-refresh"
+                            invisible="state in ('draft', 'destroyed')"
+                            help="Fetch current state from the orchestrator."/>
+                    <button name="action_open_upgrade_wizard" type="object" string="Upgrade"
+                            class="btn-primary"
+                            invisible="not has_upgrade_operation or state not in ('running', 'degraded')"
+                            help="Dispatch the upgrade operation declared in the blueprint catalog."/>
+                    <button name="action_open_restart_wizard" type="object" string="Restart App"
+                            invisible="not has_restart_operation or state not in ('running', 'degraded')"
+                            help="Restart the OpenClaw container (~5-10s downtime)."/>
+                    <button name="action_open_rotate_password_wizard" type="object" string="Rotate Password"
+                            invisible="not has_rotate_password_operation or state not in ('running', 'degraded')"
+                            help="Rotate the gateway password and update Secrets Manager."/>
+                    <button name="action_open_update_env_var_wizard" type="object" string="Set Env Var"
+                            invisible="not has_update_env_var_operation or state not in ('running', 'degraded')"
+                            help="Set or update an environment variable on the container."/>
+                    <button name="action_open_custom_domain_wizard" type="object"
+                            string="Configure Custom Domain"
+                            invisible="state not in ('running', 'degraded') or custom_domain"
+                            help="Connect a domain you own (BYO via Cloudflare for SaaS)."/>
+                    <button name="action_open_custom_domain_wizard" type="object"
+                            string="Change Custom Domain"
+                            invisible="state not in ('running', 'degraded') or not custom_domain"/>
+                    <button name="action_refresh_custom_domain" type="object"
+                            string="Refresh Custom Domain" icon="fa-refresh"
+                            invisible="not custom_domain"
+                            help="Pull the latest TLS / DNS status from Cloudflare."/>
+                    <button name="action_remove_custom_domain" type="object"
+                            string="Remove Custom Domain" class="btn-secondary"
+                            invisible="not custom_domain"
+                            confirm="Detach this custom domain from the instance?"/>
+                    <field name="has_upgrade_operation" invisible="1"/>
+                    <field name="has_restart_operation" invisible="1"/>
+                    <field name="has_rotate_password_operation" invisible="1"/>
+                    <field name="has_update_env_var_operation" invisible="1"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,provisioning,running"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="name"/>
+                            <field name="tenant_id"/>
+                            <field name="plan_id"/>
+                            <field name="subscription_id"/>
+                            <field name="access_url" widget="url"/>
+                            <field name="access_password"/>
+                            <field name="effective_access_url" widget="url" readonly="1"/>
+                            <field name="custom_domain" readonly="1"/>
+                            <field name="custom_domain_status" readonly="1" invisible="not custom_domain"/>
+                        </group>
+                        <group string="AWS">
+                            <field name="ec2_instance_id"/>
+                            <field name="ip_address"/>
+                            <field name="dns_record_id"/>
+                            <field name="efs_id"/>
+                            <field name="secret_arn"/>
+                            <field name="terraform_state_path"/>
+                        </group>
+                    </group>
+                    <group string="Metrics">
+                        <field name="cpu_usage"/>
+                        <field name="ram_usage"/>
+                        <field name="disk_usage"/>
+                        <field name="last_health_check"/>
+                        <field name="last_state_fetch_at" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Environment Variables">
+                            <field name="env_var_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="value" password="True"/>
+                                    <field name="is_secret"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Operation History">
+                            <field name="task_history_ids" readonly="1">
+                                <list decoration-success="state == 'completed'"
+                                      decoration-warning="state in ('queued', 'in_progress')"
+                                      decoration-danger="state == 'failed'"
+                                      default_order="created_at desc">
+                                    <field name="created_at"/>
+                                    <field name="task_type"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="duration_seconds" sum="Total"/>
+                                    <field name="orchestrator_task_id" optional="hide"/>
+                                    <field name="ssm_command_id" optional="hide"/>
+                                    <field name="result_summary" optional="show"/>
+                                    <field name="error_message" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="saas_instance_action" model="ir.actions.act_window">
+        <field name="name">Instances</field>
+        <field name="res_model">saas.instance</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+    </record>
+
+    <record id="action_refresh_instances_server" model="ir.actions.server">
+        <field name="name">Refresh</field>
+        <field name="model_id" ref="model_saas_instance"/>
+        <field name="binding_model_id" ref="model_saas_instance"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_refresh()</field>
+    </record>
+</odoo>

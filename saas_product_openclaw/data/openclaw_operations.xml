@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Operation: Upgrade OpenClaw -->
+        <record id="op_openclaw_upgrade" model="saas.product.operation">
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="code">upgrade</field>
+            <field name="label">Upgrade OpenClaw</field>
+            <field name="description">Rolling replacement del container: pull, start lateral, Nginx upstream switch, cooldown 30s, cleanup del viejo.</field>
+            <field name="script_path">/opt/openclaw/scripts/upgrade.sh</field>
+            <field name="requires_drain" eval="False"/>
+            <field name="timeout_seconds">600</field>
+            <field name="visible_in_admin" eval="True"/>
+            <field name="visible_in_portal" eval="True"/>
+        </record>
+
+        <record id="op_openclaw_upgrade_param_version" model="saas.product.operation.param">
+            <field name="operation_id" ref="op_openclaw_upgrade"/>
+            <field name="name">target_version</field>
+            <field name="label">Target Version</field>
+            <field name="type">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+        <!-- Operation: Restart OpenClaw container (Sprint 3 B.1) -->
+        <record id="op_openclaw_restart" model="saas.product.operation">
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="code">restart</field>
+            <field name="label">Restart OpenClaw</field>
+            <field name="description">Hard restart del container OpenClaw. ~5-10s de downtime (sin drain). Usar Upgrade si se necesita zero-downtime.</field>
+            <field name="script_path">/opt/openclaw/scripts/restart.sh</field>
+            <field name="requires_drain" eval="False"/>
+            <field name="timeout_seconds">120</field>
+            <field name="visible_in_admin" eval="True"/>
+            <field name="visible_in_portal" eval="True"/>
+        </record>
+
+        <!-- Operation: Rotate gateway password (Sprint 3 B.2) -->
+        <record id="op_openclaw_rotate_password" model="saas.product.operation">
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="code">rotate_password</field>
+            <field name="label">Rotate Gateway Password</field>
+            <field name="description">Genera un password nuevo, actualiza Secrets Manager y reinicia el container. Sesiones activas se invalidan.</field>
+            <field name="script_path">/opt/openclaw/scripts/rotate_password.sh</field>
+            <field name="requires_drain" eval="False"/>
+            <field name="timeout_seconds">180</field>
+            <field name="visible_in_admin" eval="True"/>
+            <field name="visible_in_portal" eval="True"/>
+        </record>
+
+        <record id="op_openclaw_rotate_password_param_notify" model="saas.product.operation.param">
+            <field name="operation_id" ref="op_openclaw_rotate_password"/>
+            <field name="name">notify_client</field>
+            <field name="label">Notify Client</field>
+            <field name="type">boolean</field>
+            <field name="required" eval="False"/>
+        </record>
+
+        <!-- Operation: Update environment variable (Sprint 3 B.3) -->
+        <record id="op_openclaw_update_env_var" model="saas.product.operation">
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="code">update_env_var</field>
+            <field name="label">Update Env Var</field>
+            <field name="description">Setea o actualiza una variable de entorno del container OpenClaw. Reinicia el container para aplicar el cambio.</field>
+            <field name="script_path">/opt/openclaw/scripts/update_env_var.sh</field>
+            <field name="requires_drain" eval="False"/>
+            <field name="timeout_seconds">120</field>
+            <field name="visible_in_admin" eval="True"/>
+            <field name="visible_in_portal" eval="True"/>
+        </record>
+
+        <record id="op_openclaw_update_env_var_param_name" model="saas.product.operation.param">
+            <field name="operation_id" ref="op_openclaw_update_env_var"/>
+            <field name="name">name</field>
+            <field name="label">Variable Name</field>
+            <field name="type">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+        <record id="op_openclaw_update_env_var_param_value" model="saas.product.operation.param">
+            <field name="operation_id" ref="op_openclaw_update_env_var"/>
+            <field name="name">value</field>
+            <field name="label">Value</field>
+            <field name="type">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+        <record id="op_openclaw_update_env_var_param_secret" model="saas.product.operation.param">
+            <field name="operation_id" ref="op_openclaw_update_env_var"/>
+            <field name="name">is_secret</field>
+            <field name="label">Mark as Secret (mask in logs)</field>
+            <field name="type">boolean</field>
+            <field name="required" eval="False"/>
+        </record>
+
+        <!-- Operation: Add custom domain (Phase C Plan B) -->
+        <record id="op_openclaw_add_custom_domain" model="saas.product.operation">
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="code">add_custom_domain</field>
+            <field name="label">Add Custom Domain</field>
+            <field name="description">Registra un dominio del cliente vía Let's Encrypt (HTTP-01) y monta un server block de nginx que enruta tráfico al backend de OpenClaw. El cliente debe haber apuntado primero su DNS al subdominio -direct.</field>
+            <field name="script_path">/opt/openclaw/scripts/add_custom_domain.sh</field>
+            <field name="requires_drain" eval="False"/>
+            <field name="timeout_seconds">180</field>
+            <field name="visible_in_admin" eval="True"/>
+            <field name="visible_in_portal" eval="True"/>
+        </record>
+
+        <record id="op_openclaw_add_custom_domain_param_domain" model="saas.product.operation.param">
+            <field name="operation_id" ref="op_openclaw_add_custom_domain"/>
+            <field name="name">domain</field>
+            <field name="label">Custom Domain</field>
+            <field name="type">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+        <!-- Operation: Remove custom domain (Phase C Plan B) -->
+        <record id="op_openclaw_remove_custom_domain" model="saas.product.operation">
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="code">remove_custom_domain</field>
+            <field name="label">Remove Custom Domain</field>
+            <field name="description">Borra el certificado Let's Encrypt y el server block de nginx asociado al dominio del cliente. Idempotente.</field>
+            <field name="script_path">/opt/openclaw/scripts/remove_custom_domain.sh</field>
+            <field name="requires_drain" eval="False"/>
+            <field name="timeout_seconds">120</field>
+            <field name="visible_in_admin" eval="True"/>
+            <field name="visible_in_portal" eval="True"/>
+        </record>
+
+        <record id="op_openclaw_remove_custom_domain_param_domain" model="saas.product.operation.param">
+            <field name="operation_id" ref="op_openclaw_remove_custom_domain"/>
+            <field name="name">domain</field>
+            <field name="label">Custom Domain</field>
+            <field name="type">char</field>
+            <field name="required" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

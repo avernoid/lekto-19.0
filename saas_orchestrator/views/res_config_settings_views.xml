@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_saas_orchestrator" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.saas.orchestrator</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="SaaS Orquestio" string="SaaS Orquestio" name="saas_orchestrator" groups="base.group_system">
+                    <block title="Orchestrator API" name="saas_orchestrator_api">
+                        <setting id="saas_orchestrator_url_setting"
+                                 string="Orchestrator URL"
+                                 help="Base URL of the Orquestio orchestrator API.">
+                            <field name="saas_orchestrator_url" placeholder="https://api.orquestio.com"/>
+                        </setting>
+                        <setting id="saas_orchestrator_api_key_setting"
+                                 string="API Key"
+                                 help="Bearer token used to authenticate against the orchestrator API.">
+                            <field name="saas_orchestrator_api_key" password="True" placeholder="sk-orch-..."/>
+                        </setting>
+                        <setting id="saas_orchestrator_test_setting"
+                                 string="Test connection"
+                                 help="Verify the orchestrator URL and API key by hitting /health.">
+                            <button name="action_test_orchestrator_connection"
+                                    type="object"
+                                    string="Test Connection"
+                                    class="btn-secondary"
+                                    icon="fa-plug"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action that opens Settings already on the SaaS Orquestio app -->
+    <record id="saas_orchestrator_settings_action" model="ir.actions.act_window">
+        <field name="name">SaaS Orquestio Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'saas_orchestrator'}</field>
+    </record>
+</odoo>

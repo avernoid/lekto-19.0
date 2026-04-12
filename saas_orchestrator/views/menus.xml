@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="saas_menu_root" name="Orquestio" sequence="100" web_icon="saas_orchestrator,static/description/icon.png"/>
+
+    <menuitem id="saas_menu_dashboard" name="Dashboard" parent="saas_menu_root" action="saas_dashboard_action" sequence="5"/>
+    <menuitem id="saas_menu_instances" name="Instances" parent="saas_menu_root" action="saas_instance_action" sequence="10"/>
+    <menuitem id="saas_menu_tenants" name="Tenants" parent="saas_menu_root" action="saas_tenant_action" sequence="20"/>
+
+    <menuitem id="saas_menu_config" name="Configuration" parent="saas_menu_root" sequence="90"/>
+    <menuitem id="saas_menu_blueprints" name="Blueprints" parent="saas_menu_config" action="saas_product_blueprint_action" sequence="10"/>
+    <menuitem id="saas_menu_plans" name="Plans" parent="saas_menu_config" action="saas_product_plan_action" sequence="20"/>
+
+    <menuitem id="saas_menu_history" name="Operations History" parent="saas_menu_root" action="saas_task_history_action" sequence="50"/>
+
+    <menuitem id="saas_menu_settings" name="Settings" parent="saas_menu_root" action="saas_orchestrator_settings_action" sequence="99" groups="base.group_system"/>
+</odoo>

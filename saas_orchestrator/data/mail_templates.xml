@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_instance_suspension_warning" model="mail.template">
+            <field name="name">SaaS: Instance Suspension Warning</field>
+            <field name="model_id" ref="model_saas_instance"/>
+            <field name="subject">Your instance {{ object.name }} will be suspended soon</field>
+            <field name="email_from">{{ (object.tenant_id.partner_id.company_id.email or 'noreply@orquestio.com') }}</field>
+            <field name="email_to">{{ object.tenant_id.partner_id.email }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0; padding: 0;">
+    <p>Dear {{ object.tenant_id.partner_id.name }},</p>
+    <p>Your subscription for <strong>{{ object.name }}</strong> ({{ object.plan_id.name }}) has expired.</p>
+    <p>If payment is not received within 7 days, your instance will be <strong>suspended</strong>. Your data will remain intact, but the instance will be stopped.</p>
+    <p>Please update your payment method to avoid interruption.</p>
+    <p>Best regards,<br/>Orquestio Team</p>
+</div>
+            </field>
+        </record>
+
+        <record id="mail_template_instance_suspended" model="mail.template">
+            <field name="name">SaaS: Instance Suspended</field>
+            <field name="model_id" ref="model_saas_instance"/>
+            <field name="subject">Your instance {{ object.name }} has been suspended</field>
+            <field name="email_from">{{ (object.tenant_id.partner_id.company_id.email or 'noreply@orquestio.com') }}</field>
+            <field name="email_to">{{ object.tenant_id.partner_id.email }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0; padding: 0;">
+    <p>Dear {{ object.tenant_id.partner_id.name }},</p>
+    <p>Your instance <strong>{{ object.name }}</strong> has been <strong>suspended</strong> due to non-payment.</p>
+    <p>Your data is still preserved. If payment is not received within 23 more days, the instance will be permanently destroyed.</p>
+    <p>Please update your payment to reactivate your instance.</p>
+    <p>Best regards,<br/>Orquestio Team</p>
+</div>
+            </field>
+        </record>
+
+        <record id="mail_template_instance_destruction_warning" model="mail.template">
+            <field name="name">SaaS: Instance Destruction Warning</field>
+            <field name="model_id" ref="model_saas_instance"/>
+            <field name="subject">URGENT: Your instance {{ object.name }} will be destroyed in 7 days</field>
+            <field name="email_from">{{ (object.tenant_id.partner_id.company_id.email or 'noreply@orquestio.com') }}</field>
+            <field name="email_to">{{ object.tenant_id.partner_id.email }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0; padding: 0;">
+    <p>Dear {{ object.tenant_id.partner_id.name }},</p>
+    <p><strong>URGENT:</strong> Your instance <strong>{{ object.name }}</strong> will be permanently destroyed in 7 days if payment is not received.</p>
+    <p>After destruction, all data will be lost and cannot be recovered.</p>
+    <p>Please update your payment immediately to keep your instance.</p>
+    <p>Best regards,<br/>Orquestio Team</p>
+</div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

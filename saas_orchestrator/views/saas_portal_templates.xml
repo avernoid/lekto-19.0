@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================== -->
+    <!-- Portal home: add a "SaaS Instances" card                        -->
+    <!-- ============================================================== -->
+    <template id="portal_my_home_menu_instances"
+              name="Portal layout : SaaS Instances menu entry"
+              inherit_id="portal.portal_my_home"
+              priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/saas_orchestrator/static/src/img/saas-instances.svg'"/>
+                <t t-set="title">SaaS Instances</t>
+                <t t-set="url" t-value="'/my/instances'"/>
+                <t t-set="text">Manage your SaaS instances</t>
+                <t t-set="placeholder_count" t-value="'saas_instances_count'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ============================================================== -->
+    <!-- /my/instances — list page                                       -->
+    <!-- ============================================================== -->
+    <template id="portal_my_instances" name="My SaaS Instances">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">SaaS Instances</t>
+            </t>
+
+            <t t-if="not instances">
+                <div class="alert alert-info text-center mt-3" role="status">
+                    <h4 class="mb-2">No instances yet</h4>
+                    <p class="mb-0">Your sysadmin will provision one for you.</p>
+                </div>
+            </t>
+
+            <t t-if="instances">
+                <div class="o_portal_my_doc_table">
+                    <table class="table table-sm table-hover o_portal_my_doc_table">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Instance</th>
+                                <th>Plan</th>
+                                <th>State</th>
+                                <th>Freshness</th>
+                                <th>Last Refresh</th>
+                                <th>Access URL</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="instances" t-as="instance">
+                                <td>
+                                    <a t-att-href="'/my/instances/%s' % instance.id">
+                                        <t t-esc="instance.name"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <t t-esc="instance.plan_id.name or ''"/>
+                                </td>
+                                <td>
+                                    <span t-attf-class="badge #{
+                                        'bg-success' if instance.state == 'running'
+                                        else 'bg-warning' if instance.state in ('stopped', 'degraded', 'provisioning', 'draft')
+                                        else 'bg-danger' if instance.state in ('destroyed', 'destroying', 'provisioning_failed')
+                                        else 'bg-secondary'}">
+                                        <t t-esc="dict(instance._fields['state'].selection).get(instance.state, instance.state)"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <t t-if="instance.state_freshness == 'stale'">
+                                        <span class="badge bg-warning">stale</span>
+                                    </t>
+                                    <t t-if="instance.state_freshness == 'missing'">
+                                        <span class="badge bg-danger">missing</span>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="instance.last_state_fetch_at">
+                                        <span t-field="instance.last_state_fetch_at"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span class="text-muted">never</span>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t t-if="instance.effective_access_url">
+                                        <a t-att-href="instance.effective_access_url" target="_blank" rel="noopener">
+                                            <t t-esc="instance.effective_access_url"/>
+                                        </a>
+                                    </t>
+                                </td>
+                                <td class="text-end">
+                                    <a t-att-href="'/my/instances/%s' % instance.id" class="btn btn-sm btn-primary">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div t-if="pager" class="o_portal_pager text-center">
+                    <t t-call="portal.pager"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ============================================================== -->
+    <!-- /my/instances/<id> — detail page                                -->
+    <!-- ============================================================== -->
+    <template id="portal_my_instance_detail" name="My SaaS Instance">
+        <t t-call="portal.portal_layout">
+            <t t-set="additional_title" t-value="'Instance %s' % instance.name"/>
+
+            <!-- =============== Header =============== -->
+            <div class="d-flex align-items-center mb-3">
+                <h2 class="mb-0 me-3">
+                    <t t-esc="instance.name"/>
+                </h2>
+                <span t-attf-class="badge me-3 #{
+                    'bg-success' if instance.state == 'running'
+                    else 'bg-warning' if instance.state in ('stopped', 'degraded', 'provisioning', 'draft')
+                    else 'bg-danger' if instance.state in ('destroyed', 'destroying', 'provisioning_failed')
+                    else 'bg-secondary'}">
+                    <t t-esc="dict(instance._fields['state'].selection).get(instance.state, instance.state)"/>
+                </span>
+                <form t-attf-action="/my/instances/#{instance.id}/refresh"
+                      method="post"
+                      class="ms-auto">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <button type="submit" class="btn btn-sm btn-secondary">
+                        <i class="fa fa-refresh me-1"/>Refresh
+                    </button>
+                </form>
+            </div>
+
+            <!-- =============== Status section =============== -->
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Status</h5>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <dl class="row mb-0">
+                                <dt class="col-sm-4">State</dt>
+                                <dd class="col-sm-8">
+                                    <t t-esc="dict(instance._fields['state'].selection).get(instance.state, instance.state)"/>
+                                    <t t-if="instance.state_freshness == 'stale'">
+                                        <span class="badge bg-warning ms-2">stale</span>
+                                    </t>
+                                    <t t-if="instance.state_freshness == 'missing'">
+                                        <span class="badge bg-danger ms-2">missing</span>
+                                    </t>
+                                </dd>
+                                <dt class="col-sm-4">Plan</dt>
+                                <dd class="col-sm-8">
+                                    <t t-esc="instance.plan_id.name or ''"/>
+                                </dd>
+                                <dt class="col-sm-4">Last refresh</dt>
+                                <dd class="col-sm-8">
+                                    <t t-if="instance.last_state_fetch_at">
+                                        <span t-field="instance.last_state_fetch_at"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span class="text-muted">never</span>
+                                    </t>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center justify-content-md-end mt-3 mt-md-0">
+                            <t t-if="instance.effective_access_url">
+                                <a t-att-href="instance.effective_access_url"
+                                   target="_blank"
+                                   rel="noopener"
+                                   class="btn btn-primary btn-lg">
+                                    <i class="fa fa-external-link me-2"/>Open instance
+                                </a>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =============== Custom Domain section =============== -->
+            <div class="card mb-3">
+                <div class="card-header" role="button"
+                     data-bs-toggle="collapse"
+                     data-bs-target="#collapse_custom_domain"
+                     aria-expanded="true">
+                    <h5 class="mb-0">Custom Domain</h5>
+                </div>
+                <div id="collapse_custom_domain" class="collapse show">
+                    <div class="card-body">
+                        <t t-if="instance.custom_domain">
+                            <p class="mb-2">
+                                <strong>Domain:</strong>
+                                <t t-esc="instance.custom_domain"/>
+                                <span t-attf-class="badge ms-2 #{
+                                    'bg-success' if instance.custom_domain_status == 'active'
+                                    else 'bg-warning' if instance.custom_domain_status == 'pending'
+                                    else 'bg-danger'}">
+                                    <t t-esc="instance.custom_domain_status or 'unknown'"/>
+                                </span>
+                            </p>
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal_remove_custom_domain">
+                                Remove custom domain
+                            </button>
+
+                            <!-- Remove modal -->
+                            <div class="modal fade" id="modal_remove_custom_domain" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form t-attf-action="/my/instances/#{instance.id}/custom-domain/remove"
+                                              method="post">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Remove custom domain</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>You are about to detach
+                                                    <strong><t t-esc="instance.custom_domain"/></strong>
+                                                    from this instance.
+                                                </p>
+                                                <p class="text-danger mb-0">This will affect your live instance.</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Confirm and remove</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <p class="mb-2 text-muted">No custom domain configured. You are using the default access URL.</p>
+                            <button type="button"
+                                    class="btn btn-sm btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modal_add_custom_domain">
+                                Configure custom domain
+                            </button>
+
+                            <!-- Add modal -->
+                            <div class="modal fade" id="modal_add_custom_domain" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form t-attf-action="/my/instances/#{instance.id}/custom-domain/add"
+                                              method="post">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Configure custom domain</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="input_custom_domain" class="form-label">Domain</label>
+                                                    <input type="text"
+                                                           id="input_custom_domain"
+                                                           name="domain"
+                                                           class="form-control"
+                                                           placeholder="ai.acme.com"
+                                                           required="required"/>
+                                                    <div class="form-text">
+                                                        Use a lowercase hostname you own, e.g. ai.acme.com. After submission you will need to create a CNAME record pointing to the instance. Refresh the page to see when the domain becomes active.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =============== Operations section =============== -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Operations</h5>
+                </div>
+                <div class="card-body">
+                    <t t-set="portal_ops" t-value="instance.plan_id.blueprint_id.operation_ids.filtered(lambda o: o.visible_in_portal)"/>
+                    <t t-if="not portal_ops">
+                        <p class="text-muted mb-0">No operations are available for this instance.</p>
+                    </t>
+                    <div class="row">
+                        <t t-foreach="portal_ops" t-as="op">
+                            <div class="col-md-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column">
+                                        <h6 class="card-title">
+                                            <t t-esc="op.label or op.code"/>
+                                        </h6>
+                                        <p class="card-text text-muted small flex-grow-1">
+                                            <t t-esc="op.description or ''"/>
+                                        </p>
+                                        <div>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-primary"
+                                                    data-bs-toggle="modal"
+                                                    t-attf-data-bs-target="#modal_op_#{op.code}">
+                                                Run
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Operation modal -->
+                            <div class="modal fade"
+                                 t-attf-id="modal_op_#{op.code}"
+                                 tabindex="-1"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form t-attf-action="/my/instances/#{instance.id}/operations/#{op.code}/run"
+                                              method="post">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">
+                                                    <t t-esc="op.label or op.code"/>
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    <t t-esc="op.description or ''"/>
+                                                </p>
+                                                <t t-foreach="op.param_ids" t-as="param">
+                                                    <div class="mb-3">
+                                                        <label t-attf-for="param_#{op.code}_#{param.name}" class="form-label">
+                                                            <t t-esc="param.label or param.name"/>
+                                                            <t t-if="param.required">
+                                                                <span class="text-danger">*</span>
+                                                            </t>
+                                                        </label>
+                                                        <t t-if="param.type == 'boolean'">
+                                                            <div class="form-check">
+                                                                <input type="checkbox"
+                                                                       class="form-check-input"
+                                                                       t-attf-id="param_#{op.code}_#{param.name}"
+                                                                       t-att-name="param.name"
+                                                                       value="1"/>
+                                                            </div>
+                                                        </t>
+                                                        <t t-elif="param.type == 'text'">
+                                                            <textarea class="form-control"
+                                                                      rows="4"
+                                                                      t-attf-id="param_#{op.code}_#{param.name}"
+                                                                      t-att-name="param.name"
+                                                                      t-att-required="'required' if param.required else None"/>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   t-attf-id="param_#{op.code}_#{param.name}"
+                                                                   t-att-name="param.name"
+                                                                   t-att-required="'required' if param.required else None"/>
+                                                        </t>
+                                                    </div>
+                                                </t>
+                                                <t t-if="op.code in ('rotate_password', 'restart', 'remove_custom_domain', 'destroy', 'upgrade')">
+                                                    <div class="alert alert-warning mb-0">
+                                                        This will affect your live instance.
+                                                    </div>
+                                                </t>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Confirm and run</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+            <!-- =============== History section (collapsible) =============== -->
+            <div class="card mb-3">
+                <div class="card-header" role="button"
+                     data-bs-toggle="collapse"
+                     data-bs-target="#collapse_history"
+                     aria-expanded="false">
+                    <h5 class="mb-0">Operation History</h5>
+                </div>
+                <div id="collapse_history" class="collapse">
+                    <div class="card-body">
+                        <t t-set="history" t-value="instance.task_history_ids.sorted(lambda h: h.created_at or False, reverse=True)[:20]"/>
+                        <t t-if="not history">
+                            <p class="text-muted mb-0">No operations have been run on this instance yet.</p>
+                        </t>
+                        <t t-if="history">
+                            <div class="accordion" id="history_accordion">
+                                <t t-foreach="history" t-as="task">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" t-attf-id="history_heading_#{task.id}">
+                                            <button class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    t-attf-data-bs-target="#history_body_#{task.id}"
+                                                    aria-expanded="false"
+                                                    t-attf-aria-controls="history_body_#{task.id}">
+                                                <div class="d-flex w-100 align-items-center">
+                                                    <span class="me-3 text-muted small">
+                                                        <t t-if="task.created_at">
+                                                            <span t-field="task.created_at"/>
+                                                        </t>
+                                                    </span>
+                                                    <span class="me-3">
+                                                        <t t-esc="task.task_type"/>
+                                                    </span>
+                                                    <span t-attf-class="badge me-3 #{
+                                                        'bg-success' if task.state == 'completed'
+                                                        else 'bg-warning' if task.state in ('queued', 'in_progress')
+                                                        else 'bg-danger' if task.state == 'failed'
+                                                        else 'bg-secondary'}">
+                                                        <t t-esc="task.state"/>
+                                                    </span>
+                                                    <span class="text-muted small">
+                                                        <t t-if="task.duration_seconds">
+                                                            <t t-esc="task.duration_seconds"/>s
+                                                        </t>
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        </h2>
+                                        <div t-attf-id="history_body_#{task.id}"
+                                             class="accordion-collapse collapse"
+                                             t-attf-aria-labelledby="history_heading_#{task.id}"
+                                             data-bs-parent="#history_accordion">
+                                            <div class="accordion-body">
+                                                <t t-if="task.result_summary">
+                                                    <div class="mb-2">
+                                                        <strong>Result:</strong>
+                                                        <pre class="mb-0 small"><t t-esc="task.result_summary"/></pre>
+                                                    </div>
+                                                </t>
+                                                <t t-if="task.error_message">
+                                                    <div class="mb-0">
+                                                        <strong class="text-danger">Error:</strong>
+                                                        <pre class="mb-0 small text-danger"><t t-esc="task.error_message"/></pre>
+                                                    </div>
+                                                </t>
+                                                <t t-if="not task.result_summary and not task.error_message">
+                                                    <p class="text-muted mb-0">No details available.</p>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+
+        </t>
+    </template>
+
+</odoo>

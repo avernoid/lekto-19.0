@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Generic add-on products — apply to any SaaS product, not tied to a specific blueprint. -->
+
+        <record id="product_addon_extra_vars" model="product.template">
+            <field name="name">Pack 10 Extra Variables</field>
+            <field name="list_price">5.0</field>
+            <field name="type">service</field>
+            <field name="recurring_invoice" eval="True"/>
+            <field name="is_saas_addon" eval="True"/>
+            <field name="addon_type">env_vars</field>
+            <field name="addon_qty">10</field>
+        </record>
+
+        <record id="product_addon_extra_storage" model="product.template">
+            <field name="name">Pack 20 GB Extra Storage</field>
+            <field name="list_price">10.0</field>
+            <field name="type">service</field>
+            <field name="recurring_invoice" eval="True"/>
+            <field name="is_saas_addon" eval="True"/>
+            <field name="addon_type">storage_gb</field>
+            <field name="addon_qty">20</field>
+        </record>
+
+    </data>
+</odoo>

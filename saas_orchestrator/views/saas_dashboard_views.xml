@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Graph view for instances by state -->
+    <record id="saas_instance_view_graph" model="ir.ui.view">
+        <field name="name">saas.instance.graph</field>
+        <field name="model">saas.instance</field>
+        <field name="arch" type="xml">
+            <graph string="Instances by State" type="bar">
+                <field name="state" type="row"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Pivot view for detailed analysis -->
+    <record id="saas_instance_view_pivot" model="ir.ui.view">
+        <field name="name">saas.instance.pivot</field>
+        <field name="model">saas.instance</field>
+        <field name="arch" type="xml">
+            <pivot string="Instance Analysis">
+                <field name="state" type="row"/>
+                <field name="plan_id" type="col"/>
+                <field name="cpu_usage" type="measure"/>
+                <field name="ram_usage" type="measure"/>
+                <field name="disk_usage" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Dashboard action (graph + pivot as main views) -->
+    <record id="saas_dashboard_action" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">saas.instance</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+    </record>
+</odoo>

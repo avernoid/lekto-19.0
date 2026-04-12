@@ -1,0 +1,860 @@
+# Translation of SaaS Orchestrator to Spanish
+# . module: saas_orchestrator
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the saas_orchestrator package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module saas_orchestrator 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__name
+msgid "Instance ID"
+msgstr "ID de Instancia"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__tenant_id
+msgid "Tenant"
+msgstr "Inquilino"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__plan_id
+msgid "Plan"
+msgstr "Plan"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__subscription_id
+msgid "Subscription"
+msgstr "Suscripción"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__state
+msgid "State"
+msgstr "Estado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__provisioning
+msgid "Provisioning"
+msgstr "Aprovisionando"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__provisioning_failed
+msgid "Provisioning Failed"
+msgstr "Error de Aprovisionamiento"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__running
+msgid "Running"
+msgstr "En Ejecución"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__stopped
+msgid "Stopped"
+msgstr "Detenido"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__degraded
+msgid "Degraded"
+msgstr "Degradado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__destroying
+msgid "Destroying"
+msgstr "Destruyendo"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state__destroyed
+msgid "Destroyed"
+msgstr "Destruido"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__last_state_fetch_at
+msgid "Last State Refresh"
+msgstr "Última Actualización de Estado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__last_state_fetch_at
+msgid "Timestamp of the last successful refresh of instance state from the orchestrator."
+msgstr "Marca de tiempo de la última actualización exitosa del estado de la instancia desde el orquestador."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__state_freshness
+msgid "State Freshness"
+msgstr "Frescura del Estado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__state_freshness
+msgid "Color-coded freshness of last_state_fetch_at relative to now()."
+msgstr "Frescura del estado codificada por colores de last_state_fetch_at relativa a ahora()."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state_freshness__fresh
+msgid "Fresh"
+msgstr "Fresco"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state_freshness__stale
+msgid "Stale"
+msgstr "Obsoleto"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__state_freshness__missing
+msgid "Missing"
+msgstr "Faltante"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__env_var_ids
+msgid "Environment Variables"
+msgstr "Variables de Entorno"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__task_history_ids
+msgid "Operation history"
+msgstr "Historial de Operaciones"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__task_history_ids
+msgid "Control plane operations dispatched against this instance."
+msgstr "Operaciones del plano de control despachadas contra esta instancia."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__custom_domain
+msgid "Custom Domain"
+msgstr "Dominio Personalizado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__custom_domain
+msgid "Customer-owned hostname registered as a Cloudflare custom hostname."
+msgstr "Nombre de host propiedad del cliente registrado como nombre de host personalizado de Cloudflare."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__custom_domain_status__pending
+msgid "Pending DNS / cert"
+msgstr "DNS/Certificado Pendiente"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__custom_domain_status__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_instance__custom_domain_status__failed
+msgid "Failed"
+msgstr "Fallido"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__effective_access_url
+msgid "Effective Access URL"
+msgstr "URL de Acceso Efectiva"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__effective_access_url
+msgid "HTTPS URL the customer should use: their custom domain if active, otherwise the internal subdomain."
+msgstr "URL HTTPS que el cliente debe usar: su dominio personalizado si está activo, de lo contrario el subdominio interno."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__has_upgrade_operation
+msgid "Has Upgrade Operation"
+msgstr "Tiene Operación de Actualización"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__has_upgrade_operation
+msgid "True if the instance blueprint declares the 'upgrade' operation in its catalog."
+msgstr "Verdadero si el blueprint de la instancia declara la operación 'upgrade' en su catálogo."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__has_restart_operation
+msgid "Has Restart Operation"
+msgstr "Tiene Operación de Reinicio"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__has_restart_operation
+msgid "True if the instance blueprint declares the 'restart' operation in its catalog."
+msgstr "Verdadero si el blueprint de la instancia declara la operación 'restart' en su catálogo."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__has_rotate_password_operation
+msgid "Has Rotate Password Operation"
+msgstr "Tiene Operación de Rotar Contraseña"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__has_rotate_password_operation
+msgid "True if the instance blueprint declares the 'rotate_password' operation in its catalog."
+msgstr "Verdadero si el blueprint de la instancia declara la operación 'rotate_password' en su catálogo."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__has_update_env_var_operation
+msgid "Has Update Env Var Operation"
+msgstr "Tiene Operación de Actualizar Variable de Entorno"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_instance__has_update_env_var_operation
+msgid "True if the instance blueprint declares the 'update_env_var' operation in its catalog."
+msgstr "Verdadero si el blueprint de la instancia declara la operación 'update_env_var' en su catálogo."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__cpu_usage
+msgid "CPU %"
+msgstr "CPU %"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__ram_usage
+msgid "RAM %"
+msgstr "RAM %"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_instance__disk_usage
+msgid "Disk %"
+msgstr "Disco %"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_tenant__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_tenant__slug
+msgid "Slug"
+msgstr "Slug"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_tenant__slug
+msgid "Slug used as tenant_id in the orchestrator API"
+msgstr "Slug utilizado como tenant_id en la API del orquestador"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_tenant__partner_id
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: saas_orchestrator
+#: model:ir.model.constraint,message:saas_orchestrator.constraint_saas_tenant__slug_unique
+msgid "Tenant slug must be unique."
+msgstr "El slug del inquilino debe ser único."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__blueprint_id
+msgid "Blueprint"
+msgstr "Blueprint"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__instance_type
+msgid "Instance Type"
+msgstr "Tipo de Instancia"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_product_plan__deployment_mode__dedicated
+msgid "Dedicated"
+msgstr "Dedicado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_product_plan__deployment_mode__shared
+msgid "Shared"
+msgstr "Compartido"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__backup_retention_days
+msgid "Backup Retention Days"
+msgstr "Días de Retención de Respaldo"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__history_max_records
+msgid "History Max Records"
+msgstr "Máximo de Registros de Historial"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_product_plan__history_max_records
+msgid "0 = unlimited"
+msgstr "0 = ilimitado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__history_retention_days
+msgid "History Retention Days"
+msgstr "Días de Retención de Historial"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_orchestrator.field_saas_product_plan__history_retention_days
+msgid "0 = unlimited"
+msgstr "0 = ilimitado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__env_vars_included
+msgid "Env Vars Included"
+msgstr "Vars de Entorno Incluidas"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__env_var_extra_price
+msgid "Extra Env Var Price"
+msgstr "Precio Extra Var de Entorno"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__storage_gb_included
+msgid "Storage GB Included"
+msgstr "Almacenamiento GB Incluido"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_orchestrator.field_saas_product_plan__storage_gb_extra_price
+msgid "Storage GB Extra Price"
+msgstr "Precio Extra Almacenamiento GB"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_blueprint__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_blueprint__domain
+msgid "Product domain managed in Cloudflare (e.g. orquestio.com)"
+msgstr "Dominio del producto gestionado en Cloudflare (ej. orquestio.com)"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_blueprint__container_port
+msgid "Container port exposed by the application"
+msgstr "Puerto del contenedor expuesto por la aplicación"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_blueprint__ports
+msgid "Comma-separated ports to open (e.g. 3000,443)"
+msgstr "Puertos separados por coma a abrir (ej. 3000,443)"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_blueprint__access_url_template
+msgid "Template for instance access URL (e.g. https://{instance_id}.orquestio.com)"
+msgstr "Plantilla para la URL de acceso de la instancia (ej. https://{instance_id}.orquestio.com)"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_blueprint__health_check_endpoint
+msgid "Health Check Endpoint"
+msgstr "Endpoint de Verificación de Salud"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_blueprint__requires_database
+msgid "Requires Database"
+msgstr "Requiere Base de Datos"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_blueprint__client_managed_config
+msgid "Client Managed Config"
+msgstr "Configuración Gestionada por Cliente"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__code
+msgid "Code"
+msgstr "Código"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_operation__code
+msgid "Unique operation code within the blueprint (e.g. 'upgrade', 'restart')."
+msgstr "Código de operación único dentro del blueprint (ej. 'upgrade', 'restart')."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__label
+msgid "Label"
+msgstr "Etiqueta"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__script_path
+msgid "Script Path"
+msgstr "Ruta del Script"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_operation__script_path
+msgid "Path on the EC2 host to the script that implements this operation."
+msgstr "Ruta en el host EC2 al script que implementa esta operación."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__requires_drain
+msgid "Requires Drain"
+msgstr "Requiere Drenaje"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_operation__requires_drain
+msgid "If True, the dispatcher runs drain_command before invoking the script."
+msgstr "Si es Verdadero, el despachador ejecuta drain_command antes de invocar el script."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__drain_command
+msgid "Drain Command"
+msgstr "Comando de Drenaje"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_operation__drain_command
+msgid "Shell command executed to drain the product's queue before the operation."
+msgstr "Comando shell ejecutado para drenar la cola del producto antes de la operación."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__timeout_seconds
+msgid "Timeout (seconds)"
+msgstr "Tiempo de Espera (segundos)"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__visible_in_admin
+msgid "Visible In Admin"
+msgstr "Visible en Admin"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation__visible_in_portal
+msgid "Visible In Portal"
+msgstr "Visible en Portal"
+
+#. module: saas_orchestrator
+#: model:ir.model.constraint,message:saas_orchestrator.constraint_saas_product_operation__code_unique_per_blueprint
+msgid "Operation code must be unique within a blueprint."
+msgstr "El código de operación debe ser único dentro de un blueprint."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation_param__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_operation_param__name
+msgid "Parameter name used in the API payload (e.g. 'target_version')."
+msgstr "Nombre del parámetro usado en el payload de la API (ej. 'target_version')."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation_param__label
+msgid "Label"
+msgstr "Etiqueta"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_product_operation_param__type__char
+msgid "String"
+msgstr "Texto"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_product_operation_param__type__integer
+msgid "Integer"
+msgstr "Entero"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_product_operation_param__type__boolean
+msgid "Boolean"
+msgstr "Booleano"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_product_operation_param__type__selection
+msgid "Selection"
+msgstr "Selección"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation_param__required
+msgid "Required"
+msgstr "Requerido"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation_param__default_value
+msgid "Default Value"
+msgstr "Valor por Defecto"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_operation_param__default_value
+msgid "Default value serialized as string, parsed according to type."
+msgstr "Valor por defecto serializado como texto, analizado según el tipo."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_product_operation_param__options
+msgid "Options"
+msgstr "Opciones"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_product_operation_param__options
+msgid "JSON array of {value, label} entries. Only used when type='selection'."
+msgstr "Arreglo JSON de entradas {value, label}. Solo usado cuando tipo='selection'."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_task_history__task_type
+msgid "Task Type"
+msgstr "Tipo de Tarea"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_task_history__state__queued
+msgid "Queued"
+msgstr "En Cola"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_task_history__state__in_progress
+msgid "In Progress"
+msgstr "En Progreso"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_task_history__state__completed
+msgid "Completed"
+msgstr "Completado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields.selection,name:saas_orchestrator.selection__saas_task_history__state__failed
+msgid "Failed"
+msgstr "Fallido"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_task_history__result_summary
+msgid "Result Summary"
+msgstr "Resumen del Resultado"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_task_history__error_message
+msgid "Error Message"
+msgstr "Mensaje de Error"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_task_history__ssm_command_id
+msgid "AWS SSM command id for traceability."
+msgstr "ID del comando AWS SSM para trazabilidad."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_task_history__orchestrator_task_id
+msgid "Orchestrator Task ID"
+msgstr "ID de Tarea del Orquestador"
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,help:saas_task_history__orchestrator_task_id
+msgid "UUID assigned by the orchestrator (primary key in orchestrator's tasks table)."
+msgstr "UUID asignado por el orquestador (clave primaria en la tabla de tareas del orquestador)."
+
+#. module: saas_orchestrator
+#: model:ir.model.fields,field_description:saas_task_history__duration_seconds
+msgid "Duration (seconds)"
+msgstr "Duración (segundos)"
+
+#. module: saas_orchestrator
+#: model:res.config.settings,field:saas_orchestrator.saas_orchestrator_url
+msgid "Orchestrator URL"
+msgstr "URL del Orquestador"
+
+#. module: saas_orchestrator
+#: model:res.config.settings,help:saas_orchestrator.saas_orchestrator_url
+msgid "Base URL of the Orquestio orchestrator API."
+msgstr "URL base de la API del orquestador Orquestio."
+
+#. module: saas_orchestrator
+#: model:res.config.settings,field:saas_orchestrator.saas_orchestrator_api_key
+msgid "Orchestrator API Key"
+msgstr "Clave API del Orquestador"
+
+#. module: saas_orchestrator
+#: model:res.config.settings,help:saas_orchestrator.saas_orchestrator_api_key
+msgid "Bearer token used to authenticate against the orchestrator API. Stored in System Parameters; visible only to administrators."
+msgstr "Token Bearer usado para autenticarse contra la API del orquestador. Almacenado en Parámetros del Sistema; visible solo para administradores."
+
+#. module: saas_orchestrator
+#: model:ir.actions.act_window,name:saas_orchestrator.saas_instance_action
+msgid "Instances"
+msgstr "Instancias"
+
+#. module: saas_orchestrator
+#: model:ir.actions.server,name:saas_orchestrator.action_refresh_instances_server
+msgid "Refresh"
+msgstr "Actualizar"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Orchestrator API URL and API Key must be configured in System Parameters."
+msgstr "La URL y Clave API del Orquestador deben estar configuradas en Parámetros del Sistema."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Cannot connect to orchestrator API at %s"
+msgstr "No se puede conectar a la API del orquestador en %s"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Orchestrator API timed out (%ss)."
+msgstr "Tiempo de espera de la API del orquestador agotado (%ss)."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Orchestrator API error %s: %s"
+msgstr "Error de API del Orquestador %s: %s"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Only draft instances can be provisioned."
+msgstr "Solo las instancias en borrador pueden ser aprovisionadas."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Provisioning started."
+msgstr "Aprovisionamiento iniciado."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Instance is already destroyed or being destroyed."
+msgstr "La instancia ya está destruida o está siendo destruida."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Destruction started."
+msgstr "Destrucción iniciada."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Only running instances can be stopped."
+msgstr "Solo las instancias en ejecución pueden ser detenidas."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Instance stopped."
+msgstr "Instancia detenida."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Only stopped instances can be started."
+msgstr "Solo las instancias detenidas pueden ser iniciadas."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Instance started."
+msgstr "Instancia iniciada."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Only running instances can be restarted."
+msgstr "Solo las instancias en ejecución pueden ser reiniciadas."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Instance restarted."
+msgstr "Instancia reiniciada."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Bulk refresh limited to 50 instances at a time (got %s). Select fewer and try again."
+msgstr "Actualización masiva limitada a 50 instancias a la vez (recibido %s). Seleccione menos e intente de nuevo."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Failed to refresh instance: %s"
+msgstr "Error al actualizar instancia: %s"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Refreshed %s instances. Failed: %s"
+msgstr "Actualizadas %s instancias. Fallidas: %s"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Refreshed %s instances."
+msgstr "Actualizadas %s instancias."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "The blueprint for this instance does not declare a %r operation."
+msgstr "El blueprint para esta instancia no declara la operación %r."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Another operation is in progress on this instance. Please wait for it to finish and retry."
+msgstr "Otra operación está en progreso en esta instancia. Por favor espere a que termine e intente de nuevo."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Control plane temporarily unavailable. Please retry in a few seconds."
+msgstr "Plano de control temporalmente no disponible. Por favor reintente en unos segundos."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "This instance's blueprint does not declare an upgrade operation."
+msgstr "El blueprint de esta instancia no declara una operación de actualización."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "This instance's blueprint does not declare a restart operation."
+msgstr "El blueprint de esta instancia no declara una operación de reinicio."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "This instance's blueprint does not declare a rotate_password operation."
+msgstr "El blueprint de esta instancia no declara una operación de rotar contraseña."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "No custom domain to remove."
+msgstr "No hay dominio personalizado para eliminar."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Custom domain %s removed."
+msgstr "Dominio personalizado %s eliminado."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "No custom domain to refresh."
+msgstr "No hay dominio personalizado para actualizar."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Custom domain %s status changed to %s."
+msgstr "Estado del dominio personalizado %s cambió a %s."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "This instance's blueprint does not declare an update_env_var operation."
+msgstr "El blueprint de esta instancia no declara una operación de actualizar variable de entorno."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Instance reactivated — payment received."
+msgstr "Instancia reactivada — pago recibido."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Instance suspended due to non-payment."
+msgstr "Instancia suspendida por falta de pago."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/saas_instance.py:0
+#, python-format
+msgid "Instance destroyed after 30 days of non-payment."
+msgstr "Instancia destruida después de 30 días sin pago."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/res_config_settings.py:0
+#, python-format
+msgid "Please set the Orchestrator URL first."
+msgstr "Por favor configure primero la URL del Orquestador."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/res_config_settings.py:0
+#, python-format
+msgid "Connection successful. Orchestrator status: %s. Checks: %s"
+msgstr "Conexión exitosa. Estado del orquestador: %s. Verificaciones: %s"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/res_config_settings.py:0
+#, python-format
+msgid "Orchestrator reachable but reports status: %s. Checks: %s"
+msgstr "Orquestador accesible pero reporta estado: %s. Verificaciones: %s"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/res_config_settings.py:0
+#, python-format
+msgid "Cannot connect to orchestrator at %s. Check the URL and your network."
+msgstr "No se puede conectar al orquestador en %s. Verifique la URL y su red."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/res_config_settings.py:0
+#, python-format
+msgid "Connection to %s timed out (10s)."
+msgstr "Conexión a %s agotada (10s)."
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/res_config_settings.py:0
+#, python-format
+msgid "Orchestrator responded with HTTP %s: %s"
+msgstr "Orquestador respondió con HTTP %s: %s"
+
+#. module: saas_orchestrator
+#. odoo-python
+#: code:addons/saas_orchestrator/models/res_config_settings.py:0
+#, python-format
+msgid "Unexpected error: %s"
+msgstr "Error inesperado: %s"
+
+#. module: saas_orchestrator
+#: model_terms:ir.ui.view,arch_db:saas_orchestrator.saas_instance_view_form
+msgid "General"
+msgstr "General"
+
+#. module: saas_orchestrator
+#: model_terms:ir.ui.view,arch_db:saas_orchestrator.saas_instance_view_form
+msgid "AWS"
+msgstr "AWS"
+
+#. module: saas_orchestrator
+#: model_terms:ir.ui.view,arch_db:saas_orchestrator.saas_instance_view_form
+msgid "Metrics"
+msgstr "Métricas"

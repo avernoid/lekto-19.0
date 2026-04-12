@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="saas_product_plan_view_tree" model="ir.ui.view">
+        <field name="name">saas.product.plan.tree</field>
+        <field name="model">saas.product.plan</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="blueprint_id"/>
+                <field name="instance_type"/>
+                <field name="deployment_mode"/>
+                <field name="env_vars_included"/>
+                <field name="storage_gb_included"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="saas_product_plan_view_form" model="ir.ui.view">
+        <field name="name">saas.product.plan.form</field>
+        <field name="model">saas.product.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="name"/>
+                            <field name="blueprint_id"/>
+                            <field name="instance_type"/>
+                            <field name="deployment_mode"/>
+                            <field name="product_template_id"/>
+                        </group>
+                        <group string="Retention">
+                            <field name="backup_retention_days"/>
+                            <field name="history_max_records"/>
+                            <field name="history_retention_days"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Environment Variables">
+                            <field name="env_vars_included"/>
+                            <field name="env_var_extra_price"/>
+                        </group>
+                        <group string="Storage">
+                            <field name="storage_gb_included"/>
+                            <field name="storage_gb_extra_price"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="saas_product_plan_action" model="ir.actions.act_window">
+        <field name="name">Plans</field>
+        <field name="res_model">saas.product.plan</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

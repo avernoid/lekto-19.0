@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="saas_product_blueprint_view_tree" model="ir.ui.view">
+        <field name="name">saas.product.blueprint.tree</field>
+        <field name="model">saas.product.blueprint</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="domain"/>
+                <field name="docker_image"/>
+                <field name="active" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="saas_product_blueprint_view_form" model="ir.ui.view">
+        <field name="name">saas.product.blueprint.form</field>
+        <field name="model">saas.product.blueprint</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="name"/>
+                            <field name="domain"/>
+                            <field name="cloudflare_zone_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Technical">
+                            <field name="docker_image"/>
+                            <field name="terraform_module"/>
+                            <field name="container_port"/>
+                            <field name="ports"/>
+                            <field name="access_url_template"/>
+                            <field name="health_check_endpoint"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="requires_database"/>
+                        <field name="client_managed_config"/>
+                    </group>
+                    <notebook>
+                        <page string="Plans">
+                            <field name="plan_ids"/>
+                        </page>
+                        <page string="Operations">
+                            <field name="operation_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="code"/>
+                                    <field name="label"/>
+                                    <field name="script_path"/>
+                                    <field name="requires_drain"/>
+                                    <field name="timeout_seconds"/>
+                                    <field name="visible_in_admin"/>
+                                    <field name="visible_in_portal"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <group string="Identity">
+                                                <field name="code"/>
+                                                <field name="label"/>
+                                                <field name="sequence"/>
+                                            </group>
+                                            <group string="Execution">
+                                                <field name="script_path"/>
+                                                <field name="timeout_seconds"/>
+                                                <field name="requires_drain"/>
+                                                <field name="drain_command" invisible="not requires_drain"/>
+                                            </group>
+                                        </group>
+                                        <group string="Visibility">
+                                            <field name="visible_in_admin"/>
+                                            <field name="visible_in_portal"/>
+                                        </group>
+                                        <field name="description"/>
+                                        <notebook>
+                                            <page string="Parameters">
+                                                <field name="param_ids">
+                                                    <list editable="bottom">
+                                                        <field name="sequence" widget="handle"/>
+                                                        <field name="name"/>
+                                                        <field name="label"/>
+                                                        <field name="type"/>
+                                                        <field name="required"/>
+                                                        <field name="default_value"/>
+                                                        <field name="options" invisible="type != 'selection'"/>
+                                                    </list>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="saas_product_blueprint_action" model="ir.actions.act_window">
+        <field name="name">Blueprints</field>
+        <field name="res_model">saas.product.blueprint</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

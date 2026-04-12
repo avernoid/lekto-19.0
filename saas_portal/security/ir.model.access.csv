@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_saas_instance_portal,saas.instance portal,saas_orchestrator.model_saas_instance,base.group_portal,1,0,0,0
+access_saas_tenant_portal,saas.tenant portal,saas_orchestrator.model_saas_tenant,base.group_portal,1,0,0,0
+access_saas_product_plan_portal,saas.product.plan portal,saas_orchestrator.model_saas_product_plan,base.group_portal,1,0,0,0
+access_saas_product_blueprint_portal,saas.product.blueprint portal,saas_orchestrator.model_saas_product_blueprint,base.group_portal,1,0,0,0
+access_saas_instance_env_var_portal,saas.instance.env.var portal,saas_orchestrator.model_saas_instance_env_var,base.group_portal,1,1,1,1
+access_saas_task_history_portal,saas.task.history portal,saas_orchestrator.model_saas_task_history,base.group_portal,1,0,0,0

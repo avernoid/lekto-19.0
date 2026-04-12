@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Portal: My Instances link in /my -->
+    <template id="portal_my_home_instances" name="Show Instances" inherit_id="portal.portal_my_home" priority="40">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="icon" t-value="'/saas_portal/static/description/icon.png'"/>
+                <t t-set="title">Instances</t>
+                <t t-set="url" t-value="'/my/instances'"/>
+                <t t-set="text">View your SaaS instances</t>
+                <t t-set="placeholder_count" t-value="'instance_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Portal: Instance List -->
+    <template id="portal_my_instances" name="My Instances">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My Instances</t>
+            <div class="o_portal_my_doc_table">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Instance</th>
+                            <th>Plan</th>
+                            <th>Status</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="instances" t-as="inst">
+                            <tr>
+                                <td>
+                                    <a t-attf-href="/my/instances/#{inst.id}">
+                                        <t t-out="inst.name"/>
+                                    </a>
+                                </td>
+                                <td><t t-out="inst.plan_id.name"/></td>
+                                <td>
+                                    <span t-attf-class="badge #{inst.state == 'running' and 'text-bg-success' or inst.state == 'stopped' and 'text-bg-warning' or 'text-bg-secondary'}">
+                                        <t t-out="inst.state"/>
+                                    </span>
+                                </td>
+                                <td>
+                                    <a t-if="inst.access_url" t-att-href="inst.access_url" target="_blank">
+                                        <t t-out="inst.access_url"/>
+                                    </a>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <!-- Portal: Instance Detail -->
+    <template id="portal_instance_detail" name="Instance Detail">
+        <t t-call="portal.portal_layout">
+            <t t-set="title" t-value="instance.name"/>
+
+            <!-- Flash messages -->
+            <div t-if="request.params.get('message')" class="alert alert-success alert-dismissible fade show" role="alert">
+                <t t-out="request.params.get('message')"/>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"/>
+            </div>
+            <div t-if="request.params.get('error')" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <t t-out="request.params.get('error')"/>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"/>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title"><t t-out="instance.name"/></h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Plan:</strong> <t t-out="instance.plan_id.name"/></p>
+                            <p><strong>Status:</strong>
+                                <span t-attf-class="badge #{instance.state == 'running' and 'text-bg-success' or instance.state == 'stopped' and 'text-bg-warning' or 'text-bg-secondary'}">
+                                    <t t-out="instance.state"/>
+                                </span>
+                            </p>
+                            <p>
+                                <a t-if="instance.access_url" t-att-href="instance.access_url" target="_blank" class="btn btn-primary btn-sm">Connect</a>
+                                <form t-if="instance.state == 'running'" method="post" t-attf-action="/my/instances/#{instance.id}/restart" class="d-inline">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Restart this instance?')">Restart</button>
+                                </form>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>CPU:</strong> <t t-out="instance.cpu_usage"/>%</p>
+                            <p><strong>RAM:</strong> <t t-out="instance.ram_usage"/>%</p>
+                            <p><strong>Disk:</strong> <t t-out="instance.disk_usage"/>%</p>
+                            <p><strong>Last health check:</strong> <t t-out="instance.last_health_check"/></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Credentials -->
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h6>Credentials</h6>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong>Password:</strong>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="this.nextElementSibling.classList.toggle('d-none'); this.textContent = this.textContent === 'Show' ? 'Hide' : 'Show'">Show</button>
+                        <span class="d-none"><t t-out="instance.access_password"/></span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Version Info -->
+            <div class="card mb-3" t-if="instance.current_version_id">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Version</h6>
+                    <t t-if="version_info and version_info.get('upgrade_available')">
+                        <span class="badge text-bg-info">Update available</span>
+                    </t>
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong>Current version:</strong>
+                        <t t-out="instance.current_version_id.name"/>
+                        <span t-if="instance.current_version_id.status == 'broken'" class="badge text-bg-danger ms-1">Known issue</span>
+                    </p>
+                    <t t-if="version_info and version_info.get('upgrade_available')">
+                        <p>
+                            <strong>Latest available:</strong>
+                            <t t-out="version_info.get('latest_available')"/>
+                        </p>
+                        <form method="post" t-attf-action="/my/instances/#{instance.id}/upgrade" class="d-inline">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="target_version" t-att-value="version_info.get('latest_available')"/>
+                            <button type="submit" class="btn btn-primary btn-sm"
+                                    t-attf-onclick="return confirm('Upgrade to #{version_info.get('latest_available')}? The instance will be briefly unavailable (~1 minute).')">
+                                Upgrade now
+                            </button>
+                        </form>
+                    </t>
+                    <p t-if="not version_info or not version_info.get('upgrade_available')" class="text-muted mb-0">
+                        You are on the latest version.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Environment Variables -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Environment Variables</h6>
+                    <small class="text-muted">
+                        <t t-out="len(instance.env_var_ids)"/> / <t t-out="instance.plan_id.env_vars_included"/> used
+                    </small>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm" t-if="instance.env_var_ids">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Value</th>
+                                <th/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="instance.env_var_ids" t-as="var">
+                                <tr>
+                                    <td><t t-out="var.name"/></td>
+                                    <td>********</td>
+                                    <td>
+                                        <form method="post" t-attf-action="/my/instances/#{instance.id}/env-vars/#{var.id}/delete" class="d-inline">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Delete this variable?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <p t-else="">No environment variables configured.</p>
+
+                    <!-- Add Variable Form -->
+                    <hr/>
+                    <h6>Add Variable</h6>
+                    <form method="post" t-attf-action="/my/instances/#{instance.id}/env-vars" class="row g-2 align-items-end">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="col-md-4">
+                            <label for="env_name" class="form-label">Name</label>
+                            <input type="text" class="form-control form-control-sm" id="env_name" name="name" required="required" placeholder="MY_VARIABLE"/>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="env_value" class="form-label">Value</label>
+                            <input type="text" class="form-control form-control-sm" id="env_value" name="value" required="required" placeholder="my_value"/>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary btn-sm">Add Variable</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

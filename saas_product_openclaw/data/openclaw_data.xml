@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Blueprint: OpenClaw -->
+        <record id="blueprint_openclaw" model="saas.product.blueprint">
+            <field name="name">OpenClaw</field>
+            <field name="domain">orquestio.com</field>
+            <field name="docker_image">odoopartners/openclaw:v2026.4.10</field>
+            <field name="terraform_module">modules/openclaw</field>
+            <field name="container_port">18789</field>
+            <field name="ports">18789,443</field>
+            <field name="access_url_template">https://{instance_id}.orquestio.com</field>
+            <field name="health_check_endpoint">/healthz</field>
+            <field name="requires_database" eval="False"/>
+            <field name="client_managed_config" eval="True"/>
+        </record>
+
+        <!-- Plans -->
+        <record id="plan_openclaw_basic" model="saas.product.plan">
+            <field name="name">Basic</field>
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="instance_type">t4g.small</field>
+            <field name="env_vars_included">5</field>
+            <field name="storage_gb_included">10</field>
+            <field name="backup_retention_days">7</field>
+            <field name="history_retention_days">30</field>
+        </record>
+
+        <record id="plan_openclaw_pro" model="saas.product.plan">
+            <field name="name">Pro</field>
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="instance_type">t4g.medium</field>
+            <field name="env_vars_included">20</field>
+            <field name="storage_gb_included">10</field>
+            <field name="backup_retention_days">7</field>
+            <field name="history_retention_days">90</field>
+        </record>
+
+        <record id="plan_openclaw_enterprise" model="saas.product.plan">
+            <field name="name">Enterprise</field>
+            <field name="blueprint_id" ref="blueprint_openclaw"/>
+            <field name="instance_type">t4g.large</field>
+            <field name="env_vars_included">50</field>
+            <field name="storage_gb_included">25</field>
+            <field name="backup_retention_days">30</field>
+            <field name="history_retention_days">365</field>
+        </record>
+
+        <!-- Product Templates -->
+        <record id="product_openclaw_basic" model="product.template">
+            <field name="name">OpenClaw Basic</field>
+            <field name="list_price">30.0</field>
+            <field name="type">service</field>
+            <field name="recurring_invoice" eval="True"/>
+            <field name="saas_blueprint_id" ref="blueprint_openclaw"/>
+            <field name="saas_plan_id" ref="plan_openclaw_basic"/>
+        </record>
+
+        <record id="product_openclaw_pro" model="product.template">
+            <field name="name">OpenClaw Pro</field>
+            <field name="list_price">60.0</field>
+            <field name="type">service</field>
+            <field name="recurring_invoice" eval="True"/>
+            <field name="saas_blueprint_id" ref="blueprint_openclaw"/>
+            <field name="saas_plan_id" ref="plan_openclaw_pro"/>
+        </record>
+
+        <record id="product_openclaw_enterprise" model="product.template">
+            <field name="name">OpenClaw Enterprise</field>
+            <field name="list_price">120.0</field>
+            <field name="type">service</field>
+            <field name="recurring_invoice" eval="True"/>
+            <field name="saas_blueprint_id" ref="blueprint_openclaw"/>
+            <field name="saas_plan_id" ref="plan_openclaw_enterprise"/>
+        </record>
+
+    </data>
+</odoo>

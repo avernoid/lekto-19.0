@@ -1,0 +1,147 @@
+# Translation of saas_product_openclaw to Spanish
+# . module: saas_product_openclaw
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the saas_product_openclaw package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module saas_product_openclaw 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-01 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: saas_product_openclaw
+#: model:saas.product.blueprint,name:saas_product_openclaw.blueprint_openclaw
+msgid "OpenClaw"
+msgstr "OpenClaw"
+
+#. module: saas_product_openclaw
+#: model:saas.product.plan,name:saas_product_openclaw.plan_openclaw_basic
+msgid "Basic"
+msgstr "Básico"
+
+#. module: saas_product_openclaw
+#: model:saas.product.plan,name:saas_product_openclaw.plan_openclaw_pro
+msgid "Pro"
+msgstr "Profesional"
+
+#. module: saas_product_openclaw
+#: model:saas.product.plan,name:saas_product_openclaw.plan_openclaw_enterprise
+msgid "Enterprise"
+msgstr "Empresarial"
+
+#. module: saas_product_openclaw
+#: model:product.template,name:saas_product_openclaw.product_openclaw_basic
+msgid "OpenClaw Basic"
+msgstr "OpenClaw Básico"
+
+#. module: saas_product_openclaw
+#: model:product.template,name:saas_product_openclaw.product_openclaw_pro
+msgid "OpenClaw Pro"
+msgstr "OpenClaw Profesional"
+
+#. module: saas_product_openclaw
+#: model:product.template,name:saas_product_openclaw.product_openclaw_enterprise
+msgid "OpenClaw Enterprise"
+msgstr "OpenClaw Empresarial"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,label:saas_product_openclaw.op_openclaw_upgrade
+msgid "Upgrade OpenClaw"
+msgstr "Actualizar OpenClaw"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,description:saas_product_openclaw.op_openclaw_upgrade
+msgid "Rolling replacement del container: pull, start lateral, Nginx upstream switch, cooldown 30s, cleanup del viejo."
+msgstr "Reemplazo gradual del contenedor: pull, inicio lateral, cambio de upstream Nginx, enfriamiento 30s, limpieza del antigua."
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation.param,label:saas_product_openclaw.op_openclaw_upgrade_param_version
+msgid "Target Version"
+msgstr "Versión Objetivo"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,label:saas_product_openclaw.op_openclaw_restart
+msgid "Restart OpenClaw"
+msgstr "Reiniciar OpenClaw"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,description:saas_product_openclaw.op_openclaw_restart
+msgid "Hard restart del container OpenClaw. ~5-10s de downtime (sin drain). Usar Upgrade si se necesita zero-downtime."
+msgstr "Reinicio duro del contenedor OpenClaw. ~5-10s de inactividad (sin drain). Usar Actualizar si se necesita cero tiempo de inactividad."
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,label:saas_product_openclaw.op_openclaw_rotate_password
+msgid "Rotate Gateway Password"
+msgstr "Rotar Contraseña del Gateway"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,description:saas_product_openclaw.op_openclaw_rotate_password
+msgid "Genera un password nuevo, actualiza Secrets Manager y reinicia el container. Sesiones activas se invalidan."
+msgstr "Genera una nueva contraseña, actualiza Secrets Manager y reinicia el contenedor. Las sesiones activas se invalidan."
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation.param,label:saas_product_openclaw.op_openclaw_rotate_password_param_notify
+msgid "Notify Client"
+msgstr "Notificar al Cliente"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,label:saas_product_openclaw.op_openclaw_update_env_var
+msgid "Update Env Var"
+msgstr "Actualizar Variable de Entorno"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,description:saas_product_openclaw.op_openclaw_update_env_var
+msgid "Setea o actualiza una variable de entorno del container OpenClaw. Reinicia el container para aplicar el cambio."
+msgstr "Establece o actualiza una variable de entorno del contenedor OpenClaw. Reinicia el contenedor para aplicar el cambio."
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation.param,label:saas_product_openclaw.op_openclaw_update_env_var_param_name
+msgid "Variable Name"
+msgstr "Nombre de Variable"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation.param,label:saas_product_openclaw.op_openclaw_update_env_var_param_value
+msgid "Value"
+msgstr "Valor"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation.param,label:saas_product_openclaw.op_openclaw_update_env_var_param_secret
+msgid "Mark as Secret (mask in logs)"
+msgstr "Marcar como Secreto (ocultar en logs)"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,label:saas_product_openclaw.op_openclaw_add_custom_domain
+msgid "Add Custom Domain"
+msgstr "Agregar Dominio Personalizado"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,description:saas_product_openclaw.op_openclaw_add_custom_domain
+msgid "Registra un dominio del cliente vía Let's Encrypt (HTTP-01) y monta un server block de nginx que enruta tráfico al backend de OpenClaw. El cliente debe haber apuntando primero su DNS al subdominio -direct."
+msgstr "Registra un dominio del cliente vía Let's Encrypt (HTTP-01) y monta un bloque de servidor en nginx que enruta tráfico al backend de OpenClaw. El cliente debe haber apuntando primero su DNS al subdominio -direct."
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation.param,label:saas_product_openclaw.op_openclaw_add_custom_domain_param_domain
+msgid "Custom Domain"
+msgstr "Dominio Personalizado"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,label:saas_product_openclaw.op_openclaw_remove_custom_domain
+msgid "Remove Custom Domain"
+msgstr "Eliminar Dominio Personalizado"
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation,description:saas_product_openclaw.op_openclaw_remove_custom_domain
+msgid "Borra el certificado Let's Encrypt y el server block de nginx asociado al dominio del cliente. Idempotente."
+msgstr "Borra el certificado Let's Encrypt y el bloque de servidor de nginx asociado al dominio del cliente. Idempotente."
+
+#. module: saas_product_openclaw
+#: model:saas.product.operation.param,label:saas_product_openclaw.op_openclaw_remove_custom_domain_param_domain
+msgid "Custom Domain"
+msgstr "Dominio Personalizado"

@@ -1,0 +1,172 @@
+# Translation of saas_portal to Spanish
+# . module: saas_portal
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the saas_portal package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module saas_portal 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-04-11 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_my_home_instances
+msgid "Instances"
+msgstr "Instancias"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_my_home_instances
+msgid "View your SaaS instances"
+msgstr "Ver tus instancias SaaS"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_my_instances
+msgid "My Instances"
+msgstr "Mis Instancias"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_my_instances
+msgid "Instance"
+msgstr "Instancia"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_my_instances
+msgid "Plan"
+msgstr "Plan"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_my_instances
+msgid "Status"
+msgstr "Estado"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_my_instances
+msgid "URL"
+msgstr "URL"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Plan:"
+msgstr "Plan:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Status:"
+msgstr "Estado:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Connect"
+msgstr "Conectar"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Restart"
+msgstr "Reiniciar"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "CPU:"
+msgstr "CPU:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "RAM:"
+msgstr "RAM:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Disk:"
+msgstr "Disco:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Last health check:"
+msgstr "Última verificación de salud:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Credentials"
+msgstr "Credenciales"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Password:"
+msgstr "Contraseña:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Show"
+msgstr "Mostrar"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Version"
+msgstr "Versión"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Update available"
+msgstr "Actualización disponible"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Current version:"
+msgstr "Versión actual:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Known issue"
+msgstr "Problema conocido"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Latest available:"
+msgstr "Última disponible:"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Upgrade now"
+msgstr "Actualizar ahora"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "You are on the latest version."
+msgstr "Estás en la última versión."
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Environment Variables"
+msgstr "Variables de Entorno"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Name"
+msgstr "Nombre"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Value"
+msgstr "Valor"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Delete"
+msgstr "Eliminar"
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "No environment variables configured."
+msgstr "No hay variables de entorno configuradas."
+
+#. module: saas_portal
+#: model_terms:ir.ui.view,arch_db:saas_portal.portal_instance_detail
+msgid "Add Variable"
+msgstr "Agregar Variable"

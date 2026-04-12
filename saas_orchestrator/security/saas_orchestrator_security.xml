@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Sprint 5 portal cliente — record rule that filters saas.instance
+            for portal users to only their own tenant's rows.
+
+            Portal users get base.group_portal automatically. Internal users
+            (group_user) bypass the rule (no domain). The rule applies to
+            read only — portal users can never write/create/unlink instances
+            (those perms are gated by ir.model.access.csv).
+        -->
+        <record id="saas_instance_portal_rule" model="ir.rule">
+            <field name="name">SaaS Instance: portal users see only their own</field>
+            <field name="model_id" ref="model_saas_instance"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('tenant_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="saas_task_history_portal_rule" model="ir.rule">
+            <field name="name">SaaS Task History: portal users see only their own instance's history</field>
+            <field name="model_id" ref="model_saas_task_history"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('instance_id.tenant_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="saas_product_blueprint_portal_rule" model="ir.rule">
+            <field name="name">SaaS Blueprint: portal users may read all blueprints (catalog metadata)</field>
+            <field name="model_id" ref="model_saas_product_blueprint"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="saas_product_operation_portal_rule" model="ir.rule">
+            <field name="name">SaaS Operation: portal users may read all operations (catalog metadata)</field>
+            <field name="model_id" ref="model_saas_product_operation"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <record id="saas_product_operation_param_portal_rule" model="ir.rule">
+            <field name="name">SaaS Operation Param: portal users may read all params (catalog metadata)</field>
+            <field name="model_id" ref="model_saas_product_operation_param"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!--
+            saas.tenant is a multi-tenancy boundary. The portal ACL grants
+            read on the model (ir.model.access.csv:34), so without a rule
+            portal users could search_read every tenant in the system. Scope
+            it per-partner so each portal user only sees their own tenant.
+        -->
+        <record id="saas_tenant_portal_rule" model="ir.rule">
+            <field name="name">SaaS Tenant: portal users see only their own tenant</field>
+            <field name="model_id" ref="model_saas_tenant"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
