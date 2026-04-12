@@ -10,6 +10,7 @@
     """,
     'author': 'Ganemo',
     'maintainer': 'Ganemo',
+    'company': 'Ganemo',
     'website': 'https://www.ganemo.co',
     'depends': ['base_setup'],
     'data': [
@@ -17,9 +18,13 @@
         'views/res_config_settings_views.xml',
         'views/menu.xml',
     ],
+    'icon': '/universal_connector/static/description/icon.png',
+    'images': ['static/description/banner.png'],
     'license': 'OPL-1',
     'installable': True,
+    'auto_install': False,
     'application': True,
     'currency': 'USD',
     'price': 200.0,
+    'module_type': 'official',
 }

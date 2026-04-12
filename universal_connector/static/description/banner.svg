@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="880" height="440">
+  <defs>
+    <clipPath id="imgClip">
+      <rect x="540" y="60" width="280" height="260" rx="20"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="440" fill="#5D38A4"/>
+
+  <!-- Decorative gear pattern top-left -->
+  <circle cx="30" cy="30" r="18" fill="none" stroke="#F72585" stroke-width="2" opacity="0.4"/>
+  <circle cx="30" cy="30" r="10" fill="none" stroke="#F72585" stroke-width="2" opacity="0.4"/>
+  <circle cx="70" cy="50" r="14" fill="none" stroke="#F72585" stroke-width="2" opacity="0.3"/>
+  <circle cx="70" cy="50" r="7" fill="none" stroke="#F72585" stroke-width="2" opacity="0.3"/>
+  <circle cx="50" cy="80" r="10" fill="none" stroke="#F72585" stroke-width="2" opacity="0.2"/>
+  <rect x="15" y="22" width="6" height="16" rx="2" fill="#F72585" opacity="0.3" transform="rotate(0 30 30)"/>
+  <rect x="22" y="15" width="16" height="6" rx="2" fill="#F72585" opacity="0.3"/>
+  <rect x="55" y="42" width="6" height="16" rx="2" fill="#F72585" opacity="0.25"/>
+  <rect x="62" y="35" width="16" height="6" rx="2" fill="#F72585" opacity="0.25"/>
+
+  <!-- Zigzag waves top-right -->
+  <polyline points="750,0 770,20 790,0 810,20 830,0 850,20 870,0 880,10" fill="none" stroke="#F72585" stroke-width="3" opacity="0.5"/>
+  <polyline points="760,10 780,30 800,10 820,30 840,10 860,30 880,20" fill="none" stroke="#9B5DE5" stroke-width="2" opacity="0.4"/>
+
+  <!-- Zigzag waves bottom-right -->
+  <polyline points="750,440 770,420 790,440 810,420 830,440 850,420 870,440 880,430" fill="none" stroke="#F72585" stroke-width="3" opacity="0.5"/>
+  <polyline points="760,430 780,410 800,430 820,410 840,430 860,410 880,420" fill="none" stroke="#9B5DE5" stroke-width="2" opacity="0.4"/>
+
+  <!-- Main text area (left) -->
+  <!-- Title -->
+  <text x="50" y="120" font-family="sans-serif" font-size="38" font-weight="900" fill="white" letter-spacing="1">
+    Universal Connector
+  </text>
+
+  <!-- Description (max 6 words per line, 24px) -->
+  <text x="50" font-family="sans-serif" font-size="22" fill="rgba(255,255,255,0.85)" font-weight="500">
+    <tspan x="50" dy="40">Centralized settings hub for all</tspan>
+    <tspan x="50" dy="30">third-party connector modules.</tspan>
+    <tspan x="50" dy="30">Configure credentials in one</tspan>
+    <tspan x="50" dy="30">organized place under the</tspan>
+    <tspan x="50" dy="30">Connectors app.</tspan>
+  </text>
+
+  <!-- Highlight points -->
+  <circle cx="62" cy="310" r="6" fill="#F72585"/>
+  <text x="78" y="315" font-family="sans-serif" font-size="16" fill="white" font-weight="600">Single Settings Page</text>
+
+  <circle cx="62" cy="340" r="6" fill="#F72585"/>
+  <text x="78" y="345" font-family="sans-serif" font-size="16" fill="white" font-weight="600">Modular Architecture</text>
+
+  <circle cx="62" cy="370" r="6" fill="#F72585"/>
+  <text x="78" y="375" font-family="sans-serif" font-size="16" fill="white" font-weight="600">Admin-Only Access</text>
+
+  <!-- Right image area -->
+  <rect x="540" y="60" width="280" height="260" rx="20" fill="white" opacity="0.95"/>
+
+  <!-- Icon illustration inside white box -->
+  <g transform="translate(600,100) scale(1.8)">
+    <!-- Connection lines -->
+    <line x1="50" y1="50" x2="50" y2="12" stroke="#B79EB5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="86" y2="29" stroke="#B79EB5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="86" y2="71" stroke="#B79EB5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="50" y2="88" stroke="#B79EB5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="14" y2="71" stroke="#B79EB5" stroke-width="3" stroke-linecap="round"/>
+    <line x1="50" y1="50" x2="14" y2="29" stroke="#B79EB5" stroke-width="3" stroke-linecap="round"/>
+    <!-- Outer nodes -->
+    <circle cx="50" cy="12" r="8" fill="#00A09D"/>
+    <circle cx="86" cy="29" r="8" fill="#1F8EFA"/>
+    <circle cx="86" cy="71" r="8" fill="#3ABF8F"/>
+    <circle cx="50" cy="88" r="8" fill="#F58823"/>
+    <circle cx="14" cy="71" r="8" fill="#F57C00"/>
+    <circle cx="14" cy="29" r="8" fill="#F4C430"/>
+    <!-- Central hub -->
+    <circle cx="50" cy="50" r="14" fill="#714B67"/>
+    <rect x="44" y="42" width="4" height="10" rx="1" fill="white"/>
+    <rect x="52" y="42" width="4" height="10" rx="1" fill="white"/>
+    <rect x="42" y="51" width="16" height="6" rx="2" fill="white"/>
+    <rect x="47" y="57" width="6" height="4" rx="1" fill="white"/>
+  </g>
+
+  <!-- CTA Button -->
+  <rect x="610" y="360" width="170" height="45" rx="22" fill="#F72585"/>
+  <text x="695" y="389" font-family="sans-serif" font-size="18" fill="white" font-weight="700" text-anchor="middle">ganemo.co</text>
+</svg>

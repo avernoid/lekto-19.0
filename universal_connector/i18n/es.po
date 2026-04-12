@@ -1,0 +1,52 @@
+# Translation of universal_connector to Spanish
+# . module: universal_connector
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the universal_connector package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module universal_connector 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-04-12 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: universal_connector
+#: model:ir.actions.act_window,name:universal_connector.action_universal_connector_config_settings
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: universal_connector
+#: model:ir.ui.menu,name:universal_connector.menu_universal_connector_root
+msgid "Connectors"
+msgstr "Conectores"
+
+#. module: universal_connector
+#: model:ir.ui.menu,name:universal_connector.menu_universal_connector_configuration
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: universal_connector
+#: model:ir.ui.menu,name:universal_connector.menu_universal_connector_settings
+msgid "Settings"
+msgstr "Ajustes"
+
+#. module: universal_connector
+#: model_terms:ir.ui.view,arch_db:universal_connector.res_config_settings_view_form_connector
+msgid "Connectors"
+msgstr "Conectores"
+
+#. module: universal_connector
+#: model_terms:ir.ui.view,arch_db:universal_connector.res_config_settings_view_form_connector
+msgid "Connector Integrations"
+msgstr "Integraciones de Conectores"
+
+#. module: universal_connector
+#: model_terms:ir.ui.view,arch_db:universal_connector.res_config_settings_view_form_connector
+msgid "Install connector modules to configure their credentials here."
+msgstr "Instale módulos de conectores para configurar sus credenciales aquí."
