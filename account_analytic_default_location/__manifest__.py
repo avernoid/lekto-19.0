@@ -1,6 +1,6 @@
 {
     'name': 'Account analytic default location',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.3',
     'author': 'Ganemo',
     'maintainer': 'Ganemo',
     'company': 'Ganemo',

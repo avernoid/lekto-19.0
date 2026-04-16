@@ -46,55 +46,16 @@ class AccountAnalyticDefault(models.Model):
 
 
     @api.model
-    def _get_distribution(self, arguments):
-        """ Returns the combined distribution from all matching models.
-            Refactored to match Odoo 19 merging logic + Multi-Prefix support.
-        """
-        # Discover all Many2one fields on the model (Dynamic Intelligence)
-        dimension_fields = [
-            fname for fname, field in self._fields.items()
-            if field.type == 'many2one' 
-            and not fname.startswith('create_') 
-            and not fname.startswith('write_') 
-            and fname != 'sequence'
-        ]
-        
-        domain = []
-        for field in dimension_fields + ['partner_category_id']:
-            if field not in self._fields:
-                continue
-                
-            value = arguments.get(field)
-            if field == 'partner_category_id':
-                domain += [(field, 'in', (value or []) + [False])]
-            else:
-                if value:
-                    domain += [(field, 'in', [value, False])]
-                else:
-                    domain += [(field, '=', False)]
-
-        # Search for candidate rules
-        matching_rules = self.search(domain, order='sequence, id')
-        
-        target_account_code = str(arguments.get('account_prefix', ''))
-        
-        res = {}
-        applied_plans = arguments.get('related_root_plan_ids', self.env['account.analytic.plan'])
-        
-        for rule in matching_rules:
-            # 1. Match Account Prefix (Supports Multiple Prefixes "40, 60, 64")
-            if rule.account_prefix:
-                allowed_prefixes = [p.strip() for p in rule.account_prefix.split(',') if p.strip()]
-                if not any(target_account_code.startswith(p) for p in allowed_prefixes):
-                    continue 
-
-            # 2. Merge logic (Odoo 19 style)
-            # Combine distributions unless the plan is already filled by a higher priority rule
-            rule_plans = rule.distribution_analytic_account_ids.root_plan_id
-            if not applied_plans & rule_plans:
-                res |= rule.analytic_distribution or {}
-                applied_plans += rule_plans
-
+    def _get_default_search_domain_vals(self):
+        res = super()._get_default_search_domain_vals()
+        res.update({
+            'origin_warehouse_id': False,
+            'origin_location_id': False,
+            'dest_location_id': False,
+            'invoice_user_id': False,
+            'user_id': False,
+            'journal_id': False,
+        })
         return res
 
 
