@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add industry_sector_id to partner form -->
+    <record id="res_partner_view_form_inherit_sector" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.sector</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="before">
+                <field name="customer_rank" invisible="1"/>
+                <field name="industry_sector_id" invisible="customer_rank == 0"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Add filter and group-by to partner search view -->
+    <record id="res_partner_view_search_inherit_sector" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit.sector</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="industry_sector_id"/>
+            </field>
+            <filter name="group_country" position="after">
+                <filter string="Industry Sector" name="group_sector"
+                        context="{'group_by': 'industry_sector_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

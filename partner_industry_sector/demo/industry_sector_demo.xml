@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Industry Sectors -->
+        <record id="sector_construction" model="industry.sector">
+            <field name="name">Construction</field>
+        </record>
+        <record id="sector_technology" model="industry.sector">
+            <field name="name">Technology &amp; IT</field>
+        </record>
+        <record id="sector_health" model="industry.sector">
+            <field name="name">Health &amp; Pharmaceuticals</field>
+        </record>
+        <record id="sector_education" model="industry.sector">
+            <field name="name">Education</field>
+        </record>
+        <record id="sector_agriculture" model="industry.sector">
+            <field name="name">Agriculture &amp; Livestock</field>
+        </record>
+        <record id="sector_food" model="industry.sector">
+            <field name="name">Food &amp; Beverage</field>
+        </record>
+        <record id="sector_automotive" model="industry.sector">
+            <field name="name">Automotive</field>
+        </record>
+        <record id="sector_retail" model="industry.sector">
+            <field name="name">Retail</field>
+        </record>
+        <record id="sector_finance" model="industry.sector">
+            <field name="name">Finance &amp; Banking</field>
+        </record>
+        <record id="sector_logistics" model="industry.sector">
+            <field name="name">Logistics &amp; Transport</field>
+        </record>
+        <record id="sector_mining" model="industry.sector">
+            <field name="name">Mining</field>
+        </record>
+        <record id="sector_energy" model="industry.sector">
+            <field name="name">Energy &amp; Oil</field>
+        </record>
+        <record id="sector_textile" model="industry.sector">
+            <field name="name">Textile &amp; Apparel</field>
+        </record>
+        <record id="sector_tourism" model="industry.sector">
+            <field name="name">Tourism &amp; Hospitality</field>
+        </record>
+        <record id="sector_real_estate" model="industry.sector">
+            <field name="name">Real Estate</field>
+        </record>
+        <record id="sector_consulting" model="industry.sector">
+            <field name="name">Consulting &amp; Professional Services</field>
+        </record>
+        <record id="sector_telecom" model="industry.sector">
+            <field name="name">Telecommunications</field>
+        </record>
+        <record id="sector_manufacturing" model="industry.sector">
+            <field name="name">Manufacturing &amp; Industry</field>
+        </record>
+
+        <!-- Assign sectors to some existing demo partners -->
+        <record id="base.res_partner_1" model="res.partner">
+            <field name="industry_sector_id" ref="sector_technology"/>
+        </record>
+        <record id="base.res_partner_2" model="res.partner">
+            <field name="industry_sector_id" ref="sector_construction"/>
+        </record>
+        <record id="base.res_partner_3" model="res.partner">
+            <field name="industry_sector_id" ref="sector_consulting"/>
+        </record>
+        <record id="base.res_partner_4" model="res.partner">
+            <field name="industry_sector_id" ref="sector_food"/>
+        </record>
+        <record id="base.res_partner_12" model="res.partner">
+            <field name="industry_sector_id" ref="sector_retail"/>
+        </record>
+
+    </data>
+</odoo>

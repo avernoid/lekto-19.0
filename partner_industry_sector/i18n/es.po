@@ -1,0 +1,155 @@
+# Translation of partner_industry_sector to Spanish
+# . module: partner_industry_sector
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the partner_industry_sector package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module partner_industry_sector 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-06-04 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# ── Field labels ─────────────────────────────────────────────────────────
+#. module: partner_industry_sector
+#: model:ir.model.fields,field_description:partner_industry_sector.field_industry_sector__name
+msgid "Sector Name"
+msgstr "Nombre del Sector"
+
+#. module: partner_industry_sector
+#: model:ir.model,name:partner_industry_sector.model_industry_sector
+#: model:ir.model.fields,field_description:partner_industry_sector.field_res_partner__industry_sector_id
+#: model_terms:ir.ui.view,arch_db:partner_industry_sector.res_partner_view_search_inherit_sector
+msgid "Industry Sector"
+msgstr "Sector / Rubro"
+
+# ── Field help texts ─────────────────────────────────────────────────────
+#. module: partner_industry_sector
+#: model:ir.model.fields,help:partner_industry_sector.field_industry_sector__name
+msgid "Unique sector name, shown when classifying contacts and when grouping or filtering them by sector."
+msgstr "Nombre único del sector, que se muestra al clasificar contactos y al agruparlos o filtrarlos por sector."
+
+#. module: partner_industry_sector
+#: model:ir.model.fields,help:partner_industry_sector.field_industry_sector__active
+msgid "Uncheck to archive: kept on existing contacts but no longer selectable on new ones."
+msgstr "Desmarque para archivar: se mantiene en los contactos existentes pero ya no podrá seleccionarse en los nuevos."
+
+#. module: partner_industry_sector
+#: model:ir.model.fields,help:partner_industry_sector.field_res_partner__industry_sector_id
+msgid "Sector this customer belongs to. Lets you filter and group contacts by industry. Shown for customers only."
+msgstr "Sector al que pertenece este cliente. Permite filtrar y agrupar contactos por industria. Solo se muestra para clientes."
+
+# ── Constraint ───────────────────────────────────────────────────────────
+#. module: partner_industry_sector
+#: model:ir.model.constraint,message:partner_industry_sector.constraint_industry_sector_name_uniq
+msgid "The sector name must be unique."
+msgstr "El nombre del sector debe ser único."
+
+# ── Action & menu ────────────────────────────────────────────────────────
+#. module: partner_industry_sector
+#: model:ir.actions.act_window,name:partner_industry_sector.industry_sector_action
+#: model:ir.ui.menu,name:partner_industry_sector.menu_industry_sector
+msgid "Industry Sectors"
+msgstr "Sectores Industriales"
+
+#. module: partner_industry_sector
+#: model:ir.actions.act_window,help:partner_industry_sector.industry_sector_action
+msgid "Create your first industry sector"
+msgstr "Cree su primer sector industrial"
+
+# ── Sector catalog (demo records, translatable name) ─────────────────────
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_construction
+msgid "Construction"
+msgstr "Construcción"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_technology
+msgid "Technology & IT"
+msgstr "Tecnología e Informática"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_health
+msgid "Health & Pharmaceuticals"
+msgstr "Salud y Farmacéutica"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_education
+msgid "Education"
+msgstr "Educación"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_agriculture
+msgid "Agriculture & Livestock"
+msgstr "Agricultura y Ganadería"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_food
+msgid "Food & Beverage"
+msgstr "Alimentos y Bebidas"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_automotive
+msgid "Automotive"
+msgstr "Automotriz"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_retail
+msgid "Retail"
+msgstr "Comercio Minorista"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_finance
+msgid "Finance & Banking"
+msgstr "Finanzas y Banca"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_logistics
+msgid "Logistics & Transport"
+msgstr "Logística y Transporte"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_mining
+msgid "Mining"
+msgstr "Minería"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_energy
+msgid "Energy & Oil"
+msgstr "Energía y Petróleo"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_textile
+msgid "Textile & Apparel"
+msgstr "Textil y Confección"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_tourism
+msgid "Tourism & Hospitality"
+msgstr "Turismo y Hotelería"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_real_estate
+msgid "Real Estate"
+msgstr "Inmobiliario"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_consulting
+msgid "Consulting & Professional Services"
+msgstr "Consultoría y Servicios Profesionales"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_telecom
+msgid "Telecommunications"
+msgstr "Telecomunicaciones"
+
+#. module: partner_industry_sector
+#: model:industry.sector,name:partner_industry_sector.sector_manufacturing
+msgid "Manufacturing & Industry"
+msgstr "Manufactura e Industria"

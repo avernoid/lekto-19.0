@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree view -->
+    <record id="industry_sector_view_tree" model="ir.ui.view">
+        <field name="name">industry.sector.tree</field>
+        <field name="model">industry.sector</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="industry_sector_view_form" model="ir.ui.view">
+        <field name="name">industry.sector.form</field>
+        <field name="model">industry.sector</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="industry_sector_action" model="ir.actions.act_window">
+        <field name="name">Industry Sectors</field>
+        <field name="res_model">industry.sector</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first industry sector
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu item under Sales > Configuration -->
+    <menuitem id="menu_industry_sector"
+              name="Industry Sectors"
+              parent="sale.menu_sale_config"
+              action="industry_sector_action"
+              sequence="25"/>
+
+</odoo>

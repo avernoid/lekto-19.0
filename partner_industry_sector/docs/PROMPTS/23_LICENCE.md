@@ -1,0 +1,1 @@
+En el nuevo módulo debes incluir en el primer nivel un archivo llamado `LICENSE.txt`, que debe ser una copia de `custom/addons/my_custom_module_template/LICENSE.txt.` Debes estar seguro que el archivo que crees es archivo de extensión .txt

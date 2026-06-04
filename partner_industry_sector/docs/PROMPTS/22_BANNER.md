@@ -1,0 +1,15 @@
+## Creación de Banner
+- El banner debe generarse en formato SVG (codificación UTF-8) y sobrescribir cualquier archivo previo.
+- Tamaño: 880x440 px.
+- Fondo: Un fondo sólido de color morado oscuro (similar al #5D38A4 o un tono muy cercano).
+- Patrones Decorativos: En la esquina superior izquierda, un pequeño patrón de engranajes o elementos abstractos relacionados con la automatización, en un color que contraste pero que sea armónico (ej. rosa/fucsia o blanco). En las esquinas superior e inferior derechas, patrones de ondas en zigzag, en colores que contrasten y complementen el fondo (ej. rosa/fucsia y un morado más claro/azulado).
+- Cuadro de Texto Principal (Lado Izquierdo): Un cuadro o sección claramente definida para el texto principal.
+  - Subtítulo/Descripción (Dinámico): La descripción debe dividirse en líneas de máximo 6 palabras, usando saltos de línea automáticos (etiqueta <tspan> en SVG) para evitar que el texto se desborde del área visible. El ancho máximo de la caja de texto debe ser suficiente para mantener la legibilidad. Limita el tamaño de fuente a 24px y el ancho de la caja a 650px. Si la descripción es muy larga, reduce el tamaño de fuente o aumenta el número de líneas, pero nunca permitas que se desborde.
+  - Puntos de Resalte (Dinámicos): Los puntos de resalte de principales beneficios deben colocarse siempre debajo de la última línea de la descripción, dejando al menos 10px de separación visual. Calcula la posición vertical según la cantidad de líneas generadas en la descripción. Los puntos deben estar alineados con el texto de la descripción y ser círculos de 6px de radio, color rosa/fucsia (#F72585). Si hay demasiados puntos y se salen del cuadro, reduce el tamaño de fuente o el número de puntos.
+- Sección de Imagen/Ilustración (Lado Derecho):
+  - Un cuadro o forma redondeada de color blanco o gris claro, que contenga una ilustración central.
+  - Ilustración Central (Dinámica): Debe contener la imagen del ícono creado líneas arriba, o si no es posible, una ilustración representativa del módulo. El tamaño de la ilustración debe ser proporcional y nunca debe solaparse ni desplazar el título o el texto principal. Si es necesario, reduce el tamaño de la ilustración para mantener el equilibrio visual.
+- Botón/CTA (Call to Action - Lado Derecho Inferior): Un botón ovalado o de forma suave con el texto "ganemo.co". El color del botón debe ser vibrante y contrastar (ej. rosa/fucsia). Si el contenido superior es muy largo, ajusta la posición del botón para evitar solapamientos.
+- Elementos Dinámicos: Especifica explícitamente cuáles son los elementos que pueden ser modificados (texto del titular, subtítulo, URL del botón, contenido de la ilustración, logo, puntos de resalte).
+- El banner debe llamarse `banner.svg` y estar en `static/description/` del módulo que se está trabjando.
+- Prueba el diseño con descripciones y listas de puntos largas para asegurar que el diseño se mantenga limpio y sin solapamientos.
