@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale.project.analytic.filter</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='account']" position="inside">
+                <block title="Analytic Distribution" id="sale_project_analytic_filter_block">
+                    <setting id="cogs_analytic_exclude_valuation_setting"
+                             string="Keep analytic off the COGS stock valuation line"
+                             help="Clear the analytic distribution from the COGS line booked on the product's stock valuation account (the inventory counterpart), keeping it on the COGS expense line, so the two COGS lines do not cancel out in the analytic ledger.">
+                        <field name="cogs_analytic_exclude_valuation"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

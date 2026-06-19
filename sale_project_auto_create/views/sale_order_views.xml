@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_auto_create_project" model="ir.ui.view">
+        <field name="name">sale.order.form.auto.create.project</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Keep the trigger out of the header: place it in the Other Info
+                 tab, right next to the sales team it defaults from. -->
+            <xpath expr="//page[@name='other_information']//field[@name='team_id']" position="after">
+                <field name="auto_create_project"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         Plantilla principal: contenedor + iteración sobre docs
+         ============================================================ -->
+    <template id="report_corporate_quotation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="sale_corporate_quotation.report_corporate_quotation_document"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- Plantilla _document: contenido del reporte por cotización.
+         Usa div.header / div.footer / div.article para wkhtmltopdf. -->
+    <template id="report_corporate_quotation_document">
+        <!-- Variables auxiliares -->
+        <t t-set="company" t-value="doc.company_id"/>
+        <t t-set="partner_company" t-value="doc.partner_id.commercial_partner_id or doc.partner_id"/>
+        <t t-set="partner_contact" t-value="doc.partner_id"/>
+
+        <!-- =====================================================
+             HEADER wkhtmltopdf — se repite en cada página
+             ===================================================== -->
+        <div class="header" style="font-family: Arial, Helvetica, sans-serif;
+                    border: none !important; border-bottom: none !important;">
+            <style>
+                .header, .header * { border: none !important; }
+            </style>
+            <table style="width: 100%; border-collapse: collapse; border: none !important;">
+                <tr>
+                    <!-- Logos: empresa + certificación -->
+                    <td style="width: 60%; vertical-align: middle; border: none !important;">
+                        <img t-if="company.logo"
+                             t-att-src="image_data_uri(company.logo)"
+                             style="max-height: 55px; vertical-align: middle;"
+                             alt="Logo empresa"/>
+                        <img t-if="company.quotation_certification_logo"
+                             t-att-src="image_data_uri(company.quotation_certification_logo)"
+                             style="max-height: 50px; vertical-align: middle; margin-left: 8px;"
+                             alt="Certificación"/>
+                    </td>
+                    <!-- Código de documento + Paginación dinámica -->
+                    <td style="width: 40%; vertical-align: top; text-align: right;
+                               font-size: 12px; border: none !important;">
+                        <div t-if="company.quotation_document_code" style="font-weight: bold;"
+                             t-out="company.quotation_document_code"/>
+                        <div style="margin-top: 2px;">
+                            Pág. <span class="page"/> de <span class="topage"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- Datos de la empresa (RUC, dirección, teléfono) -->
+            <div style="font-size: 12px; margin-top: 2px; line-height: 1.4;">
+                <div><strong>RUC:</strong><t t-out="company.vat or ''"/></div>
+                <div>
+                    <strong>Dirección: </strong>
+                    <t t-out="', '.join(filter(None, [
+                        company.street or '',
+                        company.street2 or '',
+                        company.city or '',
+                    ])) or ''"/>
+                </div>
+                <div>
+                    <strong>Tel: </strong>
+                    <t t-out="company.phone or ''"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             FOOTER wkhtmltopdf — se repite en cada página
+             ===================================================== -->
+        <div class="footer" style="font-family: Arial, Helvetica, sans-serif;">
+            <div style="border-top: 1px solid #000; padding-top: 6px; font-size: 12px;
+                        color: #000; line-height: 1.4; overflow: hidden;">
+                <!-- Dirección -->
+                <div style="float: left; width: 33%;">
+                    <span t-out="company.street or ''"/><br/>
+                    <span t-out="' - '.join(filter(None, [company.street2 or '', company.city or '', company.state_id.name or '']))"/>
+                </div>
+                <!-- Teléfonos -->
+                <div style="float: left; width: 34%; text-align: center; white-space: nowrap;">
+                    <t t-if="company.quotation_footer_icon_phone">
+                        <img t-att-src="'data:image/svg+xml;base64,' + company.quotation_footer_icon_phone.decode()"
+                             style="height: 24px; vertical-align: middle; margin-right: 6px;"
+                             alt="phone"/>
+                    </t>
+                    <span t-out="company.phone or ''"/>
+                </div>
+                <!-- Email / Web -->
+                <div style="float: right; width: 33%; text-align: right;">
+                    <t t-if="company.quotation_footer_icon_email">
+                        <img t-att-src="'data:image/svg+xml;base64,' + company.quotation_footer_icon_email.decode()"
+                             style="height: 24px; vertical-align: middle; margin-right: 6px;"
+                             alt="email"/>
+                    </t>
+                    <span t-out="company.email or ''"/><br/>
+                    <a t-att-href="company.website or '#'"
+                       style="color: #0066cc; text-decoration: underline;"
+                       t-out="company.website or ''"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             BODY — contenido del documento
+             ===================================================== -->
+        <div class="article" t-att-data-oe-model="doc._name" t-att-data-oe-id="doc.id">
+            <style>
+                /* Sub-tablas Código/Fecha: bordes gruesos forzados */
+                table.quotation-code-date-inner,
+                table.quotation-code-date-inner td {
+                    border: 2px solid #000 !important;
+                }
+                /* Payment block: forzar tablas a respetar ancho de página */
+                .quotation-payment-block table,
+                .quotation-payment-block table.table,
+                .quotation-payment-block table.table-bordered,
+                .quotation-payment-block table tbody,
+                .quotation-payment-block table thead,
+                .quotation-payment-block table tr {
+                    width: 100% !important;
+                    max-width: 100% !important;
+                    table-layout: fixed !important;
+                    border: none !important;
+                    border-color: transparent !important;
+                    box-shadow: none !important;
+                    outline: none !important;
+                }
+                /* Fuente uniforme en todo el payment block */
+                .quotation-payment-block,
+                .quotation-payment-block * {
+                    font-family: inherit !important;
+                    font-size: 13px !important;
+                }
+                .quotation-payment-block table tr {
+                    height: auto !important;
+                }
+                .quotation-payment-block td,
+                .quotation-payment-block th {
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                    word-wrap: break-word !important;
+                    border: 1px solid #000 !important;
+                    padding: 2px 8px !important;
+                    line-height: 1.2 !important;
+                    height: auto !important;
+                }
+                .quotation-payment-block td div,
+                .quotation-payment-block th div {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    line-height: 1.2 !important;
+                }
+                /* Quitar borde superior de la primera fila (evita doble borde) */
+                .quotation-payment-block table tr:first-child td {
+                    border-top: none !important;
+                }
+                /* Quitar bordes laterales que tocan el contenedor */
+                .quotation-payment-block table td:first-child,
+                .quotation-payment-block table th:first-child {
+                    border-left: none !important;
+                }
+                .quotation-payment-block table td:last-child,
+                .quotation-payment-block table th:last-child {
+                    border-right: none !important;
+                }
+                /* Quitar borde inferior de la última fila */
+                .quotation-payment-block table tr:last-child td {
+                    border-bottom: none !important;
+                }
+                /* Eliminar márgenes de párrafos dentro del payment block */
+                .quotation-payment-block p {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
+                /* Anchos de columnas alineados con tabla Titular/RUC */
+                .quotation-payment-block table td:nth-child(1),
+                .quotation-payment-block table th:nth-child(1) {
+                    width: 20% !important;
+                }
+                .quotation-payment-block table td:nth-child(2),
+                .quotation-payment-block table th:nth-child(2) {
+                    width: 30% !important;
+                }
+                .quotation-payment-block table td:nth-child(3),
+                .quotation-payment-block table th:nth-child(3) {
+                    width: 15% !important;
+                }
+                .quotation-payment-block table td:nth-child(4),
+                .quotation-payment-block table th:nth-child(4) {
+                    width: 35% !important;
+                }
+                .quotation-payment-block > :last-child {
+                    margin-bottom: 0 !important;
+                    padding-bottom: 0 !important;
+                }
+            </style>
+            <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #000;">
+
+                <!-- Título COTIZACIÓN -->
+                <div style="text-align: center; margin: 0 0 8px 0;">
+                    <h2 style="font-size: 24px; font-weight: bold; margin: 0; color: #000;">
+                        COTIZACIÓN
+                    </h2>
+                </div>
+
+                <!-- ========================================
+                     FILA: Código de Cotización + Fecha
+                     ======================================== -->
+                <div style="width: 100%; margin-bottom: 10px; font-size: 13px; overflow: hidden;">
+                    <!-- Bloque Código de Cotización (izquierda) -->
+                    <div style="float: left;">
+                        <table class="quotation-code-date-inner"
+                               style="border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    Código de Cotización:
+                                </td>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    <t t-out="doc.name"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- Bloque Fecha (derecha) -->
+                    <div style="float: right;">
+                        <table class="quotation-code-date-inner"
+                               style="border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    Fecha
+                                </td>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    <t t-out="doc.date_order" t-options='{"widget": "date"}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ========================================
+                     BLOQUE DE DATOS DEL CLIENTE
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;
+                              border: 2px solid #000; font-size: 13px;">
+                    <colgroup>
+                        <col style="width: 10%;"/>
+                        <col style="width: 38%;"/>
+                        <col style="width: 15%;"/>
+                        <col style="width: 37%;"/>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                RUC:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;" colspan="3">
+                                <t t-out="partner_company.vat or '-'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Cliente:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;" colspan="3">
+                                <t t-out="partner_company.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Dirección:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;" colspan="3">
+                                <t t-out="', '.join(filter(None, [
+                                    partner_company.street or '',
+                                    partner_company.street2 or '',
+                                    partner_company.city or '',
+                                    partner_company.state_id.name if partner_company.state_id else '',
+                                    partner_company.country_id.name if partner_company.country_id else '',
+                                ])) or '-'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Atención:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-if="partner_contact != partner_company">
+                                    <t t-out="partner_contact.name"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Correo:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-out="partner_contact.email or '-'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Teléfono:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-out="partner_contact.phone or '-'"/>
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Cod. Proyecto:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-out="doc.client_order_ref or '-'"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ========================================
+                     PARTE 1 — DESCRIPCIÓN / COSTOS
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-bottom: 0;
+                              font-size: 14px; font-weight: bold; color: #000;">
+                    <tr>
+                        <td style="padding: 4px 10px; border-right: 2px solid #000; width: 10%; white-space: nowrap;">PARTE 1</td>
+                        <td style="padding: 4px 10px; text-align: center;">DESCRIPCIÓN / COSTOS</td>
+                    </tr>
+                </table>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 0; margin-bottom: 4px;
+                              border: 2px solid #000; border-top: none; font-size: 13px;">
+                    <thead>
+                        <tr style="font-weight: bold;">
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000; padding: 4px 8px; width: 6%; text-align: center !important; vertical-align: middle !important;">Item</th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000; padding: 4px 8px; width: 50%; text-align: center !important; vertical-align: middle !important;">Producto / Descripción</th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000; padding: 4px 8px; width: 8%; text-align: center !important; vertical-align: middle !important;">Cnt.</th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000; padding: 4px 8px; width: 16%; text-align: center !important; vertical-align: middle !important;">
+                                Precio (<t t-out="doc.currency_id.symbol"/>)
+                            </th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000; padding: 4px 8px; width: 20%; text-align: center !important; vertical-align: middle !important;">
+                                Subtotal (<t t-out="doc.currency_id.symbol"/>)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="item_counter" t-value="0"/>
+                        <t t-foreach="doc.order_line" t-as="line">
+
+                            <!-- Línea de tipo SECCIÓN -->
+                            <t t-if="line.display_type == 'line_section'">
+                                <tr>
+                                    <td colspan="5" style="border: 1px solid #000; padding: 4px 8px;
+                                                           font-weight: bold;">
+                                        <t t-out="line.name"/>
+                                    </td>
+                                </tr>
+                            </t>
+
+                            <!-- Línea de tipo NOTA -->
+                            <t t-elif="line.display_type == 'line_note'">
+                                <tr>
+                                    <td colspan="5" style="border: 1px solid #000; padding: 4px 8px;
+                                                           font-style: italic; color: #555;">
+                                        <t t-out="line.name"/>
+                                    </td>
+                                </tr>
+                            </t>
+
+                            <!-- Línea de PRODUCTO normal -->
+                            <t t-else="">
+                                <t t-set="item_counter" t-value="item_counter + 1"/>
+                                <tr>
+                                    <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important;">
+                                        <t t-out="item_counter"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 4px 8px; vertical-align: middle !important;">
+                                        <!-- Producto y Descripción apilados en la misma celda -->
+                                        <strong t-if="line.product_id">
+                                            <t t-out="line.product_id.display_name"/>
+                                        </strong>
+                                        <t t-if="line.name">
+                                            <br/>
+                                            <span style="white-space: pre-wrap;"
+                                                  t-out="line.name"/>
+                                        </t>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important;">
+                                        <t t-out="line.product_uom_qty"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important;">
+                                        <t t-out="line.price_unit"
+                                           t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                    <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important;">
+                                        <t t-out="line.price_subtotal"
+                                           t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+                <!-- Totales fuera de la tabla principal -->
+                <table style="width: 36%; margin-left: auto; margin-bottom: 4px; border-collapse: collapse; border: 2px solid #000; font-size: 13px;">
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;
+                                   text-align: center !important; vertical-align: middle !important; width: 44.4%;">
+                            Subtotal
+                        </td>
+                        <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important; width: 55.6%;">
+                            <t t-out="doc.amount_untaxed"
+                               t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;
+                                   text-align: center !important; vertical-align: middle !important;">
+                            IGV 18%
+                        </td>
+                        <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important;">
+                            <t t-out="doc.amount_tax"
+                               t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;
+                                   text-align: center !important; vertical-align: middle !important;">
+                            Total
+                        </td>
+                        <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important;
+                                   font-weight: bold;">
+                            <t t-out="doc.amount_total"
+                               t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- ========================================
+                     PARTE 2 — DETALLES DE PAGO
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-top: 4px; margin-bottom: 0;
+                              font-size: 14px; font-weight: bold; color: #000;">
+                    <tr>
+                        <td style="padding: 4px 10px; border-right: 2px solid #000; width: 10%; white-space: nowrap;">PARTE 2</td>
+                        <td style="padding: 4px 10px; text-align: center;">DETALLES DE PAGO</td>
+                    </tr>
+                </table>
+                <div style="border: 2px solid #000; border-top: none; padding: 0;
+                            margin-bottom: 0; font-size: 13px;">
+                    <!-- Forma de Pago / Validez / Detalles bancarios — tabla unificada -->
+                    <table style="width: 100%; border-collapse: collapse;
+                                  margin-bottom: 0; font-size: 13px;">
+                        <t t-if="doc.payment_term_id">
+                            <tr>
+                                <td style="border-bottom: 1px solid #000; padding: 4px 8px;"
+                                    colspan="4">
+                                    <strong>Forma de Pago: </strong>
+                                    <span t-out="doc.payment_term_id.name"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <t t-if="doc.validity_date">
+                            <tr>
+                                <td style="border-bottom: 1px solid #000; padding: 4px 8px;"
+                                    colspan="4">
+                                    <strong>Validez de la Oferta: </strong>
+                                    <t t-out="doc.validity_date" t-options='{"widget": "date"}'/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td colspan="4" style="border-bottom: 1px solid #000; padding: 4px 8px;
+                                                   font-weight: bold;">
+                                Detalles de cuentas bancarias:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; border-left: none; padding: 4px 8px;
+                                       font-weight: bold; white-space: nowrap; width: 20%;">
+                                Titular:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px; width: 30%;">
+                                <span t-out="doc.company_id.name"/>
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;
+                                       font-weight: bold; white-space: nowrap; width: 15%;">
+                                RUC:
+                            </td>
+                            <td style="border: 1px solid #000; border-right: none; padding: 4px 8px;
+                                       width: 35%;">
+                                <span t-out="doc.company_id.vat"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- Bloque HTML libre de la compañía -->
+                    <t t-if="company.quotation_payment_block">
+                        <div style="width: 100%; max-width: 100%; overflow: hidden;
+                                    word-wrap: break-word; word-break: break-all;
+                                    margin-bottom: 0; padding-bottom: 0;"
+                             class="quotation-payment-block"
+                             t-field="company.quotation_payment_block"/>
+                    </t>
+                    <t t-else="">
+                        <p style="color: #999; font-style: italic;">
+                            (Sin información de cuentas bancarias configurada.
+                            Edite el campo en Ajustes → Compañías → pestaña "Cotización Corporativa".)
+                        </p>
+                    </t>
+                </div>
+
+                <!-- ========================================
+                     PARTE 3 — TIEMPO Y LUGAR DE ENTREGA
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-top: 4px; margin-bottom: 0;
+                              font-size: 14px; font-weight: bold; color: #000;">
+                    <tr>
+                        <td style="padding: 4px 10px; border-right: 2px solid #000; width: 10%; white-space: nowrap;">PARTE 3</td>
+                        <td style="padding: 4px 10px; text-align: center;">TIEMPO Y LUGAR DE ENTREGA</td>
+                    </tr>
+                </table>
+                <div style="border: 2px solid #000; border-top: none; padding: 0;
+                            margin-bottom: 0; font-size: 13px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                        <!-- Lugar de entrega -->
+                        <tr>
+                            <td style="border-bottom: 1px solid #000; padding: 4px 8px;"
+                                colspan="4">
+                                <strong>Lugar de Entrega: </strong>
+                                <t t-if="doc.partner_shipping_id and doc.partner_shipping_id.street">
+                                    <span t-field="doc.partner_shipping_id.street"/>
+                                </t>
+                                <t t-else="">
+                                    <span>-</span>
+                                </t>
+                            </td>
+                        </tr>
+                        <!-- Tiempo de entrega -->
+                        <tr>
+                            <td style="padding: 4px 8px;" colspan="4">
+                                <strong>Tiempo de Entrega: </strong>
+                                <t t-if="doc.delivery_lead_workdays">
+                                    <span>
+                                        <t t-out="doc.delivery_lead_workdays"/> días hábiles a partir de recibido el abono
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <span>-</span>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- ========================================
+                     PARTE 4 — TÉRMINOS Y CONDICIONES
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-top: 4px; margin-bottom: 0;
+                              font-size: 14px; font-weight: bold; color: #000;">
+                    <tr>
+                        <td style="padding: 4px 10px; border-right: 2px solid #000; width: 10%; white-space: nowrap;">PARTE 4</td>
+                        <td style="padding: 4px 10px; text-align: center;">TÉRMINOS Y CONDICIONES</td>
+                    </tr>
+                </table>
+                <div style="border: 2px solid #000; border-top: none; padding: 8px 10px;
+                            margin-bottom: 0; font-size: 13px;">
+                    <t t-if="doc.note">
+                        <div t-field="doc.note"/>
+                    </t>
+                    <t t-else="">
+                        <p>-</p>
+                    </t>
+                </div>
+
+                <!-- ========================================
+                     BLOQUE VENDEDOR / DESPEDIDA
+                     ======================================== -->
+                <div style="margin-top: 10px; font-size: 13px; line-height: 1.6;">
+                    <p style="margin: 0;">Sin otro particular por el momento, quedamos a la espera de sus gratas órdenes.</p>
+                    <br/>
+                    <p style="margin: 0;">Atte. <t t-out="doc.user_id.name or ''"/></p>
+                    <t t-if="doc.user_id.phone">
+                        <p style="margin: 0;">Celular: <t t-out="doc.user_id.phone"/></p>
+                    </t>
+                    <t t-if="doc.user_id.email">
+                        <a t-att-href="'mailto:' + doc.user_id.email"
+                           style="color: #0066cc; text-decoration: underline;"
+                           t-out="doc.user_id.email"/>
+                    </t>
+                </div>
+
+            </div><!-- /.page -->
+        </div><!-- /.article -->
+    </template>
+
+</odoo>

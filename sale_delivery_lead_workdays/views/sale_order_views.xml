@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_delivery_workdays" model="ir.ui.view">
+        <field name="name">sale.order.form.delivery.workdays</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Header field (Order Details group), next to the dates / payment
+                 terms, NOT buried in the Other Info tab. -->
+            <field name="payment_term_id" position="after">
+                <label for="delivery_lead_workdays"/>
+                <div class="o_row">
+                    <field name="delivery_lead_workdays"
+                           readonly="state not in ['draft', 'sent']"/>
+                    <button name="action_recompute_delivery_lead" type="object"
+                            string="Recalculate" class="btn-link mb-1 px-0" icon="fa-refresh"
+                            invisible="state not in ['draft', 'sent'] or not delivery_lead_workdays or commitment_date"
+                            help="Re-apply the working-days lead time to every storable order line."/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>

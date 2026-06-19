@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Categoría de producto que requiere ingeniería a medida,
+             usando el ECO type estándar de PLM como ejemplo -->
+        <record id="product_category_custom" model="product.category">
+            <field name="name">Productos a medida</field>
+            <field name="requires_engineering" eval="True"/>
+            <field name="eco_type_id" ref="mrp_plm.ecotype_bom_update"/>
+        </record>
+
+        <!-- Producto almacenable sin BOM, en la categoría a medida -->
+        <record id="product_template_custom_steel_frame" model="product.template">
+            <field name="name">Estructura metálica a medida</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="product_category_custom"/>
+            <field name="list_price">5000.00</field>
+        </record>
+
+        <record id="product_template_custom_concrete_base" model="product.template">
+            <field name="name">Base de concreto a medida</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="product_category_custom"/>
+            <field name="list_price">3500.00</field>
+        </record>
+
+        <!-- Producto estándar (NO requiere ingeniería) para contraste -->
+        <record id="product_template_standard_bolt" model="product.template">
+            <field name="name">Perno estándar M10</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"/>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="list_price">2.50</field>
+        </record>
+    </data>
+</odoo>

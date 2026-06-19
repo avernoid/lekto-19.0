@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Paperformat propio: header_spacing reducido para que el body
+         empiece justo debajo del encabezado corporativo -->
+    <record id="paperformat_corporate_quotation" model="report.paperformat">
+        <field name="name">Cotización Corporativa A4</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+        <field name="css_margins" eval="True"/>
+    </record>
+
+    <record id="report_corporate_quotation_action" model="ir.actions.report">
+        <field name="name">Quotation</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sale_corporate_quotation.report_corporate_quotation</field>
+        <field name="report_file">sale_corporate_quotation.report_corporate_quotation</field>
+        <field name="print_report_name">'Cotización - %s' % object.name</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_corporate_quotation"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="crm_team_view_form_auto_create_project" model="ir.ui.view">
+        <field name="name">crm.team.form.auto.create.project</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="Project Automation">
+                    <field name="auto_create_project"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

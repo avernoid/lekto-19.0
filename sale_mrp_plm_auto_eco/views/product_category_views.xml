@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Agregar campos de ingeniería a medida en el formulario de categoría de producto -->
+    <record id="product_category_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.category.form.inherit.auto.eco</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <field name="requires_engineering"/>
+                <field name="eco_type_id"
+                       invisible="not requires_engineering"
+                       required="requires_engineering"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

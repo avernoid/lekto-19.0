@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_corporate_quotation" model="ir.ui.view">
+        <field name="name">res.company.form.corporate.quotation</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[last()]" position="after">
+                <page string="Corporate Quotation" name="corporate_quotation">
+                    <group string="Header Data">
+                        <field name="quotation_document_code"
+                               placeholder="e.g. XX-YY-FT-000 Rev. 0 (optional)"/>
+                    </group>
+                    <group string="Certification Logo (printed in the report header)">
+                        <field name="quotation_certification_logo" widget="image" class="oe_avatar"/>
+                    </group>
+                    <group string="Footer Icons">
+                        <field name="quotation_footer_icon_phone" widget="binary" filename="quotation_footer_icon_phone_filename"/>
+                        <field name="quotation_footer_icon_email" widget="binary" filename="quotation_footer_icon_email_filename"/>
+                    </group>
+                    <group string="Payment Details (printed in the quotation report)">
+                        <field name="quotation_payment_block"
+                               widget="html"
+                               nolabel="1"
+                               colspan="2"
+                               placeholder="Enter the bank account details, withholdings, validity, etc."/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

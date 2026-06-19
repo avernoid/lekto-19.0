@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Move form -->
+    <record id="view_move_form_analytic" model="ir.ui.view">
+        <field name="name">stock.move.form - analytic distribution</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
+                    groups="analytic.group_analytic_accounting"
+                    options="{'product_field': 'product_id', 'business_domain': 'stock_move'}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Moves analysis list -->
+    <record id="view_move_tree_analytic" model="ir.ui.view">
+        <field name="name">stock.move.list - analytic distribution</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_dest_id']" position="after">
+                <field
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
+                    optional="hide"
+                    groups="analytic.group_analytic_accounting"
+                    options="{'product_field': 'product_id', 'business_domain': 'stock_move'}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Search: filter and group moves by analytic account -->
+    <record id="view_move_search_analytic" model="ir.ui.view">
+        <field name="name">stock.move.search - analytic distribution</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search" />
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field
+                    name="analytic_distribution"
+                    string="Analytic Account"
+                    groups="analytic.group_analytic_accounting"
+                />
+            </field>
+            <filter name="by_product" position="after">
+                <filter
+                    string="Analytic Account"
+                    name="groupby_analytic_distribution"
+                    domain="[]"
+                    context="{'group_by': 'analytic_distribution'}"
+                    groups="analytic.group_analytic_accounting"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_picking_form_analytic" model="ir.ui.view">
+        <field name="name">stock.picking.form - analytic distribution</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="arch" type="xml">
+            <!-- Header default that autocompletes the moves of the transfer.
+                 Placed at the end of the left header column, next to the
+                 locations it behaves like. -->
+            <xpath expr="//field[@name='backorder_id']" position="after">
+                <field
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
+                    groups="analytic.group_analytic_accounting"
+                    options="{'business_domain': 'stock_move'}"
+                />
+            </xpath>
+            <!-- Per-move override directly on the operation lines -->
+            <xpath
+                expr="//field[@name='move_ids']/list/field[@name='product_id']"
+                position="after"
+            >
+                <field
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
+                    optional="hide"
+                    groups="analytic.group_analytic_accounting"
+                    options="{'product_field': 'product_id', 'business_domain': 'stock_move'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

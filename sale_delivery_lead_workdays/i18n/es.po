@@ -1,0 +1,87 @@
+# Translation of sale_delivery_lead_workdays to Spanish
+# . module: sale_delivery_lead_workdays
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the sale_delivery_lead_workdays package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module sale_delivery_lead_workdays 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-06-18 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_delivery_lead_workdays
+#: model:ir.model.fields,field_description:sale_delivery_lead_workdays.field_stock_warehouse__resource_calendar_id
+msgid "Delivery Working Calendar"
+msgstr "Calendario laboral de entrega"
+
+#. module: sale_delivery_lead_workdays
+#: model:ir.model.fields,field_description:sale_delivery_lead_workdays.field_stock_warehouse__delivery_lead_workdays
+msgid "Default Delivery Lead Time (Working Days)"
+msgstr "Plazo de entrega por defecto (días hábiles)"
+
+#. module: sale_delivery_lead_workdays
+#: model:ir.model.fields,field_description:sale_delivery_lead_workdays.field_sale_order__delivery_lead_workdays
+msgid "Delivery Lead Time (Working Days)"
+msgstr "Plazo de entrega (días hábiles)"
+
+#. module: sale_delivery_lead_workdays
+#: model:ir.model.fields,help:sale_delivery_lead_workdays.field_stock_warehouse__resource_calendar_id
+msgid ""
+"Working calendar used to translate a delivery lead time expressed "
+"in working days into calendar days, skipping non-working days and "
+"holidays. Holidays are read from the global time off and from this "
+"calendar's own time off. If left empty, no working-day conversion is "
+"done and the order's value is written to the lines as plain days."
+msgstr ""
+"Calendario laboral usado para traducir un plazo de entrega expresado en "
+"días hábiles a días naturales, omitiendo los días no laborables y los "
+"feriados. Los feriados se leen del tiempo personal global y del tiempo "
+"personal propio de este calendario. Si se deja vacío, no se realiza "
+"ninguna conversión y el valor del pedido se escribe en las líneas como "
+"días naturales tal cual."
+
+#. module: sale_delivery_lead_workdays
+#: model:ir.model.fields,help:sale_delivery_lead_workdays.field_stock_warehouse__delivery_lead_workdays
+msgid ""
+"Default number of working days proposed on new sales orders "
+"shipping from this warehouse. It only sets the default; it can be "
+"overridden on each order."
+msgstr ""
+"Número de días hábiles propuesto por defecto en los pedidos de venta "
+"nuevos que se envían desde este almacén. Solo establece el valor por "
+"defecto; puede anularse en cada pedido."
+
+#. module: sale_delivery_lead_workdays
+#: model:ir.model.fields,help:sale_delivery_lead_workdays.field_sale_order__delivery_lead_workdays
+msgid ""
+"Delivery lead time expressed in WORKING days. When set, it is "
+"translated into calendar days using the warehouse working calendar "
+"(weekends and holidays excluded) and written into each storable line's "
+"lead time, so Odoo keeps computing the delivery date natively. "
+"Ignored when a manual Delivery Date is set on the order."
+msgstr ""
+"Plazo de entrega expresado en días HÁBILES. Cuando se establece, se "
+"traduce a días naturales usando el calendario laboral del almacén "
+"(excluyendo fines de semana y feriados) y se escribe en el plazo de "
+"entrega de cada línea almacenable, de modo que Odoo sigue calculando la "
+"fecha de entrega de forma nativa. Se ignora cuando el pedido tiene una "
+"Fecha de entrega manual."
+
+#. module: sale_delivery_lead_workdays
+#: model_terms:ir.ui.view,arch_db:sale_delivery_lead_workdays.view_order_form_delivery_workdays
+msgid "Recalculate"
+msgstr "Recalcular"
+
+#. module: sale_delivery_lead_workdays
+#: model_terms:ir.ui.view,arch_db:sale_delivery_lead_workdays.view_order_form_delivery_workdays
+msgid "Re-apply the working-days lead time to every storable order line."
+msgstr ""
+"Vuelve a aplicar el plazo en días hábiles a todas las líneas almacenables "
+"del pedido."

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Mostrar solo el número de la orden de venta origen en el ECO
+         como texto plano (sin link navegable). El campo sale_id
+         Many2one se mantiene en el modelo pero NO se muestra en la vista. -->
+    <record id="mrp_eco_view_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.eco.view.form.inherit.auto.eco</field>
+        <field name="model">mrp.eco</field>
+        <field name="inherit_id" ref="mrp_plm.mrp_eco_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="sale_order_name"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

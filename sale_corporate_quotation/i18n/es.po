@@ -1,0 +1,107 @@
+# Translation of sale_corporate_quotation to Spanish
+# . module: sale_corporate_quotation
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the sale_corporate_quotation package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module sale_corporate_quotation 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-06-18 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,field_description:sale_corporate_quotation.field_res_company__quotation_certification_logo
+msgid "Certification Logo (Quotation)"
+msgstr "Logo de Certificación (Cotización)"
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,field_description:sale_corporate_quotation.field_res_company__quotation_document_code
+msgid "Document Code (Quotation)"
+msgstr "Código de Documento (Cotización)"
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,field_description:sale_corporate_quotation.field_res_company__quotation_footer_icon_email
+msgid "Email Icon (Footer)"
+msgstr "Icono de Correo (Pie de Página)"
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,field_description:sale_corporate_quotation.field_res_company__quotation_payment_block
+msgid "Payment Details (Quotation)"
+msgstr "Detalles de Pago (Cotización)"
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,field_description:sale_corporate_quotation.field_res_company__quotation_footer_icon_phone
+msgid "Phone Icon (Footer)"
+msgstr "Icono de Teléfono (Pie de Página)"
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,help:sale_corporate_quotation.field_res_company__quotation_certification_logo
+msgid "Certification seal image (e.g. ISO 9001 / SGS / UKAS) shown next to the company logo in the header of the corporate quotation report. When empty, only the company logo is printed."
+msgstr "Imagen del sello de certificación (ej. ISO 9001 / SGS / UKAS) que se muestra junto al logo de la empresa en el encabezado del reporte de cotización corporativa. Cuando está vacío, solo se imprime el logo de la empresa."
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,help:sale_corporate_quotation.field_res_company__quotation_payment_block
+msgid "Free HTML block with the bank account details, withholdings and payment conditions printed in the 'Payment Details' section of the corporate quotation report. Leave it empty to hide the bank-account content (a placeholder note is shown on the report instead). The content is shared by every quotation of this company and can include tables, lists and styled text."
+msgstr "Bloque HTML libre con los datos de cuentas bancarias, detracciones y condiciones de pago que se imprime en la sección 'Detalles de Pago' del reporte de cotización corporativa. Déjelo vacío para ocultar el contenido de cuentas bancarias (en su lugar se muestra una nota indicativa en el reporte). El contenido es compartido por todas las cotizaciones de esta compañía y puede incluir tablas, listas y texto con estilo."
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,help:sale_corporate_quotation.field_res_company__quotation_document_code
+msgid "Optional document code printed in the top-right corner of the corporate quotation header (e.g. an internal form code such as 'XX-YY-FT-000 Rev. 0'). When empty, no code is printed."
+msgstr "Código de documento opcional que se imprime en la esquina superior derecha del encabezado de la cotización corporativa (ej. un código de formato interno como 'XX-YY-FT-000 Rev. 0'). Cuando está vacío, no se imprime ningún código."
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,help:sale_corporate_quotation.field_res_company__quotation_footer_icon_email
+msgid "SVG envelope/email icon printed before the email address in the footer of the corporate quotation report. When empty, the email is printed without an icon."
+msgstr "Icono SVG de sobre/correo que se imprime antes de la dirección de correo en el pie de página del reporte de cotización corporativa. Cuando está vacío, el correo se imprime sin icono."
+
+#. module: sale_corporate_quotation
+#: model:ir.model.fields,help:sale_corporate_quotation.field_res_company__quotation_footer_icon_phone
+msgid "SVG phone icon printed before the phone number in the footer of the corporate quotation report. When empty, the phone number is printed without an icon."
+msgstr "Icono SVG de teléfono que se imprime antes del número de teléfono en el pie de página del reporte de cotización corporativa. Cuando está vacío, el número se imprime sin icono."
+
+#. module: sale_corporate_quotation
+#: model:ir.actions.report,name:sale_corporate_quotation.report_corporate_quotation_action
+msgid "Quotation"
+msgstr "Cotización"
+
+#. module: sale_corporate_quotation
+#: model_terms:ir.ui.view,arch_db:sale_corporate_quotation.view_company_form_corporate_quotation
+msgid "Certification Logo (printed in the report header)"
+msgstr "Logo de Certificación (se imprime en el encabezado del reporte)"
+
+#. module: sale_corporate_quotation
+#: model_terms:ir.ui.view,arch_db:sale_corporate_quotation.view_company_form_corporate_quotation
+msgid "Corporate Quotation"
+msgstr "Cotización Corporativa"
+
+#. module: sale_corporate_quotation
+#: model_terms:ir.ui.view,arch_db:sale_corporate_quotation.view_company_form_corporate_quotation
+msgid "Enter the bank account details, withholdings, validity, etc."
+msgstr "Ingrese los datos de cuentas bancarias, detracciones, validez, etc."
+
+#. module: sale_corporate_quotation
+#: model_terms:ir.ui.view,arch_db:sale_corporate_quotation.view_company_form_corporate_quotation
+msgid "Footer Icons"
+msgstr "Iconos del Pie de Página"
+
+#. module: sale_corporate_quotation
+#: model_terms:ir.ui.view,arch_db:sale_corporate_quotation.view_company_form_corporate_quotation
+msgid "Header Data"
+msgstr "Datos del Encabezado"
+
+#. module: sale_corporate_quotation
+#: model_terms:ir.ui.view,arch_db:sale_corporate_quotation.view_company_form_corporate_quotation
+msgid "Payment Details (printed in the quotation report)"
+msgstr "Detalles de Pago (se imprime en el reporte de cotización)"
+
+#. module: sale_corporate_quotation
+#: model_terms:ir.ui.view,arch_db:sale_corporate_quotation.view_company_form_corporate_quotation
+msgid "e.g. XX-YY-FT-000 Rev. 0 (optional)"
+msgstr "ej. XX-YY-FT-000 Rev. 0 (opcional)"

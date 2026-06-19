@@ -1,0 +1,62 @@
+# Translation of sale_project_auto_create to Spanish
+# . module: sale_project_auto_create
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the sale_project_auto_create package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module sale_project_auto_create 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-06-18 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_project_auto_create
+#: model:ir.model.fields,field_description:sale_project_auto_create.field_crm_team__auto_create_project
+msgid "Create Project on Sales Confirmation"
+msgstr "Crear proyecto al confirmar la venta"
+
+#. module: sale_project_auto_create
+#: model:ir.model.fields,field_description:sale_project_auto_create.field_sale_order__auto_create_project
+msgid "Create Project on Confirmation"
+msgstr "Crear proyecto al confirmar"
+
+#. module: sale_project_auto_create
+#: model:ir.model.fields,help:sale_project_auto_create.field_crm_team__auto_create_project
+msgid ""
+"When enabled, confirming a sales order assigned to this sales team "
+"automatically creates a project linked to the order (with its analytic "
+"account), even if the order has no service product configured to generate "
+"one. This only sets the default for new orders; it can be overridden on each "
+"order."
+msgstr ""
+"Cuando está activado, al confirmar un pedido de venta asignado a este equipo "
+"de ventas se crea automáticamente un proyecto vinculado al pedido (con su "
+"cuenta analítica), aunque el pedido no tenga un producto de tipo servicio "
+"configurado para generarlo. Esto solo establece el valor por defecto para "
+"los pedidos nuevos; puede anularse en cada pedido."
+
+#. module: sale_project_auto_create
+#: model:ir.model.fields,help:sale_project_auto_create.field_sale_order__auto_create_project
+msgid ""
+"When enabled, confirming this order creates a project linked to it (with its "
+"analytic account) without needing a service product line. It defaults from "
+"the sales team and can be overridden here. It is ignored when the order "
+"already has a project or when a service product already makes Odoo generate "
+"one natively."
+msgstr ""
+"Cuando está activado, al confirmar este pedido se crea un proyecto vinculado "
+"a él (con su cuenta analítica) sin necesidad de una línea de producto de "
+"tipo servicio. Toma su valor por defecto del equipo de ventas y puede "
+"anularse aquí. Se ignora cuando el pedido ya tiene un proyecto o cuando un "
+"producto de tipo servicio ya hace que Odoo genere uno de forma nativa."
+
+#. module: sale_project_auto_create
+#: model_terms:ir.ui.view,arch_db:sale_project_auto_create.crm_team_view_form_auto_create_project
+msgid "Project Automation"
+msgstr "Automatización de proyectos"

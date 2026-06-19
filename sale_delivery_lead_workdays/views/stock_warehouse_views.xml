@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_warehouse_form_delivery_workdays" model="ir.ui.view">
+        <field name="name">stock.warehouse.form.delivery.workdays</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <!-- Keep these in the always-visible top group (the advanced config
+                 notebook below is gated behind multi-warehouse groups). -->
+            <field name="partner_id" position="after">
+                <field name="resource_calendar_id" options="{'no_create': True}"/>
+                <field name="delivery_lead_workdays"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
