@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_product_tree_view_archive_lock" model="ir.ui.view">
+        <field name="name">product.product.list.archive.lock</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="manually_archived" optional="hide"
+                       string="Manually archived"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

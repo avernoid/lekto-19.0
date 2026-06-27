@@ -1,0 +1,82 @@
+# Translation of product_variant_archive_lock to Spanish
+# . module: product_variant_archive_lock
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the product_variant_archive_lock package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module product_variant_archive_lock 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-06-25 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: product_variant_archive_lock
+#: model:ir.model.fields,field_description:product_variant_archive_lock.field_product_template_attribute_value__hide_from_matrix
+msgid "Hide from order grid"
+msgstr "Ocultar de la cuadrícula de pedido"
+
+#. module: product_variant_archive_lock
+#: model:ir.model.fields,field_description:product_variant_archive_lock.field_product_template__variant_archive_lock
+msgid "Keep manually archived variants"
+msgstr "Conservar variantes archivadas manualmente"
+
+#. module: product_variant_archive_lock
+#: model:ir.model.fields,field_description:product_variant_archive_lock.field_product_product__manually_archived
+#: model_terms:ir.ui.view,arch_db:product_variant_archive_lock.product_product_tree_view_archive_lock
+msgid "Manually archived"
+msgstr "Archivada manualmente"
+
+#. module: product_variant_archive_lock
+#: model:ir.model.fields,help:product_variant_archive_lock.field_product_template_attribute_value__hide_from_matrix
+msgid ""
+"If enabled, this attribute value is not shown as a row or column in the Order "
+"Grid (sales matrix) of this product. The variants that use this value keep "
+"all their data, stock and history and remain active: they are only hidden "
+"from the grid, never archived, deleted or recreated by attribute changes, and "
+"the setting is kept even after you edit the product's attributes. Note: it "
+"only hides the value from the grid; the variant can still be sold through the "
+"product configurator or by selecting it directly."
+msgstr ""
+"Si está activo, este valor de atributo no se muestra como fila o columna en "
+"la cuadrícula de pedido (matriz de ventas) de este producto. Las variantes "
+"que usan este valor conservan todos sus datos, stock e historial y siguen "
+"activas: solo se ocultan de la cuadrícula, nunca se archivan, eliminan ni se "
+"vuelven a crear por cambios de atributos, y la configuración se mantiene "
+"aunque edites los atributos del producto. Nota: solo oculta el valor de la "
+"cuadrícula; la variante todavía se puede vender mediante el configurador de "
+"producto o seleccionándola directamente."
+
+#. module: product_variant_archive_lock
+#: model:ir.model.fields,help:product_variant_archive_lock.field_product_product__manually_archived
+msgid ""
+"Technical flag: marks that a user archived this variant on purpose (not "
+"because of an invalid combination). Used to avoid reactivating it when "
+"variants are regenerated while the product has 'Keep manually archived "
+"variants' enabled."
+msgstr ""
+"Marca técnica: indica que un usuario archivó esta variante a propósito (no "
+"por una combinación inválida). Se usa para no reactivarla cuando se "
+"regeneran las variantes mientras el producto tiene activado 'Conservar "
+"variantes archivadas manualmente'."
+
+#. module: product_variant_archive_lock
+#: model:ir.model.fields,help:product_variant_archive_lock.field_product_template__variant_archive_lock
+msgid ""
+"When enabled, variants that were archived by hand on this product are NOT "
+"reactivated automatically when the combinations are regenerated (after "
+"adding or changing attributes or values). Configure it per product."
+msgstr ""
+"Cuando está activo, las variantes que se archivaron a mano en este producto "
+"NO se reactivan automáticamente cuando se regeneran las combinaciones (al "
+"añadir o cambiar atributos o valores). Configúrelo por producto."
+
+#. module: product_variant_archive_lock
+#: model_terms:ir.ui.view,arch_db:product_variant_archive_lock.product_template_form_view_archive_lock
+msgid "Manual Variant Archiving"
+msgstr "Archivado manual de variantes"
