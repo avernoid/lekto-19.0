@@ -1,6 +1,6 @@
 {
     'name': 'Auto Engineering ECO',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.1.1',
     'category': 'Manufacturing/PLM',
     'summary': 'Automatically create a PLM Engineering Change Order (ECO) and a draft BOM when confirming a sale of a made-to-order product.',
     'description': """
@@ -30,6 +30,7 @@ access still trigger it. Any failure is logged without blocking the sale.
     'website': 'https://www.ganemo.co',
     'depends': [
         'sale_management',
+        'sale_stock',
         'mrp',
         'mrp_plm',
     ],

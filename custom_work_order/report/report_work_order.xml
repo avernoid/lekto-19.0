@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         Plantilla principal: contenedor + iteración sobre docs
+         ============================================================ -->
+    <template id="report_work_order">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="custom_work_order.report_work_order_document"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- Plantilla _document: contenido del reporte por picking.
+         Usa div.header / div.footer / div.article para wkhtmltopdf. -->
+    <template id="report_work_order_document">
+        <!-- Variables auxiliares -->
+        <t t-set="company" t-value="doc.company_id"/>
+        <t t-set="partner" t-value="doc.partner_id"/>
+        <t t-set="sale" t-value="doc.sale_id"/>
+        <t t-set="shipping" t-value="sale.partner_shipping_id if sale else partner"/>
+        <t t-set="ot_number" t-value="((sale.name or '') + '-' + (doc.name or '')) if sale else doc.name"/>
+        <!-- PPI (Plan de Puntos de Inspección): toma el perfil de calidad de
+             ENTREGA del pedido si el módulo sale_quality_profile está instalado
+             (campo presente en sale.order). Si no lo está, o no hay perfil, se
+             mantiene "No Aplica". Guard con _fields para NO acoplar este reporte
+             al stack de Calidad Enterprise mediante una dependencia dura. -->
+        <t t-set="ppi" t-value="sale.delivery_quality_profile_id.name if sale and 'delivery_quality_profile_id' in sale._fields and sale.delivery_quality_profile_id else 'No Aplica'"/>
+
+        <!-- =====================================================
+             HEADER wkhtmltopdf — se repite en cada página
+             (Replicado de sale_corporate_quotation)
+             ===================================================== -->
+        <div class="header" style="font-family: Arial, Helvetica, sans-serif;
+                    border: none !important; border-bottom: none !important;">
+            <style>
+                .header, .header * { border: none !important; }
+            </style>
+            <table style="width: 100%; border-collapse: collapse; border: none !important;">
+                <tr>
+                    <!-- Logos: empresa + certificación -->
+                    <td style="width: 60%; vertical-align: middle; border: none !important;">
+                        <img t-if="company.logo"
+                             t-att-src="image_data_uri(company.logo)"
+                             style="max-height: 55px; vertical-align: middle;"
+                             alt="Logo empresa"/>
+                        <img t-if="company.quotation_certification_logo"
+                             t-att-src="image_data_uri(company.quotation_certification_logo)"
+                             style="max-height: 50px; vertical-align: middle; margin-left: 8px;"
+                             alt="Certificación"/>
+                    </td>
+                    <!-- Código de documento fijo + Paginación dinámica -->
+                    <td style="width: 40%; vertical-align: top; text-align: right;
+                               font-size: 12px; border: none !important;">
+                        <div style="font-weight: bold;">PR-VE-FT-012 Rev. 0</div>
+                        <div style="margin-top: 2px;">
+                            Pág. <span class="page"/> de <span class="topage"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- Datos de la empresa (RUC, dirección, teléfono) + bloque OT -->
+            <div style="position: relative; font-size: 12px; margin-top: 2px; line-height: 1.4;">
+                <div><strong>RUC:</strong><t t-out="company.vat or ''"/></div>
+                <div>
+                    <strong>Dirección: </strong>
+                    <t t-out="', '.join(filter(None, [
+                        company.street or '',
+                        company.street2 or '',
+                        company.city or '',
+                    ])) or ''"/>
+                </div>
+                <div>
+                    <strong>Tel: </strong>
+                    <t t-out="company.phone or ''"/>
+                </div>
+                <!-- Bloque No. Orden de Trabajo dentro del header -->
+                <table style="border-collapse: collapse; border: 2px solid #000 !important;
+                              position: absolute; top: -2px; right: 0;">
+                    <tr>
+                        <td style="padding: 4px 10px; font-weight: bold;
+                                   font-size: 13px; white-space: nowrap;
+                                   border: 2px solid #000 !important; text-align: center;">
+                            No. Orden de Trabajo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 10px; font-weight: bold;
+                                   font-size: 13px; white-space: nowrap;
+                                   border: 2px solid #000 !important; text-align: center;">
+                            <t t-out="ot_number"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             FOOTER wkhtmltopdf — se repite en cada página
+             (Replicado de sale_corporate_quotation)
+             ===================================================== -->
+        <div class="footer" style="font-family: Arial, Helvetica, sans-serif;">
+            <div style="border-top: 1px solid #000; padding-top: 6px; text-align: center;">
+                <span style="font-size: 13px; font-weight: bold; font-style: italic; color: #000;">
+                    "Un lugar para cada cosa y cada cosa en su lugar"
+                </span>
+            </div>
+        </div>
+
+        <!-- =====================================================
+             BODY — contenido del documento
+             ===================================================== -->
+        <div class="article" t-att-data-oe-model="doc._name" t-att-data-oe-id="doc.id">
+            <style>
+                /* Bordes forzados para las sub-tablas de fechas (mismo patrón que quotation-code-date-inner) */
+                table.ot-date-inner,
+                table.ot-date-inner td {
+                    border: 2px solid #000 !important;
+                }
+            </style>
+            <div class="page" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #000;">
+
+                <!-- Título ORDEN DE TRABAJO (misma estructura que COTIZACIÓN) -->
+                <div style="text-align: center; margin: 0 0 8px 0;">
+                    <h2 style="font-size: 24px; font-weight: bold; margin: 0; color: #000;">
+                        ORDEN DE TRABAJO
+                    </h2>
+                </div>
+
+                <!-- ========================================
+                     FILA: Fecha de Creación + Fecha Entrega
+                     (misma estructura que Código/Fecha en cotización)
+                     ======================================== -->
+                <div style="width: 100%; margin-bottom: 10px; font-size: 13px; overflow: hidden;">
+                    <!-- Fecha de Creación (izquierda) -->
+                    <div style="float: left;">
+                        <table class="ot-date-inner"
+                               style="border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    Fecha de Creación:
+                                </td>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    <t t-out="doc.create_date" t-options='{"widget": "date"}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- Fecha Entrega Contractual (derecha) -->
+                    <div style="float: right;">
+                        <table class="ot-date-inner"
+                               style="border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    Fecha Entrega Contractual:
+                                </td>
+                                <td style="padding: 4px 8px; font-weight: bold;
+                                           vertical-align: middle; white-space: nowrap;">
+                                    <t t-out="doc.scheduled_date" t-options='{"widget": "date"}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ========================================
+                     BLOQUE DE DATOS GENERALES
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 4px;
+                              border: 2px solid #000; font-size: 13px;">
+                    <colgroup>
+                        <col style="width: 12%;"/>
+                        <col style="width: 38%;"/>
+                        <col style="width: 8%;"/>
+                        <col style="width: 14%;"/>
+                        <col style="width: 8%;"/>
+                        <col style="width: 20%;"/>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Cliente:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;" colspan="5">
+                                <t t-out="partner.commercial_partner_id.name or partner.name or '-'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                RUC:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-out="partner.vat or '-'"/>
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                OC:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-out="sale.customer_purchase_order or '-'" t-if="sale"/>
+                                <t t-else="">-</t>
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                PPI:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-out="ppi"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold;">
+                                Proyecto:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;" colspan="5">
+                                <t t-out="sale.client_order_ref or '-'" t-if="sale"/>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ========================================
+                     PARTE 1 — DESCRIPCIÓN DE LOS PRODUCTOS
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-bottom: 0;
+                              font-size: 14px; font-weight: bold; color: #000;">
+                    <tr>
+                        <td style="padding: 4px 10px; border-right: 2px solid #000; width: 10%; white-space: nowrap;">PARTE 1</td>
+                        <td style="padding: 4px 10px; text-align: center;">DESCRIPCIÓN DE LOS PRODUCTOS</td>
+                    </tr>
+                </table>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 0; margin-bottom: 4px;
+                              border: 2px solid #000; border-top: none; font-size: 13px;">
+                    <colgroup>
+                        <col style="width: 5%;"/>
+                        <col style="width: 48%;"/>
+                        <col style="width: 22%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 15%;"/>
+                    </colgroup>
+                    <thead>
+                        <tr style="font-weight: bold;">
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000;
+                                       padding: 4px 8px; text-align: center !important;
+                                       vertical-align: middle !important;">Ítem</th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000;
+                                       padding: 4px 8px; text-align: center !important;
+                                       vertical-align: middle !important;">Producto / Descripción</th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000;
+                                       padding: 4px 8px; text-align: center !important;
+                                       vertical-align: middle !important;">Ubicación</th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000;
+                                       padding: 4px 8px; text-align: center !important;
+                                       vertical-align: middle !important;">Cnt.</th>
+                            <th style="border: 1px solid #000; border-top: none; border-bottom: 2px solid #000;
+                                       padding: 4px 8px; text-align: center !important;
+                                       vertical-align: middle !important;">Peso (kg)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="item_counter" t-value="0"/>
+                        <t t-set="total_weight" t-value="0.0"/>
+                        <t t-foreach="doc.move_ids" t-as="move">
+                            <t t-if="move.state != 'cancel'">
+                                <t t-set="item_counter" t-value="item_counter + 1"/>
+                                <t t-set="line_weight" t-value="(move.product_id.weight or 0.0) * move.product_uom_qty"/>
+                                <t t-set="total_weight" t-value="total_weight + line_weight"/>
+                                <tr>
+                                    <!-- Ítem -->
+                                    <td style="border: 1px solid #000; padding: 4px 8px;
+                                               text-align: center !important; vertical-align: middle !important;">
+                                        <t t-out="item_counter"/>
+                                    </td>
+                                    <!-- Producto / Descripción -->
+                                    <td style="border: 1px solid #000; padding: 4px 8px;
+                                               vertical-align: middle !important;">
+                                        <strong t-out="move.product_id.display_name"/>
+                                        <t t-set="extra_desc"
+                                           t-value="(move.sale_line_id.name or '').replace(move.product_id.display_name or '', '').strip() if move.sale_line_id else ''"/>
+                                        <t t-if="extra_desc">
+                                            <br/>
+                                            <span style="white-space: pre-wrap;"
+                                                  t-out="extra_desc"/>
+                                        </t>
+                                    </td>
+                                    <!-- Ubicación -->
+                                    <td style="border: 1px solid #000; padding: 4px 8px;
+                                               text-align: center !important; vertical-align: middle !important;">
+                                        <t t-if="move.move_line_ids">
+                                            <!-- Producto reservado: mostrar ubicaciones específicas -->
+                                            <t t-set="loc_names" t-value="', '.join(move.move_line_ids.mapped('location_id.complete_name'))"/>
+                                            <t t-out="loc_names"/>
+                                        </t>
+                                        <t t-elif="move.move_orig_ids and any(m.location_id.usage == 'production' for m in move.move_orig_ids)">
+                                            <span style="font-style: italic; color: #555;">Fabricación</span>
+                                        </t>
+                                        <t t-elif="move.move_orig_ids and any(m.location_id.usage == 'supplier' for m in move.move_orig_ids)">
+                                            <span style="font-style: italic; color: #555;">Compra</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span style="font-style: italic; color: #555;">Pendiente</span>
+                                        </t>
+                                    </td>
+                                    <!-- Cnt. -->
+                                    <td style="border: 1px solid #000; padding: 4px 8px;
+                                               text-align: center !important; vertical-align: middle !important;">
+                                        <t t-out="move.product_uom_qty"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                    </td>
+                                    <!-- Peso (kg) -->
+                                    <td style="border: 1px solid #000; padding: 4px 8px;
+                                               text-align: center !important; vertical-align: middle !important;">
+                                        <t t-out="line_weight"
+                                           t-options='{"widget": "float", "precision": 2}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                        <!-- Fila resumen: Peso total OT -->
+                        <tr style="font-weight: bold;">
+                            <td colspan="3" style="border: 1px solid #000; padding: 4px 8px;
+                                                   border-bottom: 2px solid #000;">
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;
+                                       text-align: center !important; vertical-align: middle !important;
+                                       border-bottom: 2px solid #000; white-space: nowrap;">
+                                Peso total OT:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;
+                                       text-align: center !important; vertical-align: middle !important;
+                                       border-bottom: 2px solid #000;">
+                                <t t-out="total_weight"
+                                   t-options='{"widget": "float", "precision": 2}'/> kg
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ========================================
+                     PARTE 2 — OBSERVACIONES
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-top: 4px; margin-bottom: 0;
+                              font-size: 14px; font-weight: bold; color: #000;">
+                    <tr>
+                        <td style="padding: 4px 10px; border-right: 2px solid #000; width: 10%; white-space: nowrap;">PARTE 2</td>
+                        <td style="padding: 4px 10px; text-align: center;">OBSERVACIONES</td>
+                    </tr>
+                </table>
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000;
+                              border-top: none; margin-bottom: 0; font-size: 13px;">
+                    <tbody>
+                        <tr>
+                            <td style="border: none; padding: 4px 8px;">
+                                <t t-if="sale and sale.work_order_observations">
+                                    <span style="white-space: pre-wrap;"
+                                          t-out="sale.work_order_observations"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- ========================================
+                     PARTE 3 — DETALLES DEL ENVÍO
+                     ======================================== -->
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000; margin-top: 4px; margin-bottom: 0;
+                              font-size: 14px; font-weight: bold; color: #000;">
+                    <tr>
+                        <td style="padding: 4px 10px; border-right: 2px solid #000; width: 10%; white-space: nowrap;">PARTE 3</td>
+                        <td style="padding: 4px 10px; text-align: center;">DETALLES DEL ENVÍO</td>
+                    </tr>
+                </table>
+                <table style="width: 100%; border-collapse: collapse; border: 2px solid #000;
+                              border-top: none; margin-bottom: 0; font-size: 13px;">
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #000; border-top: none; padding: 4px 8px; font-weight: bold; white-space: nowrap; width: 1%;">
+                                Lugar de Entrega:
+                            </td>
+                            <td style="border: 1px solid #000; border-top: none; padding: 4px 8px;">
+                                <t t-out="shipping.street or '-'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold; white-space: nowrap; width: 1%;">
+                                Dirección:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-out="shipping.street2 or '-'"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold; white-space: nowrap; width: 1%;">
+                                Información del Contacto:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-if="shipping.delivery_contact_name or shipping.phone">
+                                    <t t-if="shipping.delivery_contact_name">
+                                        <strong>Nombre: </strong><t t-out="shipping.delivery_contact_name"/>
+                                    </t>
+                                    <t t-if="shipping.delivery_contact_name and shipping.phone"> — </t>
+                                    <t t-if="shipping.phone">
+                                        <strong>Teléfono: </strong><t t-out="shipping.phone"/>
+                                    </t>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 4px 8px; font-weight: bold; white-space: nowrap; width: 1%;">
+                                Notas:
+                            </td>
+                            <td style="border: 1px solid #000; padding: 4px 8px;">
+                                <t t-if="shipping.comment">
+                                    <span style="white-space: pre-wrap;"
+                                          t-out="shipping.comment"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div><!-- /.page -->
+        </div><!-- /.article -->
+    </template>
+
+</odoo>

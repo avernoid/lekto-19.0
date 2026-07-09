@@ -115,6 +115,15 @@
                 table.quotation-code-date-inner td {
                     border: 2px solid #000 !important;
                 }
+                /* Forma de Pago: la nota HTML del término de pago se renderiza
+                   envuelta en un parrafo (bloque) y saltaba de linea. La forzamos
+                   a quedarse en la MISMA fila que la etiqueta "Forma de Pago:". */
+                .pay-term-inline,
+                .pay-term-inline * {
+                    display: inline !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                }
                 /* Payment block: forzar tablas a respetar ancho de página */
                 .quotation-payment-block table,
                 .quotation-payment-block table.table,
@@ -379,14 +388,21 @@
                                         <t t-out="item_counter"/>
                                     </td>
                                     <td style="border: 1px solid #000; padding: 4px 8px; vertical-align: middle !important;">
-                                        <!-- Producto y Descripción apilados en la misma celda -->
+                                        <!-- Producto (negrita) + descripción apilados.
+                                             'line.name' YA incluye el display_name del
+                                             producto (get_product_multiline_description_sale).
+                                             Replicamos lo que hace el widget 'sol_text' en el
+                                             formulario: quitar el nombre del producto de la
+                                             descripción para no imprimirlo dos veces. -->
                                         <strong t-if="line.product_id">
                                             <t t-out="line.product_id.display_name"/>
                                         </strong>
-                                        <t t-if="line.name">
+                                        <t t-set="extra_desc"
+                                           t-value="(line.name or '').replace(line.product_id.display_name or '', '').strip() if line.product_id else (line.name or '')"/>
+                                        <t t-if="extra_desc">
                                             <br/>
                                             <span style="white-space: pre-wrap;"
-                                                  t-out="line.name"/>
+                                                  t-out="extra_desc"/>
                                         </t>
                                     </td>
                                     <td style="border: 1px solid #000; padding: 4px 8px; text-align: center !important; vertical-align: middle !important;">
@@ -461,7 +477,16 @@
                                 <td style="border-bottom: 1px solid #000; padding: 4px 8px;"
                                     colspan="4">
                                     <strong>Forma de Pago: </strong>
-                                    <span t-out="doc.payment_term_id.name"/>
+                                    <!-- 'note' (Descripción en la factura) es el campo
+                                         pensado para mostrarse al cliente; cae al 'name'
+                                         interno solo si no se ha redactado la nota. -->
+                                    <t t-if="doc.payment_term_id.note">
+                                        <span class="pay-term-inline"
+                                              t-field="doc.payment_term_id.note"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-out="doc.payment_term_id.name"/>
+                                    </t>
                                 </td>
                             </tr>
                         </t>

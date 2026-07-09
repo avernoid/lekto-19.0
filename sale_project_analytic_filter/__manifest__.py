@@ -1,6 +1,6 @@
 {
     "name": "Sale Project Analytic Filter",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.1.0",
     "category": "Accounting/Accounting",
     "summary": """Keep the analytic distribution off the stock valuation line """
     """of the COGS entry, so the two COGS lines do not cancel out.""",

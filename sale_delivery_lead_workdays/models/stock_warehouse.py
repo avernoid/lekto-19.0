@@ -17,7 +17,7 @@ class StockWarehouse(models.Model):
         "done and the order's value is written to the lines as plain days.",
     )
     delivery_lead_workdays = fields.Integer(
-        string="Default Delivery Lead Time (Working Days)",
+        string="Default lead time (workdays)",
         help="Default number of working days proposed on new sales orders "
         "shipping from this warehouse. It only sets the default; it can be "
         "overridden on each order.",

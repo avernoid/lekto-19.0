@@ -1,6 +1,6 @@
 {
     "name": "Corporate Sales Quotation PDF",
-    "version": "19.0.1.0.1",
+    "version": "19.0.1.0.3",
     "category": "Sales",
     "summary": "Print sales quotations with a configurable corporate PDF layout: "
     "logos, certification seal, document code, payment block and delivery time.",

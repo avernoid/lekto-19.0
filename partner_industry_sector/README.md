@@ -15,10 +15,13 @@ Out of the box, Odoo has no dedicated, company-controlled "industry sector" fiel
 contacts. **Partner Industry Sector** fills that gap by adding:
 
 - A centralized **Industry Sector** catalog (model `industry.sector`).
-- A **Sector / Rubro** field on contacts (`res.partner.industry_sector_id`), shown for
-  customers only.
+- A **Sector / Rubro** field on every contact (`res.partner.industry_sector_id`) —
+  companies and their contacts alike. On a contact it is pre-filled from the parent
+  company on creation, yet can be changed independently.
+- A **"Set Industry Sector from parent company"** mass action to realign selected
+  contacts with their company's sector in one click.
 - A **search filter** and a **Group By** option on the Contacts list, so you can analyze
-  your customers by industry instantly.
+  your contacts by industry instantly.
 
 Because every sector comes from the same catalog (with a unique-name rule), your data
 stays clean and your reports stay comparable across the whole company.
@@ -30,8 +33,9 @@ stays clean and your reports stay comparable across the whole company.
 | Feature | Description |
 |---|---|
 | **Sector catalog** | Manage the list of industry sectors from one place. Names are unique and translatable; sectors can be archived instead of deleted. |
-| **Contact classification** | A `Sector / Rubro` field on the contact form lets you assign an industry to each customer. |
-| **Customer-only field** | The field is shown only when the contact is a customer (its *Customer rank* is greater than zero), keeping vendor and other forms clean. |
+| **Contact classification** | A `Sector / Rubro` field on the contact form lets you assign an industry to any contact — companies and individuals alike. |
+| **Inherit from the company** | New contacts are pre-filled with their parent company's sector on creation (imports included), but you can override the value per contact. |
+| **Bulk realign** | A *Set Industry Sector from parent company* mass action on the Contacts list overwrites the selected contacts' sector with their company's. |
 | **Filter & Group By** | Filter contacts by sector and group the Contacts list by `Sector / Rubro` for fast segmentation. |
 | **Demo data** | 18 common industry sectors are preloaded as demo data to get you started. |
 | **Multi-language** | English source with Spanish translation included (`es`). |
@@ -69,14 +73,15 @@ The module is ready to use right after installation. To curate your own sector l
 
 ## Usage
 
-### 1. Classify a customer
+### 1. Classify a contact
 
-1. Open any **customer** contact (a contact whose *Customer rank* is greater than zero —
-   e.g. it has a sales order or is flagged as a customer).
+1. Open any contact — a company or an individual.
 2. Set the **Sector / Rubro** field on the contact form and save.
 
-> The field is intentionally hidden on non-customer contacts (pure vendors, internal
-> addresses, etc.) to keep their forms uncluttered.
+> When you set a contact's parent company, the sector is pre-filled from that company
+> automatically (on creation and on import). You can change it afterwards, or use the
+> **Set Industry Sector from parent company** mass action to realign several contacts at
+> once.
 
 ### 2. Segment your contacts
 
@@ -103,7 +108,11 @@ catalog itself.
 
 - **New model:** `industry.sector` — fields `name` (unique, translatable) and `active`.
 - **Inherited model:** `res.partner` — adds `industry_sector_id` (Many2one to
-  `industry.sector`).
+  `industry.sector`), pre-filled from `parent_id` via an `onchange` and on `create`
+  (so imports inherit it too).
+- **Server action:** *Set Industry Sector from parent company*
+  (`action_inherit_industry_from_parent`) — a list-view mass action that copies the
+  parent company's sector onto the selected contacts.
 - **Views:** editable list + form for the catalog; the partner form and search views are
   extended to add the field, filter and Group By.
 - **Menu:** *Sales → Configuration → Industry Sectors*.

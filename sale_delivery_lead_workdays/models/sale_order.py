@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     delivery_lead_workdays = fields.Integer(
-        string="Delivery Lead Time (Working Days)",
+        string="Lead time (workdays)",
         compute="_compute_delivery_lead_workdays",
         store=True,
         readonly=False,

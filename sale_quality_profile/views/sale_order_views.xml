@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_view_form_quality_profile" model="ir.ui.view">
+        <field name="name">sale.order.form.quality.profile</field>
+        <field name="model">sale.order</field>
+        <!-- Hereda de la vista de sale_stock para garantizar que warehouse_id
+             ya esté en el arch cuando anclamos. -->
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <!-- Se ancla en la zona superior de datos (junto a Payment Terms),
+                 no en el bloque "Delivery" del Other Info: el módulo es opt-in y
+                 el perfil se decide antes de confirmar, así que va visible arriba.
+                 payment_term_id existe en la vista base heredada por sale_stock. -->
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <!-- Un solo label con los dos perfiles en fila (patron nativo
+                     tipo rango de fechas). Iconos Font Awesome PERSISTENTES
+                     (camion = entrega, fabrica = manufactura) para distinguir
+                     los campos aunque esten llenos; el placeholder refuerza
+                     cuando estan vacios. El nombre tecnico y el help NO cambian:
+                     solo el label visible. -->
+                <label string="Quality profile" for="delivery_quality_profile_id"/>
+                <div class="o_row">
+                    <i class="fa fa-truck text-muted" title="Delivery"
+                       role="img" aria-label="Delivery"/>
+                    <field name="delivery_quality_profile_id" nolabel="1"
+                           placeholder="Delivery"/>
+                    <i class="fa fa-industry text-muted ms-2" title="Manufacturing"
+                       role="img" aria-label="Manufacturing"/>
+                    <field name="manufacturing_quality_profile_id" nolabel="1"
+                           placeholder="Manufacturing"/>
+                </div>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="action_regenerate_quality_checks" type="object"
+                        string="Regenerate Quality Checks"
+                        groups="quality.group_quality_user"
+                        invisible="state != 'sale' or (not delivery_quality_profile_id and not manufacturing_quality_profile_id)"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

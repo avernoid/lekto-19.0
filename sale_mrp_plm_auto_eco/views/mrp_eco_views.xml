@@ -11,6 +11,47 @@
             <xpath expr="//field[@name='tag_ids']" position="after">
                 <field name="sale_order_name"/>
             </xpath>
+            <!-- Botón manual: crear la Orden de Manufactura para la venta.
+                 Visible cuando hay venta de origen y aún no se generó la MO. -->
+            <xpath expr="//header/button[@name='action_apply']" position="after">
+                <field name="stage_is_final" invisible="1"/>
+                <!-- Solo en etapas marcadas 'Final Stage', con venta de origen y
+                     sin MO ya generada. -->
+                <button string="Create Manufacturing Order"
+                        name="action_create_sale_manufacturing_order" type="object"
+                        invisible="not sale_id or generated_production_id or not stage_is_final"/>
+            </xpath>
+            <!-- Smart button hacia la MO generada por este ECO. -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="generated_production_id" invisible="1"/>
+                <button string="Manufacturing" class="oe_stat_button" icon="fa-wrench"
+                        name="action_open_generated_production" type="object"
+                        invisible="not generated_production_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Config: gate por Tipo de ECO -->
+    <record id="mrp_eco_type_view_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.eco.type.view.form.inherit.auto.eco</field>
+        <field name="model">mrp.eco.type</field>
+        <field name="inherit_id" ref="mrp_plm.mrp_eco_type_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="auto_create_mo"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Config: qué etapa dispara la creación de la MO -->
+    <record id="mrp_eco_stage_view_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.eco.stage.view.form.inherit.auto.eco</field>
+        <field name="model">mrp.eco.stage</field>
+        <field name="inherit_id" ref="mrp_plm.mrp_eco_stage_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='final_stage']" position="after">
+                <field name="triggers_mo_creation"/>
+            </xpath>
         </field>
     </record>
 </odoo>

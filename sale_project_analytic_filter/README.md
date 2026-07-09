@@ -25,8 +25,10 @@ This bridge module reimposes the right invariant: the **stock valuation line
 (the inventory counterpart) never carries analytic**, while its counterpart — the
 COGS **expense** line — does.
 
-- After the standard computation runs, any COGS line booked on the product's
-  stock valuation account has its analytic distribution **cleared**.
+- While the COGS journal items are prepared, any line booked on the product's
+  stock valuation account has its analytic distribution **cleared** before it
+  is created (the analytic is set directly in the create vals, so a compute
+  override alone would never fire).
 - The COGS **expense** line keeps the distribution, so the project sees the cost
   **once**.
 - This is the **same account criterion** the inventory valuation entry uses

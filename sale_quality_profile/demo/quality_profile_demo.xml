@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Genera un conjunto de registros interrelacionados y escribe en el
+         chatter de cada uno una explicación didáctica (con enlaces cruzados)
+         para que la data demo funcione como un "libro de aprendizaje" del
+         módulo. Toda la lógica vive en quality.profile._load_learning_demo,
+         para resolver en runtime los tipos de operación del almacén y ejecutar
+         los flujos reales (confirmación de pedidos y MOs). -->
+    <function model="quality.profile" name="_load_learning_demo"/>
+</odoo>

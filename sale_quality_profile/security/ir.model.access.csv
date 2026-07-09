@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_quality_profile_quality_user,quality.profile quality user,model_quality_profile,quality.group_quality_user,1,0,0,0
+access_quality_profile_sale_user,quality.profile sale user,model_quality_profile,sales_team.group_sale_salesman,1,0,0,0
+access_quality_profile_quality_manager,quality.profile quality manager,model_quality_profile,quality.group_quality_manager,1,1,1,1

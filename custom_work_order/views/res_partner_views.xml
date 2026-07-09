@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Field on the main partner form (Notes tab) -->
+    <record id="res_partner_view_form_delivery_contact" model="ir.ui.view">
+        <field name="name">res.partner.form.delivery.contact.name</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']//field[@name='comment']"
+                   position="before">
+                <field name="delivery_contact_name"
+                       placeholder="Name of who picks up/receives..."
+                       invisible="type != 'delivery'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Field on the child-contact inline form (popup inside Contacts tab) -->
+    <record id="res_partner_view_form_delivery_contact_inline" model="ir.ui.view">
+        <field name="name">res.partner.form.delivery.contact.name.inline</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='child_ids']//form//field[@name='email']/.."
+                   position="before">
+                <div class="d-flex align-items-baseline"
+                     invisible="type != 'delivery'">
+                    <i class="fa fa-fw me-1 fa-user text-primary"
+                       title="Delivery Contact"/>
+                    <field name="delivery_contact_name"
+                           class="w-100"
+                           placeholder="Name of who picks up/receives..."/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

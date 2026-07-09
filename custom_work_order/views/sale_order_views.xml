@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Fields work_order_observations, customer_purchase_order are added
+         to the sale.order form by the sale_custom_fields module.
+         This file is kept for future view extensions specific to the
+         Work Order workflow. -->
+
+</odoo>

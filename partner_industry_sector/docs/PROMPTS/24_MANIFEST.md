@@ -1,2 +1,0 @@
-En el nuevo módulo debes revisa su Manifest para que te asegures que contiene todos los valores de la plantilla de manifest `__manifest__.py`, que debe ser una copia de `custom/addons/my_custom_module_template/__manifest__.py`
-* A propósito, el icon y el banner son .png, porque si bien tu has creado archivos .svg, yo los he convertido o los convertiré en .png. Por lo tanto déja en el manifest la extensión .png

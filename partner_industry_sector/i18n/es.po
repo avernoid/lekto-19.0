@@ -42,8 +42,8 @@ msgstr "Desmarque para archivar: se mantiene en los contactos existentes pero ya
 
 #. module: partner_industry_sector
 #: model:ir.model.fields,help:partner_industry_sector.field_res_partner__industry_sector_id
-msgid "Sector this customer belongs to. Lets you filter and group contacts by industry. Shown for customers only."
-msgstr "Sector al que pertenece este cliente. Permite filtrar y agrupar contactos por industria. Solo se muestra para clientes."
+msgid "Sector this contact belongs to. On a child contact it is pre-filled from the parent company on creation, but can be changed independently afterwards. Lets you filter and group contacts by industry."
+msgstr "Sector al que pertenece este contacto. En un contacto hijo se rellena automáticamente desde la empresa matriz al crearlo, pero puede cambiarse de forma independiente después. Permite filtrar y agrupar contactos por industria."
 
 # ── Constraint ───────────────────────────────────────────────────────────
 #. module: partner_industry_sector
@@ -62,6 +62,11 @@ msgstr "Sectores Industriales"
 #: model:ir.actions.act_window,help:partner_industry_sector.industry_sector_action
 msgid "Create your first industry sector"
 msgstr "Cree su primer sector industrial"
+
+#. module: partner_industry_sector
+#: model:ir.actions.server,name:partner_industry_sector.action_inherit_industry_from_parent
+msgid "Set Industry Sector from parent company"
+msgstr "Asignar Sector / Rubro desde la empresa matriz"
 
 # ── Sector catalog (demo records, translatable name) ─────────────────────
 #. module: partner_industry_sector

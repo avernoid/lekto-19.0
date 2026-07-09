@@ -122,6 +122,94 @@ class TestCogsAnalyticFilter(AccountTestInvoicingCommon):
             "Non-COGS lines must never be touched by this module.",
         )
 
+    def _buggy_cogs_vals(self):
+        """A COGS vals_list as the *affected* Odoo 19 builds produce it: the
+        analytic distribution is stamped on BOTH the stock valuation line and
+        the expense line (the two then cancel out in the analytic ledger).
+
+        This is the real production input. The local Docker image may run a
+        different 19.0 build that already leaves the valuation line clean, so
+        we feed the buggy shape explicitly instead of relying on the local
+        upstream output -- otherwise the test would pass vacuously and never
+        catch the regression (the very gap the project rules warn about).
+        """
+        common = {
+            "move_id": self.invoice.id,
+            "display_type": "cogs",
+            "product_id": self.product_a.id,
+        }
+        return [
+            dict(common, account_id=self.valuation_account.id,
+                 analytic_distribution=dict(self.distribution)),
+            dict(common, account_id=self.pnl_account.id,
+                 analytic_distribution=dict(self.distribution)),
+        ]
+
+    def test_cogs_vals_strip_clears_only_valuation(self):
+        """The vals-level override (the real production fix) must clear the
+        analytic on the stock valuation line and keep it on the expense line,
+        even when upstream stamped both."""
+        # product_a's valuation account must resolve to cls.valuation_account.
+        self.product_a.is_storable = True
+        self.product_a.property_account_expense_id = self.pnl_account
+
+        vals_list = self.invoice._strip_cogs_valuation_analytic(
+            self._buggy_cogs_vals()
+        )
+        by_account = {v["account_id"]: v for v in vals_list}
+        self.assertFalse(
+            by_account[self.valuation_account.id].get("analytic_distribution"),
+            "The valuation COGS line vals must have analytic cleared.",
+        )
+        self.assertEqual(
+            by_account[self.pnl_account.id].get("analytic_distribution"),
+            self.distribution,
+            "The expense COGS line vals must keep the analytic distribution.",
+        )
+
+    def test_cogs_vals_strip_disabled_is_noop(self):
+        """With the per-company switch off, even the buggy both-lines input is
+        left untouched."""
+        self.company.cogs_analytic_exclude_valuation = False
+        self.product_a.is_storable = True
+        self.product_a.property_account_expense_id = self.pnl_account
+
+        vals_list = self.invoice._strip_cogs_valuation_analytic(
+            self._buggy_cogs_vals()
+        )
+        by_account = {v["account_id"]: v for v in vals_list}
+        self.assertEqual(
+            by_account[self.valuation_account.id].get("analytic_distribution"),
+            self.distribution,
+            "Disabled: the valuation line must keep its analytic distribution.",
+        )
+        self.assertEqual(
+            by_account[self.pnl_account.id].get("analytic_distribution"),
+            self.distribution,
+            "Disabled: the expense line must keep its analytic distribution.",
+        )
+
+    def test_realtime_cogs_preparation_runs_clean(self):
+        """End-to-end smoke of the real upstream method on this build: it must
+        run without error and never leave the valuation line carrying analytic
+        (whether the build stamped it -- then we strip it -- or not)."""
+        self.product_a.is_storable = True
+        self.product_a.categ_id.property_valuation = "real_time"
+        self.product_a.categ_id.property_cost_method = "standard"
+        self.product_a.standard_price = 100.0
+        self.product_a.property_account_expense_id = self.pnl_account
+        self.invoice.invoice_line_ids.analytic_distribution = self.distribution
+
+        vals_list = self.invoice._stock_account_prepare_realtime_out_lines_vals()
+        self.assertTrue(vals_list, "Upstream must produce COGS vals to test.")
+        by_account = {v["account_id"]: v for v in vals_list}
+        self.assertFalse(
+            by_account.get(self.valuation_account.id, {}).get(
+                "analytic_distribution"
+            ),
+            "The valuation COGS line must never end up carrying analytic.",
+        )
+
     def test_integration_project_context_strips_only_valuation(self):
         """End-to-end of the real trigger: with a project in the context,
         ``sale_project`` stamps the project's analytic distribution on the

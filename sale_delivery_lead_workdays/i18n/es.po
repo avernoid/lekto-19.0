@@ -23,13 +23,13 @@ msgstr "Calendario laboral de entrega"
 
 #. module: sale_delivery_lead_workdays
 #: model:ir.model.fields,field_description:sale_delivery_lead_workdays.field_stock_warehouse__delivery_lead_workdays
-msgid "Default Delivery Lead Time (Working Days)"
-msgstr "Plazo de entrega por defecto (días hábiles)"
+msgid "Default lead time (workdays)"
+msgstr "Plazo por defecto (días hábiles)"
 
 #. module: sale_delivery_lead_workdays
 #: model:ir.model.fields,field_description:sale_delivery_lead_workdays.field_sale_order__delivery_lead_workdays
-msgid "Delivery Lead Time (Working Days)"
-msgstr "Plazo de entrega (días hábiles)"
+msgid "Lead time (workdays)"
+msgstr "Plazo (días hábiles)"
 
 #. module: sale_delivery_lead_workdays
 #: model:ir.model.fields,help:sale_delivery_lead_workdays.field_stock_warehouse__resource_calendar_id

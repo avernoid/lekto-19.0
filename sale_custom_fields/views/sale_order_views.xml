@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         Sale order / quotation FORM – custom fields
+         ============================================================ -->
+    <record id="view_order_form_custom_fields" model="ir.ui.view">
+        <field name="name">sale.order.form.custom.fields</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Custom fields live in the "Other Info" tab, next to
+                 client_order_ref, so they don't clutter the main header.
+                 sale_description is still surfaced as an optional column in
+                 the quotation list view (defined below), independently of
+                 its position here. Companies that want any of these up top
+                 can move them with Odoo Studio. -->
+            <xpath expr="//field[@name='client_order_ref']" position="after">
+                <field name="sale_description"
+                       placeholder="Short summary of the quotation..."/>
+                <field name="customer_purchase_order"
+                       placeholder="Customer PO number"/>
+                <field name="work_order_observations"
+                       placeholder="Notes for the Work Order report..."/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ============================================================
+         Sale order / quotation TREE – sale_description visible
+         ============================================================ -->
+    <record id="view_order_tree_custom_fields" model="ir.ui.view">
+        <field name="name">sale.order.tree.custom.fields</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="sale_description" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sale_order_tree_custom_fields" model="ir.ui.view">
+        <field name="name">sale.order.tree.sale.custom.fields</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="sale_description" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

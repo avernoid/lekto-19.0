@@ -1,0 +1,62 @@
+# Translation of sale_custom_fields to Spanish
+# . module: sale_custom_fields
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the sale_custom_fields package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module sale_custom_fields 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-06-28 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_custom_fields
+#: model:ir.model.fields,field_description:sale_custom_fields.field_sale_order__customer_purchase_order
+msgid "Customer Purchase Order"
+msgstr "Orden de Compra del Cliente"
+
+#. module: sale_custom_fields
+#: model:ir.model.fields,field_description:sale_custom_fields.field_sale_order__sale_description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: sale_custom_fields
+#: model:ir.model.fields,field_description:sale_custom_fields.field_sale_order__work_order_observations
+msgid "Work Order Observations"
+msgstr "Observaciones de la Orden de Trabajo"
+
+#. module: sale_custom_fields
+#: model:ir.model.fields,help:sale_custom_fields.field_sale_order__sale_description
+msgid "Short summary of the quotation. It is shown as an optional column in the Quotations and Sales Orders list views so you can identify at a glance what each order is about, without opening it. Purely informational: it does not affect pricing, taxes or the order flow."
+msgstr "Resumen breve de la cotización. Se muestra como columna opcional en las vistas de lista de Cotizaciones y Pedidos de Venta para que puedas identificar de un vistazo de qué trata cada pedido, sin abrirlo. Es puramente informativo: no afecta los precios, los impuestos ni el flujo del pedido."
+
+#. module: sale_custom_fields
+#: model:ir.model.fields,help:sale_custom_fields.field_sale_order__customer_purchase_order
+msgid "The customer's purchase-order (PO) number for this sale, when applicable. Record it once the customer confirms so the commercial reference stays attached to the order for invoicing and follow-up. It is stored for reference only."
+msgstr "Número de la orden de compra (OC) del cliente para esta venta, cuando aplique. Regístralo una vez que el cliente confirme para que la referencia comercial quede asociada al pedido para la facturación y el seguimiento. Se almacena solo como referencia."
+
+#. module: sale_custom_fields
+#: model:ir.model.fields,help:sale_custom_fields.field_sale_order__work_order_observations
+msgid "Free-text notes for the operations team. This field is intended to be printed in the 'Observations' section of the Work Order report (Orden de Trabajo). Use it for shop-floor instructions or any remark the production team should see."
+msgstr "Notas de texto libre para el equipo de operaciones. Este campo está pensado para imprimirse en la sección 'Observaciones' del reporte de Orden de Trabajo. Úsalo para instrucciones de taller o cualquier observación que el equipo de producción deba ver."
+
+#. module: sale_custom_fields
+#: model_terms:ir.ui.view,arch_db:sale_custom_fields.view_order_form_custom_fields
+msgid "Short summary of the quotation..."
+msgstr "Resumen breve de la cotización..."
+
+#. module: sale_custom_fields
+#: model_terms:ir.ui.view,arch_db:sale_custom_fields.view_order_form_custom_fields
+msgid "Customer PO number"
+msgstr "Nro. de OC del cliente"
+
+#. module: sale_custom_fields
+#: model_terms:ir.ui.view,arch_db:sale_custom_fields.view_order_form_custom_fields
+msgid "Notes for the Work Order report..."
+msgstr "Notas para el reporte de Orden de Trabajo..."

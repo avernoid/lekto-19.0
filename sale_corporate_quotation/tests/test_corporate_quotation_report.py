@@ -266,6 +266,73 @@ class TestCorporateQuotationReport(SaleCommon):
         )
 
     # ------------------------------------------------------------------
+    # 5b. Forma de Pago: usa 'note' (Descripción en la factura) con
+    #     fallback al 'name' interno del término de pago
+    # ------------------------------------------------------------------
+
+    def test_19_payment_term_renders_note(self):
+        """Con 'note' redactada, el PDF muestra la nota, no el name interno."""
+        term = self.env["account.payment.term"].create({
+            "name": "PT-INTERNO-50-50",
+            "note": "<p>50% adelanto, 50% contra entrega</p>",
+        })
+        self.quotation.payment_term_id = term
+        html = self._render_html(self.quotation)
+        self.assertIn("50% adelanto, 50% contra entrega", html,
+                      "El reporte no muestra la nota del término de pago")
+        self.assertNotIn("PT-INTERNO-50-50", html,
+                         "El reporte muestra el name interno en vez de la nota")
+        # La nota se renderiza con la clase inline para no saltar de línea
+        # respecto a la etiqueta "Forma de Pago:".
+        self.assertIn("pay-term-inline", html,
+                      "Falta la clase inline; la nota saltaría de línea")
+
+    def test_20_payment_term_falls_back_to_name(self):
+        """Sin 'note', el PDF cae al name interno del término de pago."""
+        term = self.env["account.payment.term"].create({
+            "name": "Contado",
+            "note": False,
+        })
+        self.quotation.payment_term_id = term
+        html = self._render_html(self.quotation)
+        self.assertIn("Contado", html,
+                      "El reporte no cae al name cuando la nota está vacía")
+
+    # ------------------------------------------------------------------
+    # 5c. Descripción de línea: nombre del producto sin duplicar
+    # ------------------------------------------------------------------
+
+    def test_22_product_name_not_duplicated_in_line(self):
+        """El nombre del producto debe aparecer una sola vez por línea.
+
+        'line.name' ya incluye el display_name del producto; el reporte debe
+        replicar el widget del formulario y NO imprimirlo dos veces (una en
+        negrita + otra dentro de la descripción).
+        """
+        product = self.env["product.product"].create({
+            "name": "Casco de Seguridad XYZ",
+            "description_sale": "Norma ANSI Z89.1 - Clase E",
+        })
+        order = self.env["sale.order"].create({
+            "partner_id": self.partner.id,
+            "order_line": [
+                Command.create({
+                    "product_id": product.id,
+                    "product_uom_qty": 1.0,
+                }),
+            ],
+        })
+        html = self._render_html(order)
+        # El nombre del producto aparece exactamente una vez (solo en negrita).
+        self.assertEqual(
+            html.count("Casco de Seguridad XYZ"), 1,
+            "El nombre del producto se imprime más de una vez en la línea",
+        )
+        # La descripción de ventas sí debe seguir apareciendo.
+        self.assertIn("Norma ANSI Z89.1 - Clase E", html,
+                      "La descripción de ventas no aparece en la línea")
+
+    # ------------------------------------------------------------------
     # 6. Reporte nativo intacto
     # ------------------------------------------------------------------
 

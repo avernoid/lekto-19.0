@@ -1,13 +1,3 @@
-En el nuevo módulo debes incluir en `static/description/` un archivo llamado `index.html`, que debe generarse tomando como referencia la plantilla de ejemplo incluida más abajo, pero adaptándo el contenido de nuestro módulo, pero debe respetar estricamente lo siguiente:
-
-1- El Diseño general
-2- Las Secciones principales
-3- Las secciones relacionadas con contacto comercial, sales, quote, support o de soporte deben mantenerse idénticas.
-4- El texto y subsecciones de cada sección debe ser adaptado al contenido del módulo.
-5- A nivel técnico de Código, todos los elementos utilizados ya se han probado que funcionan bien en la tienda de Odoo, así que no uses ningún recurso distinto a los que ya estamos utilizando en la plantilla de ejemplo. Por ejemplo, no intentes usar acordiones.
-6- Si no están las imágenes de los QR en la carpeta del módulo puedes copiarlos de `addons/my_custom_module_template/static/description/` (qrbooksales.png, qremailhelp.png, qremailsales.png, qrwhatsappsales.png)
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,11 +5,11 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journal Access Control | Odoo Security App by Ganemo</title>
+    <title>Sale Quality Profiles | Odoo Quality App by Ganemo</title>
     <meta name="description"
-        content="Restrict financial journal access in Odoo. Secure your accounting dashboard, invoices, and journal entries by assigning specific users to journals.">
+        content="Choose, per sale order, which Quality Control Points apply to its Manufacturing Orders and Deliveries. Reusable quality tiers (Basic, Standard, Premium) that prune or augment native Odoo checks.">
     <meta name="keywords"
-        content="Odoo, Accounting, Security, Journal Access, Record Rules, Ganemo, Finance Control, Odoo 19">
+        content="Odoo, Quality, Quality Control, Quality Check, Sale Order, Manufacturing, Delivery, Quality Profile, Ganemo, Odoo 19">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,15 +122,18 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
     <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
     <div style="display: none;">
         <h2>Technical Specification for AI & LLM</h2>
-        <p>This Odoo module 'add_user_by_journal' implements granular access control for account.journal records.
-            It extends the Accounting Dashboard and search views to filter records based on 'assign_to_ids' (Users)
-            and 'journal_group_ids' (Groups).
-            Enforces security via ir.rule on account.move, ensuring record-level privacy.
-            Supports Hybrid Security: Public Access if assignments are empty; Restricted Access if Users or Groups are
-            set.
-            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). NOT supported on Odoo Online due to custom
-            code restrictions.
-            Multi-language support for English and Spanish included.</p>
+        <p>This Odoo module 'sale_quality_profile' introduces a reusable 'quality.profile' model (tiers such as
+            Basic, Standard, Premium) that groups quality.point records. Each sale.order can pick one profile for
+            Manufacturing and one for Delivery via 'manufacturing_quality_profile_id' and
+            'delivery_quality_profile_id'. It is NON-INVASIVE: native Odoo still creates the quality.check records;
+            this module only prunes or augments them AFTER native creation by overriding stock.move
+            '_create_quality_checks' and '_create_quality_checks_for_mo'. Two enforcement modes: 'restrict'
+            (whitelist — only the profile's points survive) and 'additive' (native points plus the profile's forced
+            points). It only affects checks with measure_on in ('operation','product'); per-quantity (move_line)
+            checks keep native behavior. Orders without a profile keep 100% native behavior. Includes an
+            action_regenerate_quality_checks button to reapply profiles after confirmation.
+            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online). Multi-language support for English and
+            Spanish included.</p>
     </div>
     <div class="d-flex align-items-center justify-content-between"
         style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -159,17 +152,17 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
             <div class="col-lg-12 d-flex flex-column align-items-center">
                 <h1 class="text-center text-uppercase"
                     style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
-                    <span style="color:#9451a5;">Journal Control</span>
+                    <span style="color:#9451a5;">Quality Profiles</span>
                 </h1>
                 <p class="my-1 text-center text-uppercase"
                     style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
-                    Private Accounting Hub & Group Access</p>
+                    Per-Order Quality Control for Manufacturing & Delivery</p>
             </div>
             <div class="col-lg-12 d-flex flex-column justify-content-center">
                 <p class="my-1 text-center"
                     style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
-                    Secure your financial data by restricting journal visibility to authorized team members or groups.
-                    Perfect for POS, Multi-Office, and high-security environments.
+                    Decide from the sale order which quality checks apply to its Manufacturing Orders and Deliveries.
+                    Reusable tiers that adapt the required quality to each customer and price — without breaking native Odoo.
                 </p>
             </div>
         </div>
@@ -189,21 +182,21 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-users mr-2"></i> Hybrid Access Control</h4>
-                            <p style="text-align: justify;">Maximum flexibility: Assign specific <strong>Users</strong>
-                                AND/OR entire <strong>User Groups</strong> (e.g., "POS Cashiers") to a journal. The
-                                system intelligently unifies permissions, so if a user matches either condition, they
-                                get in.</p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-sliders mr-2"></i> Quality That Fits Each Order</h4>
+                            <p style="text-align: justify;">The same product may require different controls depending on
+                                the <strong>customer</strong> and the <strong>price</strong>. Group your Quality Control
+                                Points into reusable <strong>Profiles</strong> (e.g. Basic, Standard, Premium) and pick
+                                the right one directly on the sale order.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-magic mr-2"></i> Smart Public Access</h4>
-                            <p style="text-align: justify;">Need a public journal for automation or web sales? Just
-                                leave the assignments
-                                empty, and it automatically becomes <strong>Public</strong>. Add one user, and it
-                                instantly becomes <strong>Private</strong>.</p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-shield mr-2"></i> Non-Invasive by Design</h4>
+                            <p style="text-align: justify;">Native Odoo still creates the quality checks — this module
+                                only <strong>prunes or augments</strong> the result <em>after</em> the native creation.
+                                Orders without a profile keep <strong>100% native behavior</strong>, so nothing breaks
+                                on Odoo upgrades.</p>
                         </div>
                     </div>
                 </div>
@@ -228,35 +221,30 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
                             style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
                                 Configuration Guide</h3>
-                            <p class="lead">Prepare the system for secure access in 4 simple steps:</p>
+                            <p class="lead">Build your quality tiers in a few simple steps:</p>
                             <div class="row">
                                 <div class="col-md-6">
                                     <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Accounting >
-                                                Configuration > Journals</strong>.</li>
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Select the <strong>Bank,
-                                                Cash, or Misc</strong> journal you want to protect.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Quality >
+                                                Configuration > Quality Profiles</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Create a profile (e.g.
+                                                <strong>Standard</strong>) and add its <strong>Control Points</strong>.</li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Find the <strong>Security
-                                                Settings</strong>.</li>
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>To
-                                                Restrict:</strong> Add Users or Groups. (Hybrid Logic: User OR Group).
-                                        </li>
-                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> <strong>To
-                                                Public:</strong> Leave both fields empty.
-                                        </li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Pick a <strong>Behavior</strong>:
+                                                <em>Restrict</em> (only these) or <em>Additive</em> (native + these).</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> On the <strong>Sale
+                                                Order</strong>, set the Manufacturing and/or Delivery profile.</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="mt-3 p-3 bg-light border-radius-10"
                                 style="border-radius: 10px; border: 1px dashed #791d97;">
-                                <small><strong><i class="fa fa-info-circle mr-1"></i> Smart Explainer:</strong> Look for
-                                    the
-                                    blue (Public) or yellow (Restricted) message box on the form. It will explain
-                                    exactly who has access in real-time.</small>
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Tip:</strong> Leave both profile
+                                    fields empty to keep Odoo's native quality behavior. A <em>Restrict</em> profile with
+                                    an empty point list means "no checks at all" for that operation.</small>
                             </div>
                         </div>
                     </div>
@@ -273,50 +261,55 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-columns text-primary mr-2"></i> Clean Dashboard</h5>
-                                        <p class="text-muted">The Accounting Dashboard is now private. Each team member
-                                            only sees the journals related to their assigned tasks, eliminating clutter
-                                            and potential data leaks.</p>
+                                        <h5><i class="fa fa-check-square-o text-primary mr-2"></i> Restrict Mode (Whitelist)</h5>
+                                        <p class="text-muted">On the order's operations, only the profile's control points
+                                            survive; every other natively-created check is pruned. Perfect for tailoring a
+                                            lean checklist to a specific customer.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-lock text-primary mr-2"></i> Bulletproof Privacy</h5>
-                                        <p class="text-muted">Security goes deep. Users cannot search for or read
-                                            Invoices, Moves, or even <strong>Journal Items (Lines)</strong> that belong
-                                            to restricted journals. Your sensitive data is locked down at the database
-                                            level.</p>
+                                        <h5><i class="fa fa-plus-square-o text-primary mr-2"></i> Additive Mode</h5>
+                                        <p class="text-muted">Keep all native checks and <strong>force</strong> the
+                                            profile's extra points — even ones that would not match natively by product —
+                                            respecting the operation type. Ideal for premium add-on inspections.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-handshake-o text-primary mr-2"></i> Smart Interoperability
-                                        </h5>
-                                        <p class="text-muted">Privacy doesn't break operations. The system detects
-                                            <strong>Commercial Data</strong> (Payments/AR/AP) and allows Sales to view
-                                            them on invoices, even if the originating journal (e.g., Bank) is hidden.
-                                            Smooth workflow, zero leaks.
-                                        </p>
+                                        <h5><i class="fa fa-random text-primary mr-2"></i> Independent Manufacturing & Delivery</h5>
+                                        <p class="text-muted">Choose one profile for Manufacturing Orders and a different
+                                            one for Deliveries. Each profile only affects its own operation type, so the
+                                            two flows never interfere.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-rocket text-primary mr-2"></i> Fast Navigation</h5>
-                                        <p class="text-muted">When moving between diaries, users can use the
-                                            pre-configured <strong>"My Journals"</strong> (Mis Diarios) filter to
-                                            instantly narrow down their workspace.</p>
+                                        <h5><i class="fa fa-refresh text-primary mr-2"></i> Regenerate After Confirmation</h5>
+                                        <p class="text-muted">Changed the profile after confirming the order? Use the
+                                            <strong>Regenerate Quality Checks</strong> button to reapply it to all open
+                                            operations. Only pending checks are touched — completed ones are safe.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-check-circle text-primary mr-2"></i> Multi-Currency Support
-                                        </h5>
-                                        <p class="text-muted">Journal assignments respect multi-currency configurations
-                                            and company divisions, ensuring a broad and secure ERP operation.</p>
+                                        <h5><i class="fa fa-lock text-primary mr-2"></i> Safe by Default</h5>
+                                        <p class="text-muted">Only checks measured per Operation or per Product are
+                                            managed. Per-quantity checks and any order without a profile keep their exact
+                                            native behavior — zero surprises.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-graduation-cap text-primary mr-2"></i> Built-in Learning Demo</h5>
+                                        <p class="text-muted">Install the demo data to get fully-worked scenarios
+                                            (Standard, Premium, Native, No-Controls, Additive) with a didactic explanation
+                                            written into each record's chatter.</p>
                                     </div>
                                 </div>
                             </div>
@@ -526,74 +519,64 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
                         <!-- Scenario 1 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
-                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-user-secret mr-2"></i>
-                                Scenario 1: Private Restrictions (User-Level)</h4>
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-check-square-o mr-2"></i>
+                                Scenario 1: Restrict Profile (Whitelist)</h4>
                             <ol class="mt-3">
-                                <li>Go to <strong>Settings > Users</strong> and create "User A" and "User B".</li>
-                                <li>Go to <strong>Accounting > Configuration > Journals</strong>.</li>
-                                <li>Select "Bank X". In <strong>Security Settings</strong> tab, add "User A" to
-                                    <em>Assigned Users</em>.
-                                </li>
-                                <li><strong>Test:</strong> Log in as User A. You SHOULD see "Bank X" in the Dashboard.
-                                </li>
-                                <li><strong>Test:</strong> Log in as User B. You SHOULD NOT see "Bank X" in Dashboard or
-                                    Journal filters.</li>
+                                <li>Create a profile "Standard" (Behavior = <em>Restrict</em>) with two Delivery control points.</li>
+                                <li>On a sale order, set it as the <strong>Delivery Quality Profile</strong> and confirm.</li>
+                                <li>Open the generated Delivery.</li>
+                                <li><strong>Test:</strong> Only the two profile points should have Quality Checks; any
+                                    other native delivery check is pruned.</li>
                             </ol>
                         </div>
                         <!-- Scenario 2 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
-                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-users mr-2"></i> Scenario 2:
-                                Role-Based Access (Group-Level)</h4>
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-plus-square-o mr-2"></i> Scenario 2:
+                                Additive Profile</h4>
                             <ol class="mt-3">
-                                <li>Create/Identify a Group, e.g., "Sales / Manager".</li>
-                                <li>Go to a Journal "Cash Y". Add "Sales / Manager" to <em>Assigned Groups</em>.</li>
-                                <li>Ensure "User B" is in the "Sales / Manager" group.</li>
-                                <li><strong>Test:</strong> Log in as User B. You SHOULD see "Cash Y".</li>
-                                <li><strong>Test:</strong> Remove User B from the group. You SHOULD NOT see "Cash Y"
-                                    anymore.</li>
+                                <li>Create a profile "Premium Add-on" (Behavior = <em>Additive</em>) with one extra point.</li>
+                                <li>Set it on the order's Delivery profile and confirm.</li>
+                                <li><strong>Test:</strong> All native checks remain AND the extra point is forced onto
+                                    the operation, even if it would not match natively by product.</li>
                             </ol>
                         </div>
                         <!-- Scenario 3 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
-                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-globe mr-2"></i> Scenario 3:
-                                Public & Hybrid Access</h4>
-                            <p class="mt-2"><strong>Public:</strong> Clear all Users and Groups from Journal Z. Everyone
-                                should see it.</p>
-                            <p><strong>Hybrid:</strong> Add "User A" AND "Group Sales".</p>
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-industry mr-2"></i> Scenario 3:
+                                Independent Manufacturing Profile</h4>
+                            <p class="mt-2">Set a Manufacturing profile and a <em>different</em> Delivery profile on the
+                                same order.</p>
                             <ul>
-                                <li>User A (not in group) -> Has Access.</li>
-                                <li>User B (in group) -> Has Access.</li>
-                                <li>User C (neither) -> No Access.</li>
+                                <li>The Manufacturing Order's checks follow the Manufacturing profile only.</li>
+                                <li>The Delivery's checks follow the Delivery profile only.</li>
+                                <li>Neither profile leaks into the other operation type.</li>
                             </ul>
                         </div>
                         <!-- Scenario 4 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
-                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-random mr-2"></i> Scenario 4:
-                                Interoperability (Whitelist)</h4>
-                            <p class="mt-2"><em>Goal: Ensure Sales can create invoices even if they can't see the Bank
-                                    Journal.</em></p>
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-refresh mr-2"></i> Scenario 4:
+                                Regenerate After Change</h4>
                             <ol>
-                                <li>Create an Invoice as a user who is RESTRICTED from seeing "Bank A".</li>
-                                <li>Register a Payment on that invoice using "Bank A".</li>
-                                <li><strong>Result:</strong> The system MUST allow saving the payment. The user can see
-                                    the payment widget on the invoice (Whitelisted) but cannot click through to read the
-                                    full Journal Entry details.</li>
+                                <li>Confirm an order with a profile, then change the profile on the order.</li>
+                                <li>Press <strong>Regenerate Quality Checks</strong>.</li>
+                                <li><strong>Result:</strong> Pending checks on open operations are rebuilt from the new
+                                    profile; already-completed checks are left untouched.</li>
                             </ol>
                         </div>
                         <!-- Scenario 5 -->
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #dc3545;">
-                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-bar-chart mr-2"></i> Scenario
-                                5: Reporting Stability</h4>
+                            <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-ban mr-2"></i> Scenario
+                                5: No-Controls & Native Fallback</h4>
                             <ol class="mt-3">
-                                <li>Install module.</li>
-                                <li>Go to <strong>Accounting > Reporting > Cash Flow Statement</strong>.</li>
-                                <li>Run the report.</li>
-                                <li><strong>Result:</strong> It MUST generate the report PDF/View without
-                                    "AssertionError" or "Odoo Server Error". (Validates SQL Join fix).</li>
+                                <li>Order A: Restrict profile with an <strong>empty</strong> point list → the operation
+                                    gets <strong>no checks</strong>.</li>
+                                <li>Order B: <strong>no profile</strong> at all → behavior is 100% native Odoo.</li>
+                                <li><strong>Result:</strong> Both cases work without errors, proving the module never
+                                    breaks the standard flow.</li>
                             </ol>
                         </div>
                     </div>
@@ -617,55 +600,47 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
-                            <h5 style="font-weight: 700; color: #333;">Using "Bank A" but can't see it?</h5>
-                            <p class="text-muted mt-2"><strong>Reason:</strong> You are likely not assigned to the
-                                journal.
-                            </p>
-                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Ask
-                                your
-                                Administrator to add your User (or your Group) to the <em>Assigned Users</em> tab in the
-                                Journal configuration.</p>
+                            <h5 style="font-weight: 700; color: #333;">My order has no quality checks at all?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> You likely assigned a <em>Restrict</em>
+                                profile with an empty point list.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Add the
+                                desired Control Points to the profile, or switch to <em>Additive</em> / remove the profile
+                                to fall back to native checks.</p>
                         </div>
                     </div>
                     <!-- Q2 -->
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
-                            <h5 style="font-weight: 700; color: #333;">Why is my Journal visible to everyone?</h5>
-                            <p class="text-muted mt-2"><strong>Reason:</strong> If no Users and no Groups are assigned,
-                                the
-                                Journal defaults to <strong>Public</strong>.</p>
-                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Add
-                                at
-                                least one User (e.g., the Administrator) to the <em>Assigned Users</em> field to
-                                activate
-                                Private Mode.</p>
+                            <h5 style="font-weight: 700; color: #333;">I changed the profile but checks didn't update.</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> Checks are created when the operation is
+                                generated, not live on every edit.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> Press
+                                the <strong>Regenerate Quality Checks</strong> button on the sale order to reapply the
+                                current profile to open operations.</p>
                         </div>
                     </div>
                     <!-- Q3 -->
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
-                            <h5 style="font-weight: 700; color: #333;">"Access Error" when opening a Move?</h5>
-                            <p class="text-muted mt-2"><strong>Reason:</strong> You are trying to access a document
-                                belonging to a Restricted Journal.</p>
+                            <h5 style="font-weight: 700; color: #333;">An additive point wasn't forced onto my MO.</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> On Manufacturing Orders, product-level
+                                checks only accept the manufactured product(s), not components.</p>
                             <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
-                                This
-                                is expected behavior. If you need access, request assignment to that specific Journal.
-                            </p>
+                                Ensure the point's operation type matches and target the finished product; this is an Odoo
+                                constraint, respected on purpose.</p>
                         </div>
                     </div>
                     <!-- Q4 -->
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
-                            <h5 style="font-weight: 700; color: #333;">Is this compatible with Multi-company?</h5>
+                            <h5 style="font-weight: 700; color: #333;">Is this safe on Odoo upgrades?</h5>
                             <p class="text-muted mt-2"><strong>Answer:</strong> Yes!</p>
-                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong>
-                                Journal
-                                assignments are strictly linked to the specific Journal record. You can have different
-                                rules
-                                for "Bank US" (Company A) and "Bank EU" (Company B).</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> The
+                                module never reimplements native matching — it only prunes or augments the checks Odoo
+                                already created, keeping it resilient to internal changes.</p>
                         </div>
                     </div>
                 </div>
@@ -818,4 +793,3 @@ En el nuevo módulo debes incluir en `static/description/` un archivo llamado `i
         </div>
 </body>
 </html>
-```

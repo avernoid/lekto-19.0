@@ -133,8 +133,12 @@
         <p>This Odoo module 'partner_industry_sector' adds industry-sector classification to res.partner.
             It introduces a new configurable model 'industry.sector' (a catalog of sectors / rubros) and a
             Many2one field 'industry_sector_id' on res.partner labelled "Sector / Rubro".
-            The field is shown on the contact form only for customers (customer_rank greater than zero).
-            It also adds a search filter and a "Group By" option on the contact list so customers can be
+            The field is shown on the contact form for every contact (companies and their contacts). On a
+            child contact it is pre-filled from the parent company's sector on creation and on import
+            (via an onchange and a create override), but can be overridden per contact. A "Set Industry
+            Sector from parent company" server action (list-view mass action) realigns selected contacts
+            with their company's sector.
+            It also adds a search filter and a "Group By" option on the contact list so contacts can be
             segmented by industry. The sector catalog is managed from Sales &gt; Configuration &gt;
             Industry Sectors, supports archiving (active flag) and a unique-name constraint, and ships with
             18 preloaded demo sectors. Useful for CRM segmentation, marketing targeting, and reporting by
@@ -267,10 +271,11 @@
                                 <div class="col-md-6 mb-4">
                                     <div class="bg-white p-3 shadow-sm h-100"
                                         style="border-radius: 12px; border-top: 3px solid #3c6dac;">
-                                        <h5><i class="fa fa-user-circle text-primary mr-2"></i> Tag a Customer</h5>
-                                        <p class="text-muted">Open any customer contact and set the
-                                            <strong>Sector / Rubro</strong> field. It appears on the contact form for
-                                            customers only, keeping the layout clean for vendors and other partners.</p>
+                                        <h5><i class="fa fa-user-circle text-primary mr-2"></i> Tag any Contact</h5>
+                                        <p class="text-muted">Open any contact &mdash; a company or an individual &mdash;
+                                            and set the <strong>Sector / Rubro</strong> field. New contacts inherit
+                                            their parent company's sector automatically, and you can override it any
+                                            time.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
@@ -504,14 +509,17 @@
                         <div class="mb-4 p-4 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
                             <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-user mr-2"></i> Scenario
-                                2: Classify a Customer</h4>
+                                2: Classify &amp; Inherit</h4>
                             <ol class="mt-3">
-                                <li>Open a contact whose <strong>Customer</strong> rank is set (e.g. has sales orders
-                                    or is marked as a customer).</li>
-                                <li><strong>Test:</strong> The <strong>Sector / Rubro</strong> field is visible; assign
-                                    a sector and save.</li>
-                                <li><strong>Test:</strong> Open a pure vendor / non-customer contact and confirm the
-                                    field is hidden.</li>
+                                <li>Open a <strong>company</strong> contact, assign a <strong>Sector / Rubro</strong>
+                                    and save.</li>
+                                <li><strong>Test:</strong> Create a new contact under that company &mdash; the
+                                    <strong>Sector / Rubro</strong> is pre-filled from the company.</li>
+                                <li><strong>Test:</strong> Change the contact's sector to a different one and save
+                                    &mdash; it keeps your override.</li>
+                                <li><strong>Test:</strong> Select several contacts in the list and run
+                                    <strong>Set Industry Sector from parent company</strong> &mdash; their sector
+                                    realigns with their company's.</li>
                             </ol>
                         </div>
                         <!-- Scenario 3 -->
@@ -548,11 +556,13 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 h-100 shadow-sm"
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
-                            <h5 style="font-weight: 700; color: #333;">I can't see the Sector field on a contact?</h5>
-                            <p class="text-muted mt-2"><strong>Reason:</strong> The field is shown for customers only.</p>
-                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Make
-                                sure the contact is a customer (its Customer rank is greater than zero, e.g. it has a
-                                sales order or is flagged as a customer).</p>
+                            <h5 style="font-weight: 700; color: #333;">A contact shows a sector I didn't set?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> New contacts inherit the sector from
+                                their parent company on creation.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Just
+                                edit the <strong>Sector / Rubro</strong> field on the contact &mdash; your value
+                                overrides the inherited one. To re-sync several contacts with their company, use the
+                                <strong>Set Industry Sector from parent company</strong> mass action.</p>
                         </div>
                     </div>
                     <!-- Q2 -->

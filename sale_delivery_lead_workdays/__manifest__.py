@@ -1,6 +1,6 @@
 {
     "name": "Sale Delivery Lead Time in Working Days",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.0.3",
     "category": "Sales/Sales",
     "summary": """Enter the delivery lead time as working days (skipping """
     """weekends and holidays) and let it fill the native per-line lead time.""",

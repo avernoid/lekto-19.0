@@ -52,18 +52,11 @@ class SaleOrder(models.Model):
         return action
 
     def action_confirm(self):
-        """Extiende la confirmación estándar de la orden de venta.
-        Después de confirmar, evalúa cada línea de venta y crea un ECO
-        (mrp.eco) por cada producto que cumpla las condiciones de
-        elegibilidad.
-        """
-        # Ejecutar la confirmación estándar primero.
+        """Tras la confirmación estándar, crea un ECO por cada producto de la
+        venta que cumpla las condiciones de elegibilidad."""
         res = super().action_confirm()
-
-        # Procesar cada orden en el recordset (pueden confirmarse varias a la vez).
         for order in self:
             order._create_plm_ecos_for_custom_products()
-
         return res
 
     def _create_plm_ecos_for_custom_products(self):
@@ -81,16 +74,12 @@ class SaleOrder(models.Model):
         """
         self.ensure_one()
 
-        # Recopilar los product.template únicos elegibles de las líneas.
         eligible_templates = self._get_eligible_product_templates()
         if not eligible_templates:
             return
 
-        # Crear un ECO (con BOM) por cada product.template elegible.
-        # Se usa sudo() porque el usuario que confirma la venta puede no tener
-        # permisos de PLM (mrp.eco / mrp.bom). La creación del ECO debe ocurrir
-        # igual; los privilegios se elevan solo para estas operaciones técnicas,
-        # no para la confirmación de la venta en sí.
+        # sudo(): quien confirma la venta puede no tener permisos de PLM
+        # (mrp.eco / mrp.bom). Se elevan solo para estas operaciones técnicas.
         EcoModel = self.env['mrp.eco'].sudo()
         BomModel = self.env['mrp.bom'].sudo()
         StageModel = self.env['mrp.eco.stage'].sudo()
@@ -105,17 +94,14 @@ class SaleOrder(models.Model):
                 )
                 continue
             try:
-                # Obtener el primer stage (por sequence) del eco_type.
                 first_stage = StageModel.search(
                     [('type_ids', 'in', eco_type.id)], limit=1,
                 )
-                # Crear primero la BOM vacía para el producto.
-                # Ingeniería la completará con sus componentes desde el ECO.
+                # BOM vacía; ingeniería la completa con sus componentes desde el ECO.
                 bom = BomModel.create({
                     'product_tmpl_id': tmpl.id,
                     'product_qty': 1.0,
                 })
-                # Crear el ECO vinculado a la BOM y a la orden de venta.
                 eco_vals = {
                     'name': "%s: %s" % (self.name, tmpl.name),
                     'type': 'bom',
@@ -133,7 +119,6 @@ class SaleOrder(models.Model):
                     tmpl.name, tmpl.id, self.name,
                 )
             except Exception:
-                # Registrar el error sin romper la confirmación de la venta.
                 _logger.exception(
                     "Error al crear ECO/BOM de PLM para producto '%s' "
                     "(template ID %s) desde la orden '%s'. "
@@ -148,39 +133,30 @@ class SaleOrder(models.Model):
         verificaciones de idempotencia.
         """
         self.ensure_one()
-        templates = self.env['product.template']
 
-        # Recopilar templates únicos que cumplan condiciones básicas.
         candidate_templates = self.env['product.template']
         for line in self.order_line:
             product = line.product_id
             if not product:
                 continue
             tmpl = product.product_tmpl_id
-
-            # Condición 1: la categoría requiere ingeniería.
             if not tmpl.categ_id.requires_engineering:
                 continue
-
-            # Condición 3: debe ser un bien almacenable.
-            # En Odoo 19: type='consu' + is_storable=True.
+            # Bien almacenable: en Odoo 19, type='consu' + is_storable=True.
             if tmpl.type != 'consu' or not tmpl.is_storable:
                 continue
-
             candidate_templates |= tmpl
 
         if not candidate_templates:
-            return templates
+            return self.env['product.template']
 
-        # Condición 2 + Idempotencia: excluir templates que ya tengan BOM.
-        # sudo() porque el usuario que confirma la venta puede no tener permiso
-        # de lectura sobre mrp.bom / mrp.eco (modelos de PLM).
+        # sudo() en los search de PLM: quien confirma la venta puede no tener
+        # permiso de lectura sobre mrp.bom / mrp.eco.
         existing_boms = self.env['mrp.bom'].sudo().search([
             ('product_tmpl_id', 'in', candidate_templates.ids),
         ])
         templates_with_bom = existing_boms.mapped('product_tmpl_id')
 
-        # También verificar BOMs asociadas a variantes específicas de estos templates.
         product_ids = self.order_line.mapped('product_id').filtered(
             lambda p: p.product_tmpl_id in candidate_templates
         ).ids
@@ -190,14 +166,11 @@ class SaleOrder(models.Model):
             ])
             templates_with_bom |= variant_boms.mapped('product_tmpl_id')
 
-        # Idempotencia: excluir templates que ya tengan un ECO creado
-        # por esta misma orden de venta (usa sale_id Many2one).
+        # Idempotencia: excluir templates con un ECO ya creado por esta venta.
         existing_ecos = self.env['mrp.eco'].sudo().search([
             ('sale_id', '=', self.id),
             ('product_tmpl_id', 'in', candidate_templates.ids),
         ])
         templates_with_eco = existing_ecos.mapped('product_tmpl_id')
 
-        # Templates finales = candidatos - con BOM - con ECO existente.
-        templates = candidate_templates - templates_with_bom - templates_with_eco
-        return templates
+        return candidate_templates - templates_with_bom - templates_with_eco

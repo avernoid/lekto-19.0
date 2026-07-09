@@ -1,6 +1,6 @@
 {
     "name": "Partner Industry Sector",
-    "version": "19.0.1.0.2",
+    "version": "19.0.1.2.0",
     "category": "Contacts",
     "summary": "Classify contacts by industry sector (rubro) and segment customers by industry.",
     "description": """
@@ -13,7 +13,11 @@ Key features:
 
 * New "Industry Sector" catalog (model ``industry.sector``) managed from
   Sales > Configuration, with unique names, archiving and translations.
-* New "Industry Sector" field on contacts, shown for customers only.
+* New "Industry Sector" field on every contact (companies and their
+  contacts), pre-filled from the parent company on creation but freely
+  editable per contact.
+* "Set Industry Sector from parent company" mass action to realign the
+  selected contacts with their company's sector.
 * Search filter and "Group By" on the Contacts list to segment your
   customer base by industry for CRM, marketing and reporting.
 * Ships with 18 common industry sectors as demo data.

@@ -1,0 +1,133 @@
+# Translation of sale_quality_profile to Spanish
+#. module: sale_quality_profile
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the sale_quality_profile package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module sale_quality_profile 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-07-02 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: sale_quality_profile
+#: model:ir.model,name:sale_quality_profile.model_quality_profile
+msgid "Quality Control Profile"
+msgstr "Perfil de Control de Calidad"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_quality_profile__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_quality_profile__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_quality_profile__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_quality_profile__point_ids
+msgid "Control Points"
+msgstr "Puntos de Control"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_quality_profile__enforcement
+msgid "Behavior"
+msgstr "Comportamiento"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_quality_profile__point_count
+#: model_terms:ir.ui.view,arch_db:sale_quality_profile.quality_profile_view_list
+msgid "# Points"
+msgstr "N.º de Puntos"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_sale_order__manufacturing_quality_profile_id
+msgid "Manufacturing Quality Profile"
+msgstr "Perfil de Calidad de Fabricación"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,field_description:sale_quality_profile.field_sale_order__delivery_quality_profile_id
+msgid "Delivery Quality Profile"
+msgstr "Perfil de Calidad de Entrega"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,help:sale_quality_profile.field_quality_profile__point_ids
+msgid ""
+"Quality control points that make up this profile. When the profile is "
+"assigned to a sale order, only these points (in 'restrict' mode) or these "
+"plus the native ones (in 'additive' mode) will generate quality checks on "
+"the order's operations."
+msgstr ""
+"Puntos de control de calidad que componen este perfil. Cuando el perfil se "
+"asigna a un pedido de venta, solo estos puntos (en modo «restrictivo») o "
+"estos más los nativos (en modo «aditivo») generarán controles de calidad en "
+"las operaciones del pedido."
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,help:sale_quality_profile.field_quality_profile__enforcement
+msgid ""
+"Restrict: on the order's operations only this profile's points generate "
+"checks (whitelist over what natively matches). An empty point list therefore "
+"means no checks.\n"
+"Additive: the native matching points plus this profile's points."
+msgstr ""
+"Restrictivo: en las operaciones del pedido solo los puntos de este perfil "
+"generan controles (lista blanca sobre lo que coincide nativamente). Por "
+"tanto, una lista de puntos vacía significa que no habrá controles.\n"
+"Aditivo: los puntos nativos coincidentes más los puntos de este perfil."
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,help:sale_quality_profile.field_sale_order__manufacturing_quality_profile_id
+msgid ""
+"Quality profile applied to the Manufacturing Orders spawned by this sale "
+"order. Leave empty to keep Odoo's native behavior."
+msgstr ""
+"Perfil de calidad aplicado a las órdenes de fabricación generadas por este "
+"pedido de venta. Déjelo vacío para mantener el comportamiento nativo de Odoo."
+
+#. module: sale_quality_profile
+#: model:ir.model.fields,help:sale_quality_profile.field_sale_order__delivery_quality_profile_id
+msgid ""
+"Quality profile applied to the delivery operations of this sale order. Leave "
+"empty to keep Odoo's native behavior."
+msgstr ""
+"Perfil de calidad aplicado a las operaciones de entrega de este pedido de "
+"venta. Déjelo vacío para mantener el comportamiento nativo de Odoo."
+
+#. module: sale_quality_profile
+#: model:ir.model.fields.selection,name:sale_quality_profile.selection__quality_profile__enforcement__restrict
+msgid "Only these control points"
+msgstr "Solo estos puntos de control"
+
+#. module: sale_quality_profile
+#: model:ir.model.fields.selection,name:sale_quality_profile.selection__quality_profile__enforcement__additive
+msgid "Native control points + these"
+msgstr "Puntos de control nativos + estos"
+
+#. module: sale_quality_profile
+#: model:ir.actions.act_window,name:sale_quality_profile.quality_profile_action
+#: model:ir.ui.menu,name:sale_quality_profile.menu_quality_profile
+msgid "Quality Profiles"
+msgstr "Perfiles de Calidad"
+
+#. module: sale_quality_profile
+#: model_terms:ir.ui.view,arch_db:sale_quality_profile.quality_profile_view_form
+msgid "e.g. Premium"
+msgstr "p. ej. Premium"
+
+#. module: sale_quality_profile
+#: model_terms:ir.ui.view,arch_db:sale_quality_profile.sale_order_view_form_quality_profile
+msgid "Regenerate Quality Checks"
+msgstr "Regenerar Controles de Calidad"

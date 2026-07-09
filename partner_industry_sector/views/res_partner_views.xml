@@ -8,8 +8,7 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <field name="category_id" position="before">
-                <field name="customer_rank" invisible="1"/>
-                <field name="industry_sector_id" invisible="customer_rank == 0"/>
+                <field name="industry_sector_id"/>
             </field>
         </field>
     </record>
@@ -28,6 +27,17 @@
                         context="{'group_by': 'industry_sector_id'}"/>
             </filter>
         </field>
+    </record>
+
+    <!-- Mass action: realign the selected contacts' sector with their parent
+         company's sector (overwrites the selection). -->
+    <record id="action_inherit_industry_from_parent" model="ir.actions.server">
+        <field name="name">Set Industry Sector from parent company</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_inherit_industry_from_parent()</field>
     </record>
 
 </odoo>

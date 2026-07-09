@@ -20,7 +20,7 @@ number *before* writing it into the native per-line lead time.
 
 ## How it works
 
-- A new order field, **Delivery Lead Time (Working Days)**, holds your input.
+- A new order field, **Lead time (workdays)**, holds your input.
 - The working calendar is taken from the order's **warehouse**
   (`resource_calendar_id`). If that field is **empty, no conversion is done**
   and the value is written to the lines as plain days (simple mode).
@@ -60,7 +60,7 @@ Ordering on a Monday with a Mon–Fri calendar:
 On each **Warehouse**:
 
 - **Delivery Working Calendar** — the `resource.calendar` to use.
-- **Default Delivery Lead Time (Working Days)** — pre-fills new orders.
+- **Default lead time (workdays)** — pre-fills new orders.
 
 Public holidays are managed as **global time off** (Inventory/Resource
 configuration) or as time off on the selected calendar.

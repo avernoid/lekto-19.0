@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_work_order_button" model="ir.ui.view">
+        <field name="name">stock.picking.form.work.order.button</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header//button[@name='button_validate']" position="before">
+                <button name="%(custom_work_order.report_work_order_action)d"
+                        string="Print Work Order"
+                        type="action"
+                        class="btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
