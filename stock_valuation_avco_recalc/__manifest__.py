@@ -1,6 +1,6 @@
 {
     'name': 'Stock Valuation Avco Recalc',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Inventory',
     'summary': 'Recalculate Average Cost (AVCO) from a past date.',
     'description': """

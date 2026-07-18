@@ -1,0 +1,680 @@
+# Translation of stock_kardex_valued to Spanish
+# . module: stock_kardex_valued
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the stock_kardex_valued package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module stock_kardex_valued 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-07-16 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# ======================================================================
+# Field labels
+# ======================================================================
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__company_id
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__report_date_from
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__date_from
+msgid "From"
+msgstr "Desde"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__report_date_to
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__date_to
+msgid "To"
+msgstr "Hasta"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__product_tmpl_id
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__product_id
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__cost_method
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Cost Method"
+msgstr "Método de costo"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__warehouse_id
+msgid "Warehouse (referential)"
+msgstr "Almacén (referencial)"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__location_id
+msgid "Source Location"
+msgstr "Ubicación de origen"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__location_dest_id
+msgid "Destination Location"
+msgstr "Ubicación de destino"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__picking_type_id
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Operation Type"
+msgstr "Tipo de operación"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__partner_id
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Partner"
+msgstr "Contacto"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__product_categ_id
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__line_kind
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Line Kind"
+msgstr "Tipo de línea"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__document
+msgid "Document"
+msgstr "Documento"
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__source_move_id
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "Stock Move"
+msgstr "Movimiento de existencias"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__picking_id
+msgid "Transfer"
+msgstr "Transferencia"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__invoice_id
+msgid "Customer Invoice"
+msgstr "Factura de cliente"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__bill_id
+msgid "Vendor Bill"
+msgstr "Factura de proveedor"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__ini_qty
+msgid "Opening Qty"
+msgstr "Cant. inicial"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__ini_unit_cost
+msgid "Opening Unit Cost"
+msgstr "Costo unitario inicial"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__ini_value
+msgid "Opening Value"
+msgstr "Valor inicial"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__in_qty
+msgid "In Qty"
+msgstr "Cant. entrada"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__in_unit_cost
+msgid "In Unit Cost"
+msgstr "Costo unitario entrada"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__in_value
+msgid "In Value"
+msgstr "Valor entrada"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__out_qty
+msgid "Out Qty"
+msgstr "Cant. salida"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__out_unit_cost
+msgid "Out Unit Cost"
+msgstr "Costo unitario salida"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__out_value
+msgid "Out Value"
+msgstr "Valor salida"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__fin_qty
+msgid "Closing Qty"
+msgstr "Cant. final"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__fin_unit_cost
+msgid "Closing Unit Cost"
+msgstr "Costo unitario final"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__fin_value
+msgid "Closing Value"
+msgstr "Valor final"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__bal_qty
+msgid "Balance Qty"
+msgstr "Cant. saldo"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__bal_unit_cost
+msgid "Balance Unit Cost"
+msgstr "Costo unitario saldo"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__bal_value
+msgid "Balance Value"
+msgstr "Valor saldo"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__ple_bal_value
+msgid "PLE Balance Value"
+msgstr "Valor saldo PLE"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued__recon_delta
+msgid "Reconciliation Delta"
+msgstr "Delta de reconciliación"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__product_ids
+msgid "Products"
+msgstr "Productos"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__categ_ids
+msgid "Product Categories"
+msgstr "Categorías de producto"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__cm_average
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "AVCO"
+msgstr "AVCO"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__cm_standard
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "STD"
+msgstr "STD"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__cm_fifo
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "FIFO"
+msgstr "FIFO"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__estimated_count
+msgid "N° Historical Events"
+msgstr "N° Eventos Históricos"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,field_description:stock_kardex_valued.field_stock_kardex_valued_wizard__estimated_hint
+msgid "Volume"
+msgstr "Volumen"
+
+# ======================================================================
+# Selection values
+# ======================================================================
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields.selection,name:stock_kardex_valued.selection__stock_kardex_valued__cost_method__standard
+msgid "Standard Price"
+msgstr "Precio estándar"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields.selection,name:stock_kardex_valued.selection__stock_kardex_valued__cost_method__fifo
+msgid "First In First Out (FIFO)"
+msgstr "Primero en entrar, primero en salir (FIFO)"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields.selection,name:stock_kardex_valued.selection__stock_kardex_valued__cost_method__average
+msgid "Average Cost (AVCO)"
+msgstr "Costo promedio (AVCO)"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields.selection,name:stock_kardex_valued.selection__stock_kardex_valued__line_kind__opening
+msgid "Opening"
+msgstr "Inicial"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields.selection,name:stock_kardex_valued.selection__stock_kardex_valued__line_kind__in
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Incoming"
+msgstr "Entrada"
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields.selection,name:stock_kardex_valued.selection__stock_kardex_valued__line_kind__out
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Outgoing"
+msgstr "Salida"
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: model:ir.model.fields.selection,name:stock_kardex_valued.selection__stock_kardex_valued__line_kind__revaluation
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "Revaluation"
+msgstr "Revaluación"
+
+# ======================================================================
+# Field help
+# ======================================================================
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__company_id
+msgid "Company whose stock valuation this Kardex line belongs to. The balance is computed at company level (one cost per product/company)."
+msgstr "Compañía a la que pertenece la valorización de existencias de esta línea del Kardex. El saldo se calcula a nivel compañía (un costo por producto/compañía)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__currency_id
+msgid "Currency used to display the monetary values, taken from the company."
+msgstr "Moneda usada para mostrar los valores monetarios, tomada de la compañía."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__report_date_from
+msgid "Start of the period this line was generated for (opening = state at the start of this date)."
+msgstr "Inicio del período para el que se generó esta línea (inicial = estado al comienzo de esta fecha)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__report_date_to
+msgid "End of the period this line was generated for (closing = state at the end of this date)."
+msgstr "Fin del período para el que se generó esta línea (final = estado al cierre de esta fecha)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__product_tmpl_id
+msgid "Product template. Used as the first grouping level; balances are valid under the canonical Template → Product grouping."
+msgstr "Plantilla de producto. Se usa como primer nivel de agrupación; los saldos son válidos bajo la agrupación canónica Plantilla → Producto."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__product_id
+msgid "Product variant this movement or balance refers to."
+msgstr "Variante de producto a la que se refiere este movimiento o saldo."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__date
+msgid "Date/time of the movement or revaluation event (empty for a pure opening balance row)."
+msgstr "Fecha/hora del movimiento o del evento de revaluación (vacío para una fila de solo saldo inicial)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__cost_method
+msgid "Costing method used to value this product at company level: Standard, FIFO or Average (AVCO). Each method is replayed with its own engine."
+msgstr "Método de costeo usado para valorizar este producto a nivel compañía: Estándar, FIFO o Promedio (AVCO). Cada método se recorre con su propio motor."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__warehouse_id
+msgid "Referential label only. The Kardex balance is computed at COMPANY level (one cost per product/company, like Odoo's own valuation); the warehouse is never the basis of the balance. Do not read balances filtered by warehouse."
+msgstr "Solo etiqueta referencial. El saldo del Kardex se calcula a nivel COMPAÑÍA (un costo por producto/compañía, como la valorización nativa de Odoo); el almacén nunca es el fundamento del saldo. No leas saldos filtrados por almacén."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__location_id
+msgid "Source location of the underlying stock move (analysis dimension only)."
+msgstr "Ubicación de origen del movimiento de existencias subyacente (solo dimensión de análisis)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__location_dest_id
+msgid "Destination location of the underlying stock move (analysis dimension only)."
+msgstr "Ubicación de destino del movimiento de existencias subyacente (solo dimensión de análisis)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__picking_type_id
+msgid "Operation type (receipt, delivery, internal, …) of the underlying move. An Odoo operation, not a SUNAT code."
+msgstr "Tipo de operación (recepción, entrega, interno, …) del movimiento subyacente. Una operación de Odoo, no un código SUNAT."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__partner_id
+msgid "Partner of the related transfer, when available (analysis dimension only)."
+msgstr "Contacto de la transferencia relacionada, cuando esté disponible (solo dimensión de análisis)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__product_categ_id
+msgid "Product category, available as an analysis dimension and group-by."
+msgstr "Categoría del producto, disponible como dimensión de análisis y agrupación."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__line_kind
+msgid "Nature of the line: an opening balance, an incoming movement, an outgoing movement, or a value revaluation (cost/standard-price change)."
+msgstr "Naturaleza de la línea: un saldo inicial, un movimiento de entrada, un movimiento de salida o una revaluación de valor (cambio de costo/precio estándar)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__document
+msgid "Human-readable reference of the source document (transfer name or move reference; 'Revaluation' / 'Opening balance' for synthetic lines)."
+msgstr "Referencia legible del documento origen (nombre de la transferencia o referencia del movimiento; 'Revaluación' / 'Saldo inicial' para líneas sintéticas)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__source_move_id
+msgid "Stock move that produced this line, for navigation to the source movement."
+msgstr "Movimiento de existencias que produjo esta línea, para navegar al movimiento origen."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__picking_id
+msgid "Transfer (picking) the source move belongs to, when available."
+msgstr "Transferencia (picking) a la que pertenece el movimiento origen, cuando esté disponible."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__invoice_id
+msgid "Related customer invoice, when a link is available."
+msgstr "Factura de cliente relacionada, cuando exista un vínculo."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__bill_id
+msgid "Related vendor bill, when a link is available."
+msgstr "Factura de proveedor relacionada, cuando exista un vínculo."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__ini_qty
+msgid "Quantity on hand at the start of the period (shown once per product)."
+msgstr "Cantidad disponible al inicio del período (se muestra una vez por producto)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__ini_unit_cost
+msgid "Unit cost at the start of the period. Unit costs are never summed."
+msgstr "Costo unitario al inicio del período. Los costos unitarios nunca se suman."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__ini_value
+msgid "Inventory value at the start of the period (shown once per product)."
+msgstr "Valor de inventario al inicio del período (se muestra una vez por producto)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__in_qty
+msgid "Incoming quantity of this movement (valued quantity)."
+msgstr "Cantidad de entrada de este movimiento (cantidad valorizada)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__in_unit_cost
+msgid "Unit cost of the incoming value (value / quantity). Never summed."
+msgstr "Costo unitario del valor de entrada (valor / cantidad). Nunca se suma."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__in_value
+msgid "Incoming value added to the balance by this movement (for a revaluation line, the value delta)."
+msgstr "Valor de entrada que este movimiento agrega al saldo (para una línea de revaluación, el delta de valor)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__out_qty
+msgid "Outgoing quantity of this movement (valued quantity)."
+msgstr "Cantidad de salida de este movimiento (cantidad valorizada)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__out_unit_cost
+msgid "Unit cost applied to the outgoing movement (re-derived from the running cost). Never summed."
+msgstr "Costo unitario aplicado al movimiento de salida (re-derivado del costo corriente). Nunca se suma."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__out_value
+msgid "Outgoing value removed from the balance by this movement (COGS)."
+msgstr "Valor de salida que este movimiento retira del saldo (costo de ventas)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__fin_qty
+msgid "Quantity on hand at the end of the period (shown once per product)."
+msgstr "Cantidad disponible al fin del período (se muestra una vez por producto)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__fin_unit_cost
+msgid "Unit cost at the end of the period. Never summed."
+msgstr "Costo unitario al fin del período. Nunca se suma."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__fin_value
+msgid "Inventory value at the end of the period. It equals the stock valuation (total_value) at the 'To' date."
+msgstr "Valor de inventario al fin del período. Coincide con la valorización de existencias (total_value) en la fecha 'Hasta'."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__bal_qty
+msgid "Running quantity on hand after this line. A per-row figure; never summed."
+msgstr "Cantidad disponible corriente después de esta línea. Cifra por fila; nunca se suma."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__bal_unit_cost
+msgid "Running unit cost after this line. A per-row figure; never summed."
+msgstr "Costo unitario corriente después de esta línea. Cifra por fila; nunca se suma."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__bal_value
+msgid "Running inventory value after this line. A per-row figure; never summed."
+msgstr "Valor de inventario corriente después de esta línea. Cifra por fila; nunca se suma."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__ple_bal_value
+msgid "Running balance a naive sum(move.value) ledger (the SUNAT PLE) would show. It does NOT reconcile with the GL when the product has price/value revaluations."
+msgstr "Saldo corriente que mostraría un libro ingenuo de suma(move.value) (el PLE de SUNAT). NO reconcilia con el Libro Mayor cuando el producto tiene revaluaciones de precio/valor."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued__recon_delta
+msgid "bal_value (correct, reconciles with the GL) minus ple_bal_value (sum(move.value) style). Non-zero means the official PLE diverges from the General Ledger for this product."
+msgstr "bal_value (correcto, reconcilia con el Libro Mayor) menos ple_bal_value (estilo suma(move.value)). Un valor distinto de cero significa que el PLE oficial diverge del Libro Mayor para este producto."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__company_id
+msgid "Company to generate the Kardex for. The balance is computed at company level (one cost per product/company)."
+msgstr "Compañía para la que se genera el Kardex. El saldo se calcula a nivel compañía (un costo por producto/compañía)."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__date_from
+msgid "Start of the period. The opening balance is the state at the start of this date. Defaults to the first day of the previous month."
+msgstr "Inicio del período. El saldo inicial es el estado al comienzo de esta fecha. Por defecto, el primer día del mes anterior."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__date_to
+msgid "End of the period. The closing balance is the state at the end of this date. Must be on or after the 'From' date."
+msgstr "Fin del período. El saldo final es el estado al cierre de esta fecha. Debe ser igual o posterior a la fecha 'Desde'."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__product_ids
+msgid "Optional. Restrict the report to these products. Leave empty to include every product with movements in the company."
+msgstr "Opcional. Restringe el reporte a estos productos. Déjalo vacío para incluir todos los productos con movimientos en la compañía."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__categ_ids
+msgid "Optional. Restrict the report to products in these categories (sub-categories included). Leave empty for no category filter."
+msgstr "Opcional. Restringe el reporte a productos de estas categorías (subcategorías incluidas). Déjalo vacío para no filtrar por categoría."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__cm_average
+msgid "Include Average-costed products. If Average, Standard and FIFO are all left unticked, ALL methods are included."
+msgstr "Incluir productos con costo Promedio. Si Promedio, Estándar y FIFO quedan todos sin marcar, se incluyen TODOS los métodos."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__cm_standard
+msgid "Include Standard-costed products. If all three method boxes are unticked, ALL methods are included."
+msgstr "Incluir productos con costo Estándar. Si las tres casillas de método quedan sin marcar, se incluyen TODOS los métodos."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__cm_fifo
+msgid "Include FIFO-costed products. If all three method boxes are unticked, ALL methods are included."
+msgstr "Incluir productos con costo FIFO. Si las tres casillas de método quedan sin marcar, se incluyen TODOS los métodos."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__estimated_count
+msgid "Estimated number of historical events (moves) that must be replayed for the selected scope. Drives the volume traffic-light."
+msgstr "Número estimado de eventos históricos (movimientos) que deben recorrerse para el alcance seleccionado. Determina el semáforo de volumen."
+
+#. module: stock_kardex_valued
+#: model:ir.model.fields,help:stock_kardex_valued.field_stock_kardex_valued_wizard__estimated_hint
+msgid "Volume traffic-light: green runs now, amber still runs but suggests narrowing the scope, red is refused. Narrow by products/categories to reduce it."
+msgstr "Semáforo de volumen: verde se ejecuta ahora, ámbar se ejecuta pero sugiere acotar el alcance, rojo se rechaza. Acota por productos/categorías para reducirlo."
+
+# ======================================================================
+# Python messages
+# ======================================================================
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "Please set both 'From' and 'To' dates."
+msgstr "Indica ambas fechas 'Desde' y 'Hasta'."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "'From' date must be on or before the 'To' date."
+msgstr "La fecha 'Desde' debe ser igual o anterior a la fecha 'Hasta'."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "No products in scope."
+msgstr "No hay productos en el alcance."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+#, python-format
+msgid "%(n)s events — will run now (synchronous)."
+msgstr "%(n)s eventos — se ejecutará ahora (síncrono)."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+#, python-format
+msgid "%(n)s events — heavy; will still run but consider narrowing the products/categories."
+msgstr "%(n)s eventos — pesado; se ejecutará igual, pero considera acotar los productos/categorías."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+#, python-format
+msgid "%(n)s events — too large (> %(max)s). Narrow the scope."
+msgstr "%(n)s eventos — demasiado grande (> %(max)s). Acota el alcance."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "No valued products found for the selected scope."
+msgstr "No se encontraron productos valorizados para el alcance seleccionado."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+#, python-format
+msgid "The selected scope spans %(n)s history events (> %(max)s). Please narrow the products or categories."
+msgstr "El alcance seleccionado abarca %(n)s eventos de historia (> %(max)s). Acota los productos o categorías."
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "Valued Inventory Kardex"
+msgstr "Kardex de inventario valorizado"
+
+#. module: stock_kardex_valued
+#. odoo-python
+#: code:addons/stock_kardex_valued/wizard/stock_kardex_valued_wizard.py:0
+msgid "Opening balance"
+msgstr "Saldo inicial"
+
+# ======================================================================
+# Menus, actions and views
+# ======================================================================
+
+#. module: stock_kardex_valued
+#: model:ir.actions.act_window,name:stock_kardex_valued.action_stock_kardex_valued
+msgid "Valued Kardex (results)"
+msgstr "Kardex valorizado (resultados)"
+
+#. module: stock_kardex_valued
+#: model:ir.actions.act_window,name:stock_kardex_valued.action_stock_kardex_valued_wizard
+#: model:ir.ui.menu,name:stock_kardex_valued.menu_stock_kardex_valued_generate
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "Generate Valued Kardex"
+msgstr "Generar Kardex valorizado"
+
+#. module: stock_kardex_valued
+#: model:ir.ui.menu,name:stock_kardex_valued.menu_stock_kardex_valued_root
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_list
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_pivot
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Valued Kardex"
+msgstr "Kardex valorizado"
+
+#. module: stock_kardex_valued
+#: model:ir.ui.menu,name:stock_kardex_valued.menu_stock_kardex_valued_results
+msgid "Kardex Results"
+msgstr "Resultados del Kardex"
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Revaluations"
+msgstr "Revaluaciones"
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Diverges from PLE (recon_delta != 0)"
+msgstr "Diverge del PLE (recon_delta != 0)"
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_search
+msgid "Month"
+msgstr "Mes"
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "This builds a valued inventory Kardex at company level that reconciles with the stock valuation General Ledger. It re-simulates the cost exactly like Odoo does, not sum(move.value)."
+msgstr "Esto construye un Kardex de inventario valorizado a nivel compañía que reconcilia con el Libro Mayor de valorización de existencias. Re-simula el costo tal como lo hace Odoo, no suma(move.value)."
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "The opening balance is the state at the start of From, and the closing balance at the end of To. Narrow the scope with Products or Categories to reduce the volume."
+msgstr "El saldo inicial es el estado al comienzo de Desde, y el saldo final al cierre de Hasta. Acota el alcance con Productos o Categorías para reducir el volumen."
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "Cost methods"
+msgstr "Métodos de costo"
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "Scope filters (optional)"
+msgstr "Filtros de alcance (opcional)"
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "Generate"
+msgstr "Generar"
+
+#. module: stock_kardex_valued
+#: model_terms:ir.ui.view,arch_db:stock_kardex_valued.view_stock_kardex_valued_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"

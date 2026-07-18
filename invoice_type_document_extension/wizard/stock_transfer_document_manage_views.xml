@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_transfer_document_manage_form" model="ir.ui.view">
+        <field name="name">stock.transfer.document.manage.form</field>
+        <field name="model">stock.transfer.document.manage</field>
+        <field name="arch" type="xml">
+            <form string="Assign document type &amp; number">
+                <!-- Hidden plumbing: selection + counts feed the banner. -->
+                <field name="move_ids" invisible="1"/>
+                <field name="legacy_available" invisible="1"/>
+                <field name="count_selected" invisible="1"/>
+                <field name="count_empty" invisible="1"/>
+                <field name="count_auto" invisible="1"/>
+                <field name="count_manual" invisible="1"/>
+                <field name="count_will_change" invisible="1"/>
+                <group>
+                    <field name="strategy" widget="radio"/>
+                    <field name="include_manual"
+                           invisible="strategy == 'fill_empty'"/>
+                </group>
+                <field name="banner" nolabel="1" readonly="1"/>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary"/>
+                    <button name="action_view_affected" type="object"
+                            string="View affected movements"
+                            class="btn-secondary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Single mass action bound to the stock.move list: replaces the three
+         former server actions (fill-empty / force / recover-legacy). -->
+    <record id="action_stock_transfer_document_manage" model="ir.actions.act_window">
+        <field name="name">Assign document type &amp; number</field>
+        <field name="res_model">stock.transfer.document.manage</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock.model_stock_move"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Volume traffic-light thresholds over HISTORY events (§9). -->
+    <record id="param_sync_max" model="ir.config_parameter">
+        <field name="key">stock_kardex_valued.sync_max</field>
+        <field name="value">100000</field>
+    </record>
+    <record id="param_queue_max" model="ir.config_parameter">
+        <field name="key">stock_kardex_valued.queue_max</field>
+        <field name="value">1000000</field>
+    </record>
+
+</odoo>

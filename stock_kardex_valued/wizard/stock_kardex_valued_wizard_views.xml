@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_stock_kardex_valued_wizard_form" model="ir.ui.view">
+        <field name="name">stock.kardex.valued.wizard.form</field>
+        <field name="model">stock.kardex.valued.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Valued Kardex">
+                <div class="alert alert-info" role="alert">
+                    <p>This builds a valued inventory Kardex at company level that reconciles with the stock valuation General Ledger. It re-simulates the cost exactly like Odoo does, not sum(move.value).</p>
+                    <p>The opening balance is the state at the start of From, and the closing balance at the end of To. Narrow the scope with Products or Categories to reduce the volume.</p>
+                </div>
+                <group>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <label for="cm_average" string="Cost methods"/>
+                        <div>
+                            <field name="cm_average"/> <label for="cm_average" string="AVCO"/>
+                            <field name="cm_standard"/> <label for="cm_standard" string="STD"/>
+                            <field name="cm_fifo"/> <label for="cm_fifo" string="FIFO"/>
+                        </div>
+                        <field name="estimated_count"/>
+                        <field name="estimated_hint"/>
+                    </group>
+                </group>
+                <group string="Scope filters (optional)">
+                    <field name="product_ids" widget="many2many_tags"/>
+                    <field name="categ_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_generate" type="object" string="Generate"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_stock_kardex_valued_wizard" model="ir.actions.act_window">
+        <field name="name">Generate Valued Kardex</field>
+        <field name="res_model">stock.kardex.valued.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menus under Inventory > Reporting -->
+    <menuitem id="menu_stock_kardex_valued_root"
+              name="Valued Kardex"
+              parent="stock.menu_stock_root"
+              groups="stock.group_stock_user"
+              sequence="90"/>
+    <menuitem id="menu_stock_kardex_valued_generate"
+              name="Generate Valued Kardex"
+              parent="menu_stock_kardex_valued_root"
+              action="action_stock_kardex_valued_wizard"
+              sequence="10"/>
+    <menuitem id="menu_stock_kardex_valued_results"
+              name="Kardex Results"
+              parent="menu_stock_kardex_valued_root"
+              action="action_stock_kardex_valued"
+              sequence="20"/>
+
+</odoo>

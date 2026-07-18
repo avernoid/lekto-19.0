@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        DEMO DATA for invoice_type_document_extension (PLE 13.1 - Kardex
+        transfer-document capture).
+
+        This file declares the *static* master data (product category, products,
+        partners). The actual history — confirmed purchases/sales, validated
+        receipts/deliveries, posted vendor bills and customer invoices, a
+        purchase return, internal transfers — is generated
+        programmatically by ``invoice.type.document.demo._generate_demo_data()``
+        (called at the end of this file), because captured stock moves cannot be
+        created as flat XML: they must go through the real confirm/receive/post
+        flow so the capture events fire exactly as in production.
+
+        All data is 100% SYNTHETIC.
+
+        How to study it (Inventory > Operations > Product Moves, add the optional
+        "Doc Type / Serie / Correlativo / Transfer Doc Manually Set" columns):
+          - Most moves already carry the fiscal document taken from their bill or
+            invoice (the steady state).
+          - Select some moves > Action > "Assign document type & number" to try
+            the wizard. The demo purposely leaves examples for every strategy:
+              * empty-but-derivable moves      -> "Fill empty" / "Re-derive"
+              * moves with a stale value        -> "Re-derive" fixes them
+              * hand-edited (manual) moves      -> protected unless include_manual
+              * moves whose picking has a legacy value -> "Recover serie/number"
+              * internal transfers / unposted bills / no-prefix bill -> stay empty
+    -->
+
+    <!-- ============================================================= -->
+    <!-- Product category: periodic valuation, so studying the transfer -->
+    <!-- document needs no stock-accounting configuration.              -->
+    <!-- ============================================================= -->
+    <record id="categ_demo_itde" model="product.category">
+        <field name="name">Demo PLE / Documentos de traslado</field>
+        <field name="property_valuation">periodic</field>
+        <field name="property_cost_method">average</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Products (synthetic office/IT catalogue)                       -->
+    <!-- ============================================================= -->
+    <record id="product_laptop" model="product.product">
+        <field name="name">Laptop Empresarial 14\" i5</field>
+        <field name="default_code">ITDE-LAP01</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">2800.0</field>
+        <field name="list_price">3500.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_monitor" model="product.product">
+        <field name="name">Monitor 24\" Full HD</field>
+        <field name="default_code">ITDE-MON24</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">620.0</field>
+        <field name="list_price">820.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_impresora" model="product.product">
+        <field name="name">Impresora Multifuncional</field>
+        <field name="default_code">ITDE-IMP01</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">780.0</field>
+        <field name="list_price">1050.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_silla" model="product.product">
+        <field name="name">Silla Ergonómica Ejecutiva</field>
+        <field name="default_code">ITDE-SIL01</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">240.0</field>
+        <field name="list_price">360.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_escritorio" model="product.product">
+        <field name="name">Escritorio Melamina 1.20m</field>
+        <field name="default_code">ITDE-ESC01</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">410.0</field>
+        <field name="list_price">590.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_teclado" model="product.product">
+        <field name="name">Teclado Mecánico</field>
+        <field name="default_code">ITDE-TEC01</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">95.0</field>
+        <field name="list_price">145.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_mouse" model="product.product">
+        <field name="name">Mouse Inalámbrico</field>
+        <field name="default_code">ITDE-MOU01</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">38.0</field>
+        <field name="list_price">62.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_ssd" model="product.product">
+        <field name="name">Disco SSD NVMe 1TB</field>
+        <field name="default_code">ITDE-SSD01</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_itde"/>
+        <field name="standard_price">255.0</field>
+        <field name="list_price">380.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Partners (synthetic PE-style vendors and customers)            -->
+    <!-- ============================================================= -->
+    <record id="vendor_tecnoandes" model="res.partner">
+        <field name="name">Importaciones TecnoAndes S.A.C.</field>
+        <field name="company_type">company</field>
+        <field name="supplier_rank">1</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record id="vendor_norte" model="res.partner">
+        <field name="name">Distribuidora Comercial del Norte E.I.R.L.</field>
+        <field name="company_type">company</field>
+        <field name="supplier_rank">1</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record id="vendor_global" model="res.partner">
+        <field name="name">Mayorista Global Supply S.A.C.</field>
+        <field name="company_type">company</field>
+        <field name="supplier_rank">1</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record id="customer_sur" model="res.partner">
+        <field name="name">Corporación Servicios del Sur S.A.C.</field>
+        <field name="company_type">company</field>
+        <field name="customer_rank">1</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record id="customer_pacifico" model="res.partner">
+        <field name="name">Inversiones El Pacífico S.A.C.</field>
+        <field name="company_type">company</field>
+        <field name="customer_rank">1</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+    <record id="customer_oficentro" model="res.partner">
+        <field name="name">Oficentro Lima S.A.C.</field>
+        <field name="company_type">company</field>
+        <field name="customer_rank">1</field>
+        <field name="country_id" ref="base.pe"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Build the captured history programmatically                    -->
+    <!-- ============================================================= -->
+    <function model="invoice.type.document.demo" name="_generate_demo_data"/>
+
+</odoo>

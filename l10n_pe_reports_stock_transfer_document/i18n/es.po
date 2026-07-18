@@ -1,0 +1,21 @@
+# Translation of l10n_pe_reports_stock_transfer_document to Spanish
+# . module: l10n_pe_reports_stock_transfer_document
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the l10n_pe_reports_stock_transfer_document package.
+#
+# NOTE: this bridge module only overrides a report method and exposes no
+# end-user fields, views, selection values or translatable messages, so there
+# are no translation entries below the header.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module l10n_pe_reports_stock_transfer_document 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-07-14 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"

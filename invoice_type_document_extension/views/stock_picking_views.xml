@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- The three transfer fields moved to stock.move (per-movement).  The
+         picking form keeps only a quick-set launcher for the common
+         "one picking = one document" case (design doc 3.5). -->
     <record id="stock_picking_view_form_inherit_invoice_type_document_extension" model="ir.ui.view">
-        <field name="name">stock.picking.view.form.inherit.invoice_type_document_extension</field>
+        <field name="name">stock.picking.form.transfer.document.quickset</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <field name="owner_id" position="after">
-                <label for="transfer_document_type_id" string="Transfer Doc." invisible="country_code != 'PE'"/>
-                <div class="o_row" style="flex-wrap: wrap;" invisible="country_code != 'PE'">
-                    <field name="transfer_document_type_id" nolabel="1" placeholder="Type" style="max-width: 150px;"/>
-                    <field name="serie_transfer_document" nolabel="1" placeholder="Serie" style="max-width: 80px;"/>
-                    <span class="mx-1">-</span>
-                    <field name="number_transfer_document" nolabel="1" placeholder="Correlative"/>
-                </div>
-            </field>
-        </field>
-    </record>
-    <record id="action_change_serie_number_type_invoice_type_document_extension" model="ir.actions.server">
-        <field name="name">Actualizar datos factura</field>
-        <field name="model_id" ref="stock.model_stock_picking"/>
-        <field name="binding_model_id" ref="stock.model_stock_picking"/>
-        <field name="binding_view_types">list</field>
-        <field name="state">code</field>
-        <field name="code">
-            if records:
-            records.massive_serie_number_type()
+            <button name="action_confirm" position="before">
+                <button name="action_itde_quickset_transfer_document"
+                        type="object"
+                        string="Set PLE Document"
+                        invisible="country_code != 'PE' or state == 'draft'"/>
+            </button>
+            <!-- Optional (hidden-by-default) columns on the picking's Operations
+                 move list (stock.view_picking_form -> field move_ids inline list). -->
+            <xpath expr="//field[@name='move_ids']/list/field[@name='date_deadline']" position="after">
+                <field name="transfer_document_type_id" optional="hide"/>
+                <field name="serie_transfer_document" optional="hide"/>
+                <field name="number_transfer_document" optional="hide"/>
+            </xpath>
         </field>
     </record>
 </odoo>

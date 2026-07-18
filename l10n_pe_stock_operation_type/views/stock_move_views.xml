@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form: show the operation type on the movement itself (visible to
+         Inventory users so a one-off manual classification is possible); the
+         provenance flag stays a read-only technical indicator (developer). -->
+    <record id="view_move_form_l10n_pe_operation_type" model="ir.ui.view">
+        <field name="name">stock.move.form.l10n.pe.operation.type</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="product_uom" position="after">
+                <field name="l10n_pe_operation_type" optional="show"/>
+                <field name="l10n_pe_operation_type_manual"
+                       readonly="1"
+                       groups="base.group_no_one"/>
+            </field>
+        </field>
+    </record>
+
+    <!--
+        Inject the operation type as an (optional, hidden-by-default) column into
+        the NATIVE "Moves Analysis" list (stock.view_move_tree, action
+        stock.stock_move_action) so it can be shown, grouped and filtered right
+        where the other Kardex columns live. Hidden by default (minimal footprint):
+        the user enables it from the list's optional-columns selector. Same
+        pattern as the sibling capture modules: no new view/menu/action.
+    -->
+    <record id="view_move_tree_l10n_pe_operation_type" model="ir.ui.view">
+        <field name="name">stock.move.list.l10n.pe.operation.type</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="l10n_pe_operation_type" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

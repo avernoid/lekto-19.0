@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_transfer_document_quickset,stock.transfer.document.quickset,model_stock_transfer_document_quickset,stock.group_stock_user,1,1,1,1
+access_stock_transfer_document_range_populate,stock.transfer.document.range.populate,model_stock_transfer_document_range_populate,stock.group_stock_manager,1,1,1,1
+access_stock_transfer_document_manage,stock.transfer.document.manage,model_stock_transfer_document_manage,stock.group_stock_user,1,1,1,1

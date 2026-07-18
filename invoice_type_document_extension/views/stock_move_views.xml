@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- PLE 13.1 transfer document columns on the Product Moves list.
+         optional="hide": visible but hidden by default, toggleable per user.
+         No country logic in the view (design doc 3.5). -->
+    <record id="view_move_tree_transfer_document" model="ir.ui.view">
+        <field name="name">stock.move.list.transfer.document</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="reference" position="after">
+                <field name="transfer_document_type_id" optional="hide"/>
+                <field name="serie_transfer_document" optional="hide"/>
+                <field name="number_transfer_document" optional="hide"/>
+                <field name="manual_override" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- The three former mass actions (fill-empty / force / recover-legacy) are
+         now consolidated into the single guided wizard
+         "Assign document type & number"
+         (wizard/stock_transfer_document_manage_views.xml).  The underlying
+         stock.move methods (action_itde_fill_empty / action_itde_force /
+         action_itde_force_including_manual / action_itde_recover_legacy) are
+         kept as the programmatic API the wizard routes to. -->
+</odoo>

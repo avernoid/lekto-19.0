@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- LIST: default grouping Template -> Product; balance columns valid only in that
+         canonical grouping (D12). -->
+    <record id="view_stock_kardex_valued_list" model="ir.ui.view">
+        <field name="name">stock.kardex.valued.list</field>
+        <field name="model">stock.kardex.valued</field>
+        <field name="arch" type="xml">
+            <list string="Valued Kardex" create="0" edit="0" delete="0" default_order="product_id, date, id">
+                <field name="product_tmpl_id" optional="hide"/>
+                <field name="product_id" optional="hide"/>
+                <field name="date"/>
+                <field name="document"/>
+                <field name="line_kind" optional="show"/>
+                <field name="cost_method" optional="hide"/>
+                <field name="ini_qty" optional="hide" sum="Opening Qty"/>
+                <field name="ini_value" optional="hide" sum="Opening Value"/>
+                <field name="in_qty" sum="In Qty"/>
+                <field name="in_unit_cost" optional="show"/>
+                <field name="in_value" sum="In Value"/>
+                <field name="out_qty" sum="Out Qty"/>
+                <field name="out_unit_cost" optional="show"/>
+                <field name="out_value" sum="Out Value"/>
+                <field name="bal_qty"/>
+                <field name="bal_unit_cost" optional="show"/>
+                <field name="bal_value"/>
+                <field name="fin_qty" optional="hide" sum="Closing Qty"/>
+                <field name="fin_value" optional="hide" sum="Closing Value"/>
+                <field name="ple_bal_value" optional="hide"/>
+                <field name="recon_delta" optional="hide"/>
+                <field name="warehouse_id" optional="hide"/>
+                <field name="location_id" optional="hide"/>
+                <field name="location_dest_id" optional="hide"/>
+                <field name="picking_type_id" optional="hide"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="product_categ_id" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- PIVOT: home of dimension analysis (D12). Only additive measures. -->
+    <record id="view_stock_kardex_valued_pivot" model="ir.ui.view">
+        <field name="name">stock.kardex.valued.pivot</field>
+        <field name="model">stock.kardex.valued</field>
+        <field name="arch" type="xml">
+            <pivot string="Valued Kardex">
+                <field name="product_id" type="row"/>
+                <field name="in_qty" type="measure"/>
+                <field name="in_value" type="measure"/>
+                <field name="out_qty" type="measure"/>
+                <field name="out_value" type="measure"/>
+                <field name="ini_qty" type="measure"/>
+                <field name="fin_qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- SEARCH: filters + group-by dimensions (D12). -->
+    <record id="view_stock_kardex_valued_search" model="ir.ui.view">
+        <field name="name">stock.kardex.valued.search</field>
+        <field name="model">stock.kardex.valued</field>
+        <field name="arch" type="xml">
+            <search string="Valued Kardex">
+                <field name="product_id"/>
+                <field name="product_tmpl_id"/>
+                <field name="document"/>
+                <field name="partner_id"/>
+                <field name="picking_type_id"/>
+                <filter name="incoming" string="Incoming" domain="[('line_kind', '=', 'in')]"/>
+                <filter name="outgoing" string="Outgoing" domain="[('line_kind', '=', 'out')]"/>
+                <filter name="revaluation" string="Revaluations" domain="[('line_kind', '=', 'revaluation')]"/>
+                <separator/>
+                <filter name="ple_divergent" string="Diverges from PLE (recon_delta != 0)"
+                        domain="[('recon_delta', '!=', 0)]"/>
+                <group>
+                    <filter name="group_product_tmpl" string="Product Template"
+                            domain="[]" context="{'group_by': 'product_tmpl_id'}"/>
+                    <filter name="group_product" string="Product"
+                            domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_cost_method" string="Cost Method"
+                            domain="[]" context="{'group_by': 'cost_method'}"/>
+                    <filter name="group_categ" string="Product Category"
+                            domain="[]" context="{'group_by': 'product_categ_id'}"/>
+                    <filter name="group_picking_type" string="Operation Type"
+                            domain="[]" context="{'group_by': 'picking_type_id'}"/>
+                    <filter name="group_partner" string="Partner"
+                            domain="[]" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_line_kind" string="Line Kind"
+                            domain="[]" context="{'group_by': 'line_kind'}"/>
+                    <filter name="group_date_month" string="Month"
+                            domain="[]" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_stock_kardex_valued" model="ir.actions.act_window">
+        <field name="name">Valued Kardex (results)</field>
+        <field name="res_model">stock.kardex.valued</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id" ref="view_stock_kardex_valued_search"/>
+        <field name="context">{'search_default_group_product_tmpl': 1, 'search_default_group_product': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No Kardex generated yet.</p>
+            <p>Use <b>Generate Valued Kardex</b> to build the report for a period.
+               Balances are valid only under the canonical Template &#8594; Product grouping.</p>
+        </field>
+    </record>
+
+</odoo>

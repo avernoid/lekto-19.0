@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        DEMO DATA for stock_kardex_valued.
+
+        This file declares the *static* master data (categories, partners, products)
+        used by the didactic Kardex demo. The actual valued history (receipts,
+        deliveries, revaluations, dropships, landed cost, multi-period) is generated
+        programmatically by ``stock.kardex.valued.demo._generate_demo_data()`` (called
+        at the end of this file) because valued stock moves cannot be created as flat
+        XML records: they must be confirmed, picked and validated so that Odoo computes
+        ``move.value`` / ``product.value`` exactly as in production.
+
+        Each product below teaches ONE feature of the report. Product *names* are the
+        study guide: "AVCO - Moving Average", "FIFO - Layer queue", "Standard - Price
+        change", etc. All data is 100% synthetic.
+
+        Suggested way to study the demo: open Inventory > Valued Kardex > Generate
+        Valued Kardex and run it for From = 2026-01-01, To = 2026-06-30 (all methods).
+    -->
+
+    <!-- ============================================================= -->
+    <!-- Product categories: one per cost method (periodic valuation,   -->
+    <!-- so no accounting configuration is required to study the report)-->
+    <!-- ============================================================= -->
+    <record id="categ_demo_avco" model="product.category">
+        <field name="name">Demo Kardex / AVCO</field>
+        <field name="property_valuation">periodic</field>
+        <field name="property_cost_method">average</field>
+    </record>
+    <record id="categ_demo_fifo" model="product.category">
+        <field name="name">Demo Kardex / FIFO</field>
+        <field name="property_valuation">periodic</field>
+        <field name="property_cost_method">fifo</field>
+    </record>
+    <record id="categ_demo_std" model="product.category">
+        <field name="name">Demo Kardex / Standard</field>
+        <field name="property_valuation">periodic</field>
+        <field name="property_cost_method">standard</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Partners                                                       -->
+    <!-- ============================================================= -->
+    <record id="partner_demo_vendor" model="res.partner">
+        <field name="name">Demo Kardex Vendor</field>
+        <field name="supplier_rank">1</field>
+        <field name="company_type">company</field>
+    </record>
+    <record id="partner_demo_customer" model="res.partner">
+        <field name="name">Demo Kardex Customer</field>
+        <field name="customer_rank">1</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Products - AVCO scenarios                                      -->
+    <!-- ============================================================= -->
+    <record id="product_avco_basic" model="product.product">
+        <field name="name">AVCO 01 - Moving Average (in/out)</field>
+        <field name="default_code">KDX-AVCO-01</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">20.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_avco_reval" model="product.product">
+        <field name="name">AVCO 02 - Cost Adjustment (revaluation)</field>
+        <field name="default_code">KDX-AVCO-02</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">5.0</field>
+        <field name="list_price">12.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_avco_negative" model="product.product">
+        <field name="name">AVCO 03 - Sale before Purchase (negative)</field>
+        <field name="default_code">KDX-AVCO-03</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">12.0</field>
+        <field name="list_price">25.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_avco_landed" model="product.product">
+        <field name="name">AVCO 04 - Landed Cost embedded in receipt</field>
+        <field name="default_code">KDX-AVCO-04</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">22.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_avco_dropship" model="product.product">
+        <field name="name">AVCO 05 - Dropship (value-neutral)</field>
+        <field name="default_code">KDX-AVCO-05</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">20.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_avco_multiperiod" model="product.product">
+        <field name="name">AVCO 06 - Multi-period (closing = next opening)</field>
+        <field name="default_code">KDX-AVCO-06</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">20.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_avco_busy" model="product.product">
+        <field name="name">AVCO 07 - Busy item (many movements)</field>
+        <field name="default_code">KDX-AVCO-07</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">15.0</field>
+        <field name="list_price">30.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Products - FIFO scenarios                                      -->
+    <!-- ============================================================= -->
+    <record id="product_fifo_basic" model="product.product">
+        <field name="name">FIFO 01 - Layer queue</field>
+        <field name="default_code">KDX-FIFO-01</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_fifo"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">25.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_fifo_negative" model="product.product">
+        <field name="name">FIFO 02 - Negative stock extrapolation</field>
+        <field name="default_code">KDX-FIFO-02</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_fifo"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">25.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_fifo_multilayer" model="product.product">
+        <field name="name">FIFO 03 - Multi-layer partial consumption</field>
+        <field name="default_code">KDX-FIFO-03</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_fifo"/>
+        <field name="standard_price">8.0</field>
+        <field name="list_price">18.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_fifo_busy" model="product.product">
+        <field name="name">FIFO 04 - Busy item (many movements)</field>
+        <field name="default_code">KDX-FIFO-04</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_fifo"/>
+        <field name="standard_price">20.0</field>
+        <field name="list_price">40.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Products - Standard scenarios                                  -->
+    <!-- ============================================================= -->
+    <record id="product_std_basic" model="product.product">
+        <field name="name">STD 01 - Standard cost (value = qty x std)</field>
+        <field name="default_code">KDX-STD-01</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_std"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">20.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_std_change" model="product.product">
+        <field name="name">STD 02 - Standard price change (revaluation)</field>
+        <field name="default_code">KDX-STD-02</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_std"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">20.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_std_busy" model="product.product">
+        <field name="name">STD 03 - Busy item (movements + price change)</field>
+        <field name="default_code">KDX-STD-03</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_std"/>
+        <field name="standard_price">25.0</field>
+        <field name="list_price">45.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Busy items with movements in EVERY month (Jan-Jun) so any period    -->
+    <!-- the user runs (including the wizard default = previous month) shows  -->
+    <!-- real movements, not just carried-forward opening balances.          -->
+    <!-- ============================================================= -->
+    <record id="product_avco_month" model="product.product">
+        <field name="name">AVCO 08 - Monthly activity (Jan-Jun)</field>
+        <field name="default_code">KDX-AVCO-08</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">15.0</field>
+        <field name="list_price">30.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_fifo_month" model="product.product">
+        <field name="name">FIFO 05 - Monthly activity (Jan-Jun)</field>
+        <field name="default_code">KDX-FIFO-05</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_fifo"/>
+        <field name="standard_price">30.0</field>
+        <field name="list_price">60.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_std_month" model="product.product">
+        <field name="name">STD 04 - Monthly activity (Jan-Jun)</field>
+        <field name="default_code">KDX-STD-04</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_std"/>
+        <field name="standard_price">25.0</field>
+        <field name="list_price">45.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Multi-variant templates: a Size attribute (S/M/L) generates 3       -->
+    <!-- variants per template, one template per cost method. Each variant   -->
+    <!-- gets its own monthly history so the canonical Template -> Variant   -->
+    <!-- grouping of the report can be studied with real data.               -->
+    <!-- ============================================================= -->
+    <record id="attr_demo_size" model="product.attribute">
+        <field name="name">Demo Size</field>
+        <field name="create_variant">always</field>
+        <field name="display_type">radio</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="attr_demo_size_s" model="product.attribute.value">
+        <field name="name">S</field>
+        <field name="attribute_id" ref="attr_demo_size"/>
+        <field name="sequence">1</field>
+    </record>
+    <record id="attr_demo_size_m" model="product.attribute.value">
+        <field name="name">M</field>
+        <field name="attribute_id" ref="attr_demo_size"/>
+        <field name="sequence">2</field>
+    </record>
+    <record id="attr_demo_size_l" model="product.attribute.value">
+        <field name="name">L</field>
+        <field name="attribute_id" ref="attr_demo_size"/>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="tmpl_var_avco" model="product.template">
+        <field name="name">VAR AVCO - Polo Shirt (S/M/L)</field>
+        <field name="default_code">KDX-VAR-AVCO</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_avco"/>
+        <field name="standard_price">20.0</field>
+        <field name="list_price">40.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="attribute_line_ids" eval="[(0, 0, {
+            'attribute_id': ref('attr_demo_size'),
+            'value_ids': [(6, 0, [ref('attr_demo_size_s'), ref('attr_demo_size_m'), ref('attr_demo_size_l')])],
+        })]"/>
+    </record>
+    <record id="tmpl_var_fifo" model="product.template">
+        <field name="name">VAR FIFO - Sneakers (S/M/L)</field>
+        <field name="default_code">KDX-VAR-FIFO</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_fifo"/>
+        <field name="standard_price">30.0</field>
+        <field name="list_price">65.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="attribute_line_ids" eval="[(0, 0, {
+            'attribute_id': ref('attr_demo_size'),
+            'value_ids': [(6, 0, [ref('attr_demo_size_s'), ref('attr_demo_size_m'), ref('attr_demo_size_l')])],
+        })]"/>
+    </record>
+    <record id="tmpl_var_std" model="product.template">
+        <field name="name">VAR STD - Cap (S/M/L)</field>
+        <field name="default_code">KDX-VAR-STD</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_demo_std"/>
+        <field name="standard_price">15.0</field>
+        <field name="list_price">28.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="attribute_line_ids" eval="[(0, 0, {
+            'attribute_id': ref('attr_demo_size'),
+            'value_ids': [(6, 0, [ref('attr_demo_size_s'), ref('attr_demo_size_m'), ref('attr_demo_size_l')])],
+        })]"/>
+    </record>
+
+    <!-- ============================================================= -->
+    <!-- Build the valued history (moves + revaluations) programmatically -->
+    <!-- ============================================================= -->
+    <function model="stock.kardex.valued.demo" name="_generate_demo_data"/>
+
+</odoo>

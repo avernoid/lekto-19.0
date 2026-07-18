@@ -35,38 +35,29 @@ class ValuationRecalcWizard(models.TransientModel):
                     # Or maybe just skip and show a warning message?
                     # The user asked "What happens if I select...", leading to disaster.
                     # Let's BLOCK it to be safe.
-                    raise models.ValidationError(_(
+                    raise ValidationError(_(
                         "Product '%s' uses '%s' costing method. "
                         "This Fix is strictly for Average Cost (AVCO) products only."
                     ) % (product.display_name, product.cost_method))
 
-                # Call the optimized SQL genesis we defined in stock.move
-                init_qty, init_val = self.env['stock.move']._get_historical_balance_at_date(product.id, min_date)
-                
-                # Call the optimized SQL genesis we defined in stock.move
-                init_qty, init_val = self.env['stock.move']._get_historical_balance_at_date(product.id, min_date)
-                
-                # --- RESTORED LOGIC: Find Oldest Remaining (Python Side) ---
+                # --- Find Oldest Remaining Layer (Python Side) ---
                 # Odoo 19 'remaining_qty' is not searchable (computed non-stored).
-                # We fetch prior incoming moves and filter in Python to find the oldest layer.
-                # This ensures we respect the user requirement to start from the oldest active stock.
+                # We fetch prior incoming moves and filter in Python to find the oldest
+                # active layer, respecting the requirement to start from the oldest active stock.
                 prior_candidates = self.env['stock.move'].search([
                     ('product_id', '=', product.id),
                     ('is_in', '=', True),
                     ('date', '<', min_date),
                     ('state', '=', 'done')
-                ], order='date asc') # Fetch all prior candidates
-                
-                oldest_layer_date = None
+                ], order='date asc')
+
                 for move in prior_candidates:
                     if move.remaining_qty > 0:
-                        oldest_layer_date = move.date
-                        break # Found the absolute oldest
-                
-                if oldest_layer_date:
-                    min_date = oldest_layer_date
-                    # Re-calculate genesis from this new deeper start date
-                    init_qty, init_val = self.env['stock.move']._get_historical_balance_at_date(product.id, min_date)
+                        min_date = move.date  # oldest active layer
+                        break
+
+                # Genesis: computed once, with the definitive min_date.
+                init_qty, init_val = self.env['stock.move']._get_historical_balance_at_date(product.id, min_date)
 
                 lines_data.append((0, 0, {
                     'product_id': product.id,

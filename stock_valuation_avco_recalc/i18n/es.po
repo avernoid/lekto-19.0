@@ -97,13 +97,14 @@ msgid "How to use:"
 msgstr "Cómo usar:"
 
 #. module: stock_valuation_avco_recalc
+#. odoo-python
 #: code:addons/stock_valuation_avco_recalc/wizards/valuation_recalc_wizard.py:0
 #, python-format
 msgid "Product '%s' uses '%s' costing method. This Fix is strictly for Average Cost (AVCO) products only."
 msgstr "El producto '%s' usa el método '%s'. Esta corrección es estrictamente para productos de Costo Promedio (AVCO)."
 
 #. module: stock_valuation_avco_recalc
+#. odoo-python
 #: code:addons/stock_valuation_avco_recalc/wizards/valuation_recalc_wizard.py:0
-#, python-format
 msgid "Recalculation Audit"
 msgstr "Auditoría de Recálculo"

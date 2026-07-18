@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Inject the Kardex columns into the NATIVE "Moves Analysis" list
+        (stock.view_move_tree, action stock.stock_move_action) and make a few
+        native columns optional. No new view/menu/action, no domain or group-by
+        changes: everything else stays native.
+    -->
+    <record id="view_move_tree_kardex_qty" model="ir.ui.view">
+        <field name="name">stock.move.list.kardex.qty</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+
+            <!-- Demand (product_uom_qty): hidden by default, user can show it. -->
+            <xpath expr="//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+
+            <!-- Quantity: visible by default, user can hide it. -->
+            <xpath expr="//field[@name='quantity']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+
+            <!-- Kardex Qty right after Quantity: visible by default, hideable.
+                 Same green-in / red-out coloring as the native Quantity column,
+                 reusing location_usage / location_dest_usage (already loaded as
+                 column_invisible fields) so there is zero extra fetch or
+                 compute; decorations are evaluated client-side.
+                 Kardex UoM right after it: hidden by default, showable. -->
+            <xpath expr="//field[@name='quantity']" position="after">
+                <field name="kardex_qty" optional="show" sum="Total Kardex Qty"
+                    decoration-danger="(location_usage in ('internal','transit')) and (location_dest_usage not in ('internal','transit'))"
+                    decoration-success="(location_usage not in ('internal','transit')) and (location_dest_usage in ('internal','transit'))"/>
+                <field name="kardex_uom_id" optional="hide"/>
+            </xpath>
+
+            <!-- From / To: stay visible by default, but become hideable. -->
+            <xpath expr="//field[@name='location_id']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

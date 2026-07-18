@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        DEMO DATA for l10n_pe_stock_operation_type.
+
+        This file declares the *static* master data (a periodic-valuation product
+        category, two partners and six products). The actual movement history (many
+        validated stock moves covering every SUNAT Table-12 use case, with the right
+        provenance: automatic / manual / empty-for-the-wizard) is generated
+        programmatically by ``l10n_pe.operation.type.demo._generate_demo_data()``
+        (the <function> at the end) because the operation type is inferred on
+        ``_action_done`` and only for a Peruvian company: the moves must go through
+        the real confirm/assign/validate flow, which cannot be flat XML.
+
+        What the demo builds (all synthetic data), so a live presentation shows many
+        rows per use case grouped by the "Type of Operation (PE)" column:
+          * Opening balance receipts (code 16, manual) that also seed stock.
+          * Heuristic autocompletion: Purchases to 02, Sales to 01, Internal to 21,
+            Inventory adjustment to 28, Scrap to 13. Provenance = automatic.
+          * Manual reclassification to ~27 further Table-12 codes (Export 17, Import
+            18, Consignment 03/04, Returns 05/06, Bonus 07, Donation 09, ...), each
+            with several rows. Provenance = manual (protected from auto).
+          * A catalogue sweep so every remaining code (11, 33, 36 to 38, 91 to 99)
+            appears at least once.
+          * A "Wizard en vivo" transfer mixing empty / auto / manual moves so the
+            presenter can run the mass-assignment wizard live and watch the policy
+            filters and the preview count react.
+
+        Suggested live view: Inventory > Reporting > Moves Analysis (or the Moves
+        list), group by "Type of Operation (PE)".
+    -->
+
+    <!-- Periodic valuation -> no accounting configuration needed to show moves. -->
+    <record id="categ_op_demo" model="product.category">
+        <field name="name">Demo SUNAT / Tipo de Operacion</field>
+        <field name="property_valuation">periodic</field>
+        <field name="property_cost_method">average</field>
+    </record>
+
+    <!-- Partners -->
+    <record id="partner_op_vendor" model="res.partner">
+        <field name="name">Proveedor Demo SUNAT</field>
+        <field name="supplier_rank">1</field>
+        <field name="company_type">company</field>
+    </record>
+    <record id="partner_op_customer" model="res.partner">
+        <field name="name">Cliente Demo SUNAT</field>
+        <field name="customer_rank">1</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <!-- Products: six storable items the generator cycles through, so every use
+         case spreads across products and any Product grouping stays busy. -->
+    <record id="product_op_01" model="product.product">
+        <field name="name">Demo SUNAT Producto 01</field>
+        <field name="default_code">KDX-OP-01</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_op_demo"/>
+        <field name="standard_price">10.0</field>
+        <field name="list_price">18.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_op_02" model="product.product">
+        <field name="name">Demo SUNAT Producto 02</field>
+        <field name="default_code">KDX-OP-02</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_op_demo"/>
+        <field name="standard_price">15.0</field>
+        <field name="list_price">26.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_op_03" model="product.product">
+        <field name="name">Demo SUNAT Producto 03</field>
+        <field name="default_code">KDX-OP-03</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_op_demo"/>
+        <field name="standard_price">22.0</field>
+        <field name="list_price">40.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_op_04" model="product.product">
+        <field name="name">Demo SUNAT Producto 04</field>
+        <field name="default_code">KDX-OP-04</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_op_demo"/>
+        <field name="standard_price">7.5</field>
+        <field name="list_price">14.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_op_05" model="product.product">
+        <field name="name">Demo SUNAT Producto 05</field>
+        <field name="default_code">KDX-OP-05</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_op_demo"/>
+        <field name="standard_price">30.0</field>
+        <field name="list_price">55.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_op_06" model="product.product">
+        <field name="name">Demo SUNAT Producto 06</field>
+        <field name="default_code">KDX-OP-06</field>
+        <field name="is_storable">True</field>
+        <field name="categ_id" ref="categ_op_demo"/>
+        <field name="standard_price">12.0</field>
+        <field name="list_price">21.0</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <!-- Build the movement history programmatically (idempotent). -->
+    <function model="l10n_pe.operation.type.demo" name="_generate_demo_data"/>
+
+</odoo>

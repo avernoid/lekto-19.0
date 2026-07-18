@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Document Type Extension | Odoo Accounting App by Ganemo</title>
+    <title>Kardex PLE 13.1 Transfer Document Capture | Odoo Peru App by Ganemo</title>
     <meta name="description"
-        content="Automate document type and series selection in Odoo Invoices and Stock Pickings. Streamline Peruvian localization workflows and reduce manual entry errors. extension for invoice_type_document.">
+        content="Capture the real fiscal document (type, series and number) on every stock movement for the Peruvian PLE 13.1 (Kardex). Fix wrong series/folio on SUNAT reports.">
     <meta name="keywords"
-        content="Odoo, Accounting, Document Type, Series, Numbering, Peru, Localization, Ganemo, Automation, Stock Picking, Invoice">
+        content="Odoo, Peru, PLE 13.1, Kardex, SUNAT, Inventory, Document Type, Series, Remission Guide, Ganemo, Odoo 19">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,7 +30,6 @@
             font-weight: 700 !important;
             color: inherit;
         }
-
         .cta-whatsapp {
             background-color: #25d366 !important;
             color: white !important;
@@ -41,14 +40,12 @@
             transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
-
         .cta-whatsapp:hover {
             background-color: #128c7e !important;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
             text-decoration: none;
         }
-
         .badge-lang {
             background-color: #f1f8ff;
             color: #0366d6;
@@ -58,62 +55,6 @@
             font-size: 14px;
             font-weight: 600;
         }
-
-        .copy-link-wrapper {
-            display: inline-flex;
-            align-items: center;
-            background-color: #007bff;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #0056b3;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            font-family: sans-serif;
-            margin-bottom: 10px;
-            max-width: 100%;
-        }
-
-        .copy-link-label {
-            background-color: white;
-            color: #333;
-            padding: 10px 15px;
-            font-weight: 800;
-            font-size: 13px;
-            line-height: 1.2;
-            text-align: center;
-            position: relative;
-            border-right: 1px solid #ddd;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            min-width: 80px;
-        }
-
-        .copy-link-label::after {
-            content: '';
-            position: absolute;
-            right: -6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 0;
-            height: 0;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            border-left: 6px solid white;
-            z-index: 10;
-        }
-
-        .copy-link-url {
-            color: white;
-            padding: 12px 20px 12px 20px;
-            font-weight: 600;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-            letter-spacing: 0.5px;
-            white-space: normal;
-            word-break: break-word;
-            overflow-x: visible;
-        }
-
         @media (max-width: 768px) {
             .mob-col {
                 flex-direction: column !important;
@@ -126,22 +67,21 @@
         }
     </style>
 </head>
-
 <body>
     <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
     <div style="display: none;">
         <h2>Technical Specification for AI & LLM</h2>
-        <p>This Odoo module 'invoice_type_document_extension' extends 'invoice_type_document' and
-            'l10n_pe_delivery_note_20'.
-            It automates the assignment of Document Types (account.document.type) and Document Series in Purchase
-            Invoices (account.move)
-            and Stock Pickings (stock.picking).
-            Key features:
-            - Auto-selects document type based on partner or journal configuration.
-            - Propagates document series from Purchase Orders to Invoices.
-            - Validates required document fields for Peruvian Localization.
-            Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
-            Multi-language support for English and Spanish included.</p>
+        <p>This Odoo module 'invoice_type_document_extension' captures the fiscal supporting document (document type,
+            series and number) on each stock.move for the Peruvian PLE 13.1 report (Registro de Inventario Permanente
+            Valorizado / Kardex). Fields live per-movement (stock.move), not per picking, to support multi-document
+            transfers. Population is event-driven: account.move._post (super-first) fills receipt/delivery moves;
+            stock.move._action_done fills done moves. Priority is invoice-first (l10n_latam_document_number then ref then
+            name) and, when there is no invoice, the picking's remission guide (SUNAT document type 09). Manual edits are
+            protected via a manual_override flag. A mass server action re-derives historical records (fill-empty and
+            force-keep-manual). SUNAT format is enforced with an api.constrains (max 20 chars, positive). The capture is
+            decoupled from the report and never reads l10n_pe_operation_type. To feed the Kardex report install the
+            bridge module l10n_pe_reports_stock_transfer_document. Compatible with Odoo 19 Enterprise / Odoo.SH.
+            Multi-language English and Spanish.</p>
     </div>
     <div class="d-flex align-items-center justify-content-between"
         style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
@@ -160,17 +100,17 @@
             <div class="col-lg-12 d-flex flex-column align-items-center">
                 <h1 class="text-center text-uppercase"
                     style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
-                    <span style="color:#9451a5;">Document Automation</span>
+                    <span style="color:#9451a5;">Kardex PLE Capture</span>
                 </h1>
                 <p class="my-1 text-center text-uppercase"
                     style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
-                    Auto-Fill Types & Series for Invoices/Stock</p>
+                    The Real Fiscal Document, Per Movement</p>
             </div>
             <div class="col-lg-12 d-flex flex-column justify-content-center">
                 <p class="my-1 text-center"
                     style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
-                    Eliminate manual entry errors. Automatically assign the correct Document Types and Series for your
-                    Purchases and Transfers based on smart defaults.
+                    Stop reporting internal sequences to SUNAT. Capture the real document type, series and number on
+                    every stock movement so your PLE 13.1 (Kardex) is accurate and audit-ready.
                 </p>
             </div>
         </div>
@@ -190,39 +130,21 @@
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-magic mr-2"></i> Smart Defaults</h4>
-                            <p style="text-align: justify;">Stop selecting the same <strong>Document Type</strong>
-                                manually every time. The system learns from your configuration and automatically
-                                populates the correct type (e.g., Invoice, Bill, Delivery Note) when creating records.
-                            </p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-exclamation-triangle mr-2"></i> Wrong Series on the PLE</h4>
+                            <p style="text-align: justify;">The native Kardex builds the series/folio from the invoice
+                                <strong>name</strong>. In journals that do not "use documents", that name is an
+                                <strong>internal sequence</strong> — so SUNAT receives the wrong fiscal number. This
+                                module captures the <strong>real</strong> document instead.</p>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="p-4 shadow-sm h-100"
                             style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-check-square-o mr-2"></i> Series Consistency
-                            </h4>
-                            <p style="text-align: justify;">Ensure your <strong>Series</strong> numbers match the
-                                document type. The module restricts valid series choices, preventing mismatches that
-                                could cause compliance issues with tax authorities.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="p-4 shadow-sm h-100"
-                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-link mr-2"></i> Stock & Invoice Link</h4>
-                            <p style="text-align: justify;">Seamlessly pass document information from <strong>Purchase
-                                    Orders</strong> to Invoices and Stock Pickings. No more re-typing data that already
-                                exists in the system.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="p-4 shadow-sm h-100"
-                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
-                            <h4 style="color: #5154a5;"><i class="fa fa-globe mr-2"></i> Localization Ready</h4>
-                            <p style="text-align: justify;">Built to support localization requirements (like Peru's
-                                SUNAT), ensuring that the mandatory document types and series are always present and
-                                correct.</p>
+                            <h4 style="color: #5154a5;"><i class="fa fa-files-o mr-2"></i> One Transfer, Many Documents</h4>
+                            <p style="text-align: justify;">A single receipt or delivery often covers
+                                <strong>several invoices</strong>. That is why the type, series and number are stored
+                                <strong>per movement</strong> (stock.move), not per picking — each line reports its own
+                                correct document.</p>
                         </div>
                     </div>
                 </div>
@@ -238,7 +160,7 @@
                     </h2>
                     <p class="my-1 text-center text-uppercase"
                         style="letter-spacing:4px !important; color:#74788D !important">
-                        Step-by-Step Implementation Guide</p>
+                        Step-by-Step implementation</p>
                 </div>
                 <!-- Setup Guide -->
                 <div class="row mt-5">
@@ -246,119 +168,93 @@
                         <div class="p-4"
                             style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
-                                Configuration</h3>
-                            <p class="lead">Prepare the system for automation:</p>
-
-                            <!-- Config Step 1: Document Types -->
-                            <div class="media mb-4">
-                                <i class="fa fa-check-circle text-success fa-2x mr-3"></i>
-                                <div class="media-body">
-                                    <h5 class="mt-0 font-weight-bold">A. Define Document Types</h5>
-                                    Go to <strong>Accounting > Configuration > Document Types</strong>. Ensure your
-                                    required types (e.g., '01' Factura, '03' Boleta, '09' Guía de Remisión) are created
-                                    and active. This is the foundation for all validations.
+                                Configuration Guide</h3>
+                            <p class="lead">Get the accurate Kardex running in a few steps:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Install this module
+                                            <strong>and</strong> the bridge <strong>l10n_pe_reports_stock_transfer_document</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> No configuration screen is
+                                            required: population is automatic.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Show the optional columns in
+                                            <strong>Inventory &gt; Reporting &gt; Product Moves</strong> to see the
+                                            captured document.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Run the mass action once to
+                                            correct historical records.</li>
+                                    </ul>
                                 </div>
                             </div>
-
-                            <!-- Config Step 2: Partners -->
-                            <div class="media mb-4">
-                                <i class="fa fa-users text-primary fa-2x mr-3"></i>
-                                <div class="media-body">
-                                    <h5 class="mt-0 font-weight-bold">B. Configure Partners (Optional)</h5>
-                                    Go to <strong>Contacts</strong>, open a Partner, and navigate to the
-                                    <strong>Accounting</strong> tab. Set a default <strong>Document Type</strong>. This
-                                    is crucial for frequent vendors or customers where the document type is always the
-                                    same.
-                                </div>
-                            </div>
-
-                            <!-- Config Step 3: Journals -->
-                            <div class="media mb-4">
-                                <i class="fa fa-book text-warning fa-2x mr-3"></i>
-                                <div class="media-body">
-                                    <h5 class="mt-0 font-weight-bold">C. Check Journal Settings</h5>
-                                    Go to <strong>Accounting > Configuration > Journals</strong>. For Purchase/Sale
-                                    journals, verify the "Use Documents" setting if available (depending on
-                                    localization). This ensures the journal is ready to accept document types.
-                                </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #791d97;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> Note:</strong> capturing the fields
+                                    does not change any report by itself. The bridge module is what makes the Kardex read
+                                    them; without captured data the report is byte-identical to the native one.</small>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Workflow / Operating Manual -->
                 <div class="row mt-5">
                     <div class="col-lg-12">
                         <div class="p-4"
                             style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
                             <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
-                                Operational Workflow</h3>
-
-                            <!-- Workflow: Purchase -->
-                            <div class="card mb-4 border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title text-primary font-weight-bold"><i
-                                            class="fa fa-shopping-cart mr-2"></i> Purchase Flow (Automatic)</h5>
-                                    <ol>
-                                        <li>Create a <strong>Purchase Order</strong>. The "Document Type" field may
-                                            appear if a partner default is set.</li>
-                                        <li><strong>Confirm</strong> the Order.</li>
-                                        <li><strong>Receipts (Stock Picking):</strong> The system auto-generates the
-                                            Receipt.
-                                            <ul>
-                                                <li>Open the Receipt.</li>
-                                                <li>Notice the <strong>Document Type</strong> is pre-filled.</li>
-                                                <li>Enter the <strong>Series</strong> and <strong>Number</strong>
-                                                    provided by the vendor.</li>
-                                                <li>Validation prevents mismatching series formats.</li>
-                                            </ul>
-                                        </li>
-                                        <li><strong>Vendor Bills:</strong> Click "Create Bill" from the PO.
-                                            <ul>
-                                                <li>The <strong>Document Type</strong> inherits from the PO/Partner.
-                                                </li>
-                                                <li>Enter the <strong>Document Number</strong> (e.g., F001-12345). The
-                                                    system splits this into Series and Number automatically.</li>
-                                            </ul>
-                                        </li>
-                                    </ol>
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">How the document is captured automatically:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-shopping-cart text-primary mr-2"></i> Purchases</h5>
+                                        <p class="text-muted">Post the Vendor Bill with its fiscal number; the receipt
+                                            movement is filled automatically with the bill's type, series and number.</p>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <!-- Workflow: Sales -->
-                            <div class="card mb-4 border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title text-success font-weight-bold"><i
-                                            class="fa fa-line-chart mr-2"></i> Sales Flow</h5>
-                                    <ol>
-                                        <li>Create a <strong>Sales Order</strong>.</li>
-                                        <li><strong>Delivery:</strong> The generated Delivery Order will default to
-                                            using the <strong>Sales Order Name</strong> as the document number if no
-                                            specific Series is configured, ensuring traceability.</li>
-                                        <li>If you need a specific <strong>Guía de Remisión</strong> series, select it
-                                            manually in the picking before validation.</li>
-                                    </ol>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-truck text-primary mr-2"></i> Sales</h5>
+                                        <p class="text-muted">Post the customer invoice and the delivery movement is
+                                            populated from the sale order line — even across split invoicing.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Workflow: Server Action -->
-                            <div class="card mb-4 border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title text-info font-weight-bold"><i class="fa fa-refresh mr-2"></i>
-                                        Bulk Update (Server Action)</h5>
-                                    <p>If you have historical records or transfers that were created before the invoice
-                                        was finalized, you can trigger a manual update:</p>
-                                    <ol>
-                                        <li>Go to the <strong>Transfers</strong> list view.</li>
-                                        <li>Select the records you want to update.</li>
-                                        <li>Click on <strong>Action > Actualizar datos factura</strong>.</li>
-                                    </ol>
-                                    <div class="alert alert-warning" role="alert">
-                                        <i class="fa fa-exclamation-triangle mr-1"></i> <strong>Important
-                                            Condition:</strong>
-                                        This action is <strong>non-destructive</strong>. It will ONLY update records
-                                        where the <em>Document Type</em>, <em>Series</em>, or <em>Number</em> fields are
-                                        <strong>EMPTY</strong>. It will NOT overwrite existing data to prevent
-                                        accidental loss of manual edits.
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-map-signs text-primary mr-2"></i> Remission Guides</h5>
+                                        <p class="text-muted">Movements without an invoice but with a remission guide are
+                                            filled with document type <strong>09</strong> and the guide's series/number,
+                                            so the column is always visible.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-hand-paper-o text-primary mr-2"></i> Manual Protection</h5>
+                                        <p class="text-muted">Anything you type by hand is flagged and never overwritten
+                                            by automatic population or by the "force" mass action.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-magic text-primary mr-2"></i> Quick-set</h5>
+                                        <p class="text-muted">The <strong>Set PLE Document</strong> button on a picking
+                                            stamps one document onto all its movements at once.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-history text-primary mr-2"></i> Historical Fix</h5>
+                                        <p class="text-muted">Two list actions — <em>Fill empty</em> and <em>Force
+                                            (keeps manual)</em> — correct thousands of legacy movements safely, never
+                                            wiping a good value.</p>
                                     </div>
                                 </div>
                             </div>
@@ -367,485 +263,314 @@
                 </div>
             </div>
         </section>
-        <!-- Technical Functional Logic -->
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
         <section class="oe_container pb-5">
-            <div class="mt-5 mb-5">
-                <div class="row">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
                     <div class="col-lg-12">
-                        <div class="p-4"
-                            style="border-left: 5px solid #17a2b8; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                            <h3 style="color: #17a2b8; font-weight: 700;"><i class="fa fa-code-fork mr-2"></i> 3.
-                                Technical Functional Logic</h3>
-                            <p class="lead">Understanding the algorithm behind the automation:</p>
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h5 class="font-weight-bold" style="color: #444;">A. Triggers (When does it happen?)
-                                    </h5>
-                                    <p>The system constantly monitors the link between Stock Picking (Transfer) and
-                                        Orders (Purchase/Sale). The auto-complete logic is triggered in two scenarios:
-                                    </p>
-                                    <ul class="mb-4">
-                                        <li class="mb-2"><strong>Automatic Trigger:</strong> When an Invoice linked to
-                                            the Purchase/Sales Order is created or its <em>Reference/Name</em> is
-                                            modified. The system detects the change via standard Odoo dependencies and
-                                            pushes the new data to the Transfer.</li>
-                                        <li><strong>Manual Trigger:</strong> Using the <strong>"Actualizar datos
-                                                factura"</strong> Server Action. This forces the system to re-evaluate
-                                            the logic on demand, useful for historical data correction or when the
-                                            automatic trigger was missed (e.g., data import).</li>
-                                    </ul>
-
-                                    <h5 class="font-weight-bold" style="color: #444;">B. Purchase Priority Algorithm
-                                    </h5>
-                                    <p>For Purchase Transfers (Receipts), the system must decide which "Document Number"
-                                        to use from the Vendor Bill. It follows this strict priority order:</p>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="badge badge-primary p-2 mr-3"
-                                            style="min-width: 100px; text-align: center;">1st Priority</span>
-                                        <div><strong>Localization Field</strong>
-                                            (<code>l10n_latam_document_number</code>): The official electronic document
-                                            number (e.g., F001-4455). This is the standard for compliant accounting.
-                                        </div>
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
                                     </div>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="badge badge-secondary p-2 mr-3"
-                                            style="min-width: 100px; text-align: center;">2nd Priority</span>
-                                        <div><strong>Vendor Reference</strong> (<code>ref</code>): If the localization
-                                            field is empty, it falls back to the manual "Bill Reference" field.</div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
                                     </div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="badge badge-light border p-2 mr-3"
-                                            style="min-width: 100px; text-align: center;">3rd Priority</span>
-                                        <div><strong>Internal Name</strong> (<code>name</code>): As a last resort, it
-                                            uses the Odoo internal sequence (e.g., BILL/2024/0001).</div>
-                                    </div>
-
-                                    <h5 class="font-weight-bold mt-4" style="color: #444;">C. Sales Logic (Delivery
-                                        Orders)</h5>
-                                    <p>For Sales Transfers (Delivery Orders), the logic is straightforward to ensure
-                                        consistency with the issued Invoice:</p>
-                                    <ul class="mb-0">
-                                        <li><strong>Source:</strong> It strictly uses the <strong>Invoice Name</strong>
-                                            (<code>name</code>).</li>
-                                        <li><strong>Format Required:</strong> The Invoice Name must contain a hyphen
-                                            (e.g., F001-0021) to be successfully split into Series and Number.</li>
-                                        <li><strong>Document Type:</strong> Inherited directly from the Invoice's
-                                            <em>Document Type</em> field.
-                                        </li>
-                                    </ul>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
                                 </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--Section Languages-->
-            <section class="oe_container pb-5 text-center">
-                <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
-                    <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
-                    <p class="lead">This module is fully translated into <strong>English</strong> and
-                        <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
-                        international organizations.
-                    </p>
-                    <div class="d-flex justify-content-center mt-3">
-                        <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
-                        <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
-                    </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
                 </div>
-            </section>
-            <!--Why Choose Ganemo?-->
-            <section class="oe_container pb-5">
-                <div class="mt64 mb64">
-
-                    <div class="col-lg-12 d-flex flex-column align-items-center">
-                        <h2 class="text-center text-uppercase"
-                            style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
-                            <span style="color:#3c6dac">Why Choose Ganemo?</span>
-                        </h2>
-                        <p class="my-1 text-center text-uppercase"
-                            style="letter-spacing:4px !important; color:#74788D !important">
-                            ----------------</p>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-sm-12 py-4">
-                        <p style="text-align: justify; font-size: 16px;">
-                            Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
-                            over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong>
-                            on
-                            the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
-                            Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for
-                            global
-                            businesses.
-                        </p>
-                    </div>
-                </div>
-            </section>
-            <!-- Primary CTA WhatsApp -->
-            <section class="oe_container py-5 text-center">
-                <div class="mt-4">
-                    <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
-                    <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
-                        directly.</p>
-
-                    <div class="row justify-content-center">
-                        <div class="col-lg-12">
-                            <!-- WhatsApp -->
-                            <div class="d-flex justify-content-center align-items-center mob-col mb-5">
-                                <img src="qrwhatsappsales.png" alt="QR WhatsApp"
-                                    style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
-                                    class="mr-4 mb-3">
-                                <div class="d-flex flex-column align-items-start">
-                                    <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
-                                    <p class="text-muted small mb-3">Fastest response time.</p>
-
-                                    <!-- Copy Link Component -->
-                                    <div class="d-inline-flex align-items-center mb-2"
-                                        style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
-                                        <!-- Label -->
-                                        <div
-                                            style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
-                                            COPY<br>LINK
-                                        </div>
-                                        <!-- Arrow Trick -->
-                                        <div
-                                            style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
-                                        </div>
-                                        <!-- URL -->
-                                        <a href="https://wa.me/18286726150" target="_blank"
-                                            style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
-                                            https://wa.me/18286726150
-                                        </a>
-                                    </div>
-
-                                    <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
-                                        <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Sales Email -->
-                            <div class="d-flex justify-content-center align-items-center mob-col mb-5">
-                                <img src="qremailsales.png" alt="QR Sales Email"
-                                    style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
-                                    class="mr-4 mb-3">
-                                <div class="d-flex flex-column align-items-start">
-                                    <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
-                                    <p class="text-muted small mb-3">For commercial inquiries.</p>
-
-                                    <!-- Copy Link Component -->
-                                    <div class="d-inline-flex align-items-center mb-2"
-                                        style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
-                                        <div
-                                            style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
-                                            COPY<br>ADDR
-                                        </div>
-                                        <div
-                                            style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
-                                        </div>
-                                        <a href="mailto:leads@ganemo.com" target="_blank"
-                                            style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
-                                            leads@ganemo.com
-                                        </a>
-                                    </div>
-                                    <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
-                                        <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- Book Demo -->
-                            <div class="d-flex justify-content-center align-items-center mob-col">
-                                <img src="qrbooksales.png" alt="QR Book Demo"
-                                    style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
-                                    class="mr-4 mb-3">
-                                <div class="d-flex flex-column align-items-start">
-                                    <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
-                                    <p class="text-muted small mb-3">Let's explore your needs.</p>
-
-                                    <!-- Copy Link Component -->
-                                    <div class="d-inline-flex align-items-center mb-2"
-                                        style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
-                                        <div
-                                            style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
-                                            COPY<br>LINK
-                                        </div>
-                                        <div
-                                            style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
-                                        </div>
-                                        <a href="https://www.ganemo.co/appointment/5" target="_blank"
-                                            style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
-                                            ganemo.co/appointment/5
-                                        </a>
-                                    </div>
-                                    <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
-                                        <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- Professional Services -->
-            <section class="oe_container pb-5">
-                <div class="mt-5 mb-5">
-                    <div class="col-lg-12 d-flex flex-column align-items-center">
-                        <h2 class="text-center text-uppercase"
-                            style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
-                            <span style="color:#3c6dac">Need More? We Do It All</span>
-                        </h2>
-                        <p class="my-1 text-center text-uppercase"
-                            style="letter-spacing:4px !important; color:#74788D !important">
-                            Professional Odoo Services</p>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-md-6 mb-4">
-                            <div class="p-4 shadow-sm h-100"
-                                style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
-                                <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
-                                    Implementation</h4>
-                                <p style="text-align: justify; color: #555;">
-                                    Transform your business with a full Odoo implementation. We analyze, configure, and
-                                    train your team to maximize productivity. From Accounting to Inventory, we handle
-                                    the
-                                    complexity so you can focus on growth.
-                                </p>
-                            </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-shopping-cart mr-2"></i>
+                                Scenario 1: Purchase Capture</h4>
+                            <ol class="mt-3">
+                                <li>Create and confirm a Purchase Order; validate the receipt.</li>
+                                <li>Register the Vendor Bill with its document type and number; <strong>post</strong> it.</li>
+                                <li><strong>Test:</strong> the receipt movement now shows the bill's type, series and
+                                    number in the optional <em>Transfer Doc</em> columns.</li>
+                            </ol>
                         </div>
-                        <div class="col-md-6 mb-4">
-                            <div class="p-4 shadow-sm h-100"
-                                style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
-                                <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev
-                                    &
-                                    Migration</h4>
-                                <p style="text-align: justify; color: #555;">
-                                    Need a custom feature? Or stuck on an older version? We develop high-performance
-                                    custom
-                                    modules and migrate your existing code to Odoo 19 with zero data loss. Expert
-                                    developers
-                                    at your service.
-                                </p>
-                            </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-hand-paper-o mr-2"></i>
+                                Scenario 2: Manual Protection</h4>
+                            <ol class="mt-3">
+                                <li>Type a series/number by hand on a movement.</li>
+                                <li>Post the related invoice, then run <em>Force transfer documents</em>.</li>
+                                <li><strong>Test:</strong> your manual value is preserved — it is never overwritten.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #28a745;">
+                            <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-map-signs mr-2"></i>
+                                Scenario 3: Remission Guide</h4>
+                            <p class="mt-2">A movement with a remission guide but no invoice is filled with type
+                                <strong>09</strong> and the guide's series/number — the report result matches the
+                                native Kardex, only now the field is visible.</p>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #ffc107;">
+                            <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-history mr-2"></i>
+                                Scenario 4: Historical Correction</h4>
+                            <ol>
+                                <li>Open <strong>Inventory &gt; Reporting &gt; Product Moves</strong> and select legacy
+                                    movements.</li>
+                                <li>Run <em>PLE: Fill empty transfer documents</em>.</li>
+                                <li><strong>Result:</strong> empty movements are filled; already-good values are kept.</li>
+                            </ol>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- QA / USER TESTING SCENARIOS -->
-            <section class="oe_container pb-5">
-                <div class="mt-5 mb-5">
-                    <div class="col-lg-12 d-flex flex-column align-items-center">
-                        <h2 class="text-center text-uppercase"
-                            style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
-                            <span style="color:#3c6dac">QA / User Testing Scenarios</span>
-                        </h2>
-                        <p class="my-1 text-center text-uppercase"
-                            style="letter-spacing:4px !important; color:#74788D !important">
-                            Enterprise Validation Plan</p>
-                    </div>
-                    <div class="row mt-5">
-                        <div class="col-lg-12">
-                            <!-- Scenario 1 -->
-                            <div class="card mb-4 shadow-sm border-left-primary">
-                                <div class="card-body">
-                                    <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-file-text-o mr-2"></i>
-                                        Scenario 1: Standard Invoice Generation</h4>
-                                    <ol class="mt-3">
-                                        <li>Create a Purchase Order for a Vendor with a default Document Type (e.g.,
-                                            Factura).</li>
-                                        <li>Confirm the Order and click <strong>Create Bill</strong>.</li>
-                                        <li><strong>Verify:</strong> The created Bill has 'Factura' pre-selected.</li>
-                                        <li><strong>Verify:</strong> Enter a valid Series-Number (e.g., F001-445566).
-                                            The
-                                            system accepts it.</li>
-                                        <li><strong>Negative Test:</strong> Enter an invalid Series (e.g., 0001-123).
-                                            The
-                                            system should raise a validation error if the type requires a letter.</li>
-                                    </ol>
-                                </div>
-                            </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
 
-                            <!-- Scenario 2 -->
-                            <div class="card mb-4 shadow-sm border-left-info">
-                                <div class="card-body">
-                                    <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-truck mr-2"></i>
-                                        Scenario
-                                        2:
-                                        Stock Transfers & Partner Defaults</h4>
-                                    <ol class="mt-3">
-                                        <li>Go to <strong>Contacts</strong> and set 'Guía de Remisión Remitente' as
-                                            default
-                                            for Partner X.</li>
-                                        <li>Create a Delivery Order for Partner X.</li>
-                                        <li><strong>Verify:</strong> The Document Type automatically switches to 'Guía
-                                            de
-                                            Remisión Remitente'.</li>
-                                        <li><strong>Verify:</strong> The Series/Number fields are visible and editable.
-                                        </li>
-                                    </ol>
-                                </div>
-                            </div>
-
-                            <!-- Scenario 3 -->
-                            <div class="card mb-4 shadow-sm border-left-warning">
-                                <div class="card-body">
-                                    <h4 style="color: #ffc107; font-weight: 700;"><i class="fa fa-list-ol mr-2"></i>
-                                        Scenario 3:
-                                        Purchase Logic Priority (New Feature)</h4>
-                                    <p>Verify how the system extracts the Transfer ID from invoice fields:</p>
-                                    <ol class="mt-3">
-                                        <li><strong>Case A (Localization):</strong> Create a Bill with
-                                            <code>l10n_latam_document_number</code> = 'F001-999'. The Receipt should
-                                            inherit
-                                            'F001' and '999'.
-                                        </li>
-                                        <li><strong>Case B (Ref):</strong> Create a Bill with NO localization number but
-                                            <code>ref</code> = 'INV-002'. The Receipt should inherit 'INV' and '002'.
-                                        </li>
-                                        <li><strong>Case C (Name):</strong> Create a Bill with no Ref, but name
-                                            'BILL-003'.
-                                            The Receipt should inherit 'BILL' and '003'.</li>
-                                    </ol>
-                                </div>
-                            </div>
-
-                            <!-- Scenario 4 -->
-                            <div class="card mb-4 shadow-sm border-left-danger">
-                                <div class="card-body">
-                                    <h4 style="color: #dc3545; font-weight: 700;"><i class="fa fa-refresh mr-2"></i>
-                                        Scenario 4:
-                                        Bulk Update Server Action</h4>
-                                    <ol class="mt-3">
-                                        <li>Select multiple Stock Picking records in list view that have empty Document
-                                            fields.</li>
-                                        <li>Action > <strong>Actualizar datos factura</strong>.</li>
-                                        <li><strong>Verify:</strong> All selected records attempt to fetch data from
-                                            their
-                                            related orders/invoices.</li>
-                                    </ol>
-                                </div>
-                            </div>
-                            <!-- Scenario 5 -->
-                            <div class="card mb-4 shadow-sm border-left-secondary">
-                                <div class="card-body">
-                                    <h4 style="color: #6c757d; font-weight: 700;"><i class="fa fa-globe mr-2"></i>
-                                        Scenario
-                                        5:
-                                        Multi-Company / Non-Peruvian</h4>
-                                    <ol class="mt-3">
-                                        <li>Switch to a Company with Country != Peru (e.g., US Company).</li>
-                                        <li>Open a Stock Picking.</li>
-                                        <li><strong>Verify:</strong> The 'Transfer Document Type', 'Series', and
-                                            'Number'
-                                            fields are <strong>INVISIBLE</strong>.</li>
-                                    </ol>
-                                </div>
-                            </div>
-                            <!-- Scenario 6 -->
-                            <div class="card mb-4 shadow-sm border-left-success">
-                                <div class="card-body">
-                                    <h4 style="color: #28a745; font-weight: 700;"><i class="fa fa-line-chart mr-2"></i>
-                                        Scenario 6:
-                                        Sales Auto-complete Logic</h4>
-                                    <ol class="mt-3">
-                                        <li>Create a <strong>Sales Order</strong> and Confirm it (Delivery Created).
-                                        </li>
-                                        <li>Create the <strong>Invoice</strong> (Draft). Set the Document Type (e.g.,
-                                            Factura).</li>
-                                        <li><strong>Post</strong> the Invoice. It generates a Name (e.g., F001-0021).
-                                        </li>
-                                        <li><strong>Verify:</strong> Go back to the Delivery Order (Transfer).</li>
-                                        <li>The <em>Document Type</em>, <em>Series</em> (F001), and <em>Number</em>
-                                            (0021) must be auto-filled from the Invoice Name.</li>
-                                    </ol>
-                                </div>
-                            </div>
-                            <!-- Scenario 7 -->
-                            <div class="card mb-4 shadow-sm border-left-dark">
-                                <div class="card-body">
-                                    <h4 style="color: #343a40; font-weight: 700;"><i class="fa fa-clock-o mr-2"></i>
-                                        Scenario 7:
-                                        Trigger Timing & Updates</h4>
-                                    <ol class="mt-3">
-                                        <li><strong>Modify Source:</strong> Go to the Invoice from Scenario 6. Reset to
-                                            Draft, change the Number to 'F001-9999', and Post again.</li>
-                                        <li><strong>Verify Automatic:</strong> Check the Transfer. It should
-                                            automatically update to '9999'.</li>
-                                        <li><strong>Manual Action Test:</strong> Manually clear the fields in the
-                                            Transfer.</li>
-                                        <li>Run <strong>Action > Actualizar datos factura</strong>.</li>
-                                        <li><strong>Verify Manual:</strong> The fields are re-populated correctly.</li>
-                                    </ol>
-                                </div>
-                            </div>
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">The Kardex still shows the old series?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> the bridge module is not installed, or
+                                the movement was never populated.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> install
+                                <strong>l10n_pe_reports_stock_transfer_document</strong> and run the mass action to fill
+                                historical movements.</p>
                         </div>
                     </div>
-            </section>
-            <!-- FAQ & TROUBLESHOOTING -->
-            <section class="oe_container pb-5">
-                <div class="mt-5 mb-5">
-                    <div class="col-lg-12 d-flex flex-column align-items-center">
-                        <h2 class="text-center text-uppercase"
-                            style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
-                            <span style="color:#3c6dac">FAQ & Troubleshooting</span>
-                        </h2>
-                        <p class="my-1 text-center text-uppercase"
-                            style="letter-spacing:4px !important; color:#74788D !important">
-                            Common Resolutions</p>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">I fixed an invoice, but the movement is stale?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> editing an already-posted invoice does
+                                not re-trigger population.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> run
+                                <em>PLE: Force transfer documents</em> before generating the PLE for the period (schedule
+                                it monthly).</p>
+                        </div>
                     </div>
-
-                    <div class="row mt-5">
-                        <!-- Q1 -->
-                        <div class="col-md-6 mb-4">
-                            <div class="p-4 h-100 shadow-sm"
-                                style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
-                                <h5 style="font-weight: 700; color: #333;">Why can't I see the Document fields?</h5>
-                                <p class="text-muted mt-2"><strong>Reason:</strong> The fields are hidden if the
-                                    Company's
-                                    Country is not set to Peru (PE).</p>
-                                <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> Go
-                                    to
-                                    Settings > Companies and ensure the Country is set to 'Peru'.</p>
-                            </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">I can't see the fields on the movement list?</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> the columns are optional and hidden by
+                                default.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                use the optional-columns toggle on the top-right of the list to show them.</p>
                         </div>
-                        <!-- Q2 -->
-                        <div class="col-md-6 mb-4">
-                            <div class="p-4 h-100 shadow-sm"
-                                style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
-                                <h5 style="font-weight: 700; color: #333;">Series/Number not updating from Invoice?</h5>
-                                <p class="text-muted mt-2"><strong>Reason:</strong> The Invoice might not be posted, or
-                                    the
-                                    fields are empty.</p>
-                                <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong>
-                                    Ensure the Vendor Bill has a valid 'Document Number' (with valid format like
-                                    F001-123)
-                                    and 'Document Type' set. Then use "Actualizar datos factura".</p>
-                            </div>
-                        </div>
-                        <!-- Q3 -->
-                        <div class="col-md-6 mb-4">
-                            <div class="p-4 h-100 shadow-sm"
-                                style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
-                                <h5 style="font-weight: 700; color: #333;">Is 'l10n_pe_delivery_note_20' required?</h5>
-                                <p class="text-muted mt-2"><strong>No.</strong> We have optimized the module to run
-                                    independently of the full delivery note suite. It only requires the standard
-                                    'l10n_latam_invoice_document' which is included in standard Odoo enterprise.</p>
-                            </div>
-                        </div>
-                        <!-- Q4 -->
-                        <div class="col-md-6 mb-4">
-                            <div class="p-4 h-100 shadow-sm"
-                                style="background-color: #fff; border-radius: 10px; border-top: 5px solid #17a2b8;">
-                                <h5 style="font-weight: 700; color: #333;">Can I use this for non-Peruvian companies?
-                                </h5>
-                                <p class="text-muted mt-2"><strong>Yes, but...</strong> The fields will be hidden by
-                                    default. If you need this functionality for other countries, you would need to
-                                    extend
-                                    the view to remove the 'country_code' check.</p>
-                            </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Is it safe for non-Peruvian companies?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> Yes.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> the
+                                fields stay empty outside LATAM localizations, and the report is unchanged until data is
+                                captured.</p>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
     </div>
     <!-- FOOTER -->
     <div class="container mt-5 pt-5 border-top">
@@ -984,8 +709,12 @@
                     </div>
                 </div>
             </div>
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
+                </div>
+            </div>
         </div>
-    </div>
 </body>
-
 </html>

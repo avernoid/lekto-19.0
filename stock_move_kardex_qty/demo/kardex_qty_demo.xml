@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Demo moves that exercise every kardex_qty branch, so the column can be
+        seen and grouped in the native Moves Analysis list:
+          +10  incoming (Units)
+          +24  incoming in a UoM != the product UoM (2 Dozen -> 24 Units): the
+               Kardex Qty is in the product reference UoM, not the move UoM
+          -3   outgoing (Units)
+           0   internal transfer (not valued as in/out -> does not move on-hand)
+          +1   customer return (counts as incoming)
+        Built through the real confirm/assign/done flow (see stock.move
+        ._kardex_qty_build_demo) so valuation and is_in/is_out are genuine.
+    -->
+    <function model="stock.move" name="_kardex_qty_build_demo"/>
+</odoo>

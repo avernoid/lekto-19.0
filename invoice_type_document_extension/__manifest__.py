@@ -1,21 +1,29 @@
 {
-    "name": "Related fields for purchases and sales",
-    "version": "19.0.1.0.1",
+    "name": "Kardex PLE 13.1 - Transfer Document Capture",
+    "version": "19.0.2.4.1",
     "author": "Ganemo",
     "maintainer": "Ganemo",
     "company": "Ganemo",
     "website": "https://www.ganemo.co",
     'category': 'Accounting',
-    "summary": "This module will allow us to place the type of document, document series and payment voucher number automatically through the records of purchase and sale invoices.",
-    "description": """This module will allow us to place the type of document, document series and payment voucher number automatically through the records of purchase and sale invoices.""",
+    "summary": "Capture the real fiscal document (type, series and number) per stock movement for the Peruvian PLE 13.1 (Kardex).",
+    "description": """Capture the supporting fiscal document -- type, series and number -- on every stock movement, so the Peruvian PLE 13.1 (Permanent Valued Inventory Ledger / Kardex) reports the real document number from the vendor/customer invoice or the remission guide instead of an internal sequence. Per-movement capture, event-driven population, mass correction for historical records and manual-edit protection.""",
     "depends": [
-        'stock', 
+        'stock',
         'l10n_latam_invoice_document',
         'purchase_stock',
         'sale_stock'
     ],
     'data': [
-        'views/stock_picking_views.xml'
+        'security/ir.model.access.csv',
+        'wizard/stock_transfer_document_quickset_views.xml',
+        'wizard/stock_transfer_document_range_populate_views.xml',
+        'wizard/stock_transfer_document_manage_views.xml',
+        'views/stock_move_views.xml',
+        'views/stock_picking_views.xml',
+    ],
+    'demo': [
+        'data/demo/invoice_type_document_extension_demo.xml',
     ],
     'application': False,
     "installable": True,

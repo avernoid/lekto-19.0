@@ -1,46 +1,423 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* invoice_type_document_extension
+# Translation of invoice_type_document_extension to Spanish
+# . module: invoice_type_document_extension
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the invoice_type_document_extension package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-10 01:50+0000\n"
-"PO-Revision-Date: 2026-02-10 01:50+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: Odoo Module invoice_type_document_extension 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-07-14 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_move__transfer_document_type_id
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_quickset__transfer_document_type_id
+msgid "Doc Type"
+msgstr "Tipo Doc"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_move__serie_transfer_document
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_quickset__serie_transfer_document
+msgid "Serie"
+msgstr "Serie"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_move__number_transfer_document
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_quickset__number_transfer_document
+msgid "Correlativo"
+msgstr "Correlativo"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_move__manual_override
+msgid "Transfer Doc Manually Set"
+msgstr "Doc. Traslado Editado Manualmente"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_quickset__picking_id
+msgid "Picking"
+msgstr "Transferencia"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_quickset__override_manual
+msgid "Overwrite manual edits"
+msgstr "Sobrescribir ediciones manuales"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_move__transfer_document_type_id
+msgid ""
+"Document type backing this movement for the PLE 13.1 (Kardex). If left "
+"blank, the Kardex falls back to the native behaviour (remission guide, "
+"invoice name, default 00)."
+msgstr ""
+"Tipo de documento que respalda este movimiento para el PLE 13.1 (Kardex). Si "
+"se deja en blanco, el Kardex recurre al comportamiento nativo (guía de "
+"remisión, nombre de la factura, 00 por defecto)."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_move__serie_transfer_document
+msgid "Document series backing this movement for the PLE 13.1 (Kardex)."
+msgstr ""
+"Serie del documento que respalda este movimiento para el PLE 13.1 (Kardex)."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_move__number_transfer_document
+msgid "Document number backing this movement for the PLE 13.1 (Kardex)."
+msgstr ""
+"Número del documento que respalda este movimiento para el PLE 13.1 (Kardex)."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_move__manual_override
+msgid ""
+"Set automatically when a user edits the transfer document fields by hand. "
+"Automatic population never overwrites a move flagged this way."
+msgstr ""
+"Se activa automáticamente cuando un usuario edita a mano los campos del "
+"documento de traslado. El poblado automático nunca sobrescribe un movimiento "
+"marcado de esta forma."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_quickset__picking_id
+msgid "Transfer whose movements will receive the document."
+msgstr "Transferencia cuyos movimientos recibirán el documento."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_quickset__transfer_document_type_id
+msgid ""
+"Document type (SUNAT table 10) to stamp on every movement of this transfer "
+"for the PLE 13.1 (Kardex)."
+msgstr ""
+"Tipo de documento (tabla 10 de SUNAT) para estampar en cada movimiento de "
+"esta transferencia para el PLE 13.1 (Kardex)."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_quickset__serie_transfer_document
+msgid "Document series to stamp on every movement of this transfer."
+msgstr "Serie del documento para estampar en cada movimiento de esta transferencia."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_quickset__number_transfer_document
+msgid "Document number (folio) to stamp on every movement of this transfer."
+msgstr ""
+"Número (folio) del documento para estampar en cada movimiento de esta "
+"transferencia."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_quickset__override_manual
+msgid ""
+"If enabled, also overwrite movements whose document was edited by hand. If "
+"disabled, manual movements are left untouched."
+msgstr ""
+"Si se activa, también sobrescribe los movimientos cuyo documento se editó a "
+"mano. Si se desactiva, los movimientos manuales quedan intactos."
+
+#. module: invoice_type_document_extension
+#: model:ir.actions.act_window,name:invoice_type_document_extension.action_stock_transfer_document_manage
+#: model_terms:ir.ui.view,arch_db:invoice_type_document_extension.stock_transfer_document_manage_form
+msgid "Assign document type & number"
+msgstr "Asignar tipo y número documento"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_manage__strategy
+msgid "Action to perform"
+msgstr "Acción a realizar"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_manage__strategy
+msgid ""
+"Fill empty: only movements with no document yet (safe, touches nothing "
+"already filled).\n"
+"Re-derive: recompute from each movement's invoice or remission guide and "
+"overwrite automatic values (manual ones stay protected unless you tick the "
+"box below).\n"
+"Recover from picking: copy the value older versions stored on the picking "
+"onto the selected movements."
+msgstr ""
+"Rellenar vacíos: solo movimientos sin documento aún (seguro, no toca nada ya "
+"lleno).\n"
+"Re-derivar: recalcula desde la factura o guía de remisión de cada movimiento "
+"y sobrescribe los valores automáticos (los manuales quedan protegidos salvo "
+"que marques la casilla de abajo).\n"
+"Recuperar del picking: copia el valor que versiones antiguas guardaron en la "
+"transferencia sobre los movimientos seleccionados."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields.selection,name:invoice_type_document_extension.selection__stock_transfer_document_manage__strategy__fill_empty
+msgid "Fill empty only (safe)"
+msgstr "Rellenar solo los vacíos (seguro)"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields.selection,name:invoice_type_document_extension.selection__stock_transfer_document_manage__strategy__rederive
+msgid "Re-derive from invoice / remission guide"
+msgstr "Re-derivar desde factura / guía de remisión"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields.selection,name:invoice_type_document_extension.selection__stock_transfer_document_manage__strategy__recover_legacy
+msgid "Recover serie/number stored on the picking"
+msgstr "Recuperar serie/correlativo guardados en el picking"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_manage__include_manual
+msgid "Also overwrite manual edits"
+msgstr "Sobrescribir también ediciones manuales"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_manage__include_manual
+msgid ""
+"Re-derive and Recover modes. If enabled, also overwrite movements whose "
+"document was edited by hand. If disabled (default), manual movements are left "
+"untouched. Use with care: this replaces human edits."
+msgstr ""
+"Modos Re-derivar y Recuperar. Si se activa, también sobrescribe movimientos "
+"cuyo documento se editó a mano. Si se desactiva (por defecto), los "
+"movimientos manuales quedan intactos. Úsalo con cuidado: reemplaza ediciones "
+"humanas."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_manage__move_ids
+msgid "Movements"
+msgstr "Movimientos"
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_transfer_document_manage__move_ids
+msgid "Stock movements this wizard will act on (the current selection)."
+msgstr "Movimientos de stock sobre los que actuará este asistente (la selección actual)."
+
+#. module: invoice_type_document_extension
+#: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_transfer_document_manage__banner
+msgid "Effect"
+msgstr "Efecto"
+
+#. module: invoice_type_document_extension
+#: model_terms:ir.ui.view,arch_db:invoice_type_document_extension.stock_transfer_document_manage_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: invoice_type_document_extension
+#: model_terms:ir.ui.view,arch_db:invoice_type_document_extension.stock_transfer_document_manage_form
+msgid "View affected movements"
+msgstr "Ver movimientos afectados"
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"Of %(total)s selected movements: %(empty)s empty (no document yet) · %(auto)s "
+"automatic (filled by the system from the invoice/guide) · %(manual)s manual "
+"(edited by hand)."
+msgstr ""
+"De %(total)s movimientos seleccionados: %(empty)s vacíos (sin documento aún) "
+"· %(auto)s automáticos (rellenados por el sistema desde la factura/guía) · "
+"%(manual)s manuales (editados a mano)."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"%(n)s empty movements will be filled from their invoice or remission guide. "
+"Automatic and manual movements are left untouched."
+msgstr ""
+"Se rellenarán %(n)s movimientos vacíos desde su factura o guía de remisión. "
+"Los movimientos automáticos y manuales quedan intactos."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"Empty movements without a posted invoice or remission guide cannot be filled "
+"and stay empty, so this number can be lower than the empty count above."
+msgstr ""
+"Los movimientos vacíos sin una factura publicada o guía de remisión no se "
+"pueden rellenar y se quedan vacíos, así que este número puede ser menor que "
+"el conteo de vacíos de arriba."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"%(n)s movements will be re-derived from their invoice or guide (empty ones "
+"plus automatic ones whose value would change). The %(manual)s manual "
+"movements stay protected."
+msgstr ""
+"Se re-derivarán %(n)s movimientos desde su factura o guía (los vacíos más los "
+"automáticos cuyo valor cambiaría). Los %(manual)s movimientos manuales quedan "
+"protegidos."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"A re-derivation that comes back empty (e.g. the invoice is not posted) never "
+"wipes an existing value."
+msgstr ""
+"Una re-derivación que sale vacía (p. ej. la factura no está publicada) nunca "
+"borra un valor existente."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"%(n)s movements will be re-derived from their invoice or guide, INCLUDING the "
+"%(manual)s manual ones — their hand-typed values will be replaced."
+msgstr ""
+"Se re-derivarán %(n)s movimientos desde su factura o guía, INCLUYENDO los "
+"%(manual)s manuales — sus valores escritos a mano serán reemplazados."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"This database has no legacy picking columns; this option does not apply. Use "
+"“Re-derive” or “Fill empty” instead."
+msgstr ""
+"Esta base de datos no tiene columnas heredadas en el picking; esta opción no "
+"aplica. Usa “Re-derivar” o “Rellenar vacíos” en su lugar."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"The legacy document from the picking will be copied onto up to %(n)s "
+"movements, INCLUDING the %(manual)s manual ones — their hand-typed values "
+"will be replaced. Changed movements are flagged as manual."
+msgstr ""
+"El documento heredado del picking se copiará sobre hasta %(n)s movimientos, "
+"INCLUYENDO los %(manual)s manuales — sus valores escritos a mano serán "
+"reemplazados. Los movimientos cambiados se marcan como manuales."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"The legacy document from the picking will be copied onto up to %(n)s non-"
+"manual movements. The %(manual)s manual movements stay protected. Changed "
+"movements are flagged as manual."
+msgstr ""
+"El documento heredado del picking se copiará sobre hasta %(n)s movimientos no "
+"manuales. Los %(manual)s movimientos manuales quedan protegidos. Los "
+"movimientos cambiados se marcan como manuales."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"'Legacy' is the document that older module versions saved on the transfer "
+"(picking); newer versions store it on each movement. 'Up to' because only "
+"movements whose picking actually kept such a value change — the rest stay "
+"unchanged."
+msgstr ""
+"'Heredado' es el documento que versiones antiguas del módulo guardaban en la "
+"transferencia (picking); las versiones nuevas lo guardan en cada movimiento. "
+"'Hasta' porque solo cambian los movimientos cuyo picking realmente conservó "
+"tal valor — el resto queda sin cambios."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid ""
+"Example: a movement with invoice F001-00001234 becomes Type 01 (Invoice) · "
+"Serie F001 · Correlativo 1234. With no invoice but a guide T001-000045 → Type "
+"09 (Remission Guide) · Serie T001 · Correlativo 45."
+msgstr ""
+"Ejemplo: un movimiento con factura F001-00001234 queda Tipo 01 (Factura) · "
+"Serie F001 · Correlativo 1234. Sin factura pero con guía T001-000045 → Tipo "
+"09 (Guía de Remisión) · Serie T001 · Correlativo 45."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid "Select at least one movement."
+msgstr "Selecciona al menos un movimiento."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid "This database has no legacy picking columns to recover from."
+msgstr "Esta base de datos no tiene columnas heredadas en el picking de las que recuperar."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/wizard/stock_transfer_document_manage.py:0
+msgid "Affected movements"
+msgstr "Movimientos afectados"
+
+#. module: invoice_type_document_extension
+#: model_terms:ir.ui.view,arch_db:invoice_type_document_extension.stock_picking_view_form_inherit_invoice_type_document_extension
+msgid "Set PLE Document"
+msgstr "Establecer documento PLE"
+
+#. module: invoice_type_document_extension
+#: model_terms:ir.ui.view,arch_db:invoice_type_document_extension.stock_transfer_document_quickset_form
+msgid "Set Transfer Document"
+msgstr "Establecer documento de traslado"
+
+#. module: invoice_type_document_extension
+#: model_terms:ir.ui.view,arch_db:invoice_type_document_extension.stock_transfer_document_quickset_form
+msgid "Apply"
+msgstr "Aplicar"
 
 #. module: invoice_type_document_extension
 #: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_picking__transfer_document_type_id
-msgid "Transfer Doc Type"
-msgstr "Tipo doc. traslado"
+msgid "Doc Type (legacy)"
+msgstr "Tipo Doc (heredado)"
 
 #. module: invoice_type_document_extension
 #: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_picking__serie_transfer_document
-msgid "Transfer Doc Series"
-msgstr "Serie doc. traslado"
+msgid "Serie (legacy)"
+msgstr "Serie (heredado)"
 
 #. module: invoice_type_document_extension
 #: model:ir.model.fields,field_description:invoice_type_document_extension.field_stock_picking__number_transfer_document
-msgid "Transfer Doc Number"
-msgstr "Número doc. traslado"
+msgid "Correlativo (legacy)"
+msgstr "Correlativo (heredado)"
 
 #. module: invoice_type_document_extension
 #: model:ir.model.fields,help:invoice_type_document_extension.field_stock_picking__transfer_document_type_id
-msgid "This document type is used for PLE 13.1 validation. If left blank, Odoo will attempt to fill it from the Remission Guide, Purchase/Sales Order, or default to 00."
-msgstr "Esta serie se utiliza para el PLE 13.1, si lo deja en Blanco, Odoo lo completará con valores por defecto que provienen de la guía de Remisión, sino, de la Orden de compra o de venta, sino, lo completará con 00."
+msgid ""
+"Legacy field kept only to preserve the historical value stored on the "
+"picking by older versions. The active PLE 13.1 capture now lives on the "
+"stock movement (stock.move); nothing reads this field."
+msgstr ""
+"Campo heredado que se conserva solo para preservar el valor histórico que las "
+"versiones antiguas guardaban en la transferencia. La captura activa del PLE "
+"13.1 ahora vive en el movimiento de stock (stock.move); nada lee este campo."
 
 #. module: invoice_type_document_extension
 #: model:ir.model.fields,help:invoice_type_document_extension.field_stock_picking__serie_transfer_document
-msgid "This series is used for PLE 13.1 validation. If left blank, Odoo will attempt to fill it from the Remission Guide, Purchase/Sales Order, or default to 00."
-msgstr "Esta serie se utiliza para el PLE 13.1, si lo deja en Blanco, Odoo lo completará con valores por defecto que provienen de la guía de Remisión, sino, de la Orden de compra o de venta, sino, lo completará con 00."
+#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_picking__number_transfer_document
+msgid ""
+"Legacy field kept only to preserve historical data. See Doc Type (legacy)."
+msgstr ""
+"Campo heredado que se conserva solo para preservar datos históricos. Ver Tipo "
+"Doc (heredado)."
 
 #. module: invoice_type_document_extension
-#: model:ir.model.fields,help:invoice_type_document_extension.field_stock_picking__number_transfer_document
-msgid "This number is used for PLE 13.1 validation. If left blank, Odoo will attempt to fill it from the Remission Guide, Purchase/Sales Order, or default to 00."
-msgstr "Este número se utiliza para el PLE 13.1, si lo deja en Blanco, Odoo lo completará con valores por defecto que provienen de la guía de Remisión, sino, de la Orden de compra o de venta, sino, lo completará con 00."
+#. odoo-python
+#: code:addons/invoice_type_document_extension/models/stock_move.py:0
+#, python-format
+msgid "The transfer document series must be 20 characters or fewer (got %s)."
+msgstr ""
+"La serie del documento de traslado debe tener 20 caracteres o menos (se "
+"recibió %s)."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/models/stock_move.py:0
+#, python-format
+msgid "The transfer document number must be 20 characters or fewer (got %s)."
+msgstr ""
+"El número del documento de traslado debe tener 20 caracteres o menos (se "
+"recibió %s)."
+
+#. module: invoice_type_document_extension
+#. odoo-python
+#: code:addons/invoice_type_document_extension/models/stock_move.py:0
+#, python-format
+msgid "The transfer document number must be positive (got %s)."
+msgstr "El número del documento de traslado debe ser positivo (se recibió %s)."

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="l10n_pe_operation_type_assign_form" model="ir.ui.view">
+        <field name="name">l10n.pe.operation.type.assign.form</field>
+        <field name="model">l10n_pe.operation.type.assign</field>
+        <field name="arch" type="xml">
+            <form string="Assign SUNAT Operation Type">
+                <div class="alert alert-info" role="status">
+                    <p>
+                        Assign the <b>SUNAT Table 12 operation type</b> to the
+                        <field name="move_count" class="oe_inline" readonly="1"/>
+                        selected movement(s). This value feeds the Peruvian
+                        Kardex PLE per movement.
+                    </p>
+                </div>
+
+                <group>
+                    <field name="source" widget="radio"/>
+                    <field name="policy"/>
+                    <field name="operation_type"
+                           invisible="source != 'fixed'"
+                           required="source == 'fixed'"/>
+                </group>
+
+                <!-- Dynamic explanatory banners per source -->
+                <div class="alert alert-secondary" role="status"
+                     invisible="source != 'auto'">
+                    <b>Automatic:</b> infers the type from the movement itself —
+                    sale → 01, purchase → 02, production → 19/27, scrap → 13,
+                    inventory adjustment → 28, otherwise the transfer direction.
+                    A smart default; you can always correct it by hand afterwards.
+                </div>
+                <div class="alert alert-secondary" role="status"
+                     invisible="source != 'from_picking'">
+                    <b>From the transfer:</b> copies the SUNAT operation type set
+                    on each movement's picking. Useful right after classifying at
+                    the transfer level. Requires the PLE stock reports module.
+                </div>
+                <div class="alert alert-secondary" role="status"
+                     invisible="source != 'fixed'">
+                    <b>A fixed value:</b> stamps the code you pick above on every
+                    eligible movement. Examples — <b>07 Bonus</b>: free
+                    promotional delivery; <b>13 Shrinkage</b>: normal physical
+                    loss; <b>28 Adjustment for Inventory Difference</b>: result of
+                    a physical count.
+                </div>
+
+                <group string="Preview">
+                    <field name="eligible_count"/>
+                    <field name="filled_count"/>
+                    <field name="manual_count"/>
+                    <field name="preview_hint" nolabel="1" colspan="2" readonly="1"/>
+                </group>
+
+                <footer>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_l10n_pe_operation_type_assign_move" model="ir.actions.act_window">
+        <field name="name">Assign SUNAT Operation Type</field>
+        <field name="res_model">l10n_pe.operation.type.assign</field>
+        <field name="binding_model_id" ref="stock.model_stock_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_l10n_pe_operation_type_assign_picking" model="ir.actions.act_window">
+        <field name="name">Assign SUNAT Operation Type</field>
+        <field name="res_model">l10n_pe.operation.type.assign</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_view_types">list</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
