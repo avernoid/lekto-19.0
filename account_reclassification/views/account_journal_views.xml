@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_journal_form_reclass" model="ir.ui.view">
+        <field name="name">account.journal.form.inherit.reclass</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <!-- Anchored on the page, not on a sibling field: a field moving
+                 around inside the page must not break the upgrade. -->
+            <xpath expr="//page[@name='bank_account']" position="inside">
+                <group name="reclass" string="Reclassification" invisible="type != 'purchase'">
+                    <field name="generate_reclass_mirror"/>
+                    <field name="reclass_mirror_journal_id"
+                           options="{'no_quick_create': True}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

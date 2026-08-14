@@ -1,0 +1,353 @@
+# Translation of account_reclassification to Spanish
+# . module: account_reclassification
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the account_reclassification package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module account_reclassification 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-13 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_account_account__reclass_counterpart_account_id
+msgid "Counterpart Account"
+msgstr "Cuenta de contrapartida"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_res_company__reclass_mirror_journal_id
+#: model:ir.model.fields,field_description:account_reclassification.field_res_config_settings__reclass_mirror_journal_id
+msgid "Default Reclassification Journal"
+msgstr "Diario de reclasificación por defecto"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_product_category__reclass_effective_production_account_id
+msgid "Effective Production/Consumption Account"
+msgstr "Cuenta de producción/consumo efectiva"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_account_journal__generate_reclass_mirror
+msgid "Generate Reclassification Entry"
+msgstr "Generar asiento de reclasificación"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_product_category__reclass_production_account_id
+msgid "Production/Consumption Account"
+msgstr "Cuenta de producción/consumo"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_account_move__reclass_mirror_applicable
+#: model:ir.model.fields,field_description:account_reclassification.field_account_bank_statement_line__reclass_mirror_applicable
+msgid "Reclassification Applicable"
+msgstr "Reclasificación aplicable"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_account_account__reclass_mirror_journal_id
+#: model:ir.model.fields,field_description:account_reclassification.field_account_journal__reclass_mirror_journal_id
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_form_reclass
+#: model_terms:ir.ui.view,arch_db:account_reclassification.res_config_settings_view_form_reclass
+msgid "Reclassification Journal"
+msgstr "Diario de reclasificación"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_account_move__reclass_source_move_id
+#: model:ir.model.fields,field_description:account_reclassification.field_account_bank_statement_line__reclass_source_move_id
+msgid "Reclassified Bill"
+msgstr "Factura reclasificada"
+
+#. module: account_reclassification
+#: model:ir.model.fields,field_description:account_reclassification.field_account_account__reclass_target_account_id
+msgid "Target Account"
+msgstr "Cuenta destino"
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_account__reclass_counterpart_account_id
+msgid ""
+"Account that balances the reclassification entry (e.g. 61 Variacion de existencias).\n"
+"\n"
+"It always takes the side opposite to the target account, so the entry is balanced and has no net effect on the result. It must be different from the target account, otherwise the entry would have no effect."
+msgstr ""
+"Cuenta que cuadra el asiento de reclasificación (por ejemplo 61 Variación de existencias).\n"
+"\n"
+"Siempre toma el lado contrario al de la cuenta destino, de modo que el asiento queda cuadrado y sin efecto neto en el resultado. Debe ser distinta de la cuenta destino; si no, el asiento no tendría efecto."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_account__reclass_target_account_id
+msgid ""
+"Account that represents this one on the reclassification entry, by nature (e.g. 60 Compras).\n"
+"\n"
+"It always keeps the side of the mirrored line: it is debited when the bill line is debited, and credited on a vendor credit note. Required as soon as the mode is not 'Do not create'."
+msgstr ""
+"Cuenta que representa a esta en el asiento de reclasificación, por naturaleza (por ejemplo 60 Compras).\n"
+"\n"
+"Siempre conserva el lado de la línea espejada: va al debe cuando la línea de la factura va al debe, y al haber en una nota de crédito de proveedor. Es obligatoria en cuanto el modo no sea 'No crear'."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_product_category__reclass_production_account_id
+msgid ""
+"Cost of production / direct consumption account for the products of this category (e.g. 60211, 61211, 65).\n"
+"\n"
+"When set, the NATIVE accounting entry of a production movement (component consumption or finished goods) books its counterpart against this account instead of the account of the production location. Nothing else changes: no extra entry, no extra movement, same amount and same direction.\n"
+"\n"
+"When empty, the account is looked up on the parent category, then on its own parent, and so on. If no ancestor defines one, the native account of the location is used, exactly as without this module.\n"
+"\n"
+"Note: the movement must be valued in real time (perpetual) for an entry to exist at all; in periodic valuation Odoo books at closing."
+msgstr ""
+"Cuenta de costo de producción / consumo directo para los productos de esta categoría (por ejemplo 60211, 61211, 65).\n"
+"\n"
+"Si está configurada, el asiento NATIVO de un movimiento de producción (consumo de componentes o producto terminado) registra su contrapartida contra esta cuenta en lugar de la cuenta de la ubicación de producción. No cambia nada más: ningún asiento adicional, ningún movimiento adicional, el mismo importe y el mismo sentido.\n"
+"\n"
+"Si está vacía, la cuenta se busca en la categoría padre, luego en el padre de esta, y así sucesivamente. Si ningún ancestro la define, se usa la cuenta nativa de la ubicación, exactamente igual que sin este módulo.\n"
+"\n"
+"Nota: el movimiento debe estar valorizado en tiempo real (perpetuo) para que exista un asiento; en valorización periódica Odoo registra al cierre."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_account__reclass_mirror_mode
+msgid ""
+"Decides whether a vendor bill line posted on this account also produces the reclassification entry, which is a SEPARATE journal entry: the bill itself is never modified.\n"
+"\n"
+"Do not create: this account never produces a reclassification entry. This is the default, so installing the module changes nothing until you configure it.\n"
+"\n"
+"Create if the journal allows it: the reclassification entry is generated only when the journal of the bill has 'Generate Reclassification Entry' ticked. Use it to enable the reclassification journal by journal.\n"
+"\n"
+"Always create: having this account on the line is enough, whatever the journal setting. Use it for accounts that must always be reclassified."
+msgstr ""
+"Decide si una línea de factura de proveedor registrada en esta cuenta produce además el asiento de reclasificación, que es un asiento SEPARADO: la factura nunca se modifica.\n"
+"\n"
+"No crear: esta cuenta nunca produce asiento de reclasificación. Es el valor por defecto, así que instalar el módulo no cambia nada hasta que usted lo configure.\n"
+"\n"
+"Crear si el diario lo permite: el asiento de reclasificación se genera solo cuando el diario de la factura tiene marcado 'Generar asiento de reclasificación'. Úselo para habilitar la reclasificación diario por diario.\n"
+"\n"
+"Crear siempre: basta con que la línea use esta cuenta, sin importar la configuración del diario. Úselo para cuentas que siempre deben reclasificarse."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_journal__reclass_mirror_journal_id
+msgid ""
+"Dedicated journal holding the reclassification entries generated from the bills of this journal (e.g. 'Accounting Reclassification'). Keeping them in their own journal leaves your purchase journal untouched.\n"
+"\n"
+"The journal set on the account of the line wins over this one; when neither is set, the company default from the accounting settings is used."
+msgstr ""
+"Diario dedicado que contiene los asientos de reclasificación generados desde las facturas de este diario (por ejemplo 'Reclasificación contable'). Mantenerlos en su propio diario deja intacto su diario de compras.\n"
+"\n"
+"El diario configurado en la cuenta de la línea gana sobre este; si no hay ninguno de los dos, se usa el diario por defecto de la compañía de los ajustes de contabilidad."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_journal__generate_reclass_mirror
+msgid ""
+"Enables the reclassification for the bills of this journal.\n"
+"\n"
+"Ticked: every bill line whose account is set to 'Create if the journal allows it' produces its reclassification entry.\n"
+"\n"
+"Unticked: those lines are skipped and the bill posts exactly as without this module. Accounts set to 'Always create' ignore this checkbox and are mirrored either way."
+msgstr ""
+"Habilita la reclasificación para las facturas de este diario.\n"
+"\n"
+"Marcado: cada línea de factura cuya cuenta esté en 'Crear si el diario lo permite' produce su asiento de reclasificación.\n"
+"\n"
+"Sin marcar: esas líneas se omiten y la factura se publica exactamente igual que sin este módulo. Las cuentas en 'Crear siempre' ignoran esta casilla y se espejan de todos modos."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_account__reclass_mirror_journal_id
+msgid ""
+"Journal receiving the reclassification entries generated from this account. This is the most specific level and wins over any other setting.\n"
+"\n"
+"When empty, the journal set on the journal of the bill is used, and failing that the company default defined in the accounting settings. If none of the three is set, no reclassification entry is generated: the bill still posts normally and the manual button explains what is missing."
+msgstr ""
+"Diario que recibe los asientos de reclasificación generados desde esta cuenta. Es el nivel más específico y gana sobre cualquier otra configuración.\n"
+"\n"
+"Si está vacío se usa el diario configurado en el diario de la factura, y en su defecto el diario por defecto de la compañía definido en los ajustes de contabilidad. Si no se define ninguno de los tres, no se genera asiento de reclasificación: la factura se publica igual y el botón manual explica qué falta."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_res_config_settings__reclass_mirror_journal_id
+msgid "Journal used for the reclassification entries of this company when neither the account of the bill line nor the journal of the bill defines a more specific one."
+msgstr "Diario usado para los asientos de reclasificación 60/61 de esta compañía cuando ni la cuenta de la línea de factura ni el diario de la factura definen uno más específico."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_res_company__reclass_mirror_journal_id
+msgid ""
+"Last resort journal for the reclassification entries of this company, used when neither the account of the line nor the journal of the bill defines one.\n"
+"\n"
+"Setting it here is enough to make the reclassification work company wide. Leaving it empty means no reclassification entry is generated unless a more specific journal is configured; the bill still posts normally."
+msgstr ""
+"Diario de último recurso para los asientos de reclasificación de esta compañía, usado cuando ni la cuenta de la línea ni el diario de la factura definen uno.\n"
+"\n"
+"Configurarlo aquí basta para que la reclasificación funcione en toda la compañía. Dejarlo vacío significa que no se genera asiento de reclasificación salvo que haya un diario más específico configurado; la factura se publica igual."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_product_category__reclass_effective_production_account_id
+msgid "Read-only. Account actually used by the production entries of this category: the one defined above, or the one inherited from the closest ancestor category that defines it. Empty means no category in the chain defines an account and the native account of the production location is used."
+msgstr "Solo lectura. Cuenta que realmente usan los asientos de producción de esta categoría: la definida arriba, o la heredada de la categoría ancestro más cercana que la defina. Vacía significa que ninguna categoría de la cadena define una cuenta y se usa la cuenta nativa de la ubicación de producción."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_move__reclass_mirror_move_id
+#: model:ir.model.fields,help:account_reclassification.field_account_bank_statement_line__reclass_mirror_move_id
+msgid "Separate journal entry holding the reclassification of this bill. It is created when the bill is posted, cancelled when the bill goes back to draft, and rebuilt from scratch on every regeneration, so there is never more than one active entry per bill."
+msgstr "Asiento contable separado que contiene la reclasificación de esta factura. Se crea al publicar la factura, se cancela cuando la factura vuelve a borrador y se reconstruye desde cero en cada regeneración, de modo que nunca hay más de un asiento activo por factura."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_move__reclass_mirror_applicable
+#: model:ir.model.fields,help:account_reclassification.field_account_bank_statement_line__reclass_mirror_applicable
+msgid "Technical field, not stored: True when at least one line of this bill is posted on an account configured to produce a reclassification entry. It only drives the visibility of the regeneration button."
+msgstr "Campo técnico, no almacenado: verdadero cuando al menos una línea de esta factura está registrada en una cuenta configurada para producir asiento de reclasificación. Solo controla la visibilidad del botón de regeneración."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_account_move__reclass_source_move_id
+#: model:ir.model.fields,help:account_reclassification.field_account_bank_statement_line__reclass_source_move_id
+msgid "Vendor bill this reclassification entry was generated from. Set on the reclassification entry itself, it keeps the trail back to the source document even after the entry has been superseded and cancelled."
+msgstr "Factura de proveedor a partir de la cual se generó este asiento de reclasificación. Se guarda en el propio asiento de reclasificación y conserva la trazabilidad hacia el documento de origen incluso después de que el asiento haya sido reemplazado y cancelado."
+
+#. module: account_reclassification
+#: model:ir.model.fields.selection,name:account_reclassification.selection__account_account__reclass_mirror_mode__always
+msgid "Always create"
+msgstr "Crear siempre"
+
+#. module: account_reclassification
+#: model:ir.model.fields.selection,name:account_reclassification.selection__account_account__reclass_mirror_mode__journal
+msgid "Create if the journal allows it"
+msgstr "Crear si el diario lo permite"
+
+#. module: account_reclassification
+#: model:ir.model.fields.selection,name:account_reclassification.selection__account_account__reclass_mirror_mode__none
+msgid "Do not create"
+msgstr "No crear"
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+#, python-format
+msgid " %(locked)s bills skipped: their period is locked."
+msgstr " %(locked)s facturas omitidas: su periodo está cerrado."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+#, python-format
+msgid " %(skipped)s bills skipped (not applicable)."
+msgstr " %(skipped)s facturas omitidas (no aplican)."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+#, python-format
+msgid "%(generated)s reclassification entries generated."
+msgstr "%(generated)s asientos de reclasificación generados."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_account.py:0
+#, python-format
+msgid "Account %(account)s generates a reclassification entry, so it needs both a target and a counterpart account."
+msgstr "La cuenta %(account)s genera asiento de reclasificación, por lo que necesita una cuenta destino y una cuenta de contrapartida."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+#, python-format
+msgid "No journal available for the reclassification entry. Set the 'Reclassification Journal' on the account, on journal %(journal)s, or as the company default in the accounting settings."
+msgstr "No hay diario disponible para el asiento de reclasificación. Configure el 'Diario del de reclasificación' en la cuenta, en el diario %(journal)s, o como diario por defecto de la compañía en los ajustes de contabilidad."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+msgid "No line of this bill carries a reclassification setup: set the 'Reclassification Entry' mode with its target and counterpart accounts on the accounts used by the lines, and tick 'Generate Reclassification Entry' on the journal when required."
+msgstr "Ninguna línea de esta factura tiene configuración 60/61: configure el modo 'Asiento de reclasificación' con sus cuentas destino y de contrapartida en las cuentas usadas por las líneas, y marque 'Generar asiento de reclasificación' en el diario cuando se exija."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+#, python-format
+msgid "Reclassification - %(bill)s"
+msgstr "Reclassification - %(bill)s"
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+msgid "Reclassification Entries"
+msgstr "Asientos de reclasificación"
+
+#. module: account_reclassification
+#. odoo-python
+#: model:ir.model.fields,field_description:account_reclassification.field_account_account__reclass_mirror_mode
+#: code:addons/account_reclassification/models/account_move.py:0
+#: model:ir.model.fields,field_description:account_reclassification.field_account_move__reclass_mirror_move_id
+#: model:ir.model.fields,field_description:account_reclassification.field_account_bank_statement_line__reclass_mirror_move_id
+msgid "Reclassification Entry"
+msgstr "Asiento de reclasificación"
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+#, python-format
+msgid "The reclassification entry can only be generated for a posted bill (%(move)s is %(state)s)."
+msgstr "El asiento de reclasificación solo se puede generar para una factura publicada (%(move)s está en %(state)s)."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+#, python-format
+msgid "The reclassification entry of %(move)s cannot be created or modified: you cannot add/modify entries prior to and inclusive of: %(lock_date_info)s."
+msgstr "El asiento de reclasificación de %(move)s no se puede crear ni modificar: no puede agregar/modificar asientos anteriores o iguales a: %(lock_date_info)s."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+msgid "The reclassification entry only applies to vendor bills and vendor credit notes."
+msgstr "El asiento de reclasificación solo aplica a facturas y notas de crédito de proveedor."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_account.py:0
+#, python-format
+msgid "The target and the counterpart of the reclassification entry of %(account)s must be two different accounts, otherwise the entry has no effect."
+msgstr "El destino y la contrapartida del asiento de reclasificación de %(account)s deben ser dos cuentas distintas; de lo contrario el asiento no tendría efecto."
+
+#. module: account_reclassification
+#. odoo-python
+#: code:addons/account_reclassification/models/account_move.py:0
+msgid "This bill has no reclassification entry."
+msgstr "Esta factura no tiene asiento de reclasificación."
+
+#. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_move_form_reclass
+msgid "<span class=\"o_stat_text\">Reclassification</span>"
+msgstr "<span class=\"o_stat_text\">Reclasificación</span>"
+
+#. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_form_reclass
+msgid "<span class=\"text-muted\">The target account keeps the side of the mirrored line: debit on a bill, credit on a vendor credit note. The counterpart account always takes the opposite side, so the entry balances.</span>"
+msgstr "<span class=\"text-muted\">La cuenta destino conserva el lado de la línea espejada: debe en una factura, haber en una nota de crédito de proveedor. La cuenta de contrapartida siempre toma el lado contrario, de modo que el asiento cuadra.</span>"
+
+#. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.res_config_settings_view_form_reclass
+msgid "Default journal for the reclassification entries, used when neither the account nor the journal of the bill defines one."
+msgstr "Diario por defecto para los asientos de reclasificación 60/61, usado cuando ni la cuenta ni el diario de la factura definen uno."
+
+#. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_move_form_reclass
+#: model:ir.actions.server,name:account_reclassification.action_reclass_generate_mirror_server
+msgid "Generate/Regenerate Reclassification"
+msgstr "Generar/Regenerar Reclasificación"
+
+#. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_form_reclass
+msgid "Journal of the bill, then company default"
+msgstr "Diario de la factura, luego el de la compañía"
+
+#. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_form_reclass
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_journal_form_reclass
+msgid "Reclassification"
+msgstr "Reclasificación"
+
+#. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_form_reclass
+msgid "Reclassification Accounts"
+msgstr "Cuentas de reclasificación"

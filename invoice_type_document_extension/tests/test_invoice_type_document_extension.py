@@ -42,6 +42,14 @@ class TestInvoiceTypeDocumentExtension(AccountTestInvoicingCommon):
             'code': '01',
             'country_id': cls.pe_country.id,
         })
+        # Credit note (07), for the return-move derivation (decision C3).
+        cls.doc_type_nc = cls.env['l10n_latam.document.type'].create({
+            'name': 'Nota de Credito',
+            'code': '07',
+            'doc_code_prefix': 'FC',
+            'internal_type': 'credit_note',
+            'country_id': cls.pe_country.id,
+        })
 
     # ------------------------------------------------------------------
     # Helpers
@@ -85,30 +93,81 @@ class TestInvoiceTypeDocumentExtension(AccountTestInvoicingCommon):
     def _receipt_move(self, po):
         return po.picking_ids.move_ids[:1]
 
-    def _validate_receipt(self, po):
-        picking = po.picking_ids
+    def _validate_picking(self, picking):
         picking.move_line_ids.write({'picked': True})
         for ml in picking.move_line_ids:
             ml.quantity = ml.move_id.product_qty
         picking.button_validate()
 
+    def _validate_receipt(self, po):
+        self._validate_picking(po.picking_ids)
+
+    def _make_return(self, po):
+        """Return the validated receipt through the REAL return wizard, so the
+        return move carries the copied purchase_line_id AND
+        origin_returned_move_id, exactly like a production return."""
+        picking = po.picking_ids.filtered(lambda p: p.state == 'done')[:1]
+        wiz = self.env['stock.return.picking'].with_context(
+            active_id=picking.id, active_model='stock.picking').create({})
+        for line in wiz.product_return_moves:
+            line.quantity = line.move_id.quantity
+        res = wiz.action_create_returns()
+        return_picking = self.env['stock.picking'].browse(res['res_id'])
+        self._validate_picking(return_picking)
+        return return_picking
+
+    def _make_refund(self, po, doc_number='FC01-4', post=True):
+        """Vendor credit note over the PO line (its line carries
+        purchase_line_id, like a real reversal of the bill does)."""
+        refund = self.env['account.move'].create({
+            'move_type': 'in_refund',
+            'partner_id': self.partner.id,
+            'invoice_date': '2024-01-15',
+            'invoice_line_ids': [(0, 0, {
+                'product_id': self.product.id,
+                'quantity': po.order_line[0].product_qty,
+                'price_unit': 100.0,
+                'purchase_line_id': po.order_line[0].id,
+            })],
+        })
+        refund.write({
+            'l10n_latam_document_type_id': self.doc_type_nc.id,
+            'l10n_latam_manual_document_number': True,
+            'l10n_latam_document_number': doc_number,
+        })
+        if post:
+            refund.action_post()
+        return refund
+
     def _expected(self, invoice):
         """Serie/folio the capture should derive from the invoice's real,
         post-formatting document number (l10n_pe zero-pads the folio, so the
-        exact digits depend on whether the localization is installed)."""
+        exact digits depend on whether the localization is installed).
+        RECEIVED documents only -- emitted ones derive from the name."""
         return self.env['stock.move']._itde_get_serie_folio(
             invoice.l10n_latam_document_number)
 
+    def _expected_out(self, invoice):
+        """Serie/folio the capture should derive for an EMITTED document:
+        parsed from the ``name`` (doc prefix included), EDI-style."""
+        return self.env['stock.move']._itde_get_serie_folio(invoice.name)
+
     # ------------------------------------------------------------------
-    # _get_serie_folio parity with the native wizard (decision A1)
+    # _get_serie_folio: same digit-run logic as the native wizard, PLUS the
+    # deliberate deviation of v19.0.2.5.0 -- spaces stripped from the serie,
+    # mirroring the (PE) EDI normalization ('F 101-...' -> 'F101').
     # ------------------------------------------------------------------
-    def test_serie_folio_parity(self):
+    def test_serie_folio_parser(self):
         Move = self.env['stock.move']
         cases = {
             'F001-00001001': ('F001', '00001001'),
             'REF-2002': ('REF', '2002'),
             'F0015005': ('F', '0015005'),        # only the trailing digit run
             'F001-01-0009': ('F00101', '0009'),  # multi-hyphen: serie strips '-'
+            # Space-stripping (EDI-style), where the native parser keeps ' ':
+            'F 101-00025627': ('F101', '00025627'),   # emitted, seeded '101'
+            'F C01-00001911': ('FC01', '00001911'),   # emitted NC, seed 'C01'
+            'F 101-25365': ('F101', '25365'),         # supplier number typed
         }
         for number, (serie, folio) in cases.items():
             parsed = Move._itde_get_serie_folio(number)
@@ -179,8 +238,13 @@ class TestInvoiceTypeDocumentExtension(AccountTestInvoicingCommon):
 
     # ------------------------------------------------------------------
     # Sale flow: exercises the sale_line_ids (plural) propagation path.
+    # An EMITTED document derives from the NAME (prefix included), EDI-style:
+    # name 'F F002-5005' -> serie 'FF002'.  The doubled letter is faithful --
+    # it is exactly what the EDI would declare with this (pathological)
+    # number seed; sane EDI seeds keep the letter out of the number (see
+    # test_sale_flow_journal_seeded_serie).
     # ------------------------------------------------------------------
-    def test_sale_flow_fills_move(self):
+    def _make_sale_invoice(self, doc_number):
         so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'order_line': [(0, 0, {
@@ -190,19 +254,38 @@ class TestInvoiceTypeDocumentExtension(AccountTestInvoicingCommon):
             })],
         })
         so.action_confirm()
-        move = so.picking_ids.move_ids[:1]
         invoice = so._create_invoices()
         invoice.write({
             'invoice_date': '2024-01-01',
             'l10n_latam_document_type_id': self.doc_type.id,
             'l10n_latam_manual_document_number': True,
-            'l10n_latam_document_number': 'F002-5005',
+            'l10n_latam_document_number': doc_number,
         })
         invoice.action_post()
+        return so.picking_ids.move_ids[:1], invoice
+
+    def test_sale_flow_fills_move(self):
+        move, invoice = self._make_sale_invoice('F002-5005')
         move._itde_populate_documents()
+        expected = self._expected_out(invoice)
         self.assertEqual(move.transfer_document_type_id, self.doc_type)
-        self.assertEqual(move.serie_transfer_document, 'F002')
-        self.assertEqual(move.number_transfer_document, self._expected(invoice)['folio'])
+        self.assertEqual(move.serie_transfer_document, 'FF002')
+        self.assertEqual(move.number_transfer_document, expected['folio'])
+
+    # ------------------------------------------------------------------
+    # Journal-seeded serie (Huarcaya pattern): the number holds only '101',
+    # the letter lives in the doc-type prefix -> name 'F 101-...' -> the
+    # capture must yield the fiscal serie 'F101' (what the EDI declares),
+    # NOT '101' (canonical number) nor 'F 101' (native report).
+    # ------------------------------------------------------------------
+    def test_sale_flow_journal_seeded_serie(self):
+        move, invoice = self._make_sale_invoice('101-4242')
+        self.assertTrue(invoice.name.startswith('F 101-'),
+                        "precondition: prefix F + seeded number '101-...'")
+        move._itde_populate_documents()
+        self.assertEqual(move.serie_transfer_document, 'F101')
+        self.assertEqual(move.number_transfer_document,
+                         self._expected_out(invoice)['folio'])
 
     # ------------------------------------------------------------------
     # manual_override: a manual edit is never clobbered by events/force.
@@ -576,3 +659,41 @@ class TestInvoiceTypeDocumentExtension(AccountTestInvoicingCommon):
         self.assertEqual(wiz.count_will_change, 1)
         affected = wiz.action_view_affected()
         self.assertEqual(affected['domain'], [('id', 'in', m_a.ids)])
+
+    # ==================================================================
+    # Returns (decision C3): the wizard-created return move copies
+    # purchase_line_id from the original, so origin_returned_move_id must win
+    # over the order-line branches — otherwise the return inherits the
+    # original INVOICE instead of its credit note (regression found in prod).
+    # ==================================================================
+    def test_return_move_never_inherits_invoice(self):
+        po = self._make_purchase()
+        receipt = self._receipt_move(po)
+        self._validate_receipt(po)
+        self._make_bill(po, doc_number='F001-1001')
+        ret_move = self._make_return(po).move_ids[:1]
+        # Preconditions: the real wizard leaves BOTH links on the return move.
+        self.assertEqual(ret_move.purchase_line_id, po.order_line[0])
+        self.assertEqual(ret_move.origin_returned_move_id, receipt)
+        # No posted credit note -> the return stays empty (native fallback);
+        # it must NEVER take the original invoice through purchase_line_id.
+        self.assertFalse(ret_move.transfer_document_type_id)
+        self.assertEqual(receipt.transfer_document_type_id, self.doc_type)
+
+    def test_return_move_gets_credit_note(self):
+        po = self._make_purchase()
+        receipt = self._receipt_move(po)
+        self._validate_receipt(po)
+        bill = self._make_bill(po, doc_number='F001-1001')
+        ret_move = self._make_return(po).move_ids[:1]
+        refund = self._make_refund(po, doc_number='FC01-4')
+        # Event-driven: posting the credit note reaches the return picking via
+        # order.picking_ids (the return move's purchase_line_id puts it there).
+        expected = self._expected(refund)
+        self.assertEqual(ret_move.transfer_document_type_id, self.doc_type_nc)
+        self.assertEqual(ret_move.serie_transfer_document, expected['serie'])
+        self.assertEqual(ret_move.number_transfer_document, expected['folio'])
+        # The original receipt keeps its invoice untouched.
+        self.assertEqual(receipt.transfer_document_type_id, self.doc_type)
+        self.assertEqual(receipt.number_transfer_document,
+                         self._expected(bill)['folio'])

@@ -34,6 +34,11 @@
                     decoration-danger="(location_usage in ('internal','transit')) and (location_dest_usage not in ('internal','transit'))"
                     decoration-success="(location_usage not in ('internal','transit')) and (location_dest_usage in ('internal','transit'))"/>
                 <field name="kardex_uom_id" optional="hide"/>
+                <!-- Signed native value: same green-in / red-out coloring, and a
+                     column footer total so the valuation ledger totalises. -->
+                <field name="kardex_value" optional="show" sum="Total Kardex Value"
+                    decoration-danger="(location_usage in ('internal','transit')) and (location_dest_usage not in ('internal','transit'))"
+                    decoration-success="(location_usage not in ('internal','transit')) and (location_dest_usage in ('internal','transit'))"/>
             </xpath>
 
             <!-- From / To: stay visible by default, but become hideable. -->

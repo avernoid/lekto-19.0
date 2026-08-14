@@ -1,6 +1,6 @@
 {
     "name": "Kardex PLE 13.1 - Transfer Document Capture",
-    "version": "19.0.2.4.1",
+    "version": "19.0.2.5.0",
     "author": "Ganemo",
     "maintainer": "Ganemo",
     "company": "Ganemo",

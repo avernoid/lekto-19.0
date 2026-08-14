@@ -32,20 +32,27 @@ class StockMove(models.Model):
 
     _inherit = 'stock.move'
 
+    # copy=False on the three capture fields: a copied move (a wizard-created
+    # RETURN is a copy of the original, and so is a duplicated picking) backs a
+    # DIFFERENT document — it must start empty and derive its own (the return
+    # wizard leak: without this the return clones the original invoice).
     transfer_document_type_id = fields.Many2one(
         comodel_name='l10n_latam.document.type',
         string='Doc Type',
         domain="[('country_id.code', '=', 'PE')]",
+        copy=False,
         help="Document type backing this movement for the PLE 13.1 (Kardex). "
              "If left blank, the Kardex falls back to the native behaviour "
              "(remission guide, invoice name, default 00).",
     )
     serie_transfer_document = fields.Char(
         string='Serie',
+        copy=False,
         help="Document series backing this movement for the PLE 13.1 (Kardex).",
     )
     number_transfer_document = fields.Char(
         string='Correlativo',
+        copy=False,
         help="Document number backing this movement for the PLE 13.1 (Kardex).",
     )
     manual_override = fields.Boolean(
@@ -107,9 +114,12 @@ class StockMove(models.Model):
                 ))
 
     # ------------------------------------------------------------------
-    # serie/folio parser - DUPLICATED from the native wizard on purpose: the
-    # capture module must not depend on l10n_pe_reports_stock (design doc 3.2,
-    # decision A1).  A parity test keeps the two copies in sync.
+    # serie/folio parser - same digit-run logic as the native wizard (no
+    # dependency on l10n_pe_reports_stock, design doc 3.2 decision A1), but
+    # DELIBERATELY not identical since v19.0.2.5.0: spaces are stripped from
+    # the serie, mirroring how the PE EDI normalizes the CPE serie
+    # ('F 101-...' -> 'F101').  The native report keeps the space and thus
+    # never matches the serie actually declared to the tax authority.
     # ------------------------------------------------------------------
     @api.model
     def _itde_get_serie_folio(self, number):
@@ -117,7 +127,10 @@ class StockMove(models.Model):
         number_matchs = list(re.finditer(r"\d+", number or ""))
         if number_matchs:
             last_number_match = number_matchs[-1]
-            values["serie"] = number[: last_number_match.start()].replace("-", "") or ""
+            values["serie"] = (
+                number[: last_number_match.start()]
+                .replace("-", "").replace(" ", "") or ""
+            )
             values["folio"] = last_number_match.group() or ""
         return values
 
@@ -135,6 +148,28 @@ class StockMove(models.Model):
         """
         self.ensure_one()
         Move = self.env['account.move']
+        # Return move FIRST: the return wizard creates the return move as a
+        # copy of the original, so it also carries sale_line_id /
+        # purchase_line_id (that is how Odoo decreases the delivered/received
+        # qty on the order).  If the order-line branches ran first, every
+        # wizard-created return would inherit the original INVOICE instead of
+        # its credit note.  Navigate to the original line via
+        # origin_returned_move_id, then to its CREDIT NOTES only (design doc
+        # 3.2, decision C3): a return never resolves to the original invoice —
+        # with no posted credit note it stays empty (guide / native fallback).
+        origin = self.origin_returned_move_id
+        if origin:
+            if origin.sale_line_id:
+                refunds = origin.sale_line_id.invoice_lines.move_id.filtered(
+                    lambda m: m.move_type == 'out_refund' and m.state == 'posted'
+                )
+                return refunds.sorted('id')[:1]
+            if origin.purchase_line_id:
+                refunds = origin.purchase_line_id.invoice_lines.move_id.filtered(
+                    lambda m: m.move_type == 'in_refund' and m.state == 'posted'
+                )
+                return refunds.sorted('id')[:1]
+            return Move
         # Direct delivery / receipt: the invoice of the move's own order line.
         if self.sale_line_id:
             candidates = self.sale_line_id.invoice_lines.move_id.filtered(
@@ -146,20 +181,6 @@ class StockMove(models.Model):
                 lambda m: m.move_type == 'in_invoice' and m.state == 'posted'
             )
             return candidates.sorted('id')[:1]
-        # Return move: it normally carries no sale/purchase line; it links to the
-        # original move via origin_returned_move_id.  Navigate to the original
-        # line, then to its CREDIT NOTES (design doc 3.2, decision C3).
-        origin = self.origin_returned_move_id
-        if origin.sale_line_id:
-            refunds = origin.sale_line_id.invoice_lines.move_id.filtered(
-                lambda m: m.move_type == 'out_refund' and m.state == 'posted'
-            )
-            return refunds.sorted('id')[:1]
-        if origin.purchase_line_id:
-            refunds = origin.purchase_line_id.invoice_lines.move_id.filtered(
-                lambda m: m.move_type == 'in_refund' and m.state == 'posted'
-            )
-            return refunds.sorted('id')[:1]
         return Move
 
     def _itde_document_values(self):
@@ -174,21 +195,40 @@ class StockMove(models.Model):
         return self._itde_invoice_values() or self._itde_guide_values()
 
     def _itde_invoice_values(self):
-        """``(doc_type, serie, number)`` from the move's own invoice, or None."""
+        """``(doc_type, serie, number)`` from the move's own invoice, or None.
+
+        The source string depends on the document's SIDE (v19.0.2.5.0):
+
+        * OWN documents (out_invoice/out_refund): the ``name`` (doc-type
+          prefix included).  The fiscal serie of an emitted document is what
+          the EDI declares, and the (PE) EDI builds it by parsing the name
+          with spaces stripped -- so 'F 101-...' yields 'F101' even when the
+          journal seed keeps the letter out of the number ('101-...'), where
+          the canonical ``l10n_latam_document_number`` would lose it.
+        * RECEIVED documents (in_invoice/in_refund): the canonical
+          ``l10n_latam_document_number`` (-> ref -> name).  The user types
+          the supplier's real number there; the name PREPENDS our own doc
+          prefix on top of it ('F F 101-...'), so parsing the name would
+          fabricate a doubled serie.
+        """
         invoice = self._itde_source_invoice()
         if not invoice:
             return None
         doc_type = invoice.l10n_latam_document_type_id
         if not doc_type:
             return None
-        # Priority: l10n_latam_document_number -> ref -> name (name is last
-        # resort: it may be the bad internal sequence -> R2 limitation).
-        number_str = (
-            invoice.l10n_latam_document_number
-            or invoice.ref
-            or invoice.name
-            or ''
-        )
+        if invoice.move_type in ('out_invoice', 'out_refund'):
+            number_str = invoice.name or ''
+        else:
+            # Priority: l10n_latam_document_number -> ref -> name (name is
+            # last resort: it may be the bad internal sequence -> R2
+            # limitation).
+            number_str = (
+                invoice.l10n_latam_document_number
+                or invoice.ref
+                or invoice.name
+                or ''
+            )
         # "'False '" rule: a name like 'False 00001001' would parse to serie
         # 'False' -> garbage.  Better empty (fall back to native) than a bad
         # serie (design doc 3.2).

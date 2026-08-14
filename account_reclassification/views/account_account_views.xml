@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_form_reclass" model="ir.ui.view">
+        <field name="name">account.account.form.inherit.reclass</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='accounting']" position="after">
+                <page name="reclass" string="Reclassification">
+                    <group>
+                        <group name="reclass_mode">
+                            <field name="reclass_mirror_mode" widget="radio"/>
+                        </group>
+                    </group>
+                    <group invisible="reclass_mirror_mode == 'none'">
+                        <group string="Reclassification Accounts" name="reclass_accounts">
+                            <field name="reclass_target_account_id"
+                                   required="reclass_mirror_mode != 'none'"
+                                   options="{'no_create': True}"/>
+                            <field name="reclass_counterpart_account_id"
+                                   required="reclass_mirror_mode != 'none'"
+                                   options="{'no_create': True}"/>
+                        </group>
+                        <group string="Reclassification Journal" name="reclass_journal">
+                            <field name="reclass_mirror_journal_id"
+                                   options="{'no_quick_create': True}"
+                                   placeholder="Journal of the bill, then company default"/>
+                        </group>
+                    </group>
+                    <div invisible="reclass_mirror_mode == 'none'">
+                        <span class="text-muted">The target account keeps the side of the mirrored line: debit on a bill, credit on a vendor credit note. The counterpart account always takes the opposite side, so the entry balances.</span>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_list_reclass" model="ir.ui.view">
+        <field name="name">account.account.list.inherit.reclass</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="reclass_mirror_mode" optional="hide"/>
+                <field name="reclass_target_account_id" optional="hide"
+                       options="{'no_create': True}"/>
+                <field name="reclass_counterpart_account_id" optional="hide"
+                       options="{'no_create': True}"/>
+                <field name="reclass_mirror_journal_id" optional="hide"
+                       options="{'no_quick_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

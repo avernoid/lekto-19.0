@@ -1,0 +1,217 @@
+# Translation of product_variant_import_toolkit to Spanish
+# . module: product_variant_import_toolkit
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the product_variant_import_toolkit package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module product_variant_import_toolkit 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-07-25 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: product_variant_import_toolkit
+#: model:ir.actions.act_window,name:product_variant_import_toolkit.product_variant_import_action
+#: model:ir.model,name:product_variant_import_toolkit.model_product_variant_import
+#: model:ir.ui.menu,name:product_variant_import_toolkit.menu_product_variant_import
+#: model_terms:ir.ui.view,arch_db:product_variant_import_toolkit.product_variant_import_view_form
+msgid "Variant Import Toolkit"
+msgstr "Herramienta de Importación de Variantes"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__data_file
+msgid "File (CSV)"
+msgstr "Archivo (CSV)"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__filename
+msgid "Filename"
+msgstr "Nombre de archivo"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__delimiter
+msgid "Delimiter"
+msgstr "Delimitador"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__encoding
+msgid "Encoding"
+msgstr "Codificación"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__module_prefix
+msgid "Module Prefix"
+msgstr "Prefijo de módulo"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__assign_template_xmlid
+msgid "External ID for templates"
+msgstr "ID externo para plantillas"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__claim_existing
+msgid "Claim existing variants"
+msgstr "Reclamar variantes existentes"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__freeze_others
+msgid "Freeze non-imported combinations"
+msgstr "Congelar combinaciones no importadas"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__state
+msgid "State"
+msgstr "Estado"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,field_description:product_variant_import_toolkit.field_product_variant_import__result_html
+msgid "Import Report"
+msgstr "Informe de importación"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__data_file
+msgid "The CSV file to import. Required columns: 'name' and 'import_attribute_values'. Optional columns: 'id' (variant External ID), 'template_id' (template External ID), any product field (default_code, barcode, standard_price, list_price, categ_id, is_storable...) and 'price_extra:<Attribute>' for value-level extra prices."
+msgstr "El archivo CSV a importar. Columnas obligatorias: 'name' e 'import_attribute_values'. Columnas opcionales: 'id' (ID externo de la variante), 'template_id' (ID externo de la plantilla), cualquier campo de producto (default_code, barcode, standard_price, list_price, categ_id, is_storable...) y 'price_extra:<Attribute>' para precios extra a nivel de valor."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__filename
+msgid "Name of the uploaded file. Filled automatically by the upload widget; it does not affect the import."
+msgstr "Nombre del archivo subido. Se completa automáticamente con el widget de carga; no afecta a la importación."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__delimiter
+msgid "Character that separates the columns in your file. Choose the one your export uses (comma, semicolon or tab) so the columns are read correctly."
+msgstr "Carácter que separa las columnas de tu archivo. Elige el que use tu exportación (coma, punto y coma o tabulación) para que las columnas se lean correctamente."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__encoding
+msgid "Text encoding used to read the file (e.g. 'utf-8' or 'latin-1'). Use 'utf-8' unless your file was exported with a different one, otherwise accented characters may be misread."
+msgstr "Codificación de texto usada para leer el archivo (ej. 'utf-8' o 'latin-1'). Usa 'utf-8' salvo que tu archivo se haya exportado con otra, de lo contrario los caracteres acentuados pueden leerse mal."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__module_prefix
+msgid "Module part applied to External IDs written without a dot: 'sku_polo' becomes '<prefix>.sku_polo'. Values that already contain a dot (e.g. 'ganemo.sku_polo') are used as-is."
+msgstr "Parte de módulo que se aplica a los ID externos escritos sin punto: 'sku_polo' se convierte en '<prefix>.sku_polo'. Los valores que ya contienen un punto (ej. 'ganemo.sku_polo') se usan tal cual."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__assign_template_xmlid
+msgid "Create an external ID for each template from the 'template_id' column, so templates are addressable in future imports. Native import only assigns external IDs to variants."
+msgstr "Crea un ID externo para cada plantilla a partir de la columna 'template_id', para que las plantillas sean referenciables en futuras importaciones. La importación nativa solo asigna ID externos a las variantes."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__claim_existing
+msgid "If a variant for a combination already exists (even archived, even auto-generated without an external ID), reactivate it and bind your external ID instead of failing with a duplicate-combination error."
+msgstr "Si ya existe una variante para una combinación (incluso archivada, incluso auto-generada sin ID externo), la reactiva y le asigna tu ID externo en vez de fallar con un error de combinación duplicada."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__freeze_others
+msgid "Add native attribute exclusions so the combinations that are NOT in this file are not auto-generated when the template is edited later. Exclusions are pairwise: with 3+ attributes some combinations cannot be isolated; those are reported, not frozen."
+msgstr "Añade exclusiones de atributo nativas para que las combinaciones que NO están en este archivo no se auto-generen al editar la plantilla más tarde. Las exclusiones son por pares: con 3+ atributos algunas combinaciones no se pueden aislar; esas se reportan, no se congelan."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields,help:product_variant_import_toolkit.field_product_variant_import__result_html
+msgid "Summary shown after the import: variants created, variants claimed, External IDs added, price_extra set, exclusions added, and any combination the freeze could not isolate."
+msgstr "Resumen mostrado tras la importación: variantes creadas, variantes reclamadas, ID externos añadidos, price_extra establecido, exclusiones añadidas, y cualquier combinación que el congelado no pudo aislar."
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields.selection,name:product_variant_import_toolkit.selection__product_variant_import__delimiter__comma
+msgid "Comma  ,"
+msgstr "Coma  ,"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields.selection,name:product_variant_import_toolkit.selection__product_variant_import__delimiter__semicolon
+msgid "Semicolon  ;"
+msgstr "Punto y coma  ;"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields.selection,name:product_variant_import_toolkit.selection__product_variant_import__delimiter__tab
+msgid "Tab"
+msgstr "Tabulación"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields.selection,name:product_variant_import_toolkit.selection__product_variant_import__state__draft
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: product_variant_import_toolkit
+#: model:ir.model.fields.selection,name:product_variant_import_toolkit.selection__product_variant_import__state__done
+msgid "Done"
+msgstr "Hecho"
+
+#. module: product_variant_import_toolkit
+#: model_terms:ir.ui.view,arch_db:product_variant_import_toolkit.product_variant_import_view_form
+msgid "Import"
+msgstr "Importar"
+
+#. module: product_variant_import_toolkit
+#: model_terms:ir.ui.view,arch_db:product_variant_import_toolkit.product_variant_import_view_form
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "Please attach a CSV file."
+msgstr "Por favor adjunta un archivo CSV."
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+#, python-format
+msgid "Could not decode the file with encoding %s: %s"
+msgstr "No se pudo decodificar el archivo con la codificación %s: %s"
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "The file is empty."
+msgstr "El archivo está vacío."
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "The file must have at least the columns 'name' and 'import_attribute_values'."
+msgstr "El archivo debe tener al menos las columnas 'name' e 'import_attribute_values'."
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+#, python-format
+msgid "External ID %(m)s.%(n)s already points to another record (%(model)s #%(rid)s)."
+msgstr "El ID externo %(m)s.%(n)s ya apunta a otro registro (%(model)s #%(rid)s)."
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "Claimed variants"
+msgstr "Variantes reclamadas"
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "price_extra set"
+msgstr "price_extra establecido"
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "Frozen (exclusions added)"
+msgstr "Congeladas (exclusiones añadidas)"
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "External IDs kept (not overwritten)"
+msgstr "ID externos conservados (no sobrescritos)"
+
+#. module: product_variant_import_toolkit
+#. odoo-python
+#: code:addons/product_variant_import_toolkit/models/product_variant_import.py:0
+msgid "Residual combinations (pairwise exclusions could not isolate — use Variant Archive Lock or archive manually)"
+msgstr "Combinaciones residuales (las exclusiones por pares no pudieron aislar — usa Variant Archive Lock o archiva manualmente)"

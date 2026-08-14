@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools.sql import column_exists, create_column
 
 
 class StockMove(models.Model):
@@ -39,6 +40,44 @@ class StockMove(models.Model):
              "subtotal is visibly meaningless instead of a clean but wrong "
              "number.",
     )
+    kardex_value = fields.Monetary(
+        string="Kardex Value",
+        currency_field="company_currency_id",
+        compute="_compute_kardex_value",
+        store=True,
+        aggregator="sum",
+        help="Signed valuation of the move for a stock ledger (Kardex): the "
+             "native 'Value' as +incoming / -outgoing, and 0 for anything that "
+             "is neither (internal transfers, dropship, non-done moves). The "
+             "native 'Value' is stored unsigned (its direction lives in the "
+             "accounting entry's debit/credit, not in the number); this exposes "
+             "that direction as a sign so the column totalises like a ledger. "
+             "In the company currency; shares its sign with 'Kardex Qty'.",
+    )
+
+    def _auto_init(self):
+        """Pre-create the stored Kardex columns so Odoo does NOT schedule an
+        eager, per-record recomputation of these computed/related fields at
+        install time.
+
+        On a production-sized ``stock_move`` (millions of rows) that eager ORM
+        pass loads every move plus its ``move_line_ids`` into memory and hangs
+        the worker (OOM / swap) -- the module would never finish installing.
+        The historical values are instead seeded in one set-based SQL pass from
+        ``post_init_hook`` (see ``hooks._seed_kardex_columns``); new and edited
+        moves are still computed normally through the ``@api.depends`` below.
+
+        This is the exact technique core Odoo uses in ``l10n_pe_edi`` for the
+        same reason. Passing the field's own ``column_type`` guarantees the
+        DDL matches what ``super()._auto_init()`` expects, so it never triggers
+        a (slow) column conversion afterwards.
+        """
+        cr = self.env.cr
+        for fname in ("kardex_qty", "kardex_uom_id", "kardex_value"):
+            if not column_exists(cr, self._table, fname):
+                create_column(
+                    cr, self._table, fname, self._fields[fname].column_type[1])
+        return super()._auto_init()
 
     @api.depends(
         "state",
@@ -62,6 +101,30 @@ class StockMove(models.Model):
                 # in/out contribute 0 -- they do not change on-hand quantity, so
                 # excluding them keeps Sum(kardex_qty) reconciled with on-hand.
                 move.kardex_qty = 0.0
+
+    @api.depends("state", "is_in", "is_out", "value")
+    def _compute_kardex_value(self):
+        """Sign the native (unsigned) ``value`` for a ledger column.
+
+        No valuation is re-derived here: ``value`` is already the move's stored
+        valuation (written by stock_account's ``_set_value`` at done time, and
+        re-written by manual value / 'Adjust Valuation' revaluation). We only
+        apply the ledger direction -- taken from the same stored ``is_in`` /
+        ``is_out`` as ``kardex_qty`` so the two columns always share their sign.
+        Depending on ``value`` makes the column self-heal on any revaluation.
+        """
+        for move in self:
+            if move.state != "done":
+                move.kardex_value = 0.0
+            elif move.is_in:
+                move.kardex_value = move.value
+            elif move.is_out:
+                move.kardex_value = -move.value
+            else:
+                # Not a valued in/out (internal transfer, dropship, ...): native
+                # value is 0 for these anyway, so 0 keeps the column consistent
+                # with kardex_qty and reconciled with on-hand valuation.
+                move.kardex_value = 0.0
 
     # ------------------------------------------------------------------
     # Demo data (loaded from demo/kardex_qty_demo.xml). Kept here so the demo

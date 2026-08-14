@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Show the send hour right after the native mail_template_ids field, and
+         only when the action is our 'Send Email (scheduled)' category, so the
+         form stays identical to stock Odoo for every other activity type. -->
+    <record id="mail_activity_type_view_form_send_mail" model="ir.ui.view">
+        <field name="name">mail.activity.type.form.send.mail</field>
+        <field name="model">mail.activity.type</field>
+        <field name="inherit_id" ref="mail.mail_activity_type_view_form"/>
+        <field name="arch" type="xml">
+            <field name="mail_template_ids" position="after">
+                <field name="send_mail_hour"
+                       widget="float_time"
+                       invisible="category != 'send_mail'"
+                       required="category == 'send_mail'"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

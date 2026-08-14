@@ -1,0 +1,59 @@
+# Translation of mail_activity_plan_scheduled_mail to Spanish
+# . module: mail_activity_plan_scheduled_mail
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the mail_activity_plan_scheduled_mail package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module mail_activity_plan_scheduled_mail 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-07-23 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: mail_activity_plan_scheduled_mail
+#: model:ir.model.fields,field_description:mail_activity_plan_scheduled_mail.field_mail_activity_type__send_mail_hour
+msgid "Send At (hour)"
+msgstr "Enviar a la hora"
+
+#. module: mail_activity_plan_scheduled_mail
+#: model:ir.model.fields,help:mail_activity_plan_scheduled_mail.field_mail_activity_type__send_mail_hour
+msgid "Local time of day (24h, e.g. 8.5 = 08:30) at which the scheduled email leaves on its due date. Only used when the action is 'Send Email (scheduled)'. If the resulting instant is already in the past it is clamped to 'now' so the send is never rejected."
+msgstr "Hora local del día (24h, p.ej. 8.5 = 08:30) a la que sale el correo programado en su fecha de vencimiento. Solo se usa cuando la acción es 'Enviar correo (programado)'. Si el instante resultante ya está en el pasado, se ajusta a 'ahora' para que el envío nunca sea rechazado."
+
+#. module: mail_activity_plan_scheduled_mail
+#: model:ir.model.fields.selection,name:mail_activity_plan_scheduled_mail.selection__mail_activity_type__category__send_mail
+msgid "Send Email (scheduled)"
+msgstr "Enviar correo (programado)"
+
+#. module: mail_activity_plan_scheduled_mail
+#. odoo-python
+#: code:addons/mail_activity_plan_scheduled_mail/models/mail_activity_type.py:0
+#, python-format
+msgid "Activity type '%(name)s' is set to 'Send Email (scheduled)' but has no model. A template always belongs to a model, so the activity type needs one too."
+msgstr "El tipo de actividad '%(name)s' está configurado como 'Enviar correo (programado)' pero no tiene modelo. Una plantilla siempre pertenece a un modelo, así que el tipo de actividad también necesita uno."
+
+#. module: mail_activity_plan_scheduled_mail
+#. odoo-python
+#: code:addons/mail_activity_plan_scheduled_mail/models/mail_activity_type.py:0
+#, python-format
+msgid "Activity type '%(name)s' is set to 'Send Email (scheduled)' and must reference exactly one email template (found %(n)s). The scheduled send has no user to choose between several."
+msgstr "El tipo de actividad '%(name)s' está configurado como 'Enviar correo (programado)' y debe referenciar exactamente una plantilla de correo (se encontraron %(n)s). El envío programado no tiene un usuario que elija entre varias."
+
+#. module: mail_activity_plan_scheduled_mail
+#. odoo-python
+#: code:addons/mail_activity_plan_scheduled_mail/models/mail_scheduled_message.py:0
+msgid "Scheduled email sent automatically by its Activity Plan."
+msgstr "Correo programado enviado automáticamente por su Plan de Actividades."
+
+#. module: mail_activity_plan_scheduled_mail
+#. odoo-python
+#: code:addons/mail_activity_plan_scheduled_mail/models/mail_activity_type.py:0
+#, python-format
+msgid "The activity types %(cycle)s form a 'Trigger Next Activity' loop that never moves forward in time (total delay: %(advance)s day(s)), and at least one of them sends a scheduled email. Every email would complete its activity, which would immediately create the next one, and so on endlessly. Give the loop a positive 'Schedule' delay."
+msgstr "Los tipos de actividad %(cycle)s forman un bucle de 'Activar la siguiente actividad' que nunca avanza en el tiempo (retraso total: %(advance)s día(s)), y al menos uno de ellos envía un correo programado. Cada correo completaría su actividad, lo que crearía de inmediato la siguiente, y así indefinidamente. Asigne al bucle un retraso de 'Programar' positivo."

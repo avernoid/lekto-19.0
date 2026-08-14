@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_category_property_form_reclass" model="ir.ui.view">
+        <field name="name">product.category.form.inherit.reclass</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="account.view_category_property_form"/>
+        <field name="arch" type="xml">
+            <field name="property_account_expense_categ_id" position="after">
+                <field name="reclass_production_account_id"
+                       options="{'no_create': True}"/>
+                <field name="reclass_effective_production_account_id"
+                       invisible="reclass_production_account_id or not reclass_effective_production_account_id"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

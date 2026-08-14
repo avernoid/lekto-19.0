@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_move_form_reclass" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.reclass</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <field name="reclass_mirror_applicable" invisible="1"/>
+                <field name="reclass_mirror_move_id" invisible="1"/>
+                <button name="action_reclass_open_mirror"
+                        class="oe_stat_button"
+                        icon="fa-exchange"
+                        type="object"
+                        groups="account.group_account_readonly,account.group_account_invoice"
+                        invisible="not reclass_mirror_move_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Reclassification</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <xpath expr="//header" position="inside">
+                <button name="action_reclass_generate_mirror"
+                        type="object"
+                        string="Generate/Regenerate Reclassification"
+                        groups="account.group_account_invoice"
+                        invisible="state != 'posted'
+                                   or move_type not in ('in_invoice', 'in_refund')
+                                   or (not reclass_mirror_applicable and not reclass_mirror_move_id)"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Mass regeneration from the bill list view (Actions menu). -->
+    <record id="action_reclass_generate_mirror_server" model="ir.actions.server">
+        <field name="name">Generate/Regenerate Reclassification</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="group_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_reclass_generate_mirror_batch()</field>
+    </record>
+
+</odoo>
