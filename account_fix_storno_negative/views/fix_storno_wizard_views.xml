@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_fix_storno_wizard_form" model="ir.ui.view">
+        <field name="name">account.fix.storno.wizard.form</field>
+        <field name="model">account.fix.storno.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Fix Storno (negative debit/credit)">
+                <div class="alert alert-info" role="status" invisible="line_count == 0">
+                    <p>The negative values will move to the opposite column in positive. Balance, taxes, reconciliations and the electronic document are not modified, and no entry is reset to draft.</p>
+                </div>
+                <group>
+                    <field name="line_count"/>
+                    <field name="move_count"/>
+                    <field name="skipped_count"/>
+                </group>
+                <div class="alert alert-warning" role="alert" invisible="skipped_count == 0">
+                    <p>Some selected entries have no negative debit or credit: they are ignored (neither counted nor fixed).</p>
+                </div>
+                <div class="alert alert-warning" role="alert" invisible="line_count != 0">
+                    <p>None of the selected journal entries has negative debit or credit. There is nothing to fix.</p>
+                </div>
+                <footer>
+                    <button name="action_confirm" type="object" string="Fix"
+                            class="btn-primary" invisible="line_count == 0"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

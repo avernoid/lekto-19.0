@@ -1,0 +1,142 @@
+# Translation of account_fix_storno_negative to Spanish
+# . module: account_fix_storno_negative
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the account_fix_storno_negative package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module account_fix_storno_negative 18.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-07-18 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,field_description:account_fix_storno_negative.field_account_fix_storno_wizard__line_count
+msgid "Lines to Fix"
+msgstr "Líneas a corregir"
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,field_description:account_fix_storno_negative.field_account_fix_storno_wizard__move_count
+msgid "Entries to Fix"
+msgstr "Asientos a corregir"
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,field_description:account_fix_storno_negative.field_account_fix_storno_wizard__move_ids
+msgid "Selected Entries"
+msgstr "Asientos seleccionados"
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,field_description:account_fix_storno_negative.field_account_fix_storno_wizard__skipped_count
+msgid "Ignored (no negatives)"
+msgstr "Ignorados (sin negativos)"
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,help:account_fix_storno_negative.field_account_fix_storno_wizard__line_count
+msgid ""
+"Number of journal item lines with negative debit or credit that will be "
+"re-expressed to the standard positive form (positive value in the opposite "
+"column)."
+msgstr ""
+"Número de líneas de apunte con débito o crédito negativo que se reexpresarán "
+"a la forma estándar positiva (valor positivo en la columna opuesta)."
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,help:account_fix_storno_negative.field_account_fix_storno_wizard__move_count
+msgid ""
+"Number of selected journal entries that contain at least one line with "
+"negative debit or credit and will therefore be corrected."
+msgstr ""
+"Número de asientos seleccionados que contienen al menos una línea con débito "
+"o crédito negativo y que, por tanto, se corregirán."
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,help:account_fix_storno_negative.field_account_fix_storno_wizard__move_ids
+msgid ""
+"Journal entries selected when the fix was launched. Only those with at least "
+"one line in negative debit or credit are counted and corrected; the rest are "
+"reported as ignored."
+msgstr ""
+"Asientos contables seleccionados al lanzar la corrección. Solo los que tienen "
+"al menos una línea con débito o crédito negativo se cuentan y se corrigen; el "
+"resto se informa como ignorado."
+
+#. module: account_fix_storno_negative
+#: model:ir.model.fields,help:account_fix_storno_negative.field_account_fix_storno_wizard__skipped_count
+msgid ""
+"Number of selected journal entries that have no negative debit or credit "
+"line. They are neither counted nor modified."
+msgstr ""
+"Número de asientos seleccionados que no tienen ninguna línea con débito o "
+"crédito negativo. No se cuentan ni se modifican."
+
+#. module: account_fix_storno_negative
+#. odoo-python
+#: code:addons/account_fix_storno_negative/models/account_move.py:0
+msgid "Fix Storno"
+msgstr "Corregir storno"
+
+#. module: account_fix_storno_negative
+#. odoo-python
+#: code:addons/account_fix_storno_negative/models/account_move.py:0
+#: model:ir.actions.server,name:account_fix_storno_negative.action_fix_storno_negative
+#: model_terms:ir.ui.view,arch_db:account_fix_storno_negative.view_fix_storno_wizard_form
+msgid "Fix Storno (negative debit/credit)"
+msgstr "Corregir storno (débito/crédito negativos)"
+
+#. module: account_fix_storno_negative
+#. odoo-python
+#: code:addons/account_fix_storno_negative/models/account_move.py:0
+msgid "No lines with negative debit or credit in the selection."
+msgstr "No hay líneas con débito o crédito negativo en la selección."
+
+#. module: account_fix_storno_negative
+#. odoo-python
+#: code:addons/account_fix_storno_negative/models/account_move.py:0
+#, python-format
+msgid "Fixed %(lines)s lines in %(moves)s journal entries."
+msgstr "Se corrigieron %(lines)s líneas en %(moves)s asientos contables."
+
+#. module: account_fix_storno_negative
+#: model_terms:ir.ui.view,arch_db:account_fix_storno_negative.view_fix_storno_wizard_form
+msgid ""
+"The negative values will move to the opposite column in positive. Balance, "
+"taxes, reconciliations and the electronic document are not modified, and no "
+"entry is reset to draft."
+msgstr ""
+"Los valores negativos pasarán a la columna opuesta en positivo. El balance, "
+"los impuestos, las conciliaciones y el documento electrónico no se modifican, "
+"y ningún asiento vuelve a borrador."
+
+#. module: account_fix_storno_negative
+#: model_terms:ir.ui.view,arch_db:account_fix_storno_negative.view_fix_storno_wizard_form
+msgid ""
+"Some selected entries have no negative debit or credit: they are ignored "
+"(neither counted nor fixed)."
+msgstr ""
+"Algunos asientos seleccionados no tienen débito o crédito negativo: se "
+"ignoran (ni se cuentan ni se corrigen)."
+
+#. module: account_fix_storno_negative
+#: model_terms:ir.ui.view,arch_db:account_fix_storno_negative.view_fix_storno_wizard_form
+msgid ""
+"None of the selected journal entries has negative debit or credit. There is "
+"nothing to fix."
+msgstr ""
+"Ninguno de los asientos seleccionados tiene débito o crédito negativo. No hay "
+"nada que corregir."
+
+#. module: account_fix_storno_negative
+#: model_terms:ir.ui.view,arch_db:account_fix_storno_negative.view_fix_storno_wizard_form
+msgid "Fix"
+msgstr "Corregir"
+
+#. module: account_fix_storno_negative
+#: model_terms:ir.ui.view,arch_db:account_fix_storno_negative.view_fix_storno_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
