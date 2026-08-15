@@ -76,6 +76,16 @@ class TestManufacturingSplit(TestBomPriceCommon):
             lambda m: m.product_id == mo.product_id and m.state == "done")
         return move.account_move_id, move
 
+    def _labour_entry(self, mo):
+        """Labour entry of the order, reached by relation.
+
+        ``mrp_account._post_labour()`` links the lines it posts to the time logs
+        of the work orders, so this is the only handle that depends neither on
+        the wording of ``ref`` -- which is a translated string -- nor on a core
+        that happens to fill it. Empty recordset when no labour entry was posted.
+        """
+        return mo.workorder_ids.time_ids.account_move_line_id.move_id
+
     def _credits(self, entry):
         """Credits of the entry grouped by account.
 
@@ -276,9 +286,8 @@ class TestManufacturingSplit(TestBomPriceCommon):
 
         self.assertEqual(move.value, 89.10,
                          "the value of the product must not change")
-        labour = self.env["account.move"].search(
-            [("ref", "=", "%s - Labour" % mo.name)])
-        self.assertFalse(labour, "the labour entry must not be created")
+        self.assertFalse(self._labour_entry(mo),
+                         "the labour entry must not be created")
         # With nothing configured the recognition entry keeps the single native
         # counterpart line, so the location account carries the value of the
         # product and the flag leaves nothing extra behind.
@@ -322,9 +331,8 @@ class TestManufacturingSplit(TestBomPriceCommon):
         # this module writes. The consumption of the storable components also
         # touches the location account, but that is native behaviour driven by
         # their own (here unconfigured) category.
-        labour = self.env["account.move"].search(
-            [("ref", "=", "%s - Labour" % mo.name)])
-        self.assertFalse(labour, "the labour entry must not be created")
+        self.assertFalse(self._labour_entry(mo),
+                         "the labour entry must not be created")
         location_balance = sum(entry.line_ids.filtered(
             lambda line: line.account_id == self.account_location).mapped("balance"))
         self.assertEqual(

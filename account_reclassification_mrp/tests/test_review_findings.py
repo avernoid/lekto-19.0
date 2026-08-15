@@ -142,8 +142,7 @@ class TestReviewFindings(TestManufacturingSplit):
         # the storable components also touches the location account, but that is
         # native behaviour driven by their own (here unconfigured) category, and
         # not what this test is about.
-        labour = self.env["account.move"].search(
-            [("ref", "=", "%s - Labour" % mo.name)])
+        labour = self._labour_entry(mo)
         self.assertTrue(labour, "the booked work centre must still post its entry")
         location_balance = sum((labour | entry).line_ids.filtered(
             lambda line: line.account_id == self.account_location).mapped("balance"))
@@ -165,10 +164,8 @@ class TestReviewFindings(TestManufacturingSplit):
         mo = self._run(finished, bom)
         entry, _move = self._finished_entry(mo)
 
-        labour_debit = sum(self.env["account.move.line"].search([
-            ("account_id", "=", self.account_location.id),
-            ("move_id.ref", "=", "%s - Labour" % mo.name),
-        ]).mapped("debit"))
+        labour_debit = sum(self._labour_entry(mo).line_ids.filtered(
+            lambda line: line.account_id == self.account_location).mapped("debit"))
         operations_credit = self._credits(entry).get(self.account_location, 0.0)
         self.assertTrue(labour_debit, "the labour entry must exist for this test")
         self.assertEqual(
