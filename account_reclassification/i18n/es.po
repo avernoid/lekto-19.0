@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Module account_reclassification 19.0\n"
 "POT-Creation-Date: 2026-01-01 00:00+0000\n"
-"PO-Revision-Date: 2026-08-13 00:00+0000\n"
+"PO-Revision-Date: 2026-08-15 00:00+0000\n"
 "Last-Translator: Ganemo <help@ganemo.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -30,6 +30,8 @@ msgstr "Diario de reclasificación por defecto"
 
 #. module: account_reclassification
 #: model:ir.model.fields,field_description:account_reclassification.field_product_category__reclass_effective_production_account_id
+#: model:ir.model.fields,field_description:account_reclassification.field_product_template__reclass_effective_production_account_id
+#: model:ir.model.fields,field_description:account_reclassification.field_product_product__reclass_effective_production_account_id
 msgid "Effective Production/Consumption Account"
 msgstr "Cuenta de producción/consumo efectiva"
 
@@ -40,6 +42,8 @@ msgstr "Generar asiento de reclasificación"
 
 #. module: account_reclassification
 #: model:ir.model.fields,field_description:account_reclassification.field_product_category__reclass_production_account_id
+#: model:ir.model.fields,field_description:account_reclassification.field_product_template__reclass_production_account_id
+#: model:ir.model.fields,field_description:account_reclassification.field_product_product__reclass_production_account_id
 msgid "Production/Consumption Account"
 msgstr "Cuenta de producción/consumo"
 
@@ -108,6 +112,18 @@ msgstr ""
 "Si está vacía, la cuenta se busca en la categoría padre, luego en el padre de esta, y así sucesivamente. Si ningún ancestro la define, se usa la cuenta nativa de la ubicación, exactamente igual que sin este módulo.\n"
 "\n"
 "Nota: el movimiento debe estar valorizado en tiempo real (perpetuo) para que exista un asiento; en valorización periódica Odoo registra al cierre."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_product_template__reclass_production_account_id
+#: model:ir.model.fields,help:account_reclassification.field_product_product__reclass_production_account_id
+msgid ""
+"Cost of production / direct consumption account for this product specifically.\n"
+"\n"
+"It has priority over the account of the product category: use it to single out one product without creating a category for it. When empty, the category chain applies (category, then its parents), and if no ancestor defines one, the native account of the production location is used."
+msgstr ""
+"Cuenta de costo de producción / consumo directo para este producto en concreto.\n"
+"\n"
+"Tiene prioridad sobre la cuenta de la categoría del producto: úsela para singularizar un producto sin necesidad de crear una categoría para él. Si está vacía, se aplica la cadena de categorías (la categoría y luego sus padres), y si ningún ancestro define una, se usa la cuenta nativa de la ubicación de producción."
 
 #. module: account_reclassification
 #: model:ir.model.fields,help:account_reclassification.field_account_account__reclass_mirror_mode
@@ -185,6 +201,12 @@ msgstr ""
 #: model:ir.model.fields,help:account_reclassification.field_product_category__reclass_effective_production_account_id
 msgid "Read-only. Account actually used by the production entries of this category: the one defined above, or the one inherited from the closest ancestor category that defines it. Empty means no category in the chain defines an account and the native account of the production location is used."
 msgstr "Solo lectura. Cuenta que realmente usan los asientos de producción de esta categoría: la definida arriba, o la heredada de la categoría ancestro más cercana que la defina. Vacía significa que ninguna categoría de la cadena define una cuenta y se usa la cuenta nativa de la ubicación de producción."
+
+#. module: account_reclassification
+#: model:ir.model.fields,help:account_reclassification.field_product_template__reclass_effective_production_account_id
+#: model:ir.model.fields,help:account_reclassification.field_product_product__reclass_effective_production_account_id
+msgid "Read-only. Account actually used for this product, resolved as product, then category and its ancestors."
+msgstr "Solo lectura. Cuenta que realmente se usa para este producto, resuelta como producto, luego categoría y sus ancestros."
 
 #. module: account_reclassification
 #: model:ir.model.fields,help:account_reclassification.field_account_move__reclass_mirror_move_id
@@ -331,6 +353,11 @@ msgid "Default journal for the reclassification entries, used when neither the a
 msgstr "Diario por defecto para los asientos de reclasificación 60/61, usado cuando ni la cuenta ni el diario de la factura definen uno."
 
 #. module: account_reclassification
+#: model_terms:ir.ui.view,arch_db:account_reclassification.product_template_form_view_reclass
+msgid "From Category"
+msgstr "De la categoría"
+
+#. module: account_reclassification
 #: model_terms:ir.ui.view,arch_db:account_reclassification.view_move_form_reclass
 #: model:ir.actions.server,name:account_reclassification.action_reclass_generate_mirror_server
 msgid "Generate/Regenerate Reclassification"
@@ -344,6 +371,7 @@ msgstr "Diario de la factura, luego el de la compañía"
 #. module: account_reclassification
 #: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_form_reclass
 #: model_terms:ir.ui.view,arch_db:account_reclassification.view_account_journal_form_reclass
+#: model_terms:ir.ui.view,arch_db:account_reclassification.product_template_form_view_reclass
 msgid "Reclassification"
 msgstr "Reclasificación"
 

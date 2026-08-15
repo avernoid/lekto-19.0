@@ -1,6 +1,6 @@
 {
     "name": "Account Reclassification",
-    "version": "19.0.6.0.0",
+    "version": "19.0.7.0.0",
     "category": "Accounting/Accounting",
     "summary": """Post a parallel reclassification entry on vendor bills, and let the
         product category decide the counterpart account of the native production
@@ -82,6 +82,7 @@ accounts, and it is inert until you configure it.
     ],
     "data": [
         "views/product_category_views.xml",
+        "views/product_template_views.xml",
         "views/account_account_views.xml",
         "views/account_journal_views.xml",
         "views/account_move_views.xml",

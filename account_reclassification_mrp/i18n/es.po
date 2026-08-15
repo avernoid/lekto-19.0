@@ -1,0 +1,103 @@
+# Translation of account_reclassification_mrp to Spanish
+# . module: account_reclassification_mrp
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the account_reclassification_mrp package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module account_reclassification_mrp 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-15 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+#. module: account_reclassification_mrp
+#: model:ir.model.fields,field_description:account_reclassification_mrp.field_mrp_workcenter__reclass_skip_labour_entry
+msgid "No Accounting Entry"
+msgstr "Sin asiento contable"
+
+#. module: account_reclassification_mrp
+#: model:ir.model.fields,field_description:account_reclassification_mrp.field_product_template__reclass_operations_account_id
+#: model:ir.model.fields,field_description:account_reclassification_mrp.field_product_product__reclass_operations_account_id
+#: model:ir.model.fields,field_description:account_reclassification_mrp.field_product_category__reclass_operations_account_id
+msgid "Production Operations Account"
+msgstr "Cuenta de operaciones de producción"
+
+#. module: account_reclassification_mrp
+#: model:ir.model.fields,field_description:account_reclassification_mrp.field_product_template__reclass_recognition_account_id
+#: model:ir.model.fields,field_description:account_reclassification_mrp.field_product_product__reclass_recognition_account_id
+#: model:ir.model.fields,field_description:account_reclassification_mrp.field_product_category__reclass_recognition_account_id
+msgid "Production Recognition Account"
+msgstr "Cuenta de reconocimiento de producción"
+
+#. module: account_reclassification_mrp
+#: model:ir.model.fields,help:account_reclassification_mrp.field_product_template__reclass_recognition_account_id
+#: model:ir.model.fields,help:account_reclassification_mrp.field_product_product__reclass_recognition_account_id
+#: model:ir.model.fields,help:account_reclassification_mrp.field_product_category__reclass_recognition_account_id
+msgid ""
+"Account credited, in the entry that recognises the manufactured product, for the part of the cost coming from THIS product when it is consumed as a non-storable component.\n"
+"\n"
+"A non-storable component ('Goods without tracking') is never capitalised: its purchase already went to expense. Its cost still lands in the value of the finished product, and that credit is what neutralises the expense. Giving it its own account lets you compare the expense of a specific process against the cost it added to production, and read the difference as a standard cost deviation.\n"
+"\n"
+"When empty, the account of the product category applies, then that of its ancestors, and finally the native account of the production location."
+msgstr ""
+"Cuenta acreditada, en el asiento que reconoce el producto fabricado, por la parte del costo que proviene de ESTE producto cuando se consume como componente no almacenable.\n"
+"\n"
+"Un componente no almacenable ('Bienes sin seguimiento') nunca se capitaliza: su compra ya fue al gasto. Aun así su costo entra en el valor del producto terminado, y ese haber es el que neutraliza el gasto. Darle una cuenta propia permite comparar el gasto de un proceso concreto contra el costo que aportó a la producción, y leer la diferencia como una desviación del costo estándar.\n"
+"\n"
+"Si está vacía, se aplica la cuenta de la categoría del producto, luego la de sus ancestros, y finalmente la cuenta nativa de la ubicación de producción."
+
+#. module: account_reclassification_mrp
+#: model:ir.model.fields,help:account_reclassification_mrp.field_product_template__reclass_operations_account_id
+#: model:ir.model.fields,help:account_reclassification_mrp.field_product_product__reclass_operations_account_id
+#: model:ir.model.fields,help:account_reclassification_mrp.field_product_category__reclass_operations_account_id
+msgid ""
+"Account credited, in the entry that recognises the manufactured product, for the part of the cost coming from work centre operations.\n"
+"\n"
+"Leave it empty to keep the native behaviour: the operations land in the account of the production location, where the labour entry clears them.\n"
+"\n"
+"Set it to a recognition account when the labour entry is suppressed for those work centres: the credit then neutralises the payroll expense already booked by nature.\n"
+"\n"
+"This account is always used once it is set. Setting it while the labour entry is still posted leaves that entry's debit on the account of the production location; keeping both settings coherent is up to you.\n"
+"\n"
+"When empty, the account of the product category applies, then that of its ancestors, and finally the account of the production location."
+msgstr ""
+"Cuenta acreditada, en el asiento que reconoce el producto fabricado, por la parte del costo que proviene de las operaciones de los centros de trabajo.\n"
+"\n"
+"Déjela vacía para conservar el comportamiento nativo: las operaciones caen en la cuenta de la ubicación de producción, donde el asiento de mano de obra las cancela.\n"
+"\n"
+"Configúrela con una cuenta de reconocimiento cuando se suprima el asiento de mano de obra de esos centros de trabajo: el haber neutraliza entonces el gasto de nómina ya registrado por naturaleza.\n"
+"\n"
+"Esta cuenta se usa siempre en cuanto está configurada. Configurarla mientras el asiento de mano de obra se sigue registrando deja el debe de ese asiento en la cuenta de la ubicación de producción; mantener coherentes ambas configuraciones es responsabilidad suya.\n"
+"\n"
+"Si está vacía, se aplica la cuenta de la categoría del producto, luego la de sus ancestros, y finalmente la cuenta de la ubicación de producción."
+
+#. module: account_reclassification_mrp
+#: model:ir.model.fields,help:account_reclassification_mrp.field_mrp_workcenter__reclass_skip_labour_entry
+msgid ""
+"Do not post the labour journal entry for the operations of this work centre.\n"
+"\n"
+"Use it when the cost of the work centre is already recognised through the entry of the manufactured product: posting the labour entry as well would credit the recognition accounts twice and leave a balance in the production location account.\n"
+"\n"
+"Analytic entries are NOT affected: they are created when the duration of the work order is set, independently of this setting, so the analytic distribution of the work centre keeps working as in native Odoo.\n"
+"\n"
+"When you tick this, point the 'Production Operations Account' of the manufactured product (or of its category) at a recognition account: leaving it on the production location account would produce a credit with no counterpart."
+msgstr ""
+"No registrar el asiento de mano de obra de las operaciones de este centro de trabajo.\n"
+"\n"
+"Úselo cuando el costo del centro de trabajo ya se reconoce a través del asiento del producto fabricado: registrar además el asiento de mano de obra acreditaría dos veces las cuentas de reconocimiento y dejaría un saldo en la cuenta de la ubicación de producción.\n"
+"\n"
+"Los asientos analíticos NO se ven afectados: se crean al fijar la duración de la orden de trabajo, con independencia de esta opción, de modo que la distribución analítica del centro de trabajo sigue funcionando igual que en Odoo nativo.\n"
+"\n"
+"Cuando marque esta casilla, apunte la 'Cuenta de operaciones de producción' del producto fabricado (o de su categoría) a una cuenta de reconocimiento: dejarla en la cuenta de la ubicación de producción produciría un haber sin contrapartida."
+
+#. module: account_reclassification_mrp
+#: model_terms:ir.ui.view,arch_db:account_reclassification_mrp.product_template_form_view_reclass_mrp
+msgid "From Category"
+msgstr "De la categoría"

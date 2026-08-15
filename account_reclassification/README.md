@@ -29,18 +29,20 @@ The same idea applies to manufacturing: Odoo takes the counterpart account of a 
 
 ### The field
 
-On **Inventory > Configuration > Product Categories**, in the accounting group:
+On **Inventory > Configuration > Product Categories**, in the accounting group — and on the product itself, in **Invoicing > Reclassification**:
 
 | Field | Meaning |
 |---|---|
-| **Production/Consumption Account** | Cost of production / direct consumption account for the products of this category (e.g. 60211, 61211, 65). Company dependent, like the native valuation accounts. |
-| **Effective Production/Consumption Account** | Read-only. Shows which account is actually being used when this category inherits it from an ancestor. |
+| **Production/Consumption Account** | Cost of production / direct consumption account for the products of this category (e.g. 60211, 61211, 65), or for one single product when set on the product. Company dependent, like the native valuation accounts. |
+| **Effective Production/Consumption Account** | Read-only. Shows which account is actually being used when the account is inherited from an ancestor. |
 
 ### How it is resolved
 
 ```
-this category  →  parent  →  grandparent  →  …  →  native location account
+the product  →  its category  →  parent  →  grandparent  →  …  →  native location account
 ```
+
+Set it on the **product** to single out one item without creating a category for it; set it on the **category** for a whole family.
 
 The first ancestor that defines the account wins. If **no** ancestor defines it, nothing changes: the native `location.valuation_account_id` stands exactly as always. The resolution never raises and never interrupts a flow.
 
@@ -196,7 +198,8 @@ Verified by running the **native** test suites with the module installed and unc
 * **Depends on**: `stock_account`.
 * **Hooks**: `account.move._post()`, `button_draft()`, `unlink()`; `stock.move._get_account_move_line_vals()` and `_should_create_account_move()`. All of them call `super()` first.
 * `_post()` is hooked instead of `action_post()` because it is the single funnel of every posting path: the button, the abnormal-amount confirmation wizard and the auto-post cron.
-* **New fields**: `product.category.reclass_production_account_id`, `account.account.reclass_mirror_mode` / `reclass_target_account_id` / `reclass_counterpart_account_id` / `reclass_mirror_journal_id`, `account.journal.generate_reclass_mirror` / `reclass_mirror_journal_id`, `res.company.reclass_mirror_journal_id`, `account.move.reclass_mirror_move_id` / `reclass_source_move_id`.
+* **Extension point**: `stock.move._reclass_counterpart_lines(counterpart_vals, account)` returns the lines replacing the counterpart of the native entry — a single line here. Override it to break that counterpart down; `account_reclassification_mrp` does exactly that, by cost origin of a manufacturing order.
+* **New fields**: `product.template.reclass_production_account_id` / `reclass_effective_production_account_id`, `product.category.reclass_production_account_id`, `account.account.reclass_mirror_mode` / `reclass_target_account_id` / `reclass_counterpart_account_id` / `reclass_mirror_journal_id`, `account.journal.generate_reclass_mirror` / `reclass_mirror_journal_id`, `res.company.reclass_mirror_journal_id`, `account.move.reclass_mirror_move_id` / `reclass_source_move_id`.
 * **No new models**, no new menus, no new security groups.
 
 ### Running the tests

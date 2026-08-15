@@ -81,12 +81,16 @@ class StockMove(models.Model):
         return self.env["stock.location"]
 
     def _reclass_get_category_account(self):
-        """Production/consumption account of the product category, or empty."""
+        """Production/consumption account for the product of this move, or empty.
+
+        Resolution: the product itself, then its category and the ancestors of
+        that category. The location is the caller's fallback.
+        """
         self.ensure_one()
-        category = self.product_id.categ_id
-        if not category:
+        product = self.product_id
+        if not product:
             return self.env["account.account"]
-        return category.with_company(self.company_id)._reclass_get_production_account()
+        return product.with_company(self.company_id)._reclass_get_production_account()
 
     def _reclass_resolve_counterpart(self):
         """Resolve the counterpart account of the native entry.
@@ -222,8 +226,7 @@ class StockMove(models.Model):
                     self.id, len(targets),
                 )
                 return vals_list
-            targets[0]["account_id"] = account.id
-            return vals_list
+            return self._reclass_replace_counterpart(vals_list, targets[0], account)
 
         # Rescued entry: the native builder left the counterpart line without an
         # account, and picked its outgoing branch because no location carried
@@ -242,8 +245,34 @@ class StockMove(models.Model):
             return vals_list
         missing, valued = canonical
         if self.is_in:
-            valued["account_id"] = account.id
             missing["account_id"] = valuation_account.id
-        else:
-            missing["account_id"] = account.id
+            return self._reclass_replace_counterpart(vals_list, valued, account)
+        return self._reclass_replace_counterpart(vals_list, missing, account)
+
+    # -------------------------------------------------------------------------
+    # COUNTERPART EXTENSION POINT
+    # -------------------------------------------------------------------------
+
+    def _reclass_replace_counterpart(self, vals_list, counterpart_vals, account):
+        """Substitute the counterpart line by whatever ``_reclass_counterpart_lines``
+        returns, keeping its position in the entry."""
+        self.ensure_one()
+        replacement = self._reclass_counterpart_lines(counterpart_vals, account)
+        index = next(
+            i for i, vals in enumerate(vals_list) if vals is counterpart_vals)
+        vals_list[index:index + 1] = replacement
         return vals_list
+
+    def _reclass_counterpart_lines(self, counterpart_vals, account):
+        """Lines replacing the counterpart line of the native entry.
+
+        Base implementation: a single line, with the resolved account applied.
+        The manufacturing bridge overrides this to break the counterpart down by
+        cost origin (consumables, operations, materials) when it can prove how
+        the cost was composed.
+
+        :return: list of line vals; must keep the same total amount and side.
+        """
+        self.ensure_one()
+        counterpart_vals["account_id"] = account.id
+        return [counterpart_vals]
