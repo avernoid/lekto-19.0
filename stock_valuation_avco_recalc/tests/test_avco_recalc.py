@@ -20,36 +20,37 @@ class TestAvcoRecalc(TransactionCase):
         cls.customer_loc = cls.env.ref('stock.stock_location_customers')
         cls.stock_loc = cls.env.ref('stock.stock_location_stock')
 
-        # Setup Journal
-        cls.journal = cls.env['account.journal'].create({
-            'name': 'Stock Journal',
+        # Setup Journal.
+        # The code must not be a guess: 'STJ' is what several localisations --
+        # the Peruvian one among them -- give their own stock journal, and
+        # account_journal_code_company_uniq then rejects the create. The test
+        # only needs *a* general journal, so reuse one if it is already there.
+        cls.journal = cls.env['account.journal'].search([
+            ('type', '=', 'general'),
+            ('company_id', '=', cls.env.company.id),
+        ], limit=1) or cls.env['account.journal'].create({
+            'name': 'Stock Journal (AVCO recalc tests)',
             'type': 'general',
-            'code': 'STJ',
+            'code': 'SVRCJ',
         })
-        # Setup Accounts
-        cls.account_stock = cls.env['account.account'].create({
-            'name': 'Stock Valuation',
-            'code': '100000',
-            'account_type': 'asset_current',
-            'reconcile': True,
-        })
-        cls.account_input = cls.env['account.account'].create({
-            'name': 'Stock Input',
-            'code': '100001',
-            'account_type': 'liability_current',
-            'reconcile': True,
-        })
-        cls.account_output = cls.env['account.account'].create({
-            'name': 'Stock Output',
-            'code': '100002',
-            'account_type': 'income',
-            'reconcile': True,
-        })
-        cls.account_expense = cls.env['account.account'].create({
-            'name': 'Cost of Goods Sold',
-            'code': '600000',
-            'account_type': 'expense',
-        })
+        # Setup Accounts.
+        # Codes must not be guessed either: '100000' and '600000' are ordinary
+        # codes in most charts of accounts -- the Peruvian one included -- and
+        # account.account rejects duplicates. The fixture only needs accounts of
+        # the right type, not accounts at a particular code, so they are given a
+        # prefix no chart uses.
+        def _account(name, code, account_type, reconcile=False):
+            return cls.env['account.account'].create({
+                'name': name,
+                'code': f'SVRC{code}',
+                'account_type': account_type,
+                'reconcile': reconcile,
+            })
+
+        cls.account_stock = _account('Stock Valuation', '01', 'asset_current', True)
+        cls.account_input = _account('Stock Input', '02', 'liability_current', True)
+        cls.account_output = _account('Stock Output', '03', 'income', True)
+        cls.account_expense = _account('Cost of Goods Sold', '04', 'expense')
         
         # Setup Product (AVCO)
         cls.categ_avco = cls.env['product.category'].create({
@@ -146,13 +147,18 @@ class TestAvcoRecalc(TransactionCase):
         # Day 3: Out 5. Should be at $12.5.
         # 4. EXECUTE THE FIX
         # We start recalculation from Day 1 to cover everything
+        # ``restate`` is asked for explicitly: this test is about the mode that
+        # overwrites the stored value. The default is now ``adjust``, which
+        # records the same correction beside the value instead of on top of it
+        # (see test_01b).
         self.StockMove._recalculate_valuation_waterfall(
-            self.product_avco.id, 
-            date_day_1, 
+            self.product_avco.id,
+            date_day_1,
             0.0, # Initial Qty
-            0.0  # Initial Value
+            0.0,  # Initial Value
+            mode='restate',
         )
-        
+
         # 5. VERIFY
         # move_out_3 should now have price_unit = 12.5
         move_out_3.invalidate_recordset() # Ensure we read from DB
@@ -162,6 +168,68 @@ class TestAvcoRecalc(TransactionCase):
         # Verify Total Value of Move
         # 5 units * 12.5 = 62.5
         self.assertAlmostEqual(move_out_3.value, 62.5, places=2)
+
+    def test_01b_adjust_mode_leaves_the_native_value_alone(self):
+        """Same correction, recorded instead of overwritten.
+
+        The default mode must reach the same ledger number without touching
+        ``stock.move.value``: the native value survives for audit, the operation
+        is reversible, and the write does not fan out through
+        ``product_id.stock_move_ids`` -- which on a product with thousands of
+        moves is the difference between one row touched and all of them, per
+        write.
+        """
+        date_day_1 = fields.Datetime.to_datetime('2020-01-01 10:00:00')
+        date_day_2 = fields.Datetime.to_datetime('2020-01-02 10:00:00')
+        date_day_3 = fields.Datetime.to_datetime('2020-01-03 10:00:00')
+
+        move_in_1 = self._create_move(self.product_avco, 10, 10.0, date_day_1, self.vendor_loc, self.stock_loc)
+        move_out_3 = self._create_move(self.product_avco, 5, 0.0, date_day_3, self.stock_loc, self.customer_loc)
+        if move_out_3.price_unit == 0.0:
+            move_out_3.write({'price_unit': 10.0, 'value': 5.0 * 10.0})
+        self._create_move(self.product_avco, 10, 15.0, date_day_2, self.vendor_loc, self.stock_loc)
+
+        res = self.StockMove._recalculate_valuation_waterfall(
+            self.product_avco.id, date_day_1, 0.0, 0.0)
+        self.assertEqual(res['moves_count'], 1)
+
+        move_out_3.invalidate_recordset()
+        self.assertAlmostEqual(move_out_3.value, 50.0, places=2,
+            msg="the native value is untouched in adjust mode")
+
+        variance = move_out_3.variance_line_ids
+        self.assertEqual(len(variance), 1)
+        self.assertEqual(variance.origin, 'recalc')
+        self.assertAlmostEqual(variance.base_amount, 12.5, places=2,
+            msg="5 units should have cost 62.5 instead of 50")
+        # The exit costs more, so the ledger goes down by the same amount.
+        self.assertAlmostEqual(variance.ledger_amount, -12.5, places=2)
+        # The exit was worth -50 to a ledger and must now be worth -62.5.
+        self.assertAlmostEqual(-move_out_3.value + variance.ledger_amount, -62.5,
+            places=2, msg="the ledger states the corrected exit cost")
+
+    def test_01c_adjust_mode_is_idempotent(self):
+        """A second run over the same window must reproduce the correction, not
+        stack a second one on top of it."""
+        date_day_1 = fields.Datetime.to_datetime('2020-01-01 10:00:00')
+        date_day_2 = fields.Datetime.to_datetime('2020-01-02 10:00:00')
+        date_day_3 = fields.Datetime.to_datetime('2020-01-03 10:00:00')
+
+        self._create_move(self.product_avco, 10, 10.0, date_day_1, self.vendor_loc, self.stock_loc)
+        move_out_3 = self._create_move(self.product_avco, 5, 0.0, date_day_3, self.stock_loc, self.customer_loc)
+        if move_out_3.price_unit == 0.0:
+            move_out_3.write({'price_unit': 10.0, 'value': 5.0 * 10.0})
+        self._create_move(self.product_avco, 10, 15.0, date_day_2, self.vendor_loc, self.stock_loc)
+
+        self.StockMove._recalculate_valuation_waterfall(
+            self.product_avco.id, date_day_1, 0.0, 0.0)
+        self.StockMove._recalculate_valuation_waterfall(
+            self.product_avco.id, date_day_1, 0.0, 0.0)
+
+        variance = move_out_3.variance_line_ids
+        self.assertEqual(len(variance), 1, "one row, replaced rather than added")
+        self.assertAlmostEqual(variance.ledger_amount, -12.5, places=2,
+            msg="the correction is reproduced, not doubled")
 
     def test_02_safety_block_fifo(self):
         """ Verify that trying to run this on a FIFO product raises UserError """
@@ -218,3 +286,50 @@ class TestAvcoRecalc(TransactionCase):
         self.assertEqual(self.product_avco.standard_price, 500.0, "Standard Price should be updated")
         
         _logger.info("SAFETY CHECK PASSED: Safe update preserves history and updates cost.")
+
+    def test_01d_forcing_a_price_needs_restate_mode(self):
+        """The raw-SQL price write is a restatement tool.
+
+        It bypasses the ORM on purpose so no native revaluation fires. Allowing
+        it while merely adjusting would mutate the engine's own number with
+        nothing recorded to match -- silently, which is what that whole write
+        path is designed to be.
+        """
+        date_day_1 = fields.Datetime.to_datetime('2020-01-01 10:00:00')
+        self._create_move(self.product_avco, 10, 10.0, date_day_1, self.vendor_loc, self.stock_loc)
+        with self.assertRaises(UserError):
+            self.StockMove._recalculate_valuation_waterfall(
+                self.product_avco.id, date_day_1, 0.0, 0.0,
+                new_standard_price=99.0)
+
+    def test_03_audit_reference_is_a_real_sequence(self):
+        """Every audit record used to be called AUDIT/0000.
+
+        ``next_by_code`` was invoked for a sequence the module never declared,
+        so it returned False and the fallback string became the name of every
+        record -- an audit trail whose entries are indistinguishable from one
+        another is not a trail. The assertion is on two consecutive records
+        because a single one would also pass with a hardcoded name.
+        """
+        first = self.env['stock.valuation.recalc.audit'].create({})
+        second = self.env['stock.valuation.recalc.audit'].create({})
+
+        self.assertNotEqual(first.name, 'AUDIT/0000')
+        self.assertNotEqual(first.name, second.name,
+                            "consecutive audits must be distinguishable")
+        self.assertTrue(first.name.startswith('AUDIT/'))
+
+    def test_04_audit_trail_cannot_be_edited_or_deleted(self):
+        """Whoever runs the correction must not be able to rewrite its record."""
+        access = self.env['ir.model.access'].search([
+            ('model_id.model', 'in', (
+                'stock.valuation.recalc.audit',
+                'stock.valuation.recalc.audit.line',
+                'stock.valuation.recalc.audit.detail')),
+        ])
+        self.assertTrue(access, "the audit models must have explicit ACLs")
+        for rule in access:
+            self.assertFalse(rule.perm_write,
+                             f"{rule.name} still grants write on the audit trail")
+            self.assertFalse(rule.perm_unlink,
+                             f"{rule.name} still grants unlink on the audit trail")

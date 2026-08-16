@@ -1,5 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_stock_valuation_recalc_audit,stock.valuation.recalc.audit,model_stock_valuation_recalc_audit,stock.group_stock_manager,1,1,1,1
-access_stock_valuation_recalc_audit_line,stock.valuation.recalc.audit.line,model_stock_valuation_recalc_audit_line,stock.group_stock_manager,1,1,1,1
+access_stock_valuation_recalc_audit,stock.valuation.recalc.audit,model_stock_valuation_recalc_audit,stock.group_stock_manager,1,0,1,0
+access_stock_valuation_recalc_audit_line,stock.valuation.recalc.audit.line,model_stock_valuation_recalc_audit_line,stock.group_stock_manager,1,0,1,0
+access_stock_valuation_recalc_audit_detail,stock.valuation.recalc.audit.detail,model_stock_valuation_recalc_audit_detail,stock.group_stock_manager,1,0,1,0
+access_stock_valuation_recalc_audit_acct,stock.valuation.recalc.audit.acct,model_stock_valuation_recalc_audit,account.group_account_manager,1,0,1,0
+access_stock_valuation_recalc_audit_line_acct,stock.valuation.recalc.audit.line.acct,model_stock_valuation_recalc_audit_line,account.group_account_manager,1,0,1,0
+access_stock_valuation_recalc_audit_detail_acct,stock.valuation.recalc.audit.detail.acct,model_stock_valuation_recalc_audit_detail,account.group_account_manager,1,0,1,0
 access_stock_valuation_recalc_wizard,stock.valuation.recalc.wizard,model_stock_valuation_recalc_wizard,stock.group_stock_manager,1,1,1,1
 access_stock_valuation_recalc_line,stock.valuation.recalc.line,model_stock_valuation_recalc_line,stock.group_stock_manager,1,1,1,1

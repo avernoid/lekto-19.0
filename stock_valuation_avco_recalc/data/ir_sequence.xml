@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_stock_valuation_recalc_audit" model="ir.sequence">
+        <field name="name">Stock Valuation Recalculation Audit</field>
+        <field name="code">stock.valuation.recalc.audit</field>
+        <field name="prefix">AUDIT/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

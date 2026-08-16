@@ -1,0 +1,567 @@
+# Translation of stock_landed_cost_variance to Spanish
+# . module: stock_landed_cost_variance
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the stock_landed_cost_variance package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module stock_landed_cost_variance 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-16 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model,name:stock_landed_cost_variance.model_stock_value_variance
+msgid "Stock Value Variance"
+msgstr "Varianza de valor de existencias"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__absorbed
+msgid "Absorbed"
+msgstr "Absorbida"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__expensed_amount
+#: model_terms:ir.ui.view,arch_db:stock_landed_cost_variance.stock_value_variance_view_list
+msgid "Belongs to Goods Gone"
+msgstr "Corresponde a mercadería ya salida"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__capitalized_amount
+#: model_terms:ir.ui.view,arch_db:stock_landed_cost_variance.stock_value_variance_view_list
+msgid "Capitalised"
+msgstr "Capitalizado"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__date
+msgid "Date"
+msgstr "Fecha"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__landed_cost_line_id
+msgid "Landed Cost Line"
+msgstr "Línea de costo en destino"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__ledger_amount
+msgid "Ledger Effect"
+msgstr "Efecto en el libro"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__lot_id
+msgid "Lot/Serial"
+msgstr "Lote/Serie"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__origin
+msgid "Origin"
+msgstr "Origen"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__variance_move_id
+msgid "Reclassification Entry"
+msgstr "Asiento de reclasificación"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__remaining_qty
+msgid "Remaining Qty"
+msgstr "Cant. remanente"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__base_amount
+#: model_terms:ir.ui.view,arch_db:stock_landed_cost_variance.stock_value_variance_view_list
+msgid "Revaluation"
+msgstr "Revalorización"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__account_move_id
+msgid "Source Bill"
+msgstr "Factura de origen"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__move_id
+msgid "Stock Move"
+msgstr "Movimiento de stock"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__valued_qty
+msgid "Valued Qty"
+msgstr "Cant. valorizada"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_move__variance_count
+msgid "Value Variance Count"
+msgstr "N.º de varianzas de valor"
+
+#. module: stock_landed_cost_variance
+#: model:ir.actions.act_window,name:stock_landed_cost_variance.stock_value_variance_action
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_move__variance_line_ids
+#: model_terms:ir.ui.view,arch_db:stock_landed_cost_variance.stock_value_variance_view_list
+msgid "Value Variances"
+msgstr "Varianzas de valor"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_product_category__variance_cogs_account_id
+msgid "Variance: Cost of Sales"
+msgstr "Varianza: costo de ventas"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_product_category__variance_variation_account_id
+msgid "Variance: Inventory Variation"
+msgstr "Varianza: variación de existencias"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_product_category__variance_valuation_account_id
+msgid "Variance: Stock Valuation"
+msgstr "Varianza: valorización de existencias"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_needaction
+msgid "Action Needed"
+msgstr "Acción requerida"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de archivos adjuntos"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Contactos)"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__has_message
+msgid "Has Message"
+msgstr "Tiene un mensaje"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_is_follower
+msgid "Is Follower"
+msgstr "Es un seguidor"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_has_error
+msgid "Message Delivery error"
+msgstr "Error de envío de mensaje"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_ids
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de acciones"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de errores"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Error de envío del SMS"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,field_description:stock_landed_cost_variance.field_stock_value_variance__website_message_ids
+msgid "Website Messages"
+msgstr "Mensajes del sitio web"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__message_has_error
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Si está marcada, algunos mensajes tienen error de envío."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Si está marcada, hay nuevos mensajes que requieren su atención."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensajes que requieren una acción"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensajes con error de envío"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__website_message_ids
+msgid "Website communication history"
+msgstr "Historial de comunicación del sitio web"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__absorbed
+msgid ""
+"A valuation recalculation has already folded this variance into the movement "
+"values, so it must no longer be applied on top."
+msgstr ""
+"Un recálculo de valorización ya incorporó esta varianza a los valores de los "
+"movimientos, de modo que no debe volver a aplicarse encima."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__company_id
+msgid ""
+"Company the revaluation belongs to. It decides the accounts used and groups "
+"the reclassification entry: one entry per company."
+msgstr ""
+"Compañía a la que pertenece la revalorización. Determina las cuentas que se "
+"usan y agrupa el asiento de reclasificación: un asiento por compañía."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_product_category__variance_cogs_account_id
+msgid "Cost of sales account where the variance is finally recognised."
+msgstr "Cuenta de costo de ventas donde se reconoce finalmente la varianza."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__date
+msgid "Date of the event that revalued the movement, not the movement's own date."
+msgstr ""
+"Fecha del hecho que revalorizó el movimiento, no la fecha propia del "
+"movimiento."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_move__variance_count
+msgid "How many revaluations have been recorded on this movement."
+msgstr "Cuántas revalorizaciones se han registrado sobre este movimiento."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_product_category__variance_valuation_account_id
+msgid ""
+"Inventory account debited/credited when a value variance is reclassified. "
+"Usually the same stock valuation account."
+msgstr ""
+"Cuenta de existencias que se carga o abona al reclasificar una varianza de "
+"valor. Normalmente la misma cuenta de valorización de existencias."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_product_category__variance_variation_account_id
+msgid ""
+"Inventory variation account used as the counterpart when the variance came "
+"from a landed cost."
+msgstr ""
+"Cuenta de variación de existencias que se usa como contrapartida cuando la "
+"varianza proviene de un costo en destino."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__capitalized_amount
+msgid "Part of the revaluation that landed on goods still in stock."
+msgstr ""
+"Parte de la revalorización que recayó sobre mercadería que sigue en "
+"existencias."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__expensed_amount
+msgid ""
+"Part of the revaluation attributable to goods that had already left when the "
+"revaluation happened."
+msgstr ""
+"Parte de la revalorización atribuible a la mercadería que ya había salido "
+"cuando se produjo la revalorización."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__valued_qty
+msgid "Quantity valued by the movement, in the product's unit."
+msgstr "Cantidad valorizada por el movimiento, en la unidad del producto."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__remaining_qty
+msgid ""
+"Quantity still in stock when the revaluation happened, in the product's unit."
+msgstr ""
+"Cantidad que seguía en existencias cuando se produjo la revalorización, en la "
+"unidad del producto."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_move__variance_line_ids
+msgid ""
+"Revaluations recorded on this movement after it was done: a landed cost or a "
+"vendor bill that changed its value, split into the part still in stock and "
+"the part belonging to goods already gone."
+msgstr ""
+"Revalorizaciones registradas sobre este movimiento después de realizarse: un "
+"costo en destino o una factura de proveedor que cambió su valor, repartido "
+"entre la parte que sigue en existencias y la que corresponde a mercadería ya "
+"salida."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__lot_id
+msgid ""
+"Set on lot-valuated products, where the revaluation is split into one row per "
+"lot. Empty otherwise."
+msgstr ""
+"Se informa en productos valorizados por lote, donde la revalorización se "
+"reparte en una fila por lote. Vacío en los demás casos."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__ledger_amount
+msgid ""
+"Signed amount this row adds to a valued ledger. Stored rather than derived so "
+"every consumer reads one number and no consumer has to know the sign rules of "
+"each origin."
+msgstr ""
+"Importe con signo que esta fila aporta a un libro valorizado. Se almacena en "
+"lugar de derivarse para que todo consumidor lea un único número y ninguno "
+"tenga que conocer las reglas de signo de cada origen."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__landed_cost_line_id
+msgid ""
+"The landed cost line that revalued the movement. Kept as evidence; the row "
+"survives if the line disappears."
+msgstr ""
+"La línea de costo en destino que revalorizó el movimiento. Se conserva como "
+"evidencia; la fila sobrevive si la línea desaparece."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__variance_move_id
+msgid ""
+"The journal entry that recognised this variance as cost of sales. Set once "
+"and never cleared: it is what stops the same amount from being posted twice. "
+"While it is posted the split cannot be edited -- reverse the entry first."
+msgstr ""
+"El asiento contable que reconoció esta varianza como costo de ventas. Se "
+"informa una sola vez y no se borra: es lo que impide que el mismo importe se "
+"contabilice dos veces. Mientras esté publicado no se puede editar el reparto "
+"-- revierta antes el asiento."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__move_id
+msgid ""
+"The stock movement whose value was changed after it was done. The row is "
+"deleted with it."
+msgstr ""
+"El movimiento de stock cuyo valor cambió después de haberse realizado. La "
+"fila se elimina junto con él."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__account_move_id
+msgid "The vendor bill whose posting revalued the movement."
+msgstr "La factura de proveedor cuya publicación revalorizó el movimiento."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__base_amount
+msgid ""
+"Whole amount by which the movement was revalued. It always equals Capitalised "
+"plus Belongs to Goods Gone."
+msgstr ""
+"Importe íntegro por el que se revalorizó el movimiento. Siempre es igual a "
+"Capitalizado más Corresponde a mercadería ya salida."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields,help:stock_landed_cost_variance.field_stock_value_variance__origin
+msgid ""
+"What revalued the movement, which decides how it is accounted for. Landed "
+"Cost: the amount stayed in the freight expense account and is taken through "
+"inventory to cost of sales. Vendor Bill: the bill already moved the valuation "
+"account, so the amount only has to come out of it -- and under periodic "
+"valuation no entry is needed at all, because the closing already gets it "
+"right. Valuation Recalculation: bookkeeping of a recalculation, never posted."
+msgstr ""
+"Qué revalorizó el movimiento, lo que determina cómo se contabiliza. Costo en "
+"destino: el importe se quedó en la cuenta de gasto del flete y se lleva a "
+"costo de ventas pasando por existencias. Factura de proveedor: la factura ya "
+"movió la cuenta de valorización, así que el importe solo tiene que salir de "
+"ella -- y con valorización periódica no hace falta asiento alguno, porque el "
+"cierre ya lo resuelve. Recálculo de valorización: registro de un recálculo, "
+"nunca se contabiliza."
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields.selection,name:stock_landed_cost_variance.selection__stock_value_variance__origin__landed_cost
+msgid "Landed Cost"
+msgstr "Costo en destino"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields.selection,name:stock_landed_cost_variance.selection__stock_value_variance__origin__bill
+msgid "Vendor Bill"
+msgstr "Factura de proveedor"
+
+#. module: stock_landed_cost_variance
+#: model:ir.model.fields.selection,name:stock_landed_cost_variance.selection__stock_value_variance__origin__recalc
+msgid "Valuation Recalculation"
+msgstr "Recálculo de valorización"
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_value_variance.py:0
+#, python-format
+msgid "%(categ)s - value variance (%(origin)s)"
+msgstr "%(categ)s - varianza de valor (%(origin)s)"
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/product_category.py:0
+#, python-format
+msgid ""
+"Account %(acc)s is used as a stock variation/expense account, so the periodic "
+"closing nets its balance out and would cancel the reclassification. Use a "
+"dedicated cost of sales account."
+msgstr ""
+"La cuenta %(acc)s se usa como cuenta de variación/gasto de existencias, así "
+"que el cierre periódico compensa su saldo y anularía la reclasificación. Use "
+"una cuenta de costo de ventas dedicada."
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_landed_cost.py:0
+#, python-format
+msgid "Cannot recompute a validated landed cost (%s)."
+msgstr "No se puede recalcular un costo en destino ya validado (%s)."
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/product_category.py:0
+msgid "Cost of Sales"
+msgstr "Costo de ventas"
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/product_category.py:0
+msgid "Inventory Variation"
+msgstr "Variación de existencias"
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_value_variance.py:0
+msgid "Nothing to reclassify in the selection."
+msgstr "No hay nada que reclasificar en la selección."
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_value_variance.py:0
+#, python-format
+msgid "Nothing to reclassify for company %s."
+msgstr "No hay nada que reclasificar para la compañía %s."
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/product_category.py:0
+#, python-format
+msgid ""
+"Product category '%(categ)s' has no variance account configured for: "
+"%(missing)s."
+msgstr ""
+"La categoría de producto '%(categ)s' no tiene configurada la cuenta de "
+"varianza para: %(missing)s."
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/product_category.py:0
+msgid "Stock Valuation"
+msgstr "Valorización de existencias"
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_value_variance.py:0
+msgid "Stock value variance reclassification"
+msgstr "Reclasificación de varianza de valor de existencias"
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_value_variance.py:0
+#, python-format
+msgid ""
+"The capitalised and expensed parts must add up to the revaluation (%(base)s "
+"!= %(cap)s + %(exp)s)."
+msgstr ""
+"Las partes capitalizada y llevada a gasto deben sumar la revalorización "
+"(%(base)s != %(cap)s + %(exp)s)."
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_value_variance.py:0
+#, python-format
+msgid ""
+"The reclassification cannot be dated %(date)s: %(locks)s. Post it in an open "
+"period."
+msgstr ""
+"La reclasificación no puede fecharse el %(date)s: %(locks)s. Contabilícela en "
+"un período abierto."
+
+#. module: stock_landed_cost_variance
+#. odoo-python
+#: code:addons/stock_landed_cost_variance/models/stock_value_variance.py:0
+#, python-format
+msgid ""
+"This variance is already backed by a posted entry (%s). Reset or reverse that "
+"entry before changing the amount."
+msgstr ""
+"Esta varianza ya está respaldada por un asiento contabilizado (%s). "
+"Restablézcalo o reviértalo antes de cambiar el importe."
+
+#. module: stock_landed_cost_variance
+#: model_terms:ir.ui.view,arch_db:stock_landed_cost_variance.stock_value_variance_view_form
+msgid "Basis of the split"
+msgstr "Base del reparto"
+
+#. module: stock_landed_cost_variance
+#: model_terms:ir.ui.view,arch_db:stock_landed_cost_variance.stock_value_variance_view_form
+msgid "Value Variance"
+msgstr "Varianza de valor"
+
+#. module: stock_landed_cost_variance
+#: model_terms:ir.ui.view,arch_db:stock_landed_cost_variance.product_category_view_form_variance
+msgid "Value Variance Accounts"
+msgstr "Cuentas de varianza de valor"

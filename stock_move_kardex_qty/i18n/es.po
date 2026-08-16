@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Module stock_move_kardex_qty 19.0\n"
-"POT-Creation-Date: 2025-01-01 00:00+0000\n"
-"PO-Revision-Date: 2026-07-16 00:00+0000\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-16 00:00+0000\n"
 "Last-Translator: Ganemo <help@ganemo.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -17,8 +17,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_move_kardex_qty
+#: model:ir.model.fields,field_description:stock_move_kardex_qty.field_stock_move__kardex_adjusted_qty
+msgid "Adjusted Qty"
+msgstr "Cant. ya salida al ajustar"
+
+#. module: stock_move_kardex_qty
+#: model:ir.model.fields,field_description:stock_move_kardex_qty.field_stock_move__kardex_value_adjustment
+msgid "Kardex Adjustment"
+msgstr "Ajuste Kardex"
+
+#. module: stock_move_kardex_qty
 #: model:ir.model.fields,field_description:stock_move_kardex_qty.field_stock_move__kardex_qty
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_list
 msgid "Kardex Qty"
 msgstr "Cant. Kardex"
 
@@ -26,6 +35,75 @@ msgstr "Cant. Kardex"
 #: model:ir.model.fields,field_description:stock_move_kardex_qty.field_stock_move__kardex_uom_id
 msgid "Kardex UoM"
 msgstr "UdM Kardex"
+
+#. module: stock_move_kardex_qty
+#: model:ir.model.fields,field_description:stock_move_kardex_qty.field_stock_move__kardex_value
+msgid "Kardex Value"
+msgstr "Valor Kardex"
+
+#. module: stock_move_kardex_qty
+#: model:ir.model.fields,help:stock_move_kardex_qty.field_stock_move__kardex_adjusted_qty
+msgid ""
+"Quantity that had already left the warehouse when this move was revalued. "
+"Informative only: no unit moved, so it must never be added to a physical "
+"count -- hence it does not aggregate."
+msgstr ""
+"Cantidad que ya había salido del almacén cuando este movimiento fue "
+"revalorizado. Solo informativa: no se movió ninguna unidad, así que nunca "
+"debe sumarse a un conteo físico -- por eso no agrega."
+
+#. module: stock_move_kardex_qty
+#: model:ir.model.fields,help:stock_move_kardex_qty.field_stock_move__kardex_uom_id
+msgid ""
+"Reference Unit of Measure of the Kardex quantity: the product's own UoM, in "
+"which the valued quantity is expressed (NOT the operational move UoM). Shown "
+"next to 'Kardex Qty' so a mixed-UoM subtotal is visibly meaningless instead "
+"of a clean but wrong number."
+msgstr ""
+"Unidad de Medida de referencia de la cantidad Kardex: la propia UdM del "
+"producto, en la que se expresa la cantidad valorizada (NO la UdM operativa "
+"del movimiento). Se muestra junto a 'Cant. Kardex' para que un subtotal con "
+"UdM mezcladas sea visiblemente carente de sentido en lugar de un número "
+"limpio pero incorrecto."
+
+#. module: stock_move_kardex_qty
+#: model:ir.model.fields,help:stock_move_kardex_qty.field_stock_move__kardex_value_adjustment
+msgid ""
+"Signed correction carried by later revaluations of this move (a landed cost "
+"or a vendor bill posted after part of the goods had left). Zero unless "
+"something recorded such a revaluation. Already included in 'Kardex Value'; "
+"shown apart so the ledger can explain the difference between the native "
+"'Value' and what it counts."
+msgstr ""
+"Corrección con signo que aportan las revalorizaciones posteriores de este "
+"movimiento (un costo en destino o una factura de proveedor contabilizada "
+"después de que parte de la mercadería ya había salido). Cero mientras nada "
+"registre una revalorización así. Ya está incluida en 'Valor Kardex'; se "
+"muestra aparte para que el libro pueda explicar la diferencia entre el "
+"'Valor' nativo y lo que cuenta."
+
+#. module: stock_move_kardex_qty
+#: model:ir.model.fields,help:stock_move_kardex_qty.field_stock_move__kardex_value
+msgid ""
+"Signed valuation of the move for a stock ledger (Kardex): the native 'Value' "
+"as +incoming / -outgoing, and 0 for anything that is neither (internal "
+"transfers, dropship, non-done moves). The native 'Value' is stored unsigned "
+"(its direction lives in the accounting entry's debit/credit, not in the "
+"number); this exposes that direction as a sign so the column totalises like a "
+"ledger. Net of 'Kardex Adjustment' when a later revaluation was recorded for "
+"the move, so the column always states what the movement is really worth to "
+"the ledger. In the company currency; shares its sign with 'Kardex Qty'."
+msgstr ""
+"Valorización con signo del movimiento para un libro de inventario (Kardex): "
+"el 'Valor' nativo como +entrada / -salida, y 0 para cualquier cosa que no sea "
+"ninguna de las dos (transferencias internas, triangulación (dropship), "
+"movimientos no realizados). El 'Valor' nativo se almacena sin signo (su "
+"dirección vive en el debe/haber del asiento contable, no en el número); esto "
+"expone esa dirección como signo para que la columna totalice como un libro. "
+"Neto del 'Ajuste Kardex' cuando se registró una revalorización posterior del "
+"movimiento, de modo que la columna siempre declara lo que el movimiento vale "
+"realmente para el libro. En la moneda de la compañía; comparte el signo con "
+"'Cant. Kardex'."
 
 #. module: stock_move_kardex_qty
 #: model:ir.model.fields,help:stock_move_kardex_qty.field_stock_move__kardex_qty
@@ -45,60 +123,11 @@ msgstr ""
 "homogéneo en UdM)."
 
 #. module: stock_move_kardex_qty
-#: model:ir.model.fields,help:stock_move_kardex_qty.field_stock_move__kardex_uom_id
-msgid ""
-"Reference Unit of Measure of the Kardex quantity: the product's own UoM, in "
-"which the valued quantity is expressed (NOT the operational move UoM). Shown "
-"next to 'Kardex Qty' so a mixed-UoM subtotal is visibly meaningless instead "
-"of a clean but wrong number."
-msgstr ""
-"Unidad de Medida de referencia de la cantidad Kardex: la propia UdM del "
-"producto, en la que se expresa la cantidad valorizada (NO la UdM operativa "
-"del movimiento). Se muestra junto a 'Cant. Kardex' para que un subtotal con "
-"UdM mezcladas sea visiblemente carente de sentido en lugar de un número "
-"limpio pero incorrecto."
+#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_move_tree_kardex_qty
+msgid "Total Kardex Qty"
+msgstr "Total Cant. Kardex"
 
 #. module: stock_move_kardex_qty
-#: model:ir.actions.act_window,name:stock_move_kardex_qty.action_stock_move_kardex_qty
-#: model:ir.ui.menu,name:stock_move_kardex_qty.menu_stock_move_kardex_qty
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_list
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_pivot
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_search
-msgid "Kardex (Quantities)"
-msgstr "Kardex (Cantidades)"
-
-#. module: stock_move_kardex_qty
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_search
-msgid "Incoming"
-msgstr "Entradas"
-
-#. module: stock_move_kardex_qty
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_search
-msgid "Outgoing"
-msgstr "Salidas"
-
-#. module: stock_move_kardex_qty
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_search
-msgid "Product"
-msgstr "Producto"
-
-#. module: stock_move_kardex_qty
-#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_stock_move_kardex_search
-msgid "Date"
-msgstr "Fecha"
-
-#. module: stock_move_kardex_qty
-#: model_terms:ir.actions.act_window,help:stock_move_kardex_qty.action_stock_move_kardex_qty
-msgid "No stock movements yet"
-msgstr "Aún no hay movimientos de stock"
-
-#. module: stock_move_kardex_qty
-#: model_terms:ir.actions.act_window,help:stock_move_kardex_qty.action_stock_move_kardex_qty
-msgid ""
-"Quantity-only Kardex: the valued quantity of each movement, signed +incoming "
-"/ -outgoing, in the product's reference UoM. Subtotals are meaningful only "
-"within a single product."
-msgstr ""
-"Kardex solo de cantidades: la cantidad valorizada de cada movimiento, con "
-"signo +entrada / -salida, en la UdM de referencia del producto. Los "
-"subtotales solo tienen sentido dentro de un mismo producto."
+#: model_terms:ir.ui.view,arch_db:stock_move_kardex_qty.view_move_tree_kardex_qty
+msgid "Total Kardex Value"
+msgstr "Total Valor Kardex"

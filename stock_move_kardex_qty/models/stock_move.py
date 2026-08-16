@@ -52,7 +52,32 @@ class StockMove(models.Model):
              "native 'Value' is stored unsigned (its direction lives in the "
              "accounting entry's debit/credit, not in the number); this exposes "
              "that direction as a sign so the column totalises like a ledger. "
-             "In the company currency; shares its sign with 'Kardex Qty'.",
+             "Net of 'Kardex Adjustment' when a later revaluation was recorded "
+             "for the move, so the column always states what the movement is "
+             "really worth to the ledger. In the company currency; shares its "
+             "sign with 'Kardex Qty'.",
+    )
+    kardex_value_adjustment = fields.Monetary(
+        string="Kardex Adjustment",
+        currency_field="company_currency_id",
+        compute="_compute_kardex_variance",
+        store=True,
+        aggregator="sum",
+        help="Signed correction carried by later revaluations of this move (a "
+             "landed cost or a vendor bill posted after part of the goods had "
+             "left). Zero unless something recorded such a revaluation. Already "
+             "included in 'Kardex Value'; shown apart so the ledger can explain "
+             "the difference between the native 'Value' and what it counts.",
+    )
+    kardex_adjusted_qty = fields.Float(
+        string="Adjusted Qty",
+        compute="_compute_kardex_variance",
+        store=True,
+        digits="Product Unit of Measure",
+        aggregator=False,
+        help="Quantity that had already left the warehouse when this move was "
+             "revalued. Informative only: no unit moved, so it must never be "
+             "added to a physical count -- hence it does not aggregate.",
     )
 
     def _auto_init(self):
@@ -73,7 +98,8 @@ class StockMove(models.Model):
         a (slow) column conversion afterwards.
         """
         cr = self.env.cr
-        for fname in ("kardex_qty", "kardex_uom_id", "kardex_value"):
+        for fname in ("kardex_qty", "kardex_uom_id", "kardex_value",
+                      "kardex_value_adjustment", "kardex_adjusted_qty"):
             if not column_exists(cr, self._table, fname):
                 create_column(
                     cr, self._table, fname, self._fields[fname].column_type[1])
@@ -102,7 +128,7 @@ class StockMove(models.Model):
                 # excluding them keeps Sum(kardex_qty) reconciled with on-hand.
                 move.kardex_qty = 0.0
 
-    @api.depends("state", "is_in", "is_out", "value")
+    @api.depends("state", "is_in", "is_out", "value", "kardex_value_adjustment")
     def _compute_kardex_value(self):
         """Sign the native (unsigned) ``value`` for a ledger column.
 
@@ -125,6 +151,27 @@ class StockMove(models.Model):
                 # value is 0 for these anyway, so 0 keeps the column consistent
                 # with kardex_qty and reconciled with on-hand valuation.
                 move.kardex_value = 0.0
+            move.kardex_value += move.kardex_value_adjustment
+
+    @api.depends("state", "is_in", "is_out")
+    def _compute_kardex_variance(self):
+        """Corrections carried by later revaluations of the move.
+
+        Kept behind a hook that returns nothing by default so this module keeps
+        depending on ``stock_account`` alone.  A bridge installs the real source
+        (``stock.value.variance``, which lives in a module that needs
+        ``stock_landed_costs``) and re-declares the dependencies; without it the
+        columns stay at zero and every existing ledger reads exactly as before.
+        """
+        for move in self:
+            amount, qty = move._kardex_variance_amounts()
+            move.kardex_value_adjustment = amount
+            move.kardex_adjusted_qty = qty
+
+    def _kardex_variance_amounts(self):
+        """Hook: (signed value correction, quantity already gone when revalued)."""
+        self.ensure_one()
+        return 0.0, 0.0
 
     # ------------------------------------------------------------------
     # Demo data (loaded from demo/kardex_qty_demo.xml). Kept here so the demo

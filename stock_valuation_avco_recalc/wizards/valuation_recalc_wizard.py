@@ -5,7 +5,20 @@ class ValuationRecalcWizard(models.TransientModel):
     _name = 'stock.valuation.recalc.wizard'
     _description = 'Valuation Recalculation Wizard'
 
-    company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
+    company_id = fields.Many2one(
+        'res.company', required=True, default=lambda self: self.env.company,
+        help="Company whose valuation is recalculated. Everything -- the moves "
+             "swept, the opening balance and the cost method check -- is scoped "
+             "to it.")
+    mode = fields.Selection(
+        [('adjust', 'Adjustment (additive, reversible)'),
+         ('restate', 'Restate movement values')],
+        string='Mode', required=True, default='adjust',
+        help="Adjustment records the correction beside the native value, so the "
+             "original survives and the operation can be undone. Restate "
+             "overwrites the stored value of each movement: use it only when "
+             "the underlying data is genuinely corrupt, because it rewrites "
+             "history that may already have been declared.")
     line_ids = fields.One2many('stock.valuation.recalc.line', 'wizard_id', string='Products to Recalculate', help="Review and adjust the initial balances for each product before confirming.")
     
     @api.model
@@ -15,6 +28,7 @@ class ValuationRecalcWizard(models.TransientModel):
         active_ids = context.get('active_ids')
         active_model = context.get('active_model')
 
+        company = self.env['res.company'].browse(res.get('company_id')) or self.env.company
         if active_model == 'stock.move' and active_ids:
             moves = self.env['stock.move'].browse(active_ids)
             lines_data = []
@@ -30,7 +44,7 @@ class ValuationRecalcWizard(models.TransientModel):
             
             # Prepare Lines using SQL Genesis
             for product, min_date in product_min_dates.items():
-                if product.cost_method != 'average':
+                if product.with_company(company).cost_method != 'average':
                     # Skip or Raise? Better to Raise to warn the user specifically.
                     # Or maybe just skip and show a warning message?
                     # The user asked "What happens if I select...", leading to disaster.
@@ -46,6 +60,7 @@ class ValuationRecalcWizard(models.TransientModel):
                 # active layer, respecting the requirement to start from the oldest active stock.
                 prior_candidates = self.env['stock.move'].search([
                     ('product_id', '=', product.id),
+                    ('company_id', '=', company.id),
                     ('is_in', '=', True),
                     ('date', '<', min_date),
                     ('state', '=', 'done')
@@ -57,7 +72,9 @@ class ValuationRecalcWizard(models.TransientModel):
                         break
 
                 # Genesis: computed once, with the definitive min_date.
-                init_qty, init_val = self.env['stock.move']._get_historical_balance_at_date(product.id, min_date)
+                init_qty, init_val = self.env['stock.move']._get_historical_balance_at_date(
+                    product.id, min_date, company=company,
+                    mode=res.get('mode') or 'adjust')
 
                 lines_data.append((0, 0, {
                     'product_id': product.id,
@@ -81,7 +98,10 @@ class ValuationRecalcWizard(models.TransientModel):
         
         # 1. Create Audit Header
         audit = self.env['stock.valuation.recalc.audit'].create({
-            'log_notes': f"Batch execution for {len(self.line_ids)} products."
+            'company_id': self.company_id.id,
+            'mode': self.mode,
+            'log_notes': f"Batch execution for {len(self.line_ids)} products "
+                         f"in {self.company_id.display_name} (mode: {self.mode}).",
         })
         
         audit_lines = []
@@ -96,7 +116,9 @@ class ValuationRecalcWizard(models.TransientModel):
                 line.start_date,
                 line.initial_qty,
                 line.initial_value,
-                new_standard_price=line.new_standard_price
+                new_standard_price=line.new_standard_price,
+                company=self.company_id,
+                mode=self.mode,
             )
             
             # 3. Create Audit Line
@@ -107,6 +129,7 @@ class ValuationRecalcWizard(models.TransientModel):
                 'value_correction_total': verify_res['total_correction'],
                 'initial_qty_used': line.initial_qty,
                 'initial_value_used': line.initial_value,
+                'detail_ids': verify_res['details'],
             }))
             
         audit.write({'audit_lines': audit_lines})
@@ -132,6 +155,11 @@ class ValuationRecalcLine(models.TransientModel):
     # EDITABLE FIELDS ("God Mode")
     initial_qty = fields.Float(string='Initial Qty (Snapshot)', help="Calculated qty just before Start Date. Edit if needed.")
     initial_value = fields.Monetary(string='Initial Value (Snapshot)', currency_field='currency_id', help="Calculated value just before Start Date. Edit if needed.")
-    new_standard_price = fields.Float(string='New Standard Price', help="If set, update the cost to this value and fix historical adjustments.")
+    new_standard_price = fields.Float(
+        string='New Standard Price',
+        help="Restate mode only. Forces the product cost by a direct SQL write "
+             "that bypasses Odoo's automatic revaluation. Not available when "
+             "adjusting, where the correction is recorded beside the movement "
+             "and the product cost is left to the engine.")
     
     currency_id = fields.Many2one('res.currency', related='product_id.currency_id')

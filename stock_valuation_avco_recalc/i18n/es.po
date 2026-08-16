@@ -1,15 +1,15 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* stock_valuation_avco_recalc
+# Translation of stock_valuation_avco_recalc to Spanish
+# . module: stock_valuation_avco_recalc
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the stock_valuation_avco_recalc package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-01 00:00+0000\n"
-"PO-Revision-Date: 2024-03-01 00:00+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"Project-Id-Version: Odoo Module stock_valuation_avco_recalc 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-16 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,94 +17,594 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_valuation_avco_recalc
+#: model:ir.model,name:stock_valuation_avco_recalc.model_stock_valuation_recalc_audit
+msgid "Stock Valuation Recalculation Audit"
+msgstr "Auditoría de recálculo de valorización"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model,name:stock_valuation_avco_recalc.model_stock_valuation_recalc_audit_line
+msgid "Audit Line Detail"
+msgstr "Detalle de línea de auditoría"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model,name:stock_valuation_avco_recalc.model_stock_valuation_recalc_audit_detail
+msgid "Audit Detail per Movement"
+msgstr "Detalle de auditoría por movimiento"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model,name:stock_valuation_avco_recalc.model_stock_valuation_recalc_wizard
+msgid "Valuation Recalculation Wizard"
+msgstr "Asistente de recálculo de valorización"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model,name:stock_valuation_avco_recalc.model_stock_valuation_recalc_line
+msgid "Line for Recalc Wizard"
+msgstr "Línea del asistente de recálculo"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__audit_line_id
+msgid "Audit Line"
+msgstr "Línea de auditoría"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__audit_id
+msgid "Audit Reference"
+msgstr "Auditoría"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__company_id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__company_id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__create_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__create_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__create_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__create_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__create_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__create_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__create_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__create_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__currency_id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__currency_id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__display_name
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__display_name
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__display_name
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__display_name
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__write_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__write_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__write_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__write_uid
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__write_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__write_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__write_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__write_date
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__deleted_product_value_date
+msgid "Deleted Anchor Date"
+msgstr "Fecha del anclaje eliminado"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__user_id
+msgid "Executed By"
+msgstr "Ejecutado por"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__execution_date
+msgid "Execution Date"
+msgstr "Fecha de ejecución"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__log_notes
+msgid "Execution Summary"
+msgstr "Resumen de la ejecución"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__initial_qty
+msgid "Initial Qty (Snapshot)"
+msgstr "Cant. inicial (foto)"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__initial_value
+msgid "Initial Value (Snapshot)"
+msgstr "Valor inicial (foto)"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__mode
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__mode
+msgid "Mode"
+msgstr "Modo"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__moves_affected_count
+msgid "Moves Affected"
+msgstr "Movimientos afectados"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__detail_ids
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_audit_detail_list
+msgid "Movements"
+msgstr "Movimientos"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__new_standard_price
+msgid "New Standard Price"
+msgstr "Nuevo costo estándar"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__product_id
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__audit_lines
+msgid "Product Details"
+msgstr "Detalle por producto"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__line_ids
+msgid "Products to Recalculate"
+msgstr "Productos a recalcular"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__recalc_start_date
+msgid "Recalc. Start Date"
+msgstr "Fecha de inicio del recálculo"
+
+#. module: stock_valuation_avco_recalc
 #: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__name
 msgid "Reference"
 msgstr "Referencia"
 
 #. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__user_id
-msgid "Executed By"
-msgstr "Ejecutado Por"
-
-#. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__execution_date
-msgid "Execution Date"
-msgstr "Fecha de Ejecución"
-
-#. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__audit_lines
-msgid "Product Details"
-msgstr "Detalles de Producto"
-
-#. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__log_notes
-msgid "Execution Summary"
-msgstr "Resumen de Ejecución"
-
-#. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__product_id
-msgid "Product"
-msgstr "Producto"
-
-#. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__recalc_start_date
-msgid "Recalc. Start Date"
-msgstr "Fecha Inicio Recálculo"
-
-#. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__moves_affected_count
-msgid "Moves Affected"
-msgstr "Movimientos Afectados"
-
-#. module: stock_valuation_avco_recalc
-#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__value_correction_total
-msgid "Total Corrected Value"
-msgstr "Valor Total Corregido"
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__start_date
+msgid "Start From"
+msgstr "Desde"
 
 #. module: stock_valuation_avco_recalc
 #: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__initial_qty_used
 msgid "Started with Qty"
-msgstr "Cantidad Inicial Usada"
+msgstr "Cant. inicial usada"
 
 #. module: stock_valuation_avco_recalc
 #: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__initial_value_used
 msgid "Started with Value"
-msgstr "Valor Inicial Usado"
+msgstr "Valor inicial usado"
 
 #. module: stock_valuation_avco_recalc
-#: model:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
-msgid "AVCO Valuation Recalculation"
-msgstr "Recálculo de Valuación AVCO"
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__move_id
+msgid "Stock Move"
+msgstr "Movimiento de stock"
 
 #. module: stock_valuation_avco_recalc
-#: model:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
-msgid "Confirm & Execute"
-msgstr "Confirmar y Ejecutar"
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__value_correction_total
+msgid "Total Corrected Value"
+msgstr "Valor total corregido"
 
 #. module: stock_valuation_avco_recalc
-#: model:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
-msgid "Verify Initial Balance"
-msgstr "Verificar Saldo Inicial"
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__new_value
+msgid "Value After"
+msgstr "Valor posterior"
 
 #. module: stock_valuation_avco_recalc
-#: model:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
-msgid "Execute"
-msgstr "Ejecutar"
+#: model:ir.model.fields,field_description:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__previous_value
+msgid "Value Before"
+msgstr "Valor anterior"
 
 #. module: stock_valuation_avco_recalc
-#: model:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
-msgid "How to use:"
-msgstr "Cómo usar:"
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__mode
+msgid ""
+"Adjustment records the correction beside the native value and is reversible. "
+"Restate overwrites stock move values."
+msgstr ""
+"Ajuste registra la corrección al lado del valor nativo y es reversible. "
+"Reexpresar sobrescribe los valores de los movimientos de stock."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__mode
+msgid ""
+"Adjustment records the correction beside the native value, so the original "
+"survives and the operation can be undone. Restate overwrites the stored value "
+"of each movement: use it only when the underlying data is genuinely corrupt, "
+"because it rewrites history that may already have been declared."
+msgstr ""
+"Ajuste registra la corrección al lado del valor nativo, de modo que el "
+"original sobrevive y la operación se puede deshacer. Reexpresar sobrescribe "
+"el valor almacenado de cada movimiento: úselo solo cuando el dato de fondo "
+"esté realmente corrupto, porque reescribe historia que puede haberse "
+"declarado ya."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__initial_qty
+msgid "Calculated qty just before Start Date. Edit if needed."
+msgstr "Cantidad calculada justo antes de la fecha Desde. Edítela si hace falta."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__initial_value
+msgid "Calculated value just before Start Date. Edit if needed."
+msgstr "Valor calculado justo antes de la fecha Desde. Edítelo si hace falta."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__company_id
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__company_id
+msgid ""
+"Company whose valuation was recalculated. Without it an audit trail is "
+"visible across companies that never took part in it."
+msgstr ""
+"Compañía cuya valorización se recalculó. Sin ella una pista de auditoría "
+"queda visible para compañías que nunca participaron en ella."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__company_id
+msgid ""
+"Company whose valuation is recalculated. Everything -- the moves swept, the "
+"opening balance and the cost method check -- is scoped to it."
+msgstr ""
+"Compañía cuya valorización se recalcula. Todo -- los movimientos barridos, el "
+"saldo inicial y la comprobación del método de costeo -- queda acotado a ella."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__audit_lines
+msgid "Detailed breakdown of recalculation results per product."
+msgstr "Desglose detallado de los resultados del recálculo por producto."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__moves_affected_count
+msgid "Number of stock moves that required cost adjustment downstream."
+msgstr ""
+"Número de movimientos de stock que requirieron ajuste de costo aguas abajo."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__audit_id
+msgid "Parent Audit Log."
+msgstr "Registro de auditoría padre."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_line__new_standard_price
+msgid ""
+"Restate mode only. Forces the product cost by a direct SQL write that bypasses "
+"Odoo's automatic revaluation. Not available when adjusting, where the "
+"correction is recorded beside the movement and the product cost is left to "
+"the engine."
+msgstr ""
+"Solo en modo reexpresar. Fuerza el costo del producto mediante una escritura "
+"SQL directa que evita la revalorización automática de Odoo. No está "
+"disponible al ajustar, donde la corrección se registra al lado del movimiento "
+"y el costo del producto se deja al motor."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_wizard__line_ids
+msgid "Review and adjust the initial balances for each product before confirming."
+msgstr ""
+"Revise y ajuste los saldos iniciales de cada producto antes de confirmar."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__deleted_product_value_date
+msgid ""
+"Set when the row records a product.value anchor removed by a restatement, "
+"rather than a movement correction."
+msgstr ""
+"Se informa cuando la fila registra un anclaje de product.value eliminado por "
+"una reexpresión, en vez de una corrección de movimiento."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__audit_line_id
+msgid "The audited product line this movement belongs to."
+msgstr "La línea de producto auditada a la que pertenece este movimiento."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__recalc_start_date
+msgid "The historic date from which the recalculation started."
+msgstr "La fecha histórica desde la que arrancó el recálculo."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__product_id
+msgid "The product being recalculated."
+msgstr "El producto que se está recalculando."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__initial_qty_used
+msgid "The quantity balance used as the starting point (Snapshot)."
+msgstr "El saldo de cantidad usado como punto de partida (foto)."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__move_id
+msgid ""
+"The stock movement that was corrected. Empty when the row records a deleted "
+"valuation anchor instead."
+msgstr ""
+"El movimiento de stock que se corrigió. Vacío cuando la fila registra en su "
+"lugar un anclaje de valorización eliminado."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__value_correction_total
+msgid "Total monetary difference applied across all affected moves."
+msgstr ""
+"Diferencia monetaria total aplicada sobre todos los movimientos afectados."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__user_id
+msgid "The user who triggered the recalculation."
+msgstr "El usuario que lanzó el recálculo."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__initial_value_used
+msgid "The valuation balance used as the starting point (Snapshot)."
+msgstr "El saldo de valorización usado como punto de partida (foto)."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__execution_date
+msgid "Timestamp when the recalculation was performed."
+msgstr "Marca de tiempo en que se ejecutó el recálculo."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__name
+msgid "Unique reference for this audit log."
+msgstr "Referencia única de este registro de auditoría."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit__log_notes
+msgid "System notes summarizing the batch execution scope."
+msgstr "Notas del sistema que resumen el alcance de la ejecución por lotes."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__previous_value
+msgid ""
+"What the movement was worth before the recalculation. This is the figure to "
+"restore in order to undo it."
+msgstr ""
+"Lo que valía el movimiento antes del recálculo. Es la cifra que hay que "
+"restaurar para deshacerlo."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_detail__new_value
+msgid ""
+"What the movement is worth after the recalculation. In adjustment mode the "
+"native value is untouched and the difference is carried by the Kardex "
+"adjustment column instead."
+msgstr ""
+"Lo que vale el movimiento después del recálculo. En modo ajuste el valor "
+"nativo no se toca y la diferencia la lleva en su lugar la columna de ajuste "
+"del Kardex."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields,help:stock_valuation_avco_recalc.field_stock_valuation_recalc_audit_line__detail_ids
+msgid ""
+"What each affected movement was worth before and after. Without this the "
+"operation cannot be undone and nothing proves to an auditor what actually "
+"changed."
+msgstr ""
+"Lo que valía cada movimiento afectado antes y después. Sin esto la operación "
+"no se puede deshacer y nada prueba ante un auditor qué cambió realmente."
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields.selection,name:stock_valuation_avco_recalc.selection__stock_valuation_recalc_audit__mode__adjust
+msgid "Adjustment (additive)"
+msgstr "Ajuste (aditivo)"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields.selection,name:stock_valuation_avco_recalc.selection__stock_valuation_recalc_wizard__mode__adjust
+msgid "Adjustment (additive, reversible)"
+msgstr "Ajuste (aditivo, reversible)"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields.selection,name:stock_valuation_avco_recalc.selection__stock_valuation_recalc_wizard__mode__restate
+msgid "Restate movement values"
+msgstr "Reexpresar los valores de los movimientos"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.model.fields.selection,name:stock_valuation_avco_recalc.selection__stock_valuation_recalc_audit__mode__restate
+msgid "Restate values"
+msgstr "Reexpresar valores"
+
+#. module: stock_valuation_avco_recalc
+#. odoo-python
+#: code:addons/stock_valuation_avco_recalc/models/stock_move_recalc.py:0
+msgid ""
+"A new standard price can only be forced when restating values. In adjustment "
+"mode the correction is recorded beside the movement and the product cost is "
+"left to Odoo."
+msgstr ""
+"Solo se puede forzar un nuevo costo estándar al reexpresar valores. En modo "
+"ajuste la corrección se registra al lado del movimiento y el costo del "
+"producto se deja a Odoo."
 
 #. module: stock_valuation_avco_recalc
 #. odoo-python
 #: code:addons/stock_valuation_avco_recalc/wizards/valuation_recalc_wizard.py:0
 #, python-format
-msgid "Product '%s' uses '%s' costing method. This Fix is strictly for Average Cost (AVCO) products only."
-msgstr "El producto '%s' usa el método '%s'. Esta corrección es estrictamente para productos de Costo Promedio (AVCO)."
+msgid ""
+"Product '%s' uses '%s' costing method. This Fix is strictly for Average Cost "
+"(AVCO) products only."
+msgstr ""
+"El producto '%s' usa el método de costeo '%s'. Esta corrección es "
+"exclusivamente para productos con costo promedio (AVCO)."
+
+#. module: stock_valuation_avco_recalc
+#. odoo-python
+#: code:addons/stock_valuation_avco_recalc/models/stock_move_recalc.py:0
+#, python-format
+msgid ""
+"Recalculation aborted: %(product)s is configured as '%(method)s' in "
+"%(company)s (expected 'average')."
+msgstr ""
+"Recálculo abortado: %(product)s está configurado como '%(method)s' en "
+"%(company)s (se esperaba 'average')."
+
+#. module: stock_valuation_avco_recalc
+#. odoo-python
+#: code:addons/stock_valuation_avco_recalc/models/stock_move_recalc.py:0
+#, python-format
+msgid "Unknown recalculation mode: %s"
+msgstr "Modo de recálculo desconocido: %s"
 
 #. module: stock_valuation_avco_recalc
 #. odoo-python
 #: code:addons/stock_valuation_avco_recalc/wizards/valuation_recalc_wizard.py:0
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_stock_valuation_audit_form
 msgid "Recalculation Audit"
-msgstr "Auditoría de Recálculo"
+msgstr "Auditoría de recálculo"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.actions.act_window,name:stock_valuation_avco_recalc.action_stock_valuation_recalc_wizard
+msgid "Recalculate AVCO Valuation"
+msgstr "Recalcular valorización AVCO"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.actions.act_window,name:stock_valuation_avco_recalc.action_stock_valuation_audit
+msgid "Valuation audits"
+msgstr "Auditorías de valorización"
+
+#. module: stock_valuation_avco_recalc
+#: model:ir.ui.menu,name:stock_valuation_avco_recalc.menu_stock_valuation_avco_recalc
+msgid "AVCO Re-Valuation History"
+msgstr "Historial de revalorización AVCO"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid "AVCO Valuation Recalculation"
+msgstr "Recálculo de valorización AVCO"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_stock_valuation_audit_form
+msgid "Affected Products"
+msgstr "Productos afectados"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_stock_valuation_audit_tree
+msgid "Audit Logs"
+msgstr "Registros de auditoría"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid "Confirm & Execute"
+msgstr "Confirmar y ejecutar"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_stock_valuation_audit_form
+msgid "No details..."
+msgstr "Sin detalle..."
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_stock_valuation_audit_form
+msgid "Total Moves"
+msgstr "Total de movimientos"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_stock_valuation_audit_form
+msgid "Total Value Shift"
+msgstr "Desplazamiento total de valor"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid "<i class=\"fa fa-info-circle\" title=\"Info\"/> Stock Valuation Recalculation (AVCO)"
+msgstr "<i class=\"fa fa-info-circle\" title=\"Información\"/> Recálculo de valorización de existencias (AVCO)"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid ""
+"This tool corrects valuation inconsistencies by recalculating the "
+"<strong>Average Cost</strong> sequentially (\"Waterfall\" method)."
+msgstr ""
+"Esta herramienta corrige inconsistencias de valorización recalculando el "
+"<strong>costo promedio</strong> de forma secuencial (método \"cascada\")."
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid "<strong>How to use:</strong>"
+msgstr "<strong>Cómo usarla:</strong>"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid ""
+"<strong>Smart Start Date:</strong> The system automatically found earlier "
+"moves to ensure a complete fix. <em>(It sets the <strong>Start From</strong> "
+"date to the oldest move that contributes to the current stock).</em>"
+msgstr ""
+"<strong>Fecha de inicio inteligente:</strong> el sistema buscó "
+"automáticamente movimientos anteriores para asegurar una corrección completa. "
+"<em>(Fija la fecha <strong>Desde</strong> en el movimiento más antiguo que "
+"contribuye a las existencias actuales).</em>"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid ""
+"<strong>Verify Initial Balance:</strong> These values represent your stock "
+"<strong>strictly BEFORE</strong> that Start Date. <em>(e.g., If 'Start From' "
+"is your very first move, Initial Balance will correctly be 0.0).</em>"
+msgstr ""
+"<strong>Verifique el saldo inicial:</strong> estos valores representan sus "
+"existencias <strong>estrictamente ANTES</strong> de esa fecha de inicio. "
+"<em>(p. ej., si 'Desde' es su primerísimo movimiento, el saldo inicial será "
+"correctamente 0.0).</em>"
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid ""
+"<strong>Execute:</strong> The tool will recalculate the Average Cost "
+"sequentially from that point forward."
+msgstr ""
+"<strong>Ejecute:</strong> la herramienta recalculará el costo promedio de "
+"forma secuencial desde ese punto en adelante."
+
+#. module: stock_valuation_avco_recalc
+#: model_terms:ir.ui.view,arch_db:stock_valuation_avco_recalc.view_valuation_recalc_wizard_form
+msgid ""
+"<i class=\"fa fa-warning\" title=\"Warning\"/> <strong>Note:</strong> This "
+"operation updates <code>stock.move</code> records directly. It does not "
+"generate new Journal Entries."
+msgstr ""
+"<i class=\"fa fa-warning\" title=\"Advertencia\"/> <strong>Nota:</strong> "
+"esta operación actualiza registros <code>stock.move</code> directamente. No "
+"genera asientos contables nuevos."

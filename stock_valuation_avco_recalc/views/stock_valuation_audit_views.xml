@@ -9,6 +9,10 @@
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
+                        <group>
+                            <field name="mode"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
                     </div>
                     <group>
                         <group>
@@ -18,7 +22,7 @@
                     </group>
                     <field name="log_notes" placeholder="No details..."/>
                     <separator string="Affected Products"/>
-                    <field name="audit_lines">
+                    <field name="audit_lines" widget="one2many">
                         <list decoration-info="moves_affected_count > 0">
                             <field name="product_id"/>
                             <field name="recalc_start_date"/>
@@ -62,4 +66,19 @@
               parent="stock.menu_stock_config_settings"
               action="action_stock_valuation_audit"
               sequence="100"/>
+
+    <record id="view_valuation_audit_detail_list" model="ir.ui.view">
+        <field name="name">stock.valuation.recalc.audit.detail.list</field>
+        <field name="model">stock.valuation.recalc.audit.detail</field>
+        <field name="arch" type="xml">
+            <list string="Movements" create="0" edit="0">
+                <field name="move_id"/>
+                <field name="deleted_product_value_date" optional="hide"/>
+                <field name="previous_value"/>
+                <field name="new_value"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
 </odoo>

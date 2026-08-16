@@ -87,8 +87,19 @@ _SEED_VALUE_SQL = """
             WHEN state = 'done' AND is_in            THEN value
             WHEN state = 'done' AND is_out AND NOT is_in THEN -value
             ELSE 0.0
-       END
+       END + COALESCE(kardex_value_adjustment, 0.0)
      WHERE id BETWEEN %(lo)s AND %(hi)s
+"""
+
+# The adjustment column defaults to zero: a revaluation is only ever recorded
+# going forward, so no historical move carries one. Seeded explicitly all the
+# same, because _SEED_VALUE_SQL adds it and a NULL would poison the sum.
+_SEED_ADJUSTMENT_ZERO_SQL = """
+    UPDATE stock_move
+       SET kardex_value_adjustment = 0.0,
+           kardex_adjusted_qty = 0.0
+     WHERE id BETWEEN %(lo)s AND %(hi)s
+       AND (kardex_value_adjustment IS NULL OR kardex_adjusted_qty IS NULL)
 """
 
 
@@ -111,6 +122,7 @@ def _seed_kardex_columns(env, batch_size=BATCH_SIZE):
         cr.execute(_SEED_UOM_SQL, params)
         cr.execute(_SEED_QTY_ZERO_SQL, params)
         cr.execute(_SEED_QTY_VALUED_SQL, params)
+        cr.execute(_SEED_ADJUSTMENT_ZERO_SQL, params)
         cr.execute(_SEED_VALUE_SQL, params)
         lo += batch_size
     return max_id - min_id + 1
@@ -135,7 +147,9 @@ def _seed_kardex_value_column(env, batch_size=BATCH_SIZE):
         return 0  # empty table: nothing to do
     lo = min_id
     while lo <= max_id:
-        cr.execute(_SEED_VALUE_SQL, {"lo": lo, "hi": lo + batch_size - 1})
+        params = {"lo": lo, "hi": lo + batch_size - 1}
+        cr.execute(_SEED_ADJUSTMENT_ZERO_SQL, params)
+        cr.execute(_SEED_VALUE_SQL, params)
         lo += batch_size
     return max_id - min_id + 1
 

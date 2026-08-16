@@ -1,0 +1,24 @@
+# Translation of stock_landed_cost_variance_kardex to Spanish
+# . module: stock_landed_cost_variance_kardex
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the stock_landed_cost_variance_kardex package.
+#
+# NOTE: this bridge module declares no field, model, selection value, action,
+# menu or user-facing message of its own -- it only supplies a hook and
+# re-declares the dependencies of a computed field, and its view adds two
+# columns whose labels belong to stock_move_kardex_qty. There are therefore no
+# translation entries below the header. The labels the user sees are translated
+# in stock_move_kardex_qty/i18n/es.po and stock_landed_cost_variance/i18n/es.po.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module stock_landed_cost_variance_kardex 19.0\n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-16 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"

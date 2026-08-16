@@ -1,6 +1,6 @@
 {
     'name': 'Stock Valuation Avco Recalc',
-    'version': '19.0.1.1.1',
+    'version': '19.0.2.0.0',
     'category': 'Inventory',
     'summary': 'Recalculate Average Cost (AVCO) from a past date.',
     'description': """
@@ -21,9 +21,10 @@ Key Features:
     'maintainer': 'Ganemo',
     'company': 'Ganemo',
     'website': 'https://www.ganemo.co',
-    'depends': ['stock_account'],
+    'depends': ['stock_account', 'stock_landed_cost_variance'],
     'data': [
         'security/ir.model.access.csv',
+        'data/ir_sequence.xml',
         'views/stock_valuation_audit_views.xml',
         'wizards/valuation_recalc_wizard_views.xml',
         'views/stock_move_action.xml',
@@ -34,7 +35,7 @@ Key Features:
     'application': False,
     'currency': 'USD',
     'price': 299.0,
-    'module_type': 'official',
+    
     'images': ['static/description/banner.png'],
     'icon': '/stock_valuation_avco_recalc/static/description/icon.png',
 }

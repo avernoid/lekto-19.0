@@ -1,6 +1,6 @@
 {
     "name": "Kardex Quantities & Value",
-    "version": "19.0.3.0.0",
+    "version": "19.0.4.0.0",
     "category": "Inventory/Reporting",
     "summary": "Signed quantity and signed value per stock movement (+in / -out "
                "/ 0) for a Kardex ledger, in the product's UoM / company currency.",

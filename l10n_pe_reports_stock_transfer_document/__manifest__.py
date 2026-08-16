@@ -1,6 +1,6 @@
 {
     "name": "Peru - Stock Reports Transfer Document (PLE 13.1 bridge)",
-    "version": "19.0.2.0.1",
+    "version": "19.0.3.0.0",
     "countries": ["pe"],
     "summary": "Feed the captured transfer document (type/serie/number) and the "
                "per-move SUNAT operation type into the Peruvian Kardex PLE.",
@@ -32,6 +32,7 @@ fails the build if the native source drifts and the copy must be re-synced.
     "license": "OPL-1",
     "depends": [
         "l10n_pe_reports_stock",
+        "l10n_pe_reports_stock_landed_costs",
         "invoice_type_document_extension",
     ],
     "data": [],

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_value_variance_view_list" model="ir.ui.view">
+        <field name="name">stock.value.variance.list</field>
+        <field name="model">stock.value.variance</field>
+        <field name="arch" type="xml">
+            <list string="Value Variances" create="0">
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="move_id"/>
+                <field name="origin"/>
+                <field name="lot_id" optional="hide"/>
+                <field name="base_amount" sum="Revaluation"/>
+                <field name="capitalized_amount" sum="Capitalised"/>
+                <field name="expensed_amount" sum="Belongs to Goods Gone"/>
+                <field name="absorbed" optional="hide"/>
+                <field name="variance_move_id" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="stock_value_variance_view_form" model="ir.ui.view">
+        <field name="name">stock.value.variance.form</field>
+        <field name="model">stock.value.variance</field>
+        <field name="arch" type="xml">
+            <form string="Value Variance" create="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="move_id" readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="lot_id" readonly="1" invisible="not lot_id"/>
+                            <field name="origin" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="base_amount" readonly="1"/>
+                            <field name="capitalized_amount" readonly="1"/>
+                            <field name="expensed_amount"/>
+                            <field name="absorbed"/>
+                            <field name="variance_move_id" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Basis of the split">
+                        <field name="valued_qty" readonly="1"/>
+                        <field name="remaining_qty" readonly="1"/>
+                        <field name="landed_cost_line_id" readonly="1" invisible="origin != 'landed_cost'"/>
+                        <field name="account_move_id" readonly="1" invisible="origin != 'bill'"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_value_variance_action" model="ir.actions.act_window">
+        <field name="name">Value Variances</field>
+        <field name="res_model">stock.value.variance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

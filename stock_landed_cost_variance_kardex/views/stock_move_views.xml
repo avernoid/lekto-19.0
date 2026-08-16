@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_move_tree_kardex_variance" model="ir.ui.view">
+        <field name="name">stock.move.list.kardex.variance</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock_move_kardex_qty.view_move_tree_kardex_qty"/>
+        <field name="arch" type="xml">
+            <field name="kardex_value" position="after">
+                <field name="kardex_value_adjustment" optional="hide"/>
+                <field name="kardex_adjusted_qty" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

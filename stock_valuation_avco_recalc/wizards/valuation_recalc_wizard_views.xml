@@ -15,14 +15,8 @@
                         <div class="mb-0">
                             <strong>How to use:</strong>
                             <ol>
-                                <li>
-                                    <strong>Smart Start Date:</strong> The system automatically found earlier moves to ensure a complete fix. 
-                                    <em>(It sets the <strong>Start From</strong> date to the oldest move that contributes to the current stock).</em>
-                                </li>
-                                <li>
-                                    <strong>Verify Initial Balance:</strong> These values represent your stock <strong>strictly BEFORE</strong> that Start Date.
-                                    <em>(e.g., If 'Start From' is your very first move, Initial Balance will correctly be 0.0).</em>
-                                </li>
+                                <li><strong>Smart Start Date:</strong> The system automatically found earlier moves to ensure a complete fix. <em>(It sets the <strong>Start From</strong> date to the oldest move that contributes to the current stock).</em></li>
+                                <li><strong>Verify Initial Balance:</strong> These values represent your stock <strong>strictly BEFORE</strong> that Start Date. <em>(e.g., If 'Start From' is your very first move, Initial Balance will correctly be 0.0).</em></li>
                                 <li>
                                     <strong>Execute:</strong> The tool will recalculate the Average Cost sequentially from that point forward.
                                 </li>
@@ -33,6 +27,7 @@
                         </p>
                     </div>
                     <group>
+                        <field name="mode"/>
                         <field name="company_id" invisible="1"/>
                     </group>
                     <field name="line_ids">
@@ -41,7 +36,8 @@
                             <field name="start_date" force_save="1"/>
                             <field name="initial_qty" decoration-warning="initial_qty &lt; 0"/>
                             <field name="initial_value" decoration-warning="initial_value &lt; 0"/>
-                            <field name="new_standard_price" optional="show"/>
+                            <field name="new_standard_price" optional="show"
+                                   column_invisible="parent.mode != 'restate'"/>
                             <field name="currency_id" column_invisible="True"/>
                         </list>
                     </field>

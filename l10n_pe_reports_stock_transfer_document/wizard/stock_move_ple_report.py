@@ -8,6 +8,125 @@ from odoo.tools import float_repr
 class L10n_PeStockPleWizard(models.TransientModel):
     _inherit = 'l10n_pe.stock.ple.wizard'
 
+    # ------------------------------------------------------------------
+    # Value variances (soft-guarded: the model lives in another module)
+    # ------------------------------------------------------------------
+    def _l10n_pe_move_variances(self, move):
+        """Live variances of a movement, or an empty recordset when absent.
+
+        Guarded on the model rather than on a field: without
+        ``stock_landed_cost_variance`` installed the model does not exist at
+        all, and a field check would raise instead of degrading.
+        """
+        if 'stock.value.variance' not in self.env:
+            return self.env['stock.move'].browse()
+        return self.env['stock.value.variance'].sudo().search([
+            ('move_id', '=', move.id),
+            ('absorbed', '=', False),
+        ], order='date, id')
+
+    def _l10n_pe_variance_adjustment_vals(self, variance):
+        """Shape a variance as an adjustment line for ``_build_adjustment_line``.
+
+        Its own CUO namespace: the base uses the move id, the landed-cost bridge
+        ``{id}LC`` and the openings ``{id}A1``, so a fourth is needed or two
+        lines of the same file would share a CUO.
+
+        Operation type 99 ("Otros"). The catalogue Odoo ships has no code for a
+        value adjustment -- 26/27 are production-service entry/exit and 28 is an
+        inventory *quantity* difference -- and the increase line already emits 26
+        natively, which is not ours to change without regressing the standard.
+        """
+        serie_folio = self._get_serie_folio(
+            variance.landed_cost_line_id.cost_id.name
+            or variance.account_move_id.name or '')
+        return {
+            'cuo': f'{variance.id}VA'.zfill(6),
+            'value': variance.ledger_amount,
+            'operation_type': '99',
+            'date': variance.date.strftime('%d/%m/%Y'),
+            'document_type': '00',
+            'serie': serie_folio['serie'].replace(' ', '').replace('/', '') or '0',
+            'folio': serie_folio['folio'].replace(' ', '') or '0',
+        }
+
+    def _l10n_pe_opening_variance(self, products):
+        """Signed variance effect accrued before the period, per product.
+
+        The opening balance is rebuilt from ``stock.move`` alone, and
+        ``move.value`` carries the whole revaluation.  Without this the period
+        would close on the corrected number and the next one would open on the
+        uncorrected one -- a ledger that is wrong today at least stays
+        continuous, and a discontinuous one is worse.
+        """
+        if 'stock.value.variance' not in self.env:
+            return {}
+        # Accrued by the date of the movement it belongs to, NOT by its own.
+        # The body emits a variance inside the period of its parent movement --
+        # a landed cost booked in March against a January receipt prints in the
+        # January file -- so the opening has to use the same window. Splitting
+        # the two would leave a gap at every boundary: the period would close
+        # on the corrected figure and the next open on the uncorrected one,
+        # with no line to explain the jump.
+        domain = [
+            ('company_id', '=', self.env.company.id),
+            ('absorbed', '=', False),
+            ('move_id.date', '<', self.date_from),
+        ]
+        if products:
+            domain.append(('product_id', 'in', products))
+        groups = self.env['stock.value.variance'].sudo()._read_group(
+            domain, ['product_id'], ['ledger_amount:sum'])
+        return {product.id: amount for product, amount in groups}
+
+    # ------------------------------------------------------------------
+    # Opening balances
+    # ------------------------------------------------------------------
+    def _l10n_pe_apply_opening_variance(self, rows, report):
+        """Fold the variances accrued before the period into an opening row.
+
+        Both opening builders live in the native module and rebuild the balance
+        from ``stock.move`` alone, where ``move.value`` still carries the whole
+        revaluation.  Left alone, a period would close on the corrected figure
+        and the next one open on the uncorrected one.
+
+        The product is recovered from the CUO, which the native code builds
+        deterministically as ``f'{product.id}A1'.zfill(6)`` in both builders.  A
+        row whose CUO does not parse is left untouched rather than guessed at.
+        """
+        if report == '1201' or not rows:
+            # 12.1 carries physical units only; a value variance has none.
+            return rows
+        variance_by_product = self._l10n_pe_opening_variance(None)
+        if not variance_by_product:
+            return rows
+        for row in rows:
+            cuo = (row.get('cuo') or '').lstrip('0')
+            if not cuo.endswith('A1'):
+                continue
+            try:
+                product_id = int(cuo[:-2])
+            except ValueError:
+                continue
+            amount = variance_by_product.get(product_id)
+            if not amount:
+                continue
+            quantity = row.get('remaining', 0)
+            value = row.get('value', 0) + amount
+            row.update(self._valuation_columns(
+                quantity, value, quantity, value, is_balance=True))
+        return rows
+
+    def _append_valuation_line(self, move, period, report):
+        values = super()._append_valuation_line(move, period, report)
+        if not values:
+            return values
+        return self._l10n_pe_apply_opening_variance([values], report)[0]
+
+    def _append_historic_valuation_lines(self, products, period, report):
+        rows = super()._append_historic_valuation_lines(products, period, report)
+        return self._l10n_pe_apply_opening_variance(rows, report)
+
     def _get_ple_report_content(self, report):
         """Copy of the native ``_get_ple_report_content`` with a single, atomic
         injection: when a move carries a captured transfer document *type*, its
@@ -130,6 +249,16 @@ class L10n_PeStockPleWizard(models.TransientModel):
 
             adjustments = adjustments_by_move.get(move.id, [])
             total_cost = (move.value if move.is_in else -abs(move.value)) - sum(a['value'] for a in adjustments)
+            # INJECTION 3 (soft-guarded): value variances recorded for this
+            # movement by stock_landed_cost_variance. An adjustment on an
+            # OUTGOING move is the corrected exit cost itself, so it is folded
+            # into the line; on an INCOMING one it must NOT be, because folding
+            # would restate the acquisition cost and the line would print a
+            # unit cost the goods never had.
+            variances = self._l10n_pe_move_variances(move)
+            if variances and move.is_out:
+                total_cost += sum(v.ledger_amount for v in variances)
+                variances = variances.browse()
             balance = data_per_products[product.id]
             balance[0] += quantity
             balance[1] += total_cost
@@ -144,6 +273,15 @@ class L10n_PeStockPleWizard(models.TransientModel):
             for adjustment in adjustments:
                 balance[1] += adjustment['value']
                 data.append(self._build_adjustment_line(move, product, period, adjustment, balance))
+
+            # INJECTION 3 continued: the part of the revaluation that belongs to
+            # goods already gone leaves as its own line, so the running balance
+            # closes on what the stock is really worth.
+            for variance in variances:
+                balance[1] += variance.ledger_amount
+                data.append(self._build_adjustment_line(
+                    move, product, period,
+                    self._l10n_pe_variance_adjustment_vals(variance), balance))
         data.extend(self._append_historic_valuation_lines(list(data_per_products), period, report))
         if not data:
             return ''
