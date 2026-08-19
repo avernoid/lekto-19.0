@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_date_adjust_mrp_production" model="ir.actions.server">
+        <field name="name">Regularise Movement Dates</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[(6, 0, [ref('stock_move_date_adjust.group_stock_move_date_adjust')])]"/>
+        <field name="state">code</field>
+        <field name="code">action = env['stock.move.date.adjust.wizard'].action_open(records)</field>
+    </record>
+
+    <record id="action_date_adjust_mrp_unbuild" model="ir.actions.server">
+        <field name="name">Regularise Movement Dates</field>
+        <field name="model_id" ref="mrp.model_mrp_unbuild"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_unbuild"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[(6, 0, [ref('stock_move_date_adjust.group_stock_move_date_adjust')])]"/>
+        <field name="state">code</field>
+        <field name="code">action = env['stock.move.date.adjust.wizard'].action_open(records)</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+# Translation of stock_move_date_adjust_mrp to Spanish
+# . module: stock_move_date_adjust_mrp
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the stock_move_date_adjust_mrp package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module stock_move_date_adjust_mrp 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-17 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_move_date_adjust_mrp
+#. odoo-python
+#: code:addons/stock_move_date_adjust_mrp/models/stock_move.py:0
+msgid "Manufacturing - Components"
+msgstr "Fabricación - Componentes"
+
+#. module: stock_move_date_adjust_mrp
+#. odoo-python
+#: code:addons/stock_move_date_adjust_mrp/models/stock_move.py:0
+msgid "Manufacturing - Finished Product"
+msgstr "Fabricación - Producto terminado"
+
+#. module: stock_move_date_adjust_mrp
+#. odoo-python
+#: code:addons/stock_move_date_adjust_mrp/models/stock_move.py:0
+msgid "Disassembly"
+msgstr "Desensamblado"
+
+#. module: stock_move_date_adjust_mrp
+#: model:ir.actions.server,name:stock_move_date_adjust_mrp.action_date_adjust_mrp_production
+#: model:ir.actions.server,name:stock_move_date_adjust_mrp.action_date_adjust_mrp_unbuild
+msgid "Regularise Movement Dates"
+msgstr "Regularizar fechas de movimientos"

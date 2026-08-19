@@ -1,0 +1,777 @@
+# Translation of stock_move_date_adjust to Spanish
+# . module: stock_move_date_adjust
+# Copyright (C) 2025 Ganemo
+# This file is distributed under the same license as the stock_move_date_adjust package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module stock_move_date_adjust 19.0\n"
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-08-17 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__accounting_count
+msgid "Valuation Entry Count"
+msgstr "Número de asientos de valorización"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__adjust_accounting
+msgid "Also re-date the valuation entry"
+msgstr "Cambiar también la fecha del asiento de valorización"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__sync_document
+msgid "Also update the document date"
+msgstr "Actualizar también la fecha del documento"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__shift_summary
+msgid "Resulting Shift"
+msgstr "Desplazamiento resultante"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__current_date
+msgid "Current Date"
+msgstr "Fecha actual"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move__date_adjusted
+#: model_terms:ir.ui.view,arch_db:stock_move_date_adjust.view_move_search_date_adjust
+msgid "Date Regularised"
+msgstr "Fecha regularizada"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__document_name
+msgid "Document"
+msgstr "Documento"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__document_count
+msgid "Document Count"
+msgstr "Número de documentos"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_res_company__stock_move_date_adjust_max_days
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_res_config_settings__stock_move_date_adjust_max_days
+msgid "Maximum Movement Date Shift"
+msgstr "Desplazamiento máximo de fecha de movimiento"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__mode
+msgid "Mode"
+msgstr "Modo"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__move_id
+msgid "Movement"
+msgstr "Movimiento"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__move_count
+msgid "Movement Count"
+msgstr "Número de movimientos"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__move_ids
+msgid "Movements"
+msgstr "Movimientos"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__target_date
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__new_date
+msgid "New Date"
+msgstr "Fecha nueva"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move__original_date
+msgid "Original Date"
+msgstr "Fecha original"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__origin_label
+msgid "Origin"
+msgstr "Origen"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__line_ids
+msgid "Preview"
+msgstr "Previsualización"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__reason
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__scope_summary
+msgid "Scope"
+msgstr "Alcance"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__shift_from
+msgid "Move This Date"
+msgstr "Mover esta fecha"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__shift_to
+msgid "To This Date"
+msgstr "A esta fecha"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__stagger
+msgid "Stagger within each document"
+msgstr "Escalonar dentro de cada documento"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__move_state
+msgid "Status"
+msgstr "Estado"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__warning_html
+msgid "Warnings"
+msgstr "Avisos"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__wizard_id
+msgid "Wizard"
+msgstr "Asistente"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__id
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__display_name
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__create_uid
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__create_date
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__write_uid
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_line__write_date
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move__original_date
+msgid ""
+"Date this movement had before the first regularisation. Written only once, "
+"so it always points at the value Odoo recorded when the movement was "
+"processed."
+msgstr ""
+"Fecha que tenía este movimiento antes de la primera regularización. Se "
+"escribe una sola vez, así que siempre apunta al valor que Odoo registró "
+"cuando se procesó el movimiento."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move__date_adjusted
+msgid "The date of this movement was regularised at least once."
+msgstr "La fecha de este movimiento se regularizó al menos una vez."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_res_company__stock_move_date_adjust_max_days
+#: model:ir.model.fields,help:stock_move_date_adjust.field_res_config_settings__stock_move_date_adjust_max_days
+msgid ""
+"Largest gap, in days, between a movement's current date and the date a "
+"regularisation may give it. Zero means no limit."
+msgstr ""
+"Diferencia máxima, en días, entre la fecha actual de un movimiento y la "
+"fecha que puede darle una regularización. Cero significa sin límite."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__move_ids
+msgid ""
+"Movements this regularisation will apply to. They are resolved from whatever "
+"you selected: a transfer, a scrap, a manufacturing order or the movements "
+"themselves."
+msgstr ""
+"Movimientos a los que se aplicará esta regularización. Se resuelven a partir "
+"de lo que hayas seleccionado: una transferencia, un desecho, una orden de "
+"fabricación o los propios movimientos."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__move_count
+msgid "How many movements are about to be re-dated."
+msgstr "Cuántos movimientos están a punto de cambiar de fecha."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__document_count
+msgid "How many distinct source documents those movements belong to."
+msgstr "A cuántos documentos de origen distintos pertenecen esos movimientos."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__scope_summary
+msgid ""
+"One-line recap of how many movements and documents the regularisation covers."
+msgstr ""
+"Resumen en una línea de cuántos movimientos y documentos abarca la "
+"regularización."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__mode
+msgid ""
+"Fixed date sends every movement to the same instant. Shift moves the whole "
+"batch by an offset, which preserves the spacing the movements already had "
+"between them."
+msgstr ""
+"Fecha fija envía todos los movimientos al mismo instante. Desplazar mueve "
+"todo el lote por un desfase, lo que conserva la separación que los "
+"movimientos ya tenían entre sí."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__new_date
+msgid ""
+"Target date and time in Fixed date mode. Every selected movement lands here, "
+"except when staggering separates the phases of a document."
+msgstr ""
+"Fecha y hora de destino en modo Fecha fija. Todos los movimientos "
+"seleccionados caen aquí, salvo cuando el escalonado separa las fases de un "
+"documento."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__stagger
+msgid ""
+"Separate the phases of a same document by one hour, so a consumption never "
+"lands at the very same second as the output it feeds. Turn it off to "
+"collapse every movement of the document onto a single instant."
+msgstr ""
+"Separa una hora las fases de un mismo documento, para que un consumo nunca "
+"caiga en el mismo segundo que la salida a la que alimenta. Desactívalo para "
+"juntar todos los movimientos del documento en un único instante."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__shift_from
+msgid ""
+"These two fields are a reference pair, not a range: the movements do not "
+"travel from one to the other. Pick a date you know -- usually the date the "
+"movements carry now -- and in the next field the date it should have been. "
+"Only the gap between the two is applied."
+msgstr ""
+"Estos dos campos son un par de referencia, no un rango: los movimientos no "
+"viajan de uno al otro. Elige una fecha que conozcas —normalmente la que "
+"tienen ahora los movimientos— y en el campo siguiente la fecha que deberían "
+"haber tenido. Solo se aplica la diferencia entre ambas."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__shift_to
+msgid ""
+"Where the reference date should have landed. The gap between the two fields "
+"is added to every selected movement, so the spacing they already had between "
+"them is preserved. Example: Aug 17 to Jul 17 moves everything 31 days "
+"earlier, whatever dates the movements have."
+msgstr ""
+"Dónde debería haber caído la fecha de referencia. La diferencia entre los "
+"dos campos se suma a cada movimiento seleccionado, así que se conserva la "
+"separación que ya tenían entre sí. Ejemplo: del 17 ago al 17 jul mueve todo "
+"31 días atrás, sean cuales sean las fechas de los movimientos."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__shift_summary
+msgid ""
+"What the reference pair actually does to every selected movement, spelled "
+"out so you can check it before applying."
+msgstr ""
+"Qué le hace realmente el par de referencia a cada movimiento seleccionado, "
+"dicho con todas las letras para que puedas comprobarlo antes de aplicar."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__reason
+msgid ""
+"Why this correction is being made. It is mandatory and it is kept in the "
+"chatter note posted on each affected document."
+msgstr ""
+"Por qué se hace esta corrección. Es obligatorio y queda en la nota que se "
+"publica en el chatter de cada documento afectado."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__sync_document
+msgid ""
+"Aligns the source document's own date field -- a transfer's Date of "
+"Transfer, a scrap's Date -- with its movements. Documents that carry no date "
+"of their own are left untouched."
+msgstr ""
+"Alinea con sus movimientos el campo de fecha propio del documento de origen: "
+"la Fecha de transferencia de una transferencia, la Fecha de un desecho. Los "
+"documentos que no tienen fecha propia se dejan intactos."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__adjust_accounting
+msgid "Off by default. Odoo forbids writing the date of a posted entry, so ticking this resets the entry to draft, clears its number, writes the new date and posts it again. The entry therefore comes back with a NEW number in the target period and leaves a gap in the original one. Entries that are reconciled, hash-protected or sitting in a closed period are refused instead."
+msgstr "Desactivado por defecto. Odoo prohíbe escribir la fecha de un asiento contabilizado, así que marcarlo lo devuelve a borrador, limpia su número, escribe la fecha nueva y lo vuelve a contabilizar. El asiento vuelve con un número NUEVO del periodo de destino y deja un hueco en la secuencia del periodo original. Los asientos conciliados, protegidos por hash o en un periodo cerrado se rechazan."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__accounting_count
+msgid "How many of the selected movements have a valuation journal entry. Entries only exist for products valued in real time, and they always keep the date they were posted on: Odoo treats the date of a posted entry as unmodifiable and ties it to the journal sequence."
+msgstr "Cuántos de los movimientos seleccionados tienen asiento de valorización. Solo existen asientos para productos valorados en tiempo real, y siempre conservan la fecha en que se contabilizaron: para Odoo la fecha de un asiento contabilizado es inmodificable y va atada a la secuencia del diario."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__line_ids
+msgid ""
+"One row per movement, grouped by origin, showing the date it has now and the "
+"date it will get."
+msgstr ""
+"Una fila por movimiento, agrupadas por origen, con la fecha que tiene ahora "
+"y la que va a tener."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__warning_html
+msgid "Alerts worth reading before applying. They never block the operation."
+msgstr ""
+"Avisos que conviene leer antes de aplicar. Nunca bloquean la operación."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__wizard_id
+msgid "The regularisation this preview row belongs to."
+msgstr "La regularización a la que pertenece esta fila de previsualización."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__move_id
+msgid "The stock movement this row previews."
+msgstr "El movimiento de stock que previsualiza esta fila."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__origin_label
+msgid ""
+"What produced the movement: a transfer, a scrap, an inventory adjustment, a "
+"manufacturing order or a disassembly."
+msgstr ""
+"Qué generó el movimiento: una transferencia, un desecho, un ajuste de "
+"inventario, una orden de fabricación o un desensamblado."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__document_name
+msgid ""
+"The source document, or the movement reference when the origin has no "
+"document of its own."
+msgstr ""
+"El documento de origen, o la referencia del movimiento cuando el origen no "
+"tiene documento propio."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__product_id
+msgid "Product moved by this movement."
+msgstr "Producto que mueve este movimiento."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__current_date
+msgid "Date the movement carries right now."
+msgstr "Fecha que lleva el movimiento ahora mismo."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__target_date
+msgid "Date the movement will carry once you apply."
+msgstr "Fecha que llevará el movimiento cuando apliques."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_line__move_state
+msgid ""
+"State of the movement. On anything other than Done the date is the planned "
+"date, not the effective one."
+msgstr ""
+"Estado del movimiento. En cualquier estado distinto de Hecho la fecha es la "
+"prevista, no la efectiva."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields.selection,name:stock_move_date_adjust.selection__stock_move_date_adjust_wizard__mode__fixed
+msgid "Fixed date"
+msgstr "Fecha fija"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields.selection,name:stock_move_date_adjust.selection__stock_move_date_adjust_wizard__mode__shift
+msgid "Shift by an offset"
+msgstr "Desplazar por un desfase"
+
+#. module: stock_move_date_adjust
+#: model:ir.model,name:stock_move_date_adjust.model_stock_move_date_adjust_wizard
+msgid "Regularise Stock Movement Dates"
+msgstr "Regularizar fechas de movimientos de stock"
+
+#. module: stock_move_date_adjust
+#: model:ir.model,name:stock_move_date_adjust.model_stock_move_date_adjust_line
+msgid "Stock Movement Date Regularisation Preview Line"
+msgstr "Línea de previsualización de regularización de fechas de movimientos"
+
+#. module: stock_move_date_adjust
+#: model:res.groups.privilege,name:stock_move_date_adjust.res_groups_privilege_stock_move_date_adjust
+msgid "Movement Date Regularisation"
+msgstr "Regularización de fechas de movimientos"
+
+#. module: stock_move_date_adjust
+#: model:res.groups,name:stock_move_date_adjust.group_stock_move_date_adjust
+msgid "Allowed"
+msgstr "Permitido"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#: model:ir.actions.server,name:stock_move_date_adjust.action_date_adjust_stock_move
+#: model:ir.actions.server,name:stock_move_date_adjust.action_date_adjust_stock_picking
+#: model:ir.actions.server,name:stock_move_date_adjust.action_date_adjust_stock_scrap
+#: model_terms:ir.ui.view,arch_db:stock_move_date_adjust.stock_move_date_adjust_wizard_form
+msgid "Regularise Movement Dates"
+msgstr "Regularizar fechas de movimientos"
+
+#. module: stock_move_date_adjust
+#: model:ir.actions.server,name:stock_move_date_adjust.action_date_adjust_restore
+msgid "Restore Original Date"
+msgstr "Restaurar fecha original"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "Transfer"
+msgstr "Transferencia"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "Scrap"
+msgstr "Desecho"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "Inventory Adjustment"
+msgstr "Ajuste de inventario"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "Other"
+msgstr "Otro"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "Before"
+msgstr "Antes"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "After"
+msgstr "Después"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "Movement dates regularised"
+msgstr "Fechas de movimientos regularizadas"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "A reason is required to regularise movement dates."
+msgstr "Hace falta un motivo para regularizar fechas de movimientos."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+msgid "None of the selected movements has an original date to restore."
+msgstr ""
+"Ninguno de los movimientos seleccionados tiene una fecha original que "
+"restaurar."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid ""
+"A movement cannot be dated in the future.\n"
+"\n"
+"%(moves)s"
+msgstr ""
+"Un movimiento no puede fecharse en el futuro.\n"
+"\n"
+"%(moves)s"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "- %(move)s: %(delta)s days, maximum %(max)s"
+msgstr "- %(move)s: %(delta)s días, máximo %(max)s"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid ""
+"The regularisation exceeds the maximum shift allowed by the company.\n"
+"\n"
+"%(moves)s"
+msgstr ""
+"La regularización supera el desplazamiento máximo permitido por la "
+"compañía.\n"
+"\n"
+"%(moves)s"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid ""
+"These movements would land in a closed accounting period:\n"
+"\n"
+"%(moves)s\n"
+"\n"
+"Reopen the period or pick another date."
+msgstr ""
+"Estos movimientos caerían en un periodo contable cerrado:\n"
+"\n"
+"%(moves)s\n"
+"\n"
+"Reabre el periodo o elige otra fecha."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+msgid "Select at least one record."
+msgstr "Selecciona al menos un registro."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+msgid "The selected records have no stock movements."
+msgstr "Los registros seleccionados no tienen movimientos de stock."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+msgid "Fill in the target date first."
+msgstr "Primero indica la fecha de destino."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "Movement date regularisation is not available on %s."
+msgstr "La regularización de fechas de movimientos no está disponible en %s."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "%(days)s days %(hours)sh %(minutes)smin"
+msgstr "%(days)s días %(hours)sh %(minutes)smin"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "Every movement moves %(gap)s later."
+msgstr "Cada movimiento se mueve %(gap)s hacia adelante."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "Every movement moves %(gap)s earlier."
+msgstr "Cada movimiento se mueve %(gap)s hacia atrás."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid ""
+"%(count)s movement(s) would land in the future, which is refused. Check the "
+"direction of the shift: the target date must be in the past."
+msgstr ""
+"%(count)s movimiento(s) caerían en el futuro, cosa que se rechaza. Revisa la "
+"dirección del desplazamiento: la fecha de destino debe estar en el pasado."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid ""
+"You are about to re-date %(moves)s movement(s) across %(documents)s "
+"document(s)."
+msgstr ""
+"Vas a cambiar la fecha de %(moves)s movimiento(s) en %(documents)s "
+"documento(s)."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid ""
+"%(count)s movement(s) would end up before their own origin movement (e.g. "
+"%(move)s before %(origin)s). The chronology of the chain would no longer "
+"hold."
+msgstr ""
+"%(count)s movimiento(s) quedarían antes que su propio movimiento de origen "
+"(por ejemplo %(move)s antes que %(origin)s). La cronología de la cadena "
+"dejaría de sostenerse."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid ""
+"%(count)s movement(s) are not done. On those, the date is the *planned* "
+"date, not the effective one."
+msgstr ""
+"%(count)s movimiento(s) no están hechos. En esos, la fecha es la *prevista*, "
+"no la efectiva."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "%(count)s valuation journal entries will keep their current date, so the stock ledger and the general ledger will differ for those movements."
+msgstr "%(count)s asientos de valorización conservarán su fecha actual, así que el kardex y el mayor diferirán para esos movimientos."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "%(count)s movements regularised."
+msgstr "%(count)s movimientos regularizados."
+
+#. module: stock_move_date_adjust
+#: model_terms:ir.ui.view,arch_db:stock_move_date_adjust.stock_move_date_adjust_wizard_form
+msgid "What will change"
+msgstr "Qué va a cambiar"
+
+#. module: stock_move_date_adjust
+#: model_terms:ir.ui.view,arch_db:stock_move_date_adjust.stock_move_date_adjust_wizard_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: stock_move_date_adjust
+#: model_terms:ir.ui.view,arch_db:stock_move_date_adjust.stock_move_date_adjust_wizard_form
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: stock_move_date_adjust
+#: model_terms:ir.ui.view,arch_db:stock_move_date_adjust.stock_move_date_adjust_wizard_form
+msgid "e.g. 2025 close regularisation"
+msgstr "p. ej. regularización cierre 2025"
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "%(count)s valuation journal entries will be reset to draft, RENUMBERED into the target period and posted again. That leaves a gap in the sequence of their original period. Reconciled, hash-protected or closed-period entries are refused."
+msgstr "%(count)s asientos de valorización se devolverán a borrador, se RENUMERARÁN en el periodo de destino y se volverán a contabilizar. Eso deja un hueco en la secuencia de su periodo original. Los asientos conciliados, protegidos por hash o en periodo cerrado se rechazan."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "These valuation entries cannot be re-dated:\n\n%(entries)s\n\nUntick the accounting option, or resolve them in Accounting first."
+msgstr "Estos asientos de valorización no se pueden re-fechar:\n\n%(entries)s\n\nDesmarca la opción contable, o resuélvelos antes en Contabilidad."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "- %(entry)s: only a posted entry can be re-dated (it is %(state)s)."
+msgstr "- %(entry)s: solo se puede re-fechar un asiento contabilizado (está en %(state)s)."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "- %(entry)s: protected by an inalterability hash."
+msgstr "- %(entry)s: protegido por un hash de inalterabilidad."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "- %(entry)s: requires a cancellation request."
+msgstr "- %(entry)s: requiere una solicitud de cancelación."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "- %(entry)s: reconciled. Odoo would let it through and break the reconciliation silently; unreconcile it first."
+msgstr "- %(entry)s: conciliado. Odoo lo dejaría pasar y rompería la conciliación en silencio; desconcílialo primero."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "- %(entry)s: its current period is closed (%(locks)s)."
+msgstr "- %(entry)s: su periodo actual está cerrado (%(locks)s)."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/models/stock_move.py:0
+#, python-format
+msgid "Re-dated by a stock movement date regularisation. Previously %(old_name)s; renumbered because Odoo ties an entry's number to its period."
+msgstr "Re-fechado por una regularización de fechas de movimientos. Antes %(old_name)s; renumerado porque Odoo ata el número de un asiento a su periodo."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__effective_move_ids
+msgid "Movements Actually Affected"
+msgstr "Movimientos realmente afectados"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,field_description:stock_move_date_adjust.field_stock_move_date_adjust_wizard__sibling_count
+msgid "Movements Added"
+msgstr "Movimientos añadidos"
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__effective_move_ids
+msgid "The selection plus the movements that syncing the document header would drag along anyway. Odoo propagates a header date back to every movement of its document, so they are included openly instead of moving unannounced."
+msgstr "La selección más los movimientos que la sincronización de la cabecera va a arrastrar de todos modos. Odoo propaga la fecha de una cabecera a todos los movimientos de su documento, así que se incluyen abiertamente en vez de moverse sin avisar."
+
+#. module: stock_move_date_adjust
+#: model:ir.model.fields,help:stock_move_date_adjust.field_stock_move_date_adjust_wizard__sibling_count
+msgid "How many movements were added to the selection because they belong to a document you are re-dating."
+msgstr "Cuántos movimientos se añadieron a la selección por pertenecer a un documento que estás re-fechando."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "%(count)s more movement(s) were added to the list: they share a document with your selection, and Odoo re-dates every movement of a document when its header date changes. They are shown below and get the same traceability. Untick 'Also update the document date' to touch only what you picked."
+msgstr "Se añadieron %(count)s movimiento(s) más a la lista: comparten documento con tu selección, y Odoo re-fecha todos los movimientos de un documento cuando cambia la fecha de su cabecera. Aparecen abajo y reciben la misma trazabilidad. Desmarca 'Actualizar también la fecha del documento' para tocar solo lo que elegiste."
+
+#. module: stock_move_date_adjust
+#. odoo-python
+#: code:addons/stock_move_date_adjust/wizard/stock_move_date_adjust_wizard.py:0
+#, python-format
+msgid "You are about to re-date %(moves)s movement(s)."
+msgstr "Vas a cambiar la fecha de %(moves)s movimiento(s)."

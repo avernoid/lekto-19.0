@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Optional columns on the native Moves Analysis list. This is the report the
+         immutable-log model would have provided: no new model, no new menu. -->
+    <record id="view_move_tree_date_adjust" model="ir.ui.view">
+        <field name="name">stock.move.list.date.adjust</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="reference" position="after">
+                <field name="original_date" optional="hide" readonly="1"/>
+                <field name="date_adjusted" optional="hide" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_search_date_adjust" model="ir.ui.view">
+        <field name="name">stock.move.search.date.adjust</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="Date Regularised" name="filter_date_adjusted"
+                        domain="[('date_adjusted', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

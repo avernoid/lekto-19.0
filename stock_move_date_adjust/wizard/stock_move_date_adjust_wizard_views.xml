@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_move_date_adjust_wizard_form" model="ir.ui.view">
+        <field name="name">stock.move.date.adjust.wizard.form</field>
+        <field name="model">stock.move.date.adjust.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Regularise Movement Dates">
+                <field name="move_ids" invisible="1"/>
+                <field name="effective_move_ids" invisible="1"/>
+                <field name="sibling_count" invisible="1"/>
+                <field name="accounting_count" invisible="1"/>
+                <div class="alert alert-info" role="status">
+                    <field name="scope_summary" nolabel="1" readonly="1"/>
+                </div>
+                <group>
+                    <group>
+                        <field name="mode" widget="radio"/>
+                        <field name="new_date" invisible="mode != 'fixed'"
+                               required="mode == 'fixed'"/>
+                        <field name="stagger" invisible="mode != 'fixed'"/>
+                        <field name="shift_from" invisible="mode != 'shift'"
+                               required="mode == 'shift'"/>
+                        <field name="shift_to" invisible="mode != 'shift'"
+                               required="mode == 'shift'"/>
+                        <field name="shift_summary" readonly="1"
+                               invisible="mode != 'shift' or not shift_summary"/>
+                    </group>
+                    <group>
+                        <field name="reason" placeholder="e.g. 2025 close regularisation"/>
+                        <field name="sync_document"/>
+                        <field name="adjust_accounting" invisible="not accounting_count"/>
+                    </group>
+                </group>
+                <div class="alert alert-warning" role="status" invisible="not warning_html">
+                    <field name="warning_html" widget="html" readonly="1" nolabel="1"/>
+                </div>
+                <separator string="What will change"/>
+                <field name="line_ids" nolabel="1" readonly="1">
+                    <list create="0" delete="0" edit="0" default_order="origin_label">
+                        <field name="origin_label"/>
+                        <field name="document_name"/>
+                        <field name="product_id"/>
+                        <field name="move_state" optional="hide"/>
+                        <field name="current_date"/>
+                        <field name="target_date" decoration-bf="1"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_apply" string="Apply" type="object"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

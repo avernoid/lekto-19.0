@@ -90,20 +90,19 @@ class ValuationRecalcWizard(models.TransientModel):
     def action_confirm_recalc(self):
         """
         Orchestrates the Recalculation.
-        1. Creates Audit Header.
-        2. Loops lines -> calls force recalculation logic.
+        1. Loops lines -> calls force recalculation logic.
+        2. Creates the Audit (header + lines) in one write-free create.
         3. Opens Audit View.
         """
         self.ensure_one()
-        
-        # 1. Create Audit Header
-        audit = self.env['stock.valuation.recalc.audit'].create({
-            'company_id': self.company_id.id,
-            'mode': self.mode,
-            'log_notes': f"Batch execution for {len(self.line_ids)} products "
-                         f"in {self.company_id.display_name} (mode: {self.mode}).",
-        })
-        
+
+        # The audit models are deliberately non-writable: every ACL declares
+        # perm_write=0 so nobody can rewrite the record of their own correction
+        # (see test_04_audit_trail_cannot_be_edited_or_deleted). The header and
+        # its lines must therefore be born in a SINGLE create. Creating the
+        # header first and writing the lines onto it afterwards raised
+        # "You are not allowed to modify ... No group currently allows this
+        # operation" for every user, administrators included.
         audit_lines = []
         
         for line in self.line_ids:
@@ -132,8 +131,14 @@ class ValuationRecalcWizard(models.TransientModel):
                 'detail_ids': verify_res['details'],
             }))
             
-        audit.write({'audit_lines': audit_lines})
-        
+        audit = self.env['stock.valuation.recalc.audit'].create({
+            'company_id': self.company_id.id,
+            'mode': self.mode,
+            'log_notes': f"Batch execution for {len(self.line_ids)} products "
+                         f"in {self.company_id.display_name} (mode: {self.mode}).",
+            'audit_lines': audit_lines,
+        })
+
         # 4. Open the Audit Log
         return {
             'type': 'ir.actions.act_window',

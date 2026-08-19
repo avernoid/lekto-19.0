@@ -1,5 +1,5 @@
 from odoo.tests import TransactionCase
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo import fields
 from datetime import datetime, timedelta
 import logging
@@ -333,3 +333,60 @@ class TestAvcoRecalc(TransactionCase):
                              f"{rule.name} still grants write on the audit trail")
             self.assertFalse(rule.perm_unlink,
                              f"{rule.name} still grants unlink on the audit trail")
+
+    def test_05_wizard_runs_for_a_real_user_not_only_for_superuser(self):
+        """The whole wizard, executed by a stock manager under ACL enforcement.
+
+        This is the test that was missing. Every other test either calls
+        ``_recalculate_valuation_waterfall`` directly or creates audit records
+        as the test superuser, and ``su`` bypasses ACLs entirely -- so the
+        wizard's own persistence path was never exercised under the rules it
+        actually runs with. It used to create the audit header and then WRITE
+        the lines onto it, which the deliberately non-writable audit ACLs
+        refuse with "No group currently allows this operation", for
+        administrators too.
+        """
+        manager = self.env['res.users'].create({
+            'name': 'AVCO Recalc Manager',
+            'login': 'avco_recalc_manager',
+            'group_ids': [(6, 0, [
+                self.env.ref('stock.group_stock_manager').id,
+                self.env.ref('account.group_account_manager').id,
+            ])],
+        })
+
+        day_1 = fields.Datetime.to_datetime('2024-01-05 10:00:00')
+        self._create_move(self.product_avco, 10, 10.0, day_1,
+                          self.vendor_loc, self.stock_loc)
+
+        wizard = self.env['stock.valuation.recalc.wizard'].with_user(manager).create({
+            'company_id': self.env.company.id,
+            'mode': 'restate',
+            'line_ids': [(0, 0, {
+                'product_id': self.product_avco.id,
+                'start_date': day_1,
+                'initial_qty': 0.0,
+                'initial_value': 0.0,
+            })],
+        })
+
+        action = wizard.action_confirm_recalc()
+
+        audit = self.env['stock.valuation.recalc.audit'].browse(action['res_id'])
+        self.assertTrue(audit.exists(), "the audit must be persisted")
+        self.assertEqual(len(audit.audit_lines), 1,
+                         "the audit lines must be created with the header")
+        self.assertEqual(audit.audit_lines.product_id, self.product_avco)
+        self.assertEqual(audit.user_id, manager)
+
+    def test_05b_audit_stays_unwritable_after_the_fix(self):
+        """The fix must not have been 'grant write on the audit'."""
+        manager = self.env['res.users'].create({
+            'name': 'AVCO Recalc Manager 2',
+            'login': 'avco_recalc_manager_2',
+            'group_ids': [(6, 0, [self.env.ref('stock.group_stock_manager').id])],
+        })
+        audit = self.env['stock.valuation.recalc.audit'].create({})
+
+        with self.assertRaises(AccessError):
+            audit.with_user(manager).write({'log_notes': 'tampered'})

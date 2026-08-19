@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Its own privilege, not a level of the Inventory one: this is an
+         independent grant, not a rank above Inventory Administrator. With a
+         single group under it, the user form renders it as a plain No / Yes. -->
+    <record id="res_groups_privilege_stock_move_date_adjust" model="res.groups.privilege">
+        <field name="name">Movement Date Regularisation</field>
+        <field name="category_id" ref="base.module_category_supply_chain"/>
+        <field name="description">Allows correcting the date of already processed
+            stock movements. Meant to be granted for a regularisation window and
+            revoked afterwards; no role implies it, not even Inventory
+            Administrator.</field>
+        <field name="sequence">200</field>
+    </record>
+
+    <record id="group_stock_move_date_adjust" model="res.groups">
+        <field name="name">Allowed</field>
+        <field name="privilege_id" ref="res_groups_privilege_stock_move_date_adjust"/>
+    </record>
+
+</odoo>
