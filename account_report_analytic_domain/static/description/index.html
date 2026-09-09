@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytic Domain Report Engine | Odoo Accounting App by Ganemo</title>
+    <meta name="description"
+        content="Build Odoo report lines from analytic items: show the distributed share of a journal item (80% of a 20/30/50 split), not its full balance. Filter and group by analytic account, cost centre or accounting account.">
+    <meta name="keywords"
+        content="Odoo, Accounting, Analytic Accounting, Analytic Distribution, Cost Centre, Report Engine, Custom Reports, Financial Reports, Ganemo, Odoo 19">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        strong,
+        b {
+            font-weight: 700 !important;
+            color: inherit;
+        }
+        .cta-whatsapp {
+            background-color: #25d366 !important;
+            color: white !important;
+            font-weight: bold;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+        .cta-whatsapp:hover {
+            background-color: #128c7e !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+            text-decoration: none;
+        }
+        .badge-lang {
+            background-color: #f1f8ff;
+            color: #0366d6;
+            border: 1px solid #c8e1ff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .copy-link-wrapper {
+            display: inline-flex;
+            align-items: center;
+            background-color: #007bff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #0056b3;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-family: sans-serif;
+            margin-bottom: 10px;
+            max-width: 100%;
+        }
+        .copy-link-label {
+            background-color: white;
+            color: #333;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 80px;
+        }
+        .copy-link-label::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-left: 6px solid white;
+            z-index: 10;
+        }
+        .copy-link-url {
+            color: white;
+            padding: 12px 20px 12px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            letter-spacing: 0.5px;
+            white-space: normal;
+            word-break: break-word;
+            overflow-x: visible;
+        }
+        @media (max-width: 768px) {
+            .mob-col {
+                flex-direction: column !important;
+            }
+
+            .mob-col img {
+                margin-right: 0 !important;
+                margin-bottom: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LLM Metadata Block (Hidden from browser, visible to indexers) -->
+    <div style="display: none;">
+        <h2>Technical Specification for AI & LLM</h2>
+        <p>This Odoo module 'account_report_analytic_domain' adds an 'analytic_domain' computation engine
+            to account.report.expression, the counterpart of the native 'domain' engine but running on
+            account.analytic.line instead of account.move.line. A report line therefore aggregates the share
+            of a journal item that was distributed to given analytic accounts, because
+            account.analytic.line.amount already holds that share; the engine sums -amount so results keep the
+            accounting balance sign and stay aggregatable through the 'aggregation' engine.
+            Formulas are Odoo domains on analytic items: analytic plan columns, general_account_id and its
+            account_type, code or tag_ids, partner_id, product_id, date, journal_id, and move_line_id for
+            anything else. It translates the report's own option domain (dates and every date_scope, companies,
+            journals, partners, forced_domain), renames account_id to general_account_id, applies the same
+            currency table as the domain engine, supports groupby on any stored analytic field, and audits a
+            cell by opening the matching analytic items. Two computed banners review the formula in the form.
+            Subformulas: sum, -sum, sum_if_pos, sum_if_neg, count_rows.
+            Requires account_reports (Enterprise). Compatible with Odoo 19 (Enterprise, Odoo.SH, Ganemo Online).
+            Multi-language support for English and Spanish included.</p>
+    </div>
+    <div class="d-flex align-items-center justify-content-between"
+        style="border-bottom: 1px solid #875A7B; padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div style="color: #875A7B; font-size: 14px; font-family: 'Montserrat', sans-serif; font-weight: bold; background-color: white; display: inline-block; padding: 3px 10px; border-radius: 50px;"
+                class="mr-2">
+                <i class="fa fa-check mr-1"></i>Enterprise (Odoo.SH, Ganemo Online or Ganemo.SH)
+            </div>
+            <span class="badge-lang ml-2"><i class="fa fa-language mr-1"></i> English & Spanish Included</span>
+        </div>
+    </div>
+    <!-- GIFBANNER -->
+    <div class="container" style="width:84vw">
+        <!--Slide-->
+        <div class="row" style="padding: 4rem 2.5rem 0 !important; background-color: #fff !important;">
+            <div class="col-lg-12 d-flex flex-column align-items-center">
+                <h1 class="text-center text-uppercase"
+                    style="font-family: Montserrat, 'sans-serif' !important; font-size: 67px !important; color: #5154a5; font-weight: 900 !important;">
+                    <span style="color:#9451a5;">Analytic Domain</span>
+                </h1>
+                <p class="my-1 text-center text-uppercase"
+                    style="letter-spacing: 4px !important; color: #74788D !important;font-size: 21px;font-weight: bold;">
+                    Report lines built from analytic items</p>
+            </div>
+            <div class="col-lg-12 d-flex flex-column justify-content-center">
+                <p class="my-1 text-center"
+                    style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
+                    An expense of 1,000 split 20% Marketing / 30% Administration / 50% Management should show 800 on a
+                    line called "Administrative expenses". With the standard engine it shows 1,000. This one shows 800.
+                </p>
+            </div>
+        </div>
+        <!--What We're Solving-->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">What We're Solving</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-pie-chart mr-2"></i> The whole amount, or the
+                                share?</h4>
+                            <p style="text-align: justify;">A report line built on journal items can <strong>filter</strong>
+                                by analytic distribution, but it always brings the <strong>full</strong> balance. Odoo
+                                does know how to prorate — its analytic group-by columns do — but only as extra
+                                <strong>columns</strong>, never as a <strong>line</strong> of your own report. This
+                                engine puts the prorated figure in the line.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-calculator mr-2"></i> No arithmetic to
+                                maintain</h4>
+                            <p style="text-align: justify;">The module performs <strong>no distribution
+                                    arithmetic</strong>. Each analytic item already carries its share of the journal
+                                item's balance, computed and rounded by Odoo itself when the entry was posted. The
+                                engine only adds them up, so your figures cannot drift from Odoo's.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-filter mr-2"></i> The full domain
+                                vocabulary</h4>
+                            <p style="text-align: justify;">Write an ordinary Odoo domain on the fields you already see
+                                in <strong>Analytic Items</strong>: the analytic account of a plan, the
+                                <strong>accounting account</strong> and its type, code or tags, the partner, the
+                                product, the journal, the date. Group several analytic accounts through a sub-plan
+                                instead of listing them one by one.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fdfdfd; border: 1px solid #eee;">
+                            <h4 style="color: #5154a5;"><i class="fa fa-check-square-o mr-2"></i> It behaves like a
+                                native line</h4>
+                            <p style="text-align: justify;">Dates and every date scope, companies, journals, partners
+                                and currency conversion are taken from the report itself, with no configuration. The
+                                sign matches the accounting balance, so an analytic line <strong>adds up</strong> with
+                                ordinary lines through the aggregation engine, and clicking the figure opens the
+                                analytic items behind it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SETUP & WORKFLOW GUIDE (Internal Manual) -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Setup & User Manual</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Step-by-Step implementation</p>
+                </div>
+                <!-- Setup Guide -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #791d97; background-color: #fcfcfc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> 1.
+                                Configuration Guide</h3>
+                            <p class="lead">Add a prorated line to any report in 4 steps:</p>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Go to <strong>Accounting >
+                                                Configuration > Reports</strong> and open or create your report.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Add a <strong>line</strong>
+                                                and open its <strong>expression</strong>.</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mt-3" style="list-style-type: none; padding: 0; line-height: 2;">
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Set <strong>Computation
+                                                Engine</strong> to <strong>Analytic Domain</strong>.</li>
+                                        <li><i class="fa fa-angle-right text-muted mr-2"></i> Write the domain and a
+                                                subformula: <code>sum</code>, <code>-sum</code>,
+                                                <code>sum_if_pos</code>, <code>sum_if_neg</code> or
+                                                <code>count_rows</code>.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="mt-3 p-3 bg-light border-radius-10"
+                                style="border-radius: 10px; border: 1px dashed #791d97;">
+                                <small><strong><i class="fa fa-info-circle mr-1"></i> You are not on your own:</strong>
+                                    choosing the engine reveals a guide listing <strong>your database's own analytic
+                                        plans</strong> with the field name each one answers to — nobody can guess that
+                                    the plan called "Cost Centres" is <code>x_plan6_id</code> — plus examples ready to
+                                    copy.</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Workflow / Operating Manual -->
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="p-4"
+                            style="border-left: 5px solid #3c6dac; background-color: #f7f9fc; border-radius: 0 15px 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                            <h3 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-desktop mr-2"></i> 2.
+                                Operating Manual (Workflow)</h3>
+                            <p class="lead">What the accountant gets, day to day:</p>
+                            <div class="row mt-4">
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-magic text-primary mr-2"></i> A reviewer for every
+                                            formula</h5>
+                                        <p class="text-muted">A second banner reads the formula as it is typed and
+                                            separates <strong>what will not work</strong> from <strong>what will be
+                                                slow</strong>, because a broken condition matters more than a slow one
+                                            and would otherwise be hidden by it.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-sitemap text-primary mr-2"></i> Group without listing</h5>
+                                        <p class="text-muted">Put several analytic accounts under a <strong>sub-plan</strong>
+                                            and filter by it. A sub-plan shares its parent's field, so it groups
+                                            accounts <em>inside</em> one dimension instead of adding another — and the
+                                            list never rots when you add an account.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-list-ul text-primary mr-2"></i> Unfold by anything</h5>
+                                        <p class="text-muted">The report line's <strong>Group By</strong> works on any
+                                            stored field of the analytic item: cost centre, accounting account, partner,
+                                            product, journal — or two levels at once, such as accounting account and
+                                            then cost centre.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-search-plus text-primary mr-2"></i> Click the figure</h5>
+                                        <p class="text-muted">Auditing a cell opens exactly the <strong>analytic
+                                                items</strong> behind it, with the report's own period and filters
+                                            applied, so any number on the report can be traced back to its entries.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-exclamation-triangle text-primary mr-2"></i> It tells you
+                                            when it cannot</h5>
+                                        <p class="text-muted">Analytic items exist only for <strong>posted</strong>
+                                            entries. Switching on "Include unposted entries" therefore cannot widen
+                                            these lines, so the report says so with a warning instead of quietly
+                                            disagreeing with the rest of the page.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #3c6dac;">
+                                        <h5><i class="fa fa-globe text-primary mr-2"></i> Multi-company, one
+                                            currency</h5>
+                                        <p class="text-muted">Consolidated reports convert analytic lines through the
+                                            <strong>same currency table</strong> the native engine uses, so an analytic
+                                            line and an accounting line over the same entries agree to the cent.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Section Languages-->
+        <section class="oe_container pb-5 text-center">
+            <div class="p-5" style="background-color: #f7f9fc; border-radius: 20px; border: 1px dashed #3c6dac;">
+                <h3 style="color: #3c6dac; font-weight: 700;">Global Ready | Multi-Language Support</h3>
+                <p class="lead">This module is fully translated into <strong>English</strong> and
+                    <strong>Spanish</strong> (en_US, es_ES, es_PE, es_MX), ensuring a professional experience for
+                    international organizations.
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                    <img src="https://flagcdn.com/w40/us.png" class="mx-2 shadow-sm" alt="English">
+                    <img src="https://flagcdn.com/w40/es.png" class="mx-2 shadow-sm" alt="Spanish">
+                </div>
+            </div>
+        </section>
+        <!--Why Choose Ganemo?-->
+        <section class="oe_container pb-5">
+            <div class="mt64 mb64">
+
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Why Choose Ganemo?</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        ----------------</p>
+                </div>
+                <div class="col-sm-12 py-4">
+                    <p style="text-align: justify; font-size: 16px;">
+                        Ganemo is the world's leading Odoo App developer and a multi-award-winning Gold Partner. For
+                        over 5 years, we have been recognized as the <strong>#1 seller of high-quality apps</strong> on
+                        the Odoo App Store. Trusted as the "Best Partner" in USA, Mexico, Chile, Spain, Colombia,
+                        Ecuador, and Peru, we deliver robust, secure, and localization-compliant solutions for global
+                        businesses.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Primary CTA WhatsApp -->
+        <section class="oe_container py-5 text-center">
+            <div class="mt-4">
+                <h2 class="mb-4" style="font-weight: 700;">Get a Quote & Resolve Commercial Doubts</h2>
+                <p class="mb-5 lead text-muted">Join thousands of satisfied clients on Odoo. Contact our sales team
+                    directly.</p>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <!-- WhatsApp -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qrwhatsappsales.png" alt="QR WhatsApp"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Official WhatsApp</h4>
+                                <p class="text-muted small mb-3">Fastest response time.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <!-- Label -->
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #007bff; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <!-- Arrow Trick -->
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <!-- URL -->
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #007bff; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #007bff; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-whatsapp text-success mr-2"></i>+1 (828) 672-6150
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Sales Email -->
+                        <div class="d-flex justify-content-center align-items-center mob-col mb-5">
+                            <img src="qremailsales.png" alt="QR Sales Email"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Sales Email</h4>
+                                <p class="text-muted small mb-3">For commercial inquiries.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-envelope text-primary mr-2"></i> leads@ganemo.com
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Book Demo -->
+                        <div class="d-flex justify-content-center align-items-center mob-col">
+                            <img src="qrbooksales.png" alt="QR Book Demo"
+                                style="max-width: 150px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);"
+                                class="mr-4 mb-3">
+                            <div class="d-flex flex-column align-items-start">
+                                <h4 class="font-weight-bold mb-1" style="color: #333;">Book a Demo</h4>
+                                <p class="text-muted small mb-3">Let's explore your needs.</p>
+
+                                <!-- Copy Link Component -->
+                                <div class="d-inline-flex align-items-center mb-2"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                                <p class="font-weight-bold" style="font-size: 18px; color: #555; margin-bottom: 0;">
+                                    <i class="fa fa-calendar text-warning mr-2"></i> Schedule Meeting
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Professional Services -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">Need More? We Do It All</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Professional Odoo Services</p>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #791d97; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-cogs mr-2"></i> ERP
+                                Implementation</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Transform your business with a full Odoo implementation. We analyze, configure, and
+                                train your team to maximize productivity. From Accounting to Inventory, we handle the
+                                complexity so you can focus on growth.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 shadow-sm h-100"
+                            style="border-radius: 15px; background: #fff; border: 1px solid #3c6dac; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-code mr-2"></i> Module Dev &
+                                Migration</h4>
+                            <p style="text-align: justify; color: #555;">
+                                Need a custom feature? Or stuck on an older version? We develop high-performance custom
+                                modules and migrate your existing code to Odoo 19 with zero data loss. Expert developers
+                                at your service.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- QA / USER TESTING SCENARIOS -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">QA / User Testing Scenarios</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Enterprise Validation Plan</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <!-- Scenario 1 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-pie-chart mr-2"></i>
+                                Scenario 1: The distributed share (the core test)</h4>
+                            <ol class="mt-3">
+                                <li>Create an analytic plan, e.g. "Cost Centres", with three accounts: Marketing,
+                                    Administration and Management.</li>
+                                <li>Post a journal entry with an expense line of <strong>1,000</strong> distributed
+                                    <strong>20% Marketing / 30% Administration / 50% Management</strong>.</li>
+                                <li>Create a report line "Administrative expenses", engine <strong>Analytic
+                                        Domain</strong>, filtering the plan field for Administration and Management,
+                                    subformula <code>sum</code>.</li>
+                                <li><strong>Test:</strong> the line SHOULD read <strong>800</strong>.</li>
+                                <li><strong>Test:</strong> the same domain on the standard <em>Odoo Domain</em> engine
+                                    reads 1,000 — that difference is the module.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 2 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-list-ul mr-2"></i> Scenario 2:
+                                Grouping and drill-down</h4>
+                            <ol class="mt-3">
+                                <li>On that line, set <strong>Group By</strong> to the analytic plan's field.</li>
+                                <li><strong>Test:</strong> unfolding SHOULD show <strong>Administration 300</strong> and
+                                    <strong>Management 500</strong>, and NOT Marketing.</li>
+                                <li>Change Group By to <code>general_account_id</code>.</li>
+                                <li><strong>Test:</strong> the same 800 SHOULD now break down by accounting account.</li>
+                                <li><strong>Test:</strong> click the 800. The analytic items behind it SHOULD open,
+                                    limited to the report's period.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 3 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-sitemap mr-2"></i> Scenario 3:
+                                Grouping accounts without listing them</h4>
+                            <ol class="mt-3">
+                                <li>Create a <strong>sub-plan</strong> "Structure" under "Cost Centres" and move
+                                    Administration and Management into it.</li>
+                                <li>Replace the domain with one filtering the plan field by
+                                    <code>plan_id child_of</code> that sub-plan.</li>
+                                <li><strong>Test:</strong> the line SHOULD still read <strong>800</strong>, with no
+                                    account ids written by hand.</li>
+                                <li><strong>Test:</strong> add a new account to the sub-plan and post to it. The line
+                                    SHOULD pick it up with no change to the formula.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 4 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #3c6dac;">
+                            <h4 style="color: #3c6dac; font-weight: 700;"><i class="fa fa-university mr-2"></i>
+                                Scenario 4: Filtering on the accounting account</h4>
+                            <ol class="mt-3">
+                                <li>Add <code>('general_account_id.account_type', '=', 'expense')</code> to the
+                                    domain.</li>
+                                <li><strong>Test:</strong> the figure SHOULD NOT change, since the entry is an
+                                    expense.</li>
+                                <li>Change it to <code>'income'</code>.</li>
+                                <li><strong>Test:</strong> the line SHOULD read <strong>0</strong>.</li>
+                                <li><strong>Test:</strong> a code prefix such as
+                                    <code>('general_account_id.code', '=like', '60%')</code> SHOULD behave the same way
+                                    against your own chart of accounts.</li>
+                            </ol>
+                        </div>
+                        <!-- Scenario 5 -->
+                        <div class="mb-4 p-4 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-left: 5px solid #791d97;">
+                            <h4 style="color: #791d97; font-weight: 700;"><i class="fa fa-calendar mr-2"></i> Scenario 5:
+                                Period, draft entries and the assistant</h4>
+                            <ol class="mt-3">
+                                <li>Narrow the report's period to a month that excludes the entry.</li>
+                                <li><strong>Test:</strong> the line SHOULD read <strong>0</strong>; widen it again and
+                                    it SHOULD return to 800.</li>
+                                <li>Reset the entry to draft.</li>
+                                <li><strong>Test:</strong> the line SHOULD read <strong>0</strong>, because analytic
+                                    items exist only for posted entries.</li>
+                                <li><strong>Test:</strong> switch on "Include unposted entries". The report SHOULD show
+                                    a warning explaining that these lines cannot widen.</li>
+                                <li><strong>Test:</strong> type a nonsense field in the formula. The review banner
+                                    SHOULD turn red and name the field.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ & TROUBLESHOOTING -->
+        <section class="oe_container pb-5">
+            <div class="mt-5 mb-5">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h2 class="text-center text-uppercase"
+                        style="font-family:Montserrat, 'sans-serif' !important; font-size:40px !important; color:#791d97; font-weight:900 !important">
+                        <span style="color:#3c6dac">FAQ & Troubleshooting</span>
+                    </h2>
+                    <p class="my-1 text-center text-uppercase"
+                        style="letter-spacing:4px !important; color:#74788D !important">
+                        Common Resolutions</p>
+                </div>
+
+                <div class="row mt-5">
+                    <!-- Q1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
+                            <h5 style="font-weight: 700; color: #333;">My line shows the whole amount, not the
+                                share</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> the expression is still on the standard
+                                <em>Odoo Domain</em> engine, which reads journal items and cannot prorate.</p>
+                            <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> open the
+                                expression and set <strong>Computation Engine</strong> to <strong>Analytic
+                                    Domain</strong>. The figure changes on the next refresh.</p>
+                        </div>
+                    </div>
+                    <!-- Q2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #ffc107;">
+                            <h5 style="font-weight: 700; color: #333;">I filtered by <code>account_id</code> and got
+                                nothing</h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> on an analytic item
+                                <code>account_id</code> is the <strong>analytic</strong> account of the project plan,
+                                not the accounting account. They happen to share a field name.</p>
+                            <p class="small text-dark"><i class="fa fa-lightbulb-o mr-1"></i> <strong>Fix:</strong> use
+                                <code>general_account_id</code>. The review banner detects this exact mistake and gives
+                                you the working spelling.</p>
+                        </div>
+                    </div>
+                    <!-- Q3 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #3c6dac;">
+                            <h5 style="font-weight: 700; color: #333;">It will not let me group by
+                                <code>auto_account_id</code></h5>
+                            <p class="text-muted mt-2"><strong>Reason:</strong> that field means "the analytic account of
+                                any plan". It is calculated on the fly, so there is no column to group by.</p>
+                            <p class="small text-primary"><i class="fa fa-info-circle mr-1"></i> <strong>Fix:</strong>
+                                group by the field of the plan you actually mean. It is also the faster way to
+                                <em>filter</em>, and the assistant points at it by name.</p>
+                        </div>
+                    </div>
+                    <!-- Q4 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 h-100 shadow-sm"
+                            style="background-color: #fff; border-radius: 10px; border-top: 5px solid #28a745;">
+                            <h5 style="font-weight: 700; color: #333;">Does it slow the report down?</h5>
+                            <p class="text-muted mt-2"><strong>Answer:</strong> no — it reads a smaller, well-indexed
+                                table.</p>
+                            <p class="small text-success"><i class="fa fa-check mr-1"></i> <strong>Detail:</strong> the
+                                share was computed when the entry was posted, so nothing is recalculated at report time:
+                                one aggregate query per line, no rows loaded into memory. Each remark in the review
+                                banner also carries the measured cost of that way of writing the filter.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- FOOTER -->
+    <div class="container mt-5 pt-5 border-top">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Commercial & Sales</h2>
+                    <p style="color:#777783">For inquiries about licenses, demos, or partnerships.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrwhatsappsales.png" class="img-fluid rounded shadow-sm" alt="QR WhatsApp">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Official WhatsApp</h5>
+                                <p class="text-muted small mb-2">Fastest response time.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #28a745; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://wa.me/18286726150" target="_blank"
+                                        style="background-color: #28a745; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #28a745; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        https://wa.me/18286726150
+                                    </a>
+                                </div>
+                                <p class="small text-muted mb-0">+1 (828) 672-6150</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qremailsales.png" class="img-fluid rounded shadow-sm" alt="QR Sales Email">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Sales Email</h5>
+                                <p class="text-muted small mb-2">For commercial inquiries.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #3c6dac; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:leads@ganemo.com" target="_blank"
+                                        style="background-color: #3c6dac; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #3c6dac; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        leads@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 mb-4">
+                    <div class="h-100 p-4 border rounded bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-4 text-center">
+                                <img src="qrbooksales.png" class="img-fluid rounded shadow-sm" alt="QR Book Demo">
+                            </div>
+                            <div class="col-8">
+                                <h5 class="font-weight-bold mb-1">Book a Demo</h5>
+                                <p class="text-muted small mb-2">Let's explore your needs.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #333; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #ffc107; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>LINK
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="https://www.ganemo.co/appointment/5" target="_blank"
+                                        style="background-color: #ffc107; color: #333; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #ffc107; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ganemo.co/appointment/5
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Technical Support Section -->
+            <div class="row mt-5">
+                <div class="col-12 mb-4">
+                    <h2 style="font-weight:bold; color:#3D3D4E">Technical Support</h2>
+                    <p style="color:#777783">Existing customers regarding module functionality.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-10 offset-md-1 mb-4">
+                    <div class="h-100 p-4 border rounded" style="background-color: #fff3cd; border-color: #ffeeba;">
+                        <div class="row align-items-center">
+                            <div class="col-5 text-center">
+                                <img src="qremailhelp.png" class="img-fluid rounded shadow-sm" style="max-width: 120px;"
+                                    alt="QR Technical Support">
+                            </div>
+                            <div class="col-7 pl-4">
+                                <h5 class="font-weight-bold mb-1" style="color:#856404">Help Desk</h5>
+                                <p class="text-muted small mb-2">Exclusive channel for technical assistance and bug
+                                    reports.</p>
+
+                                <div class="d-inline-flex align-items-center mb-2 w-100"
+                                    style="font-family: sans-serif; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <div
+                                        style="background-color: white; color: #856404; padding: 5px 10px; font-weight: 800; font-size: 10px; line-height: 1.2; text-align: center; border: 1px solid #856404; border-right: none; border-radius: 8px 0 0 8px; min-width: 60px; z-index: 2;">
+                                        COPY<br>ADDR
+                                    </div>
+                                    <div
+                                        style="width: 0; height: 0; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid white; margin-right: -8px; z-index: 3;">
+                                    </div>
+                                    <a href="mailto:ayuda@ganemo.com" target="_blank"
+                                        style="background-color: #856404; color: white; padding: 8px 10px 8px 15px; font-weight: 600; font-size: 12px; text-decoration: none; border: 1px solid #856404; border-left: none; border-radius: 0 8px 8px 0; white-space: nowrap; flex-grow: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; z-index: 1;">
+                                        ayuda@ganemo.com
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-5 pb-5">
+                <div class="col-12 text-center text-muted">
+                    <p>&copy; 2026 Ganemo. All rights reserved. <a href="https://www.ganemo.com" target="_blank">visit
+                            ganemo.com</a></p>
+                </div>
+            </div>
+        </div>
+</body>
+</html>

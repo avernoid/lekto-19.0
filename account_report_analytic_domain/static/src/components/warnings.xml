@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="account_report_analytic_domain.analytic_domain_warning_draft_entries">
+        Analytic items only exist for posted entries, so lines computed with the Analytic Domain
+        engine ignore the "Include unposted entries" filter and may not match the rest of the report.
+    </t>
+</templates>

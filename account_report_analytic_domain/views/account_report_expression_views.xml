@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_report_expression_form_analytic_domain" model="ir.ui.view">
+        <field name="name">account.report.expression.form.analytic.domain</field>
+        <field name="model">account.report.expression</field>
+        <field name="inherit_id" ref="account_reports.account_report_expression_form"/>
+        <field name="arch" type="xml">
+
+            <!-- The DB constraint would otherwise be the first thing the user meets. -->
+            <xpath expr="//field[@name='subformula']" position="attributes">
+                <attribute name="required">engine in ('domain', 'analytic_domain')</attribute>
+            </xpath>
+
+            <!-- Outside the group on purpose: inside it, a banner is squeezed into the
+                 field column and becomes unreadable. -->
+            <xpath expr="//page[@name='page_definition']/group" position="after">
+                <field name="analytic_domain_guide"
+                       nolabel="1" readonly="1"
+                       class="mt-3"
+                       invisible="engine != 'analytic_domain'"/>
+                <field name="analytic_domain_review"
+                       nolabel="1" readonly="1"
+                       class="mt-3"
+                       invisible="engine != 'analytic_domain'"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

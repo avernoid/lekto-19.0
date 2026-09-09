@@ -1,0 +1,474 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_report_analytic_domain
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module account_report_analytic_domain 19.0
+"
+"POT-Creation-Date: 2026-09-08 23:59+0000
+"
+"PO-Revision-Date: 2026-09-08 23:59+0000
+"
+"Last-Translator: Ganemo <help@ganemo.com>
+"
+"Language-Team: Spanish <>
+"
+"Language: es
+"
+"MIME-Version: 1.0
+"
+"Content-Type: text/plain; charset=UTF-8
+"
+"Content-Transfer-Encoding: 8bit
+"
+"Plural-Forms: nplurals=2; plural=(n != 1);
+"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s cannot be used in a filter: it is calculated on the fly and Odoo "
+"cannot search it. Filter by account code or by account tag instead."
+msgstr "%(field)s no se puede usar en un filtro: se calcula al vuelo y Odoo no sabe buscarlo. Filtra por código de cuenta o por etiqueta de cuenta."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "%(field)s does not exist on analytic items, so this line would fail."
+msgstr "%(field)s no existe en los apuntes analíticos, así que esta partida fallaría."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s does not exist on analytic items: it belongs to the journal item. "
+"Write %(suggestion)s instead, bearing in mind it is slower (%(cost)s)."
+msgstr "%(field)s no existe en los apuntes analíticos: es del apunte contable. Escribe %(suggestion)s en su lugar, teniendo en cuenta que es más lento (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "%(field)s does not exist on the accounting account."
+msgstr "%(field)s no existe en la cuenta contable."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "%(field)s does not exist on the analytic account."
+msgstr "%(field)s no existe en la cuenta analítica."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s is a field of the analytic item itself, so it costs nothing extra."
+msgstr "%(field)s es un campo del propio apunte analítico, así que no cuesta nada añadirlo."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "%(field)s is an indexed column of the analytic item (%(cost)s)."
+msgstr "%(field)s es una columna indexada del apunte analítico (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s is not stored as a column — the account code is kept per company —"
+" so it is resolved to a list of accounts once for the whole report "
+"(%(cost)s). Accounts archived later are still included."
+msgstr "%(field)s no se guarda como columna —el código de cuenta se guarda por compañía—, así que se resuelve a una lista de cuentas una sola vez para todo el informe (%(cost)s). Las cuentas que se archiven después siguen incluyéndose."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s means “the analytic account of any plan”, so every plan is "
+"searched at once and no index can be used (%(cost)s against %(fast)s). "
+"Prefer the column of the plan you actually mean: %(columns)s."
+msgstr "%(field)s significa «la cuenta analítica de cualquier plan», así que se buscan todos los planes a la vez y no se puede usar ningún índice (%(cost)s frente a %(fast)s). Es mejor usar la columna del plan que de verdad quieres: %(columns)s."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s reaches the journal item, a table far larger than the analytic one"
+" (%(cost)s against %(fast)s). Use it only for something that exists nowhere "
+"else: the journal, the partner and the product are already on the analytic "
+"item itself."
+msgstr "%(field)s llega hasta el apunte contable, una tabla mucho mayor que la analítica (%(cost)s frente a %(fast)s). Úsalo solo para algo que no exista en ningún otro sitio: el diario, el contacto y el producto ya están en el propio apunte analítico."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s reads a field of the analytic account of plan “%(plan)s”. Grouping"
+" accounts this way is the fastest option (%(cost)s) and beats listing their "
+"ids by hand."
+msgstr "%(field)s lee un campo de la cuenta analítica del plan «%(plan)s». Agrupar cuentas así es la opción más rápida (%(cost)s) y es mejor que enumerar sus ids a mano."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s reads a real column of the accounting account, and the chart of "
+"accounts is small, so it is cheap (%(cost)s)."
+msgstr "%(field)s lee una columna real de la cuenta contable, y el plan de cuentas es pequeño, así que sale barato (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s reads the analytic account of plan “%(plan)s”, not the accounting "
+"account — they are different things that happen to share a field name. For "
+"the accounting account write %(suggestion)s."
+msgstr "%(field)s lee la cuenta analítica del plan «%(plan)s», no la cuenta contable: son cosas distintas que casualmente comparten el nombre del campo. Para la cuenta contable escribe %(suggestion)s."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(field)s — analytic account of plan “%(plan)s”. This is the fastest way to "
+"filter (%(cost)s): it uses the index of that column."
+msgstr "%(field)s — cuenta analítica del plan «%(plan)s». Es la forma más rápida de filtrar (%(cost)s): usa el índice de esa columna."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"%(subformula)s is not a valid subformula. Use sum, -sum, sum_if_pos, "
+"sum_if_neg or count_rows."
+msgstr "%(subformula)s no es una subfórmula válida. Usa sum, -sum, sum_if_pos, sum_if_neg o count_rows."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid ""
+"1. Administration + Management — through the plan's column (the fastest way)"
+msgstr "1. Administración + Gerencia — por la columna del plan (lo más rápido)"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "2. The same, without listing accounts — through the sub-plan Structure"
+msgstr "2. Lo mismo, sin enumerar cuentas — por el sub-plan Estructura"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "3. Marketing — a single analytic account"
+msgstr "3. Marketing — una sola cuenta analítica"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "4. All the expense, by accounting account type"
+msgstr "4. Todo el gasto, por tipo de cuenta contable"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "5. All the expense, by accounting account prefix %s"
+msgstr "5. Todo el gasto, por prefijo de cuenta contable %s"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "6. Structure expense, unfoldable by accounting account"
+msgstr "6. Gasto de Estructura, desplegable por cuenta contable"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "7. Sum of 1 + 3 — an analytic line aggregates like any other"
+msgstr "7. Suma de 1 + 3 — una línea analítica se agrega como cualquier otra"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"A subformula is required: sum, -sum, sum_if_pos, sum_if_neg or count_rows."
+msgstr "Hace falta una subfórmula: sum, -sum, sum_if_pos, sum_if_neg o count_rows."
+
+#. module: account_report_analytic_domain
+#: model:ir.model,name:account_report_analytic_domain.model_account_report
+msgid "Accounting Report"
+msgstr "Informe contable"
+
+#. module: account_report_analytic_domain
+#: model:ir.model,name:account_report_analytic_domain.model_account_report_expression
+msgid "Accounting Report Expression"
+msgstr "Expresión de informe contable"
+
+#. module: account_report_analytic_domain
+#: model:ir.model,name:account_report_analytic_domain.model_account_report_line
+msgid "Accounting Report Line"
+msgstr "Línea de informe contable"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Administration"
+msgstr "Administración"
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields.selection,name:account_report_analytic_domain.selection__account_report_expression__engine__analytic_domain
+msgid "Analytic Domain"
+msgstr "Dominio analítico"
+
+#. module: account_report_analytic_domain
+#. odoo-javascript
+#: code:addons/account_report_analytic_domain/static/src/components/warnings.xml:0
+msgid ""
+"Analytic items only exist for posted entries, so lines computed with the Analytic Domain\n"
+"        engine ignore the \"Include unposted entries\" filter and may not match the rest of the report."
+msgstr ""
+"Los apuntes analíticos solo existen para asientos publicados, así que las partidas calculadas con el motor\n"
+"        Dominio analítico ignoran el filtro «Incluir asientos en borrador» y pueden no cuadrar con el resto del informe."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Commercial"
+msgstr "Comercial"
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report_expression__engine
+msgid "Computation Engine"
+msgstr "Motor de cálculo"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Cost Centres"
+msgstr "Centros de coste"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Counterpart"
+msgstr "Contrapartida"
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report__display_name
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report_line__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Distributed expense"
+msgstr "Gasto repartido"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"Each one already carries its share of the journal item's balance, so the "
+"report line only adds them up. Subformula: sum, -sum, sum_if_pos, sum_if_neg"
+" or count_rows."
+msgstr "Cada uno ya lleva la parte del saldo del apunte contable que le corresponde, así que la partida solo los suma. Subfórmula: sum, -sum, sum_if_pos, sum_if_neg o count_rows."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Expense split 20 Marketing / 30 Administration / 50 Management"
+msgstr "Gasto repartido 20 Marketing / 30 Administración / 50 Gerencia"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Expenses by cost centre (analytic)"
+msgstr "Gastos por centro de coste (analítico)"
+
+#. module: account_report_analytic_domain
+#: model:ir.model.constraint,message:account_report_analytic_domain.constraint_account_report_expression_analytic_domain_engine_subfo_2ebcb06e
+msgid ""
+"Expressions using 'analytic_domain' engine should all have a subformula."
+msgstr "Las expresiones que usan el motor 'analytic_domain' deben tener una subfórmula."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report.py:0
+msgid ""
+"Field %s does not exist on account.analytic.line and can therefore not be "
+"used in a groupby of an expression using the 'Analytic Domain' engine."
+msgstr "El campo %s no existe en account.analytic.line, por lo que no puede usarse en una agrupación de una expresión que use el motor «Dominio analítico»."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report.py:0
+msgid ""
+"Field %s of account.analytic.line cannot be used in a groupby expression, "
+"because it is not stored in the database. Group by the column of an analytic"
+" plan instead."
+msgstr "El campo %s de account.analytic.line no se puede usar en una agrupación porque no está almacenado en la base de datos. Agrupa por la columna de un plan analítico."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report.py:0
+msgid ""
+"Field %s of account.analytic.line is not searchable and can therefore not be"
+" used in a groupby expression."
+msgstr "El campo %s de account.analytic.line no admite búsquedas, por lo que no puede usarse en una expresión de agrupación."
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report_expression__analytic_domain_review
+msgid "Formula review"
+msgstr "Revisión de la fórmula"
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report_expression__analytic_domain_guide
+msgid "How to write it"
+msgstr "Cómo escribirla"
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report__id
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_report_analytic_domain.field_account_report_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report.py:0
+msgid ""
+"Invalid analytic domain formula in expression \"%(expression)s\" of line "
+"\"%(line)s\": %(formula)s"
+msgstr "Fórmula de dominio analítico no válida en la expresión \"%(expression)s\" de la línea \"%(line)s\": %(formula)s"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Management"
+msgstr "Gerencia"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Marketing"
+msgstr "Marketing"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "No analytic plan is defined yet."
+msgstr "Todavía no hay ningún plan analítico definido."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"No condition restricts the analytic account, so this line adds up every "
+"analytic item matching the rest of the filter. That is allowed, but make "
+"sure it is what you mean."
+msgstr "Ninguna condición acota la cuenta analítica, así que esta partida suma todos los apuntes analíticos que cumplan el resto del filtro. Es válido, pero asegúrate de que es lo que quieres."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "Other useful fields:"
+msgstr "Otros campos útiles:"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "Ready to copy:"
+msgstr "Listo para copiar:"
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields,help:account_report_analytic_domain.field_account_report_expression__analytic_domain_guide
+msgid ""
+"Shown only for the Analytic Domain engine. Lists the analytic plans of this "
+"database with the field name each one answers to, since that name depends on"
+" the plan's database id and cannot be guessed, and offers formulas ready to "
+"copy. It is computed while the form is open and costs nothing when the "
+"report is run."
+msgstr "Se muestra solo para el motor Dominio analítico. Enumera los planes analíticos de esta base de datos con el nombre de campo al que responde cada uno, ya que ese nombre depende del id del plan en la base de datos y no se puede adivinar, y ofrece fórmulas listas para copiar. Se calcula mientras el formulario está abierto y no cuesta nada al ejecutar el informe."
+
+#. module: account_report_analytic_domain
+#: model:ir.model.fields,help:account_report_analytic_domain.field_account_report_expression__analytic_domain_review
+msgid ""
+"Shown only for the Analytic Domain engine. Reads the formula as it is typed "
+"and reports what would not work (a field that does not exist on analytic "
+"items, one that Odoo cannot search, an invalid domain or subformula) "
+"separately from what would merely be slow, with the measured cost of each "
+"way of writing the filter. It is advisory: it never blocks saving."
+msgstr "Se muestra solo para el motor Dominio analítico. Lee la fórmula según se escribe e informa de lo que no funcionaría (un campo que no existe en los apuntes analíticos, uno que Odoo no sabe buscar, un dominio o una subfórmula no válidos) por separado de lo que solo sería lento, con el coste medido de cada forma de escribir el filtro. Es orientativo: nunca impide guardar."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
+msgid "Structure"
+msgstr "Estructura"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "The formula is not a valid Odoo domain."
+msgstr "La fórmula no es un dominio de Odoo válido."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "This formula filters analytic items, not journal items."
+msgstr "Esta fórmula filtra apuntes analíticos, no apuntes contables."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "This formula is fine"
+msgstr "Esta fórmula está bien"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "This formula will not work"
+msgstr "Esta fórmula no va a funcionar"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "This formula works, but there is a faster way"
+msgstr "Esta fórmula funciona, pero hay una forma más rápida"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "To filter by analytic account, use the column of its plan:"
+msgstr "Para filtrar por cuenta analítica, usa la columna de su plan:"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid ""
+"anything that only exists on the journal item. Slow, avoid when you can."
+msgstr "cualquier cosa que solo exista en el apunte contable. Lento, evítalo si puedes."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "available directly on the analytic item."
+msgstr "disponibles directamente en el apunte analítico."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "none defined"
+msgstr "ninguno definido"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "the accounting account. You may filter its type, code or tags."
+msgstr "la cuenta contable. Puedes filtrar su tipo, su código o sus etiquetas."

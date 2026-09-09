@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Analytic Domain Report Engine.
+       An analytic distribution split 20 / 30 / 50: the two shares the report line
+       picks up are solid, the one it leaves out is pale. Flat, geometric, no
+       background box. Radius 30 with a 20-wide stroke fills 10..90 of the canvas.
+       Circumference = 2*pi*30 = 188.4956; each arc is drawn slightly short of its
+       exact share to leave a clean gap between segments. -->
+
+  <g fill="none" stroke-width="20" stroke-linecap="butt" transform="translate(50 50)">
+
+    <!-- 20% — Marketing, left out of the line. Lavanda -->
+    <circle r="30" stroke="#B79EB5"
+            stroke-dasharray="34.7 153.8"
+            transform="rotate(-90)"/>
+
+    <!-- 30% — Administration. Teal -->
+    <circle r="30" stroke="#00A09D"
+            stroke-dasharray="53.5 135.0"
+            transform="rotate(-18)"/>
+
+    <!-- 50% — Management. Morado -->
+    <circle r="30" stroke="#714B67"
+            stroke-dasharray="91.2 97.3"
+            transform="rotate(90)"/>
+  </g>
+
+  <!-- The report line itself, inside the hole: two rows of a report. A single bar
+       here reads as a minus sign, which says the opposite of what the engine does. -->
+  <rect x="37" y="42" width="26" height="5" rx="2.5" fill="#FF9F6E"/>
+  <rect x="37" y="53" width="17" height="5" rx="2.5" fill="#FF9F6E"/>
+</svg>

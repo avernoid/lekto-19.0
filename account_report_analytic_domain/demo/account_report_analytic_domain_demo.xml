@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- El escenario se construye en Python, no aquí, por una razón dura: el campo que
+         guarda la cuenta analítica en un apunte analítico es la COLUMNA DE SU PLAN, y su
+         nombre depende del id del plan en la base de datos (x_plan6_id). No se puede
+         escribir por adelantado, sólo preguntarlo al cargar.
+         Toda la lógica vive en account.report._load_learning_demo. -->
+    <function model="account.report" name="_load_learning_demo"/>
+</odoo>
