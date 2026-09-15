@@ -4,26 +4,24 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Module account_report_analytic_domain 19.0
-"
-"POT-Creation-Date: 2026-09-08 23:59+0000
-"
-"PO-Revision-Date: 2026-09-08 23:59+0000
-"
-"Last-Translator: Ganemo <help@ganemo.com>
-"
-"Language-Team: Spanish <>
-"
-"Language: es
-"
-"MIME-Version: 1.0
-"
-"Content-Type: text/plain; charset=UTF-8
-"
-"Content-Transfer-Encoding: 8bit
-"
-"Plural-Forms: nplurals=2; plural=(n != 1);
-"
+"Project-Id-Version: Odoo Module account_report_analytic_domain 19.0\n"
+"POT-Creation-Date: 2026-09-15 00:00+0000\n"
+"PO-Revision-Date: 2026-09-15 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s cannot be used in a filter: it is calculated on the fly and Odoo "
+"cannot search it."
+msgstr "%(field)s no se puede usar en un filtro: se calcula al vuelo y Odoo no sabe buscarlo."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -49,6 +47,12 @@ msgstr "%(field)s no existe en los apuntes analíticos: es del apunte contable. 
 
 #. module: account_report_analytic_domain
 #. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "%(field)s does not exist on journal items, so this line would fail."
+msgstr "%(field)s no existe en los apuntes contables, así que esta partida fallaría."
+
+#. module: account_report_analytic_domain
+#. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid "%(field)s does not exist on the accounting account."
 msgstr "%(field)s no existe en la cuenta contable."
@@ -61,6 +65,26 @@ msgstr "%(field)s no existe en la cuenta analítica."
 
 #. module: account_report_analytic_domain
 #. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "%(field)s does not exist: %(model)s has no field %(sub)s."
+msgstr "%(field)s no existe: %(model)s no tiene el campo %(sub)s."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "%(field)s is a column of the journal item itself."
+msgstr "%(field)s es una columna del propio apunte contable."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s is a field of analytic items, not of journal items. To filter "
+"analytic items, set the engine to Analytic Domain."
+msgstr "%(field)s es un campo de los apuntes analíticos, no de los contables. Para filtrar apuntes analíticos, cambia el motor a Dominio analítico."
+
+#. module: account_report_analytic_domain
+#. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid ""
 "%(field)s is a field of the analytic item itself, so it costs nothing extra."
@@ -68,9 +92,38 @@ msgstr "%(field)s es un campo del propio apunte analítico, así que no cuesta n
 
 #. module: account_report_analytic_domain
 #. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s is a list of records, so it is checked item by item (%(cost)s)."
+msgstr "%(field)s es una lista de registros, así que se comprueba apunte por apunte (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid "%(field)s is an indexed column of the analytic item (%(cost)s)."
 msgstr "%(field)s es una columna indexada del apunte analítico (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "%(field)s is an indexed column of the journal item (%(cost)s)."
+msgstr "%(field)s es una columna indexada del apunte contable (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s is not a column: Odoo turns it into a search on each run, whose "
+"cost depends on how that search is written."
+msgstr "%(field)s no es una columna: Odoo la convierte en una búsqueda en cada ejecución, y su coste depende de cómo esté escrita esa búsqueda."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s is not a relation to another record, so this line runs a query of "
+"its own instead of sharing one with the others."
+msgstr "%(field)s no es una relación con otro registro, así que esta partida ejecuta su propia consulta en lugar de compartirla con las demás."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -83,12 +136,29 @@ msgstr "%(field)s no se guarda como columna —el código de cuenta se guarda po
 
 #. module: account_report_analytic_domain
 #. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s is not stored as a column — the account code is kept per company —"
+" so the chart of accounts is searched for it on each line (%(cost)s)."
+msgstr "%(field)s no se guarda como columna —el código de cuenta se guarda por compañía—, así que se busca en el plan de cuentas en cada partida (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid ""
 "%(field)s means “the analytic account of any plan”, so every plan is "
 "searched at once and no index can be used (%(cost)s against %(fast)s). "
 "Prefer the column of the plan you actually mean: %(columns)s."
 msgstr "%(field)s significa «la cuenta analítica de cualquier plan», así que se buscan todos los planes a la vez y no se puede usar ningún índice (%(cost)s frente a %(fast)s). Es mejor usar la columna del plan que de verdad quieres: %(columns)s."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s reaches the journal entry, which costs a join for every line "
+"(%(cost)s). If the same information exists on the journal item — the "
+"journal, the partner, the date — filter on it there."
+msgstr "%(field)s llega hasta el asiento contable, lo que cuesta una unión por cada partida (%(cost)s). Si la misma información está en el apunte —el diario, el contacto, la fecha—, filtra ahí."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -99,6 +169,18 @@ msgid ""
 "else: the journal, the partner and the product are already on the analytic "
 "item itself."
 msgstr "%(field)s llega hasta el apunte contable, una tabla mucho mayor que la analítica (%(cost)s frente a %(fast)s). Úsalo solo para algo que no exista en ningún otro sitio: el diario, el contacto y el producto ya están en el propio apunte analítico."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "%(field)s reads a column of the accounting account (%(cost)s)."
+msgstr "%(field)s lee una columna de la cuenta contable (%(cost)s)."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "%(field)s reads a field of %(model)s through the journal item."
+msgstr "%(field)s lee un campo de %(model)s a través del apunte contable."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -125,6 +207,16 @@ msgid ""
 "account — they are different things that happen to share a field name. For "
 "the accounting account write %(suggestion)s."
 msgstr "%(field)s lee la cuenta analítica del plan «%(plan)s», no la cuenta contable: son cosas distintas que casualmente comparten el nombre del campo. Para la cuenta contable escribe %(suggestion)s."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"%(field)s selects the journal items that carry those analytic accounts, but "
+"each one still counts with its full balance: an expense split 20/30/50 "
+"counts 100%% for every one of them (%(cost)s). To add up only the "
+"distributed share, use the Analytic Domain engine."
+msgstr "%(field)s selecciona los apuntes contables que llevan esas cuentas analíticas, pero cada uno sigue contando con su saldo completo: un gasto repartido 20/30/50 cuenta al 100%% para cada una de ellas (%(cost)s). Para sumar solo la parte repartida, usa el motor Dominio analítico."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -272,12 +364,37 @@ msgstr "Gasto repartido"
 
 #. module: account_report_analytic_domain
 #. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"Each matching journal item counts with its full balance, even when its "
+"analytic distribution splits it across several analytic accounts. "
+"Subformula: sum, -sum, sum_if_pos, sum_if_neg or count_rows."
+msgstr "Cada apunte contable que coincida cuenta con su saldo completo, aunque su distribución analítica lo reparta entre varias cuentas analíticas. Subfórmula: sum, -sum, sum_if_pos, sum_if_neg o count_rows."
+
+#. module: account_report_analytic_domain
+#. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid ""
 "Each one already carries its share of the journal item's balance, so the "
 "report line only adds them up. Subformula: sum, -sum, sum_if_pos, sum_if_neg"
 " or count_rows."
 msgstr "Cada uno ya lleva la parte del saldo del apunte contable que le corresponde, así que la partida solo los suma. Subfórmula: sum, -sum, sum_if_pos, sum_if_neg o count_rows."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"Every condition starts from %(field)s, so this line shares a single query "
+"with every other line built only on that field."
+msgstr "Todas las condiciones parten de %(field)s, así que esta partida comparte una única consulta con todas las demás construidas solo sobre ese campo."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"Every condition starts from %(field)s, so this line shares a single query "
+"with every other line built the same way (%(cost)s for all of them)."
+msgstr "Todas las condiciones parten de %(field)s, así que esta partida comparte una única consulta con todas las demás construidas igual (%(cost)s para todas ellas)."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -349,6 +466,14 @@ msgstr "Fórmula de dominio analítico no válida en la expresión \"%(expressio
 
 #. module: account_report_analytic_domain
 #. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"Lines whose conditions all start from the same field, typically account_id, "
+"are computed together in a single query."
+msgstr "Las partidas cuyas condiciones parten todas del mismo campo, normalmente account_id, se calculan juntas en una sola consulta."
+
+#. module: account_report_analytic_domain
+#. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
 msgid "Management"
 msgstr "Gerencia"
@@ -383,34 +508,53 @@ msgstr "Otros campos útiles:"
 #. module: account_report_analytic_domain
 #. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
 msgid "Ready to copy:"
 msgstr "Listo para copiar:"
 
 #. module: account_report_analytic_domain
 #: model:ir.model.fields,help:account_report_analytic_domain.field_account_report_expression__analytic_domain_guide
 msgid ""
-"Shown only for the Analytic Domain engine. Lists the analytic plans of this "
-"database with the field name each one answers to, since that name depends on"
-" the plan's database id and cannot be guessed, and offers formulas ready to "
-"copy. It is computed while the form is open and costs nothing when the "
-"report is run."
-msgstr "Se muestra solo para el motor Dominio analítico. Enumera los planes analíticos de esta base de datos con el nombre de campo al que responde cada uno, ya que ese nombre depende del id del plan en la base de datos y no se puede adivinar, y ofrece fórmulas listas para copiar. Se calcula mientras el formulario está abierto y no cuesta nada al ejecutar el informe."
+"Shown for the Analytic Domain and Odoo Domain engines. Explains which "
+"records the formula filters and which fields are worth using — for Analytic "
+"Domain, the analytic plans of this database with the field name each one "
+"answers to, since that name depends on the plan's database id and cannot be "
+"guessed — and offers formulas ready to copy. It is computed while the form "
+"is open and costs nothing when the report is run."
+msgstr "Se muestra para los motores Dominio analítico y Dominio de Odoo. Explica qué registros filtra la fórmula y qué campos conviene usar —en Dominio analítico, los planes analíticos de esta base de datos con el nombre de campo al que responde cada uno, ya que ese nombre depende del id del plan en la base de datos y no se puede adivinar— y ofrece fórmulas listas para copiar. Se calcula mientras el formulario está abierto y no cuesta nada al ejecutar el informe."
 
 #. module: account_report_analytic_domain
 #: model:ir.model.fields,help:account_report_analytic_domain.field_account_report_expression__analytic_domain_review
 msgid ""
-"Shown only for the Analytic Domain engine. Reads the formula as it is typed "
-"and reports what would not work (a field that does not exist on analytic "
-"items, one that Odoo cannot search, an invalid domain or subformula) "
-"separately from what would merely be slow, with the measured cost of each "
-"way of writing the filter. It is advisory: it never blocks saving."
-msgstr "Se muestra solo para el motor Dominio analítico. Lee la fórmula según se escribe e informa de lo que no funcionaría (un campo que no existe en los apuntes analíticos, uno que Odoo no sabe buscar, un dominio o una subfórmula no válidos) por separado de lo que solo sería lento, con el coste medido de cada forma de escribir el filtro. Es orientativo: nunca impide guardar."
+"Shown for the Analytic Domain and Odoo Domain engines. Reads the formula as "
+"it is typed and reports, separately, what would not work (a field that does "
+"not exist, one that Odoo cannot search, an invalid domain or subformula), "
+"what may not return what you expect, and what would merely be slow, with the"
+" cost measured on a production database for each way of writing the filter. "
+"It is advisory: it never blocks saving."
+msgstr "Se muestra para los motores Dominio analítico y Dominio de Odoo. Lee la fórmula según se escribe e informa, por separado, de lo que no funcionaría (un campo que no existe, uno que Odoo no sabe buscar, un dominio o una subfórmula no válidos), de lo que puede no devolver lo que esperas y de lo que solo sería lento, con el coste medido en una base de datos de producción para cada forma de escribir el filtro. Es orientativo: nunca impide guardar."
 
 #. module: account_report_analytic_domain
 #. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_demo.py:0
 msgid "Structure"
 msgstr "Estructura"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"The conditions start from several fields (%(fields)s), so this line cannot "
+"share a query with the others and runs one of its own."
+msgstr "Las condiciones parten de varios campos (%(fields)s), así que esta partida no puede compartir consulta con las demás y ejecuta la suya propia."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"The formula has no condition, so this line adds up every journal item of the"
+" period."
+msgstr "La fórmula no tiene ninguna condición, así que esta partida suma todos los apuntes contables del periodo."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -423,6 +567,12 @@ msgstr "La fórmula no es un dominio de Odoo válido."
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid "This formula filters analytic items, not journal items."
 msgstr "Esta fórmula filtra apuntes analíticos, no apuntes contables."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "This formula filters journal items."
+msgstr "Esta fórmula filtra apuntes contables."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -439,6 +589,12 @@ msgstr "Esta fórmula no va a funcionar"
 #. module: account_report_analytic_domain
 #. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
+msgid "This formula works, but may not return what you expect"
+msgstr "Esta fórmula funciona, pero puede no devolver lo que esperas"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid "This formula works, but there is a faster way"
 msgstr "Esta fórmula funciona, pero hay una forma más rápida"
 
@@ -447,6 +603,18 @@ msgstr "Esta fórmula funciona, pero hay una forma más rápida"
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid "To filter by analytic account, use the column of its plan:"
 msgstr "Para filtrar por cuenta analítica, usa la columna de su plan:"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "Useful fields:"
+msgstr "Campos útiles:"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "anything on the journal entry. It costs a join for every line."
+msgstr "cualquier dato del asiento contable. Cuesta una unión por cada partida."
 
 #. module: account_report_analytic_domain
 #. odoo-python
@@ -463,9 +631,37 @@ msgstr "disponibles directamente en el apunte analítico."
 
 #. module: account_report_analytic_domain
 #. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "columns of the journal item itself, the cheapest to filter on."
+msgstr "columnas del propio apunte contable, las más baratas para filtrar."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"count_rows is always computed with a query of its own, never together with "
+"other lines."
+msgstr "count_rows siempre se calcula con una consulta propia, nunca junto con otras partidas."
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid ""
+"filters by analytic account but never prorates. To get the distributed "
+"share, use the Analytic Domain engine."
+msgstr "filtra por cuenta analítica, pero nunca prorratea. Para obtener la parte repartida, usa el motor Dominio analítico."
+
+#. module: account_report_analytic_domain
+#. odoo-python
 #: code:addons/account_report_analytic_domain/models/account_report_expression.py:0
 msgid "none defined"
 msgstr "ninguno definido"
+
+#. module: account_report_analytic_domain
+#. odoo-python
+#: code:addons/account_report_analytic_domain/models/account_report_expression_domain.py:0
+msgid "the accounting account, and through it its type, code or tags."
+msgstr "la cuenta contable y, a través de ella, su tipo, su código o sus etiquetas."
 
 #. module: account_report_analytic_domain
 #. odoo-python

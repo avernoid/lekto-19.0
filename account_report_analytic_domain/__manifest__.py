@@ -1,6 +1,6 @@
 {
     'name': "Analytic Domain Report Engine",
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Accounting/Accounting',
     'summary': """Report lines that sum the distributed share of analytic items""",
     # Flush-left on purpose: Odoo renders this through docutils, and a single indented
@@ -26,6 +26,11 @@ analytic field, and auditing a figure opens the analytic items behind it.
 Two banners in the expression form list this database's own analytic plans with the field
 each one answers to, and review the formula as it is typed, separating what will not work
 from what will merely be slow.
+
+The same assistant reviews formulas written for Odoo's own "Odoo Domain" engine: it warns
+that filtering by analytic distribution brings the full balance rather than the distributed
+share, tells which lines Odoo computes together in a single query, and explains why a
+formula would be rejected before it is saved.
 
 Requires Accounting Reports (Enterprise).
 """,

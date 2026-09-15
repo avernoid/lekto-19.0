@@ -26,7 +26,7 @@ At a glance:
 | Key | Value |
 | --- | --- |
 | `name` | Analytic Domain Report Engine |
-| `version` | 19.0.1.0.0 |
+| `version` | 19.0.1.1.0 |
 | `category` | Accounting/Accounting |
 | `license` | OPL-1 |
 | `depends` | `account_reports` (Enterprise), `analytic` |
@@ -36,12 +36,12 @@ At a glance:
 
 ```bash
 # the module folder must sit on the addons path under this exact name
-git clone git@github.com:odoopartners/account_report_analytic_domain.git     <addons-path>/account_report_analytic_domain
+git clone git@github.com:odoopartners/account_report_analytic_domain.git <addons-path>/account_report_analytic_domain
 odoo-bin -u account_report_analytic_domain -d <database>
 ```
 
 Then: **Accounting → Configuration → Reports**, open a report line's expression and set
-**Computation Engine** to *Analytic Domain*. The form explains the rest — see
+**Computation Engine** to *Analytic Domain* (the same guidance also appears on Odoo's own *Odoo Domain* engine). The form explains the rest — see
 **Assistance while writing the formula**.
 
 ## Branch convention
@@ -186,20 +186,23 @@ Automatically, with no configuration:
 
 ## Assistance while writing the formula
 
-Picking this engine in an expression reveals two banners under the formula, computed in
-the form and costing nothing at report time.
+Picking **Analytic Domain** or Odoo's own **Odoo Domain** in an expression reveals two
+banners under the formula, computed in the form and costing nothing at report time.
 
 The first says what the formula filters, lists **this database's** analytic plans with the
 column name each one answers to — nobody can guess that the plan called "Departments" is
 `x_plan6_id` — and offers ready-to-copy examples built from them.
 
-The second reviews the formula as it is typed, keeping two things apart:
+The second reviews the formula as it is typed, keeping three things apart, each with a
+headline of its own so the most serious is never hidden by the others:
 
 - **What will not work**: a field that does not exist on the analytic item, a field of
   `account.account` that Odoo cannot search, an invalid domain or subformula, and the
   name collision below.
-- **What will be slow**: `auto_account_id` instead of a plan column, a term travelling
-  through `move_line_id`, or a formula that restricts no analytic account at all.
+- **What may not return what you expect**: a formula that restricts no analytic account at
+  all, and so adds up every analytic item matching the rest of the filter.
+- **What will be slow**: `auto_account_id` instead of a plan column, or a term travelling
+  through `move_line_id`.
 
 Each remark carries the measured cost of that shape rather than an invented score.
 
@@ -207,6 +210,43 @@ The collision is worth calling out: the project plan's column is literally named
 `account_id`, so `[('account_id.account_type', '=', 'expense')]` reads the **analytic**
 account of that plan, not the accounting account, and would quietly return nothing. The
 review catches it and gives the working spelling.
+
+### On the native Odoo Domain engine
+
+The same two banners review formulas written for Odoo's own engine, over journal items.
+They matter there too, for a reason of their own: that engine refuses to *save* an invalid
+formula, but its error only says "Invalid formula" — the banner says why, while it is still
+being typed.
+
+- **What may not return what you expect**: filtering on `analytic_distribution`. It selects
+  the journal items that carry those analytic accounts, but each one still counts with its
+  **full** balance — an expense split 20/30/50 counts 100% for every one of them. The
+  banner points at the Analytic Domain engine, which is the way to get the share. Also, a
+  formula with no condition at all.
+- **What will not work**: a field of analytic items such as `general_account_id` (with a
+  pointer to the right engine), a field that does not exist, or one Odoo cannot search,
+  such as `account_id.group_id`.
+- **What will be slow**: a jump to the journal entry (`move_id.<field>`), a list field such
+  as `tax_tag_ids`, and anything that stops the line from sharing a query.
+
+The native engine computes **several lines in a single query** when every condition of each
+starts from the same many2one field and the subformula is not `count_rows`. The banner
+tells whether a formula qualifies — and when it mixes, say, `account_id` with `partner_id`,
+that it will run a query of its own.
+
+Costs shown, measured with `EXPLAIN (ANALYZE)` on a production database (218k journal
+items, one fiscal year, warm cache). They are journal-item figures, measured separately
+from the analytic ones above:
+
+| Shape | Cost |
+| --- | --- |
+| `analytic_distribution` (GIN index) | ~3 ms |
+| a column of the journal item: `account_id` ids, `partner_id`, `journal_id` | ~5 ms |
+| `account_id.code` (per-company jsonb) | ~10 ms |
+| `account_id.account_type` (join to the account) | ~35 ms |
+| every line rooted on `account_id`, computed together | ~36 ms for all of them |
+| `move_id.<field>` (join to the journal entry) | ~45 ms |
+| `tax_tag_ids` and other list fields | ~45 ms |
 
 ## Auditing
 
@@ -304,9 +344,13 @@ translated.
 
 `odoo-bin -i account_report_analytic_domain --test-enable`
 
-19 tests cover the prorated share, the sign, every subformula, date scopes, draft and
-cancelled entries, the warning, items with no general account, group-by, auditing, and
-multi-company currency conversion parity with the `domain` engine.
+60 tests. The engine: the prorated share, the sign, every subformula, date scopes, draft
+and cancelled entries and their warning, items with no general account, the report's own
+filters (journal, account type, `parent_state`), account code prefixes and archived
+accounts, grouping by cost centre, accounting account, partner and two levels, auditing,
+multi-company currency conversion parity with the `domain` engine, and the learning demo.
+The assistant, on both engines: every kind of remark it makes, and that the native engine
+still computes its own values untouched.
 
 
 ---
@@ -314,7 +358,7 @@ multi-company currency conversion parity with the `domain` engine.
 ## Cross-references
 
 - Producer stack and repo inventory: [`odoopartners/agent-stack`](https://github.com/odoopartners/agent-stack) — `agent-stack/awac.yml#repos`
-- Odoo.SH validation project: `GanemoCorp/newmodule20`, branch `account-report-analytic-domain-19.0.1.0.0`
+- Odoo.SH validation project: `GanemoCorp/newmodule20`, branch `account-report-analytic-domain-19.0.1.1.0`
 - Governance: [product-structure.md](https://github.com/getGanemo/docs-company/blob/main/governance/product-structure.md)
 
 ---

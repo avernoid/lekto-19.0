@@ -535,16 +535,16 @@ class TestAnalyticDomainEngine(TestAccountReportsCommon):
         self.assertIn(self.analytic_plan.display_name, expression.analytic_domain_guide)
 
     def test_assistant_is_silent_for_other_engines(self):
+        """ Only the Analytic Domain and Odoo Domain engines get the assistant. """
         report = self.env['account.report'].create({
-            'name': "Plain domain report",
+            'name': "Manual values report",
             'column_ids': [Command.create({'name': "Balance", 'expression_label': 'balance', 'sequence': 1})],
             'line_ids': [Command.create({
                 'name': "Expenses",
                 'expression_ids': [Command.create({
                     'label': 'balance',
-                    'engine': 'domain',
-                    'formula': "[('account_id.account_type', '=', 'expense')]",
-                    'subformula': 'sum',
+                    'engine': 'external',
+                    'formula': 'sum',
                 })],
             })],
         })

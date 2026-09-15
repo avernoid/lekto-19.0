@@ -18,11 +18,11 @@
                 <field name="analytic_domain_guide"
                        nolabel="1" readonly="1"
                        class="mt-3"
-                       invisible="engine != 'analytic_domain'"/>
+                       invisible="engine not in ('analytic_domain', 'domain')"/>
                 <field name="analytic_domain_review"
                        nolabel="1" readonly="1"
                        class="mt-3"
-                       invisible="engine != 'analytic_domain'"/>
+                       invisible="engine not in ('analytic_domain', 'domain')"/>
             </xpath>
 
         </field>

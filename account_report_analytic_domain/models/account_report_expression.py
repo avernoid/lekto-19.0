@@ -33,21 +33,23 @@ class AccountReportExpression(models.Model):
         string="How to write it",
         compute='_compute_analytic_domain_guide',
         sanitize=False,
-        help="Shown only for the Analytic Domain engine. Lists the analytic plans of this "
-             "database with the field name each one answers to, since that name depends on "
-             "the plan's database id and cannot be guessed, and offers formulas ready to "
-             "copy. It is computed while the form is open and costs nothing when the report "
-             "is run.",
+        help="Shown for the Analytic Domain and Odoo Domain engines. Explains which records "
+             "the formula filters and which fields are worth using — for Analytic Domain, the "
+             "analytic plans of this database with the field name each one answers to, since "
+             "that name depends on the plan's database id and cannot be guessed — and offers "
+             "formulas ready to copy. It is computed while the form is open and costs nothing "
+             "when the report is run.",
     )
     analytic_domain_review = fields.Html(
         string="Formula review",
         compute='_compute_analytic_domain_review',
         sanitize=False,
-        help="Shown only for the Analytic Domain engine. Reads the formula as it is typed "
-             "and reports what would not work (a field that does not exist on analytic "
-             "items, one that Odoo cannot search, an invalid domain or subformula) "
-             "separately from what would merely be slow, with the measured cost of each way "
-             "of writing the filter. It is advisory: it never blocks saving.",
+        help="Shown for the Analytic Domain and Odoo Domain engines. Reads the formula as it "
+             "is typed and reports, separately, what would not work (a field that does not "
+             "exist, one that Odoo cannot search, an invalid domain or subformula), what may "
+             "not return what you expect, and what would merely be slow, with the cost "
+             "measured on a production database for each way of writing the filter. It is "
+             "advisory: it never blocks saving.",
     )
 
     _analytic_domain_engine_subformula_required = models.Constraint(
@@ -79,6 +81,9 @@ class AccountReportExpression(models.Model):
     @api.depends('engine')
     def _compute_analytic_domain_guide(self):
         for expression in self:
+            if expression.engine == 'domain':
+                expression.analytic_domain_guide = expression._domain_engine_guide()
+                continue
             if expression.engine != 'analytic_domain':
                 expression.analytic_domain_guide = False
                 continue
@@ -135,21 +140,28 @@ class AccountReportExpression(models.Model):
     @api.depends('engine', 'formula', 'subformula')
     def _compute_analytic_domain_review(self):
         for expression in self:
-            if expression.engine != 'analytic_domain':
+            if expression.engine == 'analytic_domain':
+                findings = expression._analytic_domain_collect_findings()
+            elif expression.engine == 'domain':
+                findings = expression._domain_engine_collect_findings()
+            else:
                 expression.analytic_domain_review = False
                 continue
-            expression.analytic_domain_review = expression._analytic_domain_render_review()
+            expression.analytic_domain_review = expression._formula_review_render(*findings)
 
-    def _analytic_domain_render_review(self):
-        """ Static analysis of the formula: what will not work first, what will be slow
-        second. The two are never merged into one indicator, because a broken condition
-        matters more than a slow one and would be hidden by it.
+    def _formula_review_render(self, blocking, intent, slow, fine):
+        """ Render the review of a formula, whatever its engine.
+
+        What will not work comes first, what may not return what the user expects second,
+        what will merely be slow third. They are never merged into one indicator: a broken
+        condition matters more than a surprising one, which matters more than a slow one,
+        and each would be hidden by a headline written for the others.
         """
         self.ensure_one()
-        blocking, slow, fine = self._analytic_domain_collect_findings()
-
         if blocking:
             level, headline = 'danger', _("This formula will not work")
+        elif intent:
+            level, headline = 'warning', _("This formula works, but may not return what you expect")
         elif slow:
             level, headline = 'warning', _("This formula works, but there is a faster way")
         else:
@@ -164,15 +176,16 @@ class AccountReportExpression(models.Model):
             'level': Markup(level),
             'headline': headline,
             'items': Markup().join(
-                Markup('<li>%s</li>') % message for message in (blocking + slow + fine)
+                Markup('<li>%s</li>') % message for message in (blocking + intent + slow + fine)
             ),
         }
 
-    def _analytic_domain_collect_findings(self):
-        """ Returns three lists of messages: blocking, slow and merely informative. """
+    def _formula_review_parse(self, blocking):
+        """ Checks shared by every engine the assistant reviews: the subformula, and that the
+        formula is a domain at all. Returns the (field, operator, value) conditions, or None
+        when the formula cannot be parsed.
+        """
         self.ensure_one()
-        blocking, slow, fine = [], [], []
-
         subformula = (self.subformula or '').replace('-', '').strip()
         if not subformula:
             blocking.append(_(
@@ -186,18 +199,27 @@ class AccountReportExpression(models.Model):
 
         try:
             domain = literal_eval(self.formula or '[]')
-            conditions = [term for term in domain if isinstance(term, (tuple, list)) and len(term) == 3]
+            return [
+                term for term in domain
+                if isinstance(term, (tuple, list)) and len(term) == 3 and isinstance(term[0], str)
+            ]
         except (ValueError, SyntaxError, TypeError):
             blocking.append(_("The formula is not a valid Odoo domain."))
-            return blocking, slow, fine
+            return None
+
+    def _analytic_domain_collect_findings(self):
+        """ Returns four lists of messages: blocking, intent, slow and informative. """
+        self.ensure_one()
+        blocking, intent, slow, fine = [], [], [], []
+        conditions = self._formula_review_parse(blocking)
+        if conditions is None:
+            return blocking, intent, slow, fine
 
         plan_columns = self._analytic_domain_plan_columns()
         narrows_analytic_account = False
 
         for condition in conditions:
             field_expr = condition[0]
-            if not isinstance(field_expr, str):
-                continue
             root = field_expr.partition('.')[0]
             if root in plan_columns or root == 'auto_account_id':
                 narrows_analytic_account = True
@@ -205,13 +227,13 @@ class AccountReportExpression(models.Model):
             {'danger': blocking, 'warning': slow, 'success': fine}[level].append(message)
 
         if conditions and not narrows_analytic_account:
-            slow.append(_(
+            intent.append(_(
                 "No condition restricts the analytic account, so this line adds up every "
                 "analytic item matching the rest of the filter. That is allowed, but make "
                 "sure it is what you mean."
             ))
 
-        return blocking, slow, fine
+        return blocking, intent, slow, fine
 
     def _analytic_domain_review_condition(self, field_expr, plan_columns):
         """ Returns (level, message) for a single condition of the domain. """
