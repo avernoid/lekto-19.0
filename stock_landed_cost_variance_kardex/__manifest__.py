@@ -1,6 +1,6 @@
 {
     "name": "Stock Value Variance - Kardex Columns",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Inventory",
     "summary": "Feed recorded value variances into the movement-level Kardex columns.",
     "description": """

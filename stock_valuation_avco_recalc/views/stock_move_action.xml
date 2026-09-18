@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="action_stock_valuation_recalc_wizard" model="ir.actions.act_window">
-        <field name="name">Recalculate AVCO Valuation</field>
+        <field name="name">Rebuild Stock Valuation</field>
         <field name="res_model">stock.valuation.recalc.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>

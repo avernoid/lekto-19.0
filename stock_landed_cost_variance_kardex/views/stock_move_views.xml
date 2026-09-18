@@ -8,7 +8,6 @@
         <field name="arch" type="xml">
             <field name="kardex_value" position="after">
                 <field name="kardex_value_adjustment" optional="hide"/>
-                <field name="kardex_adjusted_qty" optional="hide"/>
             </field>
         </field>
     </record>

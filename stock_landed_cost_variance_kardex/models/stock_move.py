@@ -7,8 +7,7 @@ class StockMove(models.Model):
     @api.depends(
         "variance_line_ids.ledger_amount",
         "variance_line_ids.absorbed",
-        "variance_line_ids.valued_qty",
-        "variance_line_ids.remaining_qty",
+        "variance_line_ids.kind",
     )
     def _compute_kardex_variance(self):
         """Re-declare the dependencies now that the real source exists.
@@ -22,22 +21,17 @@ class StockMove(models.Model):
         return super()._compute_kardex_variance()
 
     def _kardex_variance_amounts(self):
-        """Sum what the recorded variances say this move is really worth.
+        """What the movement is worth on top of its stored value.
 
-        Each row already carries its ledger effect signed, so nothing here has
-        to know that an incoming move gives the amount back while an outgoing
-        one gives it back the other way.  Absorbed rows contribute zero: a
-        valuation recalculation folded them into the values already, and
-        counting both would correct the same money twice.
+        Since stock_landed_cost_variance 19.0.2 a late revaluation is folded into
+        the stored ``value`` itself (exits restated, returns re-derived), so those
+        rows add nothing here. What remains are the amounts no movement value can
+        carry: the value Odoo's average replay drops when goods arrive on negative
+        stock, recorded as live rows on the entry where it happens.
+
+        The quantity part of the hook is no longer meaningful -- no row describes
+        units gone at a revaluation any more -- and returns 0.
         """
         self.ensure_one()
-        rows = self.variance_line_ids
-        if not rows:
-            return 0.0, 0.0
-        amount = sum(row._ledger_signed_amount() for row in rows)
-        # Informative: how much had already gone when the move was last
-        # revalued. The most recent live row is the meaningful snapshot -- an
-        # older one describes a warehouse state that no longer applies.
-        live = rows.filtered(lambda r: not r.absorbed).sorted("date")
-        qty = (live[-1].valued_qty - live[-1].remaining_qty) if live else 0.0
-        return amount, qty
+        rows = self.variance_line_ids.filtered(lambda r: r.kind != "legacy")
+        return sum(row._ledger_signed_amount() for row in rows), 0.0

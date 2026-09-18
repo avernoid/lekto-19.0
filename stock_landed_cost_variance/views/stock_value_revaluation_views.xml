@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_value_revaluation_view_list" model="ir.ui.view">
+        <field name="name">stock.value.revaluation.list</field>
+        <field name="model">stock.value.revaluation</field>
+        <field name="arch" type="xml">
+            <list string="Late Revaluations" create="0" edit="0" delete="0"
+                  decoration-danger="state == 'inconsistent'" decoration-warning="state == 'outdated'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="origin"/>
+                <field name="landed_cost_id" optional="show"/>
+                <field name="source_move_id" optional="show"/>
+                <field name="revaluation_amount" sum="Revaluation"/>
+                <field name="costed_amount" sum="Already Costed" optional="show"/>
+                <field name="pending_amount" sum="Not Yet Costed" optional="hide"/>
+                <field name="discard_amount" sum="Value Dropped" optional="hide"/>
+                <field name="account_move_id" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'posted'"
+                       decoration-info="state == 'no_entry'" decoration-warning="state == 'outdated'"
+                       decoration-danger="state == 'inconsistent'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="stock_value_revaluation_view_form" model="ir.ui.view">
+        <field name="name">stock.value.revaluation.form</field>
+        <field name="model">stock.value.revaluation</field>
+        <field name="arch" type="xml">
+            <form string="Late Revaluation" create="0" edit="0" delete="0">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_entry" type="object" class="oe_stat_button" icon="fa-book"
+                                invisible="not account_move_id" string="Journal Entry"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="date"/>
+                            <field name="origin"/>
+                            <field name="landed_cost_id" invisible="not landed_cost_id"/>
+                            <field name="source_move_id" invisible="not source_move_id"/>
+                            <field name="source_reference" invisible="not source_reference"/>
+                            <field name="parent_id" invisible="not parent_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Where the revaluation went">
+                            <field name="revaluation_amount"/>
+                            <field name="delta_total_value"/>
+                            <field name="costed_amount"/>
+                            <field name="pending_amount"/>
+                            <field name="discard_amount"/>
+                            <field name="native_amount"/>
+                            <field name="account_move_id"/>
+                            <field name="identity_ok"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <field name="note" invisible="not note" class="text-danger"/>
+                    <notebook>
+                        <page string="Movement Amounts" name="lines">
+                            <field name="line_ids">
+                                <list>
+                                    <field name="move_id"/>
+                                    <field name="kind"/>
+                                    <field name="date"/>
+                                    <field name="ledger_amount" sum="Total"/>
+                                    <field name="absorbed"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Cost of Sales Adjustments" name="adjustments" invisible="not adjustment_ids">
+                            <field name="adjustment_ids">
+                                <list>
+                                    <field name="sale_line_id"/>
+                                    <field name="amount" sum="Total"/>
+                                    <field name="basis_qty"/>
+                                    <field name="reversed_amount"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Cascaded Events" name="children" invisible="not child_ids">
+                            <field name="child_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_value_revaluation_view_search" model="ir.ui.view">
+        <field name="name">stock.value.revaluation.search</field>
+        <field name="model">stock.value.revaluation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="name"/>
+                <field name="landed_cost_id"/>
+                <field name="source_move_id"/>
+                <filter name="with_entry" string="With Journal Entry" domain="[('account_move_id', '!=', False)]"/>
+                <filter name="inconsistent" string="Inconsistent" domain="[('identity_ok', '=', False)]"/>
+                <separator/>
+                <filter name="group_origin" string="Origin" context="{'group_by': 'origin'}"/>
+                <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_value_revaluation_action" model="ir.actions.act_window">
+        <field name="name">Late Revaluations</field>
+        <field name="res_model">stock.value.revaluation</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No late revaluation yet</p>
+            <p>An event is recorded when a landed cost, a vendor bill or a customer credit note changes the cost of goods that had already left, or when the native engine drops value (goods arriving on negative stock, a FIFO lot).</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_stock_value_revaluation" name="Late Revaluations"
+              parent="stock.menu_warehouse_report" action="stock_value_revaluation_action" sequence="160"/>
+
+    <record id="stock_landed_cost_view_form_variance" model="ir.ui.view">
+        <field name="name">stock.landed.cost.form.variance</field>
+        <field name="model">stock.landed.cost</field>
+        <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/div[hasclass('oe_title')]" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_variance_revaluations" type="object" class="oe_stat_button"
+                            icon="fa-exchange" invisible="variance_revaluation_count == 0">
+                        <field name="variance_revaluation_count" widget="statinfo" string="Late Revaluations"/>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="account_move_view_form_variance" model="ir.ui.view">
+        <field name="name">account.move.form.variance</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_variance_revaluations" type="object" class="oe_stat_button"
+                        icon="fa-exchange" invisible="variance_revaluation_count == 0">
+                    <field name="variance_revaluation_count" widget="statinfo" string="Late Revaluations"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

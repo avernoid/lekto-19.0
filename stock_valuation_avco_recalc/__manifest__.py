@@ -1,21 +1,21 @@
 {
     'name': 'Stock Valuation Avco Recalc',
-    'version': '19.0.2.0.1',
+    'version': '19.0.3.0.0',
     'category': 'Inventory',
-    'summary': 'Recalculate Average Cost (AVCO) from a past date.',
+    'summary': 'Rebuild the stored value of historical stock movements with the late revaluation engine.',
     'description': """
-This module allows authorized users to correct valuation errors caused by retroactive changes to stock moves.
-It implements a "Waterfall" recalculation algorithm that:
-1. Calculates the "Genesis" balance (Qty/Value) via SQL snapshot at a start date.
-2. Re-processes all subsequent moves sequentially.
-3. Updates `stock.move` value and unit price (Operational only).
-4. Generates an Audit Log for traceability.
+Rebuilds the stored value of deliveries and customer returns of the selected products with the
+same engine that handles late revaluations (stock_landed_cost_variance): the cost Odoo's own
+valuation gives each exit, in (date, id) order.
 
-Key Features:
-- "Recalculate Valuation" Server Action in Stock Move list view.
-- Confirmation Wizard with editable initial balances (God Mode).
-- Dedicated Audit Log model.
-- No impact on historical Account Entries (Journal Entries are NOT touched).
+For history the engine never saw -- movements done before it was installed -- or values damaged
+by hand.  Every amount is recorded as a dated row, so periods before the chosen date keep the
+values they were reported with.  No journal entry is posted, the product cost is refreshed by
+Odoo itself, and manual valuations are kept.  Each run leaves an audit with the value before and
+after of every movement.
+
+Version 19.0.3 retires the adjustment and restatement modes, the waterfall algorithm, the SQL
+write of the product cost and the deletion of valuation anchors.
     """,
     'author': 'Ganemo',
     'maintainer': 'Ganemo',

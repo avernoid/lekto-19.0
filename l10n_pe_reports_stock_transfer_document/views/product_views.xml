@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inherits the PE group that l10n_pe_reports_stock already adds to the
+         Accounting tab, so the configuration stays where "Type of existence"
+         already lives: no new tab, no new group, no new menu. -->
+    <record id="product_template_form_view_pe_existence" model="ir.ui.view">
+        <field name="name">product.template.form.view.pe.existence.code</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="l10n_pe_reports_stock.product_template_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <field name="l10n_pe_type_of_existence" position="after">
+                <field name="l10n_pe_existence_code_source"/>
+                <field name="l10n_pe_existence_catalogue"/>
+                <field name="l10n_pe_ple_existence_code"/>
+            </field>
+        </field>
+    </record>
+</odoo>

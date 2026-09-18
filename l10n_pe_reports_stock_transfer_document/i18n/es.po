@@ -1,17 +1,13 @@
-# Translation of l10n_pe_reports_stock_transfer_document to Spanish
-# . module: l10n_pe_reports_stock_transfer_document
-# Copyright (C) 2026 Ganemo
-# This file is distributed under the same license as the l10n_pe_reports_stock_transfer_document package.
-#
-# NOTE: this bridge module only overrides a report method and exposes no
-# end-user fields, views, selection values or translatable messages, so there
-# are no translation entries below the header.
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_pe_reports_stock_transfer_document
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Module l10n_pe_reports_stock_transfer_document 19.0\n"
-"POT-Creation-Date: 2026-01-01 00:00+0000\n"
-"PO-Revision-Date: 2026-07-14 00:00+0000\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-28 11:23+0000\n"
+"PO-Revision-Date: 2026-08-28 11:23+0000\n"
 "Last-Translator: Ganemo <help@ganemo.com>\n"
 "Language-Team: Spanish <>\n"
 "Language: es\n"
@@ -19,3 +15,356 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/models/product.py:0
+msgid "%(code)s - catalogue %(catalogue)s"
+msgstr "%(code)s - catálogo %(catalogue)s"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid ""
+"%(code)s looks like a GTIN or a UNSPSC code but is declared as catalogue 9 "
+"(Others)."
+msgstr ""
+"%(code)s parece un GTIN o un código UNSPSC pero se declara como catálogo 9 "
+"(Otros)."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid "%(count)s more findings of type \"%(kind)s\" are not listed."
+msgstr "Hay %(count)s hallazgos más del tipo «%(kind)s» que no se listan."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__product_template__l10n_pe_existence_catalogue__1
+msgid "1 - United Nations (UNSPSC)"
+msgstr "1 - Naciones Unidas (UNSPSC)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__product_template__l10n_pe_existence_catalogue__3
+msgid "3 - GTIN"
+msgstr "3 - GTIN"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__product_template__l10n_pe_existence_catalogue__9
+msgid "9 - Others"
+msgstr "9 - Otros"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model_terms:ir.ui.view,arch_db:l10n_pe_reports_stock_transfer_document.view_l10n_pe_stock_ple_wizard_audit
+msgid "Audit"
+msgstr "Auditoría"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid "Audit clean"
+msgstr "Auditoría sin hallazgos"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model_terms:ir.ui.view,arch_db:l10n_pe_reports_stock_transfer_document.l10n_pe_stock_ple_audit_line_list
+msgid "Back to the report"
+msgstr "Volver al reporte"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__product_template__l10n_pe_existence_code_source__barcode
+msgid "Barcode"
+msgstr "Código de barras"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid ""
+"Catalogue 1 (United Nations) declared for %(code)s, which is not an 8 digit "
+"UNSPSC code."
+msgstr ""
+"Se declara catálogo 1 (Naciones Unidas) para %(code)s, que no es un código "
+"UNSPSC de 8 dígitos."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid ""
+"Catalogue 3 (GTIN) declared for %(code)s, which is not a GTIN (8, 12, 13 or "
+"14 digits)."
+msgstr ""
+"Se declara catálogo 3 (GTIN) para %(code)s, que no es un GTIN (8, 12, 13 o "
+"14 dígitos)."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__catalogue_mismatch
+msgid "Catalogue does not match the code (field 5)"
+msgstr "El catálogo no coincide con el código (campo 5)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_product__l10n_pe_ple_existence_code
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_template__l10n_pe_ple_existence_code
+msgid "Code Sent to the PLE"
+msgstr "Código que irá al PLE"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_product__l10n_pe_existence_catalogue
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_template__l10n_pe_existence_catalogue
+msgid "Declared Catalogue"
+msgstr "Catálogo declarado"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__detail
+msgid "Detail"
+msgstr "Detalle"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__display_name
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_product__display_name
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_template__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid ""
+"Document %(name)s is dated %(date)s, later than the period; the movement "
+"date is reported instead."
+msgstr ""
+"El documento %(name)s tiene fecha %(date)s, posterior al periodo; se informa"
+" la fecha del movimiento en su lugar."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__date_out_of_period
+msgid "Document date outside the period (field 10)"
+msgstr "Fecha del documento fuera del periodo (campo 10)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_product__l10n_pe_existence_code_source
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_template__l10n_pe_existence_code_source
+msgid "Existence Code Source"
+msgstr "Fuente del código de existencia"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__missing_code
+msgid "Existence code empty (field 7)"
+msgstr "Código de existencia vacío (campo 7)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid "Field 6 will be reported as 99 (Others)."
+msgstr "El campo 6 se informará como 99 (Otros)."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__kind
+msgid "Finding"
+msgstr "Hallazgo"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__capped
+msgid "Findings not listed"
+msgstr "Hallazgos no listados"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__missing_unspsc
+msgid "Goods without UNSPSC code (fields 8/9)"
+msgstr "Mercadería sin código UNSPSC (campos 8/9)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__id
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_wizard__id
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_product__id
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_product_template__id
+msgid "ID"
+msgstr "ID"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__product_template__l10n_pe_existence_code_source__internal_reference
+msgid "Internal Reference"
+msgstr "Referencia interna"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid ""
+"Merchandise and finished products must report fields 8/9 when the electronic"
+" invoice carries the UNSPSC or GTIN code."
+msgstr ""
+"Las mercaderías y productos terminados deben informar los campos 8/9 cuando "
+"el comprobante electrónico lleva el código UNSPSC o GTIN."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__move_id
+msgid "Movement"
+msgstr "Movimiento"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__no_picking
+msgid "Movement without a transfer (fields 4 and 14)"
+msgstr "Movimiento sin traslado (campos 4 y 14)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/models/product.py:0
+msgid "No code - SUNAT rejects the file"
+msgstr "Sin código - SUNAT rechaza el archivo"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid "No finding on the movements of the chosen period."
+msgstr "Ningún hallazgo en los movimientos del periodo elegido."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_pe_reports_stock_transfer_document.l10n_pe_stock_ple_audit_line_list
+msgid "PLE Audit"
+msgstr "Auditoría del PLE"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model,name:l10n_pe_reports_stock_transfer_document.model_l10n_pe_stock_ple_audit_line
+msgid "Peruvian Kardex PLE Audit Finding"
+msgstr "Hallazgo de auditoría del Kardex PLE"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,help:l10n_pe_reports_stock_transfer_document.field_product_product__l10n_pe_ple_existence_code
+#: model:ir.model.fields,help:l10n_pe_reports_stock_transfer_document.field_product_template__l10n_pe_ple_existence_code
+msgid ""
+"Preview of what the PLE books will carry in field 7, already scrubbed and "
+"cut to 24 characters, together with the catalogue declared in field 5. The "
+"code belongs to the variant, the configuration to the product."
+msgstr ""
+"Vista previa de lo que los libros PLE llevarán en el campo 7, ya saneado y "
+"truncado a 24 caracteres, junto con el catálogo declarado en el campo 5. El "
+"código es de la variante, la configuración es del producto."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model,name:l10n_pe_reports_stock_transfer_document.model_product_template
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model,name:l10n_pe_reports_stock_transfer_document.model_product_product
+msgid "Product Variant"
+msgstr "Variante de producto"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__severity__rejected
+msgid "Rejected by SUNAT"
+msgstr "Rechazado por SUNAT"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,help:l10n_pe_reports_stock_transfer_document.field_product_product__l10n_pe_existence_catalogue
+#: model:ir.model.fields,help:l10n_pe_reports_stock_transfer_document.field_product_template__l10n_pe_existence_catalogue
+msgid ""
+"SUNAT Table 13 catalogue the existence code belongs to (field 5 of the PLE "
+"12.1 and 13.1 books). Proposed from the code source and editable: change it "
+"when the internal reference is itself a GTIN or a UNSPSC code. Changing the "
+"source proposes the catalogue again."
+msgstr ""
+"Catálogo de la Tabla 13 de SUNAT al que pertenece el código de existencia "
+"(campo 5 de los libros PLE 12.1 y 13.1). Se propone según la fuente del "
+"código y es editable: cámbielo cuando la referencia interna sea en sí misma "
+"un GTIN o un código UNSPSC. Al cambiar la fuente se vuelve a proponer el "
+"catálogo."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,field_description:l10n_pe_reports_stock_transfer_document.field_l10n_pe_stock_ple_audit_line__severity
+msgid "Severity"
+msgstr "Severidad"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid ""
+"The chosen source (%(field)s) is empty, so field 7 goes empty and SUNAT "
+"rejects the file."
+msgstr ""
+"La fuente elegida (%(field)s) está vacía, así que el campo 7 sale vacío y "
+"SUNAT rechaza el archivo."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__missing_existence_type
+msgid "Type of existence not set (field 6)"
+msgstr "Tipo de existencia sin configurar (campo 6)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__product_template__l10n_pe_existence_code_source__unspsc
+msgid "UNSPSC"
+msgstr "UNSPSC"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid "Unit of measure %(uom)s has no SUNAT code (Table 6)."
+msgstr "La unidad de medida %(uom)s no tiene código SUNAT (Tabla 6)."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__kind__missing_uom_code
+msgid "Unit of measure without SUNAT code (field 16)"
+msgstr "Unidad de medida sin código SUNAT (campo 16)"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/models/product.py:0
+msgid "Varies by variant"
+msgstr "Varía por variante"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields.selection,name:l10n_pe_reports_stock_transfer_document.selection__l10n_pe_stock_ple_audit_line__severity__warning
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model.fields,help:l10n_pe_reports_stock_transfer_document.field_product_product__l10n_pe_existence_code_source
+#: model:ir.model.fields,help:l10n_pe_reports_stock_transfer_document.field_product_template__l10n_pe_existence_code_source
+msgid ""
+"Which field feeds the existence code (field 7) of the PLE 12.1 and 13.1 "
+"books. If the chosen field is empty the code is left empty and SUNAT rejects"
+" the file: no other field is used as a fallback, because a file that passes "
+"validation carrying the wrong code is worse than a rejected one."
+msgstr ""
+"Qué campo alimenta el código de existencia (campo 7) de los libros PLE 12.1 "
+"y 13.1. Si el campo elegido está vacío, el código sale vacío y SUNAT rechaza"
+" el archivo: no se usa ningún otro campo como respaldo, porque un archivo "
+"que pasa la validación con el código equivocado es peor que uno rechazado."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#. odoo-python
+#: code:addons/l10n_pe_reports_stock_transfer_document/wizard/ple_audit.py:0
+msgid ""
+"Without a transfer the establishment is reported as 0000 and the type of "
+"operation as 99."
+msgstr ""
+"Sin traslado, el establecimiento se informa como 0000 y el tipo de operación"
+" como 99."
+
+#. module: l10n_pe_reports_stock_transfer_document
+#: model:ir.model,name:l10n_pe_reports_stock_transfer_document.model_l10n_pe_stock_ple_wizard
+msgid "Wizard to generate Stock Move PLE reports for PE"
+msgstr ""
+"Asistente para generar los reportes PLE de movimientos de existencias para "
+"PE"

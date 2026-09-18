@@ -1,3 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_stock_value_variance_stock_user,stock.value.variance.stock.user,model_stock_value_variance,stock.group_stock_user,1,0,0,0
-access_stock_value_variance_account,stock.value.variance.account,model_stock_value_variance,account.group_account_manager,1,1,0,0
+access_stock_value_variance_account,stock.value.variance.account,model_stock_value_variance,account.group_account_readonly,1,0,0,0
+access_stock_value_revaluation_stock_user,stock.value.revaluation.stock.user,model_stock_value_revaluation,stock.group_stock_user,1,0,0,0
+access_stock_value_revaluation_account,stock.value.revaluation.account,model_stock_value_revaluation,account.group_account_readonly,1,0,0,0
+access_stock_cost_adjustment_stock_user,stock.cost.adjustment.stock.user,model_stock_cost_adjustment,stock.group_stock_user,1,0,0,0
+access_stock_cost_adjustment_account,stock.cost.adjustment.account,model_stock_cost_adjustment,account.group_account_readonly,1,0,0,0

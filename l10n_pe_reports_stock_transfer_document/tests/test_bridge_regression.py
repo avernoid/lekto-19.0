@@ -3,14 +3,13 @@ import inspect
 
 from freezegun import freeze_time
 
-from odoo import Command
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
-from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo.tests import tagged
 
 from odoo.addons.l10n_pe_reports_stock.wizard.stock_move_ple_report import (
     L10n_PeStockPleWizard as NativeWizard,
 )
+
+from .common import PleBridgeCommon
 
 # sha256 of inspect.getsource(NativeWizard._get_ple_report_content).  If Odoo
 # updates the native method, this fingerprint changes and the test fails HARD:
@@ -27,122 +26,7 @@ DRIFT_MESSAGE = (
 
 
 @tagged('post_install', 'post_install_l10n', '-at_install')
-class TestPleBridgeRegression(TestSaleCommon):
-
-    @classmethod
-    @AccountTestInvoicingCommon.setup_country('pe')
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.company = cls.company_data["company"]
-        cls.company.country_id = cls.env.ref("base.pe")
-        cls.company.vat = "20512528458"
-        cls.partner_a.write({
-            "country_id": cls.env.ref("base.pe").id,
-            "vat": "20557912879",
-            "l10n_latam_identification_type_id": cls.env.ref("l10n_pe.it_RUC").id,
-        })
-        cls.doc_type_01 = cls.env.ref("l10n_pe.document_type01")
-
-        cls.product = cls.company_data['product_order_no']
-        cls.product.categ_id.property_cost_method = "average"
-        cls.product.is_storable = True
-
-        cls.product2 = cls.env['product.product'].create({
-            'name': 'Second Product',
-            'type': 'consu',
-            'is_storable': True,
-            'categ_id': cls.product.categ_id.id,
-        })
-
-    # ------------------------------------------------------------------
-    # Fixture: a report period exercising several native branches at once.
-    # ------------------------------------------------------------------
-    def _build_fixture(self):
-        # Purchase receipt + posted bill (invoice document line).
-        purchase = self.env['purchase.order'].create({
-            'partner_id': self.partner_a.id,
-            'order_line': [
-                Command.create({
-                    'name': self.product.name,
-                    'product_id': self.product.id,
-                    'product_qty': 5.0,
-                    'product_uom_id': self.product.uom_id.id,
-                    'price_unit': 500.0,
-                }),
-                Command.create({
-                    'name': self.product2.name,
-                    'product_id': self.product2.id,
-                    'product_qty': 4.0,
-                    'product_uom_id': self.product2.uom_id.id,
-                    'price_unit': 100.0,
-                }),
-            ],
-        })
-        purchase.button_confirm()
-        picking = purchase.picking_ids
-        picking.move_line_ids.write({'picked': True})
-        for ml in picking.move_line_ids:
-            ml.quantity = ml.move_id.product_qty
-        picking.button_validate()
-
-        purchase.action_create_invoice()
-        bill = purchase.invoice_ids
-        bill.write({
-            'invoice_date': self.report_date,
-            'l10n_latam_document_type_id': self.doc_type_01.id,
-            'l10n_latam_document_number': "BILL/2026/01/0001",
-        })
-        bill.action_post()
-
-        # Sale delivery (customer, 'out' move -> exercises the sale/guide
-        # branch).  The customer invoice is intentionally NOT posted: PE
-        # e-invoicing (l10n_pe_edi) would require full EDI configuration, and
-        # the report only needs the done move.
-        sale = self.env['sale.order'].create({
-            'partner_id': self.partner_a.id,
-            'order_line': [Command.create({
-                'product_id': self.product.id,
-                'product_uom_qty': 2.0,
-                'price_unit': 800.0,
-            })],
-        })
-        sale.action_confirm()
-        out_picking = sale.picking_ids
-        out_picking.move_line_ids.write({'picked': True})
-        for ml in out_picking.move_line_ids:
-            ml.quantity = ml.move_id.product_uom_qty
-        out_picking.button_validate()
-        return purchase, sale
-
-    def _report(self):
-        return self.env['l10n_pe.stock.ple.wizard'].create({
-            'date_from': '2026-01-01',
-            'date_to': '2026-01-31',
-        })
-
-    def _clear_transfer_fields(self):
-        """Reset the capture -- the companion module auto-fills receipt moves on
-        bill posting; the bridge regression must start from a clean slate."""
-        moves = self.env['stock.move'].search(
-            [('company_id', '=', self.company.id)])
-        moves.with_context(auto_populate=True).write({
-            'transfer_document_type_id': False,
-            'serie_transfer_document': False,
-            'number_transfer_document': False,
-            'manual_override': False,
-        })
-        # The move-level SUNAT operation type (l10n_pe_stock_operation_type)
-        # auto-populates on validation too; clear it so the no-op comparison
-        # starts from a genuinely empty capture.  Guarded: inert when that
-        # module is not installed.  The manual flag is set in the same write so
-        # the provenance gate is bypassed (no context needed).
-        if 'l10n_pe_operation_type' in moves._fields:
-            moves.write({
-                'l10n_pe_operation_type': False,
-                'l10n_pe_operation_type_manual': False,
-            })
-
-    report_date = '2026-01-15'
+class TestPleBridgeRegression(PleBridgeCommon):
 
     # ------------------------------------------------------------------
     # 1) FINGERPRINT - hard fail if the native method drifts (MANDATORY).
@@ -174,8 +58,10 @@ class TestPleBridgeRegression(TestSaleCommon):
             self.assertFalse(move.number_transfer_document)
 
         for report_number in ('1301', '1201'):
-            ours = wizard._get_ple_report_content(report_number)
-            native = NativeWizard._get_ple_report_content(wizard, report_number)
+            ours = self._blank_normative_columns(
+                wizard._get_ple_report_content(report_number))
+            native = self._blank_normative_columns(
+                NativeWizard._get_ple_report_content(wizard, report_number))
             self.assertEqual(ours, native,
                              "bridge must be a no-op for report %s when the "
                              "transfer fields are empty" % report_number)
@@ -226,8 +112,10 @@ class TestPleBridgeRegression(TestSaleCommon):
             'number_transfer_document': '12345',
         })
         wizard = self._report()
-        ours = wizard._get_ple_report_content('1301')
-        native = NativeWizard._get_ple_report_content(wizard, '1301')
+        ours = self._blank_normative_columns(
+            wizard._get_ple_report_content('1301'))
+        native = self._blank_normative_columns(
+            NativeWizard._get_ple_report_content(wizard, '1301'))
         self.assertEqual(ours, native,
                          "no captured type -> the bridge must not inject")
 
@@ -270,8 +158,10 @@ class TestPleBridgeRegression(TestSaleCommon):
 
         # The injected guide reproduces what native already emits for the guide.
         wizard = self._report()
-        ours = wizard._get_ple_report_content('1301')
-        native = NativeWizard._get_ple_report_content(wizard, '1301')
+        ours = self._blank_normative_columns(
+            wizard._get_ple_report_content('1301'))
+        native = self._blank_normative_columns(
+            NativeWizard._get_ple_report_content(wizard, '1301'))
         self.assertEqual(ours, native,
                          "guide injection must match the native '09' handling")
 

@@ -1,51 +1,53 @@
-# Stock Valuation Recalculation (AVCO)
+# **Stock Valuation Rebuild**
 <img src="static/description/banner.png" width="100%" alt="Banner">
 
-**Fix retroactive valuation errors with mathematical precision.**
+**Bring historical stock values back to what Odoo's own valuation engine gives them — without rewriting the periods you already reported.**
 
-This Odoo 19 module implements a robust **Waterfall Algorithm** to recalculate the Average Cost (AVCO) of a product from a specific point in time, correcting inconsistencies caused by backdated stock moves or edits.
+Odoo 19 stores a value on every stock movement, and every valued report reads it. When that history was built before late revaluations were handled (freights, bills at another price, subcontractor bills arriving after the goods left), or when values were damaged by hand, the stored values of the deliveries no longer match what the engine says.
+
+This module rebuilds them with the **same engine** that `stock_landed_cost_variance` uses for every late revaluation.
 
 ---
 
-## 🚀 Key Features
+## What a rebuild does
 
-*   **Waterfall Recalculation**: Replays stock history sequentially to propagate the correct cost from the past to the present.
-*   **Audit Trail**: Logs every recalculation event (User, Date, Value Change) for full traceability.
-*   **Safety First**: Automatically blocks execution on products using **FIFO** or **Standard Price** to prevent data corruption.
-*   **Zero Accounting Spam**: Updates the *Operational Valuation* in `stock.move` without generating thousands of journal entries.
-*   **God Mode Wizard**: Allows manual override of "Initial Balance" for products with corrupted history.
+| | |
+|---|---|
+| Deliveries | Rewritten to the cost Odoo's own engine gives them, in date order (average, FIFO, lots, consignment) |
+| Customer returns | Re-derived with Odoo's own method from their restated delivery |
+| Value Odoo drops (goods arriving on negative stock, FIFO lots) | Recorded as a dated amount on the movement where it happens |
+| Every amount | Recorded with the **Known From** date: periods before it keep the values they were reported with, and the difference prints in the period of that date (PLE 13.1 and 3.7 included) |
+| Product cost | Refreshed by Odoo itself |
+| Audit | Value before and after of every movement, not editable by anyone |
 
-## 🛠️ Configuration
+## What it does not do
 
-No complex configuration is required. The module works out-of-the-box upon installation.
+| | Why |
+|---|---|
+| Post journal entries | A rebuild corrects history whose accounting was closed with other numbers: the differences are left visible for the accountant instead of being posted by surprise |
+| Accept a date inside a locked period | A locked period must keep the values it was closed with |
+| Delete manual valuations | They are deliberate |
+| Use its own algorithm | It reuses the engine, which is checked against Odoo's stored values in parity tests |
 
-1.  Ensure your user has **Inventory / Administrator** permissions.
-2.  Go to **Apps** and install `Stock Valuation Avco Recalc`.
+---
 
-## 📖 User Manual
+## How to use it
 
-### How to Recalculate Valuation
+1. **Inventory ▸ Reporting ▸ Moves Analysis**, filter the products to rebuild and select their movements.
+2. **Action ▸ Rebuild Stock Valuation**.
+3. Choose **Known From** (by default, today) and click **Rebuild**.
+4. Review the audit: **Inventory ▸ Configuration ▸ Valuation Rebuild History**.
 
-1.  Navigate to **Inventory > Reporting > Moves Analysis**.
-2.  Filter the list by the **Product** you want to fix.
-3.  Select the `stock.move` lines that appear incorrect or start from the date of the retroactive edit.
-4.  Click on **Action (Gear Icon) > Recalculate AVCO Valuation**.
-5.  A Wizard will open showing the **Initial Balance** (Snapshot at Start Date).
-    *   *Optional*: If the snapshot seems wrong, you can manually edit the `Initial Qty` and `Initial Value`.
-6.  Click **Confirm & Execute**.
+---
 
-### Investigating Changes
+## Upgrading from 19.0.2
 
-After execution, the system redirects you to the **Audit Log**:
-*   Review the `value_correction_total` to see the total monetary adjustment applied.
-*   Check the `moves_affected_count` to see how many future deliveries were corrected.
+Version 19.0.3 retires the *adjustment* and *restatement* modes, the waterfall algorithm, the SQL write of the product cost and the deletion of valuation anchors. Audits of 19.0.2 are kept.
 
-## ⚠️ Important Notes
+Corrections recorded by the old adjustment mode are **not** rebuilt during the upgrade — that would change past valuations without anyone asking. The upgrade log lists the products that carried them: run the rebuild on those, with a date agreed with the accountant.
 
-*   **Scope**: This module affects `stock.move` records. It does **not** modify posted Account Moves (Journal Entries).
-*   **Performance**: The SQL Genesis calculation is optimized for high-volume databases.
-
-## 👥 Credits
+---
 
 **Author**: [Ganemo](https://www.ganemo.co)
-**Maintainer**: Ganemo
+
+**License**: OPL-1

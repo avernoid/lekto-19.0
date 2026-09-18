@@ -59,7 +59,8 @@
             Kardex wizard (l10n_pe.stock.ple.wizard._get_ple_report_content). When a stock.move carries a captured
             transfer_document_type_id (from invoice_type_document_extension), the report injects that document's type,
             series and folio AFTER the native force-to-09 and BEFORE the value scrub, gated on the type being present so
-            it never emits an illegal 00. With empty data the output is byte-identical to native. Not auto-installed;
+            it never emits an illegal 00. It also applies the normative corrections of RS 108-2020 to fields 5, 6, 7, 8 and 10
+            and adds an Audit button on the emission wizard. Not auto-installed;
             countries pe. A post_install regression test compares bridge-vs-native output and hashes the native source
             (fingerprint) so a native drift fails the build hard. Depends on l10n_pe_reports_stock and
             invoice_type_document_extension. Compatible with Odoo 19 Enterprise / Odoo.SH.</p>
@@ -91,7 +92,7 @@
                 <p class="my-1 text-center"
                     style="font-family: Montserrat, 'sans-serif' !important; color: #212121 !important;font-size: 18px;font-weight: 600;">
                     The bridge that makes the Peruvian Kardex read the fiscal document you captured on each stock
-                    movement — atomic, safe, and byte-identical to native until you populate data.
+                    movement, applies the RS 108-2020 corrections to the existence code, its catalogues and the document date, and audits the period before you emit.
                 </p>
             </div>
         </div>
@@ -123,7 +124,7 @@
                             <h4 style="color: #5154a5;"><i class="fa fa-shield mr-2"></i> Compliance Without Risk</h4>
                             <p style="text-align: justify;">The injection is <strong>gated by the document type</strong>
                                 and applied after the native <em>09</em> forcing — it can never turn a compliant line
-                                into an illegal <em>00</em>. With no captured data, the report is identical to native.</p>
+                                into an illegal <em>00</em>. With no captured data, only the normative corrections of fields 5, 6, 7, 8 and 10 separate the file from the native one.</p>
                         </div>
                     </div>
                 </div>
@@ -168,8 +169,8 @@
                             <div class="mt-3 p-3 bg-light border-radius-10"
                                 style="border-radius: 10px; border: 1px dashed #791d97;">
                                 <small><strong><i class="fa fa-info-circle mr-1"></i> Safe by design:</strong> populating
-                                    a movement's document changes only that movement's PLE line. Until then, the TXT is
-                                    byte-identical to the native report.</small>
+                                    a movement's document changes only that movement's PLE line. Every other difference
+                                    with the native TXT is a normative correction, listed above.</small>
                             </div>
                         </div>
                     </div>
@@ -203,6 +204,51 @@
                                         <h5><i class="fa fa-sort-amount-asc text-primary mr-2"></i> Correct Order</h5>
                                         <p class="text-muted">Applied after the native force-to-09 and before the scrub,
                                             so the captured document wins cleanly and inherits SUNAT formatting.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #2ea36a;">
+                                        <h5><i class="fa fa-list-ol text-success mr-2"></i> Fields 5, 6, 7 and 8 per the norm</h5>
+                                        <p class="text-muted">Field 5 stops being a hardcoded <em>1</em> and declares the
+                                            catalogue the product's own code belongs to (Table 13: 1/3/9, default 9).
+                                            Field 7 chooses its source — internal reference, barcode or UNSPSC — and keeps
+                                            the hyphen. Field 8 is only emitted when field 9 carries a code. And the
+                                            opening (A1) rows stop forcing <em>99</em> in field 6: they read the product,
+                                            like the movement rows.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #2ea36a;">
+                                        <h5><i class="fa fa-calendar-check-o text-success mr-2"></i> Field 10 never exceeds the period</h5>
+                                        <p class="text-muted">The norm validates the document date against the period, so a
+                                            May delivery invoiced in June had SUNAT rejecting the May file. When the voucher
+                                            belongs to a later month, the movement date is reported instead; inside the
+                                            period nothing changes.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #2ea36a;">
+                                        <h5><i class="fa fa-link text-success mr-2"></i> Field 10 belongs to the document beside it</h5>
+                                        <p class="text-muted">Natively the date came from the first document of the order
+                                            line whatever its type, so a return printed its credit note's number next to the
+                                            invoice's date &mdash; two documents in one row, impossible for an auditor to
+                                            reconcile. The date now comes from the document the row actually reports, and
+                                            never from an unposted one: field 10 is the issue date, and a draft has not been
+                                            issued.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="bg-white p-3 shadow-sm h-100"
+                                        style="border-radius: 12px; border-top: 3px solid #2ea36a;">
+                                        <h5><i class="fa fa-search text-success mr-2"></i> Audit before you file</h5>
+                                        <p class="text-muted">One button on the emission wizard lists, without blocking and
+                                            without writing anything, what SUNAT would reject (empty existence code, unit of
+                                            measure with no Table 6 code) or observe (catalogue that does not match the code,
+                                            type of existence unset, goods with no UNSPSC, movements with no transfer). Fix
+                                            it before filing instead of discovering it at the portal.</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
@@ -407,7 +453,7 @@
                             style="background-color: #fff; border-radius: 10px; border-top: 5px solid #dc3545;">
                             <h5 style="font-weight: 700; color: #333;">The report did not change after install?</h5>
                             <p class="text-muted mt-2"><strong>Reason:</strong> that is by design — with no captured
-                                data the output is identical to native.</p>
+                                data only the normative corrections separate the output from the native one.</p>
                             <p class="small text-danger"><i class="fa fa-wrench mr-1"></i> <strong>Fix:</strong> populate
                                 the transfer document on the movements (via the capture module), then re-run the report.</p>
                         </div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="l10n_pe_stock_ple_audit_line_list" model="ir.ui.view">
+        <field name="name">l10n_pe.stock.ple.audit.line.list</field>
+        <field name="model">l10n_pe.stock.ple.audit.line</field>
+        <field name="arch" type="xml">
+            <list string="PLE Audit" create="false" delete="false" edit="false"
+                  decoration-danger="severity == 'rejected'">
+                <header>
+                    <button name="action_l10n_pe_ple_back_to_report" type="object"
+                            string="Back to the report" class="btn-primary"
+                            display="always"/>
+                </header>
+                <field name="severity"/>
+                <field name="kind"/>
+                <field name="product_id"/>
+                <field name="move_id"/>
+                <field name="detail"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Audit button, next to the two emission buttons of the native wizard. -->
+    <record id="view_l10n_pe_stock_ple_wizard_audit" model="ir.ui.view">
+        <field name="name">view.l10n_pe.stock.ple.wizard.audit</field>
+        <field name="model">l10n_pe.stock.ple.wizard</field>
+        <field name="inherit_id" ref="l10n_pe_reports_stock.view_l10n_pe_stock_ple_wizard"/>
+        <field name="arch" type="xml">
+            <xpath expr="//footer/button[@name='get_ple_report_13_1']" position="after">
+                <button name="action_l10n_pe_ple_audit" string="Audit" type="object"
+                        class="btn-secondary" data-hotkey="a"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

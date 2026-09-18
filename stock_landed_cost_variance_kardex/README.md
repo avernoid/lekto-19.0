@@ -25,20 +25,18 @@ Without it, the Kardex columns behave exactly as they did before.
 
 ## What it changes in the columns
 
-Three columns of `stock_move_kardex_qty`, available as optional columns of the native **Inventory → Reporting → Moves Analysis** list:
+Since **Stock Value Variance 19.0.2** a late revaluation (landed cost, bill, credit note) is written into the stored value of the deliveries it affects, at the moment it happens. The Kardex columns therefore read the corrected value directly, and this bridge only adds what no movement value can carry.
 
 | Column | With the bridge |
 |---|---|
-| **Kardex Value** | The signed value of the movement **net of** the corrections carried by the variances that are still live. |
-| **Kardex Adjustment** | The correction on its own, so the difference between the native *Value* and what the ledger counts is explainable at a glance. |
-| **Adjusted Qty** | How much had already left the warehouse when the movement was last revalued. Informative: no unit moved, so it deliberately does not aggregate. |
+| **Kardex Value** | The signed value of the movement plus any amount carried on top of it. |
+| **Kardex Adjustment** | The amount carried on top: the value Odoo's average replay drops when goods arrive on negative stock, shown on the entry where it happens. Zero for every other movement. |
 
-### The two rules that make the numbers safe
+With the bridge, the sum of *Kardex Value* for a product equals the inventory value Odoo computes for it.
 
-1. **Absorbed rows contribute zero.** When a valuation recalculation folds a variance into the movement values, the row is flagged *Absorbed* and stops counting. Correcting the same money twice is the classic failure of this kind of column, and it is ruled out by construction rather than by care.
-2. **Every row carries its ledger effect already signed.** Nothing downstream has to know that an incoming movement gives the amount back one way and an outgoing one the other. One number, one reading.
+### The rule that makes the numbers safe
 
-*Adjusted Qty* takes the **most recent live** variance row, not the sum: an older row describes a warehouse state that no longer applies, and quantities measured at different moments do not add up.
+**Folded rows contribute zero.** Amounts already written into the stored value are flagged *Folded into Value* and are never added again. Correcting the same money twice is the classic failure of this kind of column, and it is ruled out by construction.
 
 ---
 
@@ -49,13 +47,13 @@ None.
 1. Install **Kardex Quantities & Value**.
 2. Install **Stock Value Variance**.
 3. This module installs itself.
-4. Show *Kardex Adjustment* and *Adjusted Qty* from the optional-columns menu of the Moves Analysis list — they are hidden by default.
+4. Show *Kardex Adjustment* from the optional-columns menu of the Moves Analysis list — it is hidden by default.
 
 ---
 
 ## What it does not do
 
-* No new field, model, menu, action or view of its own — it inherits the existing list and adds two optional columns.
+* No new field, model, menu, action or view of its own — it inherits the existing list and adds one optional column.
 * No stock move, no journal entry, no valuation rewritten. The accounting side belongs to `stock_landed_cost_variance`.
 * No cron and no manual refresh: the columns are recomputed by the ORM the moment a variance changes.
 

@@ -1,32 +1,40 @@
 {
     "name": "Stock Value Variance",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "category": "Inventory",
-    "summary": "Identify the part of a later revaluation that belongs to goods already gone.",
+    "summary": "Correct the cost of goods already gone when a landed cost, a bill or a credit note arrives late.",
     "description": """
-When a landed cost or a vendor bill revalues a receipt **after** part of the
-goods have left, Odoo 19 adds the whole amount to the move's value but
-capitalises only the part still in stock -- and posts nothing at all when
-nothing is left.  The remainder stays in an expense account, unidentified.
+When a landed cost, a vendor bill with another price or exchange rate, a
+subcontractor bill or a customer credit note changes the cost of goods that
+have already left, Odoo 19 corrects the product cost but never the stored
+value of the deliveries -- and the accounting ends up split, with no cause
+anyone can point at, between the freight account, inventory and cost of sales.
 
-This module records that remainder per movement (``stock.value.variance``),
-so it can be:
+For every such event this module:
 
-* reported as its own line in a valued stock ledger, and
-* reclassified to the product's cost of sales by an explicit journal entry,
-  traceable back to the variance rows that substantiate it.
+* rewrites the value of the affected deliveries to the cost Odoo's own
+  valuation engine gives them today (average, FIFO, lots, consignment);
+* records every amount with the date of the event, so reports rebuild any
+  past date exactly as it was known then;
+* posts one identified journal entry dated on the event, linked to the
+  landed cost, bill or credit note that caused it;
+* cascades the change to manufactured and subcontracted goods;
+* books the value Odoo's average replay drops when goods arrive on negative
+  stock.
 
-It creates no stock moves and never rewrites a done move's value.
+It never blocks nor silently reverses a native operation: every event keeps
+a status that shows whether its entry is posted, not needed or outdated.
     """,
     "author": "Ganemo",
     "maintainer": "Ganemo",
     "company": "Ganemo",
     "website": "https://www.ganemo.co",
-    "depends": ["stock_landed_costs", "purchase_stock"],
+    "depends": ["stock_landed_costs", "purchase_stock", "sale_stock"],
     "data": [
         "security/ir.model.access.csv",
+        "data/ir_sequence.xml",
         "views/stock_value_variance_views.xml",
-        "views/product_category_views.xml",
+        "views/stock_value_revaluation_views.xml",
     ],
     "icon": "/stock_landed_cost_variance/static/description/icon.png",
     "images": ["static/description/banner.png"],

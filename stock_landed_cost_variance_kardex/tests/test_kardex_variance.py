@@ -1,62 +1,50 @@
 from odoo.tests import tagged
 
-from odoo.addons.stock_landed_cost_variance.tests.test_variance_capture import (
-    TestVarianceCapture,
-)
+from odoo.addons.stock_landed_cost_variance.tests.common import RevaluationCommon
 
 
 @tagged("post_install", "-at_install")
-class TestKardexVariance(TestVarianceCapture):
-    """The columns must state what the movement is really worth, and must not
-    move for anything that predates the variance record."""
+class TestKardexVariance(RevaluationCommon):
+    """The Kardex columns must add up to what Odoo says the stock is worth, after every late revaluation."""
 
-    def test_kardex_value_is_net_of_the_variance(self):
-        receipt = self._move("incoming", self.supplier_loc, self.stock_loc, 5.0)
-        out = self._move("outgoing", self.stock_loc, self.customer_loc, 3.0)
-        in_move = receipt.move_ids
-        out_move = out.move_ids
+    def _ledger(self):
+        self.env.invalidate_all()
+        moves = self.env["stock.move"].search([("product_id", "=", self.product.id), ("state", "=", "done")])
+        return sum(moves.mapped("kardex_value"))
 
-        # Before the landed cost: the column is the plain signed value.
-        self.assertAlmostEqual(in_move.kardex_value, 2500.0, 2)
-        self.assertAlmostEqual(in_move.kardex_value_adjustment, 0.0, 2)
+    def test_restated_delivery_carries_the_correction_in_its_value(self):
+        po = self.purchase(5, 500)
+        self.bill(po)
+        so = self.sale(3)
+        self.invoice(so)
+        out_move = so.picking_ids.move_ids
+        self.assertAlmostEqual(out_move.kardex_value, -1500.0, 2)
 
-        self._landed_cost(receipt, 250.0)
-        in_move.invalidate_recordset()
+        self.landed_cost(po, 250)
+        out_move.invalidate_recordset()
+        self.assertAlmostEqual(out_move.kardex_value, -1650.0, 2, "the delivery at the landed cost")
+        self.assertAlmostEqual(out_move.kardex_value_adjustment, 0.0, 2, "folded: nothing on top")
+        self.assertAlmostEqual(self._ledger(), 1100.0, 2)
+        self.assertAlmostEqual(self._ledger(), self.total_value(), 2, "the ledger and the engine agree")
 
-        # The core put the whole 250 on the receipt; 150 of it belongs to the
-        # 3 units already gone, so the ledger must count 2600, not 2750.
-        self.assertAlmostEqual(in_move.value, 2750.0, 2, "native value unchanged")
-        self.assertAlmostEqual(in_move.kardex_value_adjustment, -150.0, 2)
-        self.assertAlmostEqual(in_move.kardex_value, 2600.0, 2)
-        self.assertAlmostEqual(in_move.kardex_adjusted_qty, 3.0, 2)
-
-        # And the ledger now closes on the real value of what is left.
-        ledger = in_move.kardex_value + out_move.kardex_value
-        self.assertAlmostEqual(ledger, 1100.0, 2, "2 units at the landed 550")
-        self.assertAlmostEqual(
-            ledger, self.product.with_company(self.company).total_value, 2,
-            "the ledger and the valuation engine agree")
-
-    def test_absorbed_variance_stops_counting(self):
-        receipt = self._move("incoming", self.supplier_loc, self.stock_loc, 5.0)
-        self._move("outgoing", self.stock_loc, self.customer_loc, 3.0)
-        self._landed_cost(receipt, 250.0)
-        in_move = receipt.move_ids
-        variance = self.env["stock.value.variance"].search(
-            [("move_id", "=", in_move.id)])
-
-        variance.absorbed = True
-        in_move.invalidate_recordset()
-        self.assertAlmostEqual(in_move.kardex_value_adjustment, 0.0, 2)
-        self.assertAlmostEqual(in_move.kardex_value, 2750.0, 2,
-                               "back to gross: a recalculation owns the correction now")
+    def test_negative_stock_discard_is_added_on_the_entry(self):
+        po1 = self.purchase(2, 10)
+        self.bill(po1)
+        self.invoice(self.sale(5))
+        po2 = self.purchase(5, 20)
+        self.bill(po2)
+        receipt = po2.picking_ids.move_ids
+        receipt.invalidate_recordset()
+        self.assertAlmostEqual(receipt.kardex_value_adjustment, -30.0, 2,
+                               "the value Odoo's replay drops is carried by the entry where it happens")
+        self.assertAlmostEqual(self._ledger(), self.total_value(), 2)
 
     def test_untouched_moves_do_not_move(self):
-        """The guarantee for databases that already have this module: a move
-        with no recorded variance reads exactly as it did before."""
-        receipt = self._move("incoming", self.supplier_loc, self.stock_loc, 5.0)
-        out = self._move("outgoing", self.stock_loc, self.customer_loc, 3.0)
-        for move in (receipt.move_ids, out.move_ids):
+        """The guarantee for databases that already have this module: a move with no recorded variance
+        reads exactly as it did before."""
+        po = self.purchase(5, 500)
+        so = self.sale(3)
+        for move in (po.picking_ids.move_ids, so.picking_ids.move_ids):
             self.assertFalse(move.variance_line_ids)
             self.assertAlmostEqual(move.kardex_value_adjustment, 0.0, 2)
             self.assertAlmostEqual(move.kardex_adjusted_qty, 0.0, 2)
@@ -64,10 +52,6 @@ class TestKardexVariance(TestVarianceCapture):
             self.assertAlmostEqual(move.kardex_value, expected, 2)
 
     def test_adjusted_qty_never_aggregates(self):
-        """It counts units that did not move; summing it would corrupt a
-        physical count, which is precisely what this module protects."""
         field = self.env["stock.move"]._fields["kardex_adjusted_qty"]
         self.assertFalse(field.aggregator)
-        self.assertEqual(
-            self.env["stock.move"]._fields["kardex_qty"].aggregator, "sum",
-            "the real quantity column still aggregates")
+        self.assertEqual(self.env["stock.move"]._fields["kardex_qty"].aggregator, "sum")

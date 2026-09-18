@@ -26,8 +26,8 @@
                         <list decoration-info="moves_affected_count > 0">
                             <field name="product_id"/>
                             <field name="recalc_start_date"/>
-                            <field name="initial_qty_used"/>
-                            <field name="initial_value_used"/>
+                            <field name="initial_qty_used" optional="hide"/>
+                            <field name="initial_value_used" optional="hide"/>
                             <field name="moves_affected_count" sum="Total Moves"/>
                             <field name="value_correction_total" sum="Total Value Shift"/>
                             <field name="currency_id" column_invisible="True"/>
@@ -62,7 +62,7 @@
     <!-- Menu Item (Hidden under Inventory > Reporting or Configuration?) -->
     <!-- Placing it in Configuration -> Valuation Fix (New) -->
     <menuitem id="menu_stock_valuation_avco_recalc"
-              name="AVCO Re-Valuation History"
+              name="Valuation Rebuild History"
               parent="stock.menu_stock_config_settings"
               action="action_stock_valuation_audit"
               sequence="100"/>

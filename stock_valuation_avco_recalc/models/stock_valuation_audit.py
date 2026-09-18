@@ -16,10 +16,12 @@ class StockValuationAudit(models.Model):
         help="Company whose valuation was recalculated. Without it an audit "
              "trail is visible across companies that never took part in it.")
     mode = fields.Selection(
-        [('adjust', 'Adjustment (additive)'), ('restate', 'Restate values')],
-        string='Mode', readonly=True, default='adjust',
-        help="Adjustment records the correction beside the native value and is "
-             "reversible. Restate overwrites stock move values.")
+        [('rebuild', 'Rebuild with the valuation engine'),
+         ('adjust', 'Adjustment (19.0.2, retired)'),
+         ('restate', 'Restatement (19.0.2, retired)')],
+        string='Mode', readonly=True, default='rebuild',
+        help="Rebuild: stored values brought back to Odoo's own engine, recorded as dated rows, no journal "
+             "entry. Adjustment and Restatement are the modes of version 19.0.2, kept for the record.")
     
     @api.model_create_multi
     def create(self, vals_list):
@@ -66,12 +68,10 @@ class StockValuationAuditDetail(models.Model):
              "the figure to restore in order to undo it.")
     new_value = fields.Monetary(
         string='Value After', currency_field='currency_id',
-        help="What the movement is worth after the recalculation. In "
-             "adjustment mode the native value is untouched and the difference "
-             "is carried by the Kardex adjustment column instead.")
+        help="What the movement is worth after the rebuild.")
     deleted_product_value_date = fields.Datetime(
         string='Deleted Anchor Date',
-        help="Set when the row records a product.value anchor removed by a "
-             "restatement, rather than a movement correction.")
+        help="Version 19.0.2 only: a product.value anchor removed by a restatement. The rebuild never "
+             "removes anchors.")
     currency_id = fields.Many2one(
         'res.currency', related='audit_line_id.currency_id')

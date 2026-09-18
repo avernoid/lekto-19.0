@@ -1,80 +1,74 @@
-from odoo import fields, models
+from odoo import _, api, fields, models
 
 
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+    variance_revaluation_ids = fields.One2many(
+        "stock.value.revaluation", "source_move_id", string="Late Revaluations")
+    variance_revaluation_count = fields.Integer(compute="_compute_variance_revaluation_count")
+
+    @api.depends("variance_revaluation_ids")
+    def _compute_variance_revaluation_count(self):
+        for move in self:
+            move.variance_revaluation_count = len(move.variance_revaluation_ids)
+
     def _post(self, soft=True):
-        """Record the part of a bill-driven revaluation that belongs to goods
-        already gone.
+        """Run the late revaluation engine around vendor documents; reverse adjustments on credit notes.
 
-        Posting a vendor bill re-runs ``_set_value`` on the receipts it pays
-        for (``stock_account/models/account_move.py``), so a bill that differs
-        from the purchase order silently rewrites the value of a movement that
-        is already done -- measured: 2500 -> 2800.  The units delivered before
-        that point stay recognised at the old cost, so the cost of sales is
-        short and inventory is over by the same amount.
-
-        The delta is taken around ``super()`` because there is no other way to
-        know what the movement was worth before the bill moved it.
+        Posting a vendor bill or credit note re-runs ``_set_value`` on the incoming moves it pays for
+        (stock_account/models/account_move.py:42, same selection as ``_variance_vendor_moves``), which is
+        how another price, another exchange rate or a subcontractor bill rewrites a receipt already done.
+        The values have to be read around ``super()``: there is no other record of what they were.
         """
-        moves = self._variance_revalued_moves()
-        before = {move.id: move.value for move in moves}
+        if self.env.context.get("variance_skip_engine"):
+            return super()._post(soft=soft)
+        Revaluation = self.env["stock.value.revaluation"]
+        vendor_docs = self.filtered(lambda m: m.move_type in ("in_invoice", "in_refund"))
+        watched = {}
+        for doc in vendor_docs:
+            moves = doc._variance_vendor_moves()
+            if not moves:
+                continue
+            products = {}
+            for product in moves.product_id.filtered("is_storable"):
+                products[product] = Revaluation._variance_snapshot(product, doc.company_id)
+            watched[doc] = ({m.id: m.value for m in moves}, products)
 
         posted = super()._post(soft=soft)
 
-        if moves:
+        for doc, (values, products) in watched.items():
+            if doc not in posted:
+                continue
+            moves = self.env["stock.move"].browse(list(values))
             moves.invalidate_recordset(["value"])
-            posted._capture_bill_variance(before)
+            for product, before in products.items():
+                product_moves = moves.filtered(lambda m, p=product: m.product_id == p)
+                entry_deltas = {m: m.value - values[m.id] for m in product_moves
+                                if not doc.company_id.currency_id.is_zero(m.value - values[m.id])}
+                revaluation = sum(entry_deltas.values())
+                if doc.company_id.currency_id.is_zero(revaluation):
+                    continue
+                # The bill line itself carries the revaluation into stock valuation (real time): what Odoo
+                # posted for the revaluation IS the revaluation.
+                Revaluation._variance_handle_event(
+                    product, doc.company_id, before, doc.date, "vendor_bill", revaluation,
+                    native_amount=revaluation, entry_deltas=entry_deltas, source_move_id=doc.id)
+
+        for refund in posted.filtered(lambda m: m.move_type == "out_refund"):
+            Revaluation._variance_reverse_for_refund(refund)
         return posted
 
-    # ------------------------------------------------------------------
-    def _variance_revalued_moves(self):
-        """The moves the core will re-value on posting -- same selection it uses."""
-        moves = self.line_ids._get_stock_moves()
-        return moves.filtered(lambda m: m.is_in or m.is_dropship)
+    def _variance_vendor_moves(self):
+        """Incoming moves already done that the core re-values when this document posts."""
+        self.ensure_one()
+        return self.line_ids._get_stock_moves().filtered(
+            lambda m: m.state == "done" and (m.is_in or m.is_dropship))
 
-    def _capture_bill_variance(self, before):
-        Variance = self.env["stock.value.variance"].sudo()
-        vals_list = []
-        for bill in self:
-            company = bill.company_id
-            currency = company.currency_id
-            moves = bill._variance_revalued_moves()
-            if not moves:
-                continue
-
-            remaining_by_product = {}
-            for product in moves.product_id:
-                remaining_by_product[product.id] = self.env["stock.move"]._variance_remaining_by_move(
-                    product, company)
-
-            for move in moves:
-                base_amount = move.value - before.get(move.id, move.value)
-                if currency.is_zero(base_amount):
-                    continue
-                if move._variance_has_manual_value():
-                    continue
-                valued_qty = move._get_valued_qty()
-                if not valued_qty:
-                    continue
-                remaining = remaining_by_product.get(move.product_id.id, {}).get(move.id, 0.0)
-                capitalized = currency.round(base_amount * remaining / valued_qty)
-                low, high = sorted((0.0, base_amount))
-                capitalized = min(max(capitalized, low), high)
-                expensed = currency.round(base_amount - capitalized)
-                vals_list.append({
-                    "move_id": move.id,
-                    "company_id": company.id,
-                    "origin": "bill",
-                    "account_move_id": bill.id,
-                    "date": fields.Datetime.to_datetime(bill.date or bill.invoice_date),
-                    "base_amount": base_amount,
-                    "capitalized_amount": base_amount - expensed,
-                    "expensed_amount": expensed,
-                    "valued_qty": valued_qty,
-                    "remaining_qty": remaining,
-                    "ledger_amount": self.env["stock.value.variance"]._ledger_amount_for(
-                        move, expensed),
-                })
-        return Variance.create(vals_list) if vals_list else Variance
+    def action_view_variance_revaluations(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window", "name": _("Late Revaluations"),
+            "res_model": "stock.value.revaluation", "view_mode": "list,form",
+            "domain": ["|", ("source_move_id", "=", self.id), ("parent_id.source_move_id", "=", self.id)],
+        }
