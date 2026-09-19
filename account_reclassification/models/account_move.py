@@ -277,6 +277,11 @@ class AccountMove(models.Model):
             "partner_id": self.partner_id.id,
             "product_id": source.product_id.id,
             "quantity": source.quantity,
+            # The unit travels with the quantity or the pair lies: left unset,
+            # the native precompute resolves the REFERENCE unit of the product
+            # (the mirror is an entry, not a purchase document), so a bill of
+            # 2 Dozens produced a line reading 2 Units.
+            "product_uom_id": source.product_uom_id.id,
             "currency_id": self.company_id.currency_id.id,
             "balance": balance,
             "amount_currency": balance,

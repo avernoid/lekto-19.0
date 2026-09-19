@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from odoo import Command, fields
 from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
@@ -75,7 +77,8 @@ class TestReclassificationMirror(AccountTestInvoicingCommon):
     # -------------------------------------------------------------------------
 
     def _create_bill(self, account=None, journal=None, date=None, move_type="in_invoice",
-                     price_unit=1000.0, quantity=2.0, currency=None, analytic=None):
+                     price_unit=1000.0, quantity=2.0, currency=None, analytic=None,
+                     uom=None):
         line_vals = {
             "product_id": self.product_reclass.id,
             "name": "Reclass line",
@@ -86,6 +89,8 @@ class TestReclassificationMirror(AccountTestInvoicingCommon):
         }
         if analytic is not None:
             line_vals["analytic_distribution"] = analytic
+        if uom is not None:
+            line_vals["product_uom_id"] = uom.id
         vals = {
             "move_type": move_type,
             "partner_id": self.partner_a.id,
@@ -490,24 +495,31 @@ class TestReclassificationMirror(AccountTestInvoicingCommon):
 
     @mute_logger("odoo.addons.account_reclassification.models.account_move")
     def test_19b_broken_setup_never_blocks_the_native_posting(self):
-        """A mirror that cannot be built lets the bill post natively anyway."""
-        other_company = self.setup_other_company()["company"]
-        foreign_journal = self.env["account.journal"].create({
-            "name": "Other company journal", "code": "OCJ",
-            "type": "general", "company_id": other_company.id,
-        })
-        # Journal of another company: creating the mirror entry cannot work.
-        self.account_dest.reclass_mirror_journal_id = foreign_journal
+        """Whatever makes the entry fail, the bill still posts natively.
+
+        Until 19.0.8.0.0 this was provoked with a journal of another company.
+        That setup is now refused when the account is saved (see
+        ``test_multi_company``), so the guarantee is pinned where it actually
+        lives: the generation runs inside its own savepoint, and anything it
+        raises leaves the native posting untouched. The manual button, in
+        contrast, must still let the error through.
+        """
         bill = self._create_bill()
 
-        bill.action_post()
+        with patch.object(
+            type(bill),
+            "_reclass_generate_mirror_move",
+            side_effect=UserError("forced reclassification failure"),
+        ):
+            bill.action_post()
 
-        self.assertEqual(bill.state, "posted", "The bill must post natively")
-        self.assertFalse(bill.reclass_mirror_move_id)
-        self.assertFalse(self._mirrors_of(bill))
-        # And the accountant still gets a hard error on the manual button.
-        with self.assertRaises(Exception):
-            bill.action_reclass_generate_mirror()
+            self.assertEqual(bill.state, "posted", "The bill must post natively")
+            self.assertFalse(bill.reclass_mirror_move_id)
+            self.assertFalse(self._mirrors_of(bill))
+
+            # The manual button does not swallow what the automatic path contains.
+            with self.assertRaises(UserError):
+                bill.action_reclass_generate_mirror()
 
     def test_20_account_setup_is_validated(self):
         """A mode other than 'none' needs two different accounts."""
@@ -540,3 +552,33 @@ class TestReclassificationMirror(AccountTestInvoicingCommon):
         analytic_lines = mirror.line_ids.analytic_line_ids
         self.assertTrue(analytic_lines)
         self.assertEqual(sum(analytic_lines.mapped("amount")), 0.0)
+
+    def test_17_unit_of_measure_follows_the_bill_line(self):
+        """The mirror line keeps the UoM of the bill line, not the product default.
+
+        Regression guard. The mirror used to leave ``product_uom_id`` unset, so the
+        native precompute resolved the reference UoM of the product: a bill of
+        2 Dozens produced a mirror line reading 2 Units, which is 24. The amounts
+        were right, but quantity and unit together stated something false.
+        """
+        uom_unit = self.env.ref("uom.product_uom_unit")
+        uom_dozen = self.env.ref("uom.product_uom_dozen")
+        self.product_reclass.uom_id = uom_unit
+
+        bill = self._create_bill(uom=uom_dozen)
+        bill.action_post()
+
+        source = bill.invoice_line_ids[0]
+        self.assertEqual(
+            source.product_uom_id, uom_dozen,
+            "Precondition: the bill line must be expressed in the purchase UoM")
+
+        mirror = bill.reclass_mirror_move_id
+        self.assertTrue(mirror)
+        for line in mirror.line_ids:
+            self.assertEqual(
+                line.product_uom_id, uom_dozen,
+                "The mirror line must state the same unit as the bill line; "
+                "with the product reference UoM the quantity would mean "
+                "something else entirely")
+            self.assertEqual(line.quantity, source.quantity)

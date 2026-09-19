@@ -1,6 +1,6 @@
 {
     "name": "Account Reclassification",
-    "version": "19.0.7.0.0",
+    "version": "19.0.8.0.0",
     "category": "Accounting/Accounting",
     "summary": """Post a parallel reclassification entry on vendor bills, and let the
         product category decide the counterpart account of the native production
@@ -55,6 +55,12 @@ dedicated journal entry. Design rules:
 * Lock dates: every create/cancel is validated against the native fiscal year,
   purchase and hard lock dates.
 * Company currency: amounts are taken from the line balance, already converted.
+* Unit of measure: the mirror line states the unit of the bill line, so quantity
+  and unit keep meaning the same thing on both documents.
+* Multi-company: the whole setup (mode, target, counterpart and journal) is
+  **per company**, like the native valuation accounts. An account shared between
+  companies is configured once by each of them, and each value is validated
+  against the company that owns it.
 * Analytics: the analytic distribution of the source line is copied to *both*
   lines, so the reclassification is visible per analytic account while the
   analytic totals stay untouched (no double counting of the cost).
