@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_delivery_state_view_list" model="ir.ui.view">
+        <field name="name">stock.delivery.state.list</field>
+        <field name="model">stock.delivery.state</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="is_result_state"/>
+                <field name="result_type"/>
+                <field name="mail_template_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="stock_delivery_state_view_form" model="ir.ui.view">
+        <field name="name">stock.delivery.state.form</field>
+        <field name="model">stock.delivery.state</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="icon"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="is_result_state"/>
+                            <field name="result_type" invisible="not is_result_state" required="is_result_state"/>
+                            <field name="mail_template_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_delivery_state_action" model="ir.actions.act_window">
+        <field name="name">Delivery States</field>
+        <field name="res_model">stock.delivery.state</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="stock_delivery_state_menu" action="stock_delivery_state_action"
+              parent="stock.menu_delivery" sequence="20"/>
+
+</odoo>

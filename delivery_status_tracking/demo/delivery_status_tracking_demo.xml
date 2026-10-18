@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Carriers with their public tracking pages, in simulation: validating a delivery gives a
+         fictitious tracking number and each "Update" moves it forward. -->
+    <record id="product_shipping_ups" model="product.product">
+        <field name="name">UPS Standard shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+    <record id="product_shipping_gls" model="product.product">
+        <field name="name">GLS Business Parcel shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+    <record id="product_shipping_seur" model="product.product">
+        <field name="name">SEUR 24 shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+    <record id="product_shipping_correos_express" model="product.product">
+        <field name="name">Correos Express Paq 24 shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+
+    <record id="carrier_ups_standard" model="delivery.carrier">
+        <field name="name">UPS Standard</field>
+        <field name="delivery_type">fixed</field>
+        <field name="fixed_price">0</field>
+        <field name="product_id" ref="product_shipping_ups"/>
+        <field name="tracking_url">https://www.ups.com/track?loc=es_ES&amp;tracknum=&lt;shipmenttrackingnumber&gt;</field>
+        <field name="delivery_simulation" eval="True"/>
+        <field name="delivery_simulation_prefix">1Z999AA1</field>
+    </record>
+    <record id="carrier_gls_business_parcel" model="delivery.carrier">
+        <field name="name">GLS Business Parcel</field>
+        <field name="delivery_type">fixed</field>
+        <field name="fixed_price">0</field>
+        <field name="product_id" ref="product_shipping_gls"/>
+        <field name="tracking_url">https://gls-group.com/ES/es/seguimiento-envio/?match=&lt;shipmenttrackingnumber&gt;</field>
+        <field name="delivery_simulation" eval="True"/>
+        <field name="delivery_simulation_prefix">9</field>
+    </record>
+    <record id="carrier_seur_24" model="delivery.carrier">
+        <field name="name">SEUR 24</field>
+        <field name="delivery_type">fixed</field>
+        <field name="fixed_price">0</field>
+        <field name="product_id" ref="product_shipping_seur"/>
+        <field name="delivery_simulation" eval="True"/>
+        <field name="delivery_simulation_prefix">08</field>
+    </record>
+    <record id="carrier_correos_express_paq24" model="delivery.carrier">
+        <field name="name">Correos Express Paq 24</field>
+        <field name="delivery_type">fixed</field>
+        <field name="fixed_price">0</field>
+        <field name="product_id" ref="product_shipping_correos_express"/>
+        <field name="tracking_url">https://s.correosexpress.com/c?n=&lt;shipmenttrackingnumber&gt;</field>
+        <field name="delivery_simulation" eval="True"/>
+        <field name="delivery_simulation_prefix">30</field>
+    </record>
+
+    <!-- Customers and deliveries ready to validate -->
+    <record id="partner_hotel_mirador_port" model="res.partner">
+        <field name="name">Hotel Mirador del Port, S.L.</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">Passeig Marítim 12</field>
+        <field name="city">Tarragona</field>
+        <field name="zip">43004</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">compras@hotelmiradorport.example.com</field>
+        <field name="phone">+34 977 000 112</field>
+    </record>
+    <record id="partner_cafeteria_placa_nova" model="res.partner">
+        <field name="name">Cafetería Plaça Nova</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">Plaça Nova 5</field>
+        <field name="city">Girona</field>
+        <field name="zip">17001</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">hola@placanova.example.com</field>
+        <field name="phone">+34 972 000 205</field>
+    </record>
+
+    <record id="product_paper_cup_8oz" model="product.product">
+        <field name="name">Custom printed paper cup 8 oz</field>
+        <field name="type">consu</field>
+        <field name="weight">0.006</field>
+        <field name="list_price">0.18</field>
+    </record>
+
+    <record id="picking_out_hotel_ups" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="partner_id" ref="partner_hotel_mirador_port"/>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="location_dest_id" ref="stock.stock_location_customers"/>
+        <field name="carrier_id" ref="carrier_ups_standard"/>
+        <field name="move_ids" eval="[(0, 0, {'name': 'Custom printed paper cup 8 oz', 'product_id': ref('product_paper_cup_8oz'), 'product_uom_qty': 1000, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_stock'), 'location_dest_id': ref('stock.stock_location_customers')})]"/>
+    </record>
+    <record id="picking_out_cafeteria_gls" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="partner_id" ref="partner_cafeteria_placa_nova"/>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="location_dest_id" ref="stock.stock_location_customers"/>
+        <field name="carrier_id" ref="carrier_gls_business_parcel"/>
+        <field name="move_ids" eval="[(0, 0, {'name': 'Custom printed paper cup 8 oz', 'product_id': ref('product_paper_cup_8oz'), 'product_uom_qty': 500, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_stock'), 'location_dest_id': ref('stock.stock_location_customers')})]"/>
+    </record>
+    <record id="picking_out_hotel_seur" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="partner_id" ref="partner_hotel_mirador_port"/>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="location_dest_id" ref="stock.stock_location_customers"/>
+        <field name="carrier_id" ref="carrier_seur_24"/>
+        <field name="move_ids" eval="[(0, 0, {'name': 'Custom printed paper cup 8 oz', 'product_id': ref('product_paper_cup_8oz'), 'product_uom_qty': 2000, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_stock'), 'location_dest_id': ref('stock.stock_location_customers')})]"/>
+    </record>
+    <function model="stock.picking" name="action_confirm">
+        <value eval="[ref('picking_out_hotel_ups'), ref('picking_out_cafeteria_gls'), ref('picking_out_hotel_seur')]"/>
+    </function>
+</odoo>

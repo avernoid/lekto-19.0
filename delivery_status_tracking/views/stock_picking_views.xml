@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_delivery_status" model="ir.ui.view">
+        <field name="name">stock.picking.form.delivery.status</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <div name="tracking" position="after">
+                <field name="delivery_status_auto" invisible="1"/>
+                <label for="delivery_state_id"/>
+                <div name="delivery_state" class="o_row">
+                    <field name="delivery_state_id" options="{'no_create': True, 'no_open': True}"/>
+                    <button name="action_update_delivery_state" type="object" string="Update"
+                            icon="fa-refresh" class="btn-link"
+                            invisible="not delivery_status_auto or state != 'done'"/>
+                </div>
+                <field name="delivery_date_done" invisible="not delivery_date_done"/>
+                <field name="delivery_tracking_message" invisible="not delivery_tracking_message"/>
+                <field name="delivery_tracking_error" invisible="not delivery_tracking_error"
+                       decoration-danger="1"/>
+                <field name="delivery_tracking_history" invisible="not delivery_tracking_history"/>
+            </div>
+        </field>
+    </record>
+
+    <record id="vpicktree_delivery_status" model="ir.ui.view">
+        <field name="name">stock.picking.list.delivery.status</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="delivery_state_id" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_picking_search_delivery_status" model="ir.ui.view">
+        <field name="name">stock.picking.search.delivery.status</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <filter name="status" position="after">
+                <filter string="Delivery State" name="group_delivery_state" context="{'group_by': 'delivery_state_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

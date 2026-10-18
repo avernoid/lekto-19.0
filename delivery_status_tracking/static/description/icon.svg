@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Cargo box -->
+  <rect x="5" y="24" width="52" height="46" rx="6" fill="#714B67"/>
+  <!-- Cab -->
+  <path d="M60 38 H78 L94 54 V70 H60 Z" fill="#00A09D"/>
+  <path d="M66 43 H76 L86 54 H66 Z" fill="#FFFFFF" opacity="0.9"/>
+  <!-- Chassis -->
+  <rect x="5" y="66" width="89" height="8" rx="3" fill="#B79EB5"/>
+  <!-- Wheels -->
+  <circle cx="26" cy="76" r="11" fill="#2B2B38"/>
+  <circle cx="26" cy="76" r="4.5" fill="#B79EB5"/>
+  <circle cx="76" cy="76" r="11" fill="#2B2B38"/>
+  <circle cx="76" cy="76" r="4.5" fill="#B79EB5"/>
+  <!-- Delivered badge -->
+  <circle cx="31" cy="42" r="19" fill="#3ABF8F" stroke="#FFFFFF" stroke-width="3"/>
+  <path d="M21 42 L28.5 49.5 L41.5 34.5" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Speed lines -->
+  <rect x="64" y="22" width="26" height="4" rx="2" fill="#FF9F6E"/>
+  <rect x="72" y="30" width="18" height="4" rx="2" fill="#F4C430"/>
+</svg>

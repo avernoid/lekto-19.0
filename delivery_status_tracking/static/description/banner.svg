@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <!-- Background (fixed) -->
+  <rect width="880" height="440" fill="#5D38A4"/>
+
+  <!-- Decorative gear, top-left (fixed) -->
+  <g transform="translate(62 52)">
+    <circle r="26" fill="none" stroke="#F72585" stroke-width="12" stroke-dasharray="9.4 9.4"/>
+    <circle r="20" fill="#F72585"/>
+    <circle r="9" fill="#5D38A4"/>
+  </g>
+  <g transform="translate(112 30)" opacity="0.85">
+    <circle r="13" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-dasharray="5.1 5.1"/>
+    <circle r="10" fill="#FFFFFF"/>
+    <circle r="4.5" fill="#5D38A4"/>
+  </g>
+
+  <!-- Zigzag waves, top-right and bottom-right (fixed) -->
+  <polyline points="560,28 585,48 610,28 635,48 660,28 685,48 710,28 735,48 760,28 785,48 810,28 835,48 860,28" fill="none" stroke="#00A09D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="560,50 585,70 610,50 635,70 660,50 685,70 710,50 735,70 760,50 785,70 810,50 835,70 860,50" fill="none" stroke="#FF9F6E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  <polyline points="660,385 685,405 710,385 735,405 760,385 785,405 810,385 835,405 860,385" fill="none" stroke="#F4C430" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Text panel (left) -->
+  <rect x="30" y="95" width="610" height="310" rx="22" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="2"/>
+
+  <!-- DYNAMIC: headline -->
+  <text font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="38" fill="#FFFFFF">
+    <tspan x="58" y="146">Delivery Status</tspan>
+    <tspan x="58" y="190">Tracking</tspan>
+  </text>
+
+  <!-- DYNAMIC: subtitle (max 6 words per line) -->
+  <text font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#E8DDF7">
+    <tspan x="58" y="228">Know where every delivery is,</tspan>
+    <tspan x="58" y="256">from the carrier or by hand.</tspan>
+  </text>
+
+  <!-- DYNAMIC: highlight bullets -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#FFFFFF">
+    <circle cx="66" cy="300" r="6" fill="#F72585"/>
+    <text x="84" y="307">Configurable delivery states</text>
+    <circle cx="66" cy="336" r="6" fill="#F72585"/>
+    <text x="84" y="343">Carrier hook + hourly sync</text>
+    <circle cx="66" cy="372" r="6" fill="#F72585"/>
+    <text x="84" y="379">Delivery date and history</text>
+  </g>
+
+  <!-- DYNAMIC: illustration box (module icon) -->
+  <rect x="672" y="118" width="178" height="178" rx="26" fill="#F7F3FB"/>
+  <g transform="translate(691 137) scale(1.4)">
+    <rect x="5" y="24" width="52" height="46" rx="6" fill="#714B67"/>
+    <path d="M60 38 H78 L94 54 V70 H60 Z" fill="#00A09D"/>
+    <path d="M66 43 H76 L86 54 H66 Z" fill="#FFFFFF" opacity="0.9"/>
+    <rect x="5" y="66" width="89" height="8" rx="3" fill="#B79EB5"/>
+    <circle cx="26" cy="76" r="11" fill="#2B2B38"/><circle cx="26" cy="76" r="4.5" fill="#B79EB5"/>
+    <circle cx="76" cy="76" r="11" fill="#2B2B38"/><circle cx="76" cy="76" r="4.5" fill="#B79EB5"/>
+    <circle cx="31" cy="42" r="19" fill="#3ABF8F" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M21 42 L28.5 49.5 L41.5 34.5" fill="none" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="64" y="22" width="26" height="4" rx="2" fill="#FF9F6E"/>
+    <rect x="72" y="30" width="18" height="4" rx="2" fill="#F4C430"/>
+  </g>
+
+  <!-- DYNAMIC: CTA button URL -->
+  <rect x="672" y="322" width="178" height="48" rx="24" fill="#F72585"/>
+  <text x="761" y="353" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="21" fill="#FFFFFF">ganemo.co</text>
+</svg>

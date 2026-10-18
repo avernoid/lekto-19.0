@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="delivery_state_recorded" model="stock.delivery.state">
+            <field name="name">Recorded by the carrier</field>
+            <field name="sequence">10</field>
+            <field name="code">recorded</field>
+            <field name="icon">fa-file-text-o</field>
+        </record>
+        <record id="delivery_state_in_transit" model="stock.delivery.state">
+            <field name="name">In transit</field>
+            <field name="sequence">20</field>
+            <field name="code">in_transit</field>
+            <field name="icon">fa-truck</field>
+        </record>
+        <record id="delivery_state_delivered" model="stock.delivery.state">
+            <field name="name">Delivered</field>
+            <field name="sequence">30</field>
+            <field name="code">delivered</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="is_result_state" eval="True"/>
+            <field name="result_type">success</field>
+        </record>
+        <record id="delivery_state_incident" model="stock.delivery.state">
+            <field name="name">Incident</field>
+            <field name="sequence">40</field>
+            <field name="code">incident</field>
+            <field name="icon">fa-exclamation-triangle</field>
+        </record>
+        <record id="delivery_state_canceled" model="stock.delivery.state">
+            <field name="name">Cancelled</field>
+            <field name="sequence">50</field>
+            <field name="code">canceled</field>
+            <field name="icon">fa-times-circle</field>
+        </record>
+    </data>
+</odoo>

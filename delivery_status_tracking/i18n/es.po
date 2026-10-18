@@ -1,0 +1,412 @@
+# Translation of delivery_status_tracking to Spanish
+# . module: delivery_status_tracking
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the delivery_status_tracking package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module delivery_status_tracking 18.0\n"
+"POT-Creation-Date: 2026-10-17 00:00+0000\n"
+"PO-Revision-Date: 2026-10-17 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: delivery_status_tracking
+#: model_terms:ir.ui.view,arch_db:delivery_status_tracking.view_delivery_carrier_form_delivery_status
+msgid ""
+"<i class=\"fa fa-flask\" title=\"Simulation\"/> <strong>Simulation is on.</strong>\n"
+"                    Nothing is sent to the carrier: tracking numbers and statuses of this shipping method are fictitious.\n"
+"                    Use it only for demos and training."
+msgstr ""
+"<i class=\"fa fa-flask\" title=\"Simulación\"/> <strong>La simulación está activa.</strong>\n"
+"                    No se envía nada al transportista: los números de seguimiento y los estados de este método de envío son ficticios.\n"
+"                    Úsela solo para demostraciones y formación."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__active
+msgid "Archive the state to hide it without deleting it."
+msgstr "Archive el estado para ocultarlo sin eliminarlo."
+
+#. module: delivery_status_tracking
+#: model_terms:ir.ui.view,arch_db:delivery_status_tracking.stock_delivery_state_view_form
+msgid "Archived"
+msgstr "Archivado"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__code__canceled
+#: model:stock.delivery.state,name:delivery_status_tracking.delivery_state_canceled
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_tracking_message
+msgid "Carrier Status"
+msgstr "Estado del transportista"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_tracking_error
+msgid "Carrier Status Error"
+msgstr "Error al consultar el transportista"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_tracking_history
+msgid "Carrier Status History"
+msgstr "Historial del transportista"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__company_id
+msgid "Company this state belongs to."
+msgstr "Empresa a la que pertenece este estado."
+
+#. module: delivery_status_tracking
+#: model:delivery.carrier,name:delivery_status_tracking.carrier_correos_express_paq24
+msgid "Correos Express Paq 24"
+msgstr "Correos Express Paq 24"
+
+#. module: delivery_status_tracking
+#: model:product.template,name:delivery_status_tracking.product_shipping_correos_express_product_template
+msgid "Correos Express Paq 24 shipping"
+msgstr "Envío Correos Express Paq 24"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: delivery_status_tracking
+#: model:product.template,name:delivery_status_tracking.product_paper_cup_8oz_product_template
+msgid "Custom printed paper cup 8 oz"
+msgstr "Vaso de papel personalizado 8 oz"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__code__delivered
+#: model:stock.delivery.state,name:delivery_status_tracking.delivery_state_delivered
+msgid "Delivered"
+msgstr "Entregado"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_date_done
+msgid "Delivery Date"
+msgstr "Fecha de entrega"
+
+#. module: delivery_status_tracking
+#: model:ir.model,name:delivery_status_tracking.model_stock_delivery_state
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_state_id
+#: model_terms:ir.ui.view,arch_db:delivery_status_tracking.view_picking_search_delivery_status
+msgid "Delivery State"
+msgstr "Estado de la entrega"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_state_code
+msgid "Delivery State Code"
+msgstr "Código del estado de la entrega"
+
+#. module: delivery_status_tracking
+#: model:ir.actions.act_window,name:delivery_status_tracking.stock_delivery_state_action
+#: model:ir.ui.menu,name:delivery_status_tracking.stock_delivery_state_menu
+msgid "Delivery States"
+msgstr "Estados de entrega"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_status_auto
+msgid "Delivery Status Auto"
+msgstr "Estado de la entrega automático"
+
+#. module: delivery_status_tracking
+#: model:ir.actions.server,name:delivery_status_tracking.ir_cron_update_delivery_state_ir_actions_server
+msgid "Delivery Status Tracking: ask the carriers"
+msgstr "Seguimiento de entregas: consultar a los transportistas"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_picking__delivery_tracking_data
+msgid "Delivery Tracking Data"
+msgstr "Datos de seguimiento de la entrega"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__mail_template_id
+msgid "Email Template"
+msgstr "Plantilla de correo electrónico"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__mail_template_id
+msgid ""
+"Email sent to the transfer contact when the transfer enters this state."
+msgstr ""
+"Correo que se envía al contacto del traslado cuando este entra en este "
+"estado."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_tracking_error
+msgid "Error of the last automatic status request, if any."
+msgstr "Error de la última consulta automática del estado, si lo hubo."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_tracking_history
+msgid "Every status reported by the carrier, with its date and time."
+msgstr ""
+"Todos los estados que ha informado el transportista, con su fecha y hora."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__result_type__failure
+msgid "Failure"
+msgstr "Fallo"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__is_result_state
+msgid ""
+"Final outcome of the delivery: the delivery date is stored when a transfer "
+"reaches it."
+msgstr ""
+"Resultado final de la entrega: al llegar a este estado se guarda la fecha de"
+" entrega del traslado."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__icon
+msgid "Font Awesome Icon"
+msgstr "Icono de Font Awesome"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_delivery_carrier__delivery_simulation
+msgid ""
+"For demos and training only: nothing is sent to the carrier. When a delivery"
+" is validated it gets a fictitious tracking number, and each status update "
+"moves it forward (recorded, in transit, delivered). Carrier integrations "
+"that support it (e.g. Sendcloud) simulate their own API instead. Never "
+"enable it in production."
+msgstr ""
+"Solo para demostraciones y formación: no se envía nada al transportista. Al "
+"validar una entrega, recibe un número de seguimiento ficticio y cada "
+"actualización del estado la hace avanzar (registrado, en tránsito, "
+"entregado). Las integraciones que lo admiten (p. ej. Sendcloud) simulan su "
+"propia API. No lo active nunca en producción."
+
+#. module: delivery_status_tracking
+#: model:delivery.carrier,name:delivery_status_tracking.carrier_gls_business_parcel
+msgid "GLS Business Parcel"
+msgstr "GLS Business Parcel"
+
+#. module: delivery_status_tracking
+#: model:product.template,name:delivery_status_tracking.product_shipping_gls_product_template
+msgid "GLS Business Parcel shipping"
+msgstr "Envío GLS Business Parcel"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__result_type
+msgid "How the delivery ended when it reaches this final state."
+msgstr "Cómo terminó la entrega cuando llega a este estado final."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__id
+msgid "ID"
+msgstr "ID"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__icon
+msgid "Icon class, e.g. fa-truck."
+msgstr "Clase del icono, p. ej. fa-truck."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__code__in_transit
+#: model:stock.delivery.state,name:delivery_status_tracking.delivery_state_in_transit
+msgid "In transit"
+msgstr "En tránsito"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__code__incident
+#: model:stock.delivery.state,name:delivery_status_tracking.delivery_state_incident
+msgid "Incident"
+msgstr "Incidencia"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__is_result_state
+msgid "Is Result State"
+msgstr "Es un estado final"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_tracking_message
+msgid "Last status reported by the carrier, in its own words."
+msgstr ""
+"Último estado informado por el transportista, con sus propias palabras."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__name
+msgid "Name of the state as users and customers see it."
+msgstr "Nombre del estado tal como lo ven los usuarios y los clientes."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__sequence
+msgid "Order of the states in lists and in the state selector."
+msgstr "Orden de los estados en las listas y en el selector de estado."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__result_type__partial
+msgid "Partial Success"
+msgstr "Éxito parcial"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__code__pending
+msgid "Pending"
+msgstr "Pendiente"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__code__recorded
+#: model:stock.delivery.state,name:delivery_status_tracking.delivery_state_recorded
+msgid "Recorded by the carrier"
+msgstr "Registrado en el transportista"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__result_type
+msgid "Result Type"
+msgstr "Tipo de resultado"
+
+#. module: delivery_status_tracking
+#: model:delivery.carrier,name:delivery_status_tracking.carrier_seur_24
+msgid "SEUR 24"
+msgstr "SEUR 24"
+
+#. module: delivery_status_tracking
+#: model:product.template,name:delivery_status_tracking.product_shipping_seur_product_template
+msgid "SEUR 24 shipping"
+msgstr "Envío SEUR 24"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: delivery_status_tracking
+#: model:ir.model,name:delivery_status_tracking.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr "Métodos de envío"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_delivery_carrier__delivery_simulation
+msgid "Simulate Carrier Integration"
+msgstr "Simular la integración con el transportista"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_delivery_carrier__delivery_simulation_prefix
+msgid "Simulated Tracking Prefix"
+msgstr "Prefijo del seguimiento simulado"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_delivery_carrier__delivery_simulation_prefix
+msgid ""
+"Start of the fictitious tracking numbers, to make them look like the carrier"
+" ones (e.g. 1Z999AA1 for UPS)."
+msgstr ""
+"Inicio de los números de seguimiento ficticios, para que se parezcan a los "
+"del transportista (p. ej. 1Z999AA1 en UPS)."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields.selection,name:delivery_status_tracking.selection__stock_delivery_state__result_type__success
+msgid "Success"
+msgstr "Éxito"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,field_description:delivery_status_tracking.field_stock_delivery_state__code
+msgid "Technical Code"
+msgstr "Código técnico"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_state_code
+msgid "Technical code of the delivery state, for filters and automations."
+msgstr ""
+"Código técnico del estado de la entrega, para filtros y automatizaciones."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_tracking_data
+msgid "Technical data of the last carrier status (parcel and status ids)."
+msgstr ""
+"Datos técnicos del último estado del transportista (identificadores del "
+"paquete y del estado)."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_status_auto
+msgid "The carrier of the transfer reports the delivery state automatically."
+msgstr ""
+"El transportista del traslado informa del estado de la entrega "
+"automáticamente."
+
+#. module: delivery_status_tracking
+#: model:ir.model,name:delivery_status_tracking.model_stock_picking
+msgid "Transfer"
+msgstr "Traslado"
+
+#. module: delivery_status_tracking
+#: model:delivery.carrier,name:delivery_status_tracking.carrier_ups_standard
+msgid "UPS Standard"
+msgstr "UPS Standard"
+
+#. module: delivery_status_tracking
+#: model:product.template,name:delivery_status_tracking.product_shipping_ups_product_template
+msgid "UPS Standard shipping"
+msgstr "Envío UPS Standard"
+
+#. module: delivery_status_tracking
+#: model_terms:ir.ui.view,arch_db:delivery_status_tracking.view_picking_form_delivery_status
+msgid "Update"
+msgstr "Actualizar"
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_delivery_state__code
+msgid ""
+"What the state means. Carrier integrations use it to set the state, whatever"
+" its name."
+msgstr ""
+"Qué significa el estado. Las integraciones con transportistas lo usan para "
+"poner el estado, se llame como se llame."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_date_done
+msgid "When the delivery reached a final state."
+msgstr "Cuándo llegó la entrega a un estado final."
+
+#. module: delivery_status_tracking
+#: model:ir.model.fields,help:delivery_status_tracking.field_stock_picking__delivery_state_id
+msgid ""
+"Where the delivery is. Set by the carrier integration, or by hand for "
+"carriers without one."
+msgstr ""
+"Dónde está la entrega. Lo pone la integración con el transportista, o se "
+"indica a mano en los transportistas sin integración."
