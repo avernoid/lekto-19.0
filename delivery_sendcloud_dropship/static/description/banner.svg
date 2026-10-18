@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <rect width="880" height="440" fill="#5D38A4"/>
+  <!-- Gear motif (top-left) -->
+  <g transform="translate(70 70)" fill="none" stroke="#F72585" stroke-width="10" stroke-linecap="round">
+    <circle r="26"/>
+    <path d="M0 -44 V-34 M0 44 V34 M-44 0 H-34 M44 0 H34 M-31 -31 L-24 -24 M31 31 L24 24 M-31 31 L-24 24 M31 -31 L24 -24"/>
+  </g>
+  <!-- Zigzag top-right -->
+  <path d="M600 40 L630 70 L660 40 L690 70 L720 40 L750 70 L780 40 L810 70 L840 40" fill="none" stroke="#00A09D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Zigzag bottom-right -->
+  <path d="M560 405 L590 380 L620 405 L650 380 L680 405 L710 380 L740 405 L770 380 L800 405 L830 380" fill="none" stroke="#FF9F6E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Text panel -->
+  <rect x="40" y="120" width="520" height="270" rx="20" fill="#4A2C86"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#FFFFFF">
+    <text x="70" y="168" font-size="32" font-weight="700">Sendcloud Dropship</text>
+    <text x="70" y="208" font-size="22" fill="#E6DDF5">
+      <tspan x="70" dy="0">Ship dropships with Sendcloud,</tspan>
+      <tspan x="70" dy="28">picked up at the vendor and</tspan>
+      <tspan x="70" dy="28">tracked in the transfer.</tspan>
+    </text>
+    <circle cx="80" cy="311" r="6" fill="#F72585"/>
+    <text x="98" y="317" font-size="18">Vendor as sender, delivery address as recipient</text>
+    <circle cx="80" cy="341" r="6" fill="#F72585"/>
+    <text x="98" y="347" font-size="18">Email and phone fallback (UPS-ready)</text>
+    <circle cx="80" cy="371" r="6" fill="#F72585"/>
+    <text x="98" y="377" font-size="18">Delivery state from the parcel status</text>
+  </g>
+
+  <!-- Illustration box -->
+  <rect x="610" y="110" width="230" height="200" rx="24" fill="#F4EFFA"/>
+  <g transform="translate(637 115) scale(1.7)">
+    <circle cx="16" cy="78" r="9" fill="#714B67"/>
+    <rect x="12" y="74" width="8" height="8" rx="1.5" fill="#FFFFFF"/>
+    <path d="M25 78 C52 78 30 44 58 44" fill="none" stroke="#B79EB5" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 8"/>
+    <path d="M40 30 L62 20 L84 30 L84 56 L62 66 L40 56 Z" fill="#00A09D"/>
+    <path d="M40 30 L62 40 L84 30" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M62 40 L62 66" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M51 25 L73 35" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="82" cy="78" r="14" fill="#FF9F6E"/>
+    <path d="M75 78 L80.5 83.5 L89.5 72.5" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- CTA -->
+  <rect x="640" y="330" width="170" height="44" rx="22" fill="#F72585"/>
+  <text x="725" y="359" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="middle">ganemo.co</text>
+</svg>

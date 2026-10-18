@@ -1,0 +1,69 @@
+# Translation of delivery_sendcloud_dropship to Spanish
+# . module: delivery_sendcloud_dropship
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the delivery_sendcloud_dropship package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module delivery_sendcloud_dropship 18.0\n"
+"POT-Creation-Date: 2026-10-17 00:00+0000\n"
+"PO-Revision-Date: 2026-10-17 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,help:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_contract_id
+msgid ""
+"Id of the carrier contract in Sendcloud (Shipping > Carriers > My contracts)"
+" to use for every parcel of this method. Leave empty to let Sendcloud use "
+"the default contract of the carrier."
+msgstr ""
+"ID del contrato del transportista en Sendcloud (Envíos > Transportistas > "
+"Mis contratos) que se usa en todos los paquetes de este método. Vacío: "
+"Sendcloud usa el contrato predeterminado del transportista."
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,help:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_sender_from_odoo
+msgid ""
+"Send the warehouse address from Odoo as sender instead of looking for a "
+"Sendcloud sender address named like the warehouse. Dropships always use the "
+"vendor address."
+msgstr ""
+"Envía como remitente la dirección del almacén que tiene Odoo, en lugar de "
+"buscar en Sendcloud una dirección de remitente con el nombre del almacén. "
+"Los dropships usan siempre la dirección del proveedor."
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,field_description:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_contract_id
+msgid "Sendcloud Contract ID"
+msgstr "ID del contrato de Sendcloud"
+
+#. module: delivery_sendcloud_dropship
+#: model:product.template,name:delivery_sendcloud_dropship.product_shipping_sendcloud_product_template
+msgid "Sendcloud shipping"
+msgstr "Envío por Sendcloud"
+
+#. module: delivery_sendcloud_dropship
+#: model:delivery.carrier,name:delivery_sendcloud_dropship.carrier_sendcloud_gls_business_parcel
+msgid "Sendcloud · GLS Business Parcel"
+msgstr "Sendcloud · GLS Business Parcel"
+
+#. module: delivery_sendcloud_dropship
+#: model:delivery.carrier,name:delivery_sendcloud_dropship.carrier_sendcloud_ups_standard
+msgid "Sendcloud · UPS Standard"
+msgstr "Sendcloud · UPS Standard"
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,field_description:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_sender_from_odoo
+msgid "Sender Address from Odoo"
+msgstr "Dirección de remitente desde Odoo"
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model,name:delivery_sendcloud_dropship.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr "Métodos de envío"

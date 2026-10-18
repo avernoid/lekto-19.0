@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sendcloud shipping methods in simulation: the connector runs completely (rates, parcel,
+         label, tracking number, statuses) without calling Sendcloud. -->
+    <record id="sendcloud_product_ups_standard" model="sendcloud.shipping.product">
+        <field name="name">UPS Standard</field>
+        <field name="sendcloud_code">ups:standard</field>
+        <field name="carrier">ups</field>
+        <field name="min_weight">1</field>
+        <field name="max_weight">70001</field>
+        <field name="functionalities" eval="{'bool_func': [], 'detail_func': {}, 'customizable': {}}"/>
+    </record>
+    <record id="sendcloud_product_gls_business_parcel" model="sendcloud.shipping.product">
+        <field name="name">GLS Business Parcel</field>
+        <field name="sendcloud_code">gls_es:business_parcel</field>
+        <field name="carrier">gls_es</field>
+        <field name="min_weight">1</field>
+        <field name="max_weight">40001</field>
+        <field name="functionalities" eval="{'bool_func': [], 'detail_func': {}, 'customizable': {}}"/>
+    </record>
+
+    <record id="product_shipping_sendcloud" model="product.product">
+        <field name="name">Sendcloud shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+
+    <record id="carrier_sendcloud_ups_standard" model="delivery.carrier">
+        <field name="name">Sendcloud · UPS Standard</field>
+        <field name="delivery_type">sendcloud</field>
+        <field name="product_id" ref="product_shipping_sendcloud"/>
+        <field name="country_id" ref="base.es"/>
+        <field name="sendcloud_public_key">simulation</field>
+        <field name="sendcloud_secret_key">simulation</field>
+        <field name="prod_environment" eval="True"/>
+        <field name="free_over" eval="True"/>
+        <field name="amount">0</field>
+        <field name="tracking_url">https://www.ups.com/track?loc=es_ES&amp;tracknum=&lt;shipmenttrackingnumber&gt;</field>
+        <field name="delivery_simulation" eval="True"/>
+        <field name="delivery_simulation_prefix">1Z999AA1</field>
+    </record>
+    <record id="carrier_sendcloud_gls_business_parcel" model="delivery.carrier">
+        <field name="name">Sendcloud · GLS Business Parcel</field>
+        <field name="delivery_type">sendcloud</field>
+        <field name="product_id" ref="product_shipping_sendcloud"/>
+        <field name="country_id" ref="base.es"/>
+        <field name="sendcloud_public_key">simulation</field>
+        <field name="sendcloud_secret_key">simulation</field>
+        <field name="prod_environment" eval="True"/>
+        <field name="free_over" eval="True"/>
+        <field name="amount">0</field>
+        <field name="sendcloud_sender_from_odoo" eval="True"/>
+        <field name="delivery_simulation" eval="True"/>
+        <field name="delivery_simulation_prefix">9</field>
+    </record>
+    <!-- The Sendcloud product is computed from the country (reset on create): set it afterwards -->
+    <record id="carrier_sendcloud_ups_standard" model="delivery.carrier">
+        <field name="sendcloud_shipping_id" ref="sendcloud_product_ups_standard"/>
+    </record>
+    <record id="carrier_sendcloud_gls_business_parcel" model="delivery.carrier">
+        <field name="sendcloud_shipping_id" ref="sendcloud_product_gls_business_parcel"/>
+    </record>
+
+    <!-- Dropship to France picked up at the vendor, with the Sendcloud UPS method of the sale -->
+    <record id="sale_bistrot_napkins_ups" model="sale.order">
+        <field name="partner_id" ref="stock_delivery_dropship.partner_bistrot_dunkerque"/>
+        <field name="carrier_id" ref="carrier_sendcloud_ups_standard"/>
+        <field name="client_order_ref">Terrace reopening - napkins</field>
+        <field name="order_line" eval="[(0, 0, {'product_id': ref('stock_delivery_dropship.product_custom_napkins'), 'product_uom_qty': 4}), (0, 0, {'product_id': ref('product_shipping_sendcloud'), 'name': 'Sendcloud · UPS Standard', 'product_uom_qty': 1, 'price_unit': 0, 'is_delivery': True})]"/>
+    </record>
+    <function model="sale.order" name="action_confirm">
+        <value eval="[ref('sale_bistrot_napkins_ups')]"/>
+    </function>
+    <function model="purchase.order" name="_confirm_dropship_purchases">
+        <value eval="[ref('sale_bistrot_napkins_ups')]"/>
+    </function>
+
+    <!-- Delivery from the warehouse with Sendcloud GLS, ready to validate -->
+    <function model="stock.picking.type" name="write">
+        <value eval="[ref('stock.picking_type_out')]"/>
+        <value eval="{'print_label': True}"/>
+    </function>
+    <record id="picking_out_hotel_sendcloud_gls" model="stock.picking">
+        <field name="picking_type_id" ref="stock.picking_type_out"/>
+        <field name="partner_id" ref="delivery_status_tracking.partner_hotel_mirador_port"/>
+        <field name="location_id" ref="stock.stock_location_stock"/>
+        <field name="location_dest_id" ref="stock.stock_location_customers"/>
+        <field name="carrier_id" ref="carrier_sendcloud_gls_business_parcel"/>
+        <field name="move_ids" eval="[(0, 0, {'name': 'Custom printed paper cup 8 oz', 'product_id': ref('delivery_status_tracking.product_paper_cup_8oz'), 'product_uom_qty': 1500, 'product_uom': ref('uom.product_uom_unit'), 'location_id': ref('stock.stock_location_stock'), 'location_dest_id': ref('stock.stock_location_customers')})]"/>
+    </record>
+    <function model="stock.picking" name="action_confirm">
+        <value eval="[ref('picking_out_hotel_sendcloud_gls')]"/>
+    </function>
+</odoo>

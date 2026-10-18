@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_sendcloud_dropship
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20260528\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 18:32+0000\n"
+"PO-Revision-Date: 2026-10-17 18:32+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,help:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_contract_id
+msgid ""
+"Id of the carrier contract in Sendcloud (Shipping > Carriers > My contracts)"
+" to use for every parcel of this method. Leave empty to let Sendcloud use "
+"the default contract of the carrier."
+msgstr ""
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,help:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_sender_from_odoo
+msgid ""
+"Send the warehouse address from Odoo as sender instead of looking for a "
+"Sendcloud sender address named like the warehouse. Dropships always use the "
+"vendor address."
+msgstr ""
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,field_description:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_contract_id
+msgid "Sendcloud Contract ID"
+msgstr ""
+
+#. module: delivery_sendcloud_dropship
+#: model:product.template,name:delivery_sendcloud_dropship.product_shipping_sendcloud_product_template
+msgid "Sendcloud shipping"
+msgstr ""
+
+#. module: delivery_sendcloud_dropship
+#: model:delivery.carrier,name:delivery_sendcloud_dropship.carrier_sendcloud_gls_business_parcel
+msgid "Sendcloud · GLS Business Parcel"
+msgstr ""
+
+#. module: delivery_sendcloud_dropship
+#: model:delivery.carrier,name:delivery_sendcloud_dropship.carrier_sendcloud_ups_standard
+msgid "Sendcloud · UPS Standard"
+msgstr ""
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model.fields,field_description:delivery_sendcloud_dropship.field_delivery_carrier__sendcloud_sender_from_odoo
+msgid "Sender Address from Odoo"
+msgstr ""
+
+#. module: delivery_sendcloud_dropship
+#: model:ir.model,name:delivery_sendcloud_dropship.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
