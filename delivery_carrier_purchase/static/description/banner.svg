@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440">
+  <!-- Background (fixed) -->
+  <rect width="880" height="440" fill="#5D38A4"/>
+
+  <!-- Decorative gear, top-left (fixed) -->
+  <g transform="translate(62 52)">
+    <circle r="26" fill="none" stroke="#F72585" stroke-width="12" stroke-dasharray="9.4 9.4"/>
+    <circle r="20" fill="#F72585"/>
+    <circle r="9" fill="#5D38A4"/>
+  </g>
+  <g transform="translate(112 30)" opacity="0.85">
+    <circle r="13" fill="none" stroke="#FFFFFF" stroke-width="7" stroke-dasharray="5.1 5.1"/>
+    <circle r="10" fill="#FFFFFF"/>
+    <circle r="4.5" fill="#5D38A4"/>
+  </g>
+
+  <!-- Zigzag waves, top-right and bottom-right (fixed) -->
+  <polyline points="560,28 585,48 610,28 635,48 660,28 685,48 710,28 735,48 760,28 785,48 810,28 835,48 860,28" fill="none" stroke="#00A09D" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="560,50 585,70 610,50 635,70 660,50 685,70 710,50 735,70 760,50 785,70 810,50 835,70 860,50" fill="none" stroke="#FF9F6E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  <polyline points="660,385 685,405 710,385 735,405 760,385 785,405 810,385 835,405 860,385" fill="none" stroke="#F4C430" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Text panel (left) -->
+  <rect x="30" y="95" width="610" height="310" rx="22" fill="#FFFFFF" fill-opacity="0.12" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="2"/>
+
+  <!-- DYNAMIC: headline -->
+  <text font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="38" fill="#FFFFFF">
+    <tspan x="58" y="146">Carrier Purchase</tspan>
+    <tspan x="58" y="190">per Shipment</tspan>
+  </text>
+
+  <!-- DYNAMIC: subtitle (max 6 words per line) -->
+  <text font-family="Arial, Helvetica, sans-serif" font-size="21" fill="#E8DDF7">
+    <tspan x="58" y="228">Buy every shipment's transport</tspan>
+    <tspan x="58" y="256">from the carrier, automatically.</tspan>
+  </text>
+
+  <!-- DYNAMIC: highlight bullets -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#FFFFFF">
+    <circle cx="66" cy="300" r="6" fill="#F72585"/>
+    <text x="84" y="307">One line per validated shipment</text>
+    <circle cx="66" cy="336" r="6" fill="#F72585"/>
+    <text x="84" y="343">Open RFQ per vendor and month</text>
+    <circle cx="66" cy="372" r="6" fill="#F72585"/>
+    <text x="84" y="379">Real cost, never blocks delivery</text>
+  </g>
+
+  <!-- DYNAMIC: illustration box (module icon) -->
+  <rect x="672" y="118" width="178" height="178" rx="26" fill="#F7F3FB"/>
+  <g transform="translate(691 137) scale(1.4)">
+    <!-- Purchase order sheet -->
+    <rect x="8" y="6" width="56" height="74" rx="7" fill="#714B67"/>
+    <rect x="17" y="17" width="38" height="5" rx="2.5" fill="#B79EB5"/>
+    <rect x="17" y="28" width="30" height="5" rx="2.5" fill="#B79EB5"/>
+    <rect x="17" y="39" width="34" height="5" rx="2.5" fill="#B79EB5"/>
+    <rect x="17" y="50" width="22" height="5" rx="2.5" fill="#B79EB5"/>
+    <!-- Parcel -->
+    <path d="M40 58 L66 46 L92 58 V86 L66 98 L40 86 Z" fill="#00A09D"/>
+    <path d="M40 58 L66 70 L92 58" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M66 70 V98" stroke="#FFFFFF" stroke-width="3"/>
+    <path d="M53 52 L79 64" stroke="#F4C430" stroke-width="5" stroke-linecap="round"/>
+    <!-- Coin -->
+    <circle cx="75" cy="27" r="19" fill="#F58823" stroke="#FFFFFF" stroke-width="3"/>
+    <circle cx="75" cy="27" r="12.5" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/>
+    <text x="75" y="35" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="22" fill="#FFFFFF">$</text>
+  </g>
+
+  <!-- DYNAMIC: CTA button URL -->
+  <rect x="672" y="322" width="178" height="48" rx="24" fill="#F72585"/>
+  <text x="761" y="353" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="21" fill="#FFFFFF">ganemo.co</text>
+</svg>

@@ -1,0 +1,505 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_carrier_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e-20260528\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-17 19:31+0000\n"
+"PO-Revision-Date: 2026-10-17 19:31+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.res_config_settings_view_form_carrier_purchase
+msgid ""
+".\n"
+"                            Disable that option on them so the transport is not bought twice."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.res_config_settings_view_form_carrier_purchase
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\" title=\"Warning\"/>\n"
+"                            These delivery products still create a purchase by themselves when a sale is confirmed\n"
+"                            (Purchase Automatically):"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_delivery_carrier_form_carrier_purchase
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\" title=\"Warning\"/>\n"
+"                    The delivery product of this method creates a purchase by itself when a sale is confirmed\n"
+"                    (Purchase Automatically), and the transport is also bought per shipment.\n"
+"                    Disable Purchase Automatically on the product so the transport is not bought twice."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_picking_form_carrier_purchase
+msgid "<span class=\"o_stat_text\">Transport</span>"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid "CANCELLED"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+#: model:ir.model,name:delivery_carrier_purchase.model_carrier_purchase_cancel
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_carrier_purchase_cancel_form
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_picking_form_carrier_purchase
+msgid "Cancel Transport Purchase"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_stock_picking__carrier_purchase_cost
+msgid "Carrier Cost"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_res_config_settings__carrier_purchase_auto_products
+msgid "Carrier Purchase Auto Products"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_delivery_carrier__carrier_purchase_enabled
+msgid "Carrier Purchase Enabled"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model,name:delivery_carrier_purchase.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model,name:delivery_carrier_purchase.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_delivery_carrier__purchase_fixed_cost
+msgid "Cost of every shipment, in the currency of the company."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_picking_form_carrier_purchase
+msgid "Create Transport Purchase"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid "Create the transport purchase of this shipment by hand: %s"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_delivery_carrier_form_carrier_purchase
+msgid "Delivery product"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_res_config_settings__carrier_purchase_auto_products
+msgid ""
+"Delivery products that still create a purchase by themselves (Purchase "
+"Automatically)."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_carrier_purchase_cancel_form
+msgid "Discard"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.res_config_settings_view_form_carrier_purchase
+msgid ""
+"Each validated shipment adds a purchase line for the vendor of its shipping "
+"method, at the real cost, even when the shipping is free for the customer."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields.selection,name:delivery_carrier_purchase.selection__delivery_carrier__purchase_cost_type__fixed
+msgid "Fixed cost"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:delivery.carrier,name:delivery_carrier_purchase.carrier_gls_economy
+msgid "GLS Economy Parcel"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:product.template,name:delivery_carrier_purchase.product_shipping_gls_economy_product_template
+msgid "GLS Economy Parcel shipping"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_res_company__carrier_purchase_grouping
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_res_config_settings__carrier_purchase_grouping
+msgid "Group Transport Purchases"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__id
+msgid "ID"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields.selection,name:delivery_carrier_purchase.selection__res_company__carrier_purchase_grouping__shipment
+msgid "One purchase order per shipment"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields.selection,name:delivery_carrier_purchase.selection__res_company__carrier_purchase_grouping__day
+msgid "One request for quotation per vendor and day"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields.selection,name:delivery_carrier_purchase.selection__res_company__carrier_purchase_grouping__month
+msgid "One request for quotation per vendor and month"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields.selection,name:delivery_carrier_purchase.selection__res_company__carrier_purchase_grouping__week
+msgid "One request for quotation per vendor and week"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:product.template,name:delivery_carrier_purchase.product_transport_pallet_product_template
+msgid "Pallet transport 24/48h"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:delivery.carrier,name:delivery_carrier_purchase.carrier_palletways
+msgid "Palletways · Pallet 24/48h"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_delivery_carrier__purchase_product_id
+msgid ""
+"Product of the purchase lines. Leave it empty to use the delivery product of"
+" the method."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_delivery_carrier__purchase_auto_warning
+msgid "Purchase Auto Warning"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model,name:delivery_carrier_purchase.model_purchase_order
+msgid "Purchase Order"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model,name:delivery_carrier_purchase.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_res_company__carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_res_config_settings__carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_stock_picking__carrier_purchase_enabled
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.res_config_settings_view_form_carrier_purchase
+msgid "Purchase Transport per Shipment"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_stock_picking__carrier_purchase_line_id
+msgid "Purchase line that pays the transport of this shipment."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_stock_picking__carrier_purchase_id
+msgid "Purchase that pays the transport of this shipment."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__reason
+msgid "Reason"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_purchase_order__carrier_purchase_period
+msgid ""
+"Set on the purchases of transport created from shipments: the period (month,"
+" week, day) whose shipments this request for quotation gathers."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.res_config_settings_view_form_carrier_purchase
+msgid "Set the vendor on the shipping methods"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid "Shipment cancelled at the carrier"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields.selection,name:delivery_carrier_purchase.selection__delivery_carrier__purchase_cost_type__shipment
+msgid "Shipment cost"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_delivery_carrier__purchase_cost_type
+msgid ""
+"Shipment cost: what the carrier returns when the shipment is created (integrated carriers), or the price of the method computed with the real destination (fixed price and rule based methods).\n"
+"Fixed cost: the amount below for every shipment.\n"
+"Vendor price list: the vendor price of the purchase product."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_carrier_purchase_cancel__picking_ids
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_purchase_order__carrier_picking_count
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_purchase_order_line__carrier_picking_ids
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.purchase_order_form_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.purchase_order_line_form2_carrier_purchase
+msgid "Shipments"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_purchase_order__carrier_picking_count
+msgid "Shipments whose transport is bought in this purchase."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_purchase_order_line__carrier_picking_ids
+msgid "Shipments whose transport is bought with this line."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model,name:delivery_carrier_purchase.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/delivery_carrier.py:0
+msgid "The carrier did not return a price."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_delivery_carrier__purchase_auto_warning
+msgid ""
+"The delivery product still creates a purchase by itself (Purchase "
+"Automatically)."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_carrier_purchase_cancel_form
+msgid ""
+"The purchase line of the transport is not deleted: its price goes to 0 and its\n"
+"                    description starts with CANCELLED and the reason. A line already billed is not\n"
+"                    changed (ask the vendor for a credit note)."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/delivery_carrier.py:0
+msgid "The shipping method %(method)s does not deliver to %(partner)s."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/delivery_carrier.py:0
+msgid "The shipping method %s did not return the cost of the shipment."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid ""
+"The transport line of %(shipment)s in %(purchase)s is already billed and was"
+" not changed: ask the vendor for a credit note."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_stock_picking__carrier_purchase_canceled
+msgid ""
+"The transport purchase line of this shipment was set to 0 because the "
+"shipment was cancelled."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/delivery_carrier.py:0
+msgid "The vendor %(vendor)s has no price for %(product)s."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid "To: %s"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid "Tracking: %s"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model,name:delivery_carrier_purchase.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid "Transport %s"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_delivery_carrier__purchase_cost_type
+msgid "Transport Cost"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_delivery_carrier__purchase_fixed_cost
+msgid "Transport Fixed Cost"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_purchase_order__carrier_purchase_period
+msgid "Transport Period"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_stock_picking__carrier_purchase_id
+#: model_terms:ir.ui.view,arch_db:delivery_carrier_purchase.view_delivery_carrier_form_carrier_purchase
+msgid "Transport Purchase"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_stock_picking__carrier_purchase_canceled
+msgid "Transport Purchase Cancelled"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_stock_picking__carrier_purchase_error
+msgid "Transport Purchase Error"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_stock_picking__carrier_purchase_line_id
+msgid "Transport Purchase Line"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_delivery_carrier__purchase_product_id
+msgid "Transport Purchase Product"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_delivery_carrier__purchase_partner_id
+#: model:ir.model.fields,field_description:delivery_carrier_purchase.field_stock_picking__carrier_purchase_partner_id
+msgid "Transport Vendor"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid "Transport line of %(shipment)s cancelled (it was %(price)s)."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid ""
+"Transport line of %(shipment)s created at 0: its cost could not be obtained "
+"(%(error)s)."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#. odoo-python
+#: code:addons/delivery_carrier_purchase/models/stock_picking.py:0
+msgid ""
+"Transport purchase not created: the sale order already has one, created by "
+"its delivery product."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields.selection,name:delivery_carrier_purchase.selection__delivery_carrier__purchase_cost_type__vendor
+msgid "Vendor price list"
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_stock_picking__carrier_purchase_cost
+msgid ""
+"What the carrier charges for this shipment, as returned when the shipment "
+"was created. The Shipping Cost of the transfer is the price for the "
+"customer, 0 when the shipping is free."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_res_company__carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_res_config_settings__carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_stock_picking__carrier_purchase_enabled
+msgid ""
+"When a shipment to a customer is validated, add a purchase line for its "
+"transport for the vendor set on the shipping method."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_res_company__carrier_purchase_grouping
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_res_config_settings__carrier_purchase_grouping
+msgid ""
+"Where the transport lines go. Grouped: one line per shipment in the open "
+"request for quotation of the vendor for the period; once it is confirmed, "
+"the next shipments go to a new one."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_delivery_carrier__purchase_partner_id
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_stock_picking__carrier_purchase_partner_id
+msgid ""
+"Who is paid for the shipments of this method (the carrier, or the agency "
+"that bills it). Each validated shipment adds a purchase line for this "
+"vendor. Leave it empty to buy nothing."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_carrier_purchase_cancel__reason
+msgid ""
+"Why the transport is not paid (e.g. shipment repeated, sent by another "
+"carrier). It is added to the description of the purchase line."
+msgstr ""
+
+#. module: delivery_carrier_purchase
+#: model:ir.model.fields,help:delivery_carrier_purchase.field_stock_picking__carrier_purchase_error
+msgid ""
+"Why the transport purchase line was created at 0 or could not be created."
+msgstr ""

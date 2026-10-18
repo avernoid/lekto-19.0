@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form_carrier_purchase" model="ir.ui.view">
+        <field name="name">stock.picking.form.carrier.purchase</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_carrier_purchase" type="object" class="oe_stat_button" icon="fa-credit-card"
+                        invisible="not carrier_purchase_id" groups="purchase.group_purchase_user">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Transport</span>
+                        <field name="carrier_purchase_id" class="o_stat_value" readonly="1"/>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="/form/header" position="inside">
+                <field name="carrier_purchase_enabled" invisible="1"/>
+                <field name="carrier_purchase_partner_id" invisible="1"/>
+                <field name="carrier_purchase_line_id" invisible="1"/>
+                <field name="carrier_purchase_canceled" invisible="1"/>
+                <button name="action_create_carrier_purchase" type="object" string="Create Transport Purchase"
+                        groups="purchase.group_purchase_user"
+                        invisible="not carrier_purchase_enabled or not carrier_purchase_partner_id or carrier_purchase_line_id or state != 'done' or picking_type_code == 'incoming'"/>
+                <button name="action_cancel_carrier_purchase" type="object" string="Cancel Transport Purchase"
+                        groups="purchase.group_purchase_user"
+                        invisible="not carrier_purchase_line_id or carrier_purchase_canceled"/>
+            </xpath>
+            <group name="carrier_data" position="inside">
+                <field name="carrier_purchase_cost" invisible="not carrier_purchase_cost"
+                       groups="purchase.group_purchase_user"/>
+                <field name="carrier_purchase_error" invisible="not carrier_purchase_error" class="text-danger"
+                       groups="purchase.group_purchase_user"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

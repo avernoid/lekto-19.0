@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Purchase order sheet -->
+  <rect x="8" y="6" width="56" height="74" rx="7" fill="#714B67"/>
+  <rect x="17" y="17" width="38" height="5" rx="2.5" fill="#B79EB5"/>
+  <rect x="17" y="28" width="30" height="5" rx="2.5" fill="#B79EB5"/>
+  <rect x="17" y="39" width="34" height="5" rx="2.5" fill="#B79EB5"/>
+  <rect x="17" y="50" width="22" height="5" rx="2.5" fill="#B79EB5"/>
+  <!-- Parcel -->
+  <path d="M40 58 L66 46 L92 58 V86 L66 98 L40 86 Z" fill="#00A09D"/>
+  <path d="M40 58 L66 70 L92 58" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M66 70 V98" stroke="#FFFFFF" stroke-width="3"/>
+  <path d="M53 52 L79 64" stroke="#F4C430" stroke-width="5" stroke-linecap="round"/>
+  <!-- Coin -->
+  <circle cx="75" cy="27" r="19" fill="#F58823" stroke="#FFFFFF" stroke-width="3"/>
+  <circle cx="75" cy="27" r="12.5" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.7"/>
+  <text x="75" y="35" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="22" fill="#FFFFFF">$</text>
+</svg>

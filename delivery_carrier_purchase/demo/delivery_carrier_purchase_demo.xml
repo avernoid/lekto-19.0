@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Business case: shipping is free for the customer, but every shipment is bought from the
+         carrier that really moves it. Validate the dropships and deliveries of the demo sales: each
+         one adds a line to the open request for quotation of its carrier for the month. -->
+    <record id="base.main_company" model="res.company">
+        <field name="carrier_purchase" eval="True"/>
+        <field name="carrier_purchase_grouping">month</field>
+    </record>
+
+    <!-- Transport vendors -->
+    <record id="partner_vendor_missatgeria_valles" model="res.partner">
+        <field name="name">Missatgeria Vallès, S.L.</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">Carrer de la Indústria 44</field>
+        <field name="city">Sabadell</field>
+        <field name="zip">08202</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">facturacion@missatgeriavalles.example.com</field>
+        <field name="supplier_rank">1</field>
+    </record>
+    <record id="partner_vendor_gls" model="res.partner">
+        <field name="name">General Logistics Systems Spain, S.L.</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">Calle Ciudad de Melilla 10</field>
+        <field name="city">Coslada</field>
+        <field name="zip">28821</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">facturacion@gls-spain.example.com</field>
+        <field name="supplier_rank">1</field>
+    </record>
+    <record id="partner_vendor_palletways" model="res.partner">
+        <field name="name">Palletways Iberia, S.L.</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">Polígono Industrial Puerta de Madrid, calle Galileo 1</field>
+        <field name="city">Alcalá de Henares</field>
+        <field name="zip">28806</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">administracion@palletways-iberia.example.com</field>
+        <field name="supplier_rank">1</field>
+    </record>
+
+    <!-- Regional courier of the dropship demo: fixed cost per shipment -->
+    <record id="stock_delivery_dropship.carrier_regional_courier" model="delivery.carrier">
+        <field name="purchase_partner_id" ref="partner_vendor_missatgeria_valles"/>
+        <field name="purchase_cost_type">fixed</field>
+        <field name="purchase_fixed_cost">6.40</field>
+    </record>
+
+    <!-- GLS by weight: free for the customer, cost of the carrier rate card -->
+    <record id="product_shipping_gls_economy" model="product.product">
+        <field name="name">GLS Economy Parcel shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+    <record id="carrier_gls_economy" model="delivery.carrier">
+        <field name="name">GLS Economy Parcel</field>
+        <field name="delivery_type">base_on_rule</field>
+        <field name="product_id" ref="product_shipping_gls_economy"/>
+        <field name="free_over" eval="True"/>
+        <field name="amount">0</field>
+        <field name="country_ids" eval="[(6, 0, [ref('base.es'), ref('base.pt'), ref('base.fr')])]"/>
+        <field name="tracking_url">https://gls-group.com/ES/es/seguimiento-envio/?match=&lt;shipmenttrackingnumber&gt;</field>
+        <field name="purchase_partner_id" ref="partner_vendor_gls"/>
+        <field name="purchase_cost_type">shipment</field>
+    </record>
+    <record id="gls_economy_rule_5kg" model="delivery.price.rule">
+        <field name="carrier_id" ref="carrier_gls_economy"/>
+        <field name="sequence">10</field>
+        <field name="variable">weight</field>
+        <field name="operator">&lt;=</field>
+        <field name="max_value">5</field>
+        <field name="list_base_price">5.90</field>
+    </record>
+    <record id="gls_economy_rule_20kg" model="delivery.price.rule">
+        <field name="carrier_id" ref="carrier_gls_economy"/>
+        <field name="sequence">20</field>
+        <field name="variable">weight</field>
+        <field name="operator">&lt;=</field>
+        <field name="max_value">20</field>
+        <field name="list_base_price">8.40</field>
+    </record>
+    <record id="gls_economy_rule_heavy" model="delivery.price.rule">
+        <field name="carrier_id" ref="carrier_gls_economy"/>
+        <field name="sequence">30</field>
+        <field name="variable">weight</field>
+        <field name="operator">&gt;</field>
+        <field name="max_value">20</field>
+        <field name="list_base_price">8.40</field>
+        <field name="list_price">0.35</field>
+        <field name="variable_factor">weight</field>
+    </record>
+
+    <!-- Pallet network: price agreed with the vendor (purchase price list) -->
+    <record id="product_transport_pallet" model="product.product">
+        <field name="name">Pallet transport 24/48h</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+        <field name="seller_ids" eval="[(0, 0, {'partner_id': ref('partner_vendor_palletways'), 'price': 48.50})]"/>
+    </record>
+    <record id="carrier_palletways" model="delivery.carrier">
+        <field name="name">Palletways · Pallet 24/48h</field>
+        <field name="delivery_type">fixed</field>
+        <field name="fixed_price">0</field>
+        <field name="product_id" ref="product_transport_pallet"/>
+        <field name="purchase_partner_id" ref="partner_vendor_palletways"/>
+        <field name="purchase_cost_type">vendor</field>
+    </record>
+
+    <!-- Sales shipped by those carriers, dropships ready to validate -->
+    <record id="sale_festival_cups_gls" model="sale.order">
+        <field name="partner_id" ref="stock_delivery_dropship.partner_festival"/>
+        <field name="partner_shipping_id" ref="stock_delivery_dropship.partner_festival_delivery_address"/>
+        <field name="carrier_id" ref="carrier_gls_economy"/>
+        <field name="client_order_ref">Festival 2026 - backstage napkins</field>
+        <field name="order_line" eval="[(0, 0, {'product_id': ref('stock_delivery_dropship.product_custom_napkins'), 'product_uom_qty': 6}), (0, 0, {'product_id': ref('product_shipping_gls_economy'), 'name': 'GLS Economy Parcel', 'product_uom_qty': 1, 'price_unit': 0, 'is_delivery': True})]"/>
+    </record>
+    <record id="sale_festival_tote_bags_pallet" model="sale.order">
+        <field name="partner_id" ref="stock_delivery_dropship.partner_festival"/>
+        <field name="partner_shipping_id" ref="stock_delivery_dropship.partner_festival_delivery_address"/>
+        <field name="carrier_id" ref="carrier_palletways"/>
+        <field name="client_order_ref">Festival 2026 - welcome bags</field>
+        <field name="order_line" eval="[(0, 0, {'product_id': ref('stock_delivery_dropship.product_custom_tote_bag'), 'product_uom_qty': 2500}), (0, 0, {'product_id': ref('product_transport_pallet'), 'name': 'Palletways · Pallet 24/48h', 'product_uom_qty': 1, 'price_unit': 0, 'is_delivery': True})]"/>
+    </record>
+    <function model="sale.order" name="action_confirm">
+        <value eval="[ref('sale_festival_cups_gls'), ref('sale_festival_tote_bags_pallet')]"/>
+    </function>
+    <function model="purchase.order" name="_confirm_dropship_purchases">
+        <value eval="[ref('sale_festival_cups_gls'), ref('sale_festival_tote_bags_pallet')]"/>
+    </function>
+</odoo>

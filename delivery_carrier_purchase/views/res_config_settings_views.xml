@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_carrier_purchase" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.carrier.purchase</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block name="shipping_setting_container" position="inside">
+                <setting id="carrier_purchase" string="Purchase Transport per Shipment"
+                         help="Each validated shipment adds a purchase line for the vendor of its shipping method, at the real cost, even when the shipping is free for the customer.">
+                    <field name="carrier_purchase"/>
+                    <div class="content-group" invisible="not carrier_purchase">
+                        <div class="mt8">
+                            <field name="carrier_purchase_grouping" class="o_light_label"/>
+                        </div>
+                        <div class="alert alert-warning mt8 mb0" role="alert" invisible="not carrier_purchase_auto_products">
+                            <i class="fa fa-exclamation-triangle" title="Warning"/>
+                            These delivery products still create a purchase by themselves when a sale is confirmed
+                            (Purchase Automatically): <field name="carrier_purchase_auto_products" class="fw-bold"/>.
+                            Disable that option on them so the transport is not bought twice.
+                        </div>
+                        <div class="mt8">
+                            <button name="%(delivery.action_delivery_carrier_form)d" type="action" icon="oi-arrow-right"
+                                    string="Set the vendor on the shipping methods" class="btn-link"/>
+                        </div>
+                    </div>
+                </setting>
+            </block>
+        </field>
+    </record>
+
+</odoo>
