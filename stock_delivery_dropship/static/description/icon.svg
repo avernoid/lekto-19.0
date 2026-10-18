@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <!-- Vendor warehouse (sender) -->
+  <path d="M6 52 L26 38 L46 52 L46 86 L6 86 Z" fill="#714B67"/>
+  <rect x="19" y="64" width="14" height="22" rx="2" fill="#FFFFFF"/>
+  <rect x="12" y="55" width="28" height="5" rx="2.5" fill="#B79EB5"/>
+  <!-- Parcel in transit -->
+  <rect x="30" y="8" width="26" height="22" rx="3" fill="#F58823"/>
+  <rect x="30" y="8" width="26" height="7" rx="3" fill="#F4C430"/>
+  <rect x="40" y="8" width="6" height="22" fill="#FFFFFF" opacity="0.85"/>
+  <!-- Route arrow -->
+  <path d="M50 70 H56" stroke="#00A09D" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M52 59 L64 70 L52 81" stroke="#00A09D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Delivery pin (recipient) -->
+  <path d="M86 40 C75 40 68 48 68 57 C68 68 86 88 86 88 C86 88 100 68 100 57 C100 48 97 40 86 40 Z" transform="translate(-2 -2)" fill="#F55555"/>
+  <circle cx="84" cy="55" r="6" fill="#FFFFFF"/>
+</svg>

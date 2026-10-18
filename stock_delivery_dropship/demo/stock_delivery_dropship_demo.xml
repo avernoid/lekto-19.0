@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Business case: a promotional products company sells custom items that its vendors
+         print and ship straight to the customer (dropship). -->
+    <record id="partner_vendor_printing" model="res.partner">
+        <field name="name">Gràfiques Moianes, S.L.</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">C/ Moianès 9, Pol. Ind. Can Casablanques</field>
+        <field name="city">Sant Quirze del Vallès</field>
+        <field name="zip">08192</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">expediciones@grafiquesmoianes.example.com</field>
+        <field name="phone">+34 937 000 309</field>
+    </record>
+    <record id="partner_vendor_napkins" model="res.partner">
+        <field name="name">Papelera del Ebro, S.A.</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">Polígono Industrial El Portazgo, nave 14</field>
+        <field name="city">Zaragoza</field>
+        <field name="zip">50011</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">logistica@papeleradelebro.example.com</field>
+        <field name="phone">+34 976 000 418</field>
+    </record>
+
+    <record id="partner_festival" model="res.partner">
+        <field name="name">Festival Mar i Música, S.L.</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">Carrer de la Marina 210</field>
+        <field name="city">Barcelona</field>
+        <field name="zip">08013</field>
+        <field name="country_id" ref="base.es"/>
+        <field name="email">produccion@festivalmarimusica.example.com</field>
+        <field name="phone">+34 932 000 521</field>
+    </record>
+    <!-- Delivery address without email nor phone: carrier integrations take them from the company -->
+    <record id="partner_festival_delivery_address" model="res.partner">
+        <field name="name">Recinto del festival - Muelle de carga</field>
+        <field name="type">delivery</field>
+        <field name="parent_id" ref="partner_festival"/>
+        <field name="street">Moll de la Fusta s/n</field>
+        <field name="city">Barcelona</field>
+        <field name="zip">08039</field>
+        <field name="country_id" ref="base.es"/>
+    </record>
+    <record id="partner_bistrot_dunkerque" model="res.partner">
+        <field name="name">Bistrot du Port</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">40 Place Paul Asseman</field>
+        <field name="city">Dunkerque</field>
+        <field name="zip">59140</field>
+        <field name="country_id" ref="base.fr"/>
+        <field name="email">contact@bistrotduport.example.com</field>
+        <field name="phone">+33 328 000 140</field>
+    </record>
+
+    <record id="product_custom_napkins" model="product.product">
+        <field name="name">Custom printed napkins 33x33 (pack of 500)</field>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="weight">1.5</field>
+        <field name="list_price">39.00</field>
+        <field name="route_ids" eval="[(6, 0, [ref('stock_dropshipping.route_drop_shipping')])]"/>
+        <field name="seller_ids" eval="[(0, 0, {'partner_id': ref('partner_vendor_napkins'), 'price': 21.50})]"/>
+    </record>
+    <record id="product_custom_tote_bag" model="product.product">
+        <field name="name">Custom printed cotton tote bag</field>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="weight">0.12</field>
+        <field name="list_price">3.90</field>
+        <field name="route_ids" eval="[(6, 0, [ref('stock_dropshipping.route_drop_shipping')])]"/>
+        <field name="seller_ids" eval="[(0, 0, {'partner_id': ref('partner_vendor_printing'), 'price': 1.95})]"/>
+    </record>
+
+    <record id="product_shipping_regional" model="product.product">
+        <field name="name">Regional courier shipping</field>
+        <field name="type">service</field>
+        <field name="list_price">0</field>
+    </record>
+    <record id="carrier_regional_courier" model="delivery.carrier">
+        <field name="name">Missatgeria Vallès 24h</field>
+        <field name="delivery_type">fixed</field>
+        <field name="fixed_price">0</field>
+        <field name="product_id" ref="product_shipping_regional"/>
+    </record>
+
+    <!-- Dropship operation type: labels on validation and carrier of the sale order -->
+    <function model="stock.picking.type" name="_setup_dropship_shipping"/>
+
+    <record id="sale_event_napkins" model="sale.order">
+        <field name="partner_id" ref="partner_festival"/>
+        <field name="partner_shipping_id" ref="partner_festival_delivery_address"/>
+        <field name="carrier_id" ref="carrier_regional_courier"/>
+        <field name="client_order_ref">Festival 2026 - bar napkins</field>
+        <field name="order_line" eval="[(0, 0, {'product_id': ref('product_custom_napkins'), 'product_uom_qty': 20}), (0, 0, {'product_id': ref('product_shipping_regional'), 'name': 'Missatgeria Vallès 24h', 'product_uom_qty': 1, 'price_unit': 0, 'is_delivery': True})]"/>
+    </record>
+    <record id="sale_bistrot_tote_bags" model="sale.order">
+        <field name="partner_id" ref="partner_bistrot_dunkerque"/>
+        <field name="carrier_id" ref="carrier_regional_courier"/>
+        <field name="client_order_ref">Summer menu launch</field>
+        <field name="order_line" eval="[(0, 0, {'product_id': ref('product_custom_tote_bag'), 'product_uom_qty': 300}), (0, 0, {'product_id': ref('product_shipping_regional'), 'name': 'Missatgeria Vallès 24h', 'product_uom_qty': 1, 'price_unit': 0, 'is_delivery': True})]"/>
+    </record>
+    <function model="sale.order" name="action_confirm">
+        <value eval="[ref('sale_event_napkins'), ref('sale_bistrot_tote_bags')]"/>
+    </function>
+    <function model="purchase.order" name="_confirm_dropship_purchases">
+        <value eval="[ref('sale_event_napkins'), ref('sale_bistrot_tote_bags')]"/>
+    </function>
+</odoo>

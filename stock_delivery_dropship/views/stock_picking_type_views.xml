@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- stock_delivery only shows "Print label" for internal and outgoing types -->
+    <record id="view_picking_type_form_delivery_dropship" model="ir.ui.view">
+        <field name="name">stock.picking.type.form.delivery.dropship</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock_delivery.view_picking_type_form_delivery"/>
+        <field name="arch" type="xml">
+            <field name="print_label" position="attributes">
+                <attribute name="invisible">code not in ['internal', 'outgoing', 'dropship']</attribute>
+            </field>
+            <field name="print_label" position="after">
+                <field name="propagate_sale_carrier" invisible="code != 'dropship'"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

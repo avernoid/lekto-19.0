@@ -1,0 +1,71 @@
+# Translation of stock_delivery_dropship to Spanish
+# . module: stock_delivery_dropship
+# Copyright (C) 2026 Ganemo
+# This file is distributed under the same license as the stock_delivery_dropship package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Module stock_delivery_dropship 18.0\n"
+"POT-Creation-Date: 2026-10-17 00:00+0000\n"
+"PO-Revision-Date: 2026-10-17 00:00+0000\n"
+"Last-Translator: Ganemo <help@ganemo.com>\n"
+"Language-Team: Spanish <>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_delivery_dropship
+#: model:product.template,name:stock_delivery_dropship.product_custom_tote_bag_product_template
+msgid "Custom printed cotton tote bag"
+msgstr "Bolsa de algodón personalizada"
+
+#. module: stock_delivery_dropship
+#: model:product.template,name:stock_delivery_dropship.product_custom_napkins_product_template
+msgid "Custom printed napkins 33x33 (pack of 500)"
+msgstr "Servilletas personalizadas 33x33 (paquete de 500)"
+
+#. module: stock_delivery_dropship
+#: model:ir.model.fields,help:stock_delivery_dropship.field_stock_picking_type__propagate_sale_carrier
+msgid ""
+"Dropships of this operation type get the shipping method of the sale order "
+"when the purchase creates them, as deliveries from the warehouse already do."
+" It can still be changed on the transfer before validating. Unchecked: "
+"standard Odoo behaviour (the dropship is created without shipping method)."
+msgstr ""
+"Los dropships de este tipo de operación reciben el método de envío del "
+"pedido de venta cuando la compra los crea, como ya ocurre con las entregas "
+"desde el almacén. Se puede cambiar en el traslado antes de validar. Sin "
+"marcar: comportamiento estándar de Odoo (el dropship se crea sin método de "
+"envío)."
+
+#. module: stock_delivery_dropship
+#: model:delivery.carrier,name:stock_delivery_dropship.carrier_regional_courier
+msgid "Missatgeria Vallès 24h"
+msgstr "Missatgeria Vallès 24h"
+
+#. module: stock_delivery_dropship
+#: model:ir.model,name:stock_delivery_dropship.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de operación"
+
+#. module: stock_delivery_dropship
+#: model:ir.model,name:stock_delivery_dropship.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: stock_delivery_dropship
+#: model:product.template,name:stock_delivery_dropship.product_shipping_regional_product_template
+msgid "Regional courier shipping"
+msgstr "Envío por mensajería regional"
+
+#. module: stock_delivery_dropship
+#: model:ir.model,name:stock_delivery_dropship.model_stock_picking
+msgid "Transfer"
+msgstr "Traslado"
+
+#. module: stock_delivery_dropship
+#: model:ir.model.fields,field_description:stock_delivery_dropship.field_stock_picking_type__propagate_sale_carrier
+msgid "Use Sale Order Carrier"
+msgstr "Usar el transportista del pedido de venta"
