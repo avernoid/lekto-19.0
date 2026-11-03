@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Demo data for an electrical materials distributor in Lima that imports part of its stock:
+        the freight and the foreign supplier's invoice arrive after the goods were sold.
+
+        Three situations, the ones this module exists for, each visible afterwards in
+        Inventory > Reporting > Late Revaluations with its own journal entry:
+
+          1. Cable NYY 2x4: 5 rolls at 500 billed, 3 sold and invoiced, freight of 250 afterwards.
+             -> the delivery is restated to 1,650 and the 150 of the goods already gone are booked
+                as cost of sales instead of sitting in the freight account.
+          2. LED street lights: received against the proforma and sold, commercial invoice later at
+             a lower price. -> the difference goes the other way: without the module the stock
+                account ends up below the inventory.
+          3. Hex bolts: the counter dispatched 5 hundred with 2 in stock and the receipt of 5 at 20
+             was registered afterwards. -> the 30 that Odoo's engine drops on negative stock are
+                recorded on that receipt and booked.
+
+        Built through the real flows (see stock.value.revaluation._variance_build_demo), so the
+        values, the entries and the events are genuine, not hand-written records.
+    -->
+    <function model="stock.value.revaluation" name="_variance_build_demo"/>
+</odoo>

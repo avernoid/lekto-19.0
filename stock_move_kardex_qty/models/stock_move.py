@@ -180,19 +180,23 @@ class StockMove(models.Model):
     # ------------------------------------------------------------------
     @api.model
     def _kardex_qty_build_demo(self):
-        """Build done moves that exercise every kardex_qty branch.
+        """Build the movements of one real line: a cable an electrical distributor buys and sells.
 
-        Idempotent: skipped once the demo product already has moves (re-runs on
-        module update do not duplicate).
+        Between them they exercise every branch of the Kardex column -- a receipt, a receipt in a unit
+        other than the product's, a delivery, an internal transfer between aisles and a customer
+        return -- which is what the column has to get right.
+
+        Idempotent: skipped once the product already has moves (re-runs on module update do not
+        duplicate).
         """
         Product = self.env["product.product"]
-        product = Product.search([("default_code", "=", "KRDX-DEMO")], limit=1)
+        product = Product.search([("default_code", "=", "CBL-THW-12")], limit=1)
         if product and product.stock_move_ids:
             return
         if not product:
             product = Product.create({
-                "name": "Kardex Demo Product",
-                "default_code": "KRDX-DEMO",
+                "name": "Cable THW 12 AWG, rollo de 100 m",
+                "default_code": "CBL-THW-12",
                 "type": "consu",
                 "is_storable": True,
                 "uom_id": self.env.ref("uom.product_uom_unit").id,
@@ -202,18 +206,18 @@ class StockMove(models.Model):
         stock = self.env.ref("stock.stock_location_stock")
         suppliers = self.env.ref("stock.stock_location_suppliers")
         customers = self.env.ref("stock.stock_location_customers")
-        secondary = self.env["stock.location"].create({
-            "name": "Kardex Demo Secondary",
+        aisle = self.env["stock.location"].create({
+            "name": "Pasillo B - Conductores",
             "usage": "internal",
             "location_id": stock.location_id.id,
         })
-        # Order matters: stock the two receipts first so the out / internal moves
+        # Order matters: stock the two receipts first so the delivery, the transfer and the return
         # have something to move.
-        self._kardex_qty_demo_move(product, 10, unit, suppliers, stock)    # +10 (in)
-        self._kardex_qty_demo_move(product, 2, dozen, suppliers, stock)    # +24 (in, UoM != product UoM: 2 dozen -> 24 units)
-        self._kardex_qty_demo_move(product, 3, unit, stock, customers)     # -3  (out)
-        self._kardex_qty_demo_move(product, 4, unit, stock, secondary)     # 0   (internal transfer: not valued in/out)
-        self._kardex_qty_demo_move(product, 1, unit, customers, stock)     # +1  (customer return -> counts as in)
+        self._kardex_qty_demo_move(product, 10, unit, suppliers, stock)    # +10 compra al proveedor
+        self._kardex_qty_demo_move(product, 2, dozen, suppliers, stock)    # +24 compra por docenas (2 docenas -> 24 rollos): el Kardex va en la unidad del producto
+        self._kardex_qty_demo_move(product, 3, unit, stock, customers)     # -3  despacho al cliente
+        self._kardex_qty_demo_move(product, 4, unit, stock, aisle)         # 0   traslado al pasillo de conductores (no es entrada ni salida)
+        self._kardex_qty_demo_move(product, 1, unit, customers, stock)     # +1  devolucion del cliente (cuenta como entrada)
 
     @api.model
     def _kardex_qty_demo_move(self, product, qty, uom, src, dst):

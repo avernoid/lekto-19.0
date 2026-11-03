@@ -199,7 +199,14 @@ class RevaluationHelpers:
         self.p1 = (p1_from, p2_from - timedelta(days=1))
 
     def day(self, period, n):
-        return period[0] + timedelta(days=n - 1)
+        """Day n of the period, never past its end.
+
+        P3 is the month in progress, so its end is today: on the 3rd of the month, ``day(p3, 8)``
+        would fall in the future, the movement would sit outside the period's cut and the book
+        would not match the inventory. Measured on 2026-11-03 (day 3): two PLE 13.1 tests in red
+        for that reason alone, green on any later day of the month.
+        """
+        return min(period[0] + timedelta(days=n - 1), period[1])
 
     def known_at(self, day, product=None):
         self.env.invalidate_all()

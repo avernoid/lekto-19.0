@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!--
-        Demo moves that exercise every kardex_qty branch, so the column can be
-        seen and grouped in the native Moves Analysis list:
-          +10  incoming (Units)
-          +24  incoming in a UoM != the product UoM (2 Dozen -> 24 Units): the
-               Kardex Qty is in the product reference UoM, not the move UoM
-          -3   outgoing (Units)
-           0   internal transfer (not valued as in/out -> does not move on-hand)
-          +1   customer return (counts as incoming)
-        Built through the real confirm/assign/done flow (see stock.move
-        ._kardex_qty_build_demo) so valuation and is_in/is_out are genuine.
+        Movements of one real line of an electrical distributor — Cable THW 12 AWG, rollo de 100 m
+        (CBL-THW-12) — chosen because between them they cover every branch of the Kardex column:
+          +10  compra al proveedor
+          +24  compra por docenas (2 docenas -> 24 rollos): el Kardex va en la unidad del producto,
+               no en la del movimiento
+          -3   despacho al cliente
+           0   traslado al Pasillo B - Conductores (movimiento interno: no es entrada ni salida)
+          +1   devolucion del cliente (cuenta como entrada)
+        Built through the real confirm/assign/done flow (see stock.move._kardex_qty_build_demo) so
+        valuation and is_in/is_out are genuine.
     -->
     <function model="stock.move" name="_kardex_qty_build_demo"/>
 </odoo>

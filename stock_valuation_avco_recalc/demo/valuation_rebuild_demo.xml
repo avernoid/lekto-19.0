@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        Demo data: a product whose history nobody corrected, which is what this module rebuilds.
+
+        Tablero de distribucion trifasico 12 polos (TAB-DIST-12): 4 bought at 800 and billed, 2 sold
+        and invoiced, and a 200 freight capitalised afterwards — all of it with the revaluation
+        engine switched off, so it looks like a database that ran for months without it:
+
+          - the delivery keeps its old value (1.600) instead of the corrected one (1.700),
+          - the valued Kardex adds up to 1.800 while the inventory is worth 1.700.
+
+        Select its movements in Inventory > Reporting and run "Rebuild Stock Valuation": the audit
+        shows 1.600 -> 1.700 and both figures line up again, with no journal entry.
+    -->
+    <function model="stock.valuation.recalc.audit" name="_valuation_rebuild_build_demo"/>
+</odoo>

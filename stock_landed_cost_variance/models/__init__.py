@@ -1,5 +1,6 @@
 from . import stock_value_variance
 from . import stock_value_revaluation
+from . import stock_value_revaluation_demo
 from . import stock_cost_adjustment
 from . import stock_move
 from . import stock_landed_cost

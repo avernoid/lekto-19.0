@@ -332,11 +332,19 @@ class TestKardexQty(TransactionCase):
 
     def test_demo_data_exercises_every_branch(self):
         """The demo moves cover +in, +in-with-UoM-conversion, -out, internal 0
-        and a return. Skips cleanly if the DB was built without demo data."""
+        and a return.
+
+        The builder is called directly, as superuser, the way Odoo runs it when
+        loading the demo file: Odoo.SH installs and tests WITHOUT demo data and
+        loads it afterwards, so a test that read the database would skip itself
+        on every build and this data would be covered nowhere. The builder is
+        idempotent, so on a database that does have the demo it finds it and
+        returns.
+        """
+        self.env["stock.move"].sudo()._kardex_qty_build_demo()
         product = self.env["product.product"].search(
-            [("default_code", "=", "KRDX-DEMO")], limit=1)
-        if not product:
-            self.skipTest("demo data not loaded")
+            [("default_code", "=", "CBL-THW-12")], limit=1)
+        self.assertTrue(product, "the demo product must exist once the builder ran")
         moves = self.env["stock.move"].search(
             [("product_id", "=", product.id), ("state", "=", "done")])
         # net on-hand = 10 + 24 - 3 + 0 + 1 = 32 (internal does not change it).

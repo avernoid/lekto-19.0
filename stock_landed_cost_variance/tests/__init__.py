@@ -9,3 +9,4 @@ from . import test_engine_parity
 from . import test_engine_performance
 from . import test_engine_pos
 from . import test_native_fingerprint
+from . import test_demo_data

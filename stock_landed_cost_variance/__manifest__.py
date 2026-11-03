@@ -1,6 +1,6 @@
 {
     "name": "Stock Value Variance",
-    "version": "19.0.2.0.0",
+    "version": "19.0.2.1.1",
     "category": "Inventory",
     "summary": "Correct the cost of goods already gone when a landed cost, a bill or a credit note arrives late.",
     "description": """
@@ -36,6 +36,7 @@ a status that shows whether its entry is posted, not needed or outdated.
         "views/stock_value_variance_views.xml",
         "views/stock_value_revaluation_views.xml",
     ],
+    "demo": ["demo/stock_landed_cost_variance_demo.xml"],
     "icon": "/stock_landed_cost_variance/static/description/icon.png",
     "images": ["static/description/banner.png"],
     "license": "OPL-1",

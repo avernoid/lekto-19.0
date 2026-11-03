@@ -1,6 +1,6 @@
 {
     'name': 'Stock Valuation Avco Recalc',
-    'version': '19.0.3.0.0',
+    'version': '19.0.3.1.0',
     'category': 'Inventory',
     'summary': 'Rebuild the stored value of historical stock movements with the late revaluation engine.',
     'description': """
@@ -29,6 +29,7 @@ write of the product cost and the deletion of valuation anchors.
         'wizards/valuation_recalc_wizard_views.xml',
         'views/stock_move_action.xml',
     ],
+    'demo': ['demo/valuation_rebuild_demo.xml'],
     'license': 'OPL-1',
     'installable': True,
     'auto_install': False,
