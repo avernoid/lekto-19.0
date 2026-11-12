@@ -1,0 +1,44 @@
+// Pages outside portal_layout bring their own container: it already sits in
+// ours, so it must not add a second width limit and gutter.
+.o_portal_navigation_frontend .o_portal_navigation_content .container {
+    max-width: none;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.o_portal_navigation {
+    // Mobile: the menu is a panel from the left, opened by the toggle button.
+    .offcanvas-lg {
+        --#{$prefix}offcanvas-width: min(85vw, 320px);
+    }
+
+    .nav-link {
+        color: $body-color;
+        line-height: 1.25;
+
+        &:hover:not(.active) {
+            background-color: rgba($body-color, .05);
+        }
+    }
+
+    .o_portal_navigation_icon {
+        flex-shrink: 0;
+        object-fit: contain;
+    }
+
+    .o_portal_navigation_group_start {
+        border-top: $border-width solid $border-color;
+        margin-top: .5rem;
+        padding-top: .5rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+        position: sticky;
+        top: 1rem;
+
+        // Desktop: the panel is the left column, without its own padding.
+        .offcanvas-body {
+            padding: 0;
+        }
+    }
+}

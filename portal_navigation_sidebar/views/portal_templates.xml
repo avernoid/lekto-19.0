@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Every page built on portal.portal_layout (lists of every app, and
+         custom portal pages): wraps the content in a two-column row.
+         Not on the home page and "My account" (my_details branch) nor on a
+         document page (``object``: it has its own side panel). -->
+    <template id="portal_layout" name="Portal Navigation Sidebar" inherit_id="portal.portal_layout">
+        <xpath expr="//div[@id='wrap']/div/t[@t-else='']/t[@t-out='0']" position="replace">
+            <t t-set="portal_navigation_entries"
+               t-value="[] if object else request.env['portal.navigation']._get_navigation_entries()"/>
+            <t t-if="portal_navigation_entries">
+                <div class="row o_portal_navigation_layout">
+                    <div class="col-12 col-lg-3 col-xl-2 mb-3 mb-lg-0">
+                        <t t-call="portal_navigation_sidebar.portal_navigation"/>
+                    </div>
+                    <div class="col-12 col-lg-9 col-xl-10 o_portal_navigation_content">
+                        <t>$0</t>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <t>$0</t>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Portal pages that skip portal.portal_layout (e.g. /my/payment_method
+         renders straight on the frontend layout): the menu shows only when
+         the current URL is one of its options, never on other website pages. -->
+    <template id="frontend_layout" name="Portal Navigation Sidebar (other portal pages)" inherit_id="web.frontend_layout">
+        <xpath expr="//main/t[@t-out='0']" position="replace">
+            <t t-set="portal_navigation_entries"
+               t-value="[] if is_portal or object else request and request.env['portal.navigation']._get_navigation_entries(require_active=True)"/>
+            <t t-if="portal_navigation_entries">
+                <div class="container pt-3 o_portal_navigation_frontend">
+                    <div class="row o_portal_navigation_layout">
+                        <div class="col-12 col-lg-3 col-xl-2 mb-3 mb-lg-0">
+                            <t t-call="portal_navigation_sidebar.portal_navigation"/>
+                        </div>
+                        <div class="col-12 col-lg-9 col-xl-10 o_portal_navigation_content">
+                            <t>$0</t>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <t>$0</t>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Desktop: the menu is the left column. Mobile: a button with the
+         current section opens the same menu as a panel from the left
+         (Bootstrap responsive offcanvas), so the list keeps the full width. -->
+    <template id="portal_navigation" name="Portal Navigation Menu">
+        <t t-set="portal_navigation_current" t-value="[entry for entry in portal_navigation_entries if entry['active']]"/>
+        <nav class="o_portal_navigation" aria-label="Portal sections">
+            <button type="button" class="btn btn-light border w-100 d-flex d-lg-none align-items-center gap-2 o_portal_navigation_toggle"
+                    data-bs-toggle="offcanvas" data-bs-target="#o_portal_navigation_panel"
+                    aria-controls="o_portal_navigation_panel">
+                <!-- Not a ☰: the website header already has one. It reads as
+                     a selector: the current section and a chevron. -->
+                <t t-if="portal_navigation_current">
+                    <img t-if="portal_navigation_current[0]['icon']" t-att-src="portal_navigation_current[0]['icon']"
+                         class="o_portal_navigation_icon" alt="" width="20" height="20"/>
+                    <span class="text-truncate" t-out="portal_navigation_current[0]['name']"/>
+                </t>
+                <t t-else="">
+                    <i class="oi oi-fw" data-icon="grid_view" aria-hidden="true"/>
+                    <span class="text-truncate">Sections</span>
+                </t>
+                <i class="oi oi-fw ms-auto" data-icon="expand_more" aria-hidden="true"/>
+            </button>
+            <div id="o_portal_navigation_panel" class="offcanvas-lg offcanvas-start" tabindex="-1"
+                 aria-labelledby="o_portal_navigation_title">
+                <div class="offcanvas-header border-bottom">
+                    <h5 class="offcanvas-title" id="o_portal_navigation_title">Sections</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                            data-bs-target="#o_portal_navigation_panel" aria-label="Close"/>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="nav nav-pills flex-column flex-nowrap gap-1 w-100">
+                        <t t-foreach="portal_navigation_entries" t-as="entry">
+                            <li t-attf-class="nav-item #{'o_portal_navigation_group_start' if entry['group_start'] else ''} #{'' if entry['visible'] else 'd-none'}"
+                                t-att-data-placeholder_count="entry['placeholder_count'] or None"
+                                t-att-data-category="entry['category']">
+                                <a t-att-href="entry['url']"
+                                   t-att-title="entry['name']"
+                                   t-attf-class="nav-link d-flex align-items-center gap-2 #{'active' if entry['active'] else ''}"
+                                   t-att-aria-current="'page' if entry['active'] else None">
+                                    <img t-if="entry['icon']" t-att-src="entry['icon']" class="o_portal_navigation_icon" alt="" width="20" height="20"/>
+                                    <span class="o_portal_navigation_name" t-out="entry['name']"/>
+                                </a>
+                            </li>
+                        </t>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </template>
+
+</odoo>
