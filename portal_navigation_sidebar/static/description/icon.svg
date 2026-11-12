@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 100 100">
+  <!-- Portal Navigation Sidebar: a portal window with a persistent left menu, the current section highlighted -->
+  <!-- Window frame (Odoo purple) -->
+  <rect x="3" y="7" width="94" height="86" rx="12" fill="#714B67"/>
+  <!-- Title bar dots -->
+  <circle cx="13" cy="15.5" r="3" fill="#FF9F6E"/>
+  <circle cx="22" cy="15.5" r="3" fill="#F4C430"/>
+  <circle cx="31" cy="15.5" r="3" fill="#3ABF8F"/>
+  <!-- Page content area -->
+  <rect x="41" y="24" width="50" height="63" rx="7" fill="#F7F2F6"/>
+  <!-- Content: list rows -->
+  <g>
+    <rect x="46" y="30" width="40" height="11" rx="3" fill="#FFFFFF"/>
+    <rect x="49" y="33" width="5" height="5" rx="1.5" fill="#00A09D"/>
+    <rect x="57" y="34.25" width="25" height="2.5" rx="1.25" fill="#B79EB5"/>
+    <rect x="46" y="44" width="40" height="11" rx="3" fill="#FFFFFF"/>
+    <rect x="49" y="47" width="5" height="5" rx="1.5" fill="#00A09D"/>
+    <rect x="57" y="48.25" width="20" height="2.5" rx="1.25" fill="#B79EB5"/>
+    <rect x="46" y="58" width="40" height="11" rx="3" fill="#FFFFFF"/>
+    <rect x="49" y="61" width="5" height="5" rx="1.5" fill="#00A09D"/>
+    <rect x="57" y="62.25" width="23" height="2.5" rx="1.25" fill="#B79EB5"/>
+    <rect x="46" y="72" width="40" height="10" rx="3" fill="#FFFFFF"/>
+    <rect x="49" y="74.5" width="5" height="5" rx="1.5" fill="#00A09D"/>
+    <rect x="57" y="75.75" width="17" height="2.5" rx="1.25" fill="#B79EB5"/>
+  </g>
+  <!-- Sidebar menu entries (only the sections that have documents) -->
+  <g fill="#FFFFFF">
+    <rect x="9" y="30" width="24" height="4" rx="2" opacity="0.75"/>
+    <rect x="9" y="41" width="19" height="4" rx="2" opacity="0.75"/>
+    <rect x="9" y="67" width="22" height="4" rx="2" opacity="0.75"/>
+    <rect x="9" y="78" width="16" height="4" rx="2" opacity="0.75"/>
+  </g>
+  <!-- Highlighted current section -->
+  <rect x="6" y="51" width="33" height="11" rx="5.5" fill="#FF9F6E"/>
+  <rect x="10" y="54.5" width="23" height="4" rx="2" fill="#FFFFFF"/>
+</svg>
